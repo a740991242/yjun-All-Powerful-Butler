@@ -174,3 +174,9 @@ rtk git diff --check
 - 分类占位：`apps/web-antd/src/views/tools-pending/index.vue`。
 - 上述代码用于参考现有风格；发现缺陷应修复，不复制已知问题。
 - 当技术栈、目录、菜单或开发命令发生实际变化时同步更新本文，保持规范与项目一致。
+
+## 12. 生产托管与账号
+
+- Sites 配置位于 `.openai/hosting.json`。`corepack pnpm build:sites` 生成 `dist/server/index.js` 与 `dist/client`，保留 Vue 与 Ant Design Vue 技术栈。
+- 生产登录服务位于 `apps/web-antd/server/index.mjs`，仅使用平台环境变量校验账号，不连接公共演示接口。密码和会话签名密钥必须保存为托管平台秘密；不能打包进浏览器代码、写进日志或提交到 Git。
+- 本地模拟账号变更与生产认证分开验证。认证改动运行 `corepack pnpm exec vitest run apps/web-antd/server/index.test.mjs`，覆盖旧账号拒绝、会话验证、刷新及退出登录。

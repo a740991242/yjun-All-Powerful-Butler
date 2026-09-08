@@ -34,3 +34,11 @@ The current application is in `apps/web-antd`. UI text is in its `src/locales/la
 ## License
 
 See [LICENSE](./LICENSE). Preserve the applicable copyright and license notices when distributing this project or its dependencies.
+
+## Sign-in and deployment
+
+The initial account is `yj88888888`. Obtain the password from the project owner; it is not prefilled in the login form. The legacy demo accounts are disabled.
+
+Production uses same-origin `/api` endpoints from `apps/web-antd/server/index.mjs`, without the external demo service. Run `corepack pnpm build:sites` to produce the frontend and Worker deployment output. `.openai/hosting.json` stores the Sites project ID. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `SESSION_SECRET` in the hosting platform, marking the last two as secrets. Rotate `SESSION_SECRET` with password changes to invalidate existing sessions.
+
+Local development uses the account validator in `apps/backend-mock`; its password digest is for development only. Production credentials come from platform secrets.

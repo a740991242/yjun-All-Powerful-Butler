@@ -1,6 +1,6 @@
 export interface UserInfo {
   id: number;
-  password: string;
+  passwordHash: string;
   realName: string;
   roles: string[];
   username: string;
@@ -15,27 +15,12 @@ export interface TimezoneOption {
 export const MOCK_USERS: UserInfo[] = [
   {
     id: 0,
-    password: '123456',
-    realName: 'Vben',
+    passwordHash:
+      '8e11a380a3164c2fff64ba5fe7549882d6504842a7724b53c5d3b55538dd6d45',
+    realName: 'yj88888888',
     roles: ['super'],
-    username: 'vben',
-    homePath: '/dashboard/workspace',
-  },
-  {
-    id: 1,
-    password: '123456',
-    realName: 'Admin',
-    roles: ['admin'],
-    username: 'admin',
-    homePath: '/dashboard/workspace',
-  },
-  {
-    id: 2,
-    password: '123456',
-    realName: 'Jack',
-    roles: ['user'],
-    username: 'jack',
-    homePath: '/dashboard/analytics',
+    username: 'yj88888888',
+    homePath: '/life-tools/mortgage',
   },
 ];
 
@@ -43,7 +28,7 @@ export const MOCK_CODES = [
   // super
   {
     codes: ['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010'],
-    username: 'vben',
+    username: 'yj88888888',
   },
   {
     // admin
@@ -180,7 +165,7 @@ const createDemosMenus = (role: 'admin' | 'super' | 'user') => {
 export const MOCK_MENUS = [
   {
     menus: [...dashboardMenus, ...createDemosMenus('super')],
-    username: 'vben',
+    username: 'yj88888888',
   },
   {
     menus: [...dashboardMenus, ...createDemosMenus('admin')],

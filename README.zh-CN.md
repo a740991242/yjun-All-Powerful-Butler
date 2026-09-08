@@ -34,3 +34,11 @@ corepack pnpm exec vitest run apps/web-antd/src/views/life-tools/calculations.te
 ## 许可
 
 见 [LICENSE](./LICENSE)。分发项目及其依赖时，应保留适用的版权与许可声明。
+
+## 登录与部署
+
+默认账号：`yj88888888`。密码由项目所有者提供，登录页不预填密码。原演示账号已停用。
+
+生产环境使用同域 `/api` 和 `apps/web-antd/server/index.mjs`，不依赖外部演示接口。运行 `corepack pnpm build:sites` 生成前端与 Worker 部署产物。Sites 项目标识保存在 `.openai/hosting.json`；生产变量 `ADMIN_USERNAME`、`ADMIN_PASSWORD`、`SESSION_SECRET` 通过托管平台设置，后两项必须作为秘密保存，不写入源码。更改密码后同时轮换 `SESSION_SECRET`，使现有会话失效。
+
+本地开发使用 `apps/backend-mock` 中的账号校验；其密码摘要仅用于开发，生产密码以平台秘密为准。

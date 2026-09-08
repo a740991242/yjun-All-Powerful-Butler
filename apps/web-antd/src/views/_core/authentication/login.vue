@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
-import type { BasicOption } from '@vben/types';
 
 import { computed, markRaw } from 'vue';
 
@@ -13,61 +12,25 @@ defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
-const accountOptions = computed<BasicOption[]>(() => [
-  {
-    label: $t('tools.profile.admin'),
-    value: 'admin',
-  },
-  {
-    label: $t('tools.profile.user'),
-    value: 'jack',
-  },
-]);
-
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
-      component: 'VbenSelect',
-      componentProps: {
-        options: accountOptions.value,
-        placeholder: $t('authentication.selectAccount'),
-      },
-      fieldName: 'selectAccount',
-      label: $t('authentication.selectAccount'),
-      rules: z
-        .string()
-        .min(1, { message: $t('authentication.selectAccount') })
-        .optional()
-        .default('admin'),
-    },
-    {
       component: 'VbenInput',
       componentProps: {
+        autocomplete: 'username',
         placeholder: $t('authentication.usernameTip'),
-      },
-      dependencies: {
-        trigger(values, form) {
-          if (values.selectAccount) {
-            const findUser = accountOptions.value.find(
-              (item) => item.value === values.selectAccount,
-            );
-            if (findUser) {
-              form.setValues({
-                password: '123456',
-                username: findUser.value,
-              });
-            }
-          }
-        },
-        triggerFields: ['selectAccount'],
       },
       fieldName: 'username',
       label: $t('authentication.username'),
-      rules: z.string().min(1, { message: $t('authentication.usernameTip') }),
+      rules: z
+        .string()
+        .min(1, { message: $t('authentication.usernameTip') })
+        .default('yj88888888'),
     },
     {
       component: 'VbenInputPassword',
       componentProps: {
+        autocomplete: 'current-password',
         placeholder: $t('authentication.password'),
       },
       fieldName: 'password',
@@ -88,6 +51,10 @@ const formSchema = computed((): VbenFormSchema[] => {
 <template>
   <AuthenticationLogin
     :show-third-party-login="false"
+    :show-code-login="false"
+    :show-qrcode-login="false"
+    :show-register="false"
+    :show-forget-password="false"
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
     @submit="authStore.authLogin"

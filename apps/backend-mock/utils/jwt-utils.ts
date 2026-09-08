@@ -17,18 +17,20 @@ export interface UserPayload extends UserInfo {
 }
 
 export function generateAccessToken(user: UserInfo) {
-  return jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
+  const { passwordHash: _passwordHash, ...payload } = user;
+  return jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
 }
 
 export function generateRefreshToken(user: UserInfo) {
-  return jwt.sign(user, REFRESH_TOKEN_SECRET, {
+  const { passwordHash: _passwordHash, ...payload } = user;
+  return jwt.sign(payload, REFRESH_TOKEN_SECRET, {
     expiresIn: '30d',
   });
 }
 
 export function verifyAccessToken(
   event: H3Event<EventHandlerRequest>,
-): null | Omit<UserInfo, 'password'> {
+): null | Omit<UserInfo, 'passwordHash'> {
   const authHeader = getHeader(event, 'Authorization');
   if (!authHeader?.startsWith('Bearer')) {
     return null;
@@ -50,7 +52,7 @@ export function verifyAccessToken(
     if (!user) {
       return null;
     }
-    const { password: _pwd, ...userinfo } = user;
+    const { passwordHash: _pwd, ...userinfo } = user;
     return userinfo;
   } catch {
     return null;
@@ -59,7 +61,7 @@ export function verifyAccessToken(
 
 export function verifyRefreshToken(
   token: string,
-): null | Omit<UserInfo, 'password'> {
+): null | Omit<UserInfo, 'passwordHash'> {
   try {
     const decoded = jwt.verify(token, REFRESH_TOKEN_SECRET) as UserPayload;
     const username = decoded.username;
@@ -69,7 +71,7 @@ export function verifyRefreshToken(
     if (!user) {
       return null;
     }
-    const { password: _pwd, ...userinfo } = user;
+    const { passwordHash: _pwd, ...userinfo } = user;
     return userinfo;
   } catch {
     return null;

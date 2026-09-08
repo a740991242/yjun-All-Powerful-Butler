@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import { defineEventHandler, readBody, setResponseStatus } from 'h3';
 import {
   clearRefreshTokenCookie,
@@ -13,7 +15,12 @@ import {
 
 export default defineEventHandler(async (event) => {
   const { password, username } = await readBody(event);
-  if (!password || !username) {
+  if (
+    typeof password !== 'string' ||
+    typeof username !== 'string' ||
+    !password ||
+    !username
+  ) {
     setResponseStatus(event, 400);
     return useResponseError(
       'BadRequestException',
@@ -22,7 +29,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const findUser = MOCK_USERS.find(
-    (item) => item.username === username && item.password === password,
+    (item) =>
+      item.username === username &&
+      item.passwordHash === createHash('sha256').update(password).digest('hex'),
   );
 
   if (!findUser) {
@@ -35,8 +44,9 @@ export default defineEventHandler(async (event) => {
 
   setRefreshTokenCookie(event, refreshToken);
 
+  const { passwordHash: _passwordHash, ...userInfo } = findUser;
   return useResponseSuccess({
-    ...findUser,
+    ...userInfo,
     accessToken,
   });
 });
