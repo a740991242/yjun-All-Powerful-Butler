@@ -16,8 +16,9 @@ const logoDark = computed(() => preferences.logo.sourceDark);
     :app-name="appName"
     :logo="logo"
     :logo-dark="logoDark"
-    :page-description="$t('authentication.pageDesc')"
-    :page-title="$t('authentication.pageTitle')"
+    slogan-image="/brand/logo.svg"
+    :page-description="$t('tools.brand.description')"
+    :page-title="$t('tools.brand.slogan')"
   >
     <!-- 自定义工具栏 -->
     <!-- <template #toolbar></template> -->

@@ -2,7 +2,7 @@ import type { Router } from 'vue-router';
 
 import { LOGIN_PATH } from '@vben/constants';
 import { preferences } from '@vben/preferences';
-import { useAccessStore, useUserStore } from '@vben/stores';
+import { useAccessStore, useTabbarStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
 import { accessRoutes, coreRouteNames } from '#/router/routes';
@@ -102,6 +102,16 @@ function setupAccessGuard(router: Router) {
       // 则会在菜单中显示，但是访问会被重定向到403
       routes: accessRoutes,
     });
+
+    // 菜单调整后，移除缓存中已下线页面的标签（包括原固定分析页）。
+    const tabbarStore = useTabbarStore();
+    tabbarStore.tabs = tabbarStore.tabs
+      .filter((tab) => tab.name && router.hasRoute(tab.name))
+      .map((tab) => ({
+        ...tab,
+        meta: { ...tab.meta, ...router.resolve(tab.fullPath).meta },
+      }));
+    await tabbarStore.updateCacheTabs();
 
     // 保存菜单信息和路由信息
     accessStore.setAccessMenus(accessibleMenus);

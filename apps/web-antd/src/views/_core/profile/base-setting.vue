@@ -8,56 +8,60 @@ import { computed, onMounted, ref } from 'vue';
 import { ProfileBaseSetting } from '@vben/common-ui';
 
 import { getUserInfoApi } from '#/api';
+import { $t } from '#/locales';
+import { displayUserName } from '#/utils/display-user';
 
 const profileBaseSettingRef = ref();
 
-const MOCK_ROLES_OPTIONS: BasicOption[] = [
+const roleOptions = computed<BasicOption[]>(() => [
   {
-    label: '管理员',
+    label: $t('tools.profile.admin'),
     value: 'super',
   },
   {
-    label: '用户',
+    label: $t('tools.profile.user'),
     value: 'user',
   },
   {
-    label: '测试',
+    label: $t('tools.profile.test'),
     value: 'test',
   },
-];
+]);
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
       fieldName: 'realName',
       component: 'Input',
-      label: '姓名',
+      label: $t('tools.profile.name'),
     },
     {
       fieldName: 'username',
       component: 'Input',
-      label: '用户名',
+      label: $t('tools.profile.username'),
     },
     {
       fieldName: 'roles',
       component: 'Select',
       componentProps: {
         mode: 'tags',
-        options: MOCK_ROLES_OPTIONS,
+        options: roleOptions.value,
       },
-      label: '角色',
+      label: $t('tools.profile.role'),
     },
     {
       fieldName: 'introduction',
       component: 'Textarea',
-      label: '个人简介',
+      label: $t('tools.profile.bio'),
     },
   ];
 });
 
 onMounted(async () => {
   const data = await getUserInfoApi();
-  profileBaseSettingRef.value.getFormApi().setValues(data);
+  profileBaseSettingRef.value
+    .getFormApi()
+    .setValues({ ...data, realName: displayUserName(data.realName) });
 });
 </script>
 <template>

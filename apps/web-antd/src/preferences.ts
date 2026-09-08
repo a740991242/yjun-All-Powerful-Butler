@@ -1,5 +1,4 @@
 import {
-  appCopyrightPreferences,
   defineOverridesPreferences,
   definePreferencesExtension,
 } from '@vben/preferences';
@@ -19,9 +18,23 @@ interface WebAntdPreferencesExtension {
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
+    defaultAvatar: '/brand/avatar.svg',
+    defaultHomePath: '/life-tools/mortgage',
     name: import.meta.env.VITE_APP_TITLE,
   },
-  copyright: appCopyrightPreferences,
+  logo: {
+    source: '/brand/logo.svg',
+    sourceDark: '/brand/logo.svg',
+  },
+  copyright: {
+    companyName: '全能管家',
+    companySiteLink: '',
+    date: '2026',
+    enable: true,
+    icp: '',
+    icpLink: '',
+    settingShow: true,
+  },
 });
 
 export const preferencesExtension =

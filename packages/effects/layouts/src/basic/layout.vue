@@ -44,6 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   logoText: '',
   avatar: '',
   text: '',
+  refreshOnLocaleChange: true,
 });
 
 const emit = defineEmits<{
@@ -63,6 +64,8 @@ interface Props {
   avatar?: string;
   /** 用户文本（如用户名） */
   text?: string;
+  /** 已完整使用响应式翻译的应用可关闭语言切换刷新，以保留页面状态。 */
+  refreshOnLocaleChange?: boolean;
 }
 
 /** 最终使用的 Logo 图片地址（自定义优先，否则使用默认） */
@@ -264,7 +267,13 @@ function refreshAll() {
 
 // 语言更新后，刷新页面
 // i18n.global.locale会在preference.app.locale变更之后才会更新，因此watchpreference.app.locale是不合适的，刷新页面时可能语言配置尚未完全加载完成
-watch(i18n.global.locale, refreshAll, { flush: 'post' });
+watch(
+  i18n.global.locale,
+  () => {
+    if (props.refreshOnLocaleChange) refreshAll();
+  },
+  { flush: 'post' },
+);
 
 // 时区更新后，刷新页面
 watch(() => timezoneStore.timezone, refreshAll, { flush: 'post' });

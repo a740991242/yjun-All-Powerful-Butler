@@ -13,27 +13,23 @@ defineOptions({ name: 'Login' });
 
 const authStore = useAuthStore();
 
-const MOCK_USER_OPTIONS: BasicOption[] = [
+const accountOptions = computed<BasicOption[]>(() => [
   {
-    label: 'Super',
-    value: 'vben',
-  },
-  {
-    label: 'Admin',
+    label: $t('tools.profile.admin'),
     value: 'admin',
   },
   {
-    label: 'User',
+    label: $t('tools.profile.user'),
     value: 'jack',
   },
-];
+]);
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
       component: 'VbenSelect',
       componentProps: {
-        options: MOCK_USER_OPTIONS,
+        options: accountOptions.value,
         placeholder: $t('authentication.selectAccount'),
       },
       fieldName: 'selectAccount',
@@ -42,7 +38,7 @@ const formSchema = computed((): VbenFormSchema[] => {
         .string()
         .min(1, { message: $t('authentication.selectAccount') })
         .optional()
-        .default('vben'),
+        .default('admin'),
     },
     {
       component: 'VbenInput',
@@ -52,7 +48,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       dependencies: {
         trigger(values, form) {
           if (values.selectAccount) {
-            const findUser = MOCK_USER_OPTIONS.find(
+            const findUser = accountOptions.value.find(
               (item) => item.value === values.selectAccount,
             );
             if (findUser) {
@@ -91,6 +87,7 @@ const formSchema = computed((): VbenFormSchema[] => {
 
 <template>
   <AuthenticationLogin
+    :show-third-party-login="false"
     :form-schema="formSchema"
     :loading="authStore.loginLoading"
     @submit="authStore.authLogin"

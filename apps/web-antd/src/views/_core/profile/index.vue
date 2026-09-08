@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { Profile } from '@vben/common-ui';
 import { useUserStore } from '@vben/stores';
+
+import { $t } from '#/locales';
+import { displayUserAvatar, displayUserName } from '#/utils/display-user';
 
 import ProfileBase from './base-setting.vue';
 import ProfileNotificationSetting from './notification-setting.vue';
@@ -11,23 +14,33 @@ import ProfileSecuritySetting from './security-setting.vue';
 
 const userStore = useUserStore();
 
+const displayInfo = computed(() =>
+  userStore.userInfo
+    ? {
+        ...userStore.userInfo,
+        realName: displayUserName(userStore.userInfo.realName),
+        avatar: displayUserAvatar(userStore.userInfo.avatar),
+      }
+    : userStore.userInfo,
+);
+
 const tabsValue = ref<string>('basic');
 
-const tabs = ref([
+const tabs = computed(() => [
   {
-    label: '基本设置',
+    label: $t('tools.profile.basic'),
     value: 'basic',
   },
   {
-    label: '安全设置',
+    label: $t('tools.profile.security'),
     value: 'security',
   },
   {
-    label: '修改密码',
+    label: $t('tools.profile.password'),
     value: 'password',
   },
   {
-    label: '新消息提醒',
+    label: $t('tools.profile.notice'),
     value: 'notice',
   },
 ]);
@@ -35,8 +48,8 @@ const tabs = ref([
 <template>
   <Profile
     v-model:model-value="tabsValue"
-    title="个人中心"
-    :user-info="userStore.userInfo"
+    :title="$t('tools.profile.title')"
+    :user-info="displayInfo"
     :tabs="tabs"
   >
     <template #content>

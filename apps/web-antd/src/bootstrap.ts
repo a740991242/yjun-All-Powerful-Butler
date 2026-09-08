@@ -1,8 +1,8 @@
-import { createApp, watchEffect } from 'vue';
+import { createApp, watch, watchEffect } from 'vue';
 
 import { registerAccessDirective } from '@vben/access';
 import { registerLoadingDirective } from '@vben/common-ui/es/loading';
-import { preferences } from '@vben/preferences';
+import { preferences, updatePreferences } from '@vben/preferences';
 import { initStores } from '@vben/stores';
 import '@vben/styles';
 import '@vben/styles/antd';
@@ -43,6 +43,27 @@ async function bootstrap(namespace: string) {
   // 国际化 i18n 配置
   await setupI18n(app);
 
+  // Branding follows the loaded locale, including existing persisted preferences.
+  watch(
+    () => $t('tools.brand.name'),
+    (name) => {
+      updatePreferences({
+        app: { name, defaultAvatar: '/brand/avatar.svg' },
+        logo: { source: '/brand/logo.svg', sourceDark: '/brand/logo.svg' },
+        copyright: {
+          companyName: name,
+          companySiteLink: '',
+          icp: '',
+          icpLink: '',
+        },
+      });
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute('content', $t('tools.brand.description'));
+    },
+    { immediate: true },
+  );
+
   // 配置 pinia-tore
   await initStores(app, { namespace });
 
@@ -67,6 +88,8 @@ async function bootstrap(namespace: string) {
       const pageTitle =
         (routeTitle ? `${$t(routeTitle)} - ` : '') + preferences.app.name;
       useTitle(pageTitle);
+    } else {
+      useTitle(preferences.app.name);
     }
   });
 
