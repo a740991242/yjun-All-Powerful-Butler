@@ -182,3 +182,15 @@ rtk git diff --check
 - 生产 `VITE_BASE` 为 `/yjun-All-Powerful-Butler/`，采用 hash 路由。公共图片使用 `publicAsset()`，禁止在业务中硬编码以 `/brand/` 开头的根路径。
 - 本地 `VITE_NITRO_MOCK=false`，业务应用不启动后端。保留其他示例应用使用的 `backend-mock` 包。
 - 认证或路径变更运行 `local-auth.test.ts` 与 `public-asset.test.ts`，并验证登录、错误提示、刷新恢复、退出登录和生产子目录资源加载。
+
+## 13. 金融数据页面
+
+- 金融菜单包含 `/finance/portfolio` 自选与持仓、`/finance/etf-comparison` ETF 对比，沿用 Ant Design Vue 和 ECharts。
+- `scripts/finance/export_snapshots.py` 从相邻 `../../A_Shares_Datas` 生成 `apps/web-antd/public/data/finance` 静态快照；仅本地读取，不抓取行情或执行 Git。更新源文件后手动重跑，页面注明快照时间。
+- 公共快照仅包含行情及基金历史价格，禁止打包个人持仓数量、成本、交易记录。持仓通过页面本地导入或编辑存入浏览器；静态站点登录不提供数据保密能力。
+- 盈亏仅为快照下的浮动盈亏；ETF 不复权数据只展示价格表现，按共同交易日对齐，不称为含分红总收益。52 周高低点按指定截止日向前 52 周的不复权日 K 线计算，不得使用涨跌停价字段；注明区间、实际交易日覆盖和币种，历史不足 52 周时按可获得交易日展示。高低点不参与盈亏计算。
+- 修改计算或导入逻辑运行 `apps/web-antd/src/views/finance/model.test.ts`，同时验证导入错误不会覆盖既有持仓、生产子目录资源路径和中英文切换。
+
+- 截图补充自选清单保存在 `scripts/finance/watchlist-supplement.json`，导出时按代码去重合并；`--stocks-only` 仅更新股票快照，不改 ETF。缺失行情保持 null，不用零或其他日期价格冒充。港股自选仅展示，持仓暂仅支持人民币 A 股；持仓缺少行情时汇总市值与盈亏显示缺失。
+
+- 公开指标通过 `python3 scripts/finance/refresh_stock_metrics.py` 采集到 `scripts/finance/stock-metrics.json`，再执行 `python3 scripts/finance/export_snapshots.py --stocks-only`。更换收盘日期时先用 `--as-of YYYY-MM-DD` 刷新指标；导出检查日期一致。股息率与 TTM 市盈率使用腾讯行情快照，记录来源和时间，不冒充收盘时点指标。港股 TTM 使用字段 57（不是字段 39），股息率为 47；A 股分别为 39、64，映射依据保留在脚本。范围计算测试：`python3 -m unittest discover -s scripts/finance -p "test_*.py"`。

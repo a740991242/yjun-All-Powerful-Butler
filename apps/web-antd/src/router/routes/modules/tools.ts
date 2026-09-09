@@ -72,7 +72,29 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'Finance',
     path: '/finance',
-    component: () => import('#/views/tools-pending/index.vue'),
+    redirect: '/finance/portfolio',
+    children: [
+      {
+        name: 'FinancePortfolio',
+        path: 'portfolio',
+        component: () => import('#/views/finance/portfolio/index.vue'),
+        meta: {
+          title: 'finance.menu.portfolio',
+          icon: 'lucide:wallet',
+          keepAlive: true,
+        },
+      },
+      {
+        name: 'FinanceEtfComparison',
+        path: 'etf-comparison',
+        component: () => import('#/views/finance/etf-comparison/index.vue'),
+        meta: {
+          title: 'finance.menu.etf',
+          icon: 'lucide:chart-no-axes-combined',
+          keepAlive: true,
+        },
+      },
+    ],
     meta: {
       icon: 'lucide:chart-no-axes-combined',
       order: 4,
