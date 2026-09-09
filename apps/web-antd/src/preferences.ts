@@ -3,6 +3,7 @@ import {
   definePreferencesExtension,
 } from '@vben/preferences';
 
+import { publicAsset } from '#/utils/public-asset';
 interface WebAntdPreferencesExtension {
   defaultTableSize: number;
   enableFormFullscreen: boolean;
@@ -18,13 +19,15 @@ interface WebAntdPreferencesExtension {
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
-    defaultAvatar: '/brand/avatar.svg',
+    accessMode: 'frontend',
+    enableRefreshToken: false,
+    defaultAvatar: publicAsset('brand/avatar.svg'),
     defaultHomePath: '/life-tools/mortgage',
     name: import.meta.env.VITE_APP_TITLE,
   },
   logo: {
-    source: '/brand/logo.svg',
-    sourceDark: '/brand/logo.svg',
+    source: publicAsset('brand/logo.svg'),
+    sourceDark: publicAsset('brand/logo.svg'),
   },
   copyright: {
     companyName: '全能管家',

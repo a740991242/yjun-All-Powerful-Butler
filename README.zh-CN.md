@@ -35,10 +35,14 @@ corepack pnpm exec vitest run apps/web-antd/src/views/life-tools/calculations.te
 
 见 [LICENSE](./LICENSE)。分发项目及其依赖时，应保留适用的版权与许可声明。
 
-## 登录与部署
+## 登录与 GitHub Pages 部署
 
-默认账号：`yj88888888`。密码由项目所有者提供，登录页不预填密码。原演示账号已停用。
+这是纯前端工具站，不需要部署后端或数据库。默认账号为 `yj88888888`，密码为 `yyds123456`；登录校验、用户信息和权限均由浏览器内的本地模拟模块提供。登录状态由现有 Store 持久化，退出时清除。此登录仅控制界面入口，不是敏感数据的安全边界。
 
-生产环境使用同域 `/api` 和 `apps/web-antd/server/index.mjs`，不依赖外部演示接口。运行 `corepack pnpm build:sites` 生成前端与 Worker 部署产物。Sites 项目标识保存在 `.openai/hosting.json`；生产变量 `ADMIN_USERNAME`、`ADMIN_PASSWORD`、`SESSION_SECRET` 通过托管平台设置，后两项必须作为秘密保存，不写入源码。更改密码后同时轮换 `SESSION_SECRET`，使现有会话失效。
+- `corepack pnpm dev:antd` 启动前端，不启动 Nitro 模拟服务。
+- `corepack pnpm build:pages` 生成 `apps/web-antd/dist` 纯静态产物。
+- 推送到 `main` 后，`.github/workflows/deploy.yml` 自动测试、构建并发布到 GitHub Pages。仓库 Settings → Pages 的 Source 使用 GitHub Actions。
+- 生产访问路径为 `/yjun-All-Powerful-Butler/`，页面使用 hash 路由，刷新或打开深层链接无需服务器重写。重命名仓库时同步更新 `.env.production` 的 `VITE_BASE`。
+- 房贷、个税在浏览器计算；魔彩瓶通过 iframe 加载独立游戏。
 
-本地开发使用 `apps/backend-mock` 中的账号校验；其密码摘要仅用于开发，生产密码以平台秘密为准。
+其他示例应用仍保留原有 `backend-mock` 包，但全能管家的开发和部署不使用它。

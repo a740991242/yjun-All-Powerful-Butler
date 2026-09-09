@@ -152,5 +152,8 @@
     "systemNotice": "Receive system messages in your inbox.",
     "tasks": "Tasks",
     "taskNotice": "Receive task notifications in your inbox."
+  },
+  "auth": {
+    "invalidCredentials": "Incorrect username or password."
   }
 }

@@ -1,172 +1,51 @@
-name: Deploy Website on push
+name: Deploy GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
-  deploy-playground-ftp:
-    name: Deploy Push Playground Ftp
-    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.message, '[skip ci]') && github.repository == 'vbenjs/vue-vben-admin'
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-
-      - name: Sed Config Base
-        shell: bash
+          node-version-file: .node-version
+      - name: Enable project package manager
         run: |
-          sed -i  "s#VITE_COMPRESS\s*=.*#VITE_COMPRESS = gzip#g" ./playground/.env.production
-          sed -i  "s#VITE_PWA\s*=.*#VITE_PWA = true#g" ./playground/.env.production
-          cat ./playground/.env.production
-
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-
-      - name: Build
-        run: pnpm build:play
-
-      - name: Sync Playground files
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+          corepack enable
+          corepack prepare pnpm@11.16.0 --activate
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Test browser login and calculators
+        run: pnpm exec vitest run apps/web-antd/src/api/local-auth.test.ts apps/web-antd/src/utils/public-asset.test.ts apps/web-antd/src/locales/tools.test.ts apps/web-antd/src/views/life-tools/calculations.test.ts
+      - name: Check application types
+        run: pnpm -F @vben/web-antd typecheck
+      - name: Build static website
+        run: pnpm build:pages
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
-          server: ${{ secrets.PRO_FTP_HOST }}
-          username: ${{ secrets.WEB_PLAYGROUND_FTP_ACCOUNT }}
-          password: ${{ secrets.WEB_PLAYGROUND_FTP_PWSSWORD }}
-          local-dir: ./playground/dist/
+          path: apps/web-antd/dist
 
-  deploy-docs-ftp:
-    name: Deploy Push Docs Ftp
-    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.message, '[skip ci]') && github.repository == 'vbenjs/vue-vben-admin'
+  deploy:
+    needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-
-      - name: Build
-        run: pnpm build:docs
-
-      - name: Sync Docs files
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.PRO_FTP_HOST }}
-          username: ${{ secrets.WEBSITE_FTP_ACCOUNT }}
-          password: ${{ secrets.WEBSITE_FTP_PASSWORD }}
-          local-dir: ./docs/.vitepress/dist/
-
-  deploy-antd-ftp:
-    name: Deploy Push Antd Ftp
-    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.message, '[skip ci]') && github.repository == 'vbenjs/vue-vben-admin'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: Sed Config Base
-        shell: bash
-        run: |
-          sed -i  "s#VITE_COMPRESS\s*=.*#VITE_COMPRESS = gzip#g" ./apps/web-antd/.env.production
-          sed -i  "s#VITE_PWA\s*=.*#VITE_PWA = true#g" ./apps/web-antd/.env.production
-          cat ./apps/web-antd/.env.production
-
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-
-      - name: Build
-        run: pnpm run build:antd
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.PRO_FTP_HOST }}
-          username: ${{ secrets.WEB_ANTD_FTP_ACCOUNT }}
-          password: ${{ secrets.WEB_ANTD_FTP_PASSWORD }}
-          local-dir: ./apps/web-antd/dist/
-
-  deploy-ele-ftp:
-    name: Deploy Push Element Ftp
-    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.message, '[skip ci]') && github.repository == 'vbenjs/vue-vben-admin'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: Sed Config Base
-        shell: bash
-        run: |
-          sed -i  "s#VITE_COMPRESS\s*=.*#VITE_COMPRESS = gzip#g" ./apps/web-ele/.env.production
-          sed -i  "s#VITE_PWA\s*=.*#VITE_PWA = true#g" ./apps/web-ele/.env.production
-          cat ./apps/web-ele/.env.production
-
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-
-      - name: Build
-        run: pnpm run build:ele
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.PRO_FTP_HOST }}
-          username: ${{ secrets.WEB_ELE_FTP_ACCOUNT }}
-          password: ${{ secrets.WEB_ELE_FTP_PASSWORD }}
-          local-dir: ./apps/web-ele/dist/
-
-  deploy-naive-ftp:
-    name: Deploy Push Naive Ftp
-    if: github.actor != 'dependabot[bot]' && !contains(github.event.head_commit.message, '[skip ci]') && github.repository == 'vbenjs/vue-vben-admin'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
-      - name: Sed Config Base
-        shell: bash
-        run: |
-          sed -i  "s#VITE_COMPRESS\s*=.*#VITE_COMPRESS = gzip#g" ./apps/web-naive/.env.production
-          sed -i  "s#VITE_PWA\s*=.*#VITE_PWA = true#g" ./apps/web-naive/.env.production
-          cat ./apps/web-naive/.env.production
-
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-
-      - name: Build
-        run: pnpm run build:naive
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
-        with:
-          server: ${{ secrets.PRO_FTP_HOST }}
-          username: ${{ secrets.WEB_NAIVE_FTP_ACCOUNT }}
-          password: ${{ secrets.WEB_NAIVE_FTP_PASSWORD }}
-          local-dir: ./apps/web-naive/dist/
-
-  rerun-on-failure:
-    name: Rerun on failure
-    needs:
-      - deploy-playground-ftp
-      - deploy-docs-ftp
-      - deploy-antd-ftp
-      - deploy-ele-ftp
-      - deploy-naive-ftp
-    if: failure() && fromJSON(github.run_attempt) < 10
-    runs-on: ubuntu-latest
-    steps:
-      - name: Retry ${{ fromJSON(github.run_attempt) }} of 10
-        env:
-          GH_REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4

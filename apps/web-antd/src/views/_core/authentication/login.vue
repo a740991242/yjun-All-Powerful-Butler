@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { VbenFormSchema } from '@vben/common-ui';
 
-import { computed, markRaw } from 'vue';
+import { computed } from 'vue';
 
-import { AuthenticationLogin, SliderCaptcha, z } from '@vben/common-ui';
+import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
+import { LOCAL_USERNAME } from '#/api/local-auth';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
@@ -25,7 +26,7 @@ const formSchema = computed((): VbenFormSchema[] => {
       rules: z
         .string()
         .min(1, { message: $t('authentication.usernameTip') })
-        .default('yj88888888'),
+        .default(LOCAL_USERNAME),
     },
     {
       component: 'VbenInputPassword',
@@ -36,13 +37,6 @@ const formSchema = computed((): VbenFormSchema[] => {
       fieldName: 'password',
       label: $t('authentication.password'),
       rules: z.string().min(1, { message: $t('authentication.passwordTip') }),
-    },
-    {
-      component: markRaw(SliderCaptcha),
-      fieldName: 'captcha',
-      rules: z.boolean().refine((value) => value, {
-        message: $t('authentication.verifyRequiredTip'),
-      }),
     },
   ];
 });

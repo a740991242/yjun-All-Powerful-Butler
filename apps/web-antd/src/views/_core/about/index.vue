@@ -4,6 +4,7 @@ import { Page } from '@vben/common-ui';
 import { Card, TypographyParagraph } from 'ant-design-vue';
 
 import { $t } from '#/locales';
+import { publicAsset } from '#/utils/public-asset';
 
 defineOptions({ name: 'About' });
 </script>
@@ -12,7 +13,7 @@ defineOptions({ name: 'About' });
   <Page :title="$t('tools.brand.name')">
     <Card>
       <img
-        src="/brand/logo.svg"
+        :src="publicAsset('brand/logo.svg')"
         :alt="$t('tools.brand.name')"
         class="mb-4 size-16"
       />

@@ -10,6 +10,7 @@ import '@vben/styles/antd';
 import { useTitle } from '@vueuse/core';
 
 import { $t, setupI18n } from '#/locales';
+import { publicAsset } from '#/utils/public-asset';
 
 import { initComponentAdapter } from './adapter/component';
 import { initSetupVbenForm } from './adapter/form';
@@ -48,8 +49,11 @@ async function bootstrap(namespace: string) {
     () => $t('tools.brand.name'),
     (name) => {
       updatePreferences({
-        app: { name, defaultAvatar: '/brand/avatar.svg' },
-        logo: { source: '/brand/logo.svg', sourceDark: '/brand/logo.svg' },
+        app: { name, defaultAvatar: publicAsset('brand/avatar.svg') },
+        logo: {
+          source: publicAsset('brand/logo.svg'),
+          sourceDark: publicAsset('brand/logo.svg'),
+        },
         copyright: {
           companyName: name,
           companySiteLink: '',

@@ -52,7 +52,7 @@
     "update:deps": "npx taze -r -w",
     "version": "pnpm exec changeset version && pnpm install --no-frozen-lockfile",
     "catalog": "pnpm dlx codemod pnpm/catalog",
-    "build:sites": "pnpm build:antd && node scripts/deploy/build-sites.mjs"
+    "build:pages": "pnpm build:antd"
   },
   "dependencies": {
     "sortablejs": "catalog:"

@@ -35,10 +35,14 @@ The current application is in `apps/web-antd`. UI text is in its `src/locales/la
 
 See [LICENSE](./LICENSE). Preserve the applicable copyright and license notices when distributing this project or its dependencies.
 
-## Sign-in and deployment
+## Sign-in and GitHub Pages deployment
 
-The initial account is `yj88888888`. Obtain the password from the project owner; it is not prefilled in the login form. The legacy demo accounts are disabled.
+This is a frontend-only tool site. No backend or database deployment is needed. The initial account is `yj88888888` with password `yyds123456`. Login validation, profile information and permissions are mocked in the browser. Existing stores persist login state and clear it on logout. This login controls navigation; it is not a security boundary for private data.
 
-Production uses same-origin `/api` endpoints from `apps/web-antd/server/index.mjs`, without the external demo service. Run `corepack pnpm build:sites` to produce the frontend and Worker deployment output. `.openai/hosting.json` stores the Sites project ID. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `SESSION_SECRET` in the hosting platform, marking the last two as secrets. Rotate `SESSION_SECRET` with password changes to invalidate existing sessions.
+- `corepack pnpm dev:antd` runs the frontend without the Nitro mock server.
+- `corepack pnpm build:pages` generates static files in `apps/web-antd/dist`.
+- Pushing to `main` triggers `.github/workflows/deploy.yml` to test, build and deploy to GitHub Pages. Select GitHub Actions as the publishing source in Settings → Pages.
+- Production uses `/yjun-All-Powerful-Butler/` and hash routing, so deep links and refreshes do not require server rewrites. Update `VITE_BASE` in `.env.production` if the repository name changes.
+- Mortgage and income-tax calculations run in the browser. Magic Bottles loads its standalone game through an iframe.
 
-Local development uses the account validator in `apps/backend-mock`; its password digest is for development only. Production credentials come from platform secrets.
+The monorepo retains `backend-mock` for its other example applications; All-in-One Butler does not use it in development or deployment.

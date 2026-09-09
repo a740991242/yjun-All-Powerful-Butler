@@ -1,10 +1,6 @@
 import type { RouteRecordStringComponent } from '@vben/types';
 
-import { requestClient } from '#/api/request';
-
-/**
- * 获取用户所有菜单
- */
-export async function getAllMenusApi() {
-  return requestClient.get<RouteRecordStringComponent[]>('/menu/all');
+// This static application generates its menus from the frontend route modules.
+export async function getAllMenusApi(): Promise<RouteRecordStringComponent[]> {
+  return [];
 }

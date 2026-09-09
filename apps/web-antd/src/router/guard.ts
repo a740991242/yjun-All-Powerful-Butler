@@ -2,9 +2,15 @@ import type { Router } from 'vue-router';
 
 import { LOGIN_PATH } from '@vben/constants';
 import { preferences } from '@vben/preferences';
-import { useAccessStore, useTabbarStore, useUserStore } from '@vben/stores';
+import {
+  resetAllStores,
+  useAccessStore,
+  useTabbarStore,
+  useUserStore,
+} from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
+import { isLocalAccessToken } from '#/api/local-auth';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
@@ -49,6 +55,14 @@ function setupAccessGuard(router: Router) {
     const accessStore = useAccessStore();
     const userStore = useUserStore();
     const authStore = useAuthStore();
+
+    // Discard persisted tokens from the retired server-backed login.
+    if (
+      accessStore.accessToken &&
+      !isLocalAccessToken(accessStore.accessToken)
+    ) {
+      resetAllStores();
+    }
 
     // 基本路由，这些路由不需要进入权限拦截
     if (coreRouteNames.includes(to.name as string)) {

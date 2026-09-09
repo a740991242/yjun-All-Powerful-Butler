@@ -1,4 +1,5 @@
 import { $t } from '#/locales';
+import { publicAsset } from '#/utils/public-asset';
 
 // Only replace the bundled demo profile's presentation; keep login identifiers intact.
 export function displayUserName(realName?: string) {
@@ -7,6 +8,6 @@ export function displayUserName(realName?: string) {
 
 export function displayUserAvatar(avatar?: string) {
   return !avatar || avatar.includes('@vbenjs/static-source')
-    ? '/brand/avatar.svg'
+    ? publicAsset('brand/avatar.svg')
     : avatar;
 }

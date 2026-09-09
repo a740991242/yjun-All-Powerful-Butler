@@ -175,8 +175,10 @@ rtk git diff --check
 - 上述代码用于参考现有风格；发现缺陷应修复，不复制已知问题。
 - 当技术栈、目录、菜单或开发命令发生实际变化时同步更新本文，保持规范与项目一致。
 
-## 12. 生产托管与账号
+## 12. 纯前端与 GitHub Pages
 
-- Sites 配置位于 `.openai/hosting.json`。`corepack pnpm build:sites` 生成 `dist/server/index.js` 与 `dist/client`，保留 Vue 与 Ant Design Vue 技术栈。
-- 生产登录服务位于 `apps/web-antd/server/index.mjs`，仅使用平台环境变量校验账号，不连接公共演示接口。密码和会话签名密钥必须保存为托管平台秘密；不能打包进浏览器代码、写进日志或提交到 Git。
-- 本地模拟账号变更与生产认证分开验证。认证改动运行 `corepack pnpm exec vitest run apps/web-antd/server/index.test.mjs`，覆盖旧账号拒绝、会话验证、刷新及退出登录。
+- 当前业务应用是纯前端。登录、用户信息及权限使用 `apps/web-antd/src/api/local-auth.ts`，不调用 `/api`、Nitro 或 Sites 登录服务。模拟登录不是敏感数据的安全边界。
+- `corepack pnpm build:pages` 生成 `apps/web-antd/dist`；`.github/workflows/deploy.yml` 在推送 `main` 后测试、构建并部署 GitHub Pages。
+- 生产 `VITE_BASE` 为 `/yjun-All-Powerful-Butler/`，采用 hash 路由。公共图片使用 `publicAsset()`，禁止在业务中硬编码以 `/brand/` 开头的根路径。
+- 本地 `VITE_NITRO_MOCK=false`，业务应用不启动后端。保留其他示例应用使用的 `backend-mock` 包。
+- 认证或路径变更运行 `local-auth.test.ts` 与 `public-asset.test.ts`，并验证登录、错误提示、刷新恢复、退出登录和生产子目录资源加载。

@@ -1,55 +1,41 @@
-import { baseRequestClient, requestClient } from '#/api/request';
+import { message } from 'ant-design-vue';
+
+import { $t } from '#/locales';
+
+import { authenticateLocally, localUserInfo } from '../local-auth';
 
 export namespace AuthApi {
-  /** 登录接口参数 */
   export interface LoginParams {
     password?: string;
     username?: string;
   }
-
-  /** 登录接口返回值 */
   export interface LoginResult {
     accessToken: string;
   }
-
   export interface RefreshTokenResult {
     data: string;
     status: number;
   }
 }
 
-/**
- * 登录
- */
 export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/auth/login', data);
+  try {
+    return authenticateLocally(data.username, data.password);
+  } catch (error) {
+    message.error($t('tools.auth.invalidCredentials'));
+    throw error;
+  }
 }
 
-/**
- * 刷新accessToken
- */
-export async function refreshTokenApi() {
-  return baseRequestClient.post<AuthApi.RefreshTokenResult>(
-    '/auth/refresh',
-    undefined,
-    {
-      withCredentials: true,
-    },
-  );
+export async function refreshTokenApi(): Promise<AuthApi.RefreshTokenResult> {
+  return { data: localUserInfo().token, status: 200 };
 }
 
-/**
- * 退出登录
- */
+// The auth store clears its persisted login state and returns to the login page.
 export async function logoutApi() {
-  return baseRequestClient.post('/auth/logout', undefined, {
-    withCredentials: true,
-  });
+  return null;
 }
 
-/**
- * 获取用户权限码
- */
 export async function getAccessCodesApi() {
-  return requestClient.get<string[]>('/auth/codes');
+  return ['AC_100100', 'AC_100110', 'AC_100120', 'AC_100010'];
 }

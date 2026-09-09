@@ -152,5 +152,8 @@
     "systemNotice": "系统消息将以站内信的形式通知",
     "tasks": "待办任务",
     "taskNotice": "待办任务将以站内信的形式通知"
+  },
+  "auth": {
+    "invalidCredentials": "账号或密码错误，请重新输入。"
   }
 }
