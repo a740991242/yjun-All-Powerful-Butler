@@ -9,6 +9,37 @@ import {
 } from './calculations';
 
 describe('房贷计算', () => {
+  it.each(['equalInterest', 'equalPrincipal'] as const)(
+    '直接本金 %s 不依赖总价或首付',
+    (repayType) => {
+      const expected = calculateMortgage({ ...DEFAULT_MORTGAGE, repayType });
+      const actual = calculateMortgage({
+        ...DEFAULT_MORTGAGE,
+        repayType,
+        amountMode: 'principal',
+        principalAmount: 140,
+        totalPrice: Number.NaN,
+        downPaymentRate: Number.NaN,
+      });
+      expect(actual.loanAmount).toBe(1_400_000);
+      expect(actual.downPayment).toBeNull();
+      expect(actual.details).toEqual(expected.details);
+      expect(actual.totalPayment).toBe(expected.totalPayment);
+    },
+  );
+  it.each([undefined, Number.NaN, Number.POSITIVE_INFINITY, 0, -1])(
+    '拒绝无效直接本金 %s',
+    (principalAmount) => {
+      expect(() =>
+        calculateMortgage({
+          ...DEFAULT_MORTGAGE,
+          amountMode: 'principal',
+          principalAmount,
+        }),
+      ).toThrow('tools.errors.principal');
+    },
+  );
+
   it('默认 200 万房价、30% 首付生成 360 期明细，本金和利息与汇总相符', () => {
     const result = calculateMortgage(DEFAULT_MORTGAGE);
     expect(result.loanAmount).toBe(1_400_000);

@@ -55,7 +55,12 @@
     "interestColumn": "偿还利息（元）",
     "remainingColumn": "剩余本金（元）",
     "range": "首月 {first} 元，末月 {last} 元",
-    "fixed": "每月还款 {amount} 元"
+    "fixed": "每月还款 {amount} 元",
+    "amountMode": "金额输入方式",
+    "fromPrice": "按总价与首付计算",
+    "directAmount": "直接输入贷款金额",
+    "directPrincipal": "贷款本金",
+    "principalNote": "填写需要偿还的本金，不含利息。"
   },
   "errors": {
     "price": "请输入大于 0 的房屋总价",
@@ -68,7 +73,8 @@
     "insurance": "请输入大于等于 0 的五险一金",
     "threshold": "请输入大于等于 0 的减除费用",
     "month": "请选择 1 至 12 月",
-    "taxOverflow": "输入金额过大，请调整后重新计算"
+    "taxOverflow": "输入金额过大，请调整后重新计算",
+    "principal": "请输入大于 0 的贷款本金"
   },
   "tax": {
     "description": "按累计预扣方式，计算当月个人所得税与税后工资。",

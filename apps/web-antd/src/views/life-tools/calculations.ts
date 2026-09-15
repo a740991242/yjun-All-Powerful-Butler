@@ -4,6 +4,8 @@ export type LoanType = 'commercial' | 'fund';
 export type RepaymentType = 'equalInterest' | 'equalPrincipal';
 
 export interface MortgageInput {
+  amountMode?: 'price' | 'principal';
+  principalAmount?: number;
   annualRate: number;
   downPaymentRate: number;
   loanType: LoanType;
@@ -22,7 +24,7 @@ export interface RepaymentDetail {
 
 export interface MortgageResult {
   details: RepaymentDetail[];
-  downPayment: number;
+  downPayment: null | number;
   firstMonthlyPayment: number;
   lastMonthlyPayment: number;
   loanAmount: number;
@@ -59,13 +61,17 @@ export function formatMoney(value: number) {
 export function calculateMortgage(input: MortgageInput): MortgageResult {
   const { annualRate, downPaymentRate, loanYears, repayType, totalPrice } =
     input;
-  if (!Number.isFinite(totalPrice) || totalPrice <= 0) {
+  if (
+    input.amountMode !== 'principal' &&
+    (!Number.isFinite(totalPrice) || totalPrice <= 0)
+  ) {
     throw new CalculationError('tools.errors.price');
   }
   if (
-    !Number.isFinite(downPaymentRate) ||
-    downPaymentRate < 0 ||
-    downPaymentRate >= 100
+    input.amountMode !== 'principal' &&
+    (!Number.isFinite(downPaymentRate) ||
+      downPaymentRate < 0 ||
+      downPaymentRate >= 100)
   ) {
     throw new CalculationError('tools.errors.downRate');
   }
@@ -76,8 +82,21 @@ export function calculateMortgage(input: MortgageInput): MortgageResult {
     throw new CalculationError('tools.errors.years');
   }
 
-  const downPayment = totalPrice * 10_000 * (downPaymentRate / 100);
-  const loanAmount = totalPrice * 10_000 - downPayment;
+  const direct = input.amountMode === 'principal';
+  if (
+    direct &&
+    (input.principalAmount === undefined ||
+      !Number.isFinite(input.principalAmount) ||
+      input.principalAmount <= 0)
+  ) {
+    throw new CalculationError('tools.errors.principal');
+  }
+  const downPayment = direct
+    ? null
+    : totalPrice * 10_000 * (downPaymentRate / 100);
+  const loanAmount = direct
+    ? (input.principalAmount ?? 0) * 10_000
+    : totalPrice * 10_000 - (downPayment ?? 0);
   const months = loanYears * 12;
   const monthlyRate = annualRate / 100 / 12;
   const monthlyPrincipal = loanAmount / months;

@@ -50,14 +50,20 @@ defineOptions({ name: 'MortgageCalculator' });
 
 type MortgageForm = Omit<
   MortgageInput,
-  'annualRate' | 'downPaymentRate' | 'totalPrice'
+  'annualRate' | 'downPaymentRate' | 'principalAmount' | 'totalPrice'
 > & {
+  amountMode: 'price' | 'principal';
+  principalAmount: null | number;
   annualRate: null | number;
   downPaymentRate: null | number;
   totalPrice: null | number;
 };
 
-const form = reactive<MortgageForm>({ ...DEFAULT_MORTGAGE });
+const form = reactive<MortgageForm>({
+  ...DEFAULT_MORTGAGE,
+  amountMode: 'price',
+  principalAmount: 140,
+});
 const formRef = ref<FormInstance>();
 const result = ref<MortgageResult>();
 const errorKey = ref('');
@@ -79,6 +85,15 @@ const years = computed(() =>
 );
 const primaryValueStyle = { color: 'hsl(var(--primary))' };
 const rules = computed<FormProps['rules']>(() => ({
+  principalAmount: [
+    {
+      required: true,
+      validator: async (_rule, value) => {
+        if (!Number.isFinite(value) || value <= 0)
+          throw new Error($t('tools.errors.principal'));
+      },
+    },
+  ],
   totalPrice: [
     {
       required: true,
@@ -156,6 +171,7 @@ function calculate() {
   try {
     result.value = calculateMortgage({
       ...form,
+      principalAmount: form.principalAmount ?? Number.NaN,
       totalPrice: form.totalPrice ?? Number.NaN,
       downPaymentRate: form.downPaymentRate ?? Number.NaN,
       annualRate: form.annualRate ?? Number.NaN,
@@ -172,7 +188,10 @@ function calculate() {
 
 async function reset() {
   formRef.value?.resetFields();
-  Object.assign(form, DEFAULT_MORTGAGE);
+  Object.assign(form, DEFAULT_MORTGAGE, {
+    amountMode: 'price',
+    principalAmount: 140,
+  });
   await nextTick();
   formRef.value?.clearValidate();
   calculate();
@@ -185,6 +204,13 @@ watch(
   },
 );
 watch(form, calculate, { immediate: true });
+watch(
+  () => form.amountMode,
+  async () => {
+    await nextTick();
+    formRef.value?.clearValidate();
+  },
+);
 watch(
   () => i18n.global.locale.value,
   async () => {
@@ -208,6 +234,20 @@ watch(
           layout="vertical"
           @finish="calculate"
         >
+          <FormItem :label="$t('tools.mortgage.amountMode')" name="amountMode">
+            <RadioGroup v-model:value="form.amountMode" name="amountMode">
+              <RadioButton value="price">
+{{
+                $t('tools.mortgage.fromPrice')
+              }}
+</RadioButton>
+              <RadioButton value="principal">
+{{
+                $t('tools.mortgage.directAmount')
+              }}
+</RadioButton>
+            </RadioGroup>
+          </FormItem>
           <Row :gutter="24">
             <Col :xs="24" :md="12" :xl="8">
               <FormItem :label="$t('tools.mortgage.type')" name="loanType">
@@ -236,7 +276,7 @@ watch(
                 </RadioGroup>
               </FormItem>
             </Col>
-            <Col :xs="24" :md="12" :xl="8">
+            <Col v-if="form.amountMode === 'price'" :xs="24" :md="12" :xl="8">
               <FormItem :label="$t('tools.mortgage.price')" name="totalPrice">
                 <InputNumber
                   :value="form.totalPrice ?? undefined"
@@ -252,7 +292,27 @@ watch(
                 />
               </FormItem>
             </Col>
-            <Col :xs="24" :md="12" :xl="8">
+            <Col v-else :xs="24" :md="12" :xl="8">
+              <FormItem
+                :label="$t('tools.mortgage.directPrincipal')"
+                name="principalAmount"
+                :extra="$t('tools.mortgage.principalNote')"
+              >
+                <InputNumber
+                  :value="form.principalAmount ?? undefined"
+                  @update:value="
+                    (value) =>
+                      (form.principalAmount =
+                        typeof value === 'number' ? value : null)
+                  "
+                  class="w-full"
+                  :min="0"
+                  :step="1"
+                  :addon-after="$t('tools.common.tenThousand')"
+                />
+              </FormItem>
+            </Col>
+            <Col v-if="form.amountMode === 'price'" :xs="24" :md="12" :xl="8">
               <FormItem
                 :label="$t('tools.mortgage.downRate')"
                 name="downPaymentRate"
@@ -331,7 +391,12 @@ watch(
               }}
             </Tag>
           </template>
-          <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-5">
+          <div
+            class="grid gap-6 sm:grid-cols-2"
+            :class="
+              result.downPayment === null ? 'xl:grid-cols-4' : 'xl:grid-cols-5'
+            "
+          >
             <Statistic
               :title="$t('tools.mortgage.loanAmount')"
               :value="(result.loanAmount / 10_000).toFixed(2)"
@@ -380,6 +445,7 @@ watch(
               </template>
             </Statistic>
             <Statistic
+              v-if="result.downPayment !== null"
               :title="$t('tools.mortgage.downPayment')"
               :value="(result.downPayment / 10_000).toFixed(2)"
               :precision="2"

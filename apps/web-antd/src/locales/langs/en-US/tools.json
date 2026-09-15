@@ -55,7 +55,12 @@
     "interestColumn": "Interest (CNY)",
     "remainingColumn": "Remaining Principal (CNY)",
     "range": "First payment: CNY {first}; last payment: CNY {last}",
-    "fixed": "Monthly payment: CNY {amount}"
+    "fixed": "Monthly payment: CNY {amount}",
+    "amountMode": "Amount input method",
+    "fromPrice": "From price and down payment",
+    "directAmount": "Enter loan amount",
+    "directPrincipal": "Loan principal",
+    "principalNote": "Enter the principal to repay, excluding interest."
   },
   "errors": {
     "price": "Enter a property price greater than 0.",
@@ -68,7 +73,8 @@
     "insurance": "Enter social insurance and housing fund contributions of 0 or above.",
     "threshold": "Enter a basic deduction of 0 or above.",
     "month": "Select a month from 1 to 12.",
-    "taxOverflow": "The amount is too large. Adjust your inputs and try again."
+    "taxOverflow": "The amount is too large. Adjust your inputs and try again.",
+    "principal": "Enter a loan principal greater than zero"
   },
   "tax": {
     "description": "Estimate monthly income tax and take-home pay using cumulative withholding for mainland China.",
