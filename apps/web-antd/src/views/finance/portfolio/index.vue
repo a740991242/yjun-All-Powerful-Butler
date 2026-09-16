@@ -4,6 +4,7 @@ import type { TableColumnsType, TableProps } from 'ant-design-vue';
 import type { Holding, Stock } from '../model';
 
 import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
@@ -60,7 +61,15 @@ const holdings = ref<Holding[]>([]);
 const loading = ref(false);
 const failed = ref(false);
 const storageError = ref(false);
-const query = ref('');
+const route = useRoute();
+const query = ref(typeof route.query.code === 'string' ? route.query.code : '');
+watch(
+  () => route.query.code,
+  (code) => {
+    if (route.path === '/finance/portfolio')
+      query.value = typeof code === 'string' ? code : '';
+  },
+);
 const filter = ref('all');
 const market = ref<'a' | 'all' | 'hk'>('all');
 const editing = ref(false);

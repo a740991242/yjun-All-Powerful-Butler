@@ -85,6 +85,16 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'FinanceWishlist',
+        path: 'wishlist',
+        component: () => import('#/views/finance/wishlist/index.vue'),
+        meta: {
+          title: 'wishlist.title',
+          icon: 'lucide:heart',
+          keepAlive: true,
+        },
+      },
+      {
         name: 'FinanceEtfComparison',
         path: 'etf-comparison',
         component: () => import('#/views/finance/etf-comparison/index.vue'),

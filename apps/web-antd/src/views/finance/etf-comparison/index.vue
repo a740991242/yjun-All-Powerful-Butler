@@ -4,6 +4,7 @@ import type { TableColumnsType } from 'ant-design-vue';
 import type { Fund, Point } from '../model';
 
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
@@ -26,6 +27,7 @@ import { number, signed, snapshot } from '../data';
 import { compare, periodStart } from '../model';
 defineOptions({ name: 'FinanceEtfComparison' });
 const funds = ref<Fund[]>([]);
+const route = useRoute();
 const selected = ref<string[]>(['510300', '513100', '518880']);
 const months = ref(12);
 const histories = ref<Record<string, Point[]>>({});
@@ -101,6 +103,11 @@ async function load() {
     if (funds.value.length === 0) {
       const data = await snapshot<{ funds: Fund[] }>('etfs');
       funds.value = data.funds;
+      if (
+        typeof route.query.code === 'string' &&
+        funds.value.some((fund) => fund.code === route.query.code)
+      )
+        selected.value = [route.query.code];
     }
     const values = await Promise.all(
       selected.value.map(async (code) => ({
@@ -117,6 +124,17 @@ async function load() {
   }
 }
 watch(selected, load);
+watch(
+  () => route.query.code,
+  (code) => {
+    if (
+      route.path === '/finance/etf-comparison' &&
+      typeof code === 'string' &&
+      funds.value.some((fund) => fund.code === code)
+    )
+      selected.value = [code];
+  },
+);
 onMounted(load);
 </script>
 <template>
