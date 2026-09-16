@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-16T16:03:43+08:00",
+  "fetchedAt": "2026-09-16T16:19:29+08:00",
   "rangeStart": "2025-09-18",
   "rangeEnd": "2026-09-16",
   "fieldSource": "https://st.gtimg.com/quotes/hs-fund/bundle.13362df9.js",
@@ -813,6 +813,66 @@
       "code": "HK2513",
       "quoteSource": "https://qt.gtimg.cn/q=hk02513",
       "rangeSource": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02513,day,2025-09-18,2026-09-16,400,"
+    },
+    {
+      "pe": 18.63,
+      "dividendYield": 6.05,
+      "metricsAsOf": "20260916161437",
+      "metricsReferencePrice": 4.96,
+      "currency": "CNY",
+      "high52Week": 6.03,
+      "low52Week": 4.22,
+      "rangeFirstDate": "2025-09-18",
+      "rangeLastDate": "2026-09-16",
+      "rangeTradingDays": 239,
+      "code": "600582",
+      "quoteSource": "https://qt.gtimg.cn/q=sh600582",
+      "rangeSource": "local A_Shares_Datas daily markdown"
+    },
+    {
+      "pe": 5.48,
+      "dividendYield": 5.74,
+      "metricsAsOf": "20260916161444",
+      "metricsReferencePrice": 3.05,
+      "currency": "CNY",
+      "high52Week": 3.62,
+      "low52Week": 2.87,
+      "rangeFirstDate": "2025-09-18",
+      "rangeLastDate": "2026-09-16",
+      "rangeTradingDays": 239,
+      "code": "601818",
+      "quoteSource": "https://qt.gtimg.cn/q=sh601818",
+      "rangeSource": "local A_Shares_Datas daily markdown"
+    },
+    {
+      "pe": 12.44,
+      "dividendYield": 9.21,
+      "metricsAsOf": "20260916161457",
+      "metricsReferencePrice": 4.72,
+      "currency": "CNY",
+      "high52Week": 8.31,
+      "low52Week": 3.37,
+      "rangeFirstDate": "2025-09-18",
+      "rangeLastDate": "2026-09-16",
+      "rangeTradingDays": 239,
+      "code": "600219",
+      "quoteSource": "https://qt.gtimg.cn/q=sh600219",
+      "rangeSource": "local A_Shares_Datas daily markdown"
+    },
+    {
+      "pe": 18.85,
+      "dividendYield": 3.92,
+      "metricsAsOf": "20260916161451",
+      "metricsReferencePrice": 4.17,
+      "currency": "CNY",
+      "high52Week": 5.48,
+      "low52Week": 3.93,
+      "rangeFirstDate": "2025-09-18",
+      "rangeLastDate": "2026-09-16",
+      "rangeTradingDays": 239,
+      "code": "600050",
+      "quoteSource": "https://qt.gtimg.cn/q=sh600050",
+      "rangeSource": "local A_Shares_Datas daily markdown"
     }
   ]
 }
