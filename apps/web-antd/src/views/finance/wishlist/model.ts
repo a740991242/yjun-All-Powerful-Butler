@@ -22,12 +22,13 @@ export const catalog = [
   { code: '600036', name: '招商银行', kind: 'stock', price: 36 },
   { code: '000776', name: '广发证券', kind: 'stock', price: 20 },
   { code: '000651', name: '格力电器', kind: 'stock', price: 36 },
+  { code: '002563', name: '森马服饰', kind: 'stock', price: 5 },
 ] as const;
 export function defaults(): Target[] {
   return catalog.map((item) => {
     let rule: Target['rule'] = 'around';
     if (item.code === '600900') rule = 'below';
-    else if (['600050', '600219', '601818'].includes(item.code))
+    else if (['002563', '600050', '600219', '601818'].includes(item.code))
       rule = 'atMost';
     return {
       code: item.code,
@@ -74,6 +75,15 @@ export function validateTargets(input: unknown): Target[] {
       rule: row.rule as Target['rule'],
     };
   });
+}
+export function upgradeLegacyTargets(input: unknown): Target[] {
+  const saved = validateTargets(input);
+  const additions = defaults().filter(
+    (target) =>
+      target.code === '002563' &&
+      !saved.some((row) => row.code === target.code),
+  );
+  return [...saved, ...additions];
 }
 export function evaluate(
   target: Target,

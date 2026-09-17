@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { defaults, evaluate, validateTargets } from './model';
+import {
+  defaults,
+  evaluate,
+  upgradeLegacyTargets,
+  validateTargets,
+} from './model';
 describe('wishlist targets', () => {
   const target = {
     code: '600050',
@@ -10,12 +15,32 @@ describe('wishlist targets', () => {
     note: '',
   };
   const quote = (price: number, date = '2026-09-16') => ({ price, date });
-  it('preserves the 12 user targets and the strict boundary', () => {
+  it('preserves the 13 user targets and the strict boundary', () => {
     const all = defaults();
     expect(validateTargets(all)).toEqual(all);
-    expect(all).toHaveLength(12);
+    expect(all).toHaveLength(13);
     expect(all.find((t) => t.code === '600900')?.rule).toBe('below');
     expect(all.find((t) => t.code === '510210')?.note).toContain('3750');
+  });
+  it('includes Semir at five yuan, but not above five', () => {
+    const semir = defaults().find((row) => row.code === '002563');
+    expect(semir).toMatchObject({ price: 5, rule: 'atMost' });
+    if (!semir) throw new Error('Missing Semir target');
+    expect(evaluate(semir, quote(5), '2026-09-16').status).toBe('reached');
+    expect(evaluate(semir, quote(4.99), '2026-09-16').status).toBe('reached');
+    expect(evaluate(semir, quote(5.01), '2026-09-16').status).toBe('near');
+  });
+  it('migrates only the new target without restoring removed targets or changing edits', () => {
+    const saved = [{ ...target, price: 3.8, note: 'personal' }];
+    const upgraded = upgradeLegacyTargets(saved);
+    expect(upgraded).toHaveLength(2);
+    expect(upgraded[0]).toEqual(saved[0]);
+    expect(upgraded[1]?.code).toBe('002563');
+    expect(upgradeLegacyTargets(upgraded)).toEqual(upgraded);
+    expect(
+      validateTargets(upgraded.filter((row) => row.code !== '002563')),
+    ).toEqual(saved);
+    expect(() => upgradeLegacyTargets([{ code: 'bad' }])).toThrow('invalid');
   });
   it('distinguishes inclusive, strict and reference targets', () => {
     expect(evaluate(target, quote(4), '2026-09-16').status).toBe('reached');

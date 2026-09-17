@@ -40,12 +40,14 @@ import {
   defaults,
   evaluate,
   statusOrder,
+  upgradeLegacyTargets,
   validateTargets,
 } from './model';
 defineOptions({ name: 'FinanceWishlist' });
 const router = useRouter();
 const { width } = useWindowSize();
-const key = 'all-in-one-butler:finance:wishlist:v1';
+const key = 'all-in-one-butler:finance:wishlist:v2';
+const legacyKey = 'all-in-one-butler:finance:wishlist:v1';
 const targets = ref<Target[]>(defaults());
 const quotes = ref<Record<string, Quote>>({});
 const query = ref('');
@@ -214,7 +216,15 @@ function exportFile() {
 onMounted(() => {
   try {
     const saved = localStorage.getItem(key);
-    if (saved !== null) targets.value = validateTargets(JSON.parse(saved));
+    if (saved === null) {
+      const legacy = localStorage.getItem(legacyKey);
+      if (legacy !== null) {
+        const upgraded = upgradeLegacyTargets(JSON.parse(legacy));
+        if (!persist(upgraded)) targets.value = upgraded;
+      }
+    } else {
+      targets.value = validateTargets(JSON.parse(saved));
+    }
   } catch {
     readFailed.value = true;
   }
