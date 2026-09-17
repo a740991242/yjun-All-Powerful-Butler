@@ -1,0 +1,29 @@
+{
+  "600219": {
+    "year": 2025,
+    "verifiedAt": "2026-09-17",
+    "payments": [
+      {
+        "label": "半年度分红",
+        "perShare": 0.04,
+        "special": false,
+        "exDate": "2025-09-25",
+        "source": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=11465102&stockid=600219"
+      },
+      {
+        "label": "特别分红",
+        "perShare": 0.2584,
+        "special": true,
+        "exDate": "2025-12-12",
+        "source": "https://static.cninfo.com.cn/finalpage/2025-12-05/1224850617.PDF"
+      },
+      {
+        "label": "年度分红",
+        "perShare": 0.136,
+        "special": false,
+        "exDate": "2026-05-20",
+        "source": "https://static.cninfo.com.cn/finalpage/2026-05-13/1225300692.PDF"
+      }
+    ]
+  }
+}

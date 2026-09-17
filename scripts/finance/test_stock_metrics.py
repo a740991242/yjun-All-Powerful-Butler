@@ -1,9 +1,19 @@
 import unittest
+from datetime import date, datetime
 
-from refresh_stock_metrics import price_range, quote_metrics, symbol
+from refresh_stock_metrics import completed_end, price_range, quote_metrics, symbol
 
 
 class MetricsTest(unittest.TestCase):
+    def test_hong_kong_close_does_not_include_live_candle(self):
+        end = date(2026, 9, 17)
+        before_close = datetime(2026, 9, 17, 16, 14)
+        self.assertEqual(completed_end('HK0700', end, before_close), date(2026, 9, 16))
+        self.assertEqual(completed_end('600219', end, before_close), end)
+        self.assertEqual(completed_end('HK0700', end, datetime(2026, 9, 17, 16, 15)), end)
+        historical = date(2026, 9, 10)
+        self.assertEqual(completed_end('HK0700', historical, before_close), historical)
+
     def test_market_specific_fields_do_not_use_price_limits_or_hk_static_pe(self):
         fields = [''] * 88
         fields[2], fields[3], fields[30] = '600887', '26.39', '20260909133145'

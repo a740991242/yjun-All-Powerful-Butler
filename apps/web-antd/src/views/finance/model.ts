@@ -4,6 +4,10 @@ export interface Stock {
   price: null | number;
   priceDate: null | string;
   dividendYield: null | number;
+  dividendYear?: number;
+  dividendPerShare?: number;
+  specialDividendPerShare?: number;
+  dividendYieldExSpecial?: number;
   pe: null | number;
   high52Week?: null | number;
   low52Week?: null | number;

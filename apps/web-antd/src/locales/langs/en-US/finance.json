@@ -1,4 +1,6 @@
 {
+  "includesSpecialDividend": "Includes special dividend",
+  "annualDividendDetails": "Implemented pre-tax dividends for fiscal {year}: CNY {total} per share, including CNY {special} special dividend. Yield = total dividends / closing price CNY {price}; excluding special dividends: {regular}%. Historical, not a forecast.",
   "portfolioDescription": "Closing-price snapshots · Local holdings · Unrealized P&L",
   "etfDescription": "Compare ETF price performance and drawdown over a shared interval",
   "security": "Security",
@@ -46,7 +48,7 @@
   "retry": "Retry",
   "cny": "CNY",
   "sourceTitle": "Sources & methodology",
-  "stockSource": "Closing prices: local A_Shares_Datas snapshots. Reference dividend yield and trailing P/E: Tencent Securities, collected {updatedAt}; these are not closing-time metrics. Hover for quote times. Yield follows the provider methodology, may include special dividends, and is not a forecast. Zero means the provider returned zero; missing values show —; negative P/E is preserved for losses. 52-week extrema are recalculated from unadjusted daily highs/lows over {rangeStart}–{rangeEnd}. Short histories use available trading days; hover for actual coverage. A-share amounts are CNY; Hong Kong extrema are HKD. Holdings support A shares only. Static snapshot, not live.",
+  "stockSource": "A-share closes come from local daily archives; HK closes use the latest completed unadjusted Tencent daily candle, with date and HKD shown per row. Reference dividend yields and TTM P/E are Tencent snapshots collected at {updatedAt}, not necessarily closing-time metrics. Verified fiscal-year yields use implemented pre-tax dividends per share divided by the closing price; special dividends are labeled and calculations appear on hover. Other yields follow the provider and may include special dividends. Historical payouts do not guarantee future returns. Zero means a reported zero, missing values show a dash, and negative P/E is retained. Highs/lows use completed unadjusted daily candles within {rangeStart} to {rangeEnd}; shorter histories use available sessions, with actual coverage on hover. Holdings support CNY A-shares only. Static snapshots, not live quotes.",
   "chooseEtfs": "Select ETFs (up to 5)",
   "period": "Comparison period",
   "commonDates": "Shared interval",

@@ -195,3 +195,4 @@ rtk git diff --check
 - 截图补充自选清单保存在 `scripts/finance/watchlist-supplement.json`，导出时按代码去重合并；`--stocks-only` 仅更新股票快照，不改 ETF。缺失行情保持 null，不用零或其他日期价格冒充。港股自选仅展示，持仓暂仅支持人民币 A 股；持仓缺少行情时汇总市值与盈亏显示缺失。
 
 - 公开指标通过 `python3 scripts/finance/refresh_stock_metrics.py` 采集到 `scripts/finance/stock-metrics.json`，再执行 `python3 scripts/finance/export_snapshots.py --stocks-only`。更换收盘日期时先用 `--as-of YYYY-MM-DD` 刷新指标；导出检查日期一致。股息率与 TTM 市盈率使用腾讯行情快照，记录来源和时间，不冒充收盘时点指标。港股 TTM 使用字段 57（不是字段 39），股息率为 47；A 股分别为 39、64，映射依据保留在脚本。范围计算测试：`python3 -m unittest discover -s scripts/finance -p "test_*.py"`。
+- 已核验的年度分红另存 `scripts/finance/dividend-annual.json`，逐笔记录每股税前金额、特别分红标记、除息日及公告链接。导出时仅在该年度记录全部已实施且收盘价有效时计算全年及剔除特别分红的股息率，保留原始行情股息率用于追溯；新增年度时须重新核验公告。港股在北京时间16:15前排除当天日K，使用最近已完成交易日收盘价，指标时间仍独立标注。

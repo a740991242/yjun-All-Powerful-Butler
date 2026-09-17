@@ -6,6 +6,8 @@ import json
 import math
 from pathlib import Path
 import re
+import shutil
+import subprocess
 import time
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
@@ -78,9 +80,24 @@ def request(url):
             req = Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Referer': 'https://gu.qq.com/'})
             return urlopen(req, timeout=20).read()
         except Exception:
+            # System curl can use the host TLS/proxy setup when urllib cannot.
+            if shutil.which('curl'):
+                try:
+                    return subprocess.check_output(
+                        ['curl', '-fsSL', '--max-time', '20', url],
+                        stderr=subprocess.PIPE,
+                    )
+                except subprocess.CalledProcessError:
+                    pass
             if attempt == 2:
                 raise
             time.sleep(attempt + 1)
+
+
+def completed_end(code, end, now):
+    if code.startswith('HK') and now.strftime('%H:%M') < '16:15':
+        return min(end, now.date() - timedelta(days=1))
+    return end
 
 
 def main():
@@ -97,13 +114,18 @@ def main():
         code = stock['code']
         ticker = symbol(code)
         metrics = quote_metrics(parsed[ticker], code)
-        url = KLINE_URL + f'{ticker},day,{start},{end},400,'
+        now = datetime.now(ZoneInfo('Asia/Shanghai'))
+        close_end = completed_end(code, end, now)
+        url = KLINE_URL + f'{ticker},day,{start},{close_end},400,'
         data = json.loads(request(url))
         if data.get('code') != 0:
             raise ValueError(f'Kline request failed: {code}')
         # Only unadjusted day data is accepted, never qfqday/hfqday fallback.
         points = data['data'][ticker]['day']
-        metrics.update(price_range(points, start.isoformat(), end.isoformat()))
+        metrics.update(price_range(points, start.isoformat(), close_end.isoformat()))
+        if code.startswith('HK'):
+            latest = max((p for p in points if p[0] <= close_end.isoformat()), key=lambda p: p[0])
+            metrics.update(price=numeric(latest[2]), priceDate=latest[0])
         metrics.update(code=code, quoteSource=QUOTE_URL + ticker, rangeSource=url)
         print(f"{code} {stock['name']}: dividend={metrics['dividendYield']} PE={metrics['pe']} high/low={metrics['high52Week']}/{metrics['low52Week']} days={metrics['rangeTradingDays']}", flush=True)
         return metrics

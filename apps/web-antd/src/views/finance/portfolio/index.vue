@@ -450,6 +450,12 @@ onMounted(load);
                       record.code
                     }}</span>
                     <div
+                      v-if="record.currency === 'HKD' && record.priceDate"
+                      class="text-xs text-muted-foreground"
+                    >
+                      {{ $t('finance.snapshot') }} {{ record.priceDate }}
+                    </div>
+                    <div
                       v-if="record.price === null"
                       class="text-xs text-muted-foreground"
                     >
@@ -499,7 +505,16 @@ onMounted(load);
                       column.dataIndex === 'pe'
                     "
                     :title="
-                      $t('finance.metricTime', { time: record.metricsAsOf })
+                      column.dataIndex === 'dividendYield' &&
+                      record.dividendYear
+                        ? $t('finance.annualDividendDetails', {
+                            year: record.dividendYear,
+                            total: number(record.dividendPerShare, 4),
+                            special: number(record.specialDividendPerShare, 4),
+                            regular: number(record.dividendYieldExSpecial),
+                            price: number(record.price),
+                          })
+                        : $t('finance.metricTime', { time: record.metricsAsOf })
                     "
                   >
                     <span
@@ -519,7 +534,13 @@ onMounted(load);
                         column.dataIndex === 'dividendYield' && text !== null
                           ? '%'
                           : ''
-                      }}</span>
+                      }}<span
+                        v-if="
+                          column.dataIndex === 'dividendYield' &&
+                          record.specialDividendPerShare
+                        "
+                        class="block text-xs text-muted-foreground"
+                        >{{ $t('finance.includesSpecialDividend') }}</span></span>
                   </Tooltip>
                   <Tooltip
                     v-else-if="
@@ -543,10 +564,16 @@ onMounted(load);
                   <template v-else-if="column.dataIndex === 'percent'">
                     {{ text === null ? '—' : `${signed(text)}%` }}
 </template><span v-else>{{
-                    column.dataIndex === 'pnl'
-                      ? signed(text)
-                      : number(text, column.dataIndex === 'quantity' ? 0 : 2)
-                  }}</span>
+                      column.dataIndex === 'pnl'
+                        ? signed(text)
+                        : number(text, column.dataIndex === 'quantity' ? 0 : 2)
+                    }}<span
+                      v-if="
+                        column.dataIndex === 'price' &&
+                        record.currency === 'HKD'
+                      "
+                      class="ml-1 text-xs text-muted-foreground"
+                      >{{ $t('finance.hkd') }}</span></span>
                 </template>
               </Table>
             </div>

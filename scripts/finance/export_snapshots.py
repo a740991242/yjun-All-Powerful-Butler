@@ -4,6 +4,7 @@ import json
 import math
 import re
 from pathlib import Path
+from dividend_metrics import apply_annual_dividend
 
 ROOT = Path(__file__).resolve().parents[2]
 parser = argparse.ArgumentParser(description=__doc__)
@@ -55,10 +56,12 @@ for item in supplement:
     existing.add(item['code'])
 metrics = json.loads((ROOT / 'scripts/finance/stock-metrics.json').read_text())
 by_code = {item['code']: item for item in metrics['stocks']}
+annual = json.loads((ROOT / 'scripts/finance/dividend-annual.json').read_text())
 assert metrics['rangeEnd'] == price_date, 'Refresh metrics for the new closing snapshot before exporting'
 for stock in stocks:
     assert stock['code'] in by_code, f"Refresh metrics for {stock['code']}"
     stock.update(by_code[stock['code']])
+    apply_annual_dividend(stock, annual.get(stock['code']), price_date)
 write('stocks.json', dict(updatedAt=metrics['fetchedAt'], rangeStart=metrics['rangeStart'],
                           rangeEnd=metrics['rangeEnd'], stocks=stocks))
 if args.stocks_only:
