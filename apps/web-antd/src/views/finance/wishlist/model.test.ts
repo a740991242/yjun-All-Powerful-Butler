@@ -4,6 +4,7 @@ import {
   defaults,
   evaluate,
   upgradeLegacyTargets,
+  upgradeV2Targets,
   validateTargets,
 } from './model';
 describe('wishlist targets', () => {
@@ -15,10 +16,10 @@ describe('wishlist targets', () => {
     note: '',
   };
   const quote = (price: number, date = '2026-09-16') => ({ price, date });
-  it('preserves the 13 user targets and the strict boundary', () => {
+  it('preserves the 14 user targets and the strict boundary', () => {
     const all = defaults();
     expect(validateTargets(all)).toEqual(all);
-    expect(all).toHaveLength(13);
+    expect(all).toHaveLength(14);
     expect(all.find((t) => t.code === '600900')?.rule).toBe('below');
     expect(all.find((t) => t.code === '510210')?.note).toContain('3750');
   });
@@ -41,6 +42,27 @@ describe('wishlist targets', () => {
       validateTargets(upgraded.filter((row) => row.code !== '002563')),
     ).toEqual(saved);
     expect(() => upgradeLegacyTargets([{ code: 'bad' }])).toThrow('invalid');
+  });
+  it('adds Haier at 19.50 inclusive and preserves personal edits during migration', () => {
+    const haier = defaults().find((row) => row.code === '600690');
+    expect(haier).toMatchObject({ price: 19.5, rule: 'atMost' });
+    if (!haier) throw new Error('Missing Haier target');
+    expect(evaluate(haier, quote(19.49), '2026-09-16').status).toBe('reached');
+    expect(evaluate(haier, quote(19.5), '2026-09-16').status).toBe('reached');
+    expect(evaluate(haier, quote(19.51), '2026-09-16').status).toBe('near');
+    const saved = [{ ...target, price: 3.8, note: 'personal' }];
+    const upgraded = upgradeV2Targets(saved);
+    expect(upgraded).toEqual([...saved, haier]);
+    expect(upgradeV2Targets(upgraded)).toEqual(upgraded);
+    const edited = [{ ...haier, price: 18, note: 'edited' }];
+    expect(upgradeV2Targets(edited)).toEqual(edited);
+    expect(
+      validateTargets(upgraded.filter((row) => row.code !== '600690')),
+    ).toEqual(saved);
+    expect(
+      upgradeV2Targets(upgradeLegacyTargets(saved)).map((row) => row.code),
+    ).toEqual(['600050', '002563', '600690']);
+    expect(() => upgradeV2Targets([{ code: 'bad' }])).toThrow('invalid');
   });
   it('distinguishes inclusive, strict and reference targets', () => {
     expect(evaluate(target, quote(4), '2026-09-16').status).toBe('reached');

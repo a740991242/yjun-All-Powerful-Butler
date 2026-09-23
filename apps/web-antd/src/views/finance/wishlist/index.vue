@@ -41,12 +41,14 @@ import {
   evaluate,
   statusOrder,
   upgradeLegacyTargets,
+  upgradeV2Targets,
   validateTargets,
 } from './model';
 defineOptions({ name: 'FinanceWishlist' });
 const router = useRouter();
 const { width } = useWindowSize();
-const key = 'all-in-one-butler:finance:wishlist:v2';
+const key = 'all-in-one-butler:finance:wishlist:v3';
+const previousKey = 'all-in-one-butler:finance:wishlist:v2';
 const legacyKey = 'all-in-one-butler:finance:wishlist:v1';
 const targets = ref<Target[]>(defaults());
 const quotes = ref<Record<string, Quote>>({});
@@ -217,9 +219,17 @@ onMounted(() => {
   try {
     const saved = localStorage.getItem(key);
     if (saved === null) {
-      const legacy = localStorage.getItem(legacyKey);
-      if (legacy !== null) {
-        const upgraded = upgradeLegacyTargets(JSON.parse(legacy));
+      const previous = localStorage.getItem(previousKey);
+      const legacy = previous === null ? localStorage.getItem(legacyKey) : null;
+      if (previous !== null) {
+        const upgraded = upgradeV2Targets(JSON.parse(previous));
+        if (!persist(upgraded)) targets.value = upgraded;
+      } else if (legacy === null) {
+        persist(defaults());
+      } else {
+        const upgraded = upgradeV2Targets(
+          upgradeLegacyTargets(JSON.parse(legacy)),
+        );
         if (!persist(upgraded)) targets.value = upgraded;
       }
     } else {

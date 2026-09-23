@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-22T15:21:18+08:00",
+  "fetchedAt": "2026-09-23T09:19:51+08:00",
   "rangeStart": "2025-09-24",
   "rangeEnd": "2026-09-22",
   "fieldSource": "https://st.gtimg.com/quotes/hs-fund/bundle.13362df9.js",
@@ -909,6 +909,21 @@
       "code": "000001",
       "quoteSource": "https://qt.gtimg.cn/q=sz000001",
       "rangeSource": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz000001,day,2025-09-24,2026-09-22,400,"
+    },
+    {
+      "pe": 10.54,
+      "dividendYield": 5.72,
+      "metricsAsOf": "20260923091947",
+      "metricsReferencePrice": 20.21,
+      "currency": "CNY",
+      "high52Week": 28.31,
+      "low52Week": 19.25,
+      "rangeFirstDate": "2025-09-24",
+      "rangeLastDate": "2026-09-22",
+      "rangeTradingDays": 241,
+      "code": "600690",
+      "quoteSource": "https://qt.gtimg.cn/q=sh600690",
+      "rangeSource": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh600690,day,2025-09-24,2026-09-22,400,"
     }
   ]
 }
