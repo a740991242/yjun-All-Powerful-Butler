@@ -2,6 +2,7 @@
 import type { TableColumnsType, TableProps } from 'ant-design-vue';
 
 import type { Holding, Stock } from '../model';
+import type { BoardFilter, MarketFilter } from '../stock-board';
 
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -41,6 +42,7 @@ import { $t } from '#/locales';
 import FinanceChart from '../chart.vue';
 import { number, signed, snapshot } from '../data';
 import { parseHoldings, portfolio, validateHoldings } from '../model';
+import { matchesStockMarket } from '../stock-board';
 import { moveOrder, reconcileOrder } from '../watchlist-order';
 defineOptions({ name: 'FinancePortfolio' });
 const { token } = theme.useToken();
@@ -71,7 +73,8 @@ watch(
   },
 );
 const filter = ref('all');
-const market = ref<'a' | 'all' | 'hk'>('all');
+const market = ref<MarketFilter>('all');
+const board = ref<BoardFilter>('all');
 const editing = ref(false);
 const form = reactive<{
   code: string;
@@ -91,10 +94,7 @@ const rows = computed(() =>
         (!query.value ||
           `${row.name}${row.code}`.includes(query.value.trim())) &&
         (filter.value !== 'held' || row.quantity !== null) &&
-        (market.value === 'all' ||
-          (market.value === 'hk'
-            ? row.code.startsWith('HK')
-            : /^\d{6}$/.test(row.code))),
+        matchesStockMarket(row.code, market.value, board.value),
     ),
 );
 const columns = computed<TableColumnsType<PortfolioRow>>(() => [
@@ -295,7 +295,7 @@ function exportFile() {
   link.click();
   URL.revokeObjectURL(url);
 }
-watch([query, filter, market], () => {
+watch([query, filter, market, board], () => {
   currentPage.value = 1;
 });
 onMounted(load);
@@ -410,6 +410,20 @@ onMounted(load);
                     { value: 'all', label: $t('finance.allMarkets') },
                     { value: 'a', label: $t('finance.aShares') },
                     { value: 'hk', label: $t('finance.hkShares') },
+                  ]"
+                />
+                <Select
+                  v-if="market === 'a'"
+                  v-model:value="board"
+                  class="w-full"
+                  :aria-label="$t('finance.boardFilter')"
+                  :options="[
+                    { value: 'all', label: $t('finance.allBoards') },
+                    { value: 'main', label: $t('finance.mainBoard') },
+                    { value: 'star', label: $t('finance.starBoard') },
+                    { value: 'chinext', label: $t('finance.chinextBoard') },
+                    { value: 'bse', label: $t('finance.bseBoard') },
+                    { value: 'other', label: $t('finance.otherBoard') },
                   ]"
                 />
                 <Select
@@ -659,7 +673,7 @@ onMounted(load);
 
 .finance-filter-row {
   display: grid;
-  grid-template-columns: minmax(0, 320px) repeat(2, minmax(120px, 180px));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   align-items: center;
 }
