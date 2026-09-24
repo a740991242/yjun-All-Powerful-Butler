@@ -1,4 +1,8 @@
 {
+  "heartGap": "心动持仓 · 距目标需跌：{percent}%",
+  "heartStale": "心动持仓 · 行情已过期，暂不计算距目标需跌",
+  "heartMissing": "心动持仓 · 缺少有效行情，暂不计算距目标需跌",
+  "wishlistReadError": "心动清单读取失败，暂时无法显示爱心，请检查浏览器本地存储。",
   "includesSpecialDividend": "含特别分红",
   "annualDividendDetails": "{year}年度已实施税前分红：每股{total}元，其中特别分红{special}元；股息率按分红合计 ÷ 收盘价{price}元计算，剔除特别分红为{regular}%。历史分红，不代表未来承诺。",
   "portfolioDescription": "收盘行情快照 · 浏览器本地持仓 · 浮动盈亏分析",

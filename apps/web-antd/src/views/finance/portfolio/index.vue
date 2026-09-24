@@ -3,12 +3,22 @@ import type { TableColumnsType, TableProps } from 'ant-design-vue';
 
 import type { Holding, Stock } from '../model';
 import type { BoardFilter, MarketFilter } from '../stock-board';
+import type { Target } from '../wishlist/model';
 
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  onActivated,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from 'vue';
 import { useRoute } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
+import { useMediaQuery } from '@vueuse/core';
 import {
   Alert,
   Button,
@@ -44,6 +54,8 @@ import { number, signed, snapshot } from '../data';
 import { parseHoldings, portfolio, validateHoldings } from '../model';
 import { matchesStockMarket } from '../stock-board';
 import { moveOrder, reconcileOrder } from '../watchlist-order';
+import WishlistHeart from '../wishlist/heart.vue';
+import { readWishlist, WISHLIST_CHANGED } from '../wishlist/storage';
 defineOptions({ name: 'FinancePortfolio' });
 const { token } = theme.useToken();
 const storageKey = 'all-in-one-butler:finance:holdings:v1';
@@ -97,6 +109,7 @@ const rows = computed(() =>
         matchesStockMarket(row.code, market.value, board.value),
     ),
 );
+const narrowScreen = useMediaQuery('(max-width: 640px)');
 const columns = computed<TableColumnsType<PortfolioRow>>(() => [
   {
     title: $t('finance.rowNumber'),
@@ -133,7 +146,12 @@ const columns = computed<TableColumnsType<PortfolioRow>>(() => [
     sorter: (a: PortfolioRow, b: PortfolioRow) =>
       (a[key] ?? -Infinity) - (b[key] ?? -Infinity),
   })),
-  { title: $t('finance.actions'), key: 'actions', width: 200, fixed: 'right' },
+  {
+    title: $t('finance.actions'),
+    key: 'actions',
+    width: 200,
+    fixed: narrowScreen.value ? undefined : 'right',
+  },
 ]);
 const chart = computed(() => ({
   tooltip: { trigger: 'item' as const, renderMode: 'richText' as const },
@@ -298,7 +316,44 @@ function exportFile() {
 watch([query, filter, market, board], () => {
   currentPage.value = 1;
 });
-onMounted(load);
+const wishlist = ref<Target[]>([]);
+const wishlistError = ref(false);
+const today = ref('');
+const wishlistByCode = computed(
+  () => new Map(wishlist.value.map((target) => [target.code, target])),
+);
+function refreshWishlist() {
+  today.value = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Asia/Shanghai',
+  }).format(new Date());
+  try {
+    wishlist.value = readWishlist(localStorage).targets;
+    wishlistError.value = false;
+  } catch {
+    wishlist.value = [];
+    wishlistError.value = true;
+  }
+}
+function onWishlistStorage(event: StorageEvent) {
+  if (
+    event.key === null ||
+    event.key.startsWith('all-in-one-butler:finance:wishlist:')
+  )
+    refreshWishlist();
+}
+onMounted(() => {
+  void load();
+  refreshWishlist();
+  window.addEventListener(WISHLIST_CHANGED, refreshWishlist);
+  window.addEventListener('storage', onWishlistStorage);
+  window.addEventListener('focus', refreshWishlist);
+});
+onActivated(refreshWishlist);
+onBeforeUnmount(() => {
+  window.removeEventListener(WISHLIST_CHANGED, refreshWishlist);
+  window.removeEventListener('storage', onWishlistStorage);
+  window.removeEventListener('focus', refreshWishlist);
+});
 </script>
 <template>
   <Page
@@ -394,6 +449,13 @@ onMounted(load);
             </CollapsePanel>
           </Collapse>
           <Card :title="$t('finance.watchlist')">
+            <Alert
+              v-if="wishlistError"
+              class="mb-4"
+              type="warning"
+              show-icon
+              :message="$t('finance.wishlistReadError')"
+            />
             <div class="finance-detail-layout">
               <div class="finance-filter-row">
                 <Input
@@ -459,7 +521,15 @@ onMounted(load);
                     {{ (currentPage - 1) * pageSize + index + 1 }}
                   </template>
                   <template v-else-if="column.dataIndex === 'name'">
-                    <div>{{ record.name }}</div>
+                    <div class="flex items-center gap-1">
+                      <span>{{ record.name }}</span>
+                      <WishlistHeart
+                        v-if="wishlistByCode.has(record.code)"
+                        :target="wishlistByCode.get(record.code)!"
+                        :quote="{ price: record.price, date: record.priceDate }"
+                        :today="today"
+                      />
+                    </div>
                     <span class="text-xs text-muted-foreground">{{
                       record.code
                     }}</span>

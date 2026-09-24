@@ -1,4 +1,8 @@
 {
+  "heartGap": "Wishlist · Decline to target: {percent}%",
+  "heartStale": "Wishlist · Quote is stale; decline to target unavailable",
+  "heartMissing": "Wishlist · Valid quote missing; decline to target unavailable",
+  "wishlistReadError": "Cannot read the wishlist. Heart indicators are unavailable; check browser storage.",
   "includesSpecialDividend": "Includes special dividend",
   "annualDividendDetails": "Implemented pre-tax dividends for fiscal {year}: CNY {total} per share, including CNY {special} special dividend. Yield = total dividends / closing price CNY {price}; excluding special dividends: {regular}%. Historical, not a forecast.",
   "portfolioDescription": "Closing-price snapshots · Local holdings · Unrealized P&L",
