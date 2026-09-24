@@ -115,10 +115,12 @@
 当前顶级菜单顺序如下，新增分类或调整顺序以用户需求为准：
 
 1. 研发工程：`/engineering`
-2. 生活工具：`/life-tools`，包含房贷计算和个税计算
-3. 教育学习：`/education`
-4. 娱乐游戏：`/entertainment`，包含魔彩瓶 `/entertainment/magic-bottles`
-5. 金融赚米：`/finance`
+2. AI 工程：`/ai-engineering`，包含提示词工作台、调用成本估算、项目流程清单
+3. 生活工具：`/life-tools`，包含房贷计算和个税计算
+4. 教育学习：`/education`
+5. 娱乐游戏：`/entertainment`，包含魔彩瓶 `/entertainment/magic-bottles`
+6. 金融赚米：`/finance`
+7. 使用说明：`/usage-guide`，菜单末尾
 
 - 当前分类配置位于 `src/router/routes/modules/tools.ts`，通过路由元信息维护菜单，不另写硬编码侧栏。
 - 路由名称必须唯一，路径采用 kebab-case，页面使用动态导入。
@@ -208,3 +210,9 @@ rtk git diff --check
 - `/finance/calendar` 从 `public/data/finance/calendar.json` 读取已核验的有限公开记录；个人事项单独保存在浏览器，不写入公共快照。新公开记录必须包含日期、来源与核验更新时间；预计披露和实际披露严格区分，维护内容时同步更新覆盖说明。空日期不等于没有事件。
 - `/finance/data-status` 分别检查股票价格、ETF 实际历史末值和估值指标。默认 4 个自然日阈值不是交易日历。加载失败必须明确提示结果不完整，不得冒充已完成刷新。
 - 心动机会筛选与排序复用 `wishlist/evaluate` 的跌幅和严格低于规则；缺失及过期行情不进入目标达标或 2%/5% 筛选，排序置后。
+
+## 15. AI 工程、教育目录与使用说明
+
+- `/ai-engineering` 的提示词、成本估算和流程清单均在本地处理，不调用模型。成本单价由用户填写，币种只表示单位；提示词和勾选不自动持久化。不要把示例单价当作模型报价。
+- `/education` 当前仅实现学段和年级选择，选择由 `stage`、`grade` 查询参数恢复并校验；不展示虚构课程、成绩或学习进度。分类遵循《教育学习功能规划.md》。
+- `/usage-guide` 位于菜单末尾，提供所有可见业务叶子菜单的详细说明。新增菜单或改变行为时，同步维护 `views/usage-guide/catalog.ts` 与中英文 `guide.json`；覆盖测试检查路由与说明一一对应。

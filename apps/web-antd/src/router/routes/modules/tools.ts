@@ -56,6 +56,32 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'AiEngineering',
+    path: '/ai-engineering',
+    redirect: '/ai-engineering/prompt',
+    meta: { title: 'ai.title', icon: 'lucide:brain-circuit', order: 0.5 },
+    children: [
+      {
+        name: 'AiPrompt',
+        path: 'prompt',
+        component: () => import('#/views/ai-engineering/prompt.vue'),
+        meta: { title: 'ai.prompt', icon: 'lucide:message-square-text' },
+      },
+      {
+        name: 'AiCost',
+        path: 'cost',
+        component: () => import('#/views/ai-engineering/cost.vue'),
+        meta: { title: 'ai.cost', icon: 'lucide:calculator' },
+      },
+      {
+        name: 'AiWorkflow',
+        path: 'workflow',
+        component: () => import('#/views/ai-engineering/workflow.vue'),
+        meta: { title: 'ai.workflow', icon: 'lucide:list-checks' },
+      },
+    ],
+  },
+  {
     name: 'LifeTools',
     path: '/life-tools',
     redirect: '/life-tools/mortgage',
@@ -93,8 +119,13 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'Education',
     path: '/education',
-    component: () => import('#/views/tools-pending/index.vue'),
-    meta: { icon: 'lucide:book-open', order: 2, title: 'tools.menu.education' },
+    component: () => import('#/views/education/index.vue'),
+    meta: {
+      icon: 'lucide:book-open',
+      order: 2,
+      title: 'tools.menu.education',
+      fullPathKey: false,
+    },
   },
   {
     name: 'Entertainment',
@@ -175,6 +206,12 @@ const routes: RouteRecordRaw[] = [
       order: 4,
       title: 'tools.menu.finance',
     },
+  },
+  {
+    name: 'UsageGuide',
+    path: '/usage-guide',
+    component: () => import('#/views/usage-guide/index.vue'),
+    meta: { title: 'guide.title', icon: 'lucide:circle-help', order: 999 },
   },
 ];
 
