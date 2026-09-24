@@ -2,6 +2,7 @@
 import type { TableColumnsType } from 'ant-design-vue';
 
 import type { Point, Stock } from '../model';
+import type { OpportunityFilter } from '../opportunity';
 import type { Quote, Target } from './model';
 
 import { computed, onActivated, onMounted, reactive, ref } from 'vue';
@@ -35,6 +36,8 @@ import {
 import { $t } from '#/locales';
 
 import { number, snapshot } from '../data';
+import { compareOpportunity, matchesOpportunity } from '../opportunity';
+import WishlistHeart from './heart.vue';
 import {
   catalog,
   defaults,
@@ -53,6 +56,12 @@ const quotes = ref<Record<string, Quote>>({});
 const query = ref('');
 const kind = ref('all');
 const state = ref('all');
+const opportunity = ref<OpportunityFilter>('all');
+function setOpportunity(value: string) {
+  if (['all', 'reached', 'wishlist', 'within2', 'within5'].includes(value))
+    opportunity.value = value as OpportunityFilter;
+}
+const sortByGap = ref('status');
 const loading = ref(false);
 const failed = ref(false);
 const readFailed = ref(false);
@@ -87,7 +96,9 @@ const allRows = computed(() =>
     })
     .toSorted(
       (a, b) =>
-        statusOrder[a.status] - statusOrder[b.status] ||
+        (sortByGap.value === 'gap'
+          ? compareOpportunity(a, b)
+          : statusOrder[a.status] - statusOrder[b.status]) ||
         (a.gap ?? Infinity) - (b.gap ?? Infinity),
     ),
 );
@@ -96,6 +107,7 @@ const rows = computed(() =>
     (row) =>
       (kind.value === 'all' || row.kind === kind.value) &&
       (state.value === 'all' || row.status === state.value) &&
+      matchesOpportunity(row, opportunity.value) &&
       (row.name + row.code).includes(query.value.trim()),
   ),
 );
@@ -284,6 +296,27 @@ onActivated(updateToday);
         show-icon
         :message="$t('wishlist.loadError')"
       />
+      <Space wrap>
+        <Space wrap :aria-label="$t('opportunities.filter')">
+          <Button
+            v-for="option in ['all', 'reached', 'within2', 'within5']"
+            :key="option"
+            :type="opportunity === option ? 'primary' : 'default'"
+            @click="setOpportunity(option)"
+          >
+            {{ $t(`opportunities.${option}`) }}
+          </Button>
+        </Space>
+        <Select
+          v-model:value="sortByGap"
+          :aria-label="$t('opportunities.order')"
+          :options="[
+            { value: 'status', label: $t('opportunities.statusOrder') },
+            { value: 'gap', label: $t('opportunities.sort') },
+          ]"
+          style="min-width: 200px"
+        />
+      </Space>
       <div class="wishlist-filters">
         <Input
           v-model:value="query"
@@ -324,7 +357,20 @@ onActivated(updateToday);
           </template>
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'name'">
-              <div class="font-medium">{{ record.name }}</div>
+              <div class="flex items-center gap-1 font-medium">
+                {{ record.name
+                }}<WishlistHeart
+                  :target="{
+                    code: record.code,
+                    price: record.price,
+                    rule: record.rule,
+                    near: record.near,
+                    note: record.note,
+                  }"
+                  :quote="record.quote ?? { price: null, date: null }"
+                  :today="today"
+                />
+              </div>
               <div class="text-xs text-muted-foreground">
                 {{ record.code }} · {{ $t(`wishlist.${record.kind}`) }}
               </div>
@@ -413,7 +459,20 @@ onActivated(updateToday);
           >
             <div class="flex flex-col items-start gap-2">
               <div class="min-w-0">
-                <div class="break-words font-medium">{{ record.name }}</div>
+                <div class="flex items-center gap-1 break-words font-medium">
+                  {{ record.name
+                  }}<WishlistHeart
+                    :target="{
+                      code: record.code,
+                      price: record.price,
+                      rule: record.rule,
+                      near: record.near,
+                      note: record.note,
+                    }"
+                    :quote="record.quote ?? { price: null, date: null }"
+                    :today="today"
+                  />
+                </div>
                 <div class="mt-1 text-xs text-muted-foreground">
                   {{ record.code }} · {{ $t(`wishlist.${record.kind}`) }}
                 </div>

@@ -4,7 +4,51 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'Engineering',
     path: '/engineering',
-    component: () => import('#/views/tools-pending/index.vue'),
+    redirect: '/engineering/json',
+    children: [
+      {
+        name: 'EngineeringJson',
+        path: 'json',
+        component: () => import('#/views/engineering/json.vue'),
+        meta: { title: 'engineering.json', icon: 'lucide:braces' },
+      },
+      {
+        name: 'EngineeringCompare',
+        path: 'compare',
+        component: () => import('#/views/engineering/compare.vue'),
+        meta: { title: 'engineering.diff', icon: 'lucide:git-compare' },
+      },
+      {
+        name: 'EngineeringSql',
+        path: 'sql',
+        component: () => import('#/views/engineering/sql.vue'),
+        meta: { title: 'engineering.sql', icon: 'lucide:database' },
+      },
+      {
+        name: 'EngineeringEncoding',
+        path: 'encoding',
+        component: () => import('#/views/engineering/encoding.vue'),
+        meta: { title: 'engineering.encoding', icon: 'lucide:binary' },
+      },
+      {
+        name: 'EngineeringRegex',
+        path: 'regex',
+        component: () => import('#/views/engineering/regex.vue'),
+        meta: { title: 'engineering.regex', icon: 'lucide:regex' },
+      },
+      {
+        name: 'EngineeringKnowledge',
+        path: 'knowledge',
+        component: () => import('#/views/engineering/knowledge.vue'),
+        meta: { title: 'engineering.knowledge', icon: 'lucide:book-marked' },
+      },
+      {
+        name: 'EngineeringCron',
+        path: 'cron',
+        component: () => import('#/views/engineering/cron.vue'),
+        meta: { title: 'engineering.cron', icon: 'lucide:timer' },
+      },
+    ],
     meta: {
       icon: 'lucide:code-xml',
       order: 0,
@@ -27,6 +71,12 @@ const routes: RouteRecordRaw[] = [
           keepAlive: true,
           title: 'tools.menu.mortgage',
         },
+      },
+      {
+        name: 'LifeDates',
+        path: 'dates',
+        component: () => import('#/views/life-tools/dates/index.vue'),
+        meta: { title: 'dates.title', icon: 'lucide:calendar-days' },
       },
       {
         name: 'IncomeTaxCalculator',
@@ -74,6 +124,21 @@ const routes: RouteRecordRaw[] = [
     path: '/finance',
     redirect: '/finance/portfolio',
     children: [
+      {
+        name: 'FinanceCalendar',
+        path: 'calendar',
+        component: () => import('#/views/finance/calendar/index.vue'),
+        meta: {
+          title: 'investmentCalendar.titlePage',
+          icon: 'lucide:calendar-range',
+        },
+      },
+      {
+        name: 'FinanceDataStatus',
+        path: 'data-status',
+        component: () => import('#/views/finance/data-status.vue'),
+        meta: { title: 'dataStatus.title', icon: 'lucide:database-backup' },
+      },
       {
         name: 'FinancePortfolio',
         path: 'portfolio',

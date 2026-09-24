@@ -30,10 +30,17 @@
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
     "ant-design-vue": "catalog:",
+    "cron-parser": "^5.10.1",
     "dayjs": "catalog:",
+    "diff": "^9.0.0",
+    "papaparse": "^5.7.0",
     "pinia": "catalog:",
+    "sql-formatter": "^15.9.0",
     "vue": "catalog:",
     "vue-router": "catalog:"
   },
-  "description": "全能管家 / All-in-One Butler — tools for everyday life and work"
+  "description": "全能管家 / All-in-One Butler — tools for everyday life and work",
+  "devDependencies": {
+    "@types/papaparse": "^5.5.2"
+  }
 }

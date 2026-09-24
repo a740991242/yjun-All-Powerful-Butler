@@ -1,0 +1,11 @@
+{
+  "filter": "Opportunity filter",
+  "all": "All",
+  "wishlist": "Wishlist only",
+  "reached": "Target reached",
+  "within2": "Decline to target ≤2%",
+  "within5": "Decline to target ≤5%",
+  "sort": "Decline to target: low to high",
+  "order": "Sort order",
+  "statusOrder": "Sort by target status"
+}

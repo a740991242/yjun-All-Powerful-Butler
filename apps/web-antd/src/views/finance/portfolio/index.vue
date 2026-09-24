@@ -2,6 +2,7 @@
 import type { TableColumnsType, TableProps } from 'ant-design-vue';
 
 import type { Holding, Stock } from '../model';
+import type { OpportunityFilter } from '../opportunity';
 import type { BoardFilter, MarketFilter } from '../stock-board';
 import type { Target } from '../wishlist/model';
 
@@ -23,6 +24,7 @@ import {
   Alert,
   Button,
   Card,
+  Checkbox,
   Collapse,
   CollapsePanel,
   Dropdown,
@@ -52,9 +54,11 @@ import { $t } from '#/locales';
 import FinanceChart from '../chart.vue';
 import { number, signed, snapshot } from '../data';
 import { parseHoldings, portfolio, validateHoldings } from '../model';
+import { compareOpportunity, matchesOpportunity } from '../opportunity';
 import { matchesStockMarket } from '../stock-board';
 import { moveOrder, reconcileOrder } from '../watchlist-order';
 import WishlistHeart from '../wishlist/heart.vue';
+import { evaluate } from '../wishlist/model';
 import { readWishlist, WISHLIST_CHANGED } from '../wishlist/storage';
 defineOptions({ name: 'FinancePortfolio' });
 const { token } = theme.useToken();
@@ -84,6 +88,12 @@ watch(
       query.value = typeof code === 'string' ? code : '';
   },
 );
+const opportunity = ref<OpportunityFilter>('all');
+function setOpportunity(value: string) {
+  if (['all', 'reached', 'wishlist', 'within2', 'within5'].includes(value))
+    opportunity.value = value as OpportunityFilter;
+}
+const opportunitySort = ref(false);
 const filter = ref('all');
 const market = ref<MarketFilter>('all');
 const board = ref<BoardFilter>('all');
@@ -99,14 +109,24 @@ type PortfolioRow = ReturnType<typeof portfolio>['rows'][number];
 const rows = computed(() =>
   [...result.value.rows]
     .toSorted(
-      (a, b) => order.value.indexOf(a.code) - order.value.indexOf(b.code),
+      (a, b) =>
+        (opportunitySort.value
+          ? compareOpportunity(
+              opportunities.value.get(a.code),
+              opportunities.value.get(b.code),
+            )
+          : 0) || order.value.indexOf(a.code) - order.value.indexOf(b.code),
     )
     .filter(
       (row) =>
         (!query.value ||
           `${row.name}${row.code}`.includes(query.value.trim())) &&
         (filter.value !== 'held' || row.quantity !== null) &&
-        matchesStockMarket(row.code, market.value, board.value),
+        matchesStockMarket(row.code, market.value, board.value) &&
+        matchesOpportunity(
+          opportunities.value.get(row.code),
+          opportunity.value,
+        ),
     ),
 );
 const narrowScreen = useMediaQuery('(max-width: 640px)');
@@ -232,12 +252,14 @@ const changeTable: NonNullable<TableProps<PortfolioRow>['onChange']> = (
   pagination,
   _filters,
   sorter,
+  extra,
 ) => {
   const nextPageSize = pagination.pageSize ?? pageSize.value;
   currentPage.value =
     nextPageSize === pageSize.value ? (pagination.current ?? 1) : 1;
   pageSize.value = nextPageSize;
   const active = Array.isArray(sorter) ? sorter[0] : sorter;
+  if (extra.action === 'sort') opportunitySort.value = false;
   sortState.value = {
     field: String(active?.field ?? ''),
     order: active?.order ?? null,
@@ -313,7 +335,7 @@ function exportFile() {
   link.click();
   URL.revokeObjectURL(url);
 }
-watch([query, filter, market, board], () => {
+watch([query, filter, market, board, opportunity, opportunitySort], () => {
   currentPage.value = 1;
 });
 const wishlist = ref<Target[]>([]);
@@ -322,6 +344,29 @@ const today = ref('');
 const wishlistByCode = computed(
   () => new Map(wishlist.value.map((target) => [target.code, target])),
 );
+const opportunities = computed(
+  () =>
+    new Map(
+      stocks.value.flatMap((stock) => {
+        const target = wishlistByCode.value.get(stock.code);
+        return target
+          ? [
+              [
+                stock.code,
+                evaluate(
+                  target,
+                  { price: stock.price, date: stock.priceDate },
+                  today.value,
+                ),
+              ] as const,
+            ]
+          : [];
+      }),
+    ),
+);
+watch(opportunitySort, (enabled) => {
+  if (enabled) sortState.value = { field: '', order: null };
+});
 function refreshWishlist() {
   today.value = new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'Asia/Shanghai',
@@ -456,6 +501,27 @@ onBeforeUnmount(() => {
               show-icon
               :message="$t('finance.wishlistReadError')"
             />
+            <Space wrap class="mb-4">
+              <Space wrap :aria-label="$t('opportunities.filter')">
+                <Button
+                  v-for="option in [
+                    'all',
+                    'wishlist',
+                    'reached',
+                    'within2',
+                    'within5',
+                  ]"
+                  :key="option"
+                  :type="opportunity === option ? 'primary' : 'default'"
+                  @click="setOpportunity(option)"
+                >
+                  {{ $t(`opportunities.${option}`) }}
+                </Button>
+              </Space>
+              <Checkbox v-model:checked="opportunitySort">
+                {{ $t('opportunities.sort') }}
+              </Checkbox>
+            </Space>
             <div class="finance-detail-layout">
               <div class="finance-filter-row">
                 <Input

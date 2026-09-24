@@ -1,0 +1,35 @@
+{
+  "updatedAt": "2026-09-24",
+  "coverage": {
+    "codes": [
+      "600219",
+      "600690"
+    ],
+    "from": "2026-05-20",
+    "to": "2026-08-28"
+  },
+  "events": [
+    {
+      "id": "public-600219-20260520-exdiv",
+      "code": "600219",
+      "title": "南山铝业：2025 年年度分红除息",
+      "date": "2026-05-20",
+      "kind": "exdiv",
+      "status": "confirmed",
+      "source": "https://static.cninfo.com.cn/finalpage/2026-05-13/1225300692.PDF",
+      "updatedAt": "2026-09-24",
+      "note": "每股现金红利 0.136 元（含税）；股权登记日 2026-05-19。"
+    },
+    {
+      "id": "public-600690-20260828-report",
+      "code": "600690",
+      "title": "海尔智家：2026 年半年度报告披露",
+      "date": "2026-08-28",
+      "kind": "report",
+      "status": "confirmed",
+      "source": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12563095&stockid=600690",
+      "updatedAt": "2026-09-24",
+      "note": "实际公告日期；来源为新浪财经转载的公司公告。"
+    }
+  ]
+}
