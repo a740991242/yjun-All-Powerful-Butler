@@ -15,6 +15,7 @@ import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
+import { restoreCachedTabs } from './restore-tabs';
 
 /**
  * 通用守卫配置
@@ -119,12 +120,7 @@ function setupAccessGuard(router: Router) {
 
     // 菜单调整后，移除缓存中已下线页面的标签（包括原固定分析页）。
     const tabbarStore = useTabbarStore();
-    tabbarStore.tabs = tabbarStore.tabs
-      .filter((tab) => tab.name && router.hasRoute(tab.name))
-      .map((tab) => ({
-        ...tab,
-        meta: { ...tab.meta, ...router.resolve(tab.fullPath).meta },
-      }));
+    tabbarStore.tabs = restoreCachedTabs(tabbarStore.tabs, router);
     await tabbarStore.updateCacheTabs();
 
     // 保存菜单信息和路由信息
