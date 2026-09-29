@@ -2,11 +2,13 @@ import {
   defaults,
   upgradeLegacyTargets,
   upgradeV2Targets,
+  upgradeV3Targets,
   validateTargets,
 } from './model';
 
-export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v3';
+export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v4';
 export const WISHLIST_CHANGED = 'finance:wishlist-changed';
+const V3_KEY = 'all-in-one-butler:finance:wishlist:v3';
 const PREVIOUS_KEY = 'all-in-one-butler:finance:wishlist:v2';
 const LEGACY_KEY = 'all-in-one-butler:finance:wishlist:v1';
 
@@ -14,15 +16,23 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const current = storage.getItem(WISHLIST_KEY);
   if (current !== null)
     return { targets: validateTargets(JSON.parse(current)), needsSave: false };
+  const v3 = storage.getItem(V3_KEY);
+  if (v3 !== null)
+    return { targets: upgradeV3Targets(JSON.parse(v3)), needsSave: true };
   const previous = storage.getItem(PREVIOUS_KEY);
   if (previous !== null)
-    return { targets: upgradeV2Targets(JSON.parse(previous)), needsSave: true };
+    return {
+      targets: upgradeV3Targets(upgradeV2Targets(JSON.parse(previous))),
+      needsSave: true,
+    };
   const legacy = storage.getItem(LEGACY_KEY);
   return {
     targets:
       legacy === null
         ? defaults()
-        : upgradeV2Targets(upgradeLegacyTargets(JSON.parse(legacy))),
+        : upgradeV3Targets(
+            upgradeV2Targets(upgradeLegacyTargets(JSON.parse(legacy))),
+          ),
     needsSave: true,
   };
 }

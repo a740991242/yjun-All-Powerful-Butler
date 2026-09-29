@@ -24,13 +24,23 @@ export const catalog = [
   { code: '000651', name: '格力电器', kind: 'stock', price: 36 },
   { code: '002563', name: '森马服饰', kind: 'stock', price: 5 },
   { code: '600690', name: '海尔智家', kind: 'stock', price: 19.5 },
+  { code: '601601', name: '中国太保', kind: 'stock', price: 28.5 },
+  { code: '601318', name: '中国平安', kind: 'stock', price: 10.5 },
 ] as const;
 export function defaults(): Target[] {
   return catalog.map((item) => {
     let rule: Target['rule'] = 'around';
     if (item.code === '600900') rule = 'below';
     else if (
-      ['002563', '600050', '600219', '600690', '601818'].includes(item.code)
+      [
+        '002563',
+        '600050',
+        '600219',
+        '600690',
+        '601318',
+        '601601',
+        '601818',
+      ].includes(item.code)
     )
       rule = 'atMost';
     return {
@@ -93,6 +103,15 @@ export function upgradeV2Targets(input: unknown): Target[] {
   const additions = defaults().filter(
     (target) =>
       target.code === '600690' &&
+      !saved.some((row) => row.code === target.code),
+  );
+  return [...saved, ...additions];
+}
+export function upgradeV3Targets(input: unknown): Target[] {
+  const saved = validateTargets(input);
+  const additions = defaults().filter(
+    (target) =>
+      ['601318', '601601'].includes(target.code) &&
       !saved.some((row) => row.code === target.code),
   );
   return [...saved, ...additions];

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { defaults } from './model';
+import { defaults, evaluate } from './model';
 import { heartTier, readWishlist, WISHLIST_KEY } from './storage';
 
 describe('wishlist hearts', () => {
@@ -61,6 +61,65 @@ describe('wishlist hearts', () => {
     expect(result.targets).toEqual([
       ...saved,
       defaults().find((target) => target.code === '600690'),
+      defaults().find((target) => target.code === '601601'),
+      defaults().find((target) => target.code === '601318'),
+    ]);
+  });
+});
+
+describe('v4 wishlist migration', () => {
+  it('adds inclusive targets once without changing edits or restoring other removals', () => {
+    const edited = {
+      code: '600690',
+      price: 18,
+      near: 2,
+      rule: 'below' as const,
+      note: 'mine',
+    };
+    const upgraded = readWishlist({
+      getItem: (key) => (key.endsWith(':v3') ? JSON.stringify([edited]) : null),
+    });
+    expect(upgraded.needsSave).toBe(true);
+    expect(upgraded.targets[0]).toEqual(edited);
+    expect(upgraded.targets.map((row) => row.code)).toEqual([
+      '600690',
+      '601601',
+      '601318',
+    ]);
+    for (const target of upgraded.targets.slice(1)) {
+      expect(target.rule).toBe('atMost');
+      expect(
+        evaluate(
+          target,
+          { price: target.price, date: '2026-09-29' },
+          '2026-09-29',
+        ).status,
+      ).toBe('reached');
+      expect(
+        evaluate(
+          target,
+          { price: target.price + 0.01, date: '2026-09-29' },
+          '2026-09-29',
+        ).status,
+      ).not.toBe('reached');
+    }
+    const current = readWishlist({
+      getItem: (key) =>
+        key === WISHLIST_KEY ? JSON.stringify([edited]) : null,
+    });
+    expect(current).toEqual({ targets: [edited], needsSave: false });
+  });
+  it('preserves an existing target for an added stock', () => {
+    const saved = [
+      { code: '601601', price: 27, near: 1, rule: 'below', note: 'custom' },
+    ];
+    expect(
+      readWishlist({
+        getItem: (key) => (key.endsWith(':v3') ? JSON.stringify(saved) : null),
+      }).targets,
+    ).toEqual([
+      ...saved,
+      defaults().find((target) => target.code === '601318'),
     ]);
   });
 });
