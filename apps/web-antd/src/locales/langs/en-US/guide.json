@@ -130,7 +130,7 @@
   "wishlist_step2": "Set the near-target range and notes. Index-level conditions can be recorded as notes.",
   "wishlist_step3": "Sort by required decline or filter reached/within 2%/within 5%. Targets also drive portfolio hearts.",
   "wishlist_step4": "Export/import JSON backups up to 2 MB. Imported values replace matching codes; other targets remain. Edited or removed defaults are not reset on each refresh.",
-  "wishlist_example": "Set Haier to at or below 19.50. Strictly below differs from at-or-below when price equals the target. The first upgrade adds CPIC (at or below CNY 28.50) and Ping An Insurance (at or below CNY 10.50), preserving custom targets. Later deletions are respected.",
+  "wishlist_example": "Set Haier to at or below 19.50. Strictly below differs from at-or-below when price equals the target. The first upgrade adds CPIC (at or below CNY 28.50) and Ping An Bank (at or below CNY 10.50), preserving custom targets. Later deletions are respected.",
   "wishlist_note": "Targets are personal records, not orders or buying advice. Stale, future or missing quotes cannot trigger reached status. Data is local with no live price alerts.",
   "etf_summary": "Compare ETF price performance and drawdowns over shared trading dates.",
   "etf_step1": "Choose up to five ETFs; remove selections to add different funds.",

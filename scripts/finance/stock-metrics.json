@@ -924,21 +924,6 @@
       "code": "HK2513",
       "quoteSource": "https://qt.gtimg.cn/q=hk02513",
       "rangeSource": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02513,day,2025-10-01,2026-09-29,400,"
-    },
-    {
-      "pe": 5.97,
-      "dividendYield": 5.2,
-      "metricsAsOf": "20260929161441",
-      "metricsReferencePrice": 52.5,
-      "currency": "CNY",
-      "high52Week": 74.88,
-      "low52Week": 46.9,
-      "rangeFirstDate": "2025-10-09",
-      "rangeLastDate": "2026-09-29",
-      "rangeTradingDays": 240,
-      "code": "601318",
-      "quoteSource": "https://qt.gtimg.cn/q=sh601318",
-      "rangeSource": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh601318,day,2025-10-01,2026-09-29,400,"
     }
   ]
 }

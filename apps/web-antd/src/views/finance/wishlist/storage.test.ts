@@ -62,12 +62,12 @@ describe('wishlist hearts', () => {
       ...saved,
       defaults().find((target) => target.code === '600690'),
       defaults().find((target) => target.code === '601601'),
-      defaults().find((target) => target.code === '601318'),
+      defaults().find((target) => target.code === '000001'),
     ]);
   });
 });
 
-describe('v4 wishlist migration', () => {
+describe('v3 wishlist migration', () => {
   it('adds inclusive targets once without changing edits or restoring other removals', () => {
     const edited = {
       code: '600690',
@@ -84,7 +84,7 @@ describe('v4 wishlist migration', () => {
     expect(upgraded.targets.map((row) => row.code)).toEqual([
       '600690',
       '601601',
-      '601318',
+      '000001',
     ]);
     for (const target of upgraded.targets.slice(1)) {
       expect(target.rule).toBe('atMost');
@@ -119,7 +119,41 @@ describe('v4 wishlist migration', () => {
       }).targets,
     ).toEqual([
       ...saved,
-      defaults().find((target) => target.code === '601318'),
+      defaults().find((target) => target.code === '000001'),
     ]);
+  });
+});
+
+describe('corrected Ping An Bank target', () => {
+  const wrong = {
+    code: '601318',
+    price: 10.5,
+    rule: 'atMost',
+    near: 3,
+    note: '',
+  };
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v4') ? JSON.stringify(rows) : null),
+    });
+  it('corrects the old insurance code and keeps other targets', () => {
+    const other = defaults().find((row) => row.code === '601601');
+    expect(migrate([wrong, other])).toEqual({
+      targets: [{ ...wrong, code: '000001' }, other],
+      needsSave: true,
+    });
+  });
+  it('preserves edits and prefers an existing bank target without duplicates', () => {
+    const edited = { ...wrong, price: 10, note: 'my target' };
+    expect(migrate([edited]).targets).toEqual([{ ...edited, code: '000001' }]);
+    const bank = { ...wrong, code: '000001', price: 9.5 };
+    expect(migrate([wrong, bank]).targets).toEqual([bank]);
+  });
+  it('respects deleted targets and validates malformed data', () => {
+    expect(migrate([]).targets).toEqual([]);
+    expect(() => migrate([{ ...wrong, price: 0 }])).toThrow('invalid');
+    expect(
+      readWishlist({ getItem: (key) => (key === WISHLIST_KEY ? '[]' : null) }),
+    ).toEqual({ targets: [], needsSave: false });
   });
 });

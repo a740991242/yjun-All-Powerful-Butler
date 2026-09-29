@@ -25,7 +25,7 @@ export const catalog = [
   { code: '002563', name: '森马服饰', kind: 'stock', price: 5 },
   { code: '600690', name: '海尔智家', kind: 'stock', price: 19.5 },
   { code: '601601', name: '中国太保', kind: 'stock', price: 28.5 },
-  { code: '601318', name: '中国平安', kind: 'stock', price: 10.5 },
+  { code: '000001', name: '平安银行', kind: 'stock', price: 10.5 },
 ] as const;
 export function defaults(): Target[] {
   return catalog.map((item) => {
@@ -33,11 +33,11 @@ export function defaults(): Target[] {
     if (item.code === '600900') rule = 'below';
     else if (
       [
+        '000001',
         '002563',
         '600050',
         '600219',
         '600690',
-        '601318',
         '601601',
         '601818',
       ].includes(item.code)
@@ -111,10 +111,22 @@ export function upgradeV3Targets(input: unknown): Target[] {
   const saved = validateTargets(input);
   const additions = defaults().filter(
     (target) =>
-      ['601318', '601601'].includes(target.code) &&
+      ['000001', '601601'].includes(target.code) &&
       !saved.some((row) => row.code === target.code),
   );
   return [...saved, ...additions];
+}
+// Correct the previously shipped insurance code before catalog validation.
+export function upgradeV4Targets(input: unknown): Target[] {
+  if (!Array.isArray(input)) return validateTargets(input);
+  const hasBank = input.some((row) => row?.code === '000001');
+  return validateTargets(
+    input
+      .filter((row) => !(hasBank && row?.code === '601318'))
+      .map((row) =>
+        row?.code === '601318' ? { ...row, code: '000001' } : row,
+      ),
+  );
 }
 export function evaluate(
   target: Target,
