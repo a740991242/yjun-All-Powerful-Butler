@@ -23,6 +23,7 @@ import type { ParadeFramesVisual } from './parade-frames';
 import type { PartitionedSquareVisual } from './partitioned-square';
 import type { QuarterCircleVisual } from './quarter-circle';
 import type { RegroupSticksVisual } from './regroup-sticks';
+import type { SemesterGridVisual } from './semester-grid';
 import type { SmallArithmeticVisual } from './small-arithmetic';
 import type { SolidInstructionsVisual } from './solid-instructions';
 import type { SolidPatternVisual } from './solid-pattern';
@@ -460,6 +461,7 @@ export type Visual =
   | RegroupSticksVisual
   | RotatingPatchVisual
   | SeatGridVisual
+  | SemesterGridVisual
   | ShapeCollageVisual
   | ShapePatchVisual
   | SmallArithmeticVisual

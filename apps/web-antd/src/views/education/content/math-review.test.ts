@@ -28,7 +28,26 @@ describe('separate mathematics review pools and bridge packs', () => {
             ),
             question.id,
           ).toBe(false);
-          expect(question.knowledge).toBe(lesson.id);
+          const finalConcepts: Record<string, string[]> = {
+            'mu-final-grids': [
+              'number-grid',
+              'addition-grid',
+              'calculation',
+              'chain',
+            ],
+            'mu-final-links': ['numbers', 'calculation', 'relations', 'shapes'],
+          };
+          const concepts = finalConcepts[lesson.id];
+          if (concepts) {
+            expect(
+              concepts.map((concept) => `${lesson.id}-${concept}`),
+            ).toContain(question.knowledge);
+            expect(
+              lesson.questions.some(
+                (main) => main.knowledge === question.knowledge,
+              ),
+            ).toBe(true);
+          } else expect(question.knowledge).toBe(lesson.id);
           expect(question.hint.length).toBeGreaterThan(4);
           expect(question.explanation.length).toBeGreaterThan(4);
           if (question.rule.kind === 'number')

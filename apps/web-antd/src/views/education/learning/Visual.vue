@@ -66,6 +66,7 @@ import RegroupSticks from './RegroupSticks.vue';
 import { required } from './required';
 import RotatingPatch from './RotatingPatch.vue';
 import SeatGrid from './SeatGrid.vue';
+import SemesterGrid from './SemesterGrid.vue';
 import {
   initialShapeJoin,
   isShapeJoinState,
@@ -310,6 +311,10 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <CubePair v-else-if="visual.kind === 'cube-pair'" :visual="visual" />
+    <SemesterGrid
+      v-else-if="visual.kind === 'semester-grid'"
+      :visual="visual"
+    />
     <SolidInstructions
       v-else-if="visual.kind === 'solid-instructions'"
       :visual="visual"

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T19:01:35.420Z",
+  "generatedAt": "2026-10-02T20:00:00.388Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -10216,13 +10216,13 @@
       "resourceId": "1221001101241",
       "verifiedAt": "2026-09-30",
       "summary": {
-        "availablePacks": 33,
+        "availablePacks": 38,
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 208,
-          "manual": 30,
-          "reflection": 9
+          "objective": 269,
+          "manual": 56,
+          "reflection": 19
         }
       },
       "units": [
@@ -11291,6 +11291,109 @@
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
               }
+            },
+            {
+              "id": "mu-carry-process",
+              "title": "凑十过程与不同算法",
+              "textbookTitle": "20以内的进位加法",
+              "page": 89,
+              "version": 1,
+              "status": "available",
+              "goal": "分开记录拆数、凑十与最后结果，比较接着数和两种凑十方法。",
+              "prerequisite": "先能分合10和读写20以内的数；纸笔、数卡、小棒按实际准备，缺材料可跳过。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-carry-process"],
+              "questionKinds": ["steps", "number", "manual", "reflection"],
+              "visualKinds": ["ten-frame"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方教材88～102页实际阅读与原创任务程序核对",
+                "notes": "资源1221001101241图片94～108逐页实际查看。保留原9加几、8/7/6加几、小数加几三课v1，补独立过程、关系与整理课。只发布原创任务，不发布原教材扫描、图画或全文；学校采用版本仍需单独确认。"
+              }
+            },
+            {
+              "id": "mu-carry-relations",
+              "title": "同一整体、不同分法与实际问题",
+              "textbookTitle": "20以内的进位加法",
+              "page": 96,
+              "version": 1,
+              "status": "available",
+              "goal": "先辨所求整体与部分，解释拿走后求原总数为什么用加法。",
+              "prerequisite": "先能分合10和读写20以内的数；纸笔、数卡、小棒按实际准备，缺材料可跳过。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 5,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-carry-relations"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方教材88～102页实际阅读与原创任务程序核对",
+                "notes": "资源1221001101241图片94～108逐页实际查看。保留原9加几、8/7/6加几、小数加几三课v1，补独立过程、关系与整理课。只发布原创任务，不发布原教材扫描、图画或全文；学校采用版本仍需单独确认。"
+              }
+            },
+            {
+              "id": "mu-carry-organize",
+              "title": "整理加法表、同和分法与拼棒",
+              "textbookTitle": "20以内的进位加法",
+              "page": 100,
+              "version": 1,
+              "status": "available",
+              "goal": "实际整理完整范围的算式卡，辨认恰好10、重复次序与共有边。",
+              "prerequisite": "先能分合10和读写20以内的数；纸笔、数卡、小棒按实际准备，缺材料可跳过。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-carry-organize"],
+              "questionKinds": [
+                "choice",
+                "number",
+                "partition",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["arithmetic-grid"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方教材88～102页实际阅读与原创任务程序核对",
+                "notes": "资源1221001101241图片94～108逐页实际查看。保留原9加几、8/7/6加几、小数加几三课v1，补独立过程、关系与整理课。只发布原创任务，不发布原教材扫描、图画或全文；学校采用版本仍需单独确认。"
+              }
             }
           ]
         },
@@ -11370,6 +11473,100 @@
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
               }
+            },
+            {
+              "id": "mu-final-grids",
+              "title": "完整数表、加法表与分步计算",
+              "textbookTitle": "复习与关联",
+              "page": 106,
+              "version": 1,
+              "status": "available",
+              "goal": "联系行列、数位、相邻数和计算结果，明确含0与10的完整加法范围。",
+              "prerequisite": "按学校实际进度回顾20以内的数、加减法和四种立体图形，不要求先完成所有课包。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 17,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "mu-final-grids-number-grid",
+                "mu-final-grids-addition-grid",
+                "mu-final-grids-calculation",
+                "mu-final-grids-chain",
+                "mu-final-grids"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["semester-grid", "place-value"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方教材103～109页实际核读与原创任务程序核对",
+                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。"
+              }
+            },
+            {
+              "id": "mu-final-links",
+              "title": "知识关联、生活提问与图形回顾",
+              "textbookTitle": "复习与关联",
+              "page": 103,
+              "version": 1,
+              "status": "available",
+              "goal": "用自己的例子联系数、计算、数量关系与图形，分别记录实际应用与观察。",
+              "prerequisite": "按学校实际进度回顾20以内的数、加减法和四种立体图形，不要求先完成所有课包。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 6,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "mu-final-links-numbers",
+                "mu-final-links-calculation",
+                "mu-final-links-relations",
+                "mu-final-links-shapes",
+                "mu-final-links"
+              ],
+              "questionKinds": [
+                "choice",
+                "steps",
+                "number",
+                "set",
+                "partition",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "place-value",
+                "ten-frame",
+                "count",
+                "block-cards",
+                "cube-pair",
+                "solid-row",
+                "solid-recompose"
+              ],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方教材103～109页实际核读与原创任务程序核对",
+                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。"
+              }
             }
           ]
         }
@@ -11380,19 +11577,19 @@
           "title": "数数与数序",
           "textbookTitle": "平台专项练习",
           "page": 1,
-          "version": 2,
+          "version": 3,
           "status": "available",
           "goal": "点数、接着数、前后顺序与第几。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 60,
-            "manual": 11,
-            "reflection": 2
+            "objective": 77,
+            "manual": 15,
+            "reflection": 3
           },
           "reviewTasks": {
-            "objective": 49,
+            "objective": 53,
             "manual": 0,
             "reflection": 0
           },
@@ -11405,7 +11602,12 @@
             "mu-twenty-sequence",
             "mu-ordinal",
             "mu-twenty-bundles",
-            "mu-twenty-positions"
+            "mu-twenty-positions",
+            "mu-final-grids-number-grid",
+            "mu-final-grids-addition-grid",
+            "mu-final-grids-calculation",
+            "mu-final-grids-chain",
+            "mu-final-grids"
           ],
           "questionKinds": [
             "number",
@@ -11414,11 +11616,16 @@
             "manual",
             "reflection"
           ],
-          "visualKinds": ["count", "place-value", "number-line"],
+          "visualKinds": [
+            "count",
+            "place-value",
+            "number-line",
+            "semester-grid"
+          ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：一个不漏地数（教材第1页起）；一个不漏地数（教材第12页起）；一个不漏地数（教材第34页起）；前一个数与后一个数（教材第12页起）；前一个数与后一个数（教材第34页起）；前一个数与后一个数（教材第73页起）；几个和第几个（教材第12页起）；捆十、摆数与两个数字的意义（教材第74页起）；数序、之间与连两端的数量（教材第78页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：一个不漏地数（教材第1页起）；一个不漏地数（教材第12页起）；一个不漏地数（教材第34页起）；前一个数与后一个数（教材第12页起）；前一个数与后一个数（教材第34页起）；前一个数与后一个数（教材第73页起）；几个和第几个（教材第12页起）；捆十、摆数与两个数字的意义（教材第74页起）；数序、之间与连两端的数量（教材第78页起）；完整数表、加法表与分步计算（教材第106页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -11464,19 +11671,19 @@
           "title": "20以内数与计算",
           "textbookTitle": "平台专项练习",
           "page": 12,
-          "version": 2,
+          "version": 4,
           "status": "available",
           "goal": "数位、0、基础加减、连加连减及凑十进位。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 78,
-            "manual": 12,
-            "reflection": 4
+            "objective": 129,
+            "manual": 33,
+            "reflection": 12
           },
           "reviewTasks": {
-            "objective": 68,
+            "objective": 90,
             "manual": 0,
             "reflection": 0
           },
@@ -11492,20 +11699,44 @@
             "mu-twenty-links",
             "mu-carry-nine",
             "mu-carry-eight",
-            "mu-carry-small"
+            "mu-carry-small",
+            "mu-carry-process",
+            "mu-carry-organize",
+            "mu-final-grids-number-grid",
+            "mu-final-grids-addition-grid",
+            "mu-final-grids-calculation",
+            "mu-final-grids-chain",
+            "mu-final-grids",
+            "mu-final-links-numbers",
+            "mu-final-links-calculation",
+            "mu-final-links-relations",
+            "mu-final-links-shapes",
+            "mu-final-links"
           ],
           "questionKinds": [
             "number",
             "steps",
             "choice",
             "manual",
-            "reflection"
+            "reflection",
+            "partition",
+            "set"
           ],
-          "visualKinds": ["place-value", "bars", "ten-frame"],
+          "visualKinds": [
+            "place-value",
+            "bars",
+            "ten-frame",
+            "arithmetic-grid",
+            "semester-grid",
+            "solid-row",
+            "block-cards",
+            "solid-recompose",
+            "cube-pair"
+          ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：0也是一个数（教材第12页起）；合起来是加法（教材第12页起）；拿走后还剩多少（教材第12页起）；10以内加减练习（教材第34页起）；连加、连减与加减混合（教材第34页起）；看数位，读写数（教材第73页起）；十几加几、减几（教材第73页起）；捆十、摆数与两个数字的意义（教材第74页起）；加减联系、按条件整理与成长记录（教材第81页起）；9加几：凑成10再算（教材第88页起）；8、7、6加几（教材第88页起）；5、4、3、2加几（教材第88页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：0也是一个数（教材第12页起）；合起来是加法（教材第12页起）；拿走后还剩多少（教材第12页起）；10以内加减练习（教材第34页起）；连加、连减与加减混合（教材第34页起）；看数位，读写数（教材第73页起）；十几加几、减几（教材第73页起）；捆十、摆数与两个数字的意义（教材第74页起）；加减联系、按条件整理与成长记录（教材第81页起）；9加几：凑成10再算（教材第88页起）；8、7、6加几（教材第88页起）；5、4、3、2加几（教材第88页起）；凑十过程与不同算法（教材第89页起）；整理加法表、同和分法与拼棒（教材第100页起）；完整数表、加法表与分步计算（教材第106页起）；知识关联、生活提问与图形回顾（教材第103页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -11513,35 +11744,55 @@
           "title": "立体图形辨认与操作",
           "textbookTitle": "平台专项练习",
           "page": 67,
-          "version": 2,
+          "version": 3,
           "status": "available",
           "goal": "从外形与特征辨认立体图形，记录实际操作和自己的观察。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 18,
-            "manual": 13,
-            "reflection": 4
+            "objective": 30,
+            "manual": 19,
+            "reflection": 7
           },
           "reviewTasks": {
-            "objective": 10,
+            "objective": 20,
             "manual": 0,
             "reflection": 2
           },
-          "knowledge": ["mu-solid", "mu-solid-observe", "mu-solid-build"],
+          "knowledge": [
+            "mu-solid",
+            "mu-solid-observe",
+            "mu-solid-build",
+            "mu-final-links-numbers",
+            "mu-final-links-calculation",
+            "mu-final-links-relations",
+            "mu-final-links-shapes",
+            "mu-final-links"
+          ],
           "questionKinds": [
             "choice",
             "number",
             "manual",
             "reflection",
-            "partition"
+            "partition",
+            "steps",
+            "set"
           ],
-          "visualKinds": ["shape", "block-cards", "cube-columns", "solid-row"],
+          "visualKinds": [
+            "shape",
+            "block-cards",
+            "cube-columns",
+            "solid-row",
+            "place-value",
+            "ten-frame",
+            "solid-recompose",
+            "cube-pair"
+          ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：认一认立体图形（教材第67页起）；分形状、摸一摸与口述拿取（教材第67页起）；搭得稳、拼得完整与数规律（教材第67页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：认一认立体图形（教材第67页起）；分形状、摸一摸与口述拿取（教材第67页起）；搭得稳、拼得完整与数规律（教材第67页起）；知识关联、生活提问与图形回顾（教材第103页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -11549,19 +11800,19 @@
           "title": "图示与数量关系",
           "textbookTitle": "平台专项练习",
           "page": 34,
-          "version": 2,
+          "version": 4,
           "status": "available",
           "goal": "联系整体和部分，理解图示与生活问题。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 32,
-            "manual": 11,
-            "reflection": 4
+            "objective": 66,
+            "manual": 27,
+            "reflection": 11
           },
           "reviewTasks": {
-            "objective": 20,
+            "objective": 38,
             "manual": 0,
             "reflection": 0
           },
@@ -11569,20 +11820,39 @@
             "mu-story",
             "mu-review-story",
             "mu-twenty-positions",
-            "mu-twenty-links"
+            "mu-twenty-links",
+            "mu-carry-relations",
+            "mu-carry-organize",
+            "mu-final-links-numbers",
+            "mu-final-links-calculation",
+            "mu-final-links-relations",
+            "mu-final-links-shapes",
+            "mu-final-links"
           ],
           "questionKinds": [
             "number",
             "steps",
             "choice",
             "manual",
-            "reflection"
+            "reflection",
+            "partition",
+            "set"
           ],
-          "visualKinds": ["bars", "number-line", "place-value"],
+          "visualKinds": [
+            "bars",
+            "number-line",
+            "place-value",
+            "arithmetic-grid",
+            "ten-frame",
+            "solid-row",
+            "block-cards",
+            "solid-recompose",
+            "cube-pair"
+          ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：先找数量关系，再列式（教材第34页起）；先找数量关系，再列式（教材第103页起）；数序、之间与连两端的数量（教材第78页起）；加减联系、按条件整理与成长记录（教材第81页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：先找数量关系，再列式（教材第34页起）；先找数量关系，再列式（教材第103页起）；数序、之间与连两端的数量（教材第78页起）；加减联系、按条件整理与成长记录（教材第81页起）；同一整体、不同分法与实际问题（教材第96页起）；整理加法表、同和分法与拼棒（教材第100页起）；知识关联、生活提问与图形回顾（教材第103页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         }
       ],

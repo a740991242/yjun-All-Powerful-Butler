@@ -67,6 +67,7 @@ import { isRegroupSticksVisual } from './regroup-sticks';
 import { required } from './required';
 import { isRotatingPatchVisual } from './rotating-patch';
 import { isSeatGridVisual } from './seat-grid';
+import { isSemesterGridVisual } from './semester-grid';
 import { isShapeCollageVisual } from './shape-collage';
 import { isShapeJoinState } from './shape-join';
 import { isShapePatchVisual } from './shape-patch';
@@ -281,6 +282,9 @@ function visual(value: unknown) {
     }
     case 'teen-arithmetic-grid': {
       return isTeenArithmeticGridVisual(value);
+    }
+    case 'semester-grid': {
+      return isSemesterGridVisual(value);
     }
     case 'month-weather': {
       return isMonthWeatherVisual(value);

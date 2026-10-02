@@ -16,6 +16,7 @@ const upperGroups: Group[] = [
       'mu-ordinal',
       'mu-twenty-bundles',
       'mu-twenty-positions',
+      'mu-final-grids',
     ],
   ],
   [
@@ -49,19 +50,31 @@ const upperGroups: Group[] = [
       'mu-carry-nine',
       'mu-carry-eight',
       'mu-carry-small',
+      'mu-carry-process',
+      'mu-carry-organize',
+      'mu-final-grids',
+      'mu-final-links',
     ],
   ],
   [
     'shapes',
     '立体图形辨认与操作',
     '从外形与特征辨认立体图形，记录实际操作和自己的观察。',
-    ['mu-solid', 'mu-solid-observe', 'mu-solid-build'],
+    ['mu-solid', 'mu-solid-observe', 'mu-solid-build', 'mu-final-links'],
   ],
   [
     'relations',
     '图示与数量关系',
     '联系整体和部分，理解图示与生活问题。',
-    ['mu-story', 'mu-review-story', 'mu-twenty-positions', 'mu-twenty-links'],
+    [
+      'mu-story',
+      'mu-review-story',
+      'mu-twenty-positions',
+      'mu-twenty-links',
+      'mu-carry-relations',
+      'mu-carry-organize',
+      'mu-final-links',
+    ],
   ],
 ];
 const lowerGroups: Group[] = [
@@ -118,6 +131,17 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
           throw new Error(`Missing specialty source: ${lessonId}`);
         return source;
       });
+      let version = 1;
+      if (
+        id === 'shapes' ||
+        (volume === 'lower' && id === 'money') ||
+        (volume === 'upper' &&
+          ['calculation', 'count', 'relations'].includes(id))
+      )
+        version = 2;
+      if (volume === 'upper' && ['count', 'shapes'].includes(id)) version = 3;
+      if (volume === 'upper' && ['calculation', 'relations'].includes(id))
+        version = 4;
       return {
         id: `ms-${volume}-${id}`,
         textbookTitle: '平台专项练习',
@@ -127,13 +151,7 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
         prerequisite: '可以按学校当前进度自由选择，不要求完成全部原课包。',
         parentTip:
           '本专项复用对应课包已编写的题目，不冒充从未见过的新题或完整教材测验。',
-        version:
-          id === 'shapes' ||
-          (volume === 'lower' && id === 'money') ||
-          (volume === 'upper' &&
-            ['calculation', 'count', 'relations'].includes(id))
-            ? 2
-            : 1,
+        version,
         status: 'available',
         steps: [{ title: '先选练习范围', text: goal }],
         questions: sources.flatMap((source) => source.questions),

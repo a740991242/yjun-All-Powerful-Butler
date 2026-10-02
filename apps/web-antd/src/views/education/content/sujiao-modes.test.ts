@@ -101,7 +101,7 @@ describe('sujiao edition-specific practice and bridges', () => {
       [lower, 'ms-lower-money', 'ml-shopping-practice', 'ml-money'],
     ] as const) {
       const group = required(book.specialties?.find((l) => l.id === id));
-      expect(group.version).toBe(2);
+      expect(group.version).toBe(book.volume === 'upper' ? 3 : 2);
       expect(group.questions.some((q) => q.knowledge === sourceId)).toBe(true);
       const original = required(
         book.units.flatMap((u) => u.lessons).find((l) => l.id === originalId),

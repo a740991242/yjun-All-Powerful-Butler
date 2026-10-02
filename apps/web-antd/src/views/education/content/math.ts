@@ -8,6 +8,8 @@ import type {
 } from '../learning/types';
 
 import { required } from '../learning/required';
+import { carryPracticeLessons } from './math-carry-practice';
+import { finalPracticeLessons } from './math-final-practice';
 import { planePracticeLessons } from './math-plane-practice';
 import { mathReviewQuestions } from './math-review';
 import { shapeJoinLesson } from './math-shape-join';
@@ -901,6 +903,7 @@ const upper: Record<string, Lesson[]> = {
       ],
       'ten-frame',
     ),
+    ...carryPracticeLessons,
   ],
   u6: [
     relations('mu-review-story', '复习与关联', 103, false),
@@ -920,6 +923,7 @@ const upper: Record<string, Lesson[]> = {
         [18, '-', 8],
       ],
     ),
+    ...finalPracticeLessons,
   ],
 };
 
