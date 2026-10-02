@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T14:28:37.075Z",
+  "generatedAt": "2026-10-02T15:11:28.311Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -18780,13 +18780,13 @@
       "resourceId": "0001",
       "verifiedAt": "2026-10-02",
       "summary": {
-        "availablePacks": 9,
-        "pendingEntries": 7,
+        "availablePacks": 12,
+        "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 35,
-          "manual": 46,
-          "reflection": 18
+          "objective": 47,
+          "manual": 66,
+          "reflection": 24
         }
       },
       "units": [
@@ -19250,7 +19250,7 @@
               "page": 37,
               "kind": "lesson",
               "formalLessonId": "ethics-upper-lesson-10",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -19261,7 +19261,7 @@
               "page": 41,
               "kind": "lesson",
               "formalLessonId": "ethics-upper-lesson-11",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -19272,7 +19272,7 @@
               "page": 44,
               "kind": "lesson",
               "formalLessonId": "ethics-upper-lesson-12",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -19328,28 +19328,42 @@
               "textbookTitle": "吃饭有讲究",
               "page": 37,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "读清洗手、食物与餐桌情境，实际练习卫生和礼貌表达，按照顾者安排记录一次用餐；不把饮食需要当品德分。",
+              "prerequisite": "成人可朗读教材并安排适合孩子的洗手设施与已有用餐，不需购买、采摘或试吃新食物。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 7,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-upper-lesson-10-scenario-0",
+                "ethics-upper-lesson-10-scenario-1",
+                "ethics-upper-lesson-10-scenario-2",
+                "ethics-upper-lesson-10-scenario-3",
+                "ethics-upper-lesson-10-manual-0",
+                "ethics-upper-lesson-10-manual-1",
+                "ethics-upper-lesson-10-manual-2",
+                "ethics-upper-lesson-10-manual-3",
+                "ethics-upper-lesson-10-manual-4",
+                "ethics-upper-lesson-10-manual-5",
+                "ethics-upper-lesson-10-manual-6",
+                "ethics-upper-lesson-10-reflection-0",
+                "ethics-upper-lesson-10-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷37～40页、下册38～40页实际阅读；洗手七部位与全过程、食物三提醒、餐桌四幅及需要分记；家庭三关怀、两工作三照顾、完整四背包、三情境与四虚构生日分别人工；不强迫清盘/接触/披露，不冒扮演为真实经历，反思null、计划另记。"
               }
             },
             {
@@ -19358,28 +19372,41 @@
               "textbookTitle": "对人有礼貌",
               "page": 41,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "观察语言与行动怎样表达尊重，练习邀请、招呼、感谢、倾听和等待，记录真实尝试；不同感受和表达方式不评分。",
+              "prerequisite": "成人可朗读教材；使用桌面纸卡与虚构角色，不需去真实办公室、收银台或接触陌生人。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 6,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-upper-lesson-11-scenario-0",
+                "ethics-upper-lesson-11-scenario-1",
+                "ethics-upper-lesson-11-scenario-2",
+                "ethics-upper-lesson-11-scenario-3",
+                "ethics-upper-lesson-11-manual-0",
+                "ethics-upper-lesson-11-manual-1",
+                "ethics-upper-lesson-11-manual-2",
+                "ethics-upper-lesson-11-manual-3",
+                "ethics-upper-lesson-11-manual-4",
+                "ethics-upper-lesson-11-manual-5",
+                "ethics-upper-lesson-11-reflection-0",
+                "ethics-upper-lesson-11-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十一课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷41～43页、下册41～44页实际阅读；两组四礼貌情境、请求回应/倾听等待/花瓣分别实际，不迫表情眼神或服从；物品双谜语、两散放、六卡分类标签找回、取用归位与适合照顾、真实时机参与分记，不把辅助或未来安排当品德错/已执行，反思null、计划另记。"
               }
             },
             {
@@ -19388,28 +19415,42 @@
               "textbookTitle": "玩也有学问",
               "page": 44,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "辨认玩法中的材料与环境问题，练习停止和求助，实际变换桌面玩法、制作玩具并说明原创规则；安全讨论与真实游戏分记。",
+              "prerequisite": "成人可朗读教材；用普通纸片和画好的纸棋盘，无需去户外、接触电线或使用真实急救电话。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 7,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-upper-lesson-12-scenario-0",
+                "ethics-upper-lesson-12-scenario-1",
+                "ethics-upper-lesson-12-scenario-2",
+                "ethics-upper-lesson-12-scenario-3",
+                "ethics-upper-lesson-12-manual-0",
+                "ethics-upper-lesson-12-manual-1",
+                "ethics-upper-lesson-12-manual-2",
+                "ethics-upper-lesson-12-manual-3",
+                "ethics-upper-lesson-12-manual-4",
+                "ethics-upper-lesson-12-manual-5",
+                "ethics-upper-lesson-12-manual-6",
+                "ethics-upper-lesson-12-reflection-0",
+                "ethics-upper-lesson-12-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十二课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷44～46页、下册45～48页实际阅读；两安全/三节制与四求助资料完整读听，号码纸卡、不做危险或医疗处理，换玩法/新纸玩具/原创规则与停止实际分记；家务五苹果/三经历/六叠衣图、真实两衣物、已知系带或自会方法、三沟通和七天提示/实际贡献分记，不补造未来或强迫能力，反思null、计划另记。"
               }
             }
           ]
@@ -19599,13 +19640,13 @@
       "resourceId": "0002",
       "verifiedAt": "2026-10-02",
       "summary": {
-        "availablePacks": 9,
-        "pendingEntries": 7,
+        "availablePacks": 12,
+        "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 35,
-          "manual": 45,
-          "reflection": 18
+          "objective": 47,
+          "manual": 69,
+          "reflection": 24
         }
       },
       "units": [
@@ -20067,7 +20108,7 @@
               "page": 38,
               "kind": "lesson",
               "formalLessonId": "ethics-lower-lesson-10",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -20078,7 +20119,7 @@
               "page": 41,
               "kind": "lesson",
               "formalLessonId": "ethics-lower-lesson-11",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -20089,7 +20130,7 @@
               "page": 45,
               "kind": "lesson",
               "formalLessonId": "ethics-lower-lesson-12",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -20146,28 +20187,42 @@
               "textbookTitle": "相亲相爱一家人",
               "page": 38,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "读清不同关怀方式，区分故事与真实经历，练习征同意表达关心；尊重家庭差异、隐私和个人需要。",
+              "prerequisite": "成人可朗读教材，使用本站虚构资料即可；不需要照片、真实生日、工作地址或公开家庭经历。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 7,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-lower-lesson-10-scenario-0",
+                "ethics-lower-lesson-10-scenario-1",
+                "ethics-lower-lesson-10-scenario-2",
+                "ethics-lower-lesson-10-scenario-3",
+                "ethics-lower-lesson-10-manual-0",
+                "ethics-lower-lesson-10-manual-1",
+                "ethics-lower-lesson-10-manual-2",
+                "ethics-lower-lesson-10-manual-3",
+                "ethics-lower-lesson-10-manual-4",
+                "ethics-lower-lesson-10-manual-5",
+                "ethics-lower-lesson-10-manual-6",
+                "ethics-lower-lesson-10-reflection-0",
+                "ethics-lower-lesson-10-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷37～40页、下册38～40页实际阅读；洗手七部位与全过程、食物三提醒、餐桌四幅及需要分记；家庭三关怀、两工作三照顾、完整四背包、三情境与四虚构生日分别人工；不强迫清盘/接触/披露，不冒扮演为真实经历，反思null、计划另记。"
               }
             },
             {
@@ -20176,28 +20231,43 @@
               "textbookTitle": "让我自己来整理",
               "page": 41,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "认识物品用途，理解散放的影响，实际分类、标记、取用归位，按可行安排逐步参与整理；求助与计划分别记录。",
+              "prerequisite": "成人可朗读原书；普通纸卡、两块安全桌面区域即可，不需购买收纳用品或提供房间照片。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 8,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-lower-lesson-11-scenario-0",
+                "ethics-lower-lesson-11-scenario-1",
+                "ethics-lower-lesson-11-scenario-2",
+                "ethics-lower-lesson-11-scenario-3",
+                "ethics-lower-lesson-11-manual-0",
+                "ethics-lower-lesson-11-manual-1",
+                "ethics-lower-lesson-11-manual-2",
+                "ethics-lower-lesson-11-manual-3",
+                "ethics-lower-lesson-11-manual-4",
+                "ethics-lower-lesson-11-manual-5",
+                "ethics-lower-lesson-11-manual-6",
+                "ethics-lower-lesson-11-manual-7",
+                "ethics-lower-lesson-11-reflection-0",
+                "ethics-lower-lesson-11-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十一课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷41～43页、下册41～44页实际阅读；两组四礼貌情境、请求回应/倾听等待/花瓣分别实际，不迫表情眼神或服从；物品双谜语、两散放、六卡分类标签找回、取用归位与适合照顾、真实时机参与分记，不把辅助或未来安排当品德错/已执行，反思null、计划另记。"
               }
             },
             {
@@ -20206,28 +20276,44 @@
               "textbookTitle": "学做家务活",
               "page": 45,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "认识家务贡献，实际学习叠衣与合适的新方法，沟通能力和帮助，记录一次真实参与与七天提示，不把安排自动计完成。",
+              "prerequisite": "成人可朗读教材并提供愿意使用的干净上衣/短裤与安全桌面；没有材料则该实践待做，不用纸面答案替实际叠衣。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 9,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-lower-lesson-12-scenario-0",
+                "ethics-lower-lesson-12-scenario-1",
+                "ethics-lower-lesson-12-scenario-2",
+                "ethics-lower-lesson-12-scenario-3",
+                "ethics-lower-lesson-12-manual-0",
+                "ethics-lower-lesson-12-manual-1",
+                "ethics-lower-lesson-12-manual-2",
+                "ethics-lower-lesson-12-manual-3",
+                "ethics-lower-lesson-12-manual-4",
+                "ethics-lower-lesson-12-manual-5",
+                "ethics-lower-lesson-12-manual-6",
+                "ethics-lower-lesson-12-manual-7",
+                "ethics-lower-lesson-12-manual-8",
+                "ethics-lower-lesson-12-reflection-0",
+                "ethics-lower-lesson-12-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十二课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷44～46页、下册45～48页实际阅读；两安全/三节制与四求助资料完整读听，号码纸卡、不做危险或医疗处理，换玩法/新纸玩具/原创规则与停止实际分记；家务五苹果/三经历/六叠衣图、真实两衣物、已知系带或自会方法、三沟通和七天提示/实际贡献分记，不补造未来或强迫能力，反思null、计划另记。"
               }
             }
           ]

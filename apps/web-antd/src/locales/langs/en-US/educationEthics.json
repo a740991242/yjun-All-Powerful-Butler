@@ -720,6 +720,245 @@
         "What did you actually observe, discuss or try? What is unknown or needs company? Personal routines may remain private and feelings are not graded; one night is not a habit.",
         "How might you ask for help or record next time? Separate future arrangements from occurred sleep and reminders, without guaranteeing good sleep."
       ]
+    },
+    "lesson10": {
+      "title": "Thoughtful eating habits",
+      "goal": "Read handwashing, food and mealtime situations; practise hygiene and respectful requests, and review an existing caregiver-arranged meal without scoring personal dietary needs.",
+      "prerequisite": "An adult may read the book and arrange accessible washing facilities and an existing meal. No purchases, foraging or tasting new foods are needed.",
+      "parentTip": "Discuss printed pages 37–40 separately. Pictures are not an individual diet. Caregivers follow allergies, personal needs and existing professional advice; do not force tasting or finishing a plate, or grade appetite or body shape. Children can explain thirst; one textbook situation is not a universal ban on water. Discuss wild mushrooms and sprouted potatoes only; do not collect, handle or taste them, and give no first-aid procedures. Adults check facilities, water temperature and assistance; no climbing, hot-water controls or disinfectants.",
+      "steps": [
+        {
+          "title": "Seven hand areas and a complete wash",
+          "text": "The seven illustrations on page 37 cover palms, backs, finger spaces, bent-finger joints, thumbs, fingertips and wrists. Naming movements is not a complete wash: wetting, soap, rinsing and drying also matter. China CDC hand-hygiene information from 2026 supplements the whole process; a quiz cannot confirm actual clean hands.",
+          "activity": "Read or hear all seven pictures and identify the areas using accessible expression. After an adult checks facilities, carry out wetting, applying soap, rubbing the areas, rinsing with running water and drying with a clean towel or paper towel. Record reading, rehearsal and actual washing separately; leave unavailable actions pending."
+        },
+        {
+          "title": "Varied foods: appearance does not prove safety",
+          "text": "Page 38 includes vegetables, staple foods and other foods such as meat, fish, fruit and milk, with reminders about wild mushrooms, sprouted potatoes and fried snacks. Pictures do not establish safety or what every individual must eat. Caregivers arrange snack frequency; this lesson gives no medical diet.",
+          "activity": "Read the whole page and distinguish three food-example groups and three reminders. Discuss fictional cards for familiar food arranged for personal needs, an unknown roadside mushroom and a sprouted potato. Discuss who arranges meals and what must not be foraged or tasted; use cards only."
+        },
+        {
+          "title": "Four mealtime situations: preparation and responses",
+          "text": "The four pictures on page 39 show preparation, eating together, cough/sneeze hygiene and responding to food being offered. Thank others and explain what you can do or where you need help. Adults check suitable actions; do not carry hot food or use hot pots or knives.",
+          "activity": "Discuss all four pictures. With empty paper cards, rehearse thanking and asking to take your own card, then requesting help. Describe turning away and covering a cough or sneeze with a tissue or elbow in words only; no fake coughing or food in a demonstration. Listen to consent."
+        },
+        {
+          "title": "Four eating situations and bodily needs",
+          "text": "The four pictures on page 40 concern drinking, television, preferences and amount eaten. Discuss attention, suitable portions and avoiding waste. Explain hunger, fullness, thirst, allergies or discomfort to an adult; bowl counts do not diagnose needs and finishing a plate does not grade character.",
+          "activity": "Discuss each picture. Rehearse fictional requests: Xiaohe is full, Xiaozhu cannot have a food under their allergy arrangement, and Xiaoning is thirsty. Hear an adult response to each. Adults arrange devices; children do not handle plugs or electrical equipment."
+        },
+        {
+          "title": "Review an existing meal, not an extra meal",
+          "text": "Knowing a rule does not mean it happened. Review an existing caregiver-arranged meal; if it is not mealtime, leave the activity pending. Do not eat another meal for this task. Record communication and assistance without medical or bodily private details.",
+          "activity": "During an existing meal, make one suitable polite request or explain a need and hear the response. With the adult, distinguish actual washing, communication and arrangements. Do not invent finishing, agreement or improvement; keep future attempts separate."
+        }
+      ],
+      "manual": [
+        "Actually read or hear all seven page-37 pictures and identify palms, backs, finger spaces, joints, thumbs, fingertips and wrists with accessible expression. Reading is not washing.",
+        "After an adult checks facilities, temperature and support, actually wet, apply soap, rub the areas, rinse and dry, then review. Leave unavailable actions pending; rehearsal or answers do not replace washing. No disinfectants.",
+        "Read or hear the whole page-38 food material and discuss vegetables, staples and other examples plus wild mushrooms, sprouted potatoes and fried-snack reminders. Cards only: no foraging, tasting or safety guesses from appearance.",
+        "Discuss all four page-39 pictures: preparation, eating together, hygiene and responses. Missing material stays pending; no hot pots or knives.",
+        "With empty cards, actually rehearse thanks followed by taking your own card with consent and requesting help; describe cough/sneeze hygiene verbally. No fake coughs or food demonstrations; rehearsal is not a meal.",
+        "Read or hear all four page-40 pictures and rehearse explaining fullness, dietary restrictions and thirst with responses. No forced clean plates, universal water bans or appetite grading.",
+        "During an existing caregiver-arranged meal, actually make one suitable polite or needs request and hear a response, then review hygiene and arrangements. Pending events stay pending; no extra meals or completed future plans."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional records: A only read seven handwashing pictures; B, with adult-checked facilities, wetted, applied soap, rubbed the areas, rinsed and dried.",
+          "prompt": "Which is a picture-reading record?",
+          "reviewPrompt": "Which records the actual full wash?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Reading and doing are separate. A quiz cannot confirm clean hands."
+        },
+        {
+          "material": "Fictional food cards: A is familiar food arranged by a caregiver for personal needs; B is an unknown roadside wild mushroom that looks attractive.",
+          "prompt": "Which is arranged for personal needs?",
+          "reviewPrompt": "Which must not be foraged or eaten based on appearance?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Do not eat unknown wild mushrooms. Appearance cannot establish safety; familiar food still follows individual arrangements."
+        },
+        {
+          "material": "Fictional communication: Xiaohe thanks the adult and takes an empty card with consent; Xiaozhu explains a need for help and hears a response.",
+          "prompt": "Who took a card with consent?",
+          "reviewPrompt": "Who explained a need for help?",
+          "first": "Xiaohe",
+          "second": "Xiaozhu",
+          "explanation": "Independence and help can both be respected. Paper-card rehearsal is not carrying hot food or eating."
+        },
+        {
+          "material": "Fictional records: Xiaoning actually explained fullness at an existing meal and heard a response; Xiaoan only plans to explain a need next time.",
+          "prompt": "Who records actual mealtime communication?",
+          "reviewPrompt": "Who only has a future plan?",
+          "first": "Xiaoning",
+          "second": "Xiaoan",
+          "explanation": "Fullness can be explained honestly. Plans do not prove events, dietary effects or character."
+        }
+      ],
+      "reflections": [
+        "What did you actually read, rehearse or do at an existing meal, and where do you need help? You may use non-private examples; needs and feelings are not graded.",
+        "How might you explain needs or follow agreed arrangements next time? Separate future plans, responses and actual actions."
+      ]
+    },
+    "lesson11": {
+      "title": "Treating people politely",
+      "goal": "Observe respectful words and actions; practise invitations, greetings, thanks, listening and waiting, while recording real attempts without grading feelings or communication differences.",
+      "prerequisite": "An adult may read the book. Use desk cards and fictional roles; no real offices, checkouts or contact with strangers is required.",
+      "parentTip": "Politeness does not guarantee happiness or require obeying every request. Uncomfortable contact can be declined; pause or ask a trusted adult for help. No forced smiles, bows, eye contact, volume or movement. Real school entry and queue rules follow actual arrangements, not this example. Urgent needs can be explained and urgent help need not wait for an ordinary turn. No private stories or class character rankings.",
+      "steps": [
+        {
+          "title": "Four everyday situations and their purposes",
+          "text": "The four pictures on page 41 concern inviting a partner, greeting on returning home, letting another go first and thanking someone for work. Identify who addresses whom and why; a phrase alone does not prove respect. Feelings differ, without guaranteed warmth.",
+          "activity": "Read or hear all four pictures and describe the speaker, recipient and purpose. Optionally share a non-private event, or use book examples only. Listen to invitation responses; do not re-enact at real doors or playground equipment."
+        },
+        {
+          "title": "Four actions and accessible expression",
+          "text": "The four page-42 pictures show bowing, smiling, listening and waiting. Discuss meaning without making posture, expression or gaze the only respectful method. Words, gestures, text or nodding can be used.",
+          "activity": "Read or hear all four. Respond to a greeting comfortably, then take turns hearing one ordinary need and restating it. Separately rehearse waiting for an adult to handle a paper card and respond. No required body movement or uncomfortable waiting."
+        },
+        {
+          "title": "Practise words; requests are not permission",
+          "text": "The three completed petals on page 43 concern thanking for food, reporting before entering a teacher office, and listening. Thanks needs no purchased gift. Office entry follows real school rules; reporting or requesting does not itself grant entry.",
+          "activity": "With fictional roles, separately rehearse an invitation and response, a returning-home greeting, letting another take a card first and thanking for help. Then ask a fictional office worker to enter and await an explicit response. Desk words only, no real entry; listening may be accessible."
+        },
+        {
+          "title": "Your politeness flower: context and action",
+          "text": "Page 43 also has blanks and a prompt to continue. Concrete actions help review more than ranking others as a class politeness star. Personal experiences may remain private; do not grade classmates.",
+          "activity": "Draw or arrange five paper petals: explain the three supplied examples in your own words; add one original situation and action, such as asking to see a card and hearing the response; use the fifth for other possible methods. This is not class consensus or copied book text."
+        },
+        {
+          "title": "An attempt, a response and a separate plan",
+          "text": "One expression does not establish a lasting habit. Record attempts, responses, feelings and future wishes separately. Respect refusal while explaining your own needs; immediate happiness is not a completion condition.",
+          "activity": "With a willing adult, actually invite or thank during one safe desk exchange and hear the response, or label fictional role-play clearly. Review method, response and pending actions without names or private stories. Future attempts remain plans."
+        }
+      ],
+      "manual": [
+        "Read or hear all four page-41 pictures, naming recipients and purposes of invitation, greeting, going first and thanks. Book examples are enough; feelings need not match.",
+        "Read or hear all four page-42 pictures and discuss bowing, smiling, listening and waiting. Accessible expression is allowed; no forced face, gaze or body movement.",
+        "Actually rehearse fictional invitation and response, returning-home greeting, letting another take a card first, thanks, and requesting office entry with a response. Desk only; a request is not permission or a real school rule.",
+        "Comfortably respond to a greeting, hear and restate one need in turns, then rehearse waiting for the adult card response. Explain urgent needs; urgent help does not require ordinary waiting or uncomfortable persistence.",
+        "Actually draw or arrange a flower: review the three written page-43 examples, add an original context/action and other possible methods. No class rankings or guessed book blanks.",
+        "Actually carry out a willing safe desk invitation or thanks and hear a response, or clearly label fictional rehearsal. Review method, response and pending items; feelings are ungraded and future plans separate."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional cards: A asks whether a partner wants to view a card together; B greets a caregiver on returning to a fictional home without inviting an activity.",
+          "prompt": "Which asks about joining an activity?",
+          "reviewPrompt": "Which is a returning-home greeting?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Invitation and greeting have different purposes. A response is still needed; agreement is not automatic."
+        },
+        {
+          "material": "Fictional activities: Xiaohe hears a need and restates it; Xiaozhu waits for an adult to finish handling a card and respond. Both can use accessible expression.",
+          "prompt": "Who listens and confirms a need?",
+          "reviewPrompt": "Who waits for the card-handling response?",
+          "first": "Xiaohe",
+          "second": "Xiaozhu",
+          "explanation": "Listening and waiting are distinct, not proved by gaze, expression or volume."
+        },
+        {
+          "material": "Fictional office cards: A has only requested entry with no response; B has requested and heard the worker explicitly permit entry. Rehearsal only.",
+          "prompt": "Which has no entry permission yet?",
+          "reviewPrompt": "Which records an explicit yes?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "A request differs from permission. Fiction is not a real school arrangement or actual entry."
+        },
+        {
+          "material": "Fictional records: Xiaoning invited in role-play, heard a refusal and respected a pause; Xiaoan only plans a future invitation.",
+          "prompt": "Who has actual communication and response records?",
+          "reviewPrompt": "Who only has a future plan?",
+          "first": "Xiaoning",
+          "second": "Xiaoan",
+          "explanation": "Refusal or pause is not a character error. Plans do not prove invitations or lasting habits."
+        }
+      ],
+      "reflections": [
+        "What did you actually read, say, hear or rehearse? Which response needs respect and which expression suits you? No private family matters are required; feelings and accessible methods are ungraded.",
+        "How might you express respect or needs next time? Separate wishes, requests, explicit responses and actions, without requiring everyone to feel happy."
+      ]
+    },
+    "lesson12": {
+      "title": "Learning through play",
+      "goal": "Discuss materials and surroundings, practise stopping and asking for help, and actually vary desk rules, make a toy and explain original play. Keep discussion separate from real activities.",
+      "prerequisite": "An adult may read. Ordinary paper and a drawn board are enough; no outdoor visits, power lines or real emergency phones.",
+      "parentTip": "Not every object is a toy. Caregivers check activities and places. Dangerous pictures are discussion only: no line-side visits, scissors as toys, climbing for kites or pulling lines. Read injury pictures without creating injuries, rubbing eyes, cold-pack or massage experiments or medicines; suitable adults and clinicians handle care. Real emergencies may need help from a safe place; this lesson uses number cards only and makes no calls. Follow existing family time/screen arrangements; discomfort permits stopping, without races or guaranteed happiness.",
+      "steps": [
+        {
+          "title": "Materials and surroundings: two pictures",
+          "text": "Page 44 asks about scissors as toys and kites near power lines. Enjoyment alone does not establish safety, and a picture cannot approve a site with unknown conditions. Adults handle dangerous materials and conditions.",
+          "activity": "Read or hear both and distinguish material from environment issues. Discuss cards for ordinary desk paper play, waving real scissors and a kite near power lines. Cards only, without dangerous objects or outdoor testing."
+        },
+        {
+          "title": "Three stopping situations and four help pictures",
+          "text": "The three page-45 situations concern screen pause, bedtime and unsuitable game content. Four bottom pictures across pages 44–45 concern sand in an eye, a sprain, medical care and emergency help. Pictures are not child treatment prescriptions; stopping, requesting and resolution differ.",
+          "activity": "Read or hear all three situations and all four bottom pictures. Rehearse fictional messages about an agreed end, discomfort and needing an adult. Identify paper cards for 120 medical emergencies, 110 police and 119 fire rescue; no phone or test calls, and no treatment of another person."
+        },
+        {
+          "title": "Change a rule with the same materials",
+          "text": "Page 46 shows a changed skipping-rope activity. This site changes desk-card rules without claiming actual skipping or identical movement abilities. Both people understand and agree before trying; a new name alone is not a new method.",
+          "activity": "Arrange three large circle/square/triangle cards. First take turns pointing to a chosen card. Change to one person naming a symbol and the other pointing to its card, then swap roles. Actually try each method for a round and describe the change; accessible expression, pauses and no races."
+        },
+        {
+          "title": "Make a paper toy and another rule",
+          "text": "Page 46 also shows paper pieces and a board, with a prompt for new games. This original three-space board and two large pieces use clean ordinary paper, not copied illustrations, sharp tools or unknown waste.",
+          "activity": "Draw three spaces and prepare large circle and square pieces. Agree to take turns placing your piece in an empty space, ending after both are placed; actually each place once and put away. The child proposes another change, such as swapping piece identities, explains turns and stopping, listens and tries a round if both agree. Otherwise record it untried."
+        },
+        {
+          "title": "Stop, put away and review",
+          "text": "Making, changing rules, proposing, agreeing and playing are different records, without scoring feelings or wins. Untried ideas can stay pending; next-time arrangements are not already completed.",
+          "activity": "Actually end an agreed desk game and put away the pieces. Review contributions, differences and whether the new rule was tried. Label adult role-play rather than real classmate participation; leave undone items pending and future plans separate."
+        }
+      ],
+      "manual": [
+        "Read or hear both page-44 material/outdoor pictures and discuss paper, scissors and power-line kite cards. No danger contact or site permission inferred from a picture.",
+        "Read or hear all three page-45 screen, bedtime and content situations; rehearse agreed stopping, wanting more and pausing for discomfort, with responses. Needs are ungraded.",
+        "Read or hear all four bottom injury/help pictures across pages 44–45 and explain adult/clinical help. Read 120, 110 and 119 purpose cards and rehearse stating a need; no calls or injury treatment.",
+        "Actually try each of two methods with the three symbol cards and swap roles, describing a rule change. Consent, accessible methods and pauses are allowed; this is not book skipping practice.",
+        "Actually make an original three-space paper board and two large circle/square pieces; agree rules and each place once. Making and playing are separate; no sharp tools or unknown waste.",
+        "The child actually proposes an original rule change, explains turns and the end, listens and tries a round after agreement. Without agreement it stays unplayed; changing a name is insufficient. Label adult participation.",
+        "Actually end and put away an already-played desk game, reviewing contributions, differences and pending items. Keep future plans separate; no character scores by wins or feelings and no invented classmate play."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional play cards: A uses large paper cards at an adult-checked desk; B waves real scissors at another person. Reading only.",
+          "prompt": "Which has checked conditions for desk materials?",
+          "reviewPrompt": "Which should not be tried?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Materials and actions both matter. Discussion does not prove dangerous actions were rehearsed or every place approved."
+        },
+        {
+          "material": "Number cards explicitly say A: 120 medical emergency, B: 119 fire rescue. Read cards only, without calls.",
+          "prompt": "Which is for a medical emergency?",
+          "reviewPrompt": "Which is for fire rescue?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Real emergencies need appropriate help from a safe place; class practice makes no calls and children are not clinicians or firefighters."
+        },
+        {
+          "material": "Fictional records: Xiaohe actually changed pointing turns to symbol-led pointing with the same three cards; Xiaozhu made a new paper board and two pieces.",
+          "prompt": "Who changed play using the same materials?",
+          "reviewPrompt": "Who made a new paper toy?",
+          "first": "Xiaohe",
+          "second": "Xiaozhu",
+          "explanation": "Rule changes and making differ. Ideas do not confirm either action, and making does not prove play."
+        },
+        {
+          "material": "Fictional records: Xiaoning heard the agreed end, stopped and put away paper; Xiaoan only plans to do that next time.",
+          "prompt": "Who records actual stopping and putting away?",
+          "reviewPrompt": "Who only has a future plan?",
+          "first": "Xiaoning",
+          "second": "Xiaoan",
+          "explanation": "Wanting more can be expressed. Plans differ from actions without guaranteed happiness or habits."
+        }
+      ],
+      "reflections": [
+        "What did you actually read, make or play, and how did you explain stopping or needing help? Feelings can differ; no private injury information or invented outdoor events.",
+        "How might you change rules or timing next? Separate ideas, consent, actual trials and future plans."
+      ]
     }
   },
   "lower": {
@@ -1432,6 +1671,249 @@
       "reflections": [
         "What did you actually do when hearing a story, discussing cards or role-playing? What remains unknown? Fictional discussion is enough, without family secrets or rankings.",
         "How might you hear stories or express needs next time? Separate imagination and hopes from occurred events; no demand for immediate acceptance or reconciliation."
+      ]
+    },
+    "lesson10": {
+      "title": "Caring for one another in a family",
+      "goal": "Read different forms of care, separate stories from real experiences, and practise asking before showing care while respecting family differences, privacy and needs.",
+      "prerequisite": "An adult may read the book. Fictional materials are enough; no photos, real birthdays, workplaces or private family experiences are required.",
+      "parentTip": "Families, living arrangements and caregivers differ. Do not rank care by money, gifts, jobs, contact or obedience. Uncomfortable touch can be declined and help can be needed; difficulty carrying a bag does not grade character. Adults handle illness: no medicines, lifting people or treatment. Birthdays may be unknown or private; use fictional dates. No names, addresses, photos or secrets are collected. Worry or harm can be shared with a trusted adult; do not require endurance or immediate reconciliation.",
+      "steps": [
+        {
+          "title": "Notice care without requiring one feeling",
+          "text": "Three children on page 38 describe different signs of care. Describe specific actions without guessing real family identities or requiring the same experience. Fictional story: a caregiver asks Xiaohe whether help putting away a book is wanted; Xiaohe agrees and the caregiver puts away one book. This is discussion material.",
+          "activity": "Read or hear all three textbook examples and the complete fictional story; identify request, consent and action. Optionally share a non-private small event, or use fiction only. No names or photos and no requirement to feel happy."
+        },
+        {
+          "title": "Mutual care without ranking work",
+          "text": "Page 39 has two work pictures and three family-care pictures involving work, company, a gift and illness. Respect different work and caregiving; jobs and gifts do not measure love. A picture of care for illness is not a child treatment task.",
+          "activity": "Read or hear both work pictures and all three care pictures, distinguishing visible actions from unknown conditions. Discuss a fictional child asking whether quiet is wanted while adults care for illness and hearing a reply. Words only: no medicine, hot drinks or contact with an ill person."
+        },
+        {
+          "title": "The complete four-picture schoolbag story",
+          "text": "The four bottom pictures across pages 38–39 discuss carrying a bag and independence. Read the request and response in sequence. Try suitable tasks, but explain weight, discomfort or support needs. Not doing one task for a child does not by itself establish a lack of care.",
+          "activity": "Read or hear all four pictures and describe the question, response and unspecified conditions by number. With desk cards, rehearse saying you can place a card yourself and saying you need help, hearing responses. No heavy bags or removing assistive items."
+        },
+        {
+          "title": "Three care situations and birthday cards",
+          "text": "The three pictures on page 40 concern busy family members, company and leaving home; four birthday entries follow. Ask before offering care, rather than assuming loneliness or requiring hugs. Unknown birthdays can stay unknown; real dates are not needed here.",
+          "activity": "Discuss the three pictures and rehearse asking a busy adult whether they want to hear one sentence, asking a resting character whether company is wanted, and expressing a leaving-home message under caregiver arrangements. Fictional cards: A March 2, B May 6, C unknown, D chooses privacy. Distinguish all four without guessing."
+        },
+        {
+          "title": "A small action with consent and honest review",
+          "text": "Care may be words, listening or a suitable action, while respecting refusal and pause. Plans, agreement and completed actions are separate. Do not require identical responses or immediate real-family reconciliation.",
+          "activity": "Ask whether a person wants one desk paper card; do it only after consent and hear the reply. Alternatively use fictional-role rehearsal and label it. Review actual actions, refusal/pause and pending items; keep future care plans separate and family matters private."
+        }
+      ],
+      "manual": [
+        "Read or hear all three page-38 care examples and the complete fictional one-book story; identify request, consent and action. Fiction is enough, with no names, photos or forced happiness.",
+        "Read or hear both page-39 work pictures and all three care pictures, naming actions and unknown conditions. Do not rank jobs or gifts; illness is discussion only, with no medicine or hot drinks.",
+        "Read or hear all four schoolbag-story pictures and identify requests and responses by number; rehearse placing a desk card and asking for help. No heavy bags or character judgments about help.",
+        "Discuss all three page-40 busy, company and leaving-home pictures; ask whether care is wanted and listen. Do not assume being alone means loneliness or go out alone.",
+        "Read all four fictional birthday cards: A March 2, B May 6, C unknown, D private. Distinguish given dates, unknowns and privacy; do not give real birthdays or guess book blanks.",
+        "Actually rehearse three fictional communications: asking a busy person, offering company and a leaving-home message. Hear responses and allow pause or refusal; no required hugs or doing adult work.",
+        "With consent actually carry out a safe desk care action and hear a response, or clearly label fictional rehearsal. Review actual, refused/paused and pending actions; future plans do not prove family improvement."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional care records: A asks to pass a paper card and does so after consent; B asks, hears that it is not needed and pauses.",
+          "prompt": "Which passed a card after consent?",
+          "reviewPrompt": "Which respected the reply by pausing?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Listen to agreement and refusal. Pausing does not mean a lack of care."
+        },
+        {
+          "material": "Fictional birthday cards: A explicitly says March 2; B says the date is unknown with no other clues.",
+          "prompt": "Which gives an explicit date?",
+          "reviewPrompt": "Which must remain unknown?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Do not guess unknown dates or require real birthdays."
+        },
+        {
+          "material": "Fictional desk records: Xiaohe says they can place a card and does so with consent; Xiaozhu asks for help and the adult agrees to help.",
+          "prompt": "Who has already placed the card?",
+          "reviewPrompt": "Who explained a help need and heard agreement?",
+          "first": "Xiaohe",
+          "second": "Xiaozhu",
+          "explanation": "Abilities differ. Agreement to help is not completion, and help does not negate care."
+        },
+        {
+          "material": "Fictional records: Xiaoning completed a request-and-listening role-play with an adult; Xiaoan only wrote a future request plan.",
+          "prompt": "Who records actual role-play?",
+          "reviewPrompt": "Who only has a future plan?",
+          "first": "Xiaoning",
+          "second": "Xiaoan",
+          "explanation": "Role-play, real-family experiences and plans are separate; do not claim relationships improved."
+        }
+      ],
+      "reflections": [
+        "What did you actually read, ask, hear or rehearse, and which response needs respect? You need not discuss real family matters; refusal, pause and feelings are not graded.",
+        "How might you show care next time? Separate hopes, consent and events, without requiring immediate acceptance or reconciliation."
+      ]
+    },
+    "lesson11": {
+      "title": "Let me help put things away",
+      "goal": "Recognise uses, discuss scattered belongings, and actually sort, label, retrieve, use and return items with suitable help; keep future plans separate.",
+      "prerequisite": "An adult may read. Ordinary paper cards and safe desk space are enough; no storage purchases or room photos are required.",
+      "parentTip": "Participation does not mean having to do everything independently. Ask for help or use accessible methods; room size, possessions, speed and difficulty are not scored. Handle only willing personal items an adult confirms safe: no scissors, medicines, electrical equipment or cleaning chemicals, climbing or heavy lifting. Do not dispose of others’ things. Sock and shoe examples do not require identical use or diagnose abilities. Adults follow item-specific care instructions, rather than washing everything.",
+      "steps": [
+        {
+          "title": "Belongings and two riddles",
+          "text": "Page 41 shows toys and school materials with two riddles for socks and shoes. Items can support activities; how many someone owns does not grade them. Riddle imagery does not require identical clothing or bodily experiences.",
+          "activity": "Read or hear the examples and both riddles, identify socks and shoes from clues and describe one use in your own words. Alternatively use book, paper-and-pencil, toy, sock, shoe and ball cards. No sharp tools or private possessions are needed."
+        },
+        {
+          "title": "Two scattered-item situations; do not guess causes",
+          "text": "The two page-42 pictures concern finding an eraser and an adult tidying again. Scattered items can make finding or passage harder, but pictures do not prove deliberate loss or describe a real home. Help finding things can be requested.",
+          "activity": "Read or hear both and distinguish visible situations from unknown causes. Discuss desk records: a book card in the play area and a ball card in the study area. Identify mismatches with the agreed rule, without actually losing objects or creating trip hazards."
+        },
+        {
+          "title": "Sort, label and retrieve separately",
+          "text": "Page 43 shows sorting, arranging, labels and suitable places. Agree categories by use; labels match areas. Actually test retrieval after placing, rather than treating a label as completed tidying.",
+          "activity": "Sort six cards under explicit uses: book/paper-and-pencil for study, toy/ball for play, socks/shoes for wearing. Arrange three area labels and the matching cards. On hearing “book card in study”, retrieve and return it. Symbols can replace writing; no real scissors."
+        },
+        {
+          "title": "Use and return; suitable care differs",
+          "text": "The page-43 verse also concerns returning and caring for objects. Care methods differ, so not everything goes in water. Adults use item instructions and conditions; this site discusses rather than applying chemicals or handling electronics.",
+          "activity": "Actually take a willing card from its labelled place, view it once and return it, checking the label. Separately discuss keeping ordinary paper dry and following adult instructions for an item confirmed washable. No actual washing. Record taking, using, returning and discussion separately."
+        },
+        {
+          "title": "Agreed timing and a small contribution",
+          "text": "Page 44 shows scheduled tidying and returning to place, plus statements about postponing participation and expecting another to do it. Contribute what is suitable with help; support needs are not avoidance. A future agreed time is not completed action.",
+          "activity": "Read or hear both methods and both statements, then agree a feasible tidying time. If now is agreed, actually tidy one safe desk area and review. If later, leave it pending until the real time arrives. Record personal contribution, help and future plans without declaring a lasting habit."
+        }
+      ],
+      "manual": [
+        "Read or hear page-41 examples and both riddles; use clues to identify socks and shoes and describe uses. Cards are enough; identical possessions or bodily experiences are not required.",
+        "Read or hear both page-42 pictures, discussing effects and unknown causes; identify the fictional book/ball area mismatches. No actual losses or assumptions of deliberate difficulty.",
+        "Actually sort six use cards into study (book/paper-and-pencil), play (toy/ball) and wearing (socks/shoes), explaining the rule. Discussion does not prove a real room was tidied.",
+        "Actually arrange three area labels and cards, then retrieve and return the specified book card from study. Check labels, placement and retrieval separately; accessible symbols are allowed.",
+        "Actually take a willing ordinary card, view it and return it to its original place, checking the location. Using and returning are separate actions, not confirmed by quiz answers.",
+        "Actually discuss keeping paper dry and adult/item instructions for something washable. No immersion of arbitrary items, chemicals or electronics; this is discussion, not washing.",
+        "Read or hear both page-44 methods and both postponement/delegation statements, agreeing participation and help suited to ability. Agreement is not execution; help is not graded.",
+        "At the agreed real time, actually tidy one safe desk area and review contribution and assistance. Future time stays pending; no climbing, heavy lifting or disposing of others’ things. Keep future plans separate."
+      ],
+      "pairs": [
+        {
+          "material": "Explicit fictional use cards: A is book and paper-and-pencil cards for study; B is toy and ball cards for play. No real sharp objects are involved.",
+          "prompt": "Which follows a study-use rule?",
+          "reviewPrompt": "Which follows a play-use rule?",
+          "first": "Group A",
+          "second": "Group B",
+          "explanation": "Use the explicit rule. Other reasonable real-life rules can exist; categories do not grade children or items."
+        },
+        {
+          "material": "Fictional records: A only plans to label later; B placed a study label and book card, then actually retrieved and returned it.",
+          "prompt": "Which only has a labelling plan?",
+          "reviewPrompt": "Which records labels, placement and retrieval?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Plans, labels and retrieval are separate. Ideas do not automatically confirm tidying."
+        },
+        {
+          "material": "Care cards: A is ordinary paper to keep dry; B is an item an adult has confirmed washable under its instructions, with the method arranged by that adult.",
+          "prompt": "Which should stay dry?",
+          "reviewPrompt": "Which still follows adult and item instructions for washing?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Do not immerse arbitrary items. Discussion only: no chemicals or electronics handled by children."
+        },
+        {
+          "material": "Fictional records: Xiaoning tidied a desk area at the agreed real time and recorded help; Xiaoan agreed tomorrow, which has not arrived.",
+          "prompt": "Who records actual tidying?",
+          "reviewPrompt": "Who should keep the activity pending?",
+          "first": "Xiaoning",
+          "second": "Xiaoan",
+          "explanation": "Help may be recorded without being avoidance. Future times do not prove completion or habits."
+        }
+      ],
+      "reflections": [
+        "Which cards did you actually sort, place, retrieve or return, and where do you need help? No room photos or private information; difficulties and accessible methods are ungraded.",
+        "When and which small part might you tidy next? Separate agreement, execution and future plans; one attempt is not a lasting habit."
+      ]
+    },
+    "lesson12": {
+      "title": "Learning to help with housework",
+      "goal": "Recognise contributions, actually learn folding and a suitable new method, discuss abilities and help, and record real participation and seven-day reminders without automatic completion.",
+      "prerequisite": "An adult may read and provide willing clean shirt/shorts and a safe desk. Missing materials leave that practical task pending; paper answers do not replace folding.",
+      "parentTip": "Participate under caregiver checks and abilities, with help and pauses; no scores by gender, speed, home circumstances or difficulties. Sweeping, rubbish and dishes are picture discussions: no unknown rubbish, sharp broken things, hot water, chemicals, electrical equipment or collecting deliveries alone. Fold ordinary safe clothing without climbing or heavy lifting. Shoelaces use an adult-checked desk shoe and known method, never around the body; learning is not guaranteed for everyone. Label paper substitutes without claiming real folding or all pictured chores. Future dates stay pending.",
+      "steps": [
+        {
+          "title": "The housework tree: five examples and a blank",
+          "text": "Five pictured apples on page 45 concern sweeping, wiping, rubbish, books and tableware, with one blank. Picture counts are not ability rankings or completed chores.",
+          "activity": "Read or hear all five and discuss whose checks and help are needed. Optionally name a safe past contribution or something to learn, separating done from planned. Do not guess a fixed blank answer or use dangerous rubbish or knives."
+        },
+        {
+          "title": "Three experiences; contributions and feelings differ",
+          "text": "The three page-46 experiences concern sharing work, sweeping difficulty and first-time dishes. Suitable participation can practise skills, without guaranteed happiness or quick mastery. Explain difficulty rather than deliberately making wet clothes.",
+          "activity": "Read or hear all three, distinguishing contribution, difficulty and unknown conditions. Rehearse willing card placement, requesting a demonstration and asking to pause, each with a response. No real rubbish, dishes or deliberate wet clothing."
+        },
+        {
+          "title": "Two garments: read six pictures, then fold",
+          "text": "The shirt and shorts on page 47 each have three stages from spreading to aligning and folding smaller. In this site’s own words: lay a shirt flat, bring sleeves inward and fold top to bottom; lay shorts flat, align the legs and fold smaller. Ask for a demonstration suited to the actual garment.",
+          "activity": "Read or hear all six pictures, then actually fold a willing clean shirt and shorts separately on an adult-checked desk, spreading, aligning, folding and reviewing. Record help; no size conformity or races. Leave a missing garment pending; cards do not prove real folding."
+        },
+        {
+          "title": "Another method and three conversations",
+          "text": "Page 47 also shows learning shoelaces and introducing a method; page 48 has adults declining help, strength limitations and a request during reading. Safety, willingness and timing can be discussed. Help or declining a movement is not laziness; deliveries do not become a child’s solo stranger-contact task.",
+          "activity": "An adult demonstrates a known lace method with an existing safe shoe on a desk. The child watches, attempts feasible steps and explains difficulty without body loops or guaranteed mastery. With card roles, rehearse hearing help is not wanted, changing a too-heavy task and negotiating time during reading. No real mopping or delivery collection."
+        },
+        {
+          "title": "Seven-day reminders and one actual contribution",
+          "text": "The seven-day table on page 48 has some ticks; blanks do not automatically mean completion or failure. Reminders, future dates and actions differ. Do not invent a whole week before it occurs.",
+          "activity": "Draw seven Monday–Sunday cells and choose an adult-approved project and feasible time. Review folding already done here or participate in suitable desk housework, recording the child’s contribution, help and actual date. Future cells stay pending and unknowns stay unknown. Explain one possible adjustment; future plans are separate, without extra repeated burden."
+        }
+      ],
+      "manual": [
+        "Read or hear all five pictured page-45 apples and the blank; discuss checks and help for sweeping, wiping, rubbish, books and tableware. Optionally name done/planned work without guessing a fixed blank or ranking quantities.",
+        "Read or hear all three page-46 experiences, separating contribution, difficulty and feeling; rehearse participation, demonstration and pause requests with responses. No deliberate wet clothes or dangerous rubbish.",
+        "Read or hear all six page-47 shirt/shorts pictures, three each, describing spreading, alignment and folding. Reading does not claim actual folding.",
+        "After adult checks, actually fold a willing clean shirt by spreading, bringing sleeves inward and folding, then review. Adjust with demonstration, label help, leave missing materials pending and avoid races.",
+        "After adult checks, actually fold willing clean shorts by spreading, aligning legs and folding, then review. Missing materials stay separately pending; cards do not replace real completion or require a uniform size.",
+        "Actually watch a known adult lace method on a safe desk shoe, attempt feasible steps and describe difficulty, or demonstrate a method you really know for a partner to try. Missing conditions stay pending; no body loops or guaranteed learning.",
+        "Read or hear all three page-48 situations and rehearse card-role requests/responses for unwanted help, strength limits and reading-time negotiation. No forced uncomfortable actions or solo delivery pickup.",
+        "Actually draw seven Monday–Sunday reminder cells with suitable project/time, separating happened, future-pending and unknown entries. Do not copy book ticks as facts or score future/blank cells as failures.",
+        "Actually review one completed folding task or adult-approved safe chore with date, contribution, help and a possible adjustment. Unhappened stays pending; no repeated burden or invented seven days, and future plans separate."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional records: A actually folded a clean shirt and recorded help; B only viewed its three pictures and has not folded.",
+          "prompt": "Which records actual folding?",
+          "reviewPrompt": "Which only records picture reading?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Reading and doing differ. Help does not erase contribution; answers cannot confirm chores."
+        },
+        {
+          "material": "Fictional communication: Xiaohe requests a demonstration and hears a response; Xiaozhu explains current reading and agrees to place cards later.",
+          "prompt": "Who requests method support?",
+          "reviewPrompt": "Who negotiates participation time?",
+          "first": "Xiaohe",
+          "second": "Xiaozhu",
+          "explanation": "Help and timing differ. An agreement is not action, and help is not laziness."
+        },
+        {
+          "material": "Explicit reminder cells: A is today with shorts actually folded and dated; B is tomorrow, not yet arrived or done.",
+          "prompt": "Which can record a completed event?",
+          "reviewPrompt": "Which stays future-pending?",
+          "first": "Cell A",
+          "second": "Cell B",
+          "explanation": "Do not invent ticks or grade future/unknown cells as failures; no lasting-habit claim."
+        },
+        {
+          "material": "Fictional materials: A is adult-checked clean ordinary clothing willingly folded at a desk; B is unknown rubbish potentially containing broken sharp objects, not handled here.",
+          "prompt": "Which permits folding under checked conditions?",
+          "reviewPrompt": "Which should not be handled by the child here?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Check each condition rather than assuming every chore is suitable or involving dangerous things."
+        }
+      ],
+      "reflections": [
+        "What did you actually learn, fold or discuss, who helped, and what remains pending? Record difficulties and feelings honestly without photos or private home information.",
+        "Which small contribution might you try and when do you need a demonstration? Separate reminders, agreement, real dates and plans; a table does not prove seven completed days."
       ]
     }
   },

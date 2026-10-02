@@ -166,8 +166,8 @@ const root = `${repo}/apps/web-antd/dist`;
         ['math', 'pep-2024', 'lower', 18],
         ['math', 'sujiao', 'upper', 71],
         ['math', 'sujiao', 'lower', 87],
-        ['ethics', 'pep-2024', 'upper', 9],
-        ['ethics', 'pep-2024', 'lower', 9],
+        ['ethics', 'pep-2024', 'upper', 12],
+        ['ethics', 'pep-2024', 'lower', 12],
       ];
       for (const [subject, edition, volume, count] of volumes) {
         await p.goto(

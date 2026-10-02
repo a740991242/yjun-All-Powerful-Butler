@@ -32,7 +32,7 @@ export const ethicsTextbooks: Textbook[] = (['upper', 'lower'] as const).map(
 /** Availability follows authored lessons, not contents or body-read metadata alone. */
 function authoredLesson(
   volume: Volume,
-  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9,
+  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
   page: number,
   t: (key: string) => string,
 ): Lesson {
@@ -57,6 +57,15 @@ function authoredLesson(
   if (number === 9) {
     manualIndexes = [0, 1, 2, 3, 4, 5];
     if (volume === 'lower') manualIndexes.push(6);
+  }
+  if (number === 10) manualIndexes = [0, 1, 2, 3, 4, 5, 6];
+  if (number === 11) {
+    manualIndexes = [0, 1, 2, 3, 4, 5];
+    if (volume === 'lower') manualIndexes.push(6, 7);
+  }
+  if (number === 12) {
+    manualIndexes = [0, 1, 2, 3, 4, 5, 6];
+    if (volume === 'lower') manualIndexes.push(7, 8);
   }
   let reviewer = '原书第四课与原创活动范围核对，非教师最终审校';
   let notes =
@@ -97,6 +106,21 @@ function authoredLesson(
     reviewer = '原书第九课与原创活动范围核对，非教师最终审校';
     notes =
       '上册印刷34～36页、下册34～37页实际阅读；作息记录与未知、三早晨和六睡眠故事完整、陪伴及提醒和真实次日分记；家庭关系明示、相似不证血缘、八兄妹故事完整、不收隐私，反思null、计划另记。';
+  }
+  if (number === 10) {
+    reviewer = '原书第十课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷37～40页、下册38～40页实际阅读；洗手七部位与全过程、食物三提醒、餐桌四幅及需要分记；家庭三关怀、两工作三照顾、完整四背包、三情境与四虚构生日分别人工；不强迫清盘/接触/披露，不冒扮演为真实经历，反思null、计划另记。';
+  }
+  if (number === 11) {
+    reviewer = '原书第十一课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷41～43页、下册41～44页实际阅读；两组四礼貌情境、请求回应/倾听等待/花瓣分别实际，不迫表情眼神或服从；物品双谜语、两散放、六卡分类标签找回、取用归位与适合照顾、真实时机参与分记，不把辅助或未来安排当品德错/已执行，反思null、计划另记。';
+  }
+  if (number === 12) {
+    reviewer = '原书第十二课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷44～46页、下册45～48页实际阅读；两安全/三节制与四求助资料完整读听，号码纸卡、不做危险或医疗处理，换玩法/新纸玩具/原创规则与停止实际分记；家务五苹果/三经历/六叠衣图、真实两衣物、已知系带或自会方法、三沟通和七天提示/实际贡献分记，不补造未来或强迫能力，反思null、计划另记。';
   }
   const objective = (review: boolean): Question[] =>
     objectiveIndexes.map((index) => ({
@@ -176,7 +200,10 @@ export function createEthicsBooks(t: (key: string) => string): Book[] {
           number === 6 ||
           number === 7 ||
           number === 8 ||
-          number === 9
+          number === 9 ||
+          number === 10 ||
+          number === 11 ||
+          number === 12
         )
           return authoredLesson(book.volume, number, item.page, t);
         const title = t(`educationEthics.${book.volume}.l${number}`);

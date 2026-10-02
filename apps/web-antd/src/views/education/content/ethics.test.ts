@@ -25,7 +25,7 @@ function translation(messages: unknown) {
   };
 }
 
-it('resolves independent ethics routes and keeps 14 unread lessons unavailable', () => {
+it('resolves independent ethics routes and keeps 8 unread lessons unavailable', () => {
   const books = createEthicsBooks(translation(zh));
   expect(textbooks).toHaveLength(4);
   for (const book of books) {
@@ -37,7 +37,7 @@ it('resolves independent ethics routes and keeps 14 unread lessons unavailable',
     expect(lessons).toHaveLength(16);
     expect(
       lessons.filter((lesson) => lesson.status === 'available'),
-    ).toHaveLength(9);
+    ).toHaveLength(12);
     for (const lesson of lessons.filter(
       (item) => item.status === 'preparing',
     )) {
@@ -140,6 +140,12 @@ it.each([
   ['lower', 8, 7],
   ['upper', 9, 6],
   ['lower', 9, 7],
+  ['upper', 10, 7],
+  ['lower', 10, 7],
+  ['upper', 11, 6],
+  ['lower', 11, 8],
+  ['upper', 12, 7],
+  ['lower', 12, 9],
 ] as const)(
   'preserves first-lesson snapshots alongside %s lesson %i and supplies changed review for every mistaken skill',
   (volume, number, manualCount) => {
@@ -308,7 +314,7 @@ it('separates campus information sources and permissions, apology from repair, a
         expect(evaluate(question.rule, 'A future plan only')).toBeNull();
       }
     }
-    expect(required(required(book.units[2]).lessons[1]).status).toBe(
+    expect(required(required(book.units[3]).lessons[0]).status).toBe(
       'preparing',
     );
   }
@@ -548,4 +554,88 @@ it('keeps sleep observations honest and family stories voluntary with complete s
   for (const phrase of ['外貌', '地址', '照片', '秘密'])
     expect(zh.lower.lesson9.parentTip).toContain(phrase);
   expect(zh.lower.lesson9.steps[3]?.text).toContain('本站虚构小事');
+});
+
+it('keeps meal and family lesson-ten actions distinct, accessible, private and manually confirmed', () => {
+  for (const messages of [zh, en]) {
+    for (const book of createEthicsBooks(translation(messages))) {
+      const lesson = required(required(book.units[2]).lessons[1]);
+      const copy = messages[book.volume].lesson10;
+      expect(lesson.title).toBe(copy.title);
+      expect(lesson.steps.map((step) => step.text)).toEqual(
+        copy.steps.map((step) => step.text),
+      );
+      const actual = lesson.questions.filter((q) => q.rule.kind === 'manual');
+      expect(actual.map((q) => q.prompt)).toEqual(copy.manual);
+      for (const q of actual) expect(evaluate(q.rule, 'confirmed')).toBeNull();
+    }
+  }
+  expect(zh.upper.lesson10.manual[0]).toContain('全部七幅');
+  expect(zh.upper.lesson10.manual[3]).toContain('全部四幅');
+  expect(zh.upper.lesson10.manual[5]).toContain('全部四幅');
+  expect(zh.upper.lesson10.parentTip).toContain('不强迫尝新或清空饭碗');
+  expect(zh.upper.lesson10.parentTip).toContain('普遍禁水规则');
+  expect(zh.lower.lesson10.manual[1]).toContain('两幅工作图和三幅关怀图');
+  expect(zh.lower.lesson10.manual[2]).toContain('全部四幅');
+  expect(zh.lower.lesson10.manual[4]).toContain('丙未知、丁不愿分享');
+  expect(zh.lower.lesson10.parentTip).toContain('可拒绝不舒服的接触');
+  expect(zh.lower.lesson10.parentTip).toContain('不收姓名住址照片秘密');
+});
+
+it('supports respectful expression and actual tidying without ranking abilities or inventing permission', () => {
+  for (const messages of [zh, en]) {
+    for (const book of createEthicsBooks(translation(messages))) {
+      const lesson = required(required(book.units[2]).lessons[2]);
+      const copy = messages[book.volume].lesson11;
+      expect(lesson.title).toBe(copy.title);
+      expect(lesson.steps.map((step) => step.activity)).toEqual(
+        copy.steps.map((step) => step.activity),
+      );
+      expect(
+        lesson.questions
+          .filter((q) => q.rule.kind === 'manual')
+          .map((q) => q.prompt),
+      ).toEqual(copy.manual);
+    }
+  }
+  expect(zh.upper.lesson11.manual[0]).toContain('全部四幅');
+  expect(zh.upper.lesson11.manual[1]).toContain('全部四幅');
+  expect(zh.upper.lesson11.manual[2]).toContain('请求不等于许可');
+  expect(zh.upper.lesson11.manual[4]).toContain('三个已写花瓣');
+  expect(zh.upper.lesson11.parentTip).toContain('不强迫微笑、鞠躬、眼神接触');
+  expect(zh.lower.lesson11.manual[0]).toContain('全部两个谜语');
+  expect(zh.lower.lesson11.manual[1]).toContain('全部两幅');
+  expect(zh.lower.lesson11.manual[2]).toContain('六张用途卡');
+  expect(zh.lower.lesson11.manual[3]).toContain('标签、放置、找回分别核对');
+  expect(zh.lower.lesson11.manual[7]).toContain('时间未到待做');
+  expect(zh.lower.lesson11.parentTip).toContain('不等于必须独立完成');
+});
+
+it('separates safe-play invention, actual clothing practice and future reminder dates', () => {
+  for (const messages of [zh, en]) {
+    for (const book of createEthicsBooks(translation(messages))) {
+      const lesson = required(required(book.units[2]).lessons[3]);
+      const copy = messages[book.volume].lesson12;
+      expect(lesson.title).toBe(copy.title);
+      expect(lesson.steps.map((step) => step.text)).toEqual(
+        copy.steps.map((step) => step.text),
+      );
+      expect(
+        lesson.questions
+          .filter((q) => q.rule.kind === 'manual')
+          .map((q) => q.prompt),
+      ).toEqual(copy.manual);
+    }
+  }
+  expect(zh.upper.lesson12.manual[2]).toContain('全部四幅');
+  expect(zh.upper.lesson12.manual[2]).toContain('120、110、119');
+  expect(zh.upper.lesson12.manual[5]).toContain('原创规则变化');
+  expect(zh.upper.lesson12.parentTip).toContain('不冷敷或按摩试验');
+  expect(zh.lower.lesson12.manual[0]).toContain('全部五个');
+  expect(zh.lower.lesson12.manual[1]).toContain('全部三种');
+  expect(zh.lower.lesson12.manual[2]).toContain('共六图');
+  expect(zh.lower.lesson12.manual[3]).toContain('实际叠一件');
+  expect(zh.lower.lesson12.manual[4]).toContain('实际叠一条');
+  expect(zh.lower.lesson12.manual[7]).toContain('七格');
+  expect(zh.lower.lesson12.manual[8]).toContain('不补造七天');
 });
