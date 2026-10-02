@@ -1,5 +1,6 @@
 import type { Subject, Volume } from '../learning/types';
 
+import { ethicsTextbooks } from './ethics';
 import { sujiaoUpperTextbook } from './sujiao';
 import { sujiaoLowerTextbook } from './sujiao-lower';
 
@@ -219,7 +220,7 @@ export function findTextbook(
     if (volume === 'upper') return sujiaoUpperTextbook;
     if (volume === 'lower') return sujiaoLowerTextbook;
   }
-  return textbooks.find(
+  return [...textbooks, ...ethicsTextbooks].find(
     (item) =>
       item.subject === subject &&
       item.edition === edition &&

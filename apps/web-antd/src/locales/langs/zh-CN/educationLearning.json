@@ -1,6 +1,6 @@
 {
   "gradeOneTitle": "一年级课程",
-  "gradeOneDescription": "语文与数学 · 上下册 · 按教材版本学习",
+  "gradeOneDescription": "语文、数学与道德与法治 · 上下册 · 按教材版本学习",
   "enterGradeOne": "进入一年级课程",
   "backGrades": "返回年级选择",
   "chinese": "语文",
@@ -937,5 +937,6 @@
   "regionalProvince_hong-kong": "香港",
   "regionalProvince_macau": "澳门",
   "regionalProvince_taiwan": "台湾",
-  "regionalSchool_wujiang-choudu-primary": "苏州市吴江区绸都小学"
+  "regionalSchool_wujiang-choudu-primary": "苏州市吴江区绸都小学",
+  "ethics": "道德与法治"
 }

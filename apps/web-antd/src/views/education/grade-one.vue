@@ -10,6 +10,7 @@ import { $t } from '#/locales';
 
 import { chineseBooks } from './content/chinese';
 import { editionTarget } from './content/edition-targets';
+import { createEthicsBooks } from './content/ethics';
 import { mathBooks } from './content/math';
 import { sujiaoBooks } from './content/sujiao';
 import { sujiaoLowerSource } from './content/sujiao-lower-source';
@@ -57,9 +58,12 @@ const textbook = computed(() =>
   findTextbook(route.params.subject, route.params.edition, route.params.volume),
 );
 const book = computed(() =>
-  [...mathBooks, ...chineseBooks, ...sujiaoBooks].find(
-    (item) => item.id === textbook.value?.id,
-  ),
+  [
+    ...mathBooks,
+    ...chineseBooks,
+    ...sujiaoBooks,
+    ...createEthicsBooks($t),
+  ].find((item) => item.id === textbook.value?.id),
 );
 const sujiaoSource = computed(() => {
   if (target.value?.edition !== 'sujiao') return undefined;
@@ -97,7 +101,10 @@ function choose(subject: string, volume: string) {
         >
           {{ $t('educationLearning.backGrades') }}
         </Button>
-        <template v-for="subject in ['chinese', 'math']" :key="subject">
+        <template
+          v-for="subject in ['chinese', 'math', 'ethics']"
+          :key="subject"
+        >
           <Button
             class="!min-h-11"
             v-for="volume in ['upper', 'lower']"
@@ -151,7 +158,15 @@ function choose(subject: string, volume: string) {
         v-else-if="!textbook"
         :description="$t('educationLearning.invalidBook')"
       />
-      <BookWorkspace v-else-if="book" :key="book.id" :book="book" />
+      <template v-else-if="book">
+        <Alert
+          v-if="book.subject === 'ethics'"
+          type="info"
+          show-icon
+          :message="$t('educationEthics.sourceNotice')"
+        />
+        <BookWorkspace :key="book.id" :book="book" />
+      </template>
       <template v-else>
         <Alert
           type="info"

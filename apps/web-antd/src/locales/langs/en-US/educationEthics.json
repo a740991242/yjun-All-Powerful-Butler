@@ -1,0 +1,1439 @@
+{
+  "sourceNotice": "Contents and available lessons were checked in a third-party public textbook preview. The 2024 mark indicates approval; edition, printing and school adoption remain unverified. Other unread lessons are still being prepared.",
+  "prerequisite": "Have printed pages 2–5 of this volume available. An adult may read aloud. Keep activities pending when the textbook or materials are unavailable.",
+  "parentTip": "Original scenarios are separate from textbook activities. Feelings and future plans have no single correct answer and do not produce a character score. Confirm greetings, organization and discussion only after actually doing them; unfinished activities may be skipped.",
+  "hint": "Ask an adult to read aloud and look for information in this original scenario.",
+  "manualHint": "Confirm only after trying the activity. Skip if materials are missing, it is not applicable or it has not been done.",
+  "manualExplanation": "Record an actual attempt. A selected answer or future intention does not replace the activity.",
+  "reflectionHint": "Use your own words; an adult may write them down.",
+  "reflectionExplanation": "Keep the learner’s words without grading them. Separate past experience from future plans.",
+  "pendingGoal": "The lesson text and original teaching activities are still being checked and prepared.",
+  "upper": {
+    "title": "Ethics and the Rule of Law · Grade 1 Upper",
+    "goal": "Express feelings about starting school, practice greetings, and care for books and learning materials.",
+    "u1": "Starting primary school",
+    "l1": "A happy start at school",
+    "l2": "Respecting the national flag",
+    "l3": "Our campus",
+    "l4": "Getting home safely",
+    "u2": "Life at school",
+    "l5": "Hello, teacher!",
+    "l6": "Making friends",
+    "l7": "Learning in class",
+    "l8": "Activities after class",
+    "u3": "Building good habits",
+    "l9": "A regular routine",
+    "l10": "Eating thoughtfully",
+    "l11": "Being polite",
+    "l12": "Playing thoughtfully",
+    "u4": "Living considerately",
+    "l13": "Keeping our voices down",
+    "l14": "Caring for shared property",
+    "l15": "Putting litter in the bin",
+    "l16": "Waiting in line",
+    "steps": [
+      {
+        "title": "Feelings about school",
+        "text": "Pages 2–3 show children arriving at school and being welcomed. Excitement, worry and uncertainty are all valid. Do not enter school names, addresses or real names.",
+        "activity": "Share an expectation or concern with the adult reading with you."
+      },
+      {
+        "title": "Practicing greetings",
+        "text": "Look at the greeting on page 3. Original scenario: He greets the teacher, who responds and invites her into the classroom. This describes the scenario, not proof that the learner has done it.",
+        "activity": "Take turns acting as learner and teacher and practice greeting each other."
+      },
+      {
+        "title": "Caring for books",
+        "text": "Page 4 discusses protecting books. Original scenario: An dries the desk and then puts the book on it, without scribbling on it. Reuse a cover if useful; ask an adult to cut materials. No new purchases are required.",
+        "activity": "Check a book you already have and try one suitable way to care for it."
+      },
+      {
+        "title": "Organizing materials",
+        "text": "Page 5 shows bags and supplies. Follow the actual teacher’s instructions; avoid unnecessary heavy objects or valuable toys. Organization methods may vary. A screen answer does not confirm the bag was packed.",
+        "activity": "Check and organize existing materials with the adult."
+      },
+      {
+        "title": "A discovery and a plan",
+        "text": "Describe something actually tried today and separately record a future plan. Leave unfinished activities pending. Worry or choosing not to share does not reduce a score.",
+        "activity": "Record actual attempts separately from plans."
+      }
+    ],
+    "pairs": [
+      {
+        "material": "Original scenario: He greets the teacher, who responds and invites her into the classroom.",
+        "prompt": "Who greets first in the scenario?",
+        "first": "He",
+        "second": "The teacher",
+        "reviewPrompt": "Who responds to the greeting?",
+        "explanation": "Greeting first and responding are different actions; a choice is not proof of a real greeting."
+      },
+      {
+        "material": "Original scenario: An dries the desk and then puts the book down.",
+        "prompt": "What happens before the book is put down?",
+        "first": "Drying the desk",
+        "second": "Putting the book down",
+        "reviewPrompt": "What happens after the desk is dried?",
+        "explanation": "Use the scenario’s sequence; families need not follow one identical method."
+      },
+      {
+        "material": "Original record: The pencil case was organized today. Checking book covers is planned for tomorrow.",
+        "prompt": "Which activity has already happened?",
+        "first": "Organizing the pencil case",
+        "second": "Checking book covers",
+        "reviewPrompt": "Which activity is planned for tomorrow?",
+        "explanation": "Keep completed activity and future intention separate."
+      }
+    ],
+    "manual": [
+      "Actually discuss a feeling about starting school with the adult; happiness is not required.",
+      "Actually swap roles and practice greetings; the adult confirms an actual attempt.",
+      "Actually check and care for an existing book; an adult handles tools when needed.",
+      "Actually organize the bag or learning materials as appropriate; new purchases are not required."
+    ],
+    "reflections": [
+      "Record a discovery or feeling following an actual attempt today.",
+      "Record a future plan explicitly; do not mark it as already done."
+    ],
+    "lesson2": {
+      "title": "Respecting the national flag",
+      "goal": "Recognize the national flag and anthem, practice ceremony etiquette for the given roles, and try singing while sharing your own responses.",
+      "prerequisite": "Have printed pages 6–9 of the upper volume available. An adult can read aloud and provide a suitable anthem demonstration; keep unavailable activities pending.",
+      "parentTip": "Use the original pages or a legitimate demonstration for the flag and anthem; do not upload textbook pictures, full lyrics or recordings. Learners need not be Young Pioneers. Feelings, volume and screen scores do not assess attitudes. Record a real ceremony separately from a home rehearsal.",
+      "steps": [
+        {
+          "title": "Recognizing the flag",
+          "text": "Pages 6–7 show a red flag with yellow stars: one large star and four small ones. Point to the flag in the original page and distinguish the two sizes. The original picture is not copied here; reading about it is not attending a ceremony.",
+          "activity": "With the adult, actually point to the flag on the original page and locate the large and small stars."
+        },
+        {
+          "title": "Learning ceremony etiquette",
+          "text": "Pages 6–7 describe stopping, standing respectfully, removing a hat, facing the flag and watching it; Young Pioneers use their salute. Membership must be established, not assumed for all first-graders or guessed from clothing. Our original role card explicitly states the roles.",
+          "activity": "In a safe place, rehearse the stated roles with the adult as appropriate; record this as a home rehearsal."
+        },
+        {
+          "title": "Listening and trying to sing",
+          "text": "Pages 8–9 introduce the anthem March of the Volunteers. Page 9 credits lyrics to Tian Han and music to Nie Er. Listen to a legitimate adult-provided demonstration and try at your own pace. This site supplies no full lyrics or recording and does not grade pronunciation, posture or volume.",
+          "activity": "Actually listen to a demonstration and try a portion; the adult records the attempt."
+        },
+        {
+          "title": "Sharing your own response",
+          "text": "Page 8 invites responses to singing. Feelings may differ and sharing is optional; excitement or tears are not required. Page 9 also invites stories about the anthem. Ask an adult to check a reliable source rather than invent missing details.",
+          "activity": "Actually discuss a response, discovery or a short story whose source has been checked."
+        },
+        {
+          "title": "Participation and plans",
+          "text": "Distinguish reading the page, rehearsing at home and attending a ceremony. Record actual attempts separately from plans for next time; reflection is ungraded.",
+          "activity": "Record actual attempts separately from future plans."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Original name card: the national flag is the Five-Starred Red Flag; the anthem is March of the Volunteers.",
+          "prompt": "Which is the flag on the name card?",
+          "first": "Five-Starred Red Flag",
+          "second": "March of the Volunteers",
+          "reviewPrompt": "Which is the anthem on the name card?",
+          "explanation": "Distinguish the flag’s name from the song’s title."
+        },
+        {
+          "material": "Flag observation: one large star and four small ones, five stars altogether. Revisit pages 6–7.",
+          "prompt": "How many stars are there altogether?",
+          "first": "Five",
+          "second": "Four",
+          "reviewPrompt": "How many are small stars?",
+          "explanation": "All five include the large star and four small ones; four counts only the small stars."
+        },
+        {
+          "material": "Original role card: Xiao An is not a Young Pioneer and faces the flag to watch it respectfully. Xiao He is a Young Pioneer and uses the Pioneer salute.",
+          "prompt": "What does Xiao An do in this card?",
+          "first": "Watching the flag respectfully",
+          "second": "Using the Pioneer salute",
+          "reviewPrompt": "What does Xiao An do in this new role card?",
+          "explanation": "Use the current card’s explicit role. Membership changes in the review card; do not guess real membership from clothing or assume all first-graders have joined.",
+          "reviewMaterial": "New original review roles, different from the earlier card: Xiao An is a Young Pioneer and uses the Pioneer salute. Xiao He is not a member and watches the flag respectfully."
+        },
+        {
+          "material": "Page 9 credits Tian Han for lyrics and Nie Er for music; these are different roles.",
+          "prompt": "Who wrote the anthem’s lyrics?",
+          "first": "Tian Han",
+          "second": "Nie Er",
+          "reviewPrompt": "Who composed its music?",
+          "explanation": "Match the two roles to the original credits without reproducing full lyrics."
+        }
+      ],
+      "manual": [
+        "Actually view pages 6–7 and point out the flag and its large and small stars; leave this pending without the pages.",
+        "Actually rehearse the explicit ceremony roles at home as appropriate; do not record a rehearsal as a real ceremony.",
+        "Actually listen to a legitimate adult-provided anthem demonstration and try a portion; pitch and volume are not automatically graded.",
+        "Actually discuss a response, discovery or source-checked story you wish to share; no single emotion is required."
+      ],
+      "reflections": [
+        "Record a discovery or response after actually looking, listening or rehearsing; it is fine to note that you do not wish to share.",
+        "Separately record what you plan to practice or ask next; do not claim ceremony attendance."
+      ]
+    },
+    "lesson3": {
+      "title": "Getting to know our campus",
+      "goal": "Recognize campus places and their uses, describe a personal preference, and record real observations or questions within permitted areas.",
+      "prerequisite": "Read place labels with adult help. If a campus visit is not possible, use the textbook or our paper scenario first; leave the actual visit pending.",
+      "parentTip": "Follow school rules, staff arrangements and access limits. Do not send a child alone into kitchens, offices or closed spaces. Do not upload school names, addresses, routes or pupil photos. Facilities differ between schools; our story is not a claim about the child’s school.",
+      "steps": [
+        {
+          "title": "Connect a place with its use",
+          "text": "The textbook explores a sports ground, reading room, science classroom, activity room, music classroom and practical-work area. These examples are not a list of facilities every school must have. Our story states that books are borrowed and read in the reading area; teacher-led music activities take place in the music room.",
+          "activity": "Look at printed pages 10–11 or listen to an adult reading our story. Name two places and their uses. Separate “seen in person” from “seen in the book”."
+        },
+        {
+          "title": "Explore only where access is allowed",
+          "text": "Before a real visit, listen to the teacher or adult: where you may go, who accompanies you and where entry is restricted. Read signs and ask the responsible teacher about use. Do not guess opening times from a name. If no visit took place, record it as pending.",
+          "activity": "At a school-approved time, observe the signs and uses of two open places with the designated adult. If using a paper substitute, label it clearly."
+        },
+        {
+          "title": "Which place do you like, and why?",
+          "text": "The textbook invites personal preferences and reminds pupils about safety. You may enjoy reading, music, sport or something else; you may not yet have a preference. Observe flower beds from permitted spots without picking flowers or crossing barriers. Use equipment as the teacher directs.",
+          "activity": "Describe or draw a place you like, give your own reason and state one relevant rule. This is personal expression with no standard correct preference."
+        },
+        {
+          "title": "Learn about special spaces and staff",
+          "text": "The textbook also draws attention to the Young Pioneers room, where lunch is prepared and teachers’ offices. Spaces have different purposes and some require permission or are for staff. In our story, kitchen staff prepare food in the kitchen and teachers work in the office. Ask a teacher rather than entering on your own.",
+          "activity": "Use the book or permitted school information to find a special space and ask a responsible adult about its use or rules. A role-play does not count as a real conversation with school staff."
+        },
+        {
+          "title": "Separate discoveries from future plans",
+          "text": "An actual visit, textbook reading, an adult’s explanation and our role-play are different sources. Record place, use, source, and done or pending. Unknown school locations remain unknown until checked. A place you want to visit next is a plan.",
+          "activity": "Review the observation, expression or question that really happened and name its source. Keep unfinished activities pending and future plans separate."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Our campus story: books can be borrowed and read in the reading area; music activities take place in the music room under a teacher’s arrangements. No actual school layout is given.",
+          "prompt": "Which place should you learn about to borrow a book in this story?",
+          "reviewPrompt": "Which place should you learn about for a teacher-arranged music activity in this story?",
+          "first": "Reading area",
+          "second": "Music room",
+          "explanation": "Use the purposes stated in the story. A changed activity needs a fresh choice. Follow staff information at the real school."
+        },
+        {
+          "material": "The teacher says the reading area is open today and may be used as arranged. The equipment store is closed today and pupils may not enter on their own.",
+          "prompt": "Which place may be used as arranged today?",
+          "reviewPrompt": "Which place may not be entered on your own today?",
+          "first": "Reading area",
+          "second": "Equipment store",
+          "explanation": "Read today’s access instructions. Closed today does not mean useless forever; liking a place does not authorize entry."
+        },
+        {
+          "material": "Ning has only seen the textbook campus illustration and has not visited the actual school. Zhu visited two open spaces with a teacher at an approved time.",
+          "prompt": "Who has a record of this actual visit?",
+          "reviewPrompt": "Who must still record the actual school visit as pending?",
+          "first": "Zhu",
+          "second": "Ning",
+          "explanation": "Reading and visiting are different activities. A plan or a textbook picture cannot stand in for a real visit."
+        },
+        {
+          "material": "Our story: kitchen staff prepare food in the kitchen; teachers prepare lessons and work in the office. Pupils ask a teacher before learning more.",
+          "prompt": "Where is food prepared in this story?",
+          "reviewPrompt": "Where do teachers prepare lessons and work in this story?",
+          "first": "Kitchen",
+          "second": "Office",
+          "explanation": "Use the stated story; actual schools may differ. Knowing a purpose does not permit entry on your own."
+        }
+      ],
+      "manual": [
+        "Actually view printed pages 10–11 or listen to our story and name at least two places and their uses. Record the source used; do not claim an in-person visit.",
+        "Under school-approved arrangements, observe signs and uses in two open spaces with the designated adult. Label any paper substitute; it cannot confirm completion of a real school visit.",
+        "Actually describe or draw a preferred place, give a personal reason and state a use rule. Having no preference yet is also a valid response.",
+        "Actually ask a responsible adult about a special space and repeat the information received. Label a story rehearsal as role-play rather than a real answer from school staff."
+      ],
+      "reflections": [
+        "Describe a real discovery and whether it came from a visit, textbook, adult explanation or our rehearsal. No school name, location or personal photo is needed.",
+        "What would you like to learn next? Record a future observation or question as a separate plan, not a completed activity."
+      ]
+    },
+    "lesson4": {
+      "title": "Getting home safely",
+      "goal": "Recognize different arrangements for going home and explicit crossing conditions, rehearse safe choices on paper, and express feelings about real care or help.",
+      "prerequisite": "Read scenarios with adult help. Caregivers and school arrange collection; a textbook picture of peers walking does not authorize independent travel.",
+      "parentTip": "Practice on paper at home or in class, never by making mistakes on roads or railway crossings. Caregivers check actual collection and routes; do not upload addresses, routes or phone numbers. Follow traffic-police directions. Even with a pedestrian green signal, notice vehicles and confirm safety with the caregiver; a webpage cannot judge a complex real scene.",
+      "steps": [
+        {
+          "title": "Arrangements may differ",
+          "text": "The textbook shows walking, a school bus and travelling with peers. These are examples, not permission for every pupil. Different caregivers may collect children according to family and school arrangements. Our story does not specify an actual route.",
+          "activity": "Actually discuss an agreed way home and whom to ask if collection changes. Record that discussion without an address or personal name."
+        },
+        {
+          "title": "Find the pedestrian space first",
+          "text": "With a sidewalk, pedestrians use it; without one they walk along the roadside. Use a crossing or pedestrian crossing facility and follow traffic-police directions. A roadway or railway is not a play area; do not chase one another.",
+          "activity": "Label paper cards sidewalk, roadway and crossing facility. With an adult reading the stated conditions, identify where to walk or cross. Do not enter traffic to practise."
+        },
+        {
+          "title": "Read the correct signal",
+          "text": "Use the pedestrian signal at a signal-controlled crossing. Wait in a safe place at red without rushing. When passage is permitted, the caregiver still observes vehicles and confirms safety. A vehicle signal is not a pedestrian signal; green alone does not justify stepping out.",
+          "activity": "Rehearse pedestrian-red waiting and pedestrian-green with vehicles still requiring a safety check. Paper rehearsal is not independent real crossing."
+        },
+        {
+          "title": "Stop at a closed railway crossing",
+          "text": "The textbook shows a closed railway barrier. Our scenario explicitly states an active warning and closed barrier: stop in the safe waiting area, never duck under, climb or go around it. Railway warnings are distinct from road pedestrian signals. Follow crossing staff and equipment instructions, even if no train is visible.",
+          "activity": "Draw a closed barrier on paper and rehearse stopping with a caregiver in the waiting area. Do not visit a real railway crossing for this exercise or move a real barrier."
+        },
+        {
+          "title": "Record care and gratitude honestly",
+          "text": "The textbook shows collection, help in rain, traffic-police help and care from companions. Discuss actual help and feelings, or discuss the book if no similar experience occurred. Gratitude can be spoken, drawn or expressed accessibly; no particular family member or emotional intensity is required.",
+          "activity": "Actually discuss printed page 16 or our care story and express one way to thank someone. Separate real experience, discussion, role-play and future intentions."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Paper story: a sidewalk is for pedestrians and the adjacent roadway carries vehicles. An adult accompanies the child in recognizing their purposes.",
+          "prompt": "Which space should the pedestrian use in this story?",
+          "reviewPrompt": "Which space carries vehicles and is not this pedestrian route?",
+          "first": "Sidewalk",
+          "second": "Roadway",
+          "explanation": "Use the explicit facilities and purposes. Keeping to a side does not mean walking in the roadway when a sidewalk exists."
+        },
+        {
+          "material": "Rehearsal: He faces a pedestrian red signal and waits safely. Zhu faces a pedestrian green signal but sees a turning vehicle; the caregiver is checking safety and they have not started crossing.",
+          "prompt": "Who is waiting as required by the red signal?",
+          "reviewPrompt": "Who faces green but is still checking vehicles?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Neither has started crossing. Green is not a reason to ignore vehicles or rush out alone."
+        },
+        {
+          "material": "Paper railway record: Ning actually stopped in the waiting area in an active-warning, closed-barrier rehearsal. An only wrote a plan to stop and has not rehearsed.",
+          "prompt": "Who has a record of this paper stopping rehearsal?",
+          "reviewPrompt": "Who only has a plan and still needs to rehearse?",
+          "first": "Ning",
+          "second": "An",
+          "explanation": "Record an actual paper rehearsal as such, never as a real crossing. Do not duck under, climb or bypass a closed barrier."
+        },
+        {
+          "material": "Our care story: the caregiver collects the child at the school-agreed pickup point; a traffic-police officer directs traffic and helps pedestrians at the junction.",
+          "prompt": "Who directs traffic at the junction?",
+          "reviewPrompt": "Who collects the child at the agreed pickup point?",
+          "first": "Traffic-police officer",
+          "second": "Caregiver",
+          "explanation": "Use the stated roles and actions rather than guessing from appearance. Gratitude may take different forms; family relationships are not graded."
+        }
+      ],
+      "manual": [
+        "Actually discuss the agreed collection and whom to ask about changes with a caregiver. Record the category of discussion without addresses or routes; do not claim independent travel.",
+        "At home or in class, actually identify sidewalk, roadway and crossing facilities on paper, then rehearse red-signal waiting and checking vehicles even with green. Do not record a real crossing that never happened.",
+        "Actually rehearse stopping with an active-warning, closed-barrier paper scenario and explain not ducking under, climbing or bypassing it. Confirm only the simulation; do not visit a real railway crossing.",
+        "Actually discuss printed page 16 or our care story and express gratitude or feelings accessibly. Label book discussion, simulation or real experience; no particular family or emotion is required."
+      ],
+      "reflections": [
+        "Describe the discussion or paper rehearsal that actually happened and what an adult still needs to check. Unknown details may stay unknown.",
+        "How might you express gratitude or practise next? Keep future plans separate; simulation, plans and correct quiz answers do not complete real travel."
+      ]
+    },
+    "lesson5": {
+      "title": "Hello, teacher!",
+      "goal": "Learn stated staff responsibilities, practise explaining needs and asking for help, and greet, thank and respect others’ work appropriately.",
+      "prerequisite": "Describe a need with adult help. Use fictional roles or permitted school information. Unknown responsibilities need checking rather than guesses from appearance, gender or clothes.",
+      "parentTip": "Do not upload staff names, photos, phone numbers or private stories. Follow school arrangements for real help. Adults handle damaged facilities; children do not repair taps. Ask before helping and rehearse only with safe light objects. Respect does not mean agreeing to everything; express discomfort to a trusted adult.",
+      "steps": [
+        {
+          "title": "Recognize familiar teachers",
+          "text": "The textbook invites descriptions of familiar teachers and personal reasons for liking them. Discuss teaching or help you know about without choosing a favourite or comparing looks. Our fictional role cards explicitly say Lin leads music activities and Zhou handles book loans.",
+          "activity": "Actually view printed page 18 or listen to our cards. Describe a known teacher’s work or repeat a fictional role and express your own feeling; unknown details stay unknown."
+        },
+        {
+          "title": "Different staff support school life",
+          "text": "The book includes music, martial-arts, library and flag-assembly roles. Schools may differ and not all workers are classroom teachers. Ask a responsible adult or use permitted information rather than guessing a role from clothing.",
+          "activity": "Actually view page 19 or our cards and learn at least two kinds of work. Rehearse a polite greeting and a question about responsibilities; label real information or role-play."
+        },
+        {
+          "title": "Explain a need clearly",
+          "text": "The book considers missing belongings, damaged facilities and contacting a caregiver. Our three scenarios: explain where a cup was last used and ask a teacher for help; step away from a slippery area and report a faulty tap without repairing it; ask a teacher or designated staff for contact help under school rules rather than leaving independently.",
+          "activity": "Actually rehearse all three requests with an adult, stating the event and need. Use paper scenarios without causing damage, losing items or making real calls."
+        },
+        {
+          "title": "Greet, thank and respect work",
+          "text": "The book considers helping staff, thanking care and quiet near offices. Ask if help is wanted; touch only safe light items after adult agreement. Helping does not justify lifting heavy items or entering restricted places. Request help politely under school arrangements; quiet does not mean you cannot ask.",
+          "activity": "Actually rehearse asking before passing a paper slip, thanking help and making a quiet polite request near a pretend work area. Do not disturb real work or move items without permission."
+        },
+        {
+          "title": "Record interactions and personal feelings honestly",
+          "text": "Real school contact, reading and our role-play are different sources. You may like someone, not know them or have concerns; feelings are not graded. Thank help and ask about unknown matters. Real issues still need responsible adults; a quiz cannot prove they are resolved.",
+          "activity": "Review recognition, greeting, requests and respect for work. Label role-play or actual contact and keep next questions as future plans."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Fictional role cards: Lin leads music activities; Zhou handles book loans. No real school staff information is supplied.",
+          "prompt": "Who should you ask about book loans in these cards?",
+          "reviewPrompt": "Who should you ask about music activities in these cards?",
+          "first": "Zhou",
+          "second": "Lin",
+          "explanation": "Use the stated responsibilities, not appearance or gender. Actual school roles follow staff information."
+        },
+        {
+          "material": "Need cards: A asks for help finding a missing cup; B reports a damaged tap for a responsible adult to handle. Neither asks the child to repair anything.",
+          "prompt": "Which card requests help finding an item?",
+          "reviewPrompt": "Which card reports a facility problem?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "State the need precisely. Reporting is not completed repair, and requesting a search does not guarantee finding the item."
+        },
+        {
+          "material": "Ning actually explained a need and requested help from an adult playing the teacher. Zhu only wrote what to say later and has not rehearsed.",
+          "prompt": "Who has an actual help-request rehearsal record?",
+          "reviewPrompt": "Whose rehearsal is still pending?",
+          "first": "Ning",
+          "second": "Zhu",
+          "explanation": "Rehearsal differs from a plan. Role-play is not real school contact or proof the issue is solved."
+        },
+        {
+          "material": "Our record: He asked if help was wanted, received agreement and passed a paper slip. An thanked an adult for help but did not pass the slip.",
+          "prompt": "Who performed the agreed light-object helping simulation?",
+          "reviewPrompt": "Who expressed thanks?",
+          "first": "He",
+          "second": "An",
+          "explanation": "Helping and thanking are different actions. Confirming one does not complete the other; gratitude has no single required form."
+        }
+      ],
+      "manual": [
+        "Actually view pages 18–19 or listen to our cards, describe one teacher’s work and your feelings, and repeat a second role. Label sources without private names, images or guessed responsibilities.",
+        "Actually rehearse all three requests with an adult: a missing cup, a damaged tap and contacting a caregiver. State each need without causing faults or calling anyone; rehearsal does not resolve a real issue.",
+        "Actually rehearse a polite greeting and question about work, or greet someone under permitted school arrangements. Label role-play or contact; do not force teacher contact or invent an answer.",
+        "Using a paper slip, actually rehearse asking and obtaining agreement before helping, thanking help, and quiet but polite help-seeking near a work area. Label simulation, real activity or pending items; no heavy lifting."
+      ],
+      "reflections": [
+        "Describe a responsibility you learned or a greeting or request rehearsal that happened and your feelings. Use our roles instead of private experiences if preferred.",
+        "Whose work might you learn about or how might you ask for help next? Keep plans separate from already knowing someone, receiving an answer or resolving an issue."
+      ]
+    },
+    "lesson6": {
+      "title": "Getting to know friends",
+      "goal": "Describe partners and how you met, rehearse introductions and interests, participate together, discuss the complete story and respond to happy or sad partners.",
+      "prerequisite": "Use fictional roles, paper slips and pictures with a willing caregiver. Without a real friendship experience, discuss the textbook; names, contacts and private stories are not required.",
+      "parentTip": "Holding hands and hugging need mutual willingness; waving, pointing or speaking are alternatives. Touch, friend counts and matching preferences do not earn character scores. Adult role-play is not real peer friendship; one activity does not prove a friendship. Refusal and privacy preferences may be recorded honestly.",
+      "steps": [
+        {
+          "title": "Describe a partner and how you met",
+          "text": "The textbook starts with partners, desk neighbours and shared activities. Tell a voluntary real experience or clearly discuss a book or site story. A read story is not your own experience. Being desk neighbours and being friends differ; familiarity can take time.",
+          "activity": "Actually describe a partner experience or label textbook discussion, naming how they met and what happened without personal names."
+        },
+        {
+          "title": "Introduce yourselves and ask about interests",
+          "text": "The textbook invites introductions and finding shared preferences. Our fictional cards: He likes drawing and reading; Zhu likes reading and arranging paper slips. Reading is shared; other preferences are not all identical. Differences still allow friendly interaction.",
+          "activity": "Actually exchange fictional introductions with an adult, take turns asking an interest and listening, and identify a similarity or difference. Do not answer for the other person."
+        },
+        {
+          "title": "Listen to both people before joining an activity",
+          "text": "Shared play can help people meet, but our exercise does not involve chasing or embracing. In our original tabletop activity, both agree and alternate placing two paper slips each, with no contest. Discuss pausing or changing the activity; playing once does not prove friendship.",
+          "activity": "Actually agree and complete the turn-taking with a willing adult, recording partner category and real actions. Without agreement or a start, keep the activity pending."
+        },
+        {
+          "title": "Read all eight story panels and discuss",
+          "text": "The lower strip on printed pages 22–24 contains eight numbered friendship-story panels. Read the full sequence, distinguish visible actions from guessed motives, and discuss shared participation, leaving others and what a reminder might change. We do not assign a single hidden intention or reproduce the images or full text.",
+          "activity": "Actually view or hear an adult describe all eight panels, describe a before-and-after change and one negotiable approach. Without the complete source, leave this pending; a summary is not full reading."
+        },
+        {
+          "title": "Respond to happiness and sadness separately",
+          "text": "The textbook considers caring about a happy or sad partner. Our rehearsals: listen and respond to willing sharing of joy; ask a sad partner whether company or adult help is wanted and listen. Immediate happiness is not required; fixed expressions or touch do not define a good friend.",
+          "activity": "Actually rehearse both responses with an adult. Review all six actual activities, label role-play or real sources and keep future invitations as plans."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Fictional interest cards: He likes drawing and reading; Zhu likes reading and arranging paper slips. No real classmate preferences are inferred.",
+          "prompt": "Which interest is shared?",
+          "reviewPrompt": "Which interest is stated only on He’s card?",
+          "first": "Reading",
+          "second": "Drawing",
+          "explanation": "A shared interest differs from one person’s stated interest. Different preferences still allow friendly interaction."
+        },
+        {
+          "material": "Ning actually exchanged role introductions, asked about an interest and heard an answer with an adult. An only prepared an introduction and has not begun talking.",
+          "prompt": "Who has an actual introduction rehearsal record?",
+          "reviewPrompt": "Who only prepared, with interaction still pending?",
+          "first": "Ning",
+          "second": "An",
+          "explanation": "Interaction must happen and include a response. Written preparation does not mean meeting a real peer."
+        },
+        {
+          "material": "Record: Zhu viewed all eight textbook panels in order and discussed changes. He only heard a one-sentence summary without seeing or hearing the full sequence.",
+          "prompt": "Who completed this full story reading and discussion?",
+          "reviewPrompt": "Who still needs the complete eight panels?",
+          "first": "Zhu",
+          "second": "He",
+          "explanation": "A complete story and a summary differ. Visible actions and guessed reasons are separate; do not invent intentions."
+        },
+        {
+          "material": "Rehearsal: He asked a sad partner whether company was wanted and heard yes. Zhu listened and responded to a happy partner sharing a completed work.",
+          "prompt": "Who rehearsed responding to a sad partner’s need?",
+          "reviewPrompt": "Who rehearsed sharing a happy partner’s joy?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "The two responses need separate attempts. Neither fixed feelings nor touch are required."
+        }
+      ],
+      "manual": [
+        "Actually describe a voluntary partner experience and shared action, or label textbook discussion. No classmate names; a desk neighbour is not automatically a friend.",
+        "Actually exchange one fictional introduction each with an adult and hear the response. Label rehearsal rather than meeting a real new friend.",
+        "Actually take turns asking an interest and listening, then identify a similarity or difference. Do not answer for others or require matching interests.",
+        "With a willing adult, agree on the paper rule and alternate two placements each. Record actions and partner category without claiming a new friendship.",
+        "Actually view or hear all eight panels on printed pages 22–24, describe the sequence’s change and discuss one approach. Missing complete material stays pending; a summary is not a substitute.",
+        "Actually rehearse both responding to a happy partner and caring about a sad partner, hearing responses each time. Label role-play without forced touch or changed feelings."
+      ],
+      "reflections": [
+        "Describe an actual introduction, question, activity, story discussion or caring rehearsal, your feelings and needed help. Unfinished activities may be recorded honestly.",
+        "How might you meet or care about a partner next? Keep plans separate without inventing agreement or an established friendship."
+      ]
+    },
+    "lesson7": {
+      "title": "Ready to learn in class",
+      "goal": "Prepare actual learning materials; practise listening, thinking, asking and taking turns; experience different homework forms. One attempt is not a lasting habit.",
+      "prerequisite": "An adult may read the source and instructions. Use familiar safe materials and existing work without adding a homework burden.",
+      "parentTip": "The textbook timetable is an example, not the school’s actual schedule. Agreed accessible signals can replace raising a hand. Silence, eye contact and volume alone do not prove listening. Ask for learning help without moral blame. Use lawful familiar music and suitable physical activities already arranged by school or caregivers; stop when uncomfortable.",
+      "steps": [
+        {
+          "title": "Prepare for the stated task",
+          "text": "Page 25 checks the timetable, books and tools and mentions ways to get ready such as singing. First confirm the stated task, then check its materials. The site’s hypothetical task does not establish the school timetable.",
+          "activity": "An adult states: use paper and a pen to write one familiar character. Find and check both items, agree on a comfortable way to get ready and actually try it once."
+        },
+        {
+          "title": "Listen, think and explain a question",
+          "text": "Page 26 covers signalling before speaking, listening to others, thinking and expressing a question. Three animal panels prompt listening, thinking and clear questions. A learner may ask for an explanation and need not produce a question immediately.",
+          "activity": "Read or hear all three animal prompts on page 26. Then rehearse an original task: the adult asks for a blue circle; listen and think, use an agreed signal to ask which blue pen to use, hear the response and then begin."
+        },
+        {
+          "title": "Learn together: review, turns and craft",
+          "text": "Page 27 includes reviewing together, taking turns and observing a craft method. Everyone needs an opportunity and time. Our folded-paper task is an original substitute, not completion of every textbook group activity.",
+          "activity": "With mutual agreement, each person takes two turns stating one familiar learning point and listens to the other’s point. Then observe an adult fold paper in half, try on separate sheets and discuss the method without scissors."
+        },
+        {
+          "title": "Reading, writing and making are different",
+          "text": "Page 28 shows reading, writing and craft homework. Care includes checking the task, actually attempting it, looking back and seeking help. A correct website answer is not completed reading, writing or making. Existing work can be used.",
+          "activity": "Actually read a short lawful familiar text, write one learnt character and draw or make a simple personal paper card. Check each and record all three separately, including needed help; do not add duplicate homework."
+        },
+        {
+          "title": "Music and physical activity need real evidence",
+          "text": "Page 28 also shows music and physical homework. Written quantity alone cannot represent learning. Singing, familiar rhythm or accessible musical expression can be used. Physical activity follows existing school or caregiver arrangements suitable for this child.",
+          "activity": "Actually complete one familiar lawful music experience and one suitable safe physical activity already arranged by school or caregivers. Record each actual action or leave it pending. Discussion, imagined movement and future plans are not actual physical activity."
+        }
+      ],
+      "manual": [
+        "Actually confirm the current task, check paper and pen, and try the agreed preparation once. Label the site simulation separately from the real school timetable.",
+        "Actually read or hear all three animal prompts on page 26, then rehearse listening, thinking, signalling a question and hearing a response. Leave missing source material pending; do not demand an immediate question.",
+        "With agreement, each person takes two learning turns and listens to the other’s points. Label adult role-play; merely promising turns is not completion.",
+        "Actually observe the fold and try it on separate sheets, then exchange one method. Keep craft separate from oral review; no scissors or forced movements.",
+        "Actually read and check a short lawful familiar text. Shared or supported reading is valid and should be labelled; an answer selection is not reading.",
+        "Actually write and check one learnt character with any needed support. Looking at someone else’s work or writing a future plan is not this action.",
+        "Actually draw or make and check a simple personal paper card. Existing art or craft work can be used; do not claim it reproduces the textbook image.",
+        "Actually complete and record both a familiar music experience and a suitable safe physical activity already arranged by school or caregivers. Discussion and plans do not count; rest when uncomfortable and leave undone items pending."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional task: write one familiar character using paper and a pen. Desk A has paper and a working pen; desk B only has a book unrelated to the task.",
+          "prompt": "Which desk has the stated materials?",
+          "reviewPrompt": "Which desk still needs paper and a pen?",
+          "first": "Desk A",
+          "second": "Desk B",
+          "explanation": "Preparation follows the stated task, not tool quantity or an assumed school timetable."
+        },
+        {
+          "material": "Fictional rehearsal: He hears the colouring task, thinks, signals a question and hears an adult response. Zhu only writes a plan to ask next time and has not rehearsed.",
+          "prompt": "Who actually completed this listening, thinking and asking rehearsal?",
+          "reviewPrompt": "Who only recorded a future questioning plan?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Actual attempts differ from plans. Immediate questioning is not a moral test."
+        },
+        {
+          "material": "Fictional records: Ning and an adult each take two learning turns and listen. An and an adult observe and try folding separate paper sheets and exchange a method.",
+          "prompt": "Which record shows review with speaking turns?",
+          "reviewPrompt": "Which record shows learning craft together?",
+          "first": "Ning’s record",
+          "second": "An’s record",
+          "explanation": "Turn-taking review and craft both need their own actual evidence."
+        },
+        {
+          "material": "Fictional homework: He actually shares a short familiar reading and checks it. Zhu actually completes a familiar rhythm experience. No other homework is stated.",
+          "prompt": "Who has an actual reading record?",
+          "reviewPrompt": "Who has an actual music record?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Reading, writing, craft, music and physical activity are distinct forms with separate actual evidence."
+        }
+      ],
+      "reflections": [
+        "What did you actually try in preparation, listening, asking or shared learning? What still needs help? Private situations may remain private; expression style is not graded.",
+        "How would you prepare or ask for help next time? Separate completed attempts from future plans; one attempt is not an established habit."
+      ]
+    },
+    "lesson8": {
+      "title": "A variety of activities outside lessons",
+      "goal": "Distinguish breaks from after-school time; experience safe games, stopping, preparation, service and interests. Keep personal plans separate from actions.",
+      "prerequisite": "An adult may read. Follow actual school and caregiver arrangements and use familiar safe activities joined voluntarily.",
+      "parentTip": "Textbook examples do not establish the school’s break length, facilities or clubs. Explain needs for the toilet, water, rest or support without waiting for a game to end. Agree before play; no forced contact or movement. Follow actual ending arrangements without rushing. Preferences and feelings are not graded; plans and actions remain separate without extra tasks.",
+      "steps": [
+        {
+          "title": "Consider needs and arrangements during a break",
+          "text": "Page 29 shows packing books, rest, water, the toilet and games. A break is not only play. Explain current needs and choose within existing school arrangements and available time, including preparation for the next lesson. This site supplies no actual school facility schedule.",
+          "activity": "Discuss two original hypothetical cards: A needs the toilet or rest; B may play briefly under an existing arrangement. Explain each need, whom to tell and how to prepare next. Actually pack the current paper and pen and try a comfortable rest; do not manufacture thirst or delay the toilet."
+        },
+        {
+          "title": "A preferred game and a new rule",
+          "text": "Page 30 has simple games and introducing new rules. Discuss differing preferences without forcing contact. The site’s tabletop card game is original and is not actual completion of textbook skipping or jumping games.",
+          "activity": "With agreement and one personal card each, take turns pointing to one’s own card and naming a preferred colour; each person takes two turns. Explain a new rule using a preferred shape, let the listener try a turn and exchange explaining opportunities. No competition."
+        },
+        {
+          "title": "Hear the ending signal and finish safely",
+          "text": "Page 30 asks about a lesson bell before a game finishes. Follow existing school signals and teacher arrangements to stop, pack and prepare without rushing. Explain urgent needs. A practice signal is not an actual school bell.",
+          "activity": "Agree that an adult saying “prepare for the next task” ends this tabletop practice. During play, actually hear it, pause, each pack their card and check the next paper and pen. Explain the difference from real school arrangements."
+        },
+        {
+          "title": "After-school actions and real gains",
+          "text": "Page 31 includes service, sports, craft and observation. Choose suitable permitted activities. What was done and what was gained differ; not immediately learning or feeling happy can be honestly recorded. Service does not involve dangerous rubbish, chemicals or heights.",
+          "activity": "Actually tidy only the ordinary paper cards used here; do not touch real rubbish. Then try one voluntary interest with existing safe materials, such as folding paper or a short lawful familiar reading. Record service and interest separately; leave undone items pending."
+        },
+        {
+          "title": "Plan important needs and express interests",
+          "text": "Page 32 includes rest, organising, clubs, favourite books and discussing interests with a teacher. Priorities depend on actual needs and arrangements. There is no universal timetable or guarantee that a school has a particular club. A plan remains a plan.",
+          "activity": "Using original rest, paper-and-pen organising and preferred-activity cards, agree an order for the adult-stated need and explain a reason. Rehearse expressing an interest and hearing a response. Actually do one permitted small step and record plan, response and action separately, without claiming school club attendance."
+        }
+      ],
+      "manual": [
+        "Actually discuss both break-need cards, name the need and contact person and next preparation, then pack the current tools and rest comfortably. Do not invent a school timetable or manufacture bodily needs.",
+        "With agreement, actually play two turns each under the tabletop colour-card rule. Record participation and responses without claiming a textbook physical game.",
+        "Actually explain the new shape rule, let the listener try a turn and exchange explaining opportunities. Naming a favourite game is not teaching or playing it.",
+        "Actually hear the agreed ending signal during practice, pause, pack cards and check next-task tools. Label the simulation, without rushing or claiming a real school bell.",
+        "Actually complete both ordinary tabletop card-tidying service and one existing safe interest experience. Record actions and gains separately; no real rubbish or chemicals, and no replacing one with the other.",
+        "Actually discuss the three-card order and a reason, rehearse expressing an interest and hearing a response, then do one permitted small step. Plans, role-play and actions differ; do not claim a school club event."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional break: Ning needs the toilet, tells the responsible adult and follows existing arrangements. An plays briefly, hears the agreed ending signal and packs for the next task.",
+          "prompt": "Who is expressing a current bodily need?",
+          "reviewPrompt": "Who is stopping a game on the ending signal?",
+          "first": "Ning",
+          "second": "An",
+          "explanation": "Needs and game stopping differ and follow actual arrangements; needs need not wait until play ends."
+        },
+        {
+          "material": "Fictional game: He and an adult actually take two card-rule turns each. Zhu only writes a wish to try next time and has not played.",
+          "prompt": "Who has an actual tabletop game record?",
+          "reviewPrompt": "Who only records a future plan here?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Actual participation, adult roles and plans are labelled separately from textbook movement games."
+        },
+        {
+          "material": "Fictional after-school records: Ning and an adult actually tidy the ordinary tabletop cards. An actually tries folding a personal paper sheet.",
+          "prompt": "Which record shows this tidying service?",
+          "reviewPrompt": "Which record shows a folding interest?",
+          "first": "Ning’s record",
+          "second": "An’s record",
+          "explanation": "Service and interests need separate actions. Safety discussion is not actual cleaning."
+        },
+        {
+          "material": "Fictional preferences: He wishes to join paper folding. Zhu wishes to observe paper shapes. No school clubs are stated.",
+          "prompt": "Who explicitly prefers folding?",
+          "reviewPrompt": "Who explicitly prefers observing paper shapes?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Interests may differ; they establish neither school clubs nor moral worth."
+        }
+      ],
+      "reflections": [
+        "What actually happened during the break rehearsal, stopping or after-school activity? What did you gain or need help with? Undone actions and different feelings may be recorded honestly.",
+        "How might you arrange rest, preparation, service or interests next time? Separate plans, responses already heard and completed actions; one attempt is not a lasting habit."
+      ]
+    },
+    "lesson9": {
+      "title": "A regular daily routine",
+      "goal": "Observe one night and daytime state, discuss the full sleep story and agree reminders and preparation. Unknowns, support needs and plans remain distinct.",
+      "prerequisite": "A caregiver may read and help with clock times and records. No independent overnight arithmetic, deliberate late nights or experimental sleep changes are required.",
+      "parentTip": "Story times and claims of adapting in a few days are not universal guarantees. As a site supplement, Ministry of Education notice 2021 No. 11 calls for school and family support for ten hours of primary-school daily sleep with individual arrangements. The story’s 21:30 is not a universal recommendation. Do not morally grade sleep or force solitary sleep. Caregivers decide safe lights, reminders and comfort objects; children do not handle power. Going to bed is not necessarily falling asleep; unknown data remain unknown.",
+      "steps": [
+        {
+          "title": "Read one night without judging a person",
+          "text": "Page 34 asks about sleep, waking and duration. Observation supports discussion, not a contest for obedience. Bedtime, falling asleep and waking differ; adults may help with times. One night does not prove a habit.",
+          "activity": "Read the original fictional card: a caregiver confirms A began sleeping at 20:30 and woke next day at 06:30, giving ten hours for that interval. B only plans tonight’s rest. Identify A’s three known values and B’s unknowns. A voluntary real observation may be added without guessing."
+        },
+        {
+          "title": "Discuss the morning without manufacturing it",
+          "text": "Page 35 shows three morning scenes: wanting more sleep, no time for breakfast and classroom hunger. Discuss sequence and possible effects, not a diagnosis from one sleepy moment or blame for every missed breakfast.",
+          "activity": "Actually read or hear all three morning scenes, describe each numbered action or state and discuss a need to tell a caregiver. No staying up, missing breakfast or rushing as an experiment."
+        },
+        {
+          "title": "Six sleep attempts and negotiated company",
+          "text": "Six panels across pages 34–36 show a proposed attempt, brief family company, cheerful conversation, a comfort object, lighting and a planned attempt. Read all six and separate actions from the final future plan. No demand that all children adapt in a fixed number of days.",
+          "activity": "Actually read or hear all six, identify two support forms and the final plan. Rehearse asking for company with tabletop cards and hear the caregiver’s response; no actual solitary-sleep demand, power handling or bed-object experiment."
+        },
+        {
+          "title": "Agree reminders and arrangements",
+          "text": "Page 36 discusses alarms, adult reminders and setting times. Caregivers jointly determine arrangements with sufficient sleep and preparation; the site does not establish school waking times. A reminder agreement is not a reminder already received.",
+          "activity": "Actually agree a suitable reminder, who provides it and the existing arrangement. An adult may use a paper symbol; children need not configure a device. Pack the ordinary practice cards as one small action already performed."
+        },
+        {
+          "title": "Wait for actual events before confirming",
+          "text": "Observation follows events, so tonight cannot already be recorded as successful sleep or tomorrow as energetic. Under existing arrangements, a willing learner may look back at preparation, rest and the following day. Support, unknowns and unoccurred events remain honest.",
+          "activity": "Actually do one bedtime-preparation action under the caregiver’s existing arrangement, then voluntarily review waking and state after the real following day. Leave the activity pending until both stages occur. No extra tasks or guarantee of results."
+        }
+      ],
+      "manual": [
+        "Actually read fictional card A and identify sleep onset, next-day waking and the adult-given ten hours. B is only a plan. Personal unknown times remain unknown; bedtime alone is not sleep onset.",
+        "Actually read or hear all three page-35 morning scenes, describe each and express a possible need. No deliberate late night, missed breakfast or diagnosis from one sleepy moment.",
+        "Actually read or hear all six solitary-sleep story panels and separate support actions from the final plan. Leave missing lawful material pending; no universal adaptation deadline.",
+        "Actually rehearse requesting caregiver company and hear a response using tabletop cards. Label role-play; no forced solitary sleep, power handling or bed-object experiment.",
+        "Actually agree a suitable reminder, responsible person and existing arrangement, then pack the ordinary practice cards as a first step. An agreement is not a reminder already received.",
+        "Actually do one preparation action under existing arrangements and voluntarily review waking and state after the real following day. Record both stages separately; pending events and unknowns are not invented or replaced by plans."
+      ],
+      "pairs": [
+        {
+          "material": "Original fictional cards: a caregiver confirms A’s sleep onset at 20:30, next-day waking at 06:30 and a ten-hour interval. B only has a plan for tonight, with no overnight observation.",
+          "prompt": "Which card has an occurred overnight record?",
+          "reviewPrompt": "Which card only has a future plan?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "A record differs from a plan. Duration is adult-given, not an overnight calculation requirement or inference from bedtime."
+        },
+        {
+          "material": "Fictional support: He actually asks a caregiver for company and hears a response. Zhu only plans to request a reminder tomorrow.",
+          "prompt": "Who records an actual request and response?",
+          "reviewPrompt": "Who only records a future request?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "A response differs from a plan and does not guarantee solitary or successful sleep."
+        },
+        {
+          "material": "Fictional reminders: A agrees an adult’s verbal reminder under existing arrangements. B agrees an alarm already prepared by an adult. Both need caregiver confirmation; no child device handling is stated.",
+          "prompt": "Which card agrees a verbal adult reminder?",
+          "reviewPrompt": "Which card agrees an adult-prepared alarm?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Reminder methods differ; an agreement is not an event already received."
+        },
+        {
+          "material": "Fictional observations: Ning actually packs practice cards as preparation. An looks back at waking after the real following day and explains needed help.",
+          "prompt": "Which record is an actual preparation action?",
+          "reviewPrompt": "Which is a following-day review after events?",
+          "first": "Ning’s record",
+          "second": "An’s record",
+          "explanation": "Preparation, overnight events and following-day observation are separate stages, not proof of effects or a habit."
+        }
+      ],
+      "reflections": [
+        "What did you actually observe, discuss or try? What is unknown or needs company? Personal routines may remain private and feelings are not graded; one night is not a habit.",
+        "How might you ask for help or record next time? Separate future arrangements from occurred sleep and reminders, without guaranteeing good sleep."
+      ]
+    }
+  },
+  "lower": {
+    "title": "Ethics and the Rule of Law · Grade 1 Lower",
+    "goal": "Reflect on actual experience, distinguish goals from action, and break a suitable small goal into steps to try.",
+    "u1": "A fresh start",
+    "l1": "Setting a new goal",
+    "l2": "Doing things carefully",
+    "l3": "Putting mistakes right",
+    "l4": "Feeling ready for the day",
+    "u2": "Growing together",
+    "l5": "Being together",
+    "l6": "Asking for help",
+    "l7": "Sharing with others",
+    "l8": "Working together",
+    "u3": "A happy family",
+    "l9": "This is my home",
+    "l10": "Caring for one another",
+    "l11": "Organizing my belongings",
+    "l12": "Helping with household tasks",
+    "u4": "Growing as young citizens",
+    "l13": "Children’s Day",
+    "l14": "The Young Pioneers",
+    "l15": "Wearing the red scarf",
+    "l16": "Learning from role models",
+    "steps": [
+      {
+        "title": "Reflecting on experience",
+        "text": "Page 2 reflects on earlier goals. Describe an actual attempt, something not yet achieved, or choose not to share. Learners need not have the same experiences.",
+        "activity": "Discuss an actual experience you are comfortable sharing."
+      },
+      {
+        "title": "Goals and action",
+        "text": "Page 3 discusses direction and persistence. Original scenario: He wants a tidy desk and has put two pencils into the case today. The intention and completed action are different.",
+        "activity": "Describe a small goal separately from an actual attempt."
+      },
+      {
+        "title": "Personal and shared goals",
+        "text": "Page 4 separates personal and class goals. Choose a suitable personal goal; shared goals require real discussion. A web submission is not agreement by classmates.",
+        "activity": "Discuss a possible shared family goal with the adult, or leave this pending."
+      },
+      {
+        "title": "Small steps and adjustment",
+        "text": "Page 5 discusses small steps, planning and persistence. Original example: tidy a desk by putting pencils away, then books. Choose safe, suitable steps. Sporting examples are not universal targets.",
+        "activity": "Break a chosen goal into two steps and actually try the first."
+      },
+      {
+        "title": "Recording an attempt",
+        "text": "Record actual steps and where help is needed, then separately note future plans. An unfinished goal can still involve progress; no character score is assigned.",
+        "activity": "Record attempts separately from plans in your own words."
+      }
+    ],
+    "pairs": [
+      {
+        "material": "Original scenario: He wants a tidy desk and puts two pencils back in the case today.",
+        "prompt": "What is the goal in this scenario?",
+        "first": "A tidy desk",
+        "second": "Putting two pencils away",
+        "reviewPrompt": "Which action happened today?",
+        "explanation": "Read the goal separately from the completed action."
+      },
+      {
+        "material": "Original two-step plan: put pencils away, then books. Only the first step was tried today.",
+        "prompt": "What comes first in the plan?",
+        "first": "Putting pencils away",
+        "second": "Putting books away",
+        "reviewPrompt": "What comes next in the plan?",
+        "explanation": "The sequence is explicit; an untried second step is not completed."
+      },
+      {
+        "material": "Original record: An suggests a shared goal but has not discussed it with anyone else.",
+        "prompt": "Which event has happened?",
+        "first": "Suggesting a goal",
+        "second": "Everyone discussing and agreeing",
+        "reviewPrompt": "Which event has not happened?",
+        "explanation": "A suggestion is not completed discussion or real agreement."
+      }
+    ],
+    "manual": [
+      "Actually discuss a past attempt or unfinished goal you are comfortable sharing.",
+      "Actually choose a suitable small goal and explain why you want to try it.",
+      "Actually discuss a shared goal with the adult; without discussion, do not confirm agreement.",
+      "Actually split your goal into two steps and try the first; record the result and ask for help when needed."
+    ],
+    "reflections": [
+      "Record an actual step, feeling or area where help is needed.",
+      "Separately record what you plan to try or adjust next; do not mark it as achieved."
+    ],
+    "lesson2": {
+      "title": "Doing things carefully",
+      "goal": "Explore the cause and effects of an omission, try checklists and reminders, and compare systematically without missing positions.",
+      "prerequisite": "Have printed pages 6–9 of the lower volume, paper, a pencil and existing supplies ready. An adult may read aloud. Keep the textbook comparison pending if unavailable; record an original paper alternative separately.",
+      "parentTip": "One mistake does not define a child as careless. Do not require personal disclosure or judge classmates’ character. Explore causes and try methods; drawings can serve as reminders. View the textbook pictures on the original page; draw our separate six-position activity on paper. A choice answer does not replace comparison.",
+      "steps": [
+        {
+          "title": "Observing an omission",
+          "text": "Page 6 shows mistakes with buttons, missing belongings or questions, and a forgotten book; pages 6–7 continue the book-and-help story. Share an experience only if you want to, or discuss a fictional card. One omission does not define a person.",
+          "activity": "Actually examine the page or original card with the adult and describe an omission and its effects."
+        },
+        {
+          "title": "Exploring causes without blame",
+          "text": "Page 7 discusses misreading, rushing and forgetting to check. Original scenario: Xiao He reads only the first line and misses a question on the second; Xiao An notices it while checking. Use the stated cause without labeling real classmates.",
+          "activity": "Actually discuss a method that could be adjusted; different reasonable approaches are valid."
+        },
+        {
+          "title": "Checklists and reminders",
+          "text": "Page 8 presents notes, checklists and mutual reminders. Draw three existing supplies, check one at a time and mark each checked item. Name the specific task and thank a helper without teasing. Choose a useful list based on actual needs, not the longest list.",
+          "activity": "Actually make and use a small checklist, then exchange a specific reminder with the adult."
+        },
+        {
+          "title": "Comparing position by position",
+          "text": "Page 9 compares two pictures using systematic scanning and marks. View those pictures in the textbook. Original paper alternative: draw A with ○△□ on both rows; draw B with ○□□ on the top row and △△○ on the bottom. Number positions 1–6, top row first, left to right. Differences are at 2, 4 and 6; these are not answers to the textbook pictures.",
+          "activity": "Actually compare the textbook pictures, or separately draw and compare the original pair, marking and checking every position. State which activity was used."
+        },
+        {
+          "title": "Checking before recording",
+          "text": "Describe the method actually used and where help was needed. Careful comparison is not a speed race. Leave unfinished work pending; planning to use a list is not having checked it.",
+          "activity": "Record actual methods separately from plans."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Original scenario: Xiao He reads only the first line and misses the second-line question; Xiao An discovers it while checking.",
+          "prompt": "What does Xiao He do before the omission?",
+          "first": "Reads only the first line",
+          "second": "Checks both lines",
+          "reviewPrompt": "What does Xiao An do when noticing it?",
+          "explanation": "Distinguish the stated actions without judging a real child’s character."
+        },
+        {
+          "material": "Original checklist: pencil, eraser and book. The pencil and book have been checked; the eraser has not.",
+          "prompt": "Which item has not been checked?",
+          "first": "Eraser",
+          "second": "Pencil",
+          "reviewPrompt": "Which of these two items has been checked?",
+          "explanation": "Unchecked does not mean missing; record actual checking for each item."
+        },
+        {
+          "material": "Original two-row diagrams: A has ○△□ on both rows. B has ○□□ on the top and △△○ below. Top positions are 1–3 and bottom positions 4–6.",
+          "prompt": "What is at position 2 in diagram A?",
+          "first": "△",
+          "second": "□",
+          "reviewPrompt": "What is at position 2 in diagram A in this new pair?",
+          "explanation": "Read the current diagram at the specified position. A’s second position is a triangle in the original pair and a square in the new review pair. View the textbook pictures separately.",
+          "reviewMaterial": "New original review diagrams, different from the earlier pair: A has ○□□ on the top and ○△□ below. B has ○△□ on the top and △△○ below. Top positions are 1–3 and bottom positions 4–6."
+        },
+        {
+          "material": "Original checking record: positions 1, 2, 3, 4 and 6 have been compared; position 5 has not.",
+          "prompt": "Which position has not been compared?",
+          "first": "Position 5",
+          "second": "Position 6",
+          "reviewPrompt": "Which of these two positions has been compared?",
+          "explanation": "Check coverage of positions; a checked position need not contain a difference."
+        }
+      ],
+      "manual": [
+        "Actually discuss an omission’s effects and possible causes using the page or an original card; personal disclosure is optional.",
+        "Actually make a three-item picture or word checklist and check existing objects one at a time; do not mark an unchecked item as checked.",
+        "Actually exchange a specific reminder and response with the adult; thank a helper without teasing.",
+        "Actually complete page 9’s comparison, or separately draw and check the original six-position pair. State which material was used rather than claiming the textbook activity was done."
+      ],
+      "reflections": [
+        "Record a discovery from actual checking, reminders or comparison and any help needed.",
+        "Separately record a checking method you plan to try; do not mark it as already used."
+      ]
+    },
+    "lesson3": {
+      "title": "Putting mistakes right",
+      "goal": "Distinguish acknowledging an action, apologizing and making amends; try finding a cause, asking for a reminder and a new method, and record actual attempts and feelings.",
+      "prerequisite": "Describe an event with adult help. Use our original story or a voluntary everyday slip; private experiences need not be disclosed. A learning difficulty is not automatically a moral fault.",
+      "parentTip": "Avoid humiliation, forced confession or public disclosure. Ask a trusted adult to handle harm or danger first. Agree on appropriate repairs under real rules; children must not handle unknown dirty or dangerous objects. An apology does not require immediate forgiveness. Keep role-play, one attempt, lasting habits and future plans separate.",
+      "steps": [
+        {
+          "title": "Describe the facts honestly",
+          "text": "The textbook starts with accidentally dirtying a borrowed book and introduces acknowledgment and apology. Establish what happened and your own part rather than taking responsibility for everyone else. In our rehearsal, He marked a peer’s scrap paper and is willing to explain and discuss a repair.",
+          "activity": "Use our scrap-paper story or a voluntary everyday example to actually say what happened, what you did and its effect. Names and private details are unnecessary."
+        },
+        {
+          "title": "An apology and a repair are separate actions",
+          "text": "After expressing regret, ask what could help. Saying sorry does not mean damage has been repaired or require immediate forgiveness. Our paper scenario involves agreeing to provide another sheet. For real borrowed items, follow the librarian’s or teacher’s instructions rather than washing or paying for them independently.",
+          "activity": "Actually rehearse an explanation, apology and listening with an adult, then rehearse one agreed paper repair. A rehearsal is not proof a real incident has been resolved."
+        },
+        {
+          "title": "Find a cause and ask for a reminder",
+          "text": "The textbook discusses timely correction, causes and asking for reminders. Our story names a specific cause: rushing to tidy up without looking at the table. One method is to slow down and look before taking paper. Ask a trusted adult for a specific reminder. Calling a child bad is not a cause or a method.",
+          "activity": "Discuss one concrete cause of an actual slip or our story, agree on a method and request a helpful reminder. Making a plan is not trying it."
+        },
+        {
+          "title": "Try a different method for real",
+          "text": "The textbook considers habits, lessons, difficulties and new methods discovered through correction. Repeated learning confusion can also need a teacher’s help; not every difficulty is deliberate wrongdoing. Our rehearsal method is to look at the table, put pens away, then take clean paper. Try it once and examine the result.",
+          "activity": "Actually try a safe, ordinary method with an adult and describe the result. Label a story rehearsal; one attempt does not establish a lasting habit."
+        },
+        {
+          "title": "Notice real changes and express your feelings",
+          "text": "Listening to reminders, trying methods and asking for help can improve a situation gradually. A mistake does not define the whole person. Several attempts may be needed, and an unsuccessful attempt can be recorded honestly. Keep actual repairs separate from future intentions; apologies are not counted as morality points.",
+          "activity": "Review what really happened and what help is still needed. Write next week’s intentions separately; do not turn a plan into a completed habit."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Our story: He explained marking the scrap paper and expressed regret but has not repaired it. Lin agreed with the peer and supplied another sheet but has not yet explained their own action. We compare actions, not the whole person.",
+          "prompt": "Who has explained their own action and expressed regret?",
+          "reviewPrompt": "Who has performed the agreed repair?",
+          "first": "He",
+          "second": "Lin",
+          "explanation": "An apology and an actual repair are separate. Each person has done only one stated action; neither action counts as both."
+        },
+        {
+          "material": "Ning wrote a plan to put pens away before taking paper but has not tried it. An actually organized the pens, took a sheet using the method and recorded the result.",
+          "prompt": "Who has actually tried the method?",
+          "reviewPrompt": "Who currently has only a plan?",
+          "first": "An",
+          "second": "Ning",
+          "explanation": "An actual attempt may be recorded as done; a written plan remains pending. One attempt is not proof of a lasting habit."
+        },
+        {
+          "material": "The record says rushing to tidy without looking at the table was this incident’s cause. Looking at the table before taking paper is the agreed method for next time.",
+          "prompt": "Which statement describes the specific cause this time?",
+          "reviewPrompt": "Which statement describes the method for next time?",
+          "first": "Rushing to tidy without looking at the table",
+          "second": "Looking at the table before taking paper",
+          "explanation": "A cause explains the event; a method describes what to do later. Proposing it does not mean it was tried."
+        },
+        {
+          "material": "Zhu actually asked an adult to remind them to look before taking paper. He intends to make that request tomorrow but has not said it yet.",
+          "prompt": "Who has already requested a reminder?",
+          "reviewPrompt": "Whose request is still a future intention?",
+          "first": "Zhu",
+          "second": "He",
+          "explanation": "Check whether the request happened. An intention is not a completed action. Asking for help does not make a child bad or prove everything is fixed."
+        }
+      ],
+      "manual": [
+        "Using our story or a voluntary everyday event, actually explain what happened, your action and its effect, then rehearse an apology. Label simulation and never require private disclosures.",
+        "Actually listen to an adult playing the other person and rehearse an agreed paper repair. Follow adult rules in real situations; no dangerous materials or forced immediate forgiveness.",
+        "Actually discuss one cause, agree on a method and ask a trusted adult for a specific reminder. Record discussion or the request without claiming the method was tried.",
+        "Actually try one safe method with an adult and examine the result. Record a real attempt or a rehearsal; one success does not establish a long-term habit."
+      ],
+      "reflections": [
+        "Describe the explanation, repair or method attempt that really happened, your feelings and any help needed. An unfinished action may be recorded honestly; feelings are not graded.",
+        "What will you try next time? Keep future plans separate; untried methods and continuing practice do not mean everything is already fixed."
+      ]
+    },
+    "lesson4": {
+      "title": "Participating with energy",
+      "goal": "Explore participation, rest, suitable activity and feelings; try attentive reading, understandable expression and enjoyable singing using accessible ways.",
+      "prerequisite": "Speech, pointing, assistive communication and adult transcription are welcome. Caregivers supply familiar, lawful reading and song material. No uniform voice or posture is required.",
+      "parentTip": "Do not judge character by appearance, body shape, volume, disability, tiredness or feelings. Do not insist on continuing when unwell; tell a trusted adult what is needed. Reading, expression and singing may happen separately and use assistive methods. No costumes, contest entry, recordings or photos are required.",
+      "steps": [
+        {
+          "title": "Energy is more than appearance",
+          "text": "The textbook’s procession and animal story invite discussion beyond looks, including voice, posture and enthusiasm. We do not turn those into pupil rankings: attractive clothes do not prove attentive participation, and a quiet voice does not mean no effort.",
+          "activity": "Actually view printed pages 14–16 or listen to an adult and discuss why appearance and actions are different. Do not compare classmates’ looks."
+        },
+        {
+          "title": "Talk about rest, movement and feelings",
+          "text": "The textbook connects suitable activity, rest and feelings. Today’s state differs between people. Being tired, sad or uncomfortable can be discussed with an adult; smiling constantly is not required. Choose suitable movement with adult guidance. One attempt does not establish long-term health.",
+          "activity": "Actually review rest, suitable activity or feelings with an adult and identify one need and helpful response. Keep a future change as a separate plan."
+        },
+        {
+          "title": "Try attentive reading",
+          "text": "The textbook includes attentive reading. Use a familiar short line or lawful adult-provided material at a comfortable pace. Adult-led reading, pointing and assistive communication are possible. This is not a competition for loudness or perfect first attempts.",
+          "activity": "Actually read, follow an adult or express a familiar passage accessibly. Record the method and help used; an unattempted activity stays pending."
+        },
+        {
+          "title": "Make your meaning understandable",
+          "text": "The textbook includes clear spoken expression. Our focus is understanding: face the listener, express one idea, allow pauses and ask for help without shouting. Picture cards and assistive tools may be used. Have the listener repeat the meaning and check it.",
+          "activity": "Actually express one idea to an adult and check their understanding. Record speech, pictures or another assistive method without grading volume."
+        },
+        {
+          "title": "Join a song and review each activity",
+          "text": "The textbook also includes enjoyable singing. Sing part of a familiar lawful song, follow its rhythm or participate accessibly; a happy facial expression is not compulsory. Reading, expression and singing are separate tasks, not three completions for doing one.",
+          "activity": "Actually join a short song or rhythm activity and review each of the three attempts with an adult. Pause when tired and keep next steps as plans; no automatic ranking of energy."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Record: Ning selected attractive clothes but has not started reading. Zhu attentively read a familiar short line at a comfortable pace.",
+          "prompt": "Who has an actual reading record?",
+          "reviewPrompt": "Who has only prepared their appearance, with reading still pending?",
+          "first": "Zhu",
+          "second": "Ning",
+          "explanation": "Appearance preparation and actual reading differ. Clothes and looks do not earn character or energy scores."
+        },
+        {
+          "material": "Record: He actually told an adult they feel tired and need rest. An intends to say this later but has not expressed it yet.",
+          "prompt": "Who has already told an adult about the current need?",
+          "reviewPrompt": "Who only plans to express it later?",
+          "first": "He",
+          "second": "An",
+          "explanation": "An actual expression differs from a plan. Tiredness is not a character fault; asking for help may be recorded honestly."
+        },
+        {
+          "material": "Activity card: the first task is attentive reading of familiar short lines; the second is expressing an idea to a listener and checking understanding. Both may use suitable assistive methods.",
+          "prompt": "Which task is this reading activity?",
+          "reviewPrompt": "Which task is this spoken or assistive expression activity?",
+          "first": "First task",
+          "second": "Second task",
+          "explanation": "Reading and expression are different tasks. Doing one does not complete the other; assistive participation is not lesser participation."
+        },
+        {
+          "material": "Record: Ning actually joined part of a familiar song through its rhythm. Zhu only wrote a plan to join next time and has not tried yet.",
+          "prompt": "Who has an actual song or rhythm participation record?",
+          "reviewPrompt": "Who currently only has a future plan?",
+          "first": "Ning",
+          "second": "Zhu",
+          "explanation": "Record the real method used. A plan is not participation; no standard voice, posture or happy expression is required."
+        }
+      ],
+      "manual": [
+        "Actually view printed pages 14–16 or listen to an adult, discuss appearance versus participation and review a need involving rest, movement or feelings and possible help. Do not grade looks or feelings.",
+        "Actually read, follow along or express a familiar lawful passage accessibly. Record method, attempted content and help; do not confirm reading that never happened.",
+        "Actually express an idea to an adult and check their repeated understanding. Label speech, pointing, assistive communication or transcription honestly without shouting or private disclosure.",
+        "Actually sing, follow rhythm or join part of a familiar lawful song accessibly. Record what happened; pause when tired without forced smiles or performance."
+      ],
+      "reflections": [
+        "Describe each reading, expression or song attempt that happened, your feelings and needed help. Unfinished tasks may be recorded honestly; feelings and volume are not graded.",
+        "What would you like to try next, when might you rest or ask for help? Keep plans separate; one participation does not prove permanent ideal condition."
+      ]
+    },
+    "lesson5": {
+      "title": "Being together",
+      "goal": "Share a story of doing things together, rehearse joining requests and responses, agree on rules and take turns, and practise comfort, fair yielding and understanding.",
+      "prerequisite": "Use paper slips or a familiar safe activity with a caregiver; existing peers are not required. Speech, pictures, assistive communication and adult transcription are welcome and labelled honestly.",
+      "parentTip": "Participation needs willingness on both sides. A polite request does not guarantee entry, and refusal is not a character judgment. Pause, change activities or ask an adult for help. Do not force toy sharing, yielding all opportunities or immediate forgiveness. Use safe tabletop activities rather than chasing or collisions.",
+      "steps": [
+        {
+          "title": "Tell a story of being together",
+          "text": "The textbook begins with stories of playing and sharing reading. Tell a real experience or clearly discuss a book example; a book story is not your own experience. Happiness and having many friends are not required.",
+          "activity": "Actually tell or draw a real story with activity and feelings, or label a textbook discussion. Do not disclose others’ identities."
+        },
+        {
+          "title": "Ask politely before joining",
+          "text": "The book offers greetings, polite requests, bringing materials to discuss joining and asking for an introduction. A request opens discussion; having a toy does not require acceptance, and polite words are not actual participation. Listen to yes, later or no and discuss a workable response.",
+          "activity": "Actually rehearse all four approaches with an adult, each with a request and response. Use existing paper materials without buying toys or claiming peers agreed."
+        },
+        {
+          "title": "Agree on rules and take turns",
+          "text": "The textbook explores game rules and how to continue after wins or losses. Our original tabletop activity: two people take turns putting their paper slips in their own small circles, one per turn, two turns each, with no contest or collisions. Both agree before starting. Pause to discuss disagreements rather than changing rules independently.",
+          "activity": "Actually agree on this rule with a willing adult and take two turns each. If agreement has not happened, record rules as pending rather than completed cooperation."
+        },
+        {
+          "title": "Try comfort, fair yielding and understanding separately",
+          "text": "The textbook presents these three approaches. Our rehearsals: ask an upset person whether company is wanted; agree who goes first while preserving both people’s turns; listen to an explanation after slips are accidentally disturbed and agree on restoring them. Understanding does not force instant forgiveness or silence about discomfort.",
+          "activity": "Actually rehearse all three situations with an adult and listen to each response. Keep both people’s opportunities; express feelings and pause for help when needed."
+        },
+        {
+          "title": "Review the process and your feelings",
+          "text": "Requesting, receiving a response, agreeing rules, participating and handling disagreement are different steps. A declined request can still show actual expression and a need for help. Friend count, winning and emotions do not earn character scores. One activity does not establish friendship; plans stay separate.",
+          "activity": "Review the story, four requests, actual rule-based activity and three friendly approaches. Label simulation or real activity without inventing events."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Record: Ning politely requested to join and still awaits an answer. Zhu heard agreement and began participating under the shared rules.",
+          "prompt": "Who received agreement and started participating?",
+          "reviewPrompt": "Who is still waiting for a response?",
+          "first": "Zhu",
+          "second": "Ning",
+          "explanation": "Request, response and participation differ. Politeness does not mean agreement; waiting is not a fault."
+        },
+        {
+          "material": "Our rule cards: A says one paper slip per turn. B says alternate turns with two turns for each person. Both rules need agreement before use.",
+          "prompt": "Which card states how many slips per turn?",
+          "reviewPrompt": "Which card states order and both people’s opportunities?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Quantity and turn-taking are separate. A written rule is not evidence both people agreed."
+        },
+        {
+          "material": "He asked an upset partner if company was wanted and received agreement to sit together. An agreed the partner goes first for one turn while retaining the next turn.",
+          "prompt": "Who offered comfort with a response?",
+          "reviewPrompt": "Who fairly yielded a first turn while keeping both opportunities?",
+          "first": "He",
+          "second": "An",
+          "explanation": "Comfort and fair turns differ. Neither means surrendering all opportunities or forcing immediate happiness."
+        },
+        {
+          "material": "Ning and an adult agreed on the paper rules and actually completed alternating turns. Zhu only wrote a plan for next time without asking or participating.",
+          "prompt": "Who has a record of this actual shared activity?",
+          "reviewPrompt": "Who currently has only a future plan?",
+          "first": "Ning",
+          "second": "Zhu",
+          "explanation": "Completion differs from intention. Label adult participation or rehearsal rather than claiming classmates joined."
+        }
+      ],
+      "manual": [
+        "Actually tell or draw a story and express feelings. Separate real experience from textbook discussion; discussion is valid without a prior experience or private names.",
+        "Actually rehearse greeting, polite requesting, discussing existing materials and asking for an introduction, with a response each time. Pause after refusal and do not claim peers agreed.",
+        "With a willing adult, actually agree on the original paper rule and alternate two turns each with one slip per turn. Record the real two-person activity and partner category; discussing rules alone is not participation.",
+        "Actually rehearse all three: comfort and a response, fair first-turn yielding, and listening and agreeing on restoring disturbed slips. Label simulation without forced forgiveness or happiness."
+      ],
+      "reflections": [
+        "Describe an actual request, shared activity or disagreement and your feelings. Unsuccessful attempts and needed help may be recorded without grading friends or wins.",
+        "What invitation or method would you try next? Keep plans separate without inventing agreement or participation."
+      ]
+    },
+    "lesson6": {
+      "title": "Please help me",
+      "goal": "Recognize different difficulties and safe attempts versus adult help; rehearse explaining needs to suitable people, responses, gratitude and passing on safe help.",
+      "prerequisite": "Use paper difficulties and adult role-play without real losses, hazards or calls. Ask a trusted adult if you are unsure whether an attempt is safe.",
+      "parentTip": "Do not visit water, climb trees or approach smoke, fire or unexplained loud sounds to practise. Discuss hazards on paper and let trusted adults or responsible personnel handle them. Do not identify strangers by clothes or leave with them. Asking for help is not a character fault; seek another suitable adult after no response. Ask before helping and stay within your ability.",
+      "steps": [
+        {
+          "title": "Everyone can encounter difficulties",
+          "text": "The textbook gives examples involving pens, laces, unfamiliar words and items in water. A learning difficulty and a dangerous scene differ; concerns can be expressed honestly. Our cards describe needs without creating real problems.",
+          "activity": "Actually describe a voluntary ordinary difficulty or read a fictional card and state the event and need without private details."
+        },
+        {
+          "title": "Check safety before attempting",
+          "text": "Printed page 23 considers lost belongings, unfamiliar rope skills, getting lost, an item in a tree, smoke and a distant loud sound. A safe manageable task may be tried first and help requested if needed. Getting lost, high or water locations, smoke and unexplained sounds need a trusted adult; do not climb, enter water or approach to investigate. Not every child can independently do the same task.",
+          "activity": "Actually discuss all six textbook scenarios, then classify our explicit tabletop paper task and hazard cards and explain why. No real-site experiments; correct classification does not handle a hazard."
+        },
+        {
+          "title": "Choose suitable help and explain the need",
+          "text": "The book includes a kite in a tree and requesting caregiver contact after collection has not arrived. Our explicit roles assign reading guidance to a teacher and pickup checks to designated school staff. Clothing alone does not establish trust; do not leave alone with unknown people.",
+          "activity": "Actually rehearse the event, need and suitable helper with an adult and hear a response. Contact is role-play without calls or leaving school independently."
+        },
+        {
+          "title": "Responses, thanks and resolution differ",
+          "text": "Agreement to help does not mean a difficulty is solved; responsible adults still check follow-up. Thanks can be spoken or expressed with pictures. With no response, do not blame yourself or invent help; seek another suitable trusted adult.",
+          "activity": "Actually rehearse thanks after agreement and a further request when help is temporarily unavailable. Label rehearsal rather than a resolved real problem."
+        },
+        {
+          "title": "Pass on safe help",
+          "text": "Printed page 25 shows receiving help, gratitude and later helping someone else. Our paper exercise: ask whether an adult needs a slip and pass it after agreement. Receiving and giving are different actions. Helping does not justify approaching danger or doing tasks beyond your ability.",
+          "activity": "Actually receive safe paper help and thank it, then ask and pass a paper slip with agreement. Review the five activities; future help stays a plan."
+        }
+      ],
+      "pairs": [
+        {
+          "material": "Original cards: A is seated tabletop paper within easy reach under adult-confirmed safe arrangements; B is an item in water, discussed only on paper, requiring a trusted adult without the child entering water.",
+          "prompt": "Which card is this safe ordinary tabletop attempt?",
+          "reviewPrompt": "Which card needs adult handling without entering water?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Use explicit safety conditions; calling something small does not prove every child can do it. The hazard card is discussion only."
+        },
+        {
+          "material": "Explicit fictional roles: Zhou guides reading; Lin is designated school pickup-contact staff who checks changes. Actual school roles need separate confirmation.",
+          "prompt": "Who should hear about a reading difficulty in these cards?",
+          "reviewPrompt": "Who should check a pickup change in these cards?",
+          "first": "Zhou",
+          "second": "Lin",
+          "explanation": "Use stated responsibilities, not clothes. Schools and caregivers confirm real arrangements."
+        },
+        {
+          "material": "Ning explained a need in adult role-play and heard agreement, but the paper difficulty has not been handled. An only planned a future request without saying it.",
+          "prompt": "Who has a request-and-response rehearsal record?",
+          "reviewPrompt": "Who only has a future request plan?",
+          "first": "Ning",
+          "second": "An",
+          "explanation": "A response is not resolution; a plan is not an actual request. Do not invent events."
+        },
+        {
+          "material": "Paper record: He received a slip from an adult and expressed thanks. Zhu asked whether help was wanted, received agreement and passed a slip to the adult.",
+          "prompt": "Who received help and thanked it?",
+          "reviewPrompt": "Who gave help after agreement?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Receiving, thanking and giving are distinct real actions. One does not complete the other or handle a real hazard."
+        }
+      ],
+      "manual": [
+        "Actually describe an ordinary difficulty and need or read our card. Private experiences need not be disclosed; create no loss or hazard.",
+        "Actually discuss all six scenarios on printed page 23, then classify our explicit tabletop and hazard cards with reasons. No climbing, water or smoke experiments; source discussion stays pending without complete material.",
+        "Actually rehearse choosing a helper by stated role, explaining a need and hearing the response. Pickup contact is role-play without calls or leaving with strangers.",
+        "Actually rehearse both thanks after agreement and seeking another suitable adult when help is unavailable. Do not claim the issue was solved.",
+        "Actually receive safe paper help and thank it, then ask and give paper help after agreement. Record the two actions separately without claiming real hazards or future plans are handled."
+      ],
+      "reflections": [
+        "Describe an actual judgment or request rehearsal, its response and remaining needs. Worry and unresolved difficulties may be recorded without character scores.",
+        "Whose help might you need or how could you safely help next? Keep plans separate from agreement, rehearsal or real resolution."
+      ]
+    },
+    "lesson7": {
+      "title": "We enjoy sharing",
+      "goal": "Experience sharing books, methods and game rules; practise care, return, conditions and special-item boundaries while respecting both people’s choices.",
+      "prerequisite": "Choose ordinary safe materials you freely wish to share. An adult may read; stories, books and music must come from existing lawful material.",
+      "parentTip": "Sharing is voluntary. Do not demand private possessions, reciprocal promises or immediate forgiveness. A cherished keepsake may remain unloaned. For damage, explain honestly, stop using it and ask an adult to discuss suitable repair; apology does not mean repaired. Food examples are discussion only, not a tasting or sharing task. Keep private information private; worrying or harmful secrets may be told to a trusted adult.",
+      "steps": [
+        {
+          "title": "From one book to a shared story",
+          "text": "Page 26 shows personal reading, reading together, telling and acting a story. These are four different stages. Sharing content and enjoyment does not guarantee everyone immediately feels happy.",
+          "activity": "With one existing lawful suitable short story, actually read or hear it, agree to read together, tell it to the other person and agree on roles for a short seated or accessible scene without dangerous actions."
+        },
+        {
+          "title": "Share a method and a game rule",
+          "text": "Page 27 gives construction, food and game examples. Explain a method and give the listener a chance to try. The site substitutes tabletop paper for jumping; food is discussed without handling or tasting.",
+          "activity": "With agreement, demonstrate and explain folding a paper card; let the other person try their own. Then explain taking turns pointing first to one’s own card and then to the other’s. Each person tries one round and exchanges an opportunity to explain."
+        },
+        {
+          "title": "Share together and care for belongings",
+          "text": "Page 28 includes method guidance, book care, story expression and courtesy. Different content needs a suitable approach and a listener’s response. Private information need not be public; worrying or harmful secrets can be discussed with a trusted adult.",
+          "activity": "Ask to share an ordinary book or card, agree to view it at the table and when to return it, hear consent, handle it gently, view together, return and thank. Use a non-private original story for one line of telling and one response."
+        },
+        {
+          "title": "Distinguish accidents, conditions and exceptions",
+          "text": "Page 29 discusses accidental damage, sharing requests and a treasured keepsake. A request is not consent. Conditions may be discussed and a loan declined. Apology, repair and forgiveness are distinct; never damage real belongings to practise.",
+          "activity": "Rehearse three fictional cards separately: report a torn paper card, stop using it and seek adult repair discussion; request table-only viewing and hear a response; explain that a keepsake is not loaned and offer a photo or oral description instead."
+        },
+        {
+          "title": "Record actual sharing and personal feelings",
+          "text": "Pages 28–29 discuss enjoyment and ways of getting along. Someone may share a method while keeping a particular object private. Feelings vary. Label adult role-play separately from sharing with real classmates.",
+          "activity": "Look back at the four book stages, method, game, item and three communication rehearsals. Actually express one attempt and one response, orally or accessibly. Leave undone items pending and record future sharing separately."
+        }
+      ],
+      "manual": [
+        "With a lawful familiar short story, actually read or hear it, agree to read together, tell it and agree on roles for a short scene. Record each of the four stages; leave missing stages pending and label adult role-play.",
+        "Actually demonstrate and explain folding a card, give the other person a chance to try and hear a response. Saying that a method exists is not sharing it.",
+        "Actually explain the tabletop paper game, let both people try a round and exchange an explaining opportunity. Website answers or discussion of the textbook jumping game are not actual play.",
+        "With actual consent, share an ordinary book or card, follow agreed care and return, thank, then tell and respond to a non-private story. Do not take anything without consent.",
+        "Actually rehearse all three fictional communications: honest accident reporting and adult repair discussion; a table-use condition and response; a special keepsake refusal with another sharing option. No real damage or forced forgiveness.",
+        "Actually review the separate records and express one real attempt and response, including unfinished items. Record next-time plans separately; discussion, role-play and feelings are not real-classmate events."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional records: He reads a story and, with agreement, actually reads together, tells it and performs a short scene with an adult. Zhu only plans future shared reading.",
+          "prompt": "Who has all four actual book-sharing stages recorded?",
+          "reviewPrompt": "Who only has a future plan here?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Personal reading, shared reading, telling and acting each need an actual action. Adult role-play is not a classmate event."
+        },
+        {
+          "material": "Fictional materials: A is an ordinary card its owner is willing to view together at the table. B is a treasured keepsake the owner explicitly will not loan.",
+          "prompt": "Which item may be viewed together with mutual consent?",
+          "reviewPrompt": "Which owner’s non-loan boundary should be respected?",
+          "first": "Card A",
+          "second": "Keepsake B",
+          "explanation": "Voluntary sharing and boundaries coexist. Declining a loan does not make a child unfriendly."
+        },
+        {
+          "material": "Fictional communication: Ning notices a shared card is torn, reports it, stops using it and asks an adult to discuss repair. An asks for table-only viewing before use and hears consent.",
+          "prompt": "Which record discusses repair after an accident?",
+          "reviewPrompt": "Which record agrees on a condition before sharing?",
+          "first": "Ning’s record",
+          "second": "An’s record",
+          "explanation": "Accident communication and prior conditions differ; apology or consent does not establish repair or an actual activity."
+        },
+        {
+          "material": "Fictional actions: He demonstrates a paper fold and lets the other person try. Zhu explains the tabletop card rule and both try a round.",
+          "prompt": "Which record shares a making method?",
+          "reviewPrompt": "Which record shares a game rule with actual trials?",
+          "first": "He’s record",
+          "second": "Zhu’s record",
+          "explanation": "Methods and game rules each involve explanation, response and trying. These paper activities do not establish food sharing or physical exercise."
+        }
+      ],
+      "reflections": [
+        "What did you actually share or hear, and how did the other person respond? You may name what you wish to share and what remains private. No forced disclosure or grading of feelings.",
+        "How might you explain a method, care for belongings or state a condition next time? Plans stay separate; hoped-for acceptance or forgiveness is not an event already achieved."
+      ]
+    },
+    "lesson8": {
+      "title": "Let us cooperate",
+      "goal": "Observe solo and cooperative processes; actually divide work, coordinate, exchange opportunities and discuss role disagreements; read the full story and distinguish safe simulation.",
+      "prerequisite": "An adult may read the source and familiar lawful material. Two willing participants use ordinary tabletop cards without blindfolds or carrying people.",
+      "parentTip": "Textbook blindfold, skipping, river and climbing scenes are discussion sources. The site does not reproduce those actions. Cooperation does not guarantee speed, happiness or success every time; inspect this actual process. Roles require agreement and may change or pause without coercion. Label adult participation separately from real classroom events and plans.",
+      "steps": [
+        {
+          "title": "What changes when there is cooperation?",
+          "text": "Page 30 contrasts a nose-placement activity without and with a helper’s prompts. Discuss visible differences without claiming every collaboration is faster or solo work is bad. Our visible tabletop target is an original communication substitute, not blindfolded movement.",
+          "activity": "Draw a circle and square on paper. First the child sees a specified target and places a paper piece independently. Then agree that an adult names the square; the child listens, confirms and places it. Compare how each target was known, without speed or moral scoring."
+        },
+        {
+          "title": "Divide work and contribute",
+          "text": "Page 31 shows shared cleaning, play and recitation. The site tidies ordinary tabletop paper, not actual school cleaning or sports. Each person must do the agreed contribution rather than one person doing everything.",
+          "activity": "Agree a shared goal: divide six cards into two groups of three. One sorts and one checks; both actually do their part. Exchange roles and repeat. Separately play a tabletop pointing game for two turns each, without real rubbish or cleaning products."
+        },
+        {
+          "title": "Learn together and record this effect",
+          "text": "Page 31 also shows joint recitation. Familiar lawful short material can be read or spoken in turns with prompts. Accuracy or greater ease needs actual observation; standing together does not prove efficiency. Accessible expression can be coordinated.",
+          "activity": "Choose two familiar lawful lines. Both first try reading or listening and speaking, agree turns and prompts, then jointly read or speak once and each check a line. Record specific help without racing, forced memorisation or declaring it faster."
+        },
+        {
+          "title": "Discuss role disagreements before deciding",
+          "text": "Page 32 has four scenes involving the same desired role, refusing another role, withdrawing and blame. Read all four before discussing. State and hear wishes, discuss rotation, other roles or a pause. Declining a role is not lack of solidarity.",
+          "activity": "With original card-introducer and card-pointer roles, separately rehearse responses to both wanting to introduce, not wanting to point, requesting a pause and hearing blame. Agree a workable arrangement, then each try a short role; record rotation or pausing honestly."
+        },
+        {
+          "title": "Read the full story without unsafe imitation",
+          "text": "The deer-and-monkey story spans six panels on pages 30–32, from difficulties through different helpful abilities to each receiving wanted food. Read or hear all six and identify both contributions. Animal actions are not instructions for children to cross rivers, climb or eat leaves.",
+          "activity": "Actually read or hear all six panels, use panel numbers to describe a change and each contribution, with tabletop role cards only. No river, climbing, carrying or tasting. Review actual site cooperation, express one real help and one unfinished item, and keep future plans separate."
+        }
+      ],
+      "manual": [
+        "Actually perform both visible target-card trials: independently read and place once, then hear and confirm the helper’s stated target before placing. Compare communication, with no blindfold or claim of completed textbook nose play or guaranteed speed.",
+        "With agreement, actually sort six cards into two groups of three, one sorting and one checking, then exchange roles and repeat. Record both contributions without claiming school cleaning.",
+        "Actually play two tabletop pointing turns each and hear responses. Discussion or merely standing together is not actual coordinated play.",
+        "Actually use two familiar lawful lines; both try, agree prompts and each check a line. Name specific help, with no racing, guaranteed speed or forced memorisation.",
+        "Actually read or hear all four page-32 role-disagreement scenes, then rehearse the original responses to the same desired role, refusal of another role, a pause and blame. Leave missing source material pending.",
+        "Actually state both wishes and agree roles before trying a short introduction and pointing. Record rotation or pause; no confirmation without consent, coercion or claiming real-classmate activity with an adult.",
+        "Actually read or hear all six deer-and-monkey panels, describe a numbered change and both contributions, then review actual help and unfinished items. No river, climbing, carrying or tasting; plans stay separate."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional tabletop trials: in A, the child sees the specified circle and places independently. In B, an adult names the square and the child confirms and places. Both can see; no timing data exist.",
+          "prompt": "Which trial reads the target independently?",
+          "reviewPrompt": "Which trial has explicit prompting and confirmation?",
+          "first": "Trial A",
+          "second": "Trial B",
+          "explanation": "Both solo and prompted processes can be described; no timing data means no speed conclusion."
+        },
+        {
+          "material": "Fictional tidying: Ning and an adult agree sorting and checking roles and both actually contribute. An only plans to tidy together later.",
+          "prompt": "Who has actual divided-work cooperation?",
+          "reviewPrompt": "Who only has a future cooperation plan?",
+          "first": "Ning",
+          "second": "An",
+          "explanation": "Agreement and actual contributions differ from a plan."
+        },
+        {
+          "material": "Fictional roles: He wants to introduce, hears the other person and agrees to rotation. Zhu asks to pause and hears agreement to rest.",
+          "prompt": "Who negotiates rotation of the same role?",
+          "reviewPrompt": "Who expresses a pause and hears a response?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Rotation and pausing are different communication results. A pause or declining a role is not a moral fault."
+        },
+        {
+          "material": "Six-panel source-story card: the deer helps the monkey across the river. The monkey uses climbing ability to obtain peaches and help the deer obtain leaves. Discuss only, without imitating unsafe actions.",
+          "prompt": "Which story character helps the other reach the opposite bank?",
+          "reviewPrompt": "Which uses climbing ability to help obtain food?",
+          "first": "The deer",
+          "second": "The monkey",
+          "explanation": "The characters contribute different abilities. These animal actions are not instructions for children."
+        }
+      ],
+      "reflections": [
+        "What actually happened in dividing work, prompting, shared reading or role communication? What helped or still needs adjustment? Pausing and discomfort may be expressed without grading feelings.",
+        "How might you divide work or communicate next time? Separate agreement, actual actions and future wishes. Do not state that cooperation always improves speed or happiness."
+      ]
+    },
+    "lesson9": {
+      "title": "This is my family",
+      "goal": "Identify stated family relationships, hear stories and observe similarities and differences; discuss the full interaction story without guessing ancestry or demanding disclosure.",
+      "prerequisite": "An adult may read. Fictional family cards can replace personal disclosure; photos and real names are unnecessary.",
+      "parentTip": "The textbook depicts one family arrangement, not a requirement for every family, household or ancestry. Respect differing caregivers and arrangements. Similar looks, interests or habits prove no relationship, and habits are not fixed at birth. Identify only stated relationships; no invented blanks, names, addresses, photos or secrets. Occupation and wealth do not rank families. Feelings may remain private; no forced immediate reconciliation. Seek a trusted adult for worry or harm.",
+      "steps": [
+        {
+          "title": "A birth story needs a stated source",
+          "text": "Page 34 has adult-told early-life stories. Something not personally remembered can be labelled as heard from someone. Families differ and the source or fictional story may be used instead of private experience.",
+          "activity": "Actually read or hear the page-34 birth story and identify it as a textbook character’s experience. If willing, ask a caregiver one shareable early-life question and hear a response. Label source discussion versus real inquiry; no names, photos or addresses."
+        },
+        {
+          "title": "Relationship cards and each person’s importance",
+          "text": "Page 35 explicitly labels father, mother, paternal grandmother, maternal grandfather and the narrator. Other blanks cannot establish age or gender by position. Our fictional cards explicitly define paternal grandparents as father’s parents and maternal grandparents as mother’s parents; older/younger brother or sister refers to a male/female child with the same parents and the stated relative age in this example only.",
+          "activity": "Actually draw or place eleven original cards: narrator, father, mother, four grandparents and older/younger brother/sister. Explain every card from its stated relationship; ask rather than guess source blanks. Fictional cards suffice without a real family tree upload."
+        },
+        {
+          "title": "Similarities do not prove family ties",
+          "text": "Page 36 discusses work habits, interests and physical resemblance. Similarities and differences can be observed without assuming ancestry fixes habits or that different looks negate family. No names, photos or private features are needed.",
+          "activity": "Use original preferences: A and a caregiver both like reading; B likes folding while a caregiver likes reading. Actually name one stated similarity and one difference. A voluntary non-private example or fictional discussion is enough; no genetic conclusion."
+        },
+        {
+          "title": "Hear family stories and respond honestly",
+          "text": "Page 37 introduces relatives’ work and skills. Respect different work and care without occupational ranking. Label heard information; the source soldier and teacher are not facts about the learner’s family. Original fictional event: He and a caregiver put away two scattered books, check them and He says thanks. Discuss only, without climbing to find books.",
+          "activity": "Actually read or hear all three page-37 introductions and identify them as source examples. Then hear one freely shareable small event or our fictional book-organising story and respond, naming its source. No inquiry about occupation, workplace or address is required."
+        },
+        {
+          "title": "Eight sibling panels and different feelings",
+          "text": "Eight panels across pages 34–37 include birth, joint activities, conflict and reconciliation, resemblance and difference, small shared secrets and wishes. Read all eight without requiring a real younger sister or instant reconciliation. Private secrets need not be disclosed; worry or harm can be told to a trusted adult.",
+          "activity": "Actually read or hear all eight panels and describe a numbered change, similarity or difference, and wishes versus occurred events. Separately rehearse a fictional card character’s request for turns or a pause and hear a response. Source, role-play and real experience stay distinct."
+        }
+      ],
+      "manual": [
+        "Actually read or hear the source birth story and label it as a book example. Any voluntary real inquiry is separately sourced, with no invented birth memories, photos or addresses.",
+        "Actually read or place all eleven fictional relationship cards and explain every explicitly stated relation. Do not guess unlabeled source blanks or require a real family to match the example.",
+        "Actually name one stated preference similarity and one difference. Do not infer ancestry from appearance or fixed inheritance from habits; fictional examples suffice.",
+        "Actually read or hear all three page-37 introductions, then hear a freely shareable small event or the fictional book-organising story, label its source and respond. No workplace, occupation, income or address inquiry.",
+        "Actually read or hear all eight sibling panels and use numbers to describe a change, similarity or difference and wishes versus events. Missing material stays pending; having no siblings is not failure.",
+        "Actually rehearse a fictional card character expressing a wish for turns or a pause and hear a response. No forced real reconciliation, shared secrets or physical contact.",
+        "Actually review the site activity records and express one discussion, role-play or voluntary event and one unknown, then hear a response. Different families and feelings are not graded; plans remain separate."
+      ],
+      "pairs": [
+        {
+          "material": "Original fictional relationship cards: a paternal grandmother is father’s mother; a maternal grandfather is mother’s father. No appearance or diagram-position guesses.",
+          "prompt": "Which is father’s mother?",
+          "reviewPrompt": "Which is mother’s father?",
+          "first": "Paternal grandmother",
+          "second": "Maternal grandfather",
+          "explanation": "Use stated relationships without requiring every real family to match or live together."
+        },
+        {
+          "material": "Fictional preferences: A and a caregiver both like reading. B likes folding and a caregiver likes reading. Only preferences are stated, not ancestry.",
+          "prompt": "Which card states shared reading interest?",
+          "reviewPrompt": "Which states differing interests?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Interests prove or disprove no family ties or fixed inheritance."
+        },
+        {
+          "material": "Fictional story records: He actually hears an adult’s past book-organising event and labels the source. Zhu only plans to ask tomorrow.",
+          "prompt": "Who has an occurred story and source record?",
+          "reviewPrompt": "Who only records a future inquiry?",
+          "first": "He",
+          "second": "Zhu",
+          "explanation": "Heard experiences need sources; plans are not events or personal memories."
+        },
+        {
+          "material": "Original fictional sibling cards explicitly identify an older brother and a younger sister relative to the narrator. They state no real family membership.",
+          "prompt": "Who is stated to be older than the narrator?",
+          "reviewPrompt": "Who is stated to be younger?",
+          "first": "Older brother",
+          "second": "Younger sister",
+          "explanation": "Use stated identity and age relations; do not guess blanks or require real siblings."
+        }
+      ],
+      "reflections": [
+        "What did you actually do when hearing a story, discussing cards or role-playing? What remains unknown? Fictional discussion is enough, without family secrets or rankings.",
+        "How might you hear stories or express needs next time? Separate imagination and hopes from occurred events; no demand for immediate acceptance or reconciliation."
+      ]
+    }
+  },
+  "sourceLink": "Open third-party textbook preview"
+}

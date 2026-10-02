@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T11:21:08.888Z",
-  "scope": "一年级原有人教语文/数学四册与苏教数学上下册；教材课目和原创课包分别列示。",
+  "generatedAt": "2026-10-02T14:28:37.075Z",
+  "scope": "一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
   "books": [
@@ -18763,6 +18763,1643 @@
                 "date": "2026-10-01",
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末选四种图形：直边、曲边与完整拼组对应纸面第94页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            }
+          ]
+        }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "pep-ethics-p1-upper-2024",
+      "subject": "ethics",
+      "volume": "upper",
+      "edition": "pep-2024",
+      "title": "道德与法治 · 一年级上册",
+      "source": "https://keben.app/book/0001",
+      "resourceId": "0001",
+      "verifiedAt": "2026-10-02",
+      "summary": {
+        "availablePacks": 9,
+        "pendingEntries": 7,
+        "referenceQueries": 0,
+        "tasks": {
+          "objective": 35,
+          "manual": 46,
+          "reflection": 18
+        }
+      },
+      "units": [
+        {
+          "id": "ethics-upper-u1",
+          "title": "我是小学生啦",
+          "items": [
+            {
+              "id": "ethics-upper-lesson-1",
+              "title": "开开心心上学去",
+              "page": 2,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-1",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-2",
+              "title": "我向国旗敬个礼",
+              "page": 6,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-2",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-3",
+              "title": "这是我们的校园",
+              "page": 10,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-3",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-4",
+              "title": "平平安安回家来",
+              "page": 14,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-4",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-upper-lesson-1",
+              "title": "开开心心上学去",
+              "textbookTitle": "开开心心上学去",
+              "page": 2,
+              "version": 1,
+              "status": "available",
+              "goal": "表达自己的入学感受，练习问候，实际爱护书本和整理学习用品。",
+              "prerequisite": "准备本册印刷2～5页，可由家长帮读；没有原书或材料的实际活动保留待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 3,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 3,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-1-scenario-0",
+                "ethics-upper-lesson-1-scenario-1",
+                "ethics-upper-lesson-1-scenario-2",
+                "ethics-upper-lesson-1-manual-0",
+                "ethics-upper-lesson-1-manual-1",
+                "ethics-upper-lesson-1-manual-2",
+                "ethics-upper-lesson-1-manual-3",
+                "ethics-upper-lesson-1-reflection-0",
+                "ethics-upper-lesson-1-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书首课与原创情境范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷2～5页已实际阅读；个人情绪、计划和共同目标不自动评分，实际活动人工确认，未来计划与已做分开；其它正文未核对课保持制作中。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-2",
+              "title": "我向国旗敬个礼",
+              "textbookTitle": "我向国旗敬个礼",
+              "page": 6,
+              "version": 1,
+              "status": "available",
+              "goal": "认识国旗与国歌，按参与身份练习升旗礼仪，尝试学唱并交流自己的感受。",
+              "prerequisite": "准备上册印刷6～9页，请成人陪读和提供合适的国歌示范；没有原书或示范可保留相关活动待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-2-scenario-0",
+                "ethics-upper-lesson-2-scenario-1",
+                "ethics-upper-lesson-2-scenario-2",
+                "ethics-upper-lesson-2-scenario-3",
+                "ethics-upper-lesson-2-manual-0",
+                "ethics-upper-lesson-2-manual-1",
+                "ethics-upper-lesson-2-manual-2",
+                "ethics-upper-lesson-2-manual-3",
+                "ethics-upper-lesson-2-reflection-0",
+                "ethics-upper-lesson-2-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第二课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷6～9页已实际阅读；升旗角色明确、国歌外部合法示范、个人感受不判对错，原创六位置图与原书找不同分开；实际活动人工、反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-3",
+              "title": "这是我们的校园",
+              "textbookTitle": "这是我们的校园",
+              "page": 10,
+              "version": 1,
+              "status": "available",
+              "goal": "认识校园里的场所和用途，说说自己喜欢的地方；在允许的范围内观察、询问并记录真实发现。",
+              "prerequisite": "能在成人帮助下读场所标签。没有进入校园的条件时，可先看原书或做本站纸面情境，实际校园观察留待以后。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-3-scenario-0",
+                "ethics-upper-lesson-3-scenario-1",
+                "ethics-upper-lesson-3-scenario-2",
+                "ethics-upper-lesson-3-scenario-3",
+                "ethics-upper-lesson-3-manual-0",
+                "ethics-upper-lesson-3-manual-1",
+                "ethics-upper-lesson-3-manual-2",
+                "ethics-upper-lesson-3-manual-3",
+                "ethics-upper-lesson-3-reflection-0",
+                "ethics-upper-lesson-3-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第三课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷10～13页已实际阅读；校园示例不冒本校设施与权限，道歉与补救、原因与改法、模拟与实际分开；个人偏好与反思不判对错，实际活动人工、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-4",
+              "title": "平平安安回家来",
+              "textbookTitle": "平平安安回家来",
+              "page": 14,
+              "version": 1,
+              "status": "available",
+              "goal": "认识不同回家安排，辨认行人通行与道口的明示条件，用纸面演练安全做法，并表达对真实照顾和帮助的感受。",
+              "prerequisite": "能在成人帮助下看文字情境。接送方式由照顾者和学校安排，不从课本同伴同行图推定可以独自回家。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-4-scenario-0",
+                "ethics-upper-lesson-4-scenario-1",
+                "ethics-upper-lesson-4-scenario-2",
+                "ethics-upper-lesson-4-scenario-3",
+                "ethics-upper-lesson-4-manual-0",
+                "ethics-upper-lesson-4-manual-1",
+                "ethics-upper-lesson-4-manual-2",
+                "ethics-upper-lesson-4-manual-3",
+                "ethics-upper-lesson-4-reflection-0",
+                "ethics-upper-lesson-4-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第四课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷14～16页已实际阅读；行人设施和信号、道路和铁路分清，安全只纸面演练不冒实地通行；有精神不按外貌音量情绪或辅助方式评分，读说唱分别实际人工、反思null、计划另记。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-upper-u2",
+          "title": "过好校园生活",
+          "items": [
+            {
+              "id": "ethics-upper-lesson-5",
+              "title": "老师，您好！",
+              "page": 18,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-5",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-6",
+              "title": "拉拉手，交朋友",
+              "page": 22,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-6",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-7",
+              "title": "上课了，好好学",
+              "page": 25,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-7",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-8",
+              "title": "课余生活真丰富",
+              "page": 29,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-8",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-upper-lesson-5",
+              "title": "老师，您好！",
+              "textbookTitle": "老师，您好！",
+              "page": 18,
+              "version": 1,
+              "status": "available",
+              "goal": "认识不同老师与工作人员的职责，练习说清需要、寻求帮助，并用合适方式问候、感谢和体谅他人工作。",
+              "prerequisite": "能在成人帮助下描述需要。可用本站虚构角色或本校允许了解的信息；不知道某人的职责先询问，不从外貌、性别或服饰猜。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-5-scenario-0",
+                "ethics-upper-lesson-5-scenario-1",
+                "ethics-upper-lesson-5-scenario-2",
+                "ethics-upper-lesson-5-scenario-3",
+                "ethics-upper-lesson-5-manual-0",
+                "ethics-upper-lesson-5-manual-1",
+                "ethics-upper-lesson-5-manual-2",
+                "ethics-upper-lesson-5-manual-3",
+                "ethics-upper-lesson-5-reflection-0",
+                "ethics-upper-lesson-5-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第五课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷18～21页已实际阅读；老师与工作人员角色明示、三类求助各演练、帮助感谢与安静求助分清；请求回应与参与、共同规则与实际轮流、四加入方法和三友好办法分别实际人工，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-6",
+              "title": "拉拉手，交朋友",
+              "textbookTitle": "拉拉手，交朋友",
+              "page": 22,
+              "version": 1,
+              "status": "available",
+              "goal": "介绍伙伴和认识过程，练习相互介绍、寻找共同兴趣、共同参加、完整故事讨论，以及关心开心或伤心的伙伴。",
+              "prerequisite": "可和愿意参加的照顾者用虚构角色、纸片和图卡演练。没有真实朋友经历可讨论原书，不强迫填写同学姓名、联系方式或私人故事。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-6-scenario-0",
+                "ethics-upper-lesson-6-scenario-1",
+                "ethics-upper-lesson-6-scenario-2",
+                "ethics-upper-lesson-6-scenario-3",
+                "ethics-upper-lesson-6-manual-0",
+                "ethics-upper-lesson-6-manual-1",
+                "ethics-upper-lesson-6-manual-2",
+                "ethics-upper-lesson-6-manual-3",
+                "ethics-upper-lesson-6-manual-4",
+                "ethics-upper-lesson-6-manual-5",
+                "ethics-upper-lesson-6-reflection-0",
+                "ethics-upper-lesson-6-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第六课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷22～24页、下册22～25页已实际阅读；完整八幅交友故事与两种情绪关心分别人工，求助六情境、请求回应与帮助传递实际演练；危险只纸面讨论、双方同意先于活动，模拟与真实分开，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-7",
+              "title": "上课了，好好学",
+              "textbookTitle": "上课了，好好学",
+              "page": 25,
+              "version": 1,
+              "status": "available",
+              "goal": "实际准备学习材料，练习听、想、问与轮流交流，分别体验多种作业；一次活动不等于长期习惯。",
+              "prerequisite": "可由成人读原书和本站说明；用已有熟悉、安全的材料，不额外制造作业负担。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 8,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-7-scenario-0",
+                "ethics-upper-lesson-7-scenario-1",
+                "ethics-upper-lesson-7-scenario-2",
+                "ethics-upper-lesson-7-scenario-3",
+                "ethics-upper-lesson-7-manual-0",
+                "ethics-upper-lesson-7-manual-1",
+                "ethics-upper-lesson-7-manual-2",
+                "ethics-upper-lesson-7-manual-3",
+                "ethics-upper-lesson-7-manual-4",
+                "ethics-upper-lesson-7-manual-5",
+                "ethics-upper-lesson-7-manual-6",
+                "ethics-upper-lesson-7-manual-7",
+                "ethics-upper-lesson-7-reflection-0",
+                "ethics-upper-lesson-7-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第七课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷25～28页、下册26～29页已实际阅读；课表示例与真实学校分开，准备听想提问、复习手工及读写艺术音乐体育分别实际；图书四阶段、方法玩法、爱护归还与三边界沟通人工，不强迫分享或原谅、不制造损坏，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-8",
+              "title": "课余生活真丰富",
+              "textbookTitle": "课余生活真丰富",
+              "page": 29,
+              "version": 1,
+              "status": "available",
+              "goal": "区别课间与课后，实际体验安全游戏、结束与准备、服务和兴趣活动，把个人安排与已做分开。",
+              "prerequisite": "成人可读原书；按家庭学校实际安排，选择已有熟悉、安全且自愿参加的活动。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-8-scenario-0",
+                "ethics-upper-lesson-8-scenario-1",
+                "ethics-upper-lesson-8-scenario-2",
+                "ethics-upper-lesson-8-scenario-3",
+                "ethics-upper-lesson-8-manual-0",
+                "ethics-upper-lesson-8-manual-1",
+                "ethics-upper-lesson-8-manual-2",
+                "ethics-upper-lesson-8-manual-3",
+                "ethics-upper-lesson-8-manual-4",
+                "ethics-upper-lesson-8-manual-5",
+                "ethics-upper-lesson-8-reflection-0",
+                "ethics-upper-lesson-8-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第八课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷29～32页、下册30～32页已实际阅读；课间需要与结束、课后服务兴趣和计划分记，合作分工各贡献、四角色冲突与六动物故事完整读听分别人工；可见桌面替代不冒蒙眼/运动/危险动作，协作不保证效率快乐，反思null、计划另记。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-upper-u3",
+          "title": "养成良好习惯",
+          "items": [
+            {
+              "id": "ethics-upper-lesson-9",
+              "title": "作息有规律",
+              "page": 34,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-9",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-10",
+              "title": "吃饭有讲究",
+              "page": 37,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-10",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-11",
+              "title": "对人有礼貌",
+              "page": 41,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-11",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-12",
+              "title": "玩也有学问",
+              "page": 44,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-12",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-upper-lesson-9",
+              "title": "作息有规律",
+              "textbookTitle": "作息有规律",
+              "page": 34,
+              "version": 1,
+              "status": "available",
+              "goal": "观察一晚作息与一天状态，讨论完整睡眠故事，实际商量提醒和准备；不知道、需要陪伴和未来打算分别如实记。",
+              "prerequisite": "可由照顾者读原书、认时间并协助记录；不要求一年级独自计算跨夜时长，也不为练习熬夜或改变睡眠。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-upper-lesson-9-scenario-0",
+                "ethics-upper-lesson-9-scenario-1",
+                "ethics-upper-lesson-9-scenario-2",
+                "ethics-upper-lesson-9-scenario-3",
+                "ethics-upper-lesson-9-manual-0",
+                "ethics-upper-lesson-9-manual-1",
+                "ethics-upper-lesson-9-manual-2",
+                "ethics-upper-lesson-9-manual-3",
+                "ethics-upper-lesson-9-manual-4",
+                "ethics-upper-lesson-9-manual-5",
+                "ethics-upper-lesson-9-reflection-0",
+                "ethics-upper-lesson-9-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第九课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷34～36页、下册34～37页实际阅读；作息记录与未知、三早晨和六睡眠故事完整、陪伴及提醒和真实次日分记；家庭关系明示、相似不证血缘、八兄妹故事完整、不收隐私，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-10",
+              "title": "吃饭有讲究",
+              "textbookTitle": "吃饭有讲究",
+              "page": 37,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-11",
+              "title": "对人有礼貌",
+              "textbookTitle": "对人有礼貌",
+              "page": 41,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-12",
+              "title": "玩也有学问",
+              "textbookTitle": "玩也有学问",
+              "page": 44,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-upper-u4",
+          "title": "我们讲文明",
+          "items": [
+            {
+              "id": "ethics-upper-lesson-13",
+              "title": "我们小点儿声",
+              "page": 48,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-13",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-14",
+              "title": "人人爱护公物",
+              "page": 52,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-14",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-15",
+              "title": "我们不乱扔",
+              "page": 55,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-15",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-upper-lesson-16",
+              "title": "大家排好队",
+              "page": 58,
+              "kind": "lesson",
+              "formalLessonId": "ethics-upper-lesson-16",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-upper-lesson-13",
+              "title": "我们小点儿声",
+              "textbookTitle": "我们小点儿声",
+              "page": 48,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-14",
+              "title": "人人爱护公物",
+              "textbookTitle": "人人爱护公物",
+              "page": 52,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-15",
+              "title": "我们不乱扔",
+              "textbookTitle": "我们不乱扔",
+              "page": 55,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-upper-lesson-16",
+              "title": "大家排好队",
+              "textbookTitle": "大家排好队",
+              "page": 58,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            }
+          ]
+        }
+      ],
+      "transitions": []
+    },
+    {
+      "id": "pep-ethics-p1-lower-2024",
+      "subject": "ethics",
+      "volume": "lower",
+      "edition": "pep-2024",
+      "title": "道德与法治 · 一年级下册",
+      "source": "https://keben.app/book/0002",
+      "resourceId": "0002",
+      "verifiedAt": "2026-10-02",
+      "summary": {
+        "availablePacks": 9,
+        "pendingEntries": 7,
+        "referenceQueries": 0,
+        "tasks": {
+          "objective": 35,
+          "manual": 45,
+          "reflection": 18
+        }
+      },
+      "units": [
+        {
+          "id": "ethics-lower-u1",
+          "title": "我有新面貌",
+          "items": [
+            {
+              "id": "ethics-lower-lesson-1",
+              "title": "有个新目标",
+              "page": 2,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-1",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-2",
+              "title": "做事要仔细",
+              "page": 6,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-2",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-3",
+              "title": "错了就要改",
+              "page": 10,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-3",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-4",
+              "title": "我们有精神",
+              "page": 14,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-4",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-lower-lesson-1",
+              "title": "有个新目标",
+              "textbookTitle": "有个新目标",
+              "page": 2,
+              "version": 1,
+              "status": "available",
+              "goal": "回顾实际经历，区分目标和行动，把一个适合自己的小目标拆成可尝试的方法。",
+              "prerequisite": "准备本册印刷2～5页，可由家长帮读；没有原书或材料的实际活动保留待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 3,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 3,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-1-scenario-0",
+                "ethics-lower-lesson-1-scenario-1",
+                "ethics-lower-lesson-1-scenario-2",
+                "ethics-lower-lesson-1-manual-0",
+                "ethics-lower-lesson-1-manual-1",
+                "ethics-lower-lesson-1-manual-2",
+                "ethics-lower-lesson-1-manual-3",
+                "ethics-lower-lesson-1-reflection-0",
+                "ethics-lower-lesson-1-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书首课与原创情境范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷2～5页已实际阅读；个人情绪、计划和共同目标不自动评分，实际活动人工确认，未来计划与已做分开；其它正文未核对课保持制作中。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-2",
+              "title": "做事要仔细",
+              "textbookTitle": "做事要仔细",
+              "page": 6,
+              "version": 1,
+              "status": "available",
+              "goal": "观察一次遗漏的原因与影响，实际尝试清单、提示和互相提醒，按顺序找不同并检查。",
+              "prerequisite": "准备下册印刷6～9页、纸笔和已有学习用品；可以家长帮读。没有原书找不同活动可待做，本站原创纸面替代另记。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-2-scenario-0",
+                "ethics-lower-lesson-2-scenario-1",
+                "ethics-lower-lesson-2-scenario-2",
+                "ethics-lower-lesson-2-scenario-3",
+                "ethics-lower-lesson-2-manual-0",
+                "ethics-lower-lesson-2-manual-1",
+                "ethics-lower-lesson-2-manual-2",
+                "ethics-lower-lesson-2-manual-3",
+                "ethics-lower-lesson-2-reflection-0",
+                "ethics-lower-lesson-2-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第二课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷6～9页已实际阅读；升旗角色明确、国歌外部合法示范、个人感受不判对错，原创六位置图与原书找不同分开；实际活动人工、反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-3",
+              "title": "错了就要改",
+              "textbookTitle": "错了就要改",
+              "page": 10,
+              "version": 1,
+              "status": "available",
+              "goal": "在具体情境中分清承认、道歉和补救；尝试找原因、请人提醒、换方法，并记录真实改进与感受。",
+              "prerequisite": "能在成人帮助下描述一件事。可以选本站原创故事或普通小失误，不强迫公开私人经历；不把学习困难自动当品德错误。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-3-scenario-0",
+                "ethics-lower-lesson-3-scenario-1",
+                "ethics-lower-lesson-3-scenario-2",
+                "ethics-lower-lesson-3-scenario-3",
+                "ethics-lower-lesson-3-manual-0",
+                "ethics-lower-lesson-3-manual-1",
+                "ethics-lower-lesson-3-manual-2",
+                "ethics-lower-lesson-3-manual-3",
+                "ethics-lower-lesson-3-reflection-0",
+                "ethics-lower-lesson-3-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第三课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷10～13页已实际阅读；校园示例不冒本校设施与权限，道歉与补救、原因与改法、模拟与实际分开；个人偏好与反思不判对错，实际活动人工、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-4",
+              "title": "我们有精神",
+              "textbookTitle": "我们有精神",
+              "page": 14,
+              "version": 1,
+              "status": "available",
+              "goal": "从参与、休息、适当活动和心情等方面理解有精神，尝试认真读、清楚表达和愉快唱，用适合自己的方式记录实际参与。",
+              "prerequisite": "可以用口语、指图、辅助沟通或成人代录。朗读和歌唱材料由照顾者提供合法、熟悉的内容；不要求统一声音和姿态。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-4-scenario-0",
+                "ethics-lower-lesson-4-scenario-1",
+                "ethics-lower-lesson-4-scenario-2",
+                "ethics-lower-lesson-4-scenario-3",
+                "ethics-lower-lesson-4-manual-0",
+                "ethics-lower-lesson-4-manual-1",
+                "ethics-lower-lesson-4-manual-2",
+                "ethics-lower-lesson-4-manual-3",
+                "ethics-lower-lesson-4-reflection-0",
+                "ethics-lower-lesson-4-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第四课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷14～16页已实际阅读；行人设施和信号、道路和铁路分清，安全只纸面演练不冒实地通行；有精神不按外貌音量情绪或辅助方式评分，读说唱分别实际人工、反思null、计划另记。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-lower-u2",
+          "title": "我们一起长大",
+          "items": [
+            {
+              "id": "ethics-lower-lesson-5",
+              "title": "和大家在一起",
+              "page": 18,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-5",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-6",
+              "title": "请帮我一下",
+              "page": 22,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-6",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-7",
+              "title": "我们爱分享",
+              "page": 26,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-7",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-8",
+              "title": "大家来合作",
+              "page": 30,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-8",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-lower-lesson-5",
+              "title": "和大家在一起",
+              "textbookTitle": "和大家在一起",
+              "page": 18,
+              "version": 1,
+              "status": "available",
+              "goal": "分享一起活动的故事，练习礼貌请求加入和回应，实际商量规则、轮流参与、安慰、谦让与体谅，并表达自己的感受。",
+              "prerequisite": "可和照顾者用纸片或熟悉安全活动演练，不要求一开始就有同伴。使用口语、图卡、辅助沟通或成人代录均可，注明方式。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-5-scenario-0",
+                "ethics-lower-lesson-5-scenario-1",
+                "ethics-lower-lesson-5-scenario-2",
+                "ethics-lower-lesson-5-scenario-3",
+                "ethics-lower-lesson-5-manual-0",
+                "ethics-lower-lesson-5-manual-1",
+                "ethics-lower-lesson-5-manual-2",
+                "ethics-lower-lesson-5-manual-3",
+                "ethics-lower-lesson-5-reflection-0",
+                "ethics-lower-lesson-5-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第五课与原创活动范围核对，非教师最终审校",
+                "notes": "六三来源0001/0002印刷18～21页已实际阅读；老师与工作人员角色明示、三类求助各演练、帮助感谢与安静求助分清；请求回应与参与、共同规则与实际轮流、四加入方法和三友好办法分别实际人工，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-6",
+              "title": "请帮我一下",
+              "textbookTitle": "请帮我一下",
+              "page": 22,
+              "version": 1,
+              "status": "available",
+              "goal": "看清不同困难，分辨安全可尝试与需成人帮助的情境，练习向合适的人说明需要、听回应、感谢和安全传递帮助。",
+              "prerequisite": "可用纸面虚构困难与成人扮演，不制造真实丢失、危险或拨打电话。不懂是否安全时先向可信成人说明。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 5,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-6-scenario-0",
+                "ethics-lower-lesson-6-scenario-1",
+                "ethics-lower-lesson-6-scenario-2",
+                "ethics-lower-lesson-6-scenario-3",
+                "ethics-lower-lesson-6-manual-0",
+                "ethics-lower-lesson-6-manual-1",
+                "ethics-lower-lesson-6-manual-2",
+                "ethics-lower-lesson-6-manual-3",
+                "ethics-lower-lesson-6-manual-4",
+                "ethics-lower-lesson-6-reflection-0",
+                "ethics-lower-lesson-6-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第六课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷22～24页、下册22～25页已实际阅读；完整八幅交友故事与两种情绪关心分别人工，求助六情境、请求回应与帮助传递实际演练；危险只纸面讨论、双方同意先于活动，模拟与真实分开，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-7",
+              "title": "我们爱分享",
+              "textbookTitle": "我们爱分享",
+              "page": 26,
+              "version": 1,
+              "status": "available",
+              "goal": "分别体验图书、方法和玩法分享，练习爱护归还、提出条件与说明特殊物品，尊重双方选择。",
+              "prerequisite": "先选愿意分享的安全普通材料；可由成人朗读，故事、书和音乐需来自已有合法材料。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-7-scenario-0",
+                "ethics-lower-lesson-7-scenario-1",
+                "ethics-lower-lesson-7-scenario-2",
+                "ethics-lower-lesson-7-scenario-3",
+                "ethics-lower-lesson-7-manual-0",
+                "ethics-lower-lesson-7-manual-1",
+                "ethics-lower-lesson-7-manual-2",
+                "ethics-lower-lesson-7-manual-3",
+                "ethics-lower-lesson-7-manual-4",
+                "ethics-lower-lesson-7-manual-5",
+                "ethics-lower-lesson-7-reflection-0",
+                "ethics-lower-lesson-7-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第七课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷25～28页、下册26～29页已实际阅读；课表示例与真实学校分开，准备听想提问、复习手工及读写艺术音乐体育分别实际；图书四阶段、方法玩法、爱护归还与三边界沟通人工，不强迫分享或原谅、不制造损坏，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-8",
+              "title": "大家来合作",
+              "textbookTitle": "大家来合作",
+              "page": 30,
+              "version": 1,
+              "status": "available",
+              "goal": "观察合作与独自做的区别，实际分工配合、交换机会和沟通角色问题，读完整故事并区分安全模拟。",
+              "prerequisite": "成人可朗读原书和熟悉合法短材料；两人自愿，用普通纸卡做桌面任务，不需蒙眼或身体搬运。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-8-scenario-0",
+                "ethics-lower-lesson-8-scenario-1",
+                "ethics-lower-lesson-8-scenario-2",
+                "ethics-lower-lesson-8-scenario-3",
+                "ethics-lower-lesson-8-manual-0",
+                "ethics-lower-lesson-8-manual-1",
+                "ethics-lower-lesson-8-manual-2",
+                "ethics-lower-lesson-8-manual-3",
+                "ethics-lower-lesson-8-manual-4",
+                "ethics-lower-lesson-8-manual-5",
+                "ethics-lower-lesson-8-manual-6",
+                "ethics-lower-lesson-8-reflection-0",
+                "ethics-lower-lesson-8-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第八课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷29～32页、下册30～32页已实际阅读；课间需要与结束、课后服务兴趣和计划分记，合作分工各贡献、四角色冲突与六动物故事完整读听分别人工；可见桌面替代不冒蒙眼/运动/危险动作，协作不保证效率快乐，反思null、计划另记。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-lower-u3",
+          "title": "幸福一家人",
+          "items": [
+            {
+              "id": "ethics-lower-lesson-9",
+              "title": "这是我的家",
+              "page": 34,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-9",
+              "formalLessonStatus": "available",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-10",
+              "title": "相亲相爱一家人",
+              "page": 38,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-10",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-11",
+              "title": "让我自己来整理",
+              "page": 41,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-11",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-12",
+              "title": "学做家务活",
+              "page": 45,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-12",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-lower-lesson-9",
+              "title": "这是我的家",
+              "textbookTitle": "这是我的家",
+              "page": 34,
+              "version": 1,
+              "status": "available",
+              "goal": "认识明确给出的家庭关系，听家人故事，观察相似与不同，完整讨论相处故事；不从外貌猜血缘或强迫披露。",
+              "prerequisite": "成人可读原书；可使用本站虚构家庭卡而不公开自己的家庭，照片和真实姓名均不需要。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 4,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "ethics-lower-lesson-9-scenario-0",
+                "ethics-lower-lesson-9-scenario-1",
+                "ethics-lower-lesson-9-scenario-2",
+                "ethics-lower-lesson-9-scenario-3",
+                "ethics-lower-lesson-9-manual-0",
+                "ethics-lower-lesson-9-manual-1",
+                "ethics-lower-lesson-9-manual-2",
+                "ethics-lower-lesson-9-manual-3",
+                "ethics-lower-lesson-9-manual-4",
+                "ethics-lower-lesson-9-manual-5",
+                "ethics-lower-lesson-9-manual-6",
+                "ethics-lower-lesson-9-reflection-0",
+                "ethics-lower-lesson-9-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原书第九课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷34～36页、下册34～37页实际阅读；作息记录与未知、三早晨和六睡眠故事完整、陪伴及提醒和真实次日分记；家庭关系明示、相似不证血缘、八兄妹故事完整、不收隐私，反思null、计划另记。"
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-10",
+              "title": "相亲相爱一家人",
+              "textbookTitle": "相亲相爱一家人",
+              "page": 38,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-11",
+              "title": "让我自己来整理",
+              "textbookTitle": "让我自己来整理",
+              "page": 41,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-12",
+              "title": "学做家务活",
+              "textbookTitle": "学做家务活",
+              "page": 45,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            }
+          ]
+        },
+        {
+          "id": "ethics-lower-u4",
+          "title": "争做中国好儿童",
+          "items": [
+            {
+              "id": "ethics-lower-lesson-13",
+              "title": "快乐儿童节",
+              "page": 50,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-13",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-14",
+              "title": "光荣的少先队",
+              "page": 54,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-14",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-15",
+              "title": "戴上红领巾",
+              "page": 57,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-15",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            },
+            {
+              "id": "ethics-lower-lesson-16",
+              "title": "学先锋 做先锋",
+              "page": 60,
+              "kind": "lesson",
+              "formalLessonId": "ethics-lower-lesson-16",
+              "formalLessonStatus": "preparing",
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "ethics-lower-lesson-13",
+              "title": "快乐儿童节",
+              "textbookTitle": "快乐儿童节",
+              "page": 50,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-14",
+              "title": "光荣的少先队",
+              "textbookTitle": "光荣的少先队",
+              "page": 54,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-15",
+              "title": "戴上红领巾",
+              "textbookTitle": "戴上红领巾",
+              "page": 57,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
+              }
+            },
+            {
+              "id": "ethics-lower-lesson-16",
+              "title": "学先锋 做先锋",
+              "textbookTitle": "学先锋 做先锋",
+              "page": 60,
+              "version": 1,
+              "status": "preparing",
+              "goal": "本课正文与原创教学尚待核对制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "",
+                "reviewer": "",
+                "notes": ""
               }
             }
           ]

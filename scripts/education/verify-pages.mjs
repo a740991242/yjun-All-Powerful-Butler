@@ -1,6 +1,6 @@
 /* Production-only smoke check: run after pnpm build:pages.
  * Uses a temporary static server and fresh Chrome profiles; never reads user data.
- * Tests six catalog routes and one representative complete learning/backup flow.
+ * Tests eight catalog routes and one representative complete learning/backup flow.
  * This does not certify curriculum coverage or regional textbook assignments.
  * Usage: rtk proxy node scripts/education/verify-pages.mjs
  */
@@ -166,6 +166,8 @@ const root = `${repo}/apps/web-antd/dist`;
         ['math', 'pep-2024', 'lower', 18],
         ['math', 'sujiao', 'upper', 71],
         ['math', 'sujiao', 'lower', 87],
+        ['ethics', 'pep-2024', 'upper', 9],
+        ['ethics', 'pep-2024', 'lower', 9],
       ];
       for (const [subject, edition, volume, count] of volumes) {
         await p.goto(
@@ -435,7 +437,7 @@ const root = `${repo}/apps/web-antd/dist`;
           width,
           login: true,
           provinceGuard: true,
-          catalogs: 6,
+          catalogs: 8,
           taskFlow: 15,
           draftReload: true,
           backupExport: true,

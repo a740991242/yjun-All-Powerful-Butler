@@ -36,7 +36,7 @@ import type { ViewpointHouseVisual } from './viewpoint-house';
 import type { ViewpointJugVisual } from './viewpoint-jug';
 import type { ZeroNumberChartVisual } from './zero-number-chart';
 
-export type Subject = 'chinese' | 'math';
+export type Subject = 'chinese' | 'ethics' | 'math';
 export type Volume = 'lower' | 'upper';
 export type CharacterReferenceKind =
   | 'radicals'

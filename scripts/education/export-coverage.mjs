@@ -17,19 +17,39 @@ async function main() {
     const page = await context.newPage();
     await page.goto(base.origin, { waitUntil: 'domcontentloaded' });
     report = await page.evaluate(async () => {
-      const [cn, math, sj, textbooks, characters] = await Promise.all([
-        import('/src/views/education/content/chinese.ts'),
-        import('/src/views/education/content/math.ts'),
-        import('/src/views/education/content/sujiao.ts'),
-        import('/src/views/education/content/textbooks.ts'),
-        import('/src/views/education/content/characters.ts'),
-      ]);
+      const [cn, math, sj, textbooks, characters, ethics, ethicsMessages] =
+        await Promise.all([
+          import('/src/views/education/content/chinese.ts'),
+          import('/src/views/education/content/math.ts'),
+          import('/src/views/education/content/sujiao.ts'),
+          import('/src/views/education/content/textbooks.ts'),
+          import('/src/views/education/content/characters.ts'),
+          import('/src/views/education/content/ethics.ts'),
+          import('/src/locales/langs/zh-CN/educationEthics.json'),
+        ]);
       const models = [
         ...textbooks.textbooks,
         textbooks.findTextbook('math', 'sujiao', 'upper'),
         textbooks.findTextbook('math', 'sujiao', 'lower'),
+        ...ethics.ethicsTextbooks,
       ];
-      const books = [...cn.chineseBooks, ...math.mathBooks, ...sj.sujiaoBooks];
+      const ethicsText = (key) => {
+        let value = ethicsMessages.default;
+        for (const part of key.split('.').slice(1)) {
+          if (!value || typeof value !== 'object')
+            throw new Error(`Missing ethics text ${key}`);
+          value = value[part];
+        }
+        if (typeof value !== 'string')
+          throw new Error(`Missing ethics text ${key}`);
+        return value;
+      };
+      const books = [
+        ...cn.chineseBooks,
+        ...math.mathBooks,
+        ...sj.sujiaoBooks,
+        ...ethics.createEthicsBooks(ethicsText),
+      ];
       const taskCounts = (qs) => ({
         objective: qs.filter(
           (q) => !['manual', 'reflection'].includes(q.rule.kind),
@@ -65,7 +85,7 @@ async function main() {
         schemaVersion: 1,
         generatedAt: new Date().toISOString(),
         scope:
-          '一年级原有人教语文/数学四册与苏教数学上下册；教材课目和原创课包分别列示。',
+          '一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。',
         limitation:
           '本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。',
         fullPlanCompletion: 'not-verified',
@@ -102,10 +122,10 @@ async function main() {
                 id: unit.id,
                 title: unit.title,
                 items: unit.items.map((item) => {
-                  const formalId =
-                    book.subject === 'chinese'
-                      ? `c${book.volume === 'upper' ? 'u' : 'l'}-${item.id}`
-                      : null;
+                  let formalId = null;
+                  if (book.subject === 'chinese')
+                    formalId = `c${book.volume === 'upper' ? 'u' : 'l'}-${item.id}`;
+                  if (book.subject === 'ethics') formalId = item.id;
                   const formal = formalId
                     ? actual.lessons.find((l) => l.id === formalId)
                     : null;

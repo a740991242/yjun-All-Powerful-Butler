@@ -1,6 +1,6 @@
 {
   "gradeOneTitle": "Grade 1 courses",
-  "gradeOneDescription": "Chinese and mathematics · Both volumes · Learn by textbook edition",
+  "gradeOneDescription": "Chinese, mathematics and ethics · both volumes · learn by textbook edition",
   "enterGradeOne": "Enter Grade 1 courses",
   "backGrades": "Back to grade selection",
   "chinese": "Chinese",
@@ -937,5 +937,6 @@
   "regionalProvince_hong-kong": "Hong Kong",
   "regionalProvince_macau": "Macau",
   "regionalProvince_taiwan": "Taiwan",
-  "regionalSchool_wujiang-choudu-primary": "Choudu Primary School, Wujiang, Suzhou"
+  "regionalSchool_wujiang-choudu-primary": "Choudu Primary School, Wujiang, Suzhou",
+  "ethics": "Ethics and the Rule of Law"
 }

@@ -13,7 +13,7 @@ export function editionTarget(
   volume: unknown,
 ): EditionTarget | undefined {
   if (
-    (subject !== 'chinese' && subject !== 'math') ||
+    (subject !== 'chinese' && subject !== 'math' && subject !== 'ethics') ||
     (volume !== 'upper' && volume !== 'lower')
   )
     return;

@@ -139,6 +139,19 @@ function choose(stage?: string, grade?: string) {
           >
             {{ $t('educationLearning.enterGradeOne') }}
           </Button>
+          <div class="flex flex-wrap gap-3">
+            <Button
+              v-for="volume in ['upper', 'lower']"
+              :key="volume"
+              class="!min-h-11"
+              @click="
+                router.push(`/education/primary/p1/ethics/pep-2024/${volume}`)
+              "
+            >
+              {{ $t('educationLearning.ethics') }} ·
+              {{ $t(`educationLearning.${volume}`) }}
+            </Button>
+          </div>
         </div>
         <p v-else class="font-medium">{{ $t('education.pending') }}</p>
         <p class="my-3 leading-7 text-muted-foreground">

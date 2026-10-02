@@ -35,6 +35,19 @@ import SessionPlayer from './SessionPlayer.vue';
 import { specialtyQuestions } from './specialties';
 
 const props = defineProps<{ book: Book }>();
+const textbookLinkKey = computed(() => {
+  if (props.book.subject === 'ethics') return 'educationEthics.sourceLink';
+  if (props.book.edition === 'sujiao')
+    return 'educationLearning.sujiaoSourcePreview';
+  return 'educationLearning.openTextbook';
+});
+const textbookNoticeKey = computed(() => {
+  if (props.book.subject === 'ethics') return 'educationEthics.sourceNotice';
+  if (props.book.edition !== 'sujiao') return 'educationLearning.editionNotice';
+  return props.book.volume === 'lower'
+    ? 'educationLearning.sujiaoLowerEditionNotice'
+    : 'educationLearning.sujiaoEditionNotice';
+});
 const route = useRoute();
 const router = useRouter();
 const busy = ref(false);
@@ -457,25 +470,11 @@ const wrongSessions = computed(() => [
         <Card :title="book.title">
           <template #extra>
             <a :href="book.source" target="_blank" rel="noopener noreferrer">
-              {{
-                $t(
-                  book.edition === 'sujiao'
-                    ? 'educationLearning.sujiaoSourcePreview'
-                    : 'educationLearning.openTextbook',
-                )
-              }}
+              {{ $t(textbookLinkKey) }}
             </a>
           </template>
           <p class="mb-4 text-muted-foreground">
-            {{
-              $t(
-                book.edition === 'sujiao'
-                  ? book.volume === 'lower'
-                    ? 'educationLearning.sujiaoLowerEditionNotice'
-                    : 'educationLearning.sujiaoEditionNotice'
-                  : 'educationLearning.editionNotice',
-              )
-            }}
+            {{ $t(textbookNoticeKey) }}
           </p>
           <Alert
             v-if="book.edition === 'sujiao'"
