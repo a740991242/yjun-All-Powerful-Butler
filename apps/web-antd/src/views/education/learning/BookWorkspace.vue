@@ -375,7 +375,11 @@ const wrongSessions = computed(() => [
           :message="$t('educationLearning.sessionNotFound')"
         />
         <Card
-          v-if="book.edition === 'pep-2024' || book.transitions?.length"
+          v-if="
+            book.subject === 'math' ||
+            book.edition === 'pep-2024' ||
+            book.transitions?.length
+          "
           :title="$t('educationLearning.transitionTitle')"
         >
           <p class="mb-4 leading-7 text-muted-foreground">
@@ -404,7 +408,9 @@ const wrongSessions = computed(() => [
           <Button
             v-else-if="book.subject === 'math'"
             class="!min-h-11"
-            @click="router.push('/education/primary/p1/math/pep-2024/lower')"
+            @click="
+              router.push(`/education/primary/p1/math/${book.edition}/lower`)
+            "
           >
             {{ $t('educationLearning.openLowerTransition') }}
           </Button>

@@ -8,10 +8,14 @@ import type {
 } from '../learning/types';
 
 import { required } from '../learning/required';
+import { planePracticeLessons } from './math-plane-practice';
 import { mathReviewQuestions } from './math-review';
 import { shapeJoinLesson } from './math-shape-join';
+import { shoppingPracticeLesson } from './math-shopping-practice';
+import { solidPracticeLessons } from './math-solid-practice';
 import { mathSpecialties } from './math-specialties';
 import { mathTransitions } from './math-transitions';
+import { twentyPracticeLessons } from './math-twenty-practice';
 import { textbooks } from './textbooks';
 
 type Draft = Omit<Question, 'id' | 'knowledge'>;
@@ -244,7 +248,7 @@ function arithmetic(
       return { kind: 'break-ten', left, right };
     return undefined;
   }
-  return lesson(
+  const course = lesson(
     id,
     textbookTitle,
     title,
@@ -264,6 +268,65 @@ function arithmetic(
     }),
     calculations[0] ? diagram(calculations[0]) : undefined,
   );
+  if (id === 'ml-written-add' || id === 'ml-written-sub') {
+    course.version = 2;
+    course.steps.push({
+      title: '把方法与结果分开检查',
+      text:
+        id === 'ml-written-add'
+          ? '先算个位，记录是否进1；再算十位，把进的1加进去。没有进位时也要明确记录0，不是留空。'
+          : '先判断个位够不够减。需要退位时，把十位的1个十换成10个一；个位和十位都要按换过的数量计算。没有退位时记录0。',
+      activity:
+        '选一道本课算式在纸上列竖式，指着相同数位说明对齐方式，讲出每一步。由孩子或家长确认实际书写与讲解；屏幕填数不评价笔迹和书写质量。',
+    });
+    course.questions.push(
+      ...calculations
+        .slice(0, 4)
+        .map(([left, operator, right], index): Question => {
+          const leftOnes = left % 10;
+          const rightOnes = right % 10;
+          const exchange =
+            operator === '+'
+              ? Number(leftOnes + rightOnes >= 10)
+              : Number(leftOnes < rightOnes);
+          const ones =
+            operator === '+'
+              ? (leftOnes + rightOnes) % 10
+              : leftOnes + exchange * 10 - rightOnes;
+          const tens =
+            operator === '+'
+              ? Math.floor(left / 10) + Math.floor(right / 10) + exchange
+              : Math.floor(left / 10) - exchange - Math.floor(right / 10);
+          return {
+            id: `${id}-method${index + 1}`,
+            knowledge: id,
+            prompt: `${left} ${operator} ${right}：依次填写${operator === '+' ? '向十位进的数' : '从十位退的数'}、结果个位数字、结果十位数字；不进或不退填0。`,
+            rule: { kind: 'steps', values: [exchange, ones, tens] },
+            hint: '先看个位，再考虑十位；三个空分别记录换位、个位结果和十位结果。',
+            explanation: `换位记录为${exchange}，结果个位为${ones}，十位为${tens}，合起来是${tens * 10 + ones}。方法填数与整道算式结果分别记录，不代表已经完成纸笔书写。`,
+            visual: diagram([left, operator, right]),
+          };
+        }),
+      {
+        id: `${id}-paper`,
+        knowledge: id,
+        prompt:
+          '实际在纸上写一道本课竖式，检查数位对齐并说出计算步骤。完成后由孩子或家长确认；没做可以跳过。',
+        rule: { kind: 'manual' },
+        hint: '个位对个位，十位对十位；从个位开始。先做实际书写，再确认。',
+        explanation:
+          '这是实际书写与讲解的人工记录，不自动判对，不计入客观题正确率。',
+      },
+    );
+    course.review = {
+      ...course.review,
+      date: '2026-10-03',
+      reviewer: '原创笔算步骤与记录边界程序核对',
+      notes:
+        '保留原六道结果题及其稳定ID；补充同题的进退位、个位与十位记录及实际纸笔确认。该补充依据既有笔算范围，不声称完成教材逐页审校。',
+    };
+  }
+  return course;
 }
 
 function placeValues(
@@ -563,6 +626,7 @@ function shopping(): Lesson[] {
         ),
       ],
     ),
+    shoppingPracticeLesson,
   ];
 }
 
@@ -749,6 +813,7 @@ const upper: Record<string, Lesson[]> = {
       ['cuboid', 'cube', 'cylinder', 'sphere', 'cube', 'cylinder'],
       true,
     ),
+    ...solidPracticeLessons,
   ],
   u4: [
     sequenceLesson('mu-twenty-sequence', '11～20的认识', 73, 20),
@@ -782,6 +847,7 @@ const upper: Record<string, Lesson[]> = {
         [18, '-', 8],
       ],
     ),
+    ...twentyPracticeLessons,
   ],
   u5: [
     arithmetic(
@@ -874,6 +940,7 @@ const lower: Record<string, Lesson[]> = {
       false,
     ),
     shapeJoinLesson,
+    ...planePracticeLessons,
   ],
   u2: [
     arithmetic(

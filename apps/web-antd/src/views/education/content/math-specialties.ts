@@ -14,6 +14,8 @@ const upperGroups: Group[] = [
       'mu-ten-sequence',
       'mu-twenty-sequence',
       'mu-ordinal',
+      'mu-twenty-bundles',
+      'mu-twenty-positions',
     ],
   ],
   [
@@ -42,17 +44,24 @@ const upperGroups: Group[] = [
       'mu-chain',
       'mu-twenty-place',
       'mu-twenty-addsub',
+      'mu-twenty-bundles',
+      'mu-twenty-links',
       'mu-carry-nine',
       'mu-carry-eight',
       'mu-carry-small',
     ],
   ],
-  ['shapes', '立体图形辨认', '从外形与特征辨认立体图形。', ['mu-solid']],
+  [
+    'shapes',
+    '立体图形辨认与操作',
+    '从外形与特征辨认立体图形，记录实际操作和自己的观察。',
+    ['mu-solid', 'mu-solid-observe', 'mu-solid-build'],
+  ],
   [
     'relations',
     '图示与数量关系',
     '联系整体和部分，理解图示与生活问题。',
-    ['mu-story', 'mu-review-story'],
+    ['mu-story', 'mu-review-story', 'mu-twenty-positions', 'mu-twenty-links'],
   ],
 ];
 const lowerGroups: Group[] = [
@@ -83,13 +92,13 @@ const lowerGroups: Group[] = [
     'shapes',
     '平面图形辨认与拼组',
     '辨认平面图形，观察拼组后的外轮廓。',
-    ['ml-flat', 'ml-flat-join'],
+    ['ml-flat', 'ml-flat-join', 'ml-plane-observe', 'ml-plane-build'],
   ],
   [
     'money',
     '人民币与购物',
     '换算元角分，计算金额并解决原创购物问题。',
-    ['ml-money', 'ml-shop'],
+    ['ml-money', 'ml-shop', 'ml-shopping-practice'],
   ],
   [
     'relations',
@@ -118,7 +127,13 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
         prerequisite: '可以按学校当前进度自由选择，不要求完成全部原课包。',
         parentTip:
           '本专项复用对应课包已编写的题目，不冒充从未见过的新题或完整教材测验。',
-        version: 1,
+        version:
+          id === 'shapes' ||
+          (volume === 'lower' && id === 'money') ||
+          (volume === 'upper' &&
+            ['calculation', 'count', 'relations'].includes(id))
+            ? 2
+            : 1,
         status: 'available',
         steps: [{ title: '先选练习范围', text: goal }],
         questions: sources.flatMap((source) => source.questions),

@@ -80,8 +80,8 @@ const root = `${repo}/apps/web-antd/dist`;
           .filter({ visible: true })
           .last()
           .click();
-      const read = () =>
-        p.evaluate(
+      const read = (page = p) =>
+        page.evaluate(
           () =>
             new Promise((resolve, reject) => {
               const req = indexedDB.open('butler-grade-one', 1);
@@ -177,8 +177,8 @@ const root = `${repo}/apps/web-antd/dist`;
       const volumes = [
         ['chinese', 'pep-2024', 'upper', 72],
         ['chinese', 'pep-2024', 'lower', 46],
-        ['math', 'pep-2024', 'upper', 28],
-        ['math', 'pep-2024', 'lower', 18],
+        ['math', 'pep-2024', 'upper', 33],
+        ['math', 'pep-2024', 'lower', 21],
         ['math', 'sujiao', 'upper', 71],
         ['math', 'sujiao', 'lower', 87],
         ['ethics', 'pep-2024', 'upper', 16],
@@ -364,6 +364,130 @@ const root = `${repo}/apps/web-antd/dist`;
       const rejectedLibrary = await read();
       if (rejectedLibrary.sessions.filter((s) => s.id === sid).length !== 1)
         throw new Error('invalid import changed state');
+      if (width === 1200) {
+        const beforeReject = await read();
+        for (const buffer of [
+          Buffer.from('{broken-json'),
+          Buffer.from(
+            JSON.stringify({
+              ...backup,
+              data: { ...backup.data, activeProfileId: 'missing-profile' },
+            }),
+          ),
+          Buffer.alloc(8 * 1024 * 1024 + 1, 'x'),
+        ]) {
+          await upload.setInputFiles({
+            name: 'invalid-record.json',
+            mimeType: 'application/json',
+            buffer,
+          });
+          const rejection = p.getByText(
+            buffer.length > 8 * 1024 * 1024
+              ? '备份文件不能超过8 MB。'
+              : '备份文件格式或记录校验失败，原档案未改变。',
+            { exact: true },
+          );
+          await rejection.waitFor();
+          if (JSON.stringify(await read()) !== JSON.stringify(beforeReject))
+            throw new Error('rejected file mutated persisted library');
+          await rejection.waitFor({ state: 'hidden' });
+        }
+
+        // Simulate a failed IndexedDB write in this isolated test profile.
+        // Only the next readwrite transaction is aborted; reads remain usable.
+        await upload.setInputFiles({
+          name: 'backup.json',
+          mimeType: 'application/json',
+          buffer: Buffer.from(JSON.stringify(backup)),
+        });
+        await modal.getByText('检查备份后合并', { exact: true }).waitFor();
+        await p.evaluate(() => {
+          const original = IDBDatabase.prototype.transaction;
+          IDBDatabase.prototype.transaction = function (...args) {
+            const tx = original.apply(this, args);
+            if (args[1] === 'readwrite') {
+              IDBDatabase.prototype.transaction = original;
+              queueMicrotask(() => tx.abort());
+            }
+            return tx;
+          };
+        });
+        await modal.getByRole('button', { name: '确 定', exact: true }).click();
+        await p
+          .getByText(
+            '无法读取或保存本地学习档案。请检查浏览器存储权限，不要清除原记录。',
+            { exact: true },
+          )
+          .waitFor();
+        if (JSON.stringify(await read()) !== JSON.stringify(beforeReject))
+          throw new Error('failed import mutated persisted library');
+        await modal.getByRole('button', { name: '取 消', exact: true }).click();
+        await modal.waitFor({ state: 'hidden' });
+
+        const restoredContext = await browser.newContext({
+          viewport: { width: 1200, height: 1000 },
+        });
+        try {
+          const restoredPage = await restoredContext.newPage();
+          restoredPage.on('pageerror', (error) => errors.push(error.message));
+          await restoredPage.goto(
+            `${url}#/education/primary/p1/math/sujiao/upper`,
+          );
+          await restoredPage
+            .getByPlaceholder('请输入用户名')
+            .fill('yj88888888');
+          await restoredPage
+            .getByPlaceholder('密码', { exact: true })
+            .fill('yyds123456');
+          await restoredPage
+            .locator('button')
+            .filter({ hasText: '登录' })
+            .click();
+          await restoredPage
+            .getByRole('button', { name: '导出备份', exact: true })
+            .waitFor();
+          const initialRestoredState = await read(restoredPage);
+          if (initialRestoredState.sessions.length > 0)
+            throw new Error('restore context was not empty');
+          await restoredPage.locator('input[type=file]').setInputFiles({
+            name: 'restore.json',
+            mimeType: 'application/json',
+            buffer: Buffer.from(JSON.stringify(backup)),
+          });
+          const restoreModal = restoredPage.getByRole('dialog');
+          await restoreModal
+            .getByText('检查备份后合并', { exact: true })
+            .waitFor();
+          await restoreModal
+            .getByRole('button', { name: '确 定', exact: true })
+            .click();
+          await restoredPage.getByText('备份已合并', { exact: true }).waitFor();
+          await restoredPage.reload();
+          await restoredPage
+            .getByRole('button', { name: '导出备份', exact: true })
+            .waitFor();
+          const restored = await read(restoredPage);
+          for (const session of backup.data.sessions) {
+            const actual = restored.sessions.find(
+              (item) => item.id === session.id,
+            );
+            if (JSON.stringify(actual) !== JSON.stringify(session))
+              throw new Error(
+                'fresh restore changed session snapshot or response',
+              );
+          }
+          for (const profile of backup.data.profiles) {
+            if (
+              JSON.stringify(
+                restored.profiles.find((item) => item.id === profile.id),
+              ) !== JSON.stringify(profile)
+            )
+              throw new Error('fresh restore changed profile');
+          }
+        } finally {
+          await restoredContext.close();
+        }
+      }
       await click('新增档案');
       await p
         .getByRole('dialog')

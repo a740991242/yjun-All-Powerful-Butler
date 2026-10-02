@@ -2,10 +2,87 @@ import { describe, expect, it } from 'vitest';
 
 import { exportBackup, parseBackup } from '../learning/backup';
 import { createSession, evaluate } from '../learning/engine';
+import { required } from '../learning/required';
 import { mathBooks } from './math';
 import { textbooks } from './textbooks';
 
 describe('reviewed PEP mathematics lesson packs', () => {
+  it('records written methods separately, rejects blank exchange fields and keeps paper work manual', () => {
+    const lower = required(mathBooks.find((book) => book.volume === 'lower'));
+    for (const [id, expected] of [
+      [
+        'ml-written-add',
+        [
+          [0, 7, 3],
+          [0, 7, 5],
+          [1, 3, 6],
+          [1, 3, 7],
+        ],
+      ],
+      [
+        'ml-written-sub',
+        [
+          [0, 5, 4],
+          [0, 4, 3],
+          [1, 5, 2],
+          [1, 6, 2],
+        ],
+      ],
+    ] as const) {
+      const course = required(
+        lower.units
+          .flatMap((unit) => unit.lessons)
+          .find((item) => item.id === id),
+      );
+      expect(course.version).toBe(2);
+      expect(course.questions.slice(0, 6).map((item) => item.id)).toEqual(
+        Array.from({ length: 6 }, (_, index) => `${id}-q${index + 1}`),
+      );
+      const methods = course.questions.filter(
+        (item) => item.rule.kind === 'steps',
+      );
+      expect(methods.map((item) => item.rule)).toEqual(
+        expected.map((values) => ({ kind: 'steps', values: [...values] })),
+      );
+      for (const [index, question] of methods.entries()) {
+        const values = [...required(expected[index])];
+        expect(evaluate(question.rule, values)).toBe(true);
+        expect(
+          evaluate(question.rule, [
+            1 - required(values[0]),
+            ...values.slice(1),
+          ]),
+        ).toBe(false);
+        expect(() =>
+          evaluate(question.rule, [null, ...values.slice(1)]),
+        ).toThrow('educationLearning.answerRequired');
+      }
+      expect(
+        evaluate(
+          required(course.questions.find((item) => item.id === `${id}-paper`))
+            .rule,
+          'confirmed',
+        ),
+      ).toBeNull();
+      const now = '2026-10-03T00:00:00.000Z';
+      const old = createSession(
+        { ...course, version: 1, questions: course.questions.slice(0, 6) },
+        lower.id,
+        'child-1',
+        { seed: 7, now },
+      );
+      const restored = parseBackup(
+        exportBackup({
+          schemaVersion: 1,
+          activeProfileId: 'child-1',
+          profiles: [{ id: 'child-1', nickname: '学习者', createdAt: now }],
+          sessions: [old],
+        }),
+      ).data.sessions[0];
+      expect(restored).toEqual(old);
+      expect(restored?.questions).toHaveLength(6);
+    }
+  });
   it('teaches unit exchanges separately from written digits and includes the three digits of 100', () => {
     for (const book of mathBooks) {
       const id =
@@ -82,14 +159,16 @@ describe('reviewed PEP mathematics lesson packs', () => {
         source.units.map((unit) => unit.id),
       );
       const ids = new Set<string>();
-      for (const unit of book.units) {
+      for (const [unitIndex, unit] of book.units.entries()) {
         expect(unit.lessons.length).toBeGreaterThan(0);
         for (const lesson of unit.lessons) {
           expect(ids.has(lesson.id)).toBe(false);
           ids.add(lesson.id);
           expect(lesson.questions.length).toBeGreaterThanOrEqual(6);
           expect(lesson.steps.some((step) => step.activity)).toBe(true);
-          expect(lesson.page).toBe(unit.page);
+          expect(lesson.page).toBeGreaterThanOrEqual(unit.page);
+          const nextUnit = book.units[unitIndex + 1];
+          if (nextUnit) expect(lesson.page).toBeLessThan(nextUnit.page);
           const now = '2026-09-30T00:00:00.000Z';
           const state = {
             schemaVersion: 1 as const,
@@ -137,11 +216,12 @@ describe('reviewed PEP mathematics lesson packs', () => {
       )?.rule,
     ).toEqual({ kind: 'number', value: 25 });
     const money = lower.units.find((unit) => unit.id === 'shopping')!.lessons;
-    expect(money.length).toBe(2);
+    expect(money.length).toBe(3);
     expect(
-      money[1]?.questions.find((question) =>
-        question.prompt.includes('一共多少角'),
-      )?.rule,
+      money
+        .find((course) => course.id === 'ml-shop')
+        ?.questions.find((question) => question.prompt.includes('一共多少角'))
+        ?.rule,
     ).toEqual({ kind: 'number', value: 30 });
   });
   it('does not imply each partition has only one answer', () => {

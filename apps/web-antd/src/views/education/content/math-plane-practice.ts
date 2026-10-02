@@ -1,0 +1,477 @@
+import type { Lesson, Question, Visual } from '../learning/types';
+
+const base = {
+  textbookTitle: '认识平面图形',
+  page: 1,
+  version: 1,
+  status: 'available' as const,
+  prerequisite:
+    '先认识长方形、正方形、平行四边形、三角形和圆；可以由家长代读。',
+  parentTip:
+    '参考人教下册印刷1～7页，图示与题目为本站原创。实际描画、拼摆和折剪另行确认，屏幕看图不代替动手。用允许使用的轻小物品和纸片；剪纸请成人协助，可使用预先剪好的材料，没有材料可跳过。按本课五类分类时正方形单列，数学上正方形也是特殊的长方形和平行四边形。',
+  review: {
+    date: '2026-10-03',
+    reviewer: '官方教材1～7页实际阅读与原创活动程序核对',
+    notes:
+      '资源1221001102241图片7～13实际核读；不复制扫描页、原画或原题。原ml-flat与ml-flat-join的ID、v1和旧快照保留。新增描面、围画、拼剪、七巧板、规律和独立成长反思；实际操作不自动判分。',
+  },
+};
+function task(
+  id: string,
+  suffix: string,
+  prompt: string,
+  rule: Question['rule'],
+  hint: string,
+  explanation: string,
+  visual?: Visual,
+  labels?: string[],
+): Question {
+  return {
+    id: `${id}-${suffix}`,
+    knowledge: id,
+    prompt,
+    rule,
+    hint,
+    explanation,
+    visual,
+    choices: labels?.map((label) => ({ id: label, label })),
+  };
+}
+function manual(
+  id: string,
+  suffix: string,
+  prompt: string,
+  hint: string,
+  visual?: Visual,
+): Question {
+  return task(
+    id,
+    suffix,
+    prompt,
+    { kind: 'manual' },
+    hint,
+    '只记录真实操作与表达，不自动评价作品或理解程度，不计客观正确率；未做可以跳过。',
+    visual,
+  );
+}
+function reflection(id: string, suffix: string, prompt: string): Question {
+  return task(
+    id,
+    suffix,
+    prompt,
+    { kind: 'reflection' },
+    '按实际经历写，未做或需要帮助也如实说明，可由家长代录。',
+    '独立保存自己的观察和想法，没有统一正确答案，也不自动认定已掌握。',
+  );
+}
+function choose(
+  id: string,
+  suffix: string,
+  prompt: string,
+  labels: string[],
+  value: string,
+  hint: string,
+  explanation: string,
+  visual?: Visual,
+): Question {
+  return task(
+    id,
+    suffix,
+    prompt,
+    { kind: 'choice', value },
+    hint,
+    explanation,
+    visual,
+    labels,
+  );
+}
+const observeId = 'ml-plane-observe';
+const buildId = 'ml-plane-build';
+const cards: Visual = {
+  kind: 'plane-cards',
+  cards: [
+    { shape: 'square', size: 1, turn: 45 },
+    { shape: 'rectangle', size: 2, turn: 90 },
+    { shape: 'circle', size: 1, turn: 0 },
+    { shape: 'square', size: 2, turn: 0 },
+    { shape: 'rectangle', size: 1, turn: 135 },
+    { shape: 'circle', size: 2, turn: 0 },
+  ],
+};
+const tiles: Visual = {
+  kind: 'tile-grid',
+  cells: [
+    [true, true, true, true],
+    [true, false, false, true],
+    [true, false, true, true],
+  ],
+};
+const pattern: Visual = {
+  kind: 'periodic-shapes',
+  pattern: [
+    { shape: 'triangle', size: 1 },
+    { shape: 'square', size: 2 },
+    { shape: 'circle', size: 1 },
+  ],
+  total: 8,
+  shown: 6,
+};
+const alternating: Visual = {
+  kind: 'plane-cards',
+  cards: Array.from({ length: 6 }, (_, index) => ({
+    shape: index % 2 === 0 ? 'square' : 'triangle',
+    size: 1,
+    turn: 0,
+  })),
+};
+export const planePracticeLessons: Lesson[] = [
+  {
+    ...base,
+    id: observeId,
+    title: '描面、分类与围画图形',
+    goal: '区分物体与平面轮廓，不受大小方向影响分类，实际描画、涂色、围线和点阵画图。',
+    steps: [
+      {
+        title: '物体与它的一个面',
+        text: '物体有厚度，描在纸上的封闭轮廓是平面图形。把积木的一个平面贴稳，沿边描一圈；圆柱的平底能描圆，球没有可平贴描边的平面。不是所有弯曲表面都能这样描。',
+        activity: '找一个平面的物品，先指面再描；说清物品名称与描出图形名称。',
+      },
+      {
+        title: '大小方向不是分类标准',
+        text: '旋转和缩放不改变本来的图形类别。正方形转斜仍是正方形；三角形可以高、矮、宽、窄。本课按五类分：长方形、正方形、平行四边形、三角形、圆；正方形在这里单列。',
+        visual: cards,
+        activity: '按卡片轮廓分类，再换顺序核对，不能只看颜色或大小。',
+      },
+      {
+        title: '分类涂色与围线',
+        text: '在自己画的图案中，按事先说好的规则为同类轮廓涂色。可在点阵纸连点画直边图形；围线需要闭合。用真实钉板时成人照看，不能把四段折线称作圆。',
+        activity:
+          '分别画长方形、正方形、三角形和平行四边形；圆用合适的圆形平面描画。',
+      },
+      {
+        title: '把不同轮廓组成自己的图案',
+        text: '用实际物品的平面描出不同轮廓，或用纸片拼贴，设计自己的图案。指一指用了什么图形；物品斜看像菱形不等于纸上描出的正方形变了。',
+        activity: '画一个原创小车或花园，不必照抄教材插画。',
+      },
+    ],
+    questions: [
+      ...(['square', 'rectangle', 'circle', 'triangle'] as const).map(
+        (shape, index) =>
+          task(
+            observeId,
+            `q${index + 1}`,
+            `按本课分类，图中${['正方形', '长方形', '圆', '三角形'][index]}卡片有几张？`,
+            { kind: 'number', value: shape === 'triangle' ? 0 : 2 },
+            '只看封闭轮廓，大小和朝向不改变名称。',
+            shape === 'triangle'
+              ? '没有三角形，数量为0，不能留空。'
+              : '这一类有两张，不因大小或转动漏数。',
+            cards,
+          ),
+      ),
+      choose(
+        observeId,
+        'q5',
+        '图中的斜四边形按本课单列五类，叫什么？',
+        ['平行四边形', '三角形', '圆'],
+        '平行四边形',
+        '看四条直边和两组相对的边。',
+        '图中两组相对边平行，是平行四边形；不是所有四边形都叫长方形。',
+        { kind: 'shape', shape: 'parallelogram' },
+      ),
+      choose(
+        observeId,
+        'q6',
+        '要让物品的一个平面贴纸、沿边描出圆，哪一种合适？',
+        ['圆柱的平底', '球的弯曲表面'],
+        '圆柱的平底',
+        '题目要求一个平面可以贴纸。',
+        '圆柱平底是圆形平面；球没有这样的平底。',
+      ),
+      manual(
+        observeId,
+        'trace',
+        '实际选择至少两种物品，各把一个平面贴纸描轮廓，说出物品与图形名称。',
+        '可用盒子的面和圆形平底；没有合适材料则保留待做。',
+      ),
+      manual(
+        observeId,
+        'classify',
+        '在纸上画出五类图形，包含不同大小或朝向；按约定五类分类，给同类涂同色并解释。',
+        '正方形本课单列；不能只把相同颜色分一起。',
+      ),
+      manual(
+        observeId,
+        'dots',
+        '在点阵纸分别连点画长方形、正方形、三角形和平行四边形，检查每个轮廓闭合。',
+        '没有钉板可用纸上点阵；画圆可用圆形物品描，不把直线围成圆。',
+      ),
+      manual(
+        observeId,
+        'design',
+        '实际描画或拼贴自己的图案，指着图案说明用了哪些平面图形。',
+        '可以做小车或花园，记录自己的作品和理由。',
+      ),
+      reflection(
+        observeId,
+        'growth-faces',
+        '记录今天真正找到的一个物品平面和描出的图形；若未做，写明材料或帮助需求。',
+      ),
+      reflection(
+        observeId,
+        'growth-classify',
+        '记录分类或画图时自己发现的一件事，说明大小、朝向、轮廓中你看了什么。',
+      ),
+    ],
+    reviewQuestions: [
+      choose(
+        observeId,
+        'r1',
+        '把同一张正方形纸转45度，按本课分类名称变吗？',
+        ['不变', '变成长方形'],
+        '不变',
+        '纸片没有改变边长和角。',
+        '转动改变朝向，不改变它是正方形。',
+      ),
+      task(
+        observeId,
+        'r2',
+        '一组卡片只有三张圆和一张长方形，按本课分类，三角形有几张？',
+        { kind: 'number', value: 0 },
+        '题目没有三角形。',
+        '没有就是0，0与未填写不同。',
+      ),
+      manual(
+        observeId,
+        'r3',
+        '换一个允许使用的物品描平面，指着实际轮廓介绍图形。',
+        '换材料再观察，不把上次答案当新操作。',
+      ),
+      reflection(
+        observeId,
+        'r4',
+        '复习后记录本次实际描画或分类的发现，没做则注明。',
+      ),
+    ],
+  },
+  {
+    ...base,
+    id: buildId,
+    title: '拼剪图形、七巧板与规律',
+    page: 3,
+    goal: '区分原纸片与整体轮廓，实际拼组和折剪，探索七巧板多种拼法，计数空位与续摆规律，分别记录成长。',
+    steps: [
+      {
+        title: '几块纸片与一个新轮廓',
+        text: '用两张同样长方形、两张或四张同样正方形实际拼一拼。边贴齐、内部不重叠后看整体，不把拼缝算成外边；尺寸会影响能拼什么，不能仅凭块数断定一定是正方形。',
+        activity:
+          '先拼两块，再试四块，并指着整体外轮廓介绍；可以回原“两块三角形”学具练习。',
+        visual: {
+          kind: 'composite-shapes',
+          layout: 'square-grid',
+          divisions: 2,
+        },
+      },
+      {
+        title: '折剪与重新拼贴',
+        text: '取两张同样正方形纸，一张沿对边中点连线分两部分，另一张沿对角线分两部分。前者两张长方形，后者两张同样三角形。实际叠合检查，再重新拼回；剪贴自己的图案。',
+        activity:
+          '可由成人沿折痕剪，或使用预先剪好的纸片；尚未操作就不确认完成。',
+      },
+      {
+        title: '七巧板是材料条件',
+        text: '标准七巧板有五张不同大小的三角形、一张正方形和一张平行四边形。先认材料，再探索用两块、三块或更多块拼三角形，也试长方形、正方形或原创图案。不凭“块数”认定拼法有效，要看实际外轮廓、空隙和重叠。',
+        activity:
+          '使用已有标准七巧板；没有时保留待做。记录实际用了哪些块和摆法，不照搬他人作品当自己的。',
+      },
+      {
+        title: '完整铺面与一组重复',
+        text: '按统一等大的格子检查缺几块，不能把行数当缺块数。续摆先找重复的一组，再从左数位置；重复可以涉及形状与大小。图示为原创格子和三项组合。',
+        visual: pattern,
+        activity: '用纸片摆自己的重复排列，再留一空请同伴续摆。',
+      },
+      {
+        title: '分成同样大小与成长记录',
+        text: '长方形沿两组对边中点连线、或一条对角线，可以分成面积相等的两部分。先猜，再实际剪开重合检验。这是可尝试的几种方法，不声称找全所有剪法；学习发现与未来计划分开。',
+        visual: { kind: 'rectangle-cut', width: 4, cut: 'diagonal' },
+        activity: '实际比较至少两种分法，说清怎样检查同样大。',
+      },
+    ],
+    questions: [
+      task(
+        buildId,
+        'q1',
+        '图中整体拼成正方形，一共用了几张原来的小正方形纸片？',
+        { kind: 'number', value: 4 },
+        '数原片，不数整体外边。',
+        '2行每行2张，共4张；整体是一个图形。',
+        { kind: 'composite-shapes', layout: 'square-grid', divisions: 2 },
+      ),
+      choose(
+        buildId,
+        'q2',
+        '正方形沿一条对角线剪开，两部分各是什么图形？',
+        ['三角形', '圆', '长方形'],
+        '三角形',
+        '对角线连接相对两个顶点。',
+        '每部分有三条直边，是同样大小的三角形；不等同于沿对边中点剪。',
+      ),
+      task(
+        buildId,
+        'q3',
+        '格子每个空位放一块相同正方形纸片，补齐完整长方形还缺几块？',
+        { kind: 'number', value: 3 },
+        '逐行数虚线空格，已经铺的不要再数。',
+        '第二行缺2块，第三行缺1块，共3块。',
+        tiles,
+      ),
+      choose(
+        buildId,
+        'q4',
+        '图中按“较小三角形、较大正方形、较小圆”一组重复，第8个应放什么？',
+        ['较大正方形', '较小圆', '较小三角形'],
+        '较大正方形',
+        '6个是两组，第7个重新开始一组。',
+        '第7个三角形，第8个是较大正方形；形状和大小一起检查。',
+        pattern,
+      ),
+      task(
+        buildId,
+        'q5',
+        '标准七巧板有5张三角形、1张正方形和1张平行四边形，一套共有几张？',
+        { kind: 'number', value: 7 },
+        '合计三类原片。',
+        '5+1+1=7；这是原片数量，不是拼成图案数量。',
+      ),
+      choose(
+        buildId,
+        'q6',
+        '只知道选了两张纸片，能断定一定拼成没有空隙的完整三角形吗？',
+        ['不能', '能'],
+        '不能',
+        '还要看形状、大小和实际摆法。',
+        '块数不是几何拼组的充分条件，要核对整个轮廓、空隙和重叠。',
+      ),
+      choose(
+        buildId,
+        'q7',
+        '图中从左到右按两种形状交替重复，接下来第7、8张依次是什么？',
+        ['正方形、三角形', '三角形、正方形', '正方形、正方形'],
+        '正方形、三角形',
+        '把正方形和三角形看成一组，先检查已经摆了几组。',
+        '六张是三组，第7张从正方形开始，第8张是三角形。与三项一组的规律分开检查。',
+        alternating,
+      ),
+      choose(
+        buildId,
+        'q8',
+        '把同一个圆沿直径分成两张半圆纸片，再把原直边完整贴合、内部不重叠，整体恢复成什么？',
+        ['圆', '正方形', '三角形'],
+        '圆',
+        '这里的两张来自同一个圆，不是任意不同大小的半圆。',
+        '两个匹配半圆恢复原圆，内部拼缝不属于外轮廓。实际拼贴另行确认。',
+      ),
+      manual(
+        buildId,
+        'rectangles',
+        '用两张同样长方形实际拼组，再沿整体外轮廓走一圈并介绍。',
+        '边贴齐、内部不重叠；记录自己的尺寸与结果。',
+      ),
+      manual(
+        buildId,
+        'squares',
+        '分别用两张、四张同样正方形实际拼组，比较原片数与整体图形。',
+        '至少完成两种材料数量，不能用看图代替摆。',
+      ),
+      manual(
+        buildId,
+        'square-cuts',
+        '分别沿对边中点连线和对角线分正方形纸，实际比较两部分并重新拼回。',
+        '成人协助剪纸或用预剪纸片；比较长方形与三角形两种结果。',
+      ),
+      manual(
+        buildId,
+        'collage',
+        '用实际剪出的纸片设计、拼贴和涂色自己的图案，介绍用了哪些原片。',
+        '不要求复制教材的鱼或火箭。',
+      ),
+      manual(
+        buildId,
+        'matching-halves',
+        '把同一个圆的两张半圆实际拼回，再用一个长方形沿对角线分出的两张三角形拼回，沿整体外轮廓介绍。',
+        '成人协助剪出或提供预剪纸片；两组材料分别来自原图形，检查直边匹配、空隙与重叠。',
+      ),
+      manual(
+        buildId,
+        'tangram-triangles',
+        '用标准七巧板实际探索至少两种拼三角形的方法，记录使用哪些原片，检查外轮廓与空隙。',
+        '没有七巧板就保留待做，不能把任意七张纸称作标准七巧板。',
+      ),
+      manual(
+        buildId,
+        'tangram-design',
+        '用已有七巧板试拼长方形、正方形，再拼自己的图案并交流。',
+        '图形名称看整体轮廓；用到的块数与图案数量分别说。',
+      ),
+      manual(
+        buildId,
+        'own-pattern',
+        '用纸片摆出自己的重复组，留一个空位让同伴续摆并说明依据。',
+        '写清一组是什么、形状大小如何重复。',
+      ),
+      manual(
+        buildId,
+        'rectangle-cuts',
+        '把长方形纸用至少两种方法分成同样大小的两部分，实际重合或比较并说明。',
+        '试对边中点连线或对角线，不把这些方法说成全部可能剪法。',
+      ),
+      reflection(
+        buildId,
+        'growth-build',
+        '记录本次实际拼剪或七巧板作品及一个发现，没做则写材料需求。',
+      ),
+      reflection(
+        buildId,
+        'growth-method',
+        '记录自己怎样检查整体轮廓、空隙或同样大小；把后续想尝试的计划另写，不当作已经完成。',
+      ),
+    ],
+    reviewQuestions: [
+      task(
+        buildId,
+        'r1',
+        '两行各两个相同等大的格子，已经铺满，补成完整长方形还缺几块？',
+        { kind: 'number', value: 0 },
+        '检查是否还有空位。',
+        '没有空位，缺0块；不是未填写。',
+        {
+          kind: 'tile-grid',
+          cells: [
+            [true, true],
+            [true, true],
+          ],
+        },
+      ),
+      choose(
+        buildId,
+        'r2',
+        '长方形沿对角线剪后两个三角形能实际重合，这说明什么？',
+        ['两部分同样大小', '两部分都是正方形'],
+        '两部分同样大小',
+        '看实际重合结果，不只数有两块。',
+        '重合可检查这两部分形状大小相同，不把三角形称成正方形。',
+      ),
+      manual(
+        buildId,
+        'r3',
+        '用已有纸片换一种摆法，说明原片与整体轮廓的区别。',
+        '实际尝试，发现不能拼成完整图形也如实记录。',
+      ),
+      reflection(
+        buildId,
+        'r4',
+        '记录这次复习真实发现或尚待尝试的事，分开已做与计划。',
+      ),
+    ],
+  },
+];

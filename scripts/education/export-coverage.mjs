@@ -150,6 +150,9 @@ async function main() {
                 lessons: actual.lessons.map((lesson) => lessonRow(lesson)),
               };
             }),
+            specialties: (book.specialties || []).map((lesson) =>
+              lessonRow(lesson),
+            ),
             transitions: (book.transitions || []).map((lesson) =>
               lessonRow(lesson),
             ),

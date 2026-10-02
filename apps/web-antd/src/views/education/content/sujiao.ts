@@ -1,6 +1,7 @@
 import type { Book, Lesson } from '../learning/types';
 import type { Textbook } from './textbooks';
 
+import { required } from '../learning/required';
 import { sujiaoComparisonDraft } from './sujiao-comparison';
 import { sujiaoDirectionComparisonLesson } from './sujiao-direction-comparison';
 import { sujiaoFillArithmeticLesson } from './sujiao-fill-arithmetic';
@@ -19,6 +20,7 @@ import { sujiaoIntroGamesDraft } from './sujiao-intro-games';
 import { sujiaoIntroShapesLesson } from './sujiao-intro-shapes';
 import { sujiaoLowerBook } from './sujiao-lower';
 import { sujiaoMissingAddendDraft } from './sujiao-missing-addend';
+import { sujiaoSpecialties, sujiaoTransitions } from './sujiao-modes';
 import { sujiaoNineConsolidationLesson } from './sujiao-nine-consolidation';
 import { sujiaoPositionDraft } from './sujiao-position';
 import { sujiaoRecognitionReviewLesson } from './sujiao-recognition-review';
@@ -246,7 +248,7 @@ export const sujiaoUpperTextbook: Textbook = {
   })),
 };
 
-export const sujiaoBooks: Book[] = [
+const baseBooks: Book[] = [
   {
     id,
     subject: 'math',
@@ -367,3 +369,14 @@ export const sujiaoBooks: Book[] = [
   },
   sujiaoLowerBook,
 ];
+
+// Keep the canonical book objects: existing consumers share the lower-book registry.
+for (const book of baseBooks) {
+  book.specialties = sujiaoSpecialties(book);
+  if (book.volume === 'lower')
+    book.transitions = sujiaoTransitions(
+      required(baseBooks[0]),
+      required(baseBooks[1]),
+    );
+}
+export const sujiaoBooks: Book[] = baseBooks;
