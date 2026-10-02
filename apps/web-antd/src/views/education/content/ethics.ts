@@ -32,7 +32,7 @@ export const ethicsTextbooks: Textbook[] = (['upper', 'lower'] as const).map(
 /** Availability follows authored lessons, not contents or body-read metadata alone. */
 function authoredLesson(
   volume: Volume,
-  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
+  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14,
   page: number,
   t: (key: string) => string,
 ): Lesson {
@@ -66,6 +66,14 @@ function authoredLesson(
   if (number === 12) {
     manualIndexes = [0, 1, 2, 3, 4, 5, 6];
     if (volume === 'lower') manualIndexes.push(7, 8);
+  }
+  if (number === 13) {
+    manualIndexes = [0, 1, 2, 3, 4, 5, 6, 7];
+    if (volume === 'lower') manualIndexes.push(8);
+  }
+  if (number === 14) {
+    manualIndexes = [0, 1, 2, 3, 4, 5, 6, 7];
+    if (volume === 'lower') manualIndexes.push(8);
   }
   let reviewer = '原书第四课与原创活动范围核对，非教师最终审校';
   let notes =
@@ -121,6 +129,16 @@ function authoredLesson(
     reviewer = '原书第十二课与原创活动范围核对，非教师最终审校';
     notes =
       '上册印刷44～46页、下册45～48页实际阅读；两安全/三节制与四求助资料完整读听，号码纸卡、不做危险或医疗处理，换玩法/新纸玩具/原创规则与停止实际分记；家务五苹果/三经历/六叠衣图、真实两衣物、已知系带或自会方法、三沟通和七天提示/实际贡献分记，不补造未来或强迫能力，反思null、计划另记。';
+  }
+  if (number === 13) {
+    reviewer = '原书第十三课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷48～51页、下册50～53页实际阅读；四影响/四方法/四提示与两公共两无标志/四故事完整，场合音量与求助辅助分清，原创提示先获许可；六庆祝/四体验/三关怀完整，歌曲材料缺少待做、纸扇实际与自愿分享分别、两书卡不冒捐赠，权利不由表现换，反思null、计划另记。';
+  }
+  if (number === 14) {
+    reviewer = '原书第十四课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷52～54页、下册54～56页实际阅读；四用途/完整观察表与未知原因/两拟人/四方法、获准真实共享物与协作分记不冒修理；三队员例/三历史资料/2025队章身份、原创制作、领巾歌曲队礼各实际与缺材料分记，学校正式批准不由网页替代，反思null、计划另记。';
   }
   const objective = (review: boolean): Question[] =>
     objectiveIndexes.map((index) => ({
@@ -203,7 +221,9 @@ export function createEthicsBooks(t: (key: string) => string): Book[] {
           number === 9 ||
           number === 10 ||
           number === 11 ||
-          number === 12
+          number === 12 ||
+          number === 13 ||
+          number === 14
         )
           return authoredLesson(book.volume, number, item.page, t);
         const title = t(`educationEthics.${book.volume}.l${number}`);

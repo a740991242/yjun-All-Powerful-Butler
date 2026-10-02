@@ -959,6 +959,168 @@
         "What did you actually read, make or play, and how did you explain stopping or needing help? Feelings can differ; no private injury information or invented outdoor events.",
         "How might you change rules or timing next? Separate ideas, consent, actual trials and future plans."
       ]
+    },
+    "lesson13": {
+      "title": "Let us lower the noise",
+      "goal": "Observe effects of sound, adapt communication to the setting, read signs and unsigned situations, and make and discuss an original reminder. Record reading separately from actual action.",
+      "prerequisite": "An adult may read the book. Use ordinary paper and a pen; no noise experiment or visit to a hospital or public space is needed.",
+      "parentTip": "Do not slam doors, drag heavy chairs, run or expose ears to loud noise. Respond to actual communication needs; no forced whisper, hearing test, gaze or speech method. Assisted communication is welcome. Clearly asking for urgent help or explaining discomfort remains allowed. Book examples are not local permissions. Display a reminder only in an agreed place.",
+      "steps": [
+        {
+          "title": "Observe four effects separately",
+          "text": "Page 48 shows a startling door, overlapping talk that prevents understanding, a noisy chair and running that interrupts others. These pictures are not observations of our own class.",
+          "activity": "Read or hear all four pictures, name an effect and a possible change in each. Gently place ordinary paper for a safe action; do not reproduce the door, chair or running. Keep unknown classroom facts unknown."
+        },
+        {
+          "title": "A little sound tuner: quiet or clearly audible",
+          "text": "Page 49 includes a group reminder, making a reminder, speaking to a class and borrowing an eraser in a library. Different settings need different communication, with turns and responses.",
+          "activity": "Role-play a group, a class and a library request separately, then swap roles. Listen to the real response and adapt. Pointing or assisted expression is allowed; there is no decibel target."
+        },
+        {
+          "title": "Four signs and two public settings",
+          "text": "Page 50 shows the character 静, a crossed speaker, a finger near lips and a crossed phone. Consider text and context rather than treating all as one formal standard. Hospital and library pictures are examples; asking for help is still allowed.",
+          "activity": "Observe each sign and separate visible marks, an interpretation and anything to check. Ask if unclear. Discuss rest and reading in the two examples; quiet is not a medical treatment or proof of local permission."
+        },
+        {
+          "title": "Consider others without a sign; make a reminder",
+          "text": "Page 51 shows a toy plane in a hotel corridor and a loud call on a bus. A missing sign does not settle what is considerate. State the setting and reason without shaming or blocking help.",
+          "activity": "Read both examples. Draw an original tabletop reading reminder with a setting, reason and permission to ask for help. Explain it and ask where to put it. Display only on an agreed personal tabletop, never an unapproved public wall."
+        },
+        {
+          "title": "Read all four listening frames and act",
+          "text": "The bottom story on pages 50–51 refers to a stream, birds, another person’s feelings and considerate conduct. The latter two are metaphors, not sounds of a heart or an abstract concept. Perception and expression differ.",
+          "activity": "Read all four frames and explain the distinction. With consent, take turns expressing a reading need and responding in an accessible way. Actually place paper gently and communicate on an approved tabletop. Do not test hearing or require anyone to hear a particular sound."
+        }
+      ],
+      "manual": [
+        "Read or hear all four page-48 effects and suggest one change each; gently place paper, without door slamming, chair dragging or running. Do not invent classroom observations.",
+        "Read all four page-49 examples. Role-play the three group/class/library communication settings with responses, then swap roles. Assisted expression is equally welcome.",
+        "Observe each of the four page-50 signs; separate visible marks, interpretation and uncertainty. Ask an adult if needed; do not claim a universal formal standard.",
+        "Discuss hospital and library needs separately. Clearly asking for help remains allowed; quiet is not treatment or evidence of a local rule.",
+        "Read both unsigned hotel-corridor and bus-call examples and explain consideration in each; no sign does not imply unlimited noise is appropriate.",
+        "Actually draw an original tabletop reminder with its setting, reason and allowance for help. Explain and ask permission; display only after agreement. Record a refusal as not displayed, and do not paste on public walls.",
+        "Read all four bottom listening frames and distinguish natural sounds from metaphors about feelings and respect. Take turns expressing and responding to needs; no hearing test or guaranteed perception.",
+        "Actually place ordinary paper gently and communicate in an approved tabletop setting, adapting to a response. Record action separately from future ideas and simulated school events."
+      ],
+      "pairs": [
+        {
+          "material": "Fiction: A quietly asks for paper in a reading corner and waits; B speaks clearly in an agreed class turn.",
+          "prompt": "Who is making the reading-corner request?",
+          "reviewPrompt": "Who is speaking to the class?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Setting and communication needs differ; volume is not a moral ranking."
+        },
+        {
+          "material": "Original cards: A says “Reading corner: be considerate; ask for help if needed.” B says “Let the audience understand; assisted expression is welcome.”",
+          "prompt": "Which fits this reading corner?",
+          "reviewPrompt": "Which fits a talk to an audience?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Use the setting and needs; quiet must not block help."
+        },
+        {
+          "material": "Story cards: A refers to natural bird and stream sounds; B uses feelings and considerate conduct as metaphors.",
+          "prompt": "Which discusses natural sounds?",
+          "reviewPrompt": "Which uses metaphors?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "A metaphor is not a body test; not hearing does not show disrespect."
+        },
+        {
+          "material": "Fiction: A made a reminder and displayed it with tabletop permission; B only plans to make one next time.",
+          "prompt": "Who actually made and displayed it?",
+          "reviewPrompt": "Who has only a future plan?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Making, permission and display are separate; a plan is not action."
+        }
+      ],
+      "reflections": [
+        "How did you consider the setting and someone’s needs? Record assistance, uncertainty and unfinished tasks without private medical information or a moral volume ranking.",
+        "What might you try next? Separate future ideas from consent and actions already taken."
+      ]
+    },
+    "lesson14": {
+      "title": "Everyone cares for shared property",
+      "goal": "Identify uses of shared facilities, read a complete observation record, observe and record safely, discuss care methods and act together with permission. Separate facts, uncertain causes and future suggestions.",
+      "prerequisite": "An adult may read. Use paper cards; actual care uses only a safe shared book or tabletop item approved by an adult. No electrical inspection is required.",
+      "parentTip": "Book facilities are not proof of your school’s facilities. Distinguish school, household-shared and personal objects. Observe only in an approved area; no fan testing, toilet operation, climbing or repair, chemicals or sharp fragments. Do not investigate classmates or collect names, photos or addresses. Ask responsible adults for help without confronting others or taking on repair. Observation, unknown cause and permission differ.",
+      "steps": [
+        {
+          "title": "Four campus objects and uses",
+          "text": "Page 52 shows a basketball court, electric fan, reading-room books and desks/chairs, each with a shared use. Shared access does not make an item someone’s personal possession. Household-shared items are not campus property.",
+          "activity": "Read all four and name each use. Compare original text cards for a school-library book and a personal pencil. Keep unknown school facilities unknown; do not operate the fan or court equipment."
+        },
+        {
+          "title": "The full observation table: good, damaged, unknown",
+          "text": "Page 53 includes observer, time and place. The bucket is marked good, the table-tennis table damaged, and a third item/state row blank. Blank is neither good nor damaged, and visible condition does not establish a cause.",
+          "activity": "Read both filled rows and the blank. Make a separate card with nickname, date, general setting, object, visible condition and known/unknown cause. Actually observe one adult-approved safe campus object; a household-shared book may be used if labelled honestly. No permission means unfinished, not inspection of dangerous equipment."
+        },
+        {
+          "title": "Two desks’ imagined wishes",
+          "text": "The two desks at the bottom of page 53 are marked and tidy respectively. Their personified wishes invite care; furniture does not literally speak, and a picture cannot identify who caused damage.",
+          "activity": "Read both personified examples and suggest each need. Offer an original response and listen to another suggestion. Do not pressure someone to comply or infer a person’s character from a desk."
+        },
+        {
+          "title": "Discuss all four care methods",
+          "text": "Page 54 shows gentle use of a flush pedal, avoiding marks on walls, arranging cleaning tools and using a table mat. Care must suit the object; not every surface is washable and tools are not toys.",
+          "activity": "Read all four. Use fictional wall/tool cards to practice a considerate reminder, response and request for adult help. No toilet, long-tool or chemical operation. Actually use an approved shared book or tabletop item: follow agreed use, appropriate care and return; record each, not a paper-card simulation of repair."
+        },
+        {
+          "title": "Act together, review and ask for help",
+          "text": "Correct use, routine care, reminders and reporting are different. Agreement is not execution. Avoid damaged or dangerous equipment and tell a trusted adult rather than dismantling it. Caring does not require taking risks.",
+          "activity": "Agree on a safe shared-tabletop action and roles, such as arranging two approved books. One places, one checks; swap roles. Review each contribution, facts and uncertainty. Separately role-play a fictional damage report; a reminder is not a completed repair. Future suggestions remain plans."
+        }
+      ],
+      "manual": [
+        "Read all four court/fan/books/desks examples and name each use. Distinguish campus, household-shared and personal scope without inventing school facilities.",
+        "Read both filled bucket/table-tennis rows and the third blank row. Blank is unknown; condition alone does not prove a cause or identify a responsible person.",
+        "Actually observe an approved safe shared item and record nickname, date, general setting, object, visible state and known/unknown cause. Label a household substitute; do not invent school observations or inspect electrical/damaged equipment.",
+        "Read both desks’ personified wishes, name needs, offer an original response and hear a suggestion. Do not treat furniture as speaking or infer responsibility or character.",
+        "Discuss all four pedal/wall/tool/mat methods. Practice reminders and responses with paper cards; do not operate toilets, long tools or chemicals.",
+        "Actually use an approved shared book or tabletop item, recording agreed use, suitable care and return separately. No permission means unfinished; a paper card is not actual repair.",
+        "Actually agree on a shared-tabletop action and roles, contribute and swap checking, such as arranging two approved books. Label adult participation; do not claim a whole-class action.",
+        "Review a real care action, help and unknowns. Separately practice a fictional report to a trusted adult; do not repair or claim a reminder solved damage. Future ideas are separate."
+      ],
+      "pairs": [
+        {
+          "material": "Explicit cards: A is a school reading-room book available for classmates to borrow; B is the child’s personal pencil.",
+          "prompt": "Which is campus shared property here?",
+          "reviewPrompt": "Which is personal here?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Scope is explicit, not changed by preference or who currently holds an item."
+        },
+        {
+          "material": "Book-table reading: A is the bucket marked good; B is the table-tennis table marked damaged. A third row is blank and causes unstated.",
+          "prompt": "Which row is marked good?",
+          "reviewPrompt": "Which row is marked damaged?",
+          "first": "Row A",
+          "second": "Row B",
+          "explanation": "Read the marks; blank is unknown, and the cause is not established."
+        },
+        {
+          "material": "Fiction: A observes a torn book page with unknown cause; B records adult permission to arrange books but has not acted.",
+          "prompt": "Who records a visible condition?",
+          "reviewPrompt": "Who only has permission, without action?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Observation, permission and action differ; do not fill unknown causes with guesses."
+        },
+        {
+          "material": "Fiction: A arranged approved shared books with agreement; B only plans to arrange them next time.",
+          "prompt": "Who actually arranged books?",
+          "reviewPrompt": "Who has only a future plan?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Record real contribution separately from plans; not all objects are therefore repaired."
+        }
+      ],
+      "reflections": [
+        "What did you actually observe or care for? State scope, help and unknown causes, without identifying classmates or treating personification as fact.",
+        "What might you do together next? Separate suggestions, permission, real contributions and future plans."
+      ]
     }
   },
   "lower": {
@@ -1914,6 +2076,170 @@
       "reflections": [
         "What did you actually learn, fold or discuss, who helped, and what remains pending? Record difficulties and feelings honestly without photos or private home information.",
         "Which small contribution might you try and when do you need a demonstration? Separate reminders, agreement, real dates and plans; a table does not prove seven completed days."
+      ]
+    },
+    "lesson13": {
+      "title": "A happy Children’s Day",
+      "goal": "Learn about June 1, read celebrations and care examples, prepare and voluntarily share an activity, and discuss children’s rights and needs. Separate actual, simulated and future events.",
+      "prerequisite": "Ordinary paper and a pen suffice. An adult may read. Existing lawful song material can help; no gifts, donations, martial arts or large gathering are required.",
+      "parentTip": "Respect the child’s wishes and an adult-approved setting. Watching, pointing, assistance, pausing and different feelings are allowed. Book events and historical photos do not prove today’s date, school arrangements or membership. Do not upload identities or medical details, copy medical procedures or use unsafe stages. Book giving is voluntary and adult-managed, with channels checked. Rights are not earned through grades, donations or obedience.",
+      "steps": [
+        {
+          "title": "The full celebration spread: preparation and performance",
+          "text": "Pages 50–51 show singing Tongxin Xiang Dang (童心向党), fan crafts, choosing and preparing an activity, dance, martial arts and an audience. The book’s first Children’s Day after school entry is not proof that today or our school has the same event; scarves do not determine a learner’s membership.",
+          "activity": "Read all six categories. With existing lawful material, listen to an adult demonstrate the named song and optionally try a line; record listening and trying separately. This site does not reproduce lyrics or audio. Discuss dance and martial arts without requiring imitation or a stage."
+        },
+        {
+          "title": "Choice, consent and actual preparation",
+          "text": "Choosing, preparing and already presenting are different. In an original tabletop sharing, choose a short original introduction, an existing lawful song or explaining a paper fan; being an audience member is allowed. A home activity is not a whole-school event.",
+          "activity": "Discuss roles, materials and how to pause, hearing both wishes. Fold ordinary paper alternately back and forth, then hold one end to form a fan, without scissors, staples or glue. Record help; missing materials remain unfinished. Prepare the chosen content; unagreed roles remain unagreed."
+        },
+        {
+          "title": "Actual participation and four experiences",
+          "text": "Page 52 shows play with a partner, a family performance, a community celebration and choosing books for children in mountain areas. Experiences and feelings differ; neither gifts nor donation rank a child, and recipients are not all alike.",
+          "activity": "In an adult-approved tabletop space, actually show the fan or chosen introduction, hear a response and swap sharing/audience roles once. Label a simulation honestly. Read all four experiences; share one real remembered occasion or keep it unknown. Wishes are separate."
+        },
+        {
+          "title": "Voluntary care is not a completed donation",
+          "text": "Choosing books and the next-page donation are care examples. A proposal, owner consent, a checked channel and actual delivery are different. Care is not limited to spending or donating; respect opinions, privacy and different resources.",
+          "activity": "Discuss fictional book cards A and B separately: A has owner consent but an unchecked channel; B lacks owner consent. Explain the missing conditions and role-play asking and hearing a response. Do not mail, pay, message or reveal recipients. Card discussion is not an actual donation."
+        },
+        {
+          "title": "Three care examples and children’s rights",
+          "text": "Page 53 shows textbook historical examples of Xi Jinping at a Children’s Day event, a doctors’ free clinic and book donors. Do not invent a year or location. June 1 is celebrated as Children’s Day in China. Children have rights to life, development, protection and participation, with learning, rest and opportunities to express views; these do not depend on a good performance or a donation.",
+          "activity": "Read all three examples and captions. In original fictional situations, role-play asking a trusted adult for care when unwell, for rest and to hear an activity suggestion; listen to a response in each. No medical imitation or forced disclosure. Review actual participation, preparation, reading and unfinished work separately from future plans."
+        }
+      ],
+      "manual": [
+        "Read all six spread categories: song, fan, choice/preparation, dance, martial arts and audience. Do not infer today, school events or membership.",
+        "Using existing lawful material, actually hear Tongxin Xiang Dang (童心向党) and optionally try a line. Record each separately; missing material stays unfinished. An original introduction does not replace learning the named song.",
+        "Actually discuss content, roles, materials and pausing, hearing both wishes. Unagreed roles stay unfinished; no forced performance or happiness.",
+        "Actually fold ordinary paper back and forth and hold one end to make a fan; prepare the chosen sharing. Record adult assistance, use no scissors or staples, and keep missing materials unfinished.",
+        "Actually show the fan or chosen introduction in an approved place, hear a response and swap sharing/audience roles once. Label a simulation; do not claim a school celebration or martial-arts performance.",
+        "Read all four partner/family/community/book-giving examples. Share one real holiday memory or keep it unknown; wishes are separate and feelings ungraded.",
+        "Discuss both fictional book cards, distinguishing owner consent and an unchecked channel. Practice asking and hearing wishes; no mailing, payments or messaging, and no actual donation claim.",
+        "Read all three page-53 care pictures and captions: Xi Jinping’s event, doctors’ free clinic and book donation. Treat them as textbook historical examples without invented dates or places and without medical imitation.",
+        "Read the rights explanation and separately role-play care, rest and an opportunity to suggest something, hearing adult responses. Rights are not traded for grades, performances or gifts; no forced medical disclosure."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional date cards: A says June 1, Children’s Day; B says October 1, National Day. No current date is stated.",
+          "prompt": "Which is Children’s Day?",
+          "reviewPrompt": "Which is National Day?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "A book date is not today or a school arrangement; do not assume all countries use the same date."
+        },
+        {
+          "material": "Fiction: A prepared a fan and introduction but has not shared; B shared with consent and heard a response.",
+          "prompt": "Who only prepared?",
+          "reviewPrompt": "Who has an actual sharing record?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Preparation is not performance; record the actual scope and assistance."
+        },
+        {
+          "material": "Book cards: A has owner consent, with a channel still unchecked; B has no owner consent. Neither has been mailed.",
+          "prompt": "Which has consent and an unchecked channel?",
+          "reviewPrompt": "Which lacks owner consent?",
+          "first": "Book A",
+          "second": "Book B",
+          "explanation": "Consent, channels and delivery differ; choosing a book is not donation and spending is not required."
+        },
+        {
+          "material": "Fictional requests: A feels unwell and asks a trusted adult for care; B asks someone to hear an activity suggestion.",
+          "prompt": "Who expresses a care need?",
+          "reviewPrompt": "Who makes a suggestion?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Care and views matter; rights are not earned through grades or performances. Do not disclose private medical details."
+        }
+      ],
+      "reflections": [
+        "What did you actually take part in, and what response or care did you receive? Different feelings are allowed. Do not disclose private identity or medical details, or call a simulation a school event.",
+        "What would you like next Children’s Day? Separate wishes, consent, preparation and events that actually happened."
+      ]
+    },
+    "lesson14": {
+      "title": "The Young Pioneers",
+      "goal": "Read activity and history examples, learn the organization’s name and membership conditions, learn scarf, song and salute separately, and attempt an appropriate service. Distinguish wishes, preparation and formal status.",
+      "prerequisite": "An adult may read the book and official material. Ordinary paper supports original crafting. Scarf and song practice require adult-approved suitable materials and lawful demonstration; missing material stays unfinished.",
+      "parentTip": "Separate the 2025 constitution from historical examples. Formal status is established by the organization, never clothing, age or website completion. Wishes, application, requirements and approval differ. School organizations handle actual admission and ceremonies; this site does not apply, message or grant membership. No reproduced lyrics/audio. Do not play with, tug or tightly bind a scarf or use a rope around the neck; adult supervision is required. Assistance, pausing and different feelings are allowed, without ranking physical ability. Keep unknown school arrangements unknown.",
+      "steps": [
+        {
+          "title": "Three examples and your own feelings",
+          "text": "Page 54 shows school-gate service, a tree-planting activity and hearing/singing the team song. These illustrate members’ activities, not the learner’s status or an instruction to stand at a gate or plant independently. Feelings can differ.",
+          "activity": "Read all three, naming the activity and who it may help. Share a feeling or a question without requiring excitement. Do not perform gate duty, dig or invent school arrangements."
+        },
+        {
+          "title": "The name and three materials from different periods",
+          "text": "The full name is 中国少年先锋队, the Young Pioneers of China. Page 55 discusses the Anyuan Children’s Corps as a predecessor, a Chuangzao Cup innovation activity and contemporary aspirations. Historical pictures do not establish today’s events or school participation.",
+          "activity": "Read the name and all three materials, separating earlier history, innovation and aspirations without invented dates. Make an original paper item, explain its purpose, change something and try it, such as a folded holder for a large paper card. This is not competition participation, a patent or an official team activity."
+        },
+        {
+          "title": "Wishing, preparing and formal confirmation",
+          "text": "Page 56 introduces preparation. The 2025 constitution sets ages 6–14, willingness to join and follow the constitution, application to the school organization, meeting requirements and approval before membership. Age, learning or wearing a scarf alone does not grant status.",
+          "activity": "Read the sequence. Compare fictional A still learning requirements with B explicitly approved as a member. Express wishes and questions and draw an anonymous preparation list. Do not submit it as a real application; families can ask schools about actual arrangements."
+        },
+        {
+          "title": "Three preparations, each separately",
+          "text": "Page 56 has learning the scarf, team song and salute. The song is 我们是共产主义接班人, with words by Zhou Yuhui and music by Ji Ming. The salute uses the right hand with fingers together raised above the head, expressing priority for the people’s interests. Learning is not a formal ceremony.",
+          "activity": "An adult checks official guidance and demonstrates four steps from the wearer’s perspective: drape over the shoulders with the wide point at the centre of the back and the right end below the left at the crossing; bring the right end in front of the left and across to the right; bring it through the crossing gap to make one loop around the left; pass the right end through that loop and arrange the knot. With suitable materials, willingness and direct supervision, practice the appropriate drape and tie without neck pressure or active play; paper observation is not wearing. With lawful material, hear the complete song and optionally sing along; no lyrics/audio here. An adult demonstrates the right hand’s five fingers together, raised past the chest about a fist above the head, palm toward the front-left/down, then supports a voluntary attempt. Record observation, assistance or pausing honestly."
+        },
+        {
+          "title": "Further preparation: a real small service",
+          "text": "Learning requirements, studying and appropriately helping others are forms of preparation. A helpful act does not automatically grant membership. Record real contributions, help and unfinished work separately from wishes and school approval.",
+          "activity": "Propose one safe approved service, such as returning usable shared-reading books after hearing someone’s needs and agreeing. Actually do it and label adult help. Review reading, crafting and each of the three preparations separately; missing song or scarf materials remain unfinished. Keep future questions separate, without messaging an application or approving membership."
+        }
+      ],
+      "manual": [
+        "Read all three gate/tree-planting/song examples and discuss activity and whom it helps. Different feelings are allowed; do not infer learner status or perform gate duty/digging.",
+        "Read the full Chinese organization name and all three Anyuan/Chuangzao Cup/contemporary materials, identifying their scope without invented dates or school participation.",
+        "Actually make an original paper item, explain a purpose, change something and try again, such as a folded holder for a large card. Record help or failure, not competition or patent success.",
+        "Read the 2025 membership conditions, compare fictional preparation and approval, express wishes/questions and draw an anonymous list. Do not apply or infer membership from age or website completion.",
+        "An adult checks and demonstrates four scarf-method stages. With willingness, suitable material and supervision, actually practice appropriate draping/tying, distinguishing observation, attempts and help. No neck pressure, tugging or rope loops; missing material stays unfinished and paper observation is not wearing.",
+        "With lawful material, actually hear the complete named team song and optionally sing along, recording the actual extent. Missing material stays unfinished; name recognition is not singing, and lyrics/audio are not copied.",
+        "After seeing or hearing an adult’s salute demonstration, voluntarily try the right hand with fingers together above the head, its direction and meaning. Record observation, assistance or pausing without claiming a ceremony or grading physical ability.",
+        "Actually propose a safe small service and help needed, ask and hear needs/permission before arranging roles. A plan is not action and a helpful act does not grant membership.",
+        "Actually perform one approved appropriate service and review contributions, help and unfinished preparations. Label adult participation; formal status and future arrangements remain separate without school approval by this site."
+      ],
+      "pairs": [
+        {
+          "material": "Fictional conditions: A wishes to join and is learning requirements, without approval; B is explicitly approved as a member.",
+          "prompt": "Who is still preparing?",
+          "reviewPrompt": "Who is explicitly formally approved here?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Preparation is not status; use explicit records rather than age or clothing."
+        },
+        {
+          "material": "Book-material cards: A discusses the Anyuan Children’s Corps as a predecessor; B discusses a Chuangzao Cup innovation activity. No photo date is provided.",
+          "prompt": "Which concerns earlier organizational history?",
+          "reviewPrompt": "Which concerns innovation?",
+          "first": "Card A",
+          "second": "Card B",
+          "explanation": "Keep scope distinct; do not invent dates or school participation."
+        },
+        {
+          "material": "Learning records: A watched a scarf demonstration but lacked material to practice wearing; B tried draping/tying with adult guidance but is not yet fluent.",
+          "prompt": "Who only observed without wearing practice?",
+          "reviewPrompt": "Who attempted without proven fluency?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Observation, attempts and fluency differ; missing material stays unfinished and ability is not a moral grade."
+        },
+        {
+          "material": "Fiction: A returned two approved reading books and heard a response; B plans to help next time but has not acted.",
+          "prompt": "Who has an actual service record?",
+          "reviewPrompt": "Who only has a future plan?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Helping does not grant status; application and approval are not website confirmations."
+        }
+      ],
+      "reflections": [
+        "What did you learn, actually practice or help with, and what needs material or assistance? Wishes are ungraded; do not collect actual identity or school details.",
+        "What would you ask or prepare next? Separate plans, actual steps, application and formal approval."
       ]
     }
   },

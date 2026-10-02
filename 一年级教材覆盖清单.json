@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T15:11:28.311Z",
+  "generatedAt": "2026-10-02T15:59:25.723Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -18780,13 +18780,13 @@
       "resourceId": "0001",
       "verifiedAt": "2026-10-02",
       "summary": {
-        "availablePacks": 12,
-        "pendingEntries": 4,
+        "availablePacks": 14,
+        "pendingEntries": 2,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 47,
-          "manual": 66,
-          "reflection": 24
+          "objective": 55,
+          "manual": 82,
+          "reflection": 28
         }
       },
       "units": [
@@ -19465,7 +19465,7 @@
               "page": 48,
               "kind": "lesson",
               "formalLessonId": "ethics-upper-lesson-13",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -19476,7 +19476,7 @@
               "page": 52,
               "kind": "lesson",
               "formalLessonId": "ethics-upper-lesson-14",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -19511,28 +19511,43 @@
               "textbookTitle": "我们小点儿声",
               "page": 48,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "逐一观察声音影响，按场合调整交流方式，理解四种提示与无标志情境，实际设计提醒并交流；听见故事和真实活动分别记录。",
+              "prerequisite": "可请成人读教材；准备普通纸和笔，不用制造噪声、去医院或公共场所试验。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 8,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-upper-lesson-13-scenario-0",
+                "ethics-upper-lesson-13-scenario-1",
+                "ethics-upper-lesson-13-scenario-2",
+                "ethics-upper-lesson-13-scenario-3",
+                "ethics-upper-lesson-13-manual-0",
+                "ethics-upper-lesson-13-manual-1",
+                "ethics-upper-lesson-13-manual-2",
+                "ethics-upper-lesson-13-manual-3",
+                "ethics-upper-lesson-13-manual-4",
+                "ethics-upper-lesson-13-manual-5",
+                "ethics-upper-lesson-13-manual-6",
+                "ethics-upper-lesson-13-manual-7",
+                "ethics-upper-lesson-13-reflection-0",
+                "ethics-upper-lesson-13-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十三课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷48～51页、下册50～53页实际阅读；四影响/四方法/四提示与两公共两无标志/四故事完整，场合音量与求助辅助分清，原创提示先获许可；六庆祝/四体验/三关怀完整，歌曲材料缺少待做、纸扇实际与自愿分享分别、两书卡不冒捐赠，权利不由表现换，反思null、计划另记。"
               }
             },
             {
@@ -19541,28 +19556,43 @@
               "textbookTitle": "人人爱护公物",
               "page": 52,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "认识共享设施的用途，读完整观察记录，实际观察与记录、表达爱护方法并在获准范围协作行动；事实、原因猜测与未来建议分别保存。",
+              "prerequisite": "成人可读教材；普通纸卡即可，实际行动仅用成人确认可用的安全共享书或桌面物品，不需现场查电器。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 8,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-upper-lesson-14-scenario-0",
+                "ethics-upper-lesson-14-scenario-1",
+                "ethics-upper-lesson-14-scenario-2",
+                "ethics-upper-lesson-14-scenario-3",
+                "ethics-upper-lesson-14-manual-0",
+                "ethics-upper-lesson-14-manual-1",
+                "ethics-upper-lesson-14-manual-2",
+                "ethics-upper-lesson-14-manual-3",
+                "ethics-upper-lesson-14-manual-4",
+                "ethics-upper-lesson-14-manual-5",
+                "ethics-upper-lesson-14-manual-6",
+                "ethics-upper-lesson-14-manual-7",
+                "ethics-upper-lesson-14-reflection-0",
+                "ethics-upper-lesson-14-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十四课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷52～54页、下册54～56页实际阅读；四用途/完整观察表与未知原因/两拟人/四方法、获准真实共享物与协作分记不冒修理；三队员例/三历史资料/2025队章身份、原创制作、领巾歌曲队礼各实际与缺材料分记，学校正式批准不由网页替代，反思null、计划另记。"
               }
             },
             {
@@ -19640,13 +19670,13 @@
       "resourceId": "0002",
       "verifiedAt": "2026-10-02",
       "summary": {
-        "availablePacks": 12,
-        "pendingEntries": 4,
+        "availablePacks": 14,
+        "pendingEntries": 2,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 47,
-          "manual": 69,
-          "reflection": 24
+          "objective": 55,
+          "manual": 87,
+          "reflection": 28
         }
       },
       "units": [
@@ -20328,7 +20358,7 @@
               "page": 50,
               "kind": "lesson",
               "formalLessonId": "ethics-lower-lesson-13",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -20339,7 +20369,7 @@
               "page": 54,
               "kind": "lesson",
               "formalLessonId": "ethics-lower-lesson-14",
-              "formalLessonStatus": "preparing",
+              "formalLessonStatus": "available",
               "referenceQuery": null,
               "characters": null,
               "coverageCompletion": "not-verified"
@@ -20374,28 +20404,44 @@
               "textbookTitle": "快乐儿童节",
               "page": 50,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "认识六一儿童节，读看教材庆祝与关怀例，实际准备并自愿交流一个节目，理解儿童权利与需要；真实、模拟、未来安排分记。",
+              "prerequisite": "普通纸和笔即可；成人可朗读。已有合法歌曲示范可辅助，不需购买礼物、捐款、武术或大型聚会。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 9,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-lower-lesson-13-scenario-0",
+                "ethics-lower-lesson-13-scenario-1",
+                "ethics-lower-lesson-13-scenario-2",
+                "ethics-lower-lesson-13-scenario-3",
+                "ethics-lower-lesson-13-manual-0",
+                "ethics-lower-lesson-13-manual-1",
+                "ethics-lower-lesson-13-manual-2",
+                "ethics-lower-lesson-13-manual-3",
+                "ethics-lower-lesson-13-manual-4",
+                "ethics-lower-lesson-13-manual-5",
+                "ethics-lower-lesson-13-manual-6",
+                "ethics-lower-lesson-13-manual-7",
+                "ethics-lower-lesson-13-manual-8",
+                "ethics-lower-lesson-13-reflection-0",
+                "ethics-lower-lesson-13-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十三课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷48～51页、下册50～53页实际阅读；四影响/四方法/四提示与两公共两无标志/四故事完整，场合音量与求助辅助分清，原创提示先获许可；六庆祝/四体验/三关怀完整，歌曲材料缺少待做、纸扇实际与自愿分享分别、两书卡不冒捐赠，权利不由表现换，反思null、计划另记。"
               }
             },
             {
@@ -20404,28 +20450,44 @@
               "textbookTitle": "光荣的少先队",
               "page": 54,
               "version": 1,
-              "status": "preparing",
-              "goal": "本课正文与原创教学尚待核对制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "读看队员活动和历史例，认识队名与入队条件，分别学习红领巾、队歌、队礼，实际尝试力所能及的服务；愿望、准备和正式身份分清。",
+              "prerequisite": "成人可读教材与官方资料；普通纸可作原创小制作，红领巾和歌曲练习需成人确认合适材料与合法示范，缺材料留待做。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 4,
+                "manual": 9,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "ethics-lower-lesson-14-scenario-0",
+                "ethics-lower-lesson-14-scenario-1",
+                "ethics-lower-lesson-14-scenario-2",
+                "ethics-lower-lesson-14-scenario-3",
+                "ethics-lower-lesson-14-manual-0",
+                "ethics-lower-lesson-14-manual-1",
+                "ethics-lower-lesson-14-manual-2",
+                "ethics-lower-lesson-14-manual-3",
+                "ethics-lower-lesson-14-manual-4",
+                "ethics-lower-lesson-14-manual-5",
+                "ethics-lower-lesson-14-manual-6",
+                "ethics-lower-lesson-14-manual-7",
+                "ethics-lower-lesson-14-manual-8",
+                "ethics-lower-lesson-14-reflection-0",
+                "ethics-lower-lesson-14-reflection-1"
+              ],
+              "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "",
-                "reviewer": "",
-                "notes": ""
+                "date": "2026-10-02",
+                "reviewer": "原书第十四课与原创活动范围核对，非教师最终审校",
+                "notes": "上册印刷52～54页、下册54～56页实际阅读；四用途/完整观察表与未知原因/两拟人/四方法、获准真实共享物与协作分记不冒修理；三队员例/三历史资料/2025队章身份、原创制作、领巾歌曲队礼各实际与缺材料分记，学校正式批准不由网页替代，反思null、计划另记。"
               }
             },
             {
