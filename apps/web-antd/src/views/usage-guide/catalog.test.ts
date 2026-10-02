@@ -4,9 +4,11 @@ import { expect, it } from 'vitest';
 
 import enAi from '#/locales/langs/en-US/ai.json';
 import enEducation from '#/locales/langs/en-US/education.json';
+import enLearning from '#/locales/langs/en-US/educationLearning.json';
 import enGuide from '#/locales/langs/en-US/guide.json';
 import zhAi from '#/locales/langs/zh-CN/ai.json';
 import zhEducation from '#/locales/langs/zh-CN/education.json';
+import zhLearning from '#/locales/langs/zh-CN/educationLearning.json';
 import zhGuide from '#/locales/langs/zh-CN/guide.json';
 import routes from '#/router/routes/modules/tools';
 
@@ -15,6 +17,7 @@ import { articleFields, guides } from './catalog';
 it('covers every visible leaf menu with a bilingual detailed guide and valid destination', () => {
   function leaves(items: RouteRecordRaw[], parent = ''): string[] {
     return items.flatMap((item) => {
+      if (item.meta?.hideInMenu) return [];
       const path = item.path.startsWith('/')
         ? item.path
         : `${parent}/${item.path}`;
@@ -36,6 +39,7 @@ it('provides matching keys and placeholders for all new locales', () => {
   for (const [zh, en] of [
     [zhAi, enAi],
     [zhEducation, enEducation],
+    [zhLearning, enLearning],
     [zhGuide, enGuide],
   ]) {
     if (!zh || !en) throw new Error('Missing locale');

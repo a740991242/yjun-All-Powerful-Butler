@@ -11,6 +11,19 @@ const resolvePlugin = createRequire(
 
 export default defineConfig({
   ...oxlintConfig,
+  overrides: [
+    ...(oxlintConfig.overrides ?? []),
+    {
+      // Fixture lookups are deliberately asserted in generated curriculum tests.
+      // Branches enumerate different rule kinds, rather than skip an assertion.
+      files: ['apps/web-antd/src/views/education/**/*.test.ts'],
+      rules: {
+        'typescript/no-non-null-assertion': 'off',
+        'vitest/no-conditional-expect': 'off',
+        'vitest/valid-expect': ['error', { maxArgs: 2 }],
+      },
+    },
+  ],
   jsPlugins: oxlintConfig.jsPlugins?.map((plugin) =>
     typeof plugin === 'string'
       ? resolvePlugin(plugin)

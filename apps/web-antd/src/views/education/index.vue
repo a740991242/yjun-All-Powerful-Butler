@@ -5,15 +5,35 @@ import { useRoute, useRouter } from 'vue-router';
 import { Page } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 
-import { Alert, Button, Card, Tag } from 'ant-design-vue';
+import { Alert, Button, Card, Select, Tag } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
 import { selection, stages } from './catalog';
+import {
+  mathEditionPersistenceFailed,
+  mathEditionPreference,
+} from './edition-preferences';
+import RegionalEditionPanel from './RegionalEditionPanel.vue';
 defineOptions({ name: 'Education' });
 const route = useRoute();
 const router = useRouter();
 const current = computed(() => selection(route.query.stage, route.query.grade));
+const editionOptions = computed(() => [
+  { value: 'sujiao', label: $t('educationLearning.sujiaoEdition') },
+  { value: 'pep-2024', label: $t('educationLearning.pepEdition') },
+]);
+function chooseEdition(value: unknown) {
+  if (value === 'sujiao' || value === 'pep-2024')
+    mathEditionPreference.value = value;
+}
+function applyRegionalEdition(
+  edition: 'pep-2024' | 'sujiao',
+  volume: 'lower' | 'upper',
+) {
+  mathEditionPreference.value = edition;
+  void router.push(`/education/primary/p1/math/${edition}/${volume}`);
+}
 function choose(stage?: string, grade?: string) {
   void router.push({ path: '/education', query: { stage, grade } });
 }
@@ -40,9 +60,10 @@ function choose(stage?: string, grade?: string) {
           >
             <div class="flex flex-col gap-3">
               <div class="flex items-center gap-3">
-                <IconifyIcon :icon="stage.icon" class="size-6 shrink-0" /><span
-                  class="text-base font-semibold"
-                  >{{ $t(`education.${stage.id}`) }}</span>
+                <IconifyIcon :icon="stage.icon" class="size-6 shrink-0" />
+                <span class="text-base font-semibold">
+                  {{ $t(`education.${stage.id}`) }}
+                </span>
               </div>
               <div class="text-xs leading-6">
                 {{ $t(`education.${stage.id}Hint`) }}
@@ -80,7 +101,46 @@ function choose(stage?: string, grade?: string) {
           {{ $t(`education.${current.stage.id}`) }} ·
           {{ $t(`education.${current.grade}`) }}
         </h2>
-        <p class="font-medium">{{ $t('education.pending') }}</p>
+        <div
+          v-if="current.stage.id === 'primary' && current.grade === 'p1'"
+          class="flex flex-col gap-4"
+        >
+          <RegionalEditionPanel @apply="applyRegionalEdition" />
+          <div class="flex flex-col gap-2 sm:max-w-sm">
+            <label for="education-entry-math-edition">
+              {{ $t('educationLearning.mathEditionLabel') }}
+            </label>
+            <Select
+              id="education-entry-math-edition"
+              size="large"
+              :value="mathEditionPreference"
+              :options="editionOptions"
+              :aria-label="$t('educationLearning.mathEditionLabel')"
+              @update:value="chooseEdition"
+            />
+          </div>
+          <p class="leading-7 text-muted-foreground">
+            {{ $t('educationLearning.editionPreferenceNotice') }}
+          </p>
+          <Alert
+            v-if="mathEditionPersistenceFailed"
+            type="warning"
+            show-icon
+            :message="$t('educationLearning.editionPreferenceFailed')"
+          />
+          <Button
+            type="primary"
+            class="!min-h-11 self-start"
+            @click="
+              router.push(
+                `/education/primary/p1/math/${mathEditionPreference}/upper`,
+              )
+            "
+          >
+            {{ $t('educationLearning.enterGradeOne') }}
+          </Button>
+        </div>
+        <p v-else class="font-medium">{{ $t('education.pending') }}</p>
         <p class="my-3 leading-7 text-muted-foreground">
           {{ $t('education.next') }}
         </p>
@@ -89,3 +149,10 @@ function choose(stage?: string, grade?: string) {
     </div>
   </Page>
 </template>
+
+<style scoped>
+:deep(.ant-select-selector) {
+  align-items: center;
+  min-height: 44px;
+}
+</style>

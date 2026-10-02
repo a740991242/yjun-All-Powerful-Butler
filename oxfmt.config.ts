@@ -1,6 +1,14 @@
 import { defineConfig } from '@vben/oxfmt-config';
 
 export default defineConfig({
+  // Course templates use explicit flex/grid gaps. Keep multiline component
+  // closing tags consistent with the repository's Vue ESLint rules.
+  overrides: [
+    {
+      files: ['apps/web-antd/src/views/education/**/*.vue'],
+      options: { htmlWhitespaceSensitivity: 'ignore' },
+    },
+  ],
   ignorePatterns: [
     'dist',
     'dev-dist',

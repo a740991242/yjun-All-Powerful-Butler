@@ -128,6 +128,18 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'EducationGradeOne',
+    path: '/education/primary/p1/:subject/:edition/:volume',
+    component: () => import('#/views/education/grade-one.vue'),
+    meta: {
+      title: 'educationLearning.gradeOneTitle',
+      icon: 'lucide:graduation-cap',
+      hideInMenu: true,
+      activePath: '/education',
+      fullPathKey: false,
+    },
+  },
+  {
     name: 'Entertainment',
     path: '/entertainment',
     redirect: '/entertainment/magic-bottles',
