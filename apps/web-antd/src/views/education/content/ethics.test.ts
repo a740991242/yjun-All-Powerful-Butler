@@ -11,6 +11,83 @@ import { editionTarget } from './edition-targets';
 import { createEthicsBooks } from './ethics';
 import { findTextbook, textbooks } from './textbooks';
 
+it('keeps final-lesson requests, consent, source identity and actual contributions distinct', () => {
+  for (const messages of [zh, en]) {
+    for (const book of createEthicsBooks(translation(messages))) {
+      const lesson = required(required(book.units[3]).lessons[3]);
+      const session = createSession(lesson, book.id, 'child', {
+        seed: 16,
+        now: '2026-10-03T00:00:00.000Z',
+      });
+      for (const [i, question] of session.questions.entries()) {
+        if (question.rule.kind === 'choice') {
+          session.responses[i] = submitResponse(
+            question,
+            { ...required(session.responses[i]), draft: 'first' },
+            session.startedAt,
+          );
+        } else {
+          expect(required(session.responses[i]).submissions).toEqual([]);
+          expect(
+            evaluate(
+              question.rule,
+              question.rule.kind === 'manual' ? 'confirmed' : 'Next time',
+            ),
+          ).toBeNull();
+        }
+      }
+      expect(
+        session.responses.filter((response) => response.submissions.length > 0),
+      ).toHaveLength(4);
+    }
+  }
+  expect(zh.upper.lesson16.manual[5]).toContain('六幅');
+  expect(zh.upper.lesson16.manual[6]).toContain('三段');
+  expect(zh.upper.lesson16.parentTip).toContain('不以忍耐');
+  expect(required(zh.upper.lesson16.steps[2]).text).toContain('不是所有场所');
+  expect(zh.lower.lesson16.manual[0]).toContain('两历史图');
+  expect(zh.lower.lesson16.manual[3]).toContain('缺材料留待做');
+  expect(zh.lower.lesson16.manual[5]).toContain('全部三图');
+  expect(zh.lower.lesson16.manual[7]).toContain('双方实际同意');
+  expect(zh.lower.lesson16.manual[8]).toContain('未来努力另记');
+});
+
+it('keeps lesson 15 collection, sorting, formal membership and material-dependent care separate from objective answers', () => {
+  for (const messages of [zh, en]) {
+    for (const book of createEthicsBooks(translation(messages))) {
+      const lesson = required(required(book.units[3]).lessons[2]);
+      expect(lesson.review?.date).toBe('2026-10-03');
+      const session = createSession(lesson, book.id, 'child', {
+        seed: 15,
+        now: '2026-10-03T00:00:00.000Z',
+      });
+      for (const [i, question] of session.questions.entries()) {
+        if (question.rule.kind !== 'choice') continue;
+        session.responses[i] = submitResponse(
+          question,
+          { ...required(session.responses[i]), draft: 'first' },
+          session.startedAt,
+        );
+      }
+      for (const [i, question] of session.questions.entries()) {
+        if (question.rule.kind === 'choice') continue;
+        expect(required(session.responses[i]).submissions).toEqual([]);
+        expect(required(session.responses[i]).draft).toBeNull();
+      }
+    }
+  }
+  expect(zh.upper.lesson15.manual[0]).toContain('全部四幅');
+  expect(zh.upper.lesson15.manual[5]).toContain('六幅故事');
+  expect(zh.upper.lesson15.manual[7]).toContain('不按颜色猜');
+  expect(zh.upper.lesson15.parentTip).toContain('不下水捡垃圾');
+  expect(zh.lower.lesson15.manual[0]).toContain('四幅');
+  expect(zh.lower.lesson15.manual[2]).toContain('全部三旗');
+  expect(zh.lower.lesson15.manual[4]).toContain('全部四幅');
+  expect(zh.lower.lesson15.manual[5]).toContain('留待做');
+  expect(zh.lower.lesson15.manual[6]).toContain('留待做');
+  expect(zh.lower.lesson15.manual[8]).toContain('不冒正式队活动');
+});
+
 function translation(messages: unknown) {
   return (key: string): string => {
     let value: unknown = messages;
@@ -25,7 +102,7 @@ function translation(messages: unknown) {
   };
 }
 
-it('resolves independent ethics routes and keeps 4 unread lessons unavailable', () => {
+it('resolves independent ethics routes and supplies all 32 authored lessons without changing original four books', () => {
   const books = createEthicsBooks(translation(zh));
   expect(textbooks).toHaveLength(4);
   for (const book of books) {
@@ -37,16 +114,10 @@ it('resolves independent ethics routes and keeps 4 unread lessons unavailable', 
     expect(lessons).toHaveLength(16);
     expect(
       lessons.filter((lesson) => lesson.status === 'available'),
-    ).toHaveLength(14);
-    for (const lesson of lessons.filter(
-      (item) => item.status === 'preparing',
-    )) {
-      expect(lesson.steps).toEqual([]);
-      expect(lesson.questions).toEqual([]);
-      expect(() => createSession(lesson, book.id, 'child')).toThrow(
-        'educationLearning.noQuestions',
-      );
-    }
+    ).toHaveLength(16);
+    expect(lessons.filter((item) => item.status === 'preparing')).toHaveLength(
+      0,
+    );
   }
   expect(editionTarget('ethics', 'sujiao', 'upper')).toBeUndefined();
   expect(findTextbook('ethics', 'sujiao', 'upper')).toBeUndefined();
@@ -150,6 +221,10 @@ it.each([
   ['lower', 13, 9],
   ['upper', 14, 8],
   ['lower', 14, 9],
+  ['upper', 15, 8],
+  ['lower', 15, 9],
+  ['upper', 16, 8],
+  ['lower', 16, 9],
 ] as const)(
   'preserves first-lesson snapshots alongside %s lesson %i and supplies changed review for every mistaken skill',
   (volume, number, manualCount) => {
@@ -318,8 +393,8 @@ it('separates campus information sources and permissions, apology from repair, a
         expect(evaluate(question.rule, 'A future plan only')).toBeNull();
       }
     }
-    expect(required(required(book.units[3]).lessons[2]).status).toBe(
-      'preparing',
+    expect(required(required(book.units[3]).lessons[3]).status).toBe(
+      'available',
     );
   }
 });

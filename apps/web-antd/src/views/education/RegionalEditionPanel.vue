@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { RegionalEditionQuery } from './regional-editions';
+import type {
+  RegionalApplicationQuery,
+  RegionalEditionAction,
+  SchoolSystem,
+} from './regional-application';
 
 import { computed, ref, watch } from 'vue';
 
@@ -7,7 +11,7 @@ import { Alert, Button, Select, Tag } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
-import { resolveRegionalEdition } from './regional-editions';
+import { regionalApplicationPlan } from './regional-application';
 import {
   regionalCities,
   regionalProvinces,
@@ -15,12 +19,14 @@ import {
 } from './regional-locations';
 
 const emit = defineEmits<{
-  apply: [edition: 'pep-2024' | 'sujiao', volume: 'lower' | 'upper'];
+  apply: [actions: RegionalEditionAction[]];
+  clear: [];
 }>();
 const province = ref('jiangsu');
 const city = ref('suzhou');
 const school = ref('none');
 const academicYear = ref('2026-2027');
+const schoolSystem = ref<SchoolSystem>('unknown');
 const volume = ref<'lower' | 'upper'>('upper');
 const provinces = computed(() =>
   regionalProvinces.map((value) => ({
@@ -62,7 +68,7 @@ const volumes = computed(() => [
   { value: 'upper', label: $t('educationLearning.upper') },
   { value: 'lower', label: $t('educationLearning.lower') },
 ]);
-const query = computed<RegionalEditionQuery>(() => ({
+const query = computed<RegionalApplicationQuery>(() => ({
   province: province.value,
   city: city.value === 'none' ? '' : city.value,
   school: school.value === 'none' ? '' : school.value,
@@ -70,19 +76,19 @@ const query = computed<RegionalEditionQuery>(() => ({
   stage: 'primary',
   grade: 'p1',
   subject: 'math',
+  schoolSystem: schoolSystem.value,
   volume: volume.value,
 }));
-const subjects = ['chinese', 'math', 'ethics', 'english'] as const;
-const results = computed(() =>
-  subjects.map((subject) => ({
-    subject,
-    resolution: resolveRegionalEdition({ ...query.value, subject }),
-  })),
+const results = computed(() => regionalApplicationPlan(query.value));
+const actions = computed(() =>
+  results.value.flatMap((item) => (item.action ? [item.action] : [])),
 );
-const math = computed(() => resolveRegionalEdition(query.value));
+watch(query, () => emit('clear'), { flush: 'sync' });
 function apply() {
-  const result = resolveRegionalEdition(query.value);
-  if (result.status === 'verified') emit('apply', result.edition, volume.value);
+  const available = regionalApplicationPlan(query.value).flatMap((item) =>
+    item.action ? [item.action] : [],
+  );
+  if (available.length > 0) emit('apply', available);
 }
 </script>
 <template>
@@ -170,6 +176,31 @@ function apply() {
         />
       </div>
     </div>
+    <div class="flex flex-col gap-2 md:max-w-sm">
+      <label for="education-region-system">
+        {{ $t('educationLearning.regionalSystem') }}
+      </label>
+      <Select
+        id="education-region-system"
+        v-model:value="schoolSystem"
+        size="large"
+        :aria-label="$t('educationLearning.regionalSystem')"
+        :options="[
+          {
+            value: 'unknown',
+            label: $t('educationLearning.regionalSystem_unknown'),
+          },
+          {
+            value: 'six-three',
+            label: $t('educationLearning.regionalSystem_six-three'),
+          },
+          {
+            value: 'five-four',
+            label: $t('educationLearning.regionalSystem_five-four'),
+          },
+        ]"
+      />
+    </div>
     <div class="grid gap-3 sm:grid-cols-2">
       <div
         v-for="item in results"
@@ -190,7 +221,12 @@ function apply() {
         >
           {{ $t(`educationLearning.regionalStatus_${item.resolution.status}`) }}
         </Tag>
-        <span v-if="item.resolution.status === 'verified'">
+        <span
+          v-if="
+            item.resolution.status === 'verified' ||
+            item.resolution.status === 'guidance'
+          "
+        >
           {{
             $t(
               item.resolution.edition === 'sujiao'
@@ -199,29 +235,33 @@ function apply() {
             )
           }}
         </span>
+        <p class="w-full text-sm leading-6 text-muted-foreground">
+          {{ $t(`educationLearning.regionalReason_${item.reason}`) }}
+        </p>
       </div>
     </div>
     <Alert
-      v-if="math.status !== 'verified'"
+      v-if="actions.length === 0"
       type="info"
       show-icon
       :message="$t('educationLearning.regionalUnknown')"
     />
-    <template v-else>
-      <p class="leading-7 text-muted-foreground">
-        {{ $t('educationLearning.regionalHistorical') }}
-      </p>
-      <div
-        v-for="evidence in math.evidence"
-        :key="evidence.id"
-        class="space-y-2 break-words text-sm leading-6"
-      >
+    <p class="leading-7 text-muted-foreground">
+      {{ $t('educationLearning.regionalPolicyScope') }}
+    </p>
+    <div
+      v-for="item in results"
+      :key="`source-${item.subject}`"
+      class="space-y-2 break-words text-sm leading-6"
+    >
+      <div v-for="evidence in item.resolution.evidence" :key="evidence.id">
         <a
           :href="evidence.sourceUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="text-primary underline"
         >
+          {{ $t(`educationLearning.regionalSubject_${item.subject}`) }} ·
           {{ $t('educationLearning.regionalSource') }} ·
           {{ evidence.sourceTitle }}
         </a>
@@ -234,11 +274,11 @@ function apply() {
           }}
         </p>
       </div>
-    </template>
+    </div>
     <Button
       type="primary"
       class="!min-h-11 !h-auto !whitespace-normal !py-2"
-      :disabled="math.status !== 'verified'"
+      :disabled="actions.length === 0"
       @click="apply"
     >
       {{ $t('educationLearning.regionalApply') }}

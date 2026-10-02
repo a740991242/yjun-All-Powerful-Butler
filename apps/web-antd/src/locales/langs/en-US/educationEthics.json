@@ -1,5 +1,5 @@
 {
-  "sourceNotice": "Contents and available lessons were checked in a third-party public textbook preview. The 2024 mark indicates approval; edition, printing and school adoption remain unverified. Other unread lessons are still being prepared.",
+  "sourceNotice": "Contents and the body pages for all 32 lessons were checked in a third-party public textbook preview, with original teaching supplied here. The 2024 mark indicates approval; edition, printing and school adoption remain unverified. Available lessons do not establish final teacher review.",
   "prerequisite": "Have printed pages 2–5 of this volume available. An adult may read aloud. Keep activities pending when the textbook or materials are unavailable.",
   "parentTip": "Original scenarios are separate from textbook activities. Feelings and future plans have no single correct answer and do not produce a character score. Confirm greetings, organization and discussion only after actually doing them; unfinished activities may be skipped.",
   "hint": "Ask an adult to read aloud and look for information in this original scenario.",
@@ -1121,6 +1121,168 @@
         "What did you actually observe or care for? State scope, help and unknown causes, without identifying classmates or treating personification as fact.",
         "What might you do together next? Separate suggestions, permission, real contributions and future plans."
       ]
+    },
+    "lesson15": {
+      "title": "We do not litter",
+      "goal": "Compare settings, read all six story panels, discuss shared hygiene and actually record or collect safe paper; distinguish observations, actions and plans.",
+      "prerequisite": "An adult can read the book; use only your own clean paper, a bag and a safe tabletop. No river visit, public waste handling or travel is required.",
+      "parentTip": "Do not touch unknown waste, sharp items, bodily fluids or cleaning chemicals, or enter water to retrieve litter. Tell a trusted adult about discomfort; never induce coughing or spitting. Masks require suitable adult and professional guidance. Follow local transport instructions and ask an adult about necessary food or water; textbook examples are not universal transport laws.",
+      "steps": [
+        {
+          "title": "Compare all four setting pictures",
+          "text": "Page 55 shows two pairs: spectator seating and a riverside, each with scattered waste and a tidier scene. Preferences can have personal reasons; pictures do not establish responsibility or local conditions.",
+          "activity": "Actually read or listen to all four pictures, describe visible items and compare each pair. Explain a preference without grading feelings. Mention a familiar tidy place only if actually observed; otherwise say unknown."
+        },
+        {
+          "title": "No visible bin does not permit littering",
+          "text": "Page 56 includes a child with discomfort, a child holding a book and a child discarding paper because no bin is seen. Discomfort calls for care and adult help, rather than a character judgment.",
+          "activity": "Discuss all three roles. Use clean paper to rehearse keeping it in a bag and asking an adult where it belongs. Make a time, general place, observed action and suggestion record. Enter real observations only in an approved safe area; do not invent facts or photograph others."
+        },
+        {
+          "title": "Three reminders and bodily needs",
+          "text": "Page 57 discusses covering coughs or sneezes, tissue disposal and masks during influenza. China CDC advises tissue or elbow coverage and suitable hand hygiene; mask use depends on actual circumstances, not a website diagnosis.",
+          "activity": "Read all three reminders and the open-ended continuation. Describe or model a disposal route with clean paper only; do not cough, spit or touch your mouth or nose. Ask an adult about discomfort; use an established safe washing method, never disinfectants."
+        },
+        {
+          "title": "Four petals and real actions",
+          "text": "The four petals concern no spitting on the floor, no drawing on walls, taking waste when leaving and no eating on a metro or bus. These are textbook situations; follow local adult instructions and seek help for health needs.",
+          "activity": "Read all four petals and draw your own record. Colour only actions actually completed and explain the evidence; leave unknown or uncompleted actions blank and keep plans separate. This is not an automatic website award or a judgment of others."
+        },
+        {
+          "title": "All six panels and safe paper collection",
+          "text": "The story across pages 55–57 progresses through bringing a bag, discarded picnic peel, paper play, waste left behind, collection and disposal at sorting bins. Having a bag does not prove collection or sorting.",
+          "activity": "Read or listen to all six panels and retell them in order. After agreement, place two pieces of your own clean paper on a safe table, collect them into a bag and restore the surface. Read local sorting guidance with an adult, not colours alone. A paper rehearsal is not an actual picnic or completed sorting; review facts and keep plans separate."
+        }
+      ],
+      "manual": [
+        "Actually read all four seating and riverside pictures, describe visible differences and explain a preference without inventing local experience or responsibility.",
+        "Actually discuss all three page 56 roles and rehearse retaining clean paper and asking for help when no bin is visible; discomfort is not a moral fault.",
+        "Actually make a four-column time, general place, action and suggestion record; enter facts only after a real observation in an adult-approved safe area. Unknown or unapproved observations remain pending; collect no identities.",
+        "Actually read the three hygiene reminders and describe tissue or elbow coverage, suitable disposal and washing. Do not induce coughs, spit, handle fluids or disinfectants, or force an unsuitable mask.",
+        "Actually read all four petals and make a personal record; colour only completed actions, leave unknowns blank and separate future plans. Ask an adult about transport and bodily needs.",
+        "Actually read all six story panels in order and distinguish bringing a bag, collection and sorting; do not claim a personal picnic.",
+        "After agreement, actually place your own two clean paper pieces, collect them into a bag and restore a safe table; record the steps separately. Handle no unknown waste and conduct no riverside rehearsal.",
+        "Actually read the wording of local sorting guidance with an adult and say whether the paper destination is known. Missing guidance remains pending; colours are insufficient and collection is not sorting. Review real actions and plans."
+      ],
+      "pairs": [
+        {
+          "material": "Explicit fictional picture cards: A shows scattered paper on spectator seating; B shows tidy seating without scattered paper. Causes are unspecified.",
+          "prompt": "Which card shows scattered paper?",
+          "reviewPrompt": "Which card shows no scattered paper?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Use visible facts; do not infer responsibility or grade preferences."
+        },
+        {
+          "material": "Fictional action cards: A retains clean waste paper in a bag but does not know its sorting destination; B has actually sorted suitable waste using local guidance supplied by an adult.",
+          "prompt": "Who still lacks the sorting destination?",
+          "reviewPrompt": "Who has an actual guided sorting record?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Temporary retention is not completed sorting; do not guess from colours."
+        },
+        {
+          "material": "Fictional records: A describes paper actually seen on a table, with unknown cause; B only suggests preparing a bag next time.",
+          "prompt": "Who records an actual observation?",
+          "reviewPrompt": "Who records a future suggestion?",
+          "first": "A",
+          "second": "B",
+          "explanation": "An observation and a plan differ; unknown causes remain unknown."
+        },
+        {
+          "material": "Fictional steps: A has prepared a bag but paper remains on the table; B has collected paper and restored a safe table but has not sorted it.",
+          "prompt": "Who has only prepared, without collection?",
+          "reviewPrompt": "Who has collected but not sorted?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Preparation, collection and sorting differ. Answers do not confirm real actions."
+        }
+      ],
+      "reflections": [
+        "What did you actually observe or collect? Describe help and unknowns without identifying others.",
+        "How would you keep a place tidy next? Separate completed actions from future suggestions."
+      ]
+    },
+    "lesson16": {
+      "title": "Everyone queues in order",
+      "goal": "Compare distribution methods and learn order, spacing, arrival and numbered waiting. Read all six courtesy panels and actually rehearse tabletop turn-taking and communication; urgent needs allow adult help and plans remain separate.",
+      "prerequisite": "An adult can read the book. Use two personal paper cards and three role cards on a safe table; no staircase, station or crowd rehearsal is needed.",
+      "parentTip": "Do not create pushing, congestion, stair or boarding experiments or obstruct exits. Follow staff guidance in actual settings; tell an adult about discomfort or urgent needs rather than grading endurance or compulsory yielding. Courtesy begins with communication, not forced sacrifice. State adult participation; card ordering is not actual public queuing.",
+      "steps": [
+        {
+          "title": "Two distribution methods and turns",
+          "text": "Page 58 contrasts crowding around a box with receiving items in a queue. Preferences may have reasons and feelings are ungraded. Order helps participants know whose turn it is, without guaranteeing greater speed.",
+          "activity": "Read both pictures and describe visible methods. Agree how to use two of your own paper cards, each take and replace once, then reverse who goes first. Buy no gifts, take no other person’s belongings, do not push and do not claim a whole-class event."
+        },
+        {
+          "title": "Why queue: two settings",
+          "text": "Page 59 contrasts crowding on stairs with orderly bus boarding. Order concerns safety and fairness, but does not replace hazard awareness, staff arrangements or help for urgent needs.",
+          "activity": "Read both pictures and discuss reasons. Make three role cards explicitly stating A arrived first, B next and C last, then arrange them accordingly. This is paper simulation only, not a stair or vehicle experiment; infer no actual injury."
+        },
+        {
+          "title": "Three methods: spacing, arrival and calls",
+          "text": "Page 60 shows leaving space at a marked line, not inviting a friend to cut in, and sitting while waiting for a number. Queuing need not be a standing line; the pictured one-metre line is a local instruction, not a universal distance.",
+          "activity": "Read all three examples. Leave space between tabletop role cards, move one according to the agreed order, then let an adult call A, B and C and move only the called card. Arrival is explicitly given, not changed by friendship. Ask staff about different arrangements."
+        },
+        {
+          "title": "All six courtesy panels",
+          "text": "The six bottom panels across pages 58–60 progress from later arrival and inviting an older person first, to asking about order and an adult offering a turn, then urgent toilet need and considering courtesy. Requests, offers, consent and actual yielding differ.",
+          "activity": "Read and retell all six in order. The ending is not a compulsory single answer for every situation; discuss communication. Use cards for toilet conversations only, never delay an actual bodily need or infer that everyone has identical needs."
+        },
+        {
+          "title": "Three conversations, actual review and holiday plans",
+          "text": "Keeping turns, noticing needs and explaining your own difficulty can coexist. Ask an adult about special situations rather than forcibly changing a public queue. The book’s holiday reminder concerns future intentions.",
+          "activity": "Rehearse three safe tabletop conversations: joining behind, asking whether to yield, and explaining an urgent need while seeking adult help. Each includes a request and response before agreed card movement. A refusal can be explained with help; do not grade feelings. Review actual turns and conversations, then record future holiday or public-setting plans separately."
+        }
+      ],
+      "manual": [
+        "Actually read both distribution pictures, describe crowding and ordered receipt and give a preference without grading feelings or promising greater speed.",
+        "Actually agree how to use your own two paper cards, each take and replace once and reverse the starting order. No pushing or invented class event; state adult involvement.",
+        "Actually read both stair and bus pictures and explain order, safety and fairness. Arrange three role cards by their explicitly stated arrival; no real staircase or vehicle experiments.",
+        "Actually read all three spacing, arrival/no-cutting and seated-number examples. The pictured one-metre line is local, not a universal distance.",
+        "Actually space tabletop role cards, move them by agreed turns and then by an adult’s call. Friendship does not alter arrival; do not claim a public event.",
+        "Actually read all six courtesy panels in order and distinguish requests, offers, consent and yielding. An open ending is not a compulsory universal answer.",
+        "Actually rehearse joining behind, asking about courtesy and explaining urgent needs to an adult, with request and response before agreed movement. Do not force yielding or delay bodily needs.",
+        "Actually review completed turns, communication and help; record holiday or public-setting plans separately. Correct web answers do not confirm actions."
+      ],
+      "pairs": [
+        {
+          "material": "Explicit fictional record: A arrived at a service point first; B arrived after A. Staff specify arrival order with no other arrangement.",
+          "prompt": "Who goes first under this rule?",
+          "reviewPrompt": "Who goes later under this rule?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Use the stated order; ask staff about special arrangements."
+        },
+        {
+          "material": "Explicit method cards: A sits in a waiting area for a staff number call; B stands in an ordered line. Both follow the agreed method.",
+          "prompt": "Which is seated numbered waiting?",
+          "reviewPrompt": "Which is standing in line?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Queuing can take different forms, following the setting’s arrangement."
+        },
+        {
+          "material": "Fictional courtesy records: A has only asked whether the other person needs an earlier turn and received no response; B yielded after mutual agreement.",
+          "prompt": "Who has only asked, without consent?",
+          "reviewPrompt": "Who actually yielded after consent?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Request, agreement and action differ; courtesy is not forced."
+        },
+        {
+          "material": "Fictional records: A actually completed agreed safe tabletop turns today; B only plans to follow local queues during a holiday.",
+          "prompt": "Who records an action already done?",
+          "reviewPrompt": "Who records a future plan?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Tabletop rehearsal is not an actual public event, and plans are not completed actions."
+        }
+      ],
+      "reflections": [
+        "How did you actually take turns or communicate? Describe help, responses and unknown local rules.",
+        "How would you queue or explain needs next? Separate plans from completed actions."
+      ]
     }
   },
   "lower": {
@@ -2240,6 +2402,170 @@
       "reflections": [
         "What did you learn, actually practice or help with, and what needs material or assistance? Wishes are ungraded; do not collect actual identity or school details.",
         "What would you ask or prepare next? Separate plans, actual steps, application and formal approval."
+      ]
+    },
+    "lesson15": {
+      "title": "Wearing the red scarf",
+      "goal": "Recognise ceremonies, flags and the red scarf; read the four care panels and four growth activities. Actual care requires materials; formal membership and personal learning remain separate.",
+      "prerequisite": "An adult can read the book and official guidance. A missing scarf does not prevent learning; wearing or washing remains pending until suitable materials and guidance are available.",
+      "parentTip": "Do not infer membership from age or clothing, or grant membership or awards through the website. Formal ceremonies follow the school organisation. Feelings and assisted participation are not graded. Never pull or tighten around the neck or require a purchase. Confirm fabric and safe care before washing; no unknown cleaners or personal identity collection.",
+      "steps": [
+        {
+          "title": "Four ceremony pictures and personal experience",
+          "text": "Page 57 shows scarf presentation, the oath, the call and a first salute. The oath and call use a fist; the salute raises the joined fingers of the right hand above the head. Roles and actions differ.",
+          "activity": "Actually read all four and identify the activities. Describe an induction only if actually attended; not yet a member or unknown is acceptable. Web practice is not a formal ceremony; membership is handled by the school organisation under the charter."
+        },
+        {
+          "title": "The Party flag and two team flags",
+          "text": "Page 58 shows the Party flag with its emblem, a rectangular brigade flag and a detachment flag with a swallowtail cut. Both team flags show a star and torch: Party leadership, light and revolutionary victory are the respective meanings of star, torch and red.",
+          "activity": "Read all three flags, names, visible distinctions and team-flag meanings. Do not confuse them with the national flag, manufacture symbols or invent dimensions. Mention a previous sighting only if actually remembered; otherwise say unknown."
+        },
+        {
+          "title": "Scarf meaning and use",
+          "text": "The red scarf marks Young Pioneer membership and symbolises a corner of the red flag; the reference to martyrs’ blood is symbolic, not physical contact. Follow organisational arrangements for team events and important ceremonies. It may be omitted during sports, work or home rest; in heat, the official guidance uses a badge.",
+          "activity": "Read the meaning and use situations with an adult. Ask the school organisation about its actual requirements. Missing materials or unknown membership must not become a claim of wearing. Constant forced wear is not care, and personal feelings are not ranked."
+        },
+        {
+          "title": "Yueyue’s four care panels",
+          "text": "The lower story across pages 57–58 has four panels only: an adult reminder, neat wearing before school, folding after returning home and washing when dirty. Care requires suitable actions, rather than wearing constantly.",
+          "activity": "Read and retell all four. With suitable materials and adult guidance, wear, remove, lay flat and fold neatly; left and right refer to the wearer. Ask the counsellor to demonstrate unfamiliar steps and never pull the neck. Separately wash and dry only when needed and after confirming fabric and method; missing conditions remain pending. Ordinary paper is not a real scarf."
+        },
+        {
+          "title": "Four growth activities and a real small contribution",
+          "text": "Page 59 shows a revolutionary martyrs’ memorial visit, team knowledge learning, a science exhibition and suitable helpful actions. Honesty, courage, liveliness and unity are the team’s style. These photos do not establish your participation.",
+          "activity": "Read all four. With an adult choose a lawful history or science introduction, actually read or listen to a part and state its source and a question. Missing material remains pending; home reading is not a site visit. After agreement, actually give safe help within your ability, such as arranging your own tabletop with a clean cloth. Record your contribution and keep future efforts separate from formal team events."
+        }
+      ],
+      "manual": [
+        "Actually read all four presentation, oath, call and first-salute pictures; distinguish roles, a fist and the joined-finger salute. Do not claim a formal ceremony.",
+        "Actually describe a real induction or say not yet a member or unknown. Invent no identity, collect no school, name or photos and do not grade feelings.",
+        "Actually read the Party, brigade and detachment flags; explain visible distinctions and the team flags’ star, torch and red meanings without confusion with the national flag.",
+        "Actually discuss symbolism and use during formal events, sports, work, home rest and hot weather with an adult. Ask the organisation about unknown school rules; do not claim completed wear.",
+        "Actually read all four Yueyue panels and retell reminder, neat wearing, folding and washing in order. Web answers do not confirm care.",
+        "Only with a suitable scarf and adult guidance, actually wear, remove, lay flat and fold using the wearer’s left and right. No pulling or neck tightening; missing materials or guidance stay pending. Paper is not a scarf.",
+        "Only when washing is needed and an adult confirms fabric and safe method, actually wash and dry suitably and describe help. Unneeded or unsupported care remains pending; no unknown cleaners.",
+        "Actually read all four growth activities and a lawful history or science introduction, giving its source and one question. Missing material remains pending; home reading is not an actual visit.",
+        "After agreement, actually give safe help within your ability and record a specific contribution. Future effort stays a plan, not a formal team activity or automatic membership."
+      ],
+      "pairs": [
+        {
+          "material": "Explicit action cards: A uses a right fist for the induction oath; B raises the joined fingers of the right hand above the head for a salute. Read the cards only.",
+          "prompt": "Which shows the oath gesture?",
+          "reviewPrompt": "Which shows the salute gesture?",
+          "first": "A",
+          "second": "B",
+          "explanation": "A fist and the salute’s open hand differ; cards do not replace a ceremony."
+        },
+        {
+          "material": "Explicit flag cards: A is a rectangular brigade flag; B is a detachment flag with a swallowtail cut. Both show a star and torch.",
+          "prompt": "Which is the brigade flag?",
+          "reviewPrompt": "Which is the detachment flag?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Their outlines differ; star and torch alone do not distinguish them."
+        },
+        {
+          "material": "Yueyue story cards: A is neat wearing before school; B is removing and folding after returning home.",
+          "prompt": "Which is the wearing stage?",
+          "reviewPrompt": "Which is the folding stage?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Wearing and storage differ; care does not require constant wearing."
+        },
+        {
+          "material": "Fictional records: A read a lawful memorial introduction at home with an adult and did not visit; B actually visited the memorial under approved arrangements.",
+          "prompt": "Who only read an introduction at home?",
+          "reviewPrompt": "Who has an actual site-visit record?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Home reading is not a visit; future plans are not completed participation."
+        }
+      ],
+      "reflections": [
+        "What did you actually read, care for or contribute? State materials, adult help and unknown membership honestly.",
+        "What would you learn or try next? Keep future efforts separate from activities actually attended."
+      ]
+    },
+    "lesson16": {
+      "title": "Learn from role models and act",
+      "goal": "Read role-model material and discuss work, learning, perseverance, creativity, contribution and gratitude. Actually share and undertake suitable small actions; distinguish history, fictional rehearsal, national awards and personal learning.",
+      "prerequisite": "An adult can read the book and lawful role-model sources; use personal paper and books. An adult supplies sourced national youth stories; actual reading stays pending without material.",
+      "parentTip": "The website grants no role-model or national youth title and does not rank grades, disability or family income. Historical work or thrift does not require driving, collecting scrap, withholding food or water, excessive work or donations. Read a charity-sale picture only; no unapproved money collection. Read care scenes without feeding, medication or infection exposure. Thanks are voluntary and assistance can be stated.",
+      "steps": [
+        {
+          "title": "Lei Feng and two kinds of sharing",
+          "text": "Page 60 introduces Lei Feng and historical photos of sharing thrift with Young Pioneers and driving skills with fellow soldiers. These describe historical activities, not instructions for a child to drive or collect metal.",
+          "activity": "Read both photos and identify the shared content. This brief paraphrase uses Hunan Lei Feng Memorial Museum’s Thrift Box account: he retained reusable old parts, found suitable pieces when needed and returned surplus to the collective. An adult may add lawful original material. Learn to value safe existing belongings, not scrap collection, repair or withholding water."
+        },
+        {
+          "title": "Tell a story actually read",
+          "text": "Admired people and feelings may differ. State whether a story comes from the book, lawful material or personal experience; an adult’s historical account is not your eyewitness experience.",
+          "activity": "Actually read or listen to the sourced short account above or a lawful story supplied by an adult, then retell the person, action, one possible lesson and source in your own words. Invent no details when material is missing; do not copy pages or recordings."
+        },
+        {
+          "title": "Three sharing themes",
+          "text": "Page 61 suggests stories about enjoying work, perseverance and diligent learning. Original fictional cards: A arranges personal books by agreement; B asks an adult for help with an unfamiliar fold and tries again; C raises a question after reading and checks a source. These are fictional learning examples, not national award recipients.",
+          "activity": "Read all three themes and cards and discuss concrete actions. The 2026 national announcement has an explicit year, unlike the textbook’s undated classroom setting. An adult supplies a sourced national youth account for actual reading and discussion of theme and evidence; without it remain pending. Difficulty or help does not negate perseverance."
+        },
+        {
+          "title": "Three qualities and nearby examples",
+          "text": "Page 62 illustrates model experiments, a charity sale and caring for a relative as creativity, contribution and gratitude. Pictures do not prove your participation in sales or feeding a patient; creativity can start with a safe small change.",
+          "activity": "Read all three and discuss suitable actions. Actually try two safe folded-edge or placement methods for finding a bookmark, using the same personal sheet and restoring it between trials. No cutting, burning or throwing and no claim of aircraft flight. Each partner shares and listens once; mention a peer action actually observed, or say unknown."
+        },
+        {
+          "title": "Small actions: contribution, thanks and plans",
+          "text": "Learning from a model does not immediately confer an award or adult responsibilities. Separate your contribution, a peer’s concrete action and future effort. No compelled private disclosure or physical contact.",
+          "activity": "Agree on a safe small contribution, such as arranging two personal books approved for use, actually do it and describe steps and help. Voluntarily express thanks through speech, a written card or assisted communication and record the response. Do not claim treatment or a real charity sale; future efforts are separate plans."
+        }
+      ],
+      "manual": [
+        "Actually read the introduction and both historical thrift-sharing and driving-skills pictures; distinguish content and time without copying hazardous adult work.",
+        "Actually read or listen to the sourced Lei Feng paraphrase or a lawful story supplied by an adult, then state person, action, one possible lesson and source. Invent no details or eyewitness history.",
+        "Actually read the three work, perseverance and learning themes and original fictional cards. Explain concrete actions; fictional cards are not national award stories and help does not invalidate perseverance.",
+        "With lawful sourced national youth material supplied by an adult, actually read an account and state its year, source, theme and specific action. Without it remain pending; an announcement or answer is not story reading.",
+        "Actually take one sharing and one listening turn each, responding to a concrete action. State assisted participation; rank no feelings and force no private disclosure.",
+        "Actually read all three creativity, contribution and gratitude pictures and explain suitable alternatives. Collect no sale money and do not feed or medicate patients.",
+        "Actually try two safe folded-edge or placement bookmark methods on one personal sheet, restoring it between trials. State a peer action actually seen or unknown; no throwing or invented flight.",
+        "After mutual agreement, actually make a suitable safe contribution such as arranging two approved personal books, recording steps and help. No forced money, scrap collection, excessive work or invented sale.",
+        "Actually express voluntary thanks through speech, writing or assisted communication and record the response. Future effort is separate, not treatment, an award or an already achieved future goal."
+      ],
+      "pairs": [
+        {
+          "material": "Textbook historical caption cards: A shares thrift experience with Young Pioneers; B shares driving skills with fellow soldiers. Read captions only.",
+          "prompt": "Which shares thrift experience?",
+          "reviewPrompt": "Which shares driving skills?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Historical sharing differs; reading does not require child driving."
+        },
+        {
+          "material": "Explicit source cards: A is this site’s fictional child arranging two books; B is a real national youth account with year and source supplied by an adult.",
+          "prompt": "Which is a fictional example?",
+          "reviewPrompt": "Which is a sourced real account?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Fiction and fact differ; fictional characters receive no national title."
+        },
+        {
+          "material": "Fictional expression cards: A voluntarily thanked a person who helped; B only plans to try a new bookmark method next week.",
+          "prompt": "Who has expressed thanks?",
+          "reviewPrompt": "Who has only a trial plan?",
+          "first": "A",
+          "second": "B",
+          "explanation": "An expression already made differs from a future creative plan."
+        },
+        {
+          "material": "Fictional records: A only read a charity-sale picture, without sales or donation; B actually arranged two personal books after agreement and collected no money.",
+          "prompt": "Who only read the sale picture?",
+          "reviewPrompt": "Who completed safe arranging?",
+          "first": "A",
+          "second": "B",
+          "explanation": "Picture reading is not a sale; contribution is not a formal award."
+        }
+      ],
+      "reflections": [
+        "Which sourced material did you actually read, share or act on? State sources and help without invented awards or experience.",
+        "Which specific action would you learn next? Separate plans, actual contributions and personal feelings."
       ]
     }
   },

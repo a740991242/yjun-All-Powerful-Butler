@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import type { RegionalEditionAction } from './regional-application';
+
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
@@ -14,6 +16,7 @@ import {
   mathEditionPersistenceFailed,
   mathEditionPreference,
 } from './edition-preferences';
+import { regionalActionPath } from './regional-application';
 import RegionalEditionPanel from './RegionalEditionPanel.vue';
 defineOptions({ name: 'Education' });
 const route = useRoute();
@@ -27,12 +30,11 @@ function chooseEdition(value: unknown) {
   if (value === 'sujiao' || value === 'pep-2024')
     mathEditionPreference.value = value;
 }
-function applyRegionalEdition(
-  edition: 'pep-2024' | 'sujiao',
-  volume: 'lower' | 'upper',
-) {
-  mathEditionPreference.value = edition;
-  void router.push(`/education/primary/p1/math/${edition}/${volume}`);
+const regionalApplied = ref<RegionalEditionAction[]>([]);
+function applyRegionalEdition(actions: RegionalEditionAction[]) {
+  const math = actions.find((item) => item.subject === 'math');
+  if (math) mathEditionPreference.value = math.edition;
+  regionalApplied.value = structuredClone(actions);
 }
 function choose(stage?: string, grade?: string) {
   void router.push({ path: '/education', query: { stage, grade } });
@@ -105,7 +107,40 @@ function choose(stage?: string, grade?: string) {
           v-if="current.stage.id === 'primary' && current.grade === 'p1'"
           class="flex flex-col gap-4"
         >
-          <RegionalEditionPanel @apply="applyRegionalEdition" />
+          <RegionalEditionPanel
+            @apply="applyRegionalEdition"
+            @clear="regionalApplied = []"
+          />
+          <div v-if="regionalApplied.length" class="flex flex-col gap-3">
+            <Alert
+              type="success"
+              show-icon
+              :message="
+                $t('educationLearning.regionalApplied', {
+                  count: regionalApplied.length,
+                })
+              "
+            />
+            <div class="flex flex-wrap gap-3">
+              <Button
+                v-for="action in regionalApplied"
+                :key="action.subject"
+                class="!min-h-11 !h-auto !whitespace-normal !py-2"
+                @click="router.push(regionalActionPath(action))"
+              >
+                {{ $t(`educationLearning.regionalSubject_${action.subject}`) }}
+                ·
+                {{
+                  $t(
+                    action.edition === 'sujiao'
+                      ? 'educationLearning.sujiaoEdition'
+                      : 'educationLearning.pepEdition',
+                  )
+                }}
+                · {{ $t(`educationLearning.${action.volume}`) }}
+              </Button>
+            </div>
+          </div>
           <div class="flex flex-col gap-2 sm:max-w-sm">
             <label for="education-entry-math-edition">
               {{ $t('educationLearning.mathEditionLabel') }}

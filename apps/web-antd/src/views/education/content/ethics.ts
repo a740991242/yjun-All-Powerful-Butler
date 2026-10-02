@@ -32,7 +32,7 @@ export const ethicsTextbooks: Textbook[] = (['upper', 'lower'] as const).map(
 /** Availability follows authored lessons, not contents or body-read metadata alone. */
 function authoredLesson(
   volume: Volume,
-  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14,
+  number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16,
   page: number,
   t: (key: string) => string,
 ): Lesson {
@@ -71,7 +71,7 @@ function authoredLesson(
     manualIndexes = [0, 1, 2, 3, 4, 5, 6, 7];
     if (volume === 'lower') manualIndexes.push(8);
   }
-  if (number === 14) {
+  if (number === 14 || number === 15 || number === 16) {
     manualIndexes = [0, 1, 2, 3, 4, 5, 6, 7];
     if (volume === 'lower') manualIndexes.push(8);
   }
@@ -140,6 +140,16 @@ function authoredLesson(
     notes =
       '上册印刷52～54页、下册54～56页实际阅读；四用途/完整观察表与未知原因/两拟人/四方法、获准真实共享物与协作分记不冒修理；三队员例/三历史资料/2025队章身份、原创制作、领巾歌曲队礼各实际与缺材料分记，学校正式批准不由网页替代，反思null、计划另记。';
   }
+  if (number === 15) {
+    reviewer = '原书第十五课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷55～57页、下册57～59页实际阅读；四环境/三角色/四花瓣/六故事完整，观察与准备收集分类分清，不接未知垃圾或模仿咳吐；四仪式/三旗/四领巾故事/四成长完整，正式身份与学习分开、材料缺少待做，真实帮助人工、反思null、计划另记。';
+  }
+  if (number === 16) {
+    reviewer = '原书第十六课与原创活动范围核对，非教师最终审校';
+    notes =
+      '上册印刷58～60页、下册60～62页实际阅读；两发放/两秩序场景/三排队方法/六礼让故事完整，实际纸卡轮流与沟通独立，身体急需求助不强忍；两雷锋分享/三故事主题/三品质完整，原书历史与有出处外部资料及原创卡分明，真实分享贡献感谢人工，反思null、计划另记，不授正式称号。';
+  }
   const objective = (review: boolean): Question[] =>
     objectiveIndexes.map((index) => ({
       id: `${id}-${review ? 'review' : 'main'}-${index}`,
@@ -192,7 +202,7 @@ function authoredLesson(
     ],
     reviewQuestions: objective(true),
     review: {
-      date: '2026-10-02',
+      date: number >= 15 ? '2026-10-03' : '2026-10-02',
       reviewer,
       notes,
     },
@@ -223,7 +233,9 @@ export function createEthicsBooks(t: (key: string) => string): Book[] {
           number === 11 ||
           number === 12 ||
           number === 13 ||
-          number === 14
+          number === 14 ||
+          number === 15 ||
+          number === 16
         )
           return authoredLesson(book.volume, number, item.page, t);
         const title = t(`educationEthics.${book.volume}.l${number}`);

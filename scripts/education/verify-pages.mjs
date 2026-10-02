@@ -137,17 +137,26 @@ const root = `${repo}/apps/web-antd/dist`;
         exact: true,
       });
       const applyArea = region.getByRole('button', {
-        name: '应用已核验数学版本并进入课程',
+        name: '一键应用可用学科版本',
         exact: true,
       });
+      await chooseArea('education-region-system', '六三学制（小学六年）');
       await chooseArea('education-region-school', '苏州市吴江区绸都小学');
       await chooseArea('education-region-year', '2025—2026');
       if (await applyArea.isDisabled())
         throw new Error('exact school evidence unavailable');
+      await applyArea.click();
+      await p
+        .getByText(
+          '已应用3个学科课程入口。未适用学科保留原选择，可从下方进入对应册次。',
+          { exact: true },
+        )
+        .waitFor();
       await chooseArea('education-region-province', '浙江', true);
       if (
-        !(await applyArea.isDisabled()) ||
-        (await region.getByText('待核验', { exact: true }).count()) !== 4
+        (await applyArea.isDisabled()) ||
+        (await region.getByText('待核验', { exact: true }).count()) !== 2 ||
+        (await region.getByText('已核验', { exact: true }).count()) !== 0
       )
         throw new Error('stale regional evidence');
       const areaText = await region.innerText();
@@ -157,8 +166,14 @@ const root = `${repo}/apps/web-antd/dist`;
       )
         throw new Error('stale city or school');
       await chooseArea('education-region-province', '江苏', true);
-      if (!(await applyArea.isDisabled()))
+      if ((await region.getByText('已核验', { exact: true }).count()) !== 0)
         throw new Error('school silently restored');
+      await chooseArea('education-region-system', '五四学制（小学五年）');
+      if (!(await applyArea.isDisabled()))
+        throw new Error('five-four incorrectly applied');
+      await chooseArea('education-region-system', '尚未确认学制');
+      if (!(await applyArea.isDisabled()))
+        throw new Error('unknown system incorrectly applied');
       const volumes = [
         ['chinese', 'pep-2024', 'upper', 72],
         ['chinese', 'pep-2024', 'lower', 46],
@@ -166,8 +181,8 @@ const root = `${repo}/apps/web-antd/dist`;
         ['math', 'pep-2024', 'lower', 18],
         ['math', 'sujiao', 'upper', 71],
         ['math', 'sujiao', 'lower', 87],
-        ['ethics', 'pep-2024', 'upper', 14],
-        ['ethics', 'pep-2024', 'lower', 14],
+        ['ethics', 'pep-2024', 'upper', 16],
+        ['ethics', 'pep-2024', 'lower', 16],
       ];
       for (const [subject, edition, volume, count] of volumes) {
         await p.goto(

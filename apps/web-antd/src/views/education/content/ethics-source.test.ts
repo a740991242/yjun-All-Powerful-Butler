@@ -56,6 +56,8 @@ it('keeps complete ordered contents and separates read pages from available auth
       book.volume === 'upper' ? 44 : 45,
       book.volume === 'upper' ? 48 : 50,
       book.volume === 'upper' ? 52 : 54,
+      book.volume === 'upper' ? 55 : 57,
+      book.volume === 'upper' ? 58 : 60,
     ]);
     expect(book.readPrintedPages).toEqual([
       2,
@@ -102,8 +104,8 @@ it('keeps complete ordered contents and separates read pages from available auth
       45,
       46,
       ...(book.volume === 'lower'
-        ? [47, 48, 50, 51, 52, 53, 54, 55, 56]
-        : [48, 49, 50, 51, 52, 53, 54]),
+        ? [47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62]
+        : [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]),
     ]);
     expect(book.readPdfPages).toEqual([
       1,
@@ -154,8 +156,8 @@ it('keeps complete ordered contents and separates read pages from available auth
       50,
       51,
       ...(book.volume === 'lower'
-        ? [52, 53, 55, 56, 57, 58, 59, 60, 61]
-        : [53, 54, 55, 56, 57, 58, 59]),
+        ? [52, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67]
+        : [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]),
     ]);
     expect(book.readPdfPages.length).toBeLessThan(book.pdfPages);
   }
