@@ -37,6 +37,7 @@ import FoldCutJoin from './FoldCutJoin.vue';
 import GeoboardShift from './GeoboardShift.vue';
 import GridPaths from './GridPaths.vue';
 import { hundredPosition } from './hundred-chart';
+import { knowledgeCards, selectedKnowledgeCard } from './knowledge-cards';
 import MagicGrid from './MagicGrid.vue';
 import MathStory from './MathStory.vue';
 import MonthCalendar from './MonthCalendar.vue';
@@ -133,6 +134,9 @@ const timetableRows = computed(() =>
     : [],
 );
 const localState = ref<VisualState>({});
+const knowledgeCard = computed(() =>
+  selectedKnowledgeCard(toolState.value.knowledgeCard),
+);
 const toolState = computed(() => props.state ?? localState.value);
 const touched = computed(() => toolState.value.touched ?? []);
 const join = computed(() =>
@@ -259,7 +263,46 @@ const shapeDescription = computed(() =>
     class="learning-visual my-4 rounded-xl border border-border bg-muted/30 p-4"
     :aria-label="$t('educationLearning.diagram')"
   >
-    <QuarterCircle v-if="visual.kind === 'quarter-circle'" :visual="visual" />
+    <section v-if="visual.kind === 'knowledge-map'" data-knowledge-map>
+      <p class="mb-3 text-muted-foreground">
+        {{ $t('educationLearning.knowledgeCardsNotice') }}
+      </p>
+      <div
+        class="grid grid-cols-1 gap-3 sm:grid-cols-2"
+        :aria-label="$t('educationLearning.knowledgeCardsLabel')"
+      >
+        <Button
+          v-for="(card, index) in knowledgeCards"
+          :key="card.topic"
+          class="knowledge-card-button !h-auto !min-h-11 min-w-0 w-full"
+          :type="card === knowledgeCard ? 'primary' : 'default'"
+          :aria-pressed="card === knowledgeCard"
+          @click="change({ knowledgeCard: index })"
+        >
+          {{ $t(`educationLearning.knowledgeCards.${card.topic}.title`) }}
+        </Button>
+      </div>
+      <div class="mt-4" aria-live="polite" aria-atomic="true">
+        <h3 class="text-lg font-semibold">
+          {{
+            $t(`educationLearning.knowledgeCards.${knowledgeCard.topic}.title`)
+          }}
+        </h3>
+        <Visual :visual="knowledgeCard.visual" />
+        <p class="break-words text-lg font-semibold">
+          {{ knowledgeCard.equation }}
+        </p>
+        <p class="mt-3">
+          {{
+            $t(`educationLearning.knowledgeCards.${knowledgeCard.topic}.text`)
+          }}
+        </p>
+      </div>
+    </section>
+    <QuarterCircle
+      v-else-if="visual.kind === 'quarter-circle'"
+      :visual="visual"
+    />
     <TwoPieceJoin
       v-else-if="visual.kind === 'two-piece-join'"
       :visual="visual"
@@ -1388,6 +1431,11 @@ const shapeDescription = computed(() =>
 </template>
 
 <style scoped>
+.knowledge-card-button :deep(span) {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
 .character-grid::before,
 .character-grid::after {
   position: absolute;

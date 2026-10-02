@@ -1,11 +1,16 @@
 import type { ArithmeticGridVisual } from './types';
 
 export function arithmeticAxes(mode: ArithmeticGridVisual['mode']) {
-  const columns =
-    mode === 'sum-grid'
+  const columns = (() => {
+    if (mode === 'borrow-complete')
+      return Array.from({ length: 9 }, (_n, i) => 9 - i);
+    return mode === 'sum-grid'
       ? Array.from({ length: 9 }, (_n, i) => 1 + i)
       : Array.from({ length: 8 }, (_n, i) => 9 - i);
+  })();
   const rows = (() => {
+    if (mode === 'borrow-complete')
+      return Array.from({ length: 9 }, (_n, i) => 10 + i);
     if (mode === 'borrow-subtract')
       return Array.from({ length: 8 }, (_n, i) => 11 + i);
     return mode === 'sum-grid'
@@ -25,7 +30,7 @@ export function arithmeticCell(
   if (r === undefined || c === undefined) return null;
   if (mode === 'carry-add')
     return r + c > 10 ? { expression: `${c}+${r}`, value: c + r } : null;
-  if (mode === 'borrow-subtract')
+  if (mode === 'borrow-subtract' || mode === 'borrow-complete')
     return r % 10 < c ? { expression: `${r}−${c}`, value: r - c } : null;
   return { expression: `${r}+${c}`, value: r + c };
 }
@@ -45,7 +50,8 @@ export function isArithmeticGridVisual(
       ['hidden', 'kind', 'marked', 'mode'].includes(key),
     ) ||
     model.kind !== 'arithmetic-grid' ||
-    !['borrow-subtract', 'carry-add', 'sum-grid'].includes(
+    typeof model.mode !== 'string' ||
+    !['borrow-complete', 'borrow-subtract', 'carry-add', 'sum-grid'].includes(
       String(model.mode),
     ) ||
     !Array.isArray(model.hidden) ||

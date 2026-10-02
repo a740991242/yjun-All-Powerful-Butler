@@ -14,6 +14,61 @@ import { createSession, evaluate, statistics, submitResponse } from './engine';
 import { fold } from './fold';
 import { sparseArray } from './sparse-array';
 import { initialLibrary } from './storage';
+it('adds the complete 45 borrowing equations without changing the original 36-equation mode', () => {
+  const axes = arithmeticAxes('borrow-complete');
+  expect(axes.rows).toEqual([10, 11, 12, 13, 14, 15, 16, 17, 18]);
+  expect(axes.columns).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1]);
+  const expressions: string[] = [];
+  axes.rows.forEach((minuend, row) => {
+    axes.columns.forEach((subtrahend, column) => {
+      const cell = arithmeticCell('borrow-complete', row, column);
+      if (subtrahend > minuend - 10) {
+        expect(cell).toEqual({
+          expression: `${minuend}−${subtrahend}`,
+          value: minuend - subtrahend,
+        });
+        expressions.push(cell!.expression);
+      } else expect(cell).toBeNull();
+    });
+  });
+  expect(expressions).toHaveLength(45);
+  expect(new Set(expressions).size).toBe(45);
+  expect(expressions).toContain('10−1');
+  expect(expressions).toContain('10−9');
+  expect(expressions).not.toContain('18−8');
+  expect(arithmeticAxes('borrow-subtract')).toEqual({
+    rows: [11, 12, 13, 14, 15, 16, 17, 18],
+    columns: [9, 8, 7, 6, 5, 4, 3, 2],
+  });
+  const visual: ArithmeticGridVisual = {
+    kind: 'arithmetic-grid',
+    mode: 'borrow-complete',
+    hidden: [
+      [0, 0],
+      [0, 8],
+      [3, 4],
+      [8, 0],
+    ],
+  };
+  expect(isArithmeticGridVisual(visual)).toBe(true);
+  expect(
+    visual.hidden.map(([r, c]) => arithmeticCell(visual.mode, r, c)?.value),
+  ).toEqual([1, 9, 8, 9]);
+  for (const hidden of [
+    [[8, 1]],
+    [[9, 0]],
+    [[0, 9]],
+    [
+      [0, 0],
+      [0, 0],
+    ],
+  ])
+    expect(isArithmeticGridVisual({ ...visual, hidden })).toBe(false);
+  expect(isArithmeticGridVisual({ ...visual, marked: [9] })).toBe(false);
+  expect(isArithmeticGridVisual({ ...visual, mode: ['borrow-complete'] })).toBe(
+    false,
+  );
+});
 it('covers exactly the 36 carry additions and 36 borrowing subtractions with independently checked scope', () => {
   const addition: string[] = [];
   const subtraction: string[] = [];

@@ -1,3 +1,12 @@
+export const educationSections = [
+  'editions',
+  'practice',
+  'scoring',
+  'tools',
+  'reflection',
+  'backup',
+] as const;
+
 export const guides = [
   {
     id: 'json',

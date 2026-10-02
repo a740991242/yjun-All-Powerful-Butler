@@ -369,6 +369,7 @@ export const finalPracticeLessons: Lesson[] = [
   {
     ...base,
     id: map,
+    version: 2,
     page: 103,
     title: '知识关联、生活提问与图形回顾',
     goal: '用自己的例子联系数、计算、数量关系与图形，分别记录实际应用与观察。',
@@ -378,7 +379,7 @@ export const finalPracticeLessons: Lesson[] = [
         activity:
           '实际画数与计算、数量关系、图形三个分支，每类放真实例子并解释联系。',
         text: '在纸上以本学期学习为中心，画数与计算、数量关系、图形三个分支。每类添自己的具体例子：数量与第几、十和一、分合与加减、整体与部分、立体形状。逐类解释怎样联系，也可以补充自己的发现；不是复制教材人物的收获。',
-        visual: { kind: 'place-value', value: 17 },
+        visual: { kind: 'knowledge-map' },
       },
       {
         title: '同一材料联系多个算法',

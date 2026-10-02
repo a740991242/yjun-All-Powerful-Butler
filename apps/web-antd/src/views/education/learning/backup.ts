@@ -29,6 +29,7 @@ import { fold } from './fold';
 import { isFoldCutJoinVisual } from './fold-cut-join';
 import { isGeoboardShiftState, isGeoboardShiftVisual } from './geoboard-shift';
 import { isGridPathsVisual } from './grid-paths';
+import { isKnowledgeCard } from './knowledge-cards';
 import {
   isMagicGridRule,
   isMagicGridVisual,
@@ -285,6 +286,9 @@ function visual(value: unknown) {
     }
     case 'semester-grid': {
       return isSemesterGridVisual(value);
+    }
+    case 'knowledge-map': {
+      return Object.keys(value).length === 1;
     }
     case 'month-weather': {
       return isMonthWeatherVisual(value);
@@ -662,6 +666,7 @@ function tools(value: unknown) {
           'cardGame',
           'estimateDots',
           'geoboardShift',
+          'knowledgeCard',
           'placeValue',
           'position',
           'removed',
@@ -702,6 +707,11 @@ function tools(value: unknown) {
     )
       return false;
     if (state.cardGame !== undefined && !isCardGameState(state.cardGame))
+      return false;
+    if (
+      state.knowledgeCard !== undefined &&
+      !isKnowledgeCard(state.knowledgeCard)
+    )
       return false;
     if (state.transferred !== undefined && !integer(state.transferred, 10))
       return false;

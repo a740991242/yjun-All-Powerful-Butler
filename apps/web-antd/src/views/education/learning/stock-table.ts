@@ -1,7 +1,7 @@
 import { required } from './required';
 export interface StockTableVisual {
   kind: 'stock-table';
-  variant: 'main' | 'review';
+  variant: 'main' | 'review' | 'within-twenty' | 'within-twenty-review';
 }
 export function isStockTableVisual(value: unknown): value is StockTableVisual {
   if (typeof value !== 'object' || value === null || Array.isArray(value))
@@ -10,23 +10,36 @@ export function isStockTableVisual(value: unknown): value is StockTableVisual {
   return (
     Object.keys(v).length === 2 &&
     v.kind === 'stock-table' &&
-    (v.variant === 'main' || v.variant === 'review')
+    typeof v.variant === 'string' &&
+    ['main', 'review', 'within-twenty', 'within-twenty-review'].includes(
+      String(v.variant),
+    )
   );
 }
 export function stockRows(visual: StockTableVisual) {
   if (!isStockTableVisual(visual)) throw new Error('Invalid stock table');
-  const quantities =
-    visual.variant === 'main'
-      ? [
-          [43, 7],
-          [30, 6],
-          [52, 9],
-        ]
-      : [
-          [64, 8],
-          [40, 7],
-          [71, 6],
-        ];
+  const quantities = {
+    main: [
+      [43, 7],
+      [30, 6],
+      [52, 9],
+    ],
+    review: [
+      [64, 8],
+      [40, 7],
+      [71, 6],
+    ],
+    'within-twenty': [
+      [12, 7],
+      [14, 8],
+      [16, 9],
+    ],
+    'within-twenty-review': [
+      [13, 8],
+      [15, 9],
+      [17, 8],
+    ],
+  }[visual.variant];
   return ['cards', 'stickers', 'bookmarks'].map((item, index) => ({
     id: String.fromCodePoint(65 + index),
     item,

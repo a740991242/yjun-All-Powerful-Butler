@@ -8,6 +8,41 @@ import { createSession, evaluate, submitResponse } from './engine';
 import { isStockTableVisual, stockRows } from './stock-table';
 import { initialLibrary } from './storage';
 
+it('provides independent within-twenty main and review quantities without storing answers', () => {
+  for (const [variant, expected] of [
+    [
+      'within-twenty',
+      [
+        [12, 7],
+        [14, 8],
+        [16, 9],
+      ],
+    ],
+    [
+      'within-twenty-review',
+      [
+        [13, 8],
+        [15, 9],
+        [17, 8],
+      ],
+    ],
+  ] as const) {
+    const visual = { kind: 'stock-table' as const, variant };
+    expect(isStockTableVisual(visual)).toBe(true);
+    const rows = stockRows(visual);
+    expect(rows.map((r) => [r.initial, r.sold])).toEqual(expected);
+    expect(rows.map((r) => r.unit)).toEqual(['sheets', 'sheets', 'pieces']);
+    for (const row of rows) {
+      expect(row.initial).toBeLessThanOrEqual(20);
+      expect(row.sold).toBeLessThan(row.initial);
+      expect(row).not.toHaveProperty('remaining');
+    }
+    expect(isStockTableVisual({ ...visual, remaining: [5, 6, 7] })).toBe(false);
+    rows[0]!.initial = 0;
+    expect(stockRows(visual).map((r) => [r.initial, r.sold])).toEqual(expected);
+  }
+});
+
 it('keeps only original/sold quantities in fixed source rows and never supplies a remaining answer column', () => {
   const main = stockRows({ kind: 'stock-table', variant: 'main' });
   const review = stockRows({ kind: 'stock-table', variant: 'review' });

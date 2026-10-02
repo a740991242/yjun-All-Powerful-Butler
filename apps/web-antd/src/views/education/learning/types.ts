@@ -85,7 +85,7 @@ export interface NumberTowerVisual {
 
 export interface ArithmeticGridVisual {
   kind: 'arithmetic-grid';
-  mode: 'borrow-subtract' | 'carry-add' | 'sum-grid';
+  mode: 'borrow-complete' | 'borrow-subtract' | 'carry-add' | 'sum-grid';
   /** Zero-based row/column positions, labelled in the supplied order. */
   hidden: [number, number][];
   marked?: number[];
@@ -492,6 +492,7 @@ export type Visual =
   | { kind: 'column'; left: number; operator: '+' | '-'; right: number }
   | { kind: 'count'; count: number; other?: number }
   | { kind: 'hundred-chart'; value: number }
+  | { kind: 'knowledge-map' }
   | { kind: 'money'; cents: number[] }
   | { kind: 'nature-scene'; variant: 'garden' | 'hill' }
   | { kind: 'number-line'; maximum: number; minimum: number; value: number }
@@ -508,6 +509,7 @@ export type Visual =
 
 /** Bounded local tool state, stored separately from the reviewed diagram. */
 export interface VisualState {
+  knowledgeCard?: number;
   estimateDots?: EstimateDotsState;
   triangleMosaic?: TriangleMosaicState;
   surveyTable?: SurveyTableState;

@@ -34,6 +34,7 @@ const rows = computed(() => stockRows(props.visual));
 <template>
   <div
     class="min-w-0 space-y-3"
+    :data-stock-table="visual.variant"
     role="region"
     :aria-label="$t('educationLearning.stockTitle')"
   >

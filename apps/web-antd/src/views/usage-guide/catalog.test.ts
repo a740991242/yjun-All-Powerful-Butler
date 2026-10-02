@@ -13,7 +13,18 @@ import zhGuide from '#/locales/langs/zh-CN/guide.json';
 import routes from '#/router/routes/modules/tools';
 
 import { selection, stages } from '../education/catalog';
-import { articleFields, guides } from './catalog';
+import { articleFields, educationSections, guides } from './catalog';
+function localeLeaves(value: unknown, prefix = ''): Record<string, string> {
+  if (typeof value === 'string') return { [prefix]: value };
+  if (!value || typeof value !== 'object' || Array.isArray(value))
+    throw new Error(`Invalid locale value: ${prefix}`);
+  return Object.assign(
+    {},
+    ...Object.entries(value).map(([key, child]) =>
+      localeLeaves(child, prefix ? `${prefix}.${key}` : key),
+    ),
+  );
+}
 it('covers every visible leaf menu with a bilingual detailed guide and valid destination', () => {
   function leaves(items: RouteRecordRaw[], parent = ''): string[] {
     return items.flatMap((item) => {
@@ -43,16 +54,39 @@ it('provides matching keys and placeholders for all new locales', () => {
     [zhGuide, enGuide],
   ]) {
     if (!zh || !en) throw new Error('Missing locale');
-    expect(Object.keys(zh).toSorted()).toEqual(Object.keys(en).toSorted());
-    for (const key of Object.keys(zh)) {
-      const cn = Reflect.get(zh, key) as string;
-      const english = Reflect.get(en, key) as string;
+    const chinese = localeLeaves(zh);
+    const englishLeaves = localeLeaves(en);
+    expect(Object.keys(chinese).toSorted()).toEqual(
+      Object.keys(englishLeaves).toSorted(),
+    );
+    for (const key of Object.keys(chinese)) {
+      const cn = Reflect.get(chinese, key);
+      const english = Reflect.get(englishLeaves, key);
       expect(english).not.toMatch(/\p{Script=Han}/u);
       expect(cn.match(/\{\w+\}/g)?.toSorted() ?? []).toEqual(
         english.match(/\{\w+\}/g)?.toSorted() ?? [],
       );
     }
   }
+});
+it('keeps all six education operating topics bilingual and separately readable', () => {
+  expect(educationSections).toEqual([
+    'editions',
+    'practice',
+    'scoring',
+    'tools',
+    'reflection',
+    'backup',
+  ]);
+  for (const section of educationSections)
+    for (const locale of [zhGuide, enGuide]) {
+      expect(
+        Reflect.get(locale, `education_${section}Title`)?.length,
+      ).toBeGreaterThan(2);
+      expect(
+        Reflect.get(locale, `education_${section}Text`)?.length,
+      ).toBeGreaterThan(40);
+    }
 });
 it('accepts only grades belonging to their stage, including flexible higher education years', () => {
   expect(stages).toHaveLength(7);

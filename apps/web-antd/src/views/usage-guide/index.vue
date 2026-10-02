@@ -19,7 +19,7 @@ import {
 
 import { $t } from '#/locales';
 
-import { articleFields, groups, guides } from './catalog';
+import { articleFields, educationSections, groups, guides } from './catalog';
 defineOptions({ name: 'UsageGuide' });
 const router = useRouter();
 const query = ref('');
@@ -33,6 +33,12 @@ const filtered = computed(() =>
         $t(item.title),
         $t(`guide.${item.group}`),
         ...articleFields.map((field) => $t(`guide.${item.id}_${field}`)),
+        ...(item.id === 'education'
+          ? educationSections.flatMap((section) => [
+              $t(`guide.education_${section}Title`),
+              $t(`guide.education_${section}Text`),
+            ])
+          : []),
       ]
         .join(' ')
         .toLocaleLowerCase()
@@ -76,7 +82,8 @@ watch(filtered, (items) => {
           <Space wrap>
             <Button @click="active = filtered.map((item) => item.id)">
               {{ $t('guide.expand') }}
-</Button><Button @click="active = []">
+            </Button>
+            <Button @click="active = []">
               {{ $t('guide.collapse') }}
             </Button>
           </Space>
@@ -96,6 +103,16 @@ watch(filtered, (items) => {
               {{ $t(`guide.${item.id}_step${step}`) }}
             </li>
           </ol>
+          <div v-if="item.id === 'education'" class="mt-6 space-y-5">
+            <section v-for="section in educationSections" :key="section">
+              <h3 class="mb-2 font-semibold">
+                {{ $t(`guide.education_${section}Title`) }}
+              </h3>
+              <p class="whitespace-pre-line break-words leading-7">
+                {{ $t(`guide.education_${section}Text`) }}
+              </p>
+            </section>
+          </div>
           <div class="my-4 rounded-lg border border-border p-4">
             <h3 class="mb-2 font-semibold">{{ $t('guide.example') }}</h3>
             <p class="whitespace-pre-wrap break-words leading-7">

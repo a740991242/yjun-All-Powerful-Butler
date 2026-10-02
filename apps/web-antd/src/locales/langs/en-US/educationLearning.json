@@ -1,4 +1,26 @@
 {
+  "arithmeticAxis_borrow-complete": "Minuend / subtrahend",
+  "arithmeticInstruction_borrow-complete": "Minuends 10–18 and subtrahends 9–1. This complete table has 45 cases requiring regrouping, including subtraction from 10. A dash means outside this range, not an answer of zero.",
+  "knowledgeCardsLabel": "Choose a knowledge topic",
+  "knowledgeCardsNotice": "Select a topic to connect models, equations and explanations. Your selection is saved; viewing cards does not count as a correct answer or a completed hands-on activity.",
+  "knowledgeCards": {
+    "numbers": {
+      "title": "Numbers and place value",
+      "text": "One ten and seven ones represent 17. The digit 1 in the tens place represents 10; 7 in the ones place represents 7. The number of beads is not the quantity represented."
+    },
+    "calculation": {
+      "title": "Make ten and calculate",
+      "text": "Start with groups of 8 and 6. Split 6 into 2 and 4; combine 8 and 2 to make 10, then add the remaining 4. The diagram shows the groups. Try the interactive ten-frame in the next step, or explain using real counters."
+    },
+    "relations": {
+      "title": "Whole and parts",
+      "text": "Two groups contain 5 and 7 paper counters, making 12 in all. Add to find the whole from its parts. Subtract to find one part from the whole and the other part. The same whole connects two subtraction equations."
+    },
+    "shapes": {
+      "title": "Shapes and classification",
+      "text": "Observe a cuboid, cube, cylinder and sphere. Each card represents one model, making four models in all. Sort by shape and examine flat and curved surfaces. The drawings do not determine the sizes of real objects."
+    }
+  },
   "gradeOneTitle": "Grade 1 courses",
   "gradeOneDescription": "Chinese, mathematics and ethics · both volumes · learn by textbook edition",
   "enterGradeOne": "Enter Grade 1 courses",
