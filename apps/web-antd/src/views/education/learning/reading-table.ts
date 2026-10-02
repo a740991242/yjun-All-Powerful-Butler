@@ -17,7 +17,9 @@ export function isReadingTableVisual(
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const table = value as Record<string, unknown>;
   return (
-    Object.keys(table).length === 4 &&
+    (Object.keys(table).length === 4 ||
+      (Object.keys(table).length === 5 && table.display === 'blanks')) &&
+    (table.display === undefined || table.display === 'blanks') &&
     table.kind === 'reading-table' &&
     labels(table.names, 2) &&
     labels(table.days, 3) &&

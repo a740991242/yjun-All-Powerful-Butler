@@ -10,6 +10,7 @@ import type {
 import { matchesCrossBalance } from './cross-balance';
 import { fold } from './fold';
 import { magicBlankCount, matchesMagicGrid } from './magic-grid';
+import { matchesNumberChain, numberChainBlankCount } from './number-chain';
 import { matchesNumberPicks } from './number-picks';
 import { matchesTower, towerBlankCount } from './number-tower';
 
@@ -50,6 +51,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
     }
     case 'cross-balance':
     case 'number-picks':
+    case 'number-chain':
     case 'magic-grid':
     case 'tower':
     case 'partition':
@@ -59,6 +61,8 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
         answer.length ===
           (() => {
             if (rule.kind === 'number-picks') return rule.fields.length;
+            if (rule.kind === 'number-chain')
+              return numberChainBlankCount(rule);
             return (() => {
               if (rule.kind === 'magic-grid')
                 return magicBlankCount(rule.cells);
@@ -141,6 +145,9 @@ export function evaluate(
     }
     case 'number-picks': {
       return matchesNumberPicks(rule, answer);
+    }
+    case 'number-chain': {
+      return matchesNumberChain(rule, answer);
     }
     case 'magic-grid': {
       return matchesMagicGrid(rule.cells, answer);

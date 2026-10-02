@@ -7,6 +7,7 @@ import { sujiaoBooks } from './sujiao';
 import { sujiaoAssemblyCandidatesDraft } from './sujiao-assembly-candidates';
 import { sujiaoBeadBudgetDraft } from './sujiao-bead-budget';
 import { sujiaoCalculationLinksDraft } from './sujiao-calculation-links';
+import { sujiaoCalculationReviewDraft } from './sujiao-calculation-review';
 import { sujiaoChildActivitiesDraft } from './sujiao-child-activities';
 import { sujiaoCircularNumbersDraft } from './sujiao-circular-numbers';
 import { sujiaoClassSurveysDraft } from './sujiao-class-surveys';
@@ -24,6 +25,14 @@ import { sujiaoEqualizeTransfersDraft } from './sujiao-equalize-transfers';
 import { sujiaoEstimationDraft } from './sujiao-estimation';
 import { sujiaoFaceTracingDraft } from './sujiao-face-tracing';
 import { sujiaoFiftyDraft } from './sujiao-fifty';
+import { sujiaoFinalClassificationReviewDraft } from './sujiao-final-classification-review';
+import { sujiaoFinalCountingDraft } from './sujiao-final-counting';
+import { sujiaoFinalDataQuestionsDraft } from './sujiao-final-data-questions';
+import { sujiaoFinalEmbeddedDraft } from './sujiao-final-embedded';
+import { sujiaoFinalEquationsDraft } from './sujiao-final-equations';
+import { sujiaoFinalFourShapesDraft } from './sujiao-final-four-shapes';
+import { sujiaoFinalNumbersShapesDraft } from './sujiao-final-numbers-shapes';
+import { sujiaoFinalParadeDraft } from './sujiao-final-parade';
 import { sujiaoFirstDrafts } from './sujiao-first-drafts';
 import { sujiaoFoldCutJoinDraft } from './sujiao-fold-cut-join';
 import { sujiaoGeoboardShiftDraft } from './sujiao-geoboard-shift';
@@ -35,6 +44,8 @@ import {
 } from './sujiao-lower';
 import { sujiaoLowerFinalNumbersDraft } from './sujiao-lower-final-numbers';
 import { sujiaoLowerFinalRelationsDraft } from './sujiao-lower-final-relations';
+import { sujiaoLowerFirstPracticeDraft } from './sujiao-lower-first-practice';
+import { sujiaoLowerFirstReviewDraft } from './sujiao-lower-first-review';
 import { sujiaoLowerSource as source } from './sujiao-lower-source';
 import { sujiaoMathComicDraft } from './sujiao-math-comic';
 import { sujiaoMixedCollagesDraft } from './sujiao-mixed-collages';
@@ -52,6 +63,7 @@ import { sujiaoPaperFoldsDraft } from './sujiao-paper-folds';
 import { sujiaoPlaneCuttingDraft } from './sujiao-plane-cutting';
 import { sujiaoPlanePatternsDraft } from './sujiao-plane-patterns';
 import { sujiaoPlaneRecognitionDraft } from './sujiao-plane-recognition';
+import { sujiaoPlaneReviewDraft } from './sujiao-plane-review';
 import { sujiaoPoolClassificationDraft } from './sujiao-pool-classification';
 import { sujiaoPracticalProblemsDraft } from './sujiao-practical-problems';
 import { sujiaoQuantityApplicationsDraft } from './sujiao-quantity-applications';
@@ -100,7 +112,10 @@ it('registers the inspected ISBN separately from PEP and upper volumes without i
 it('releases independent copies of released tested packs and leaves unfinished content without runnable tasks', () => {
   const drafts = [
     ...sujiaoFirstDrafts,
+    sujiaoLowerFirstPracticeDraft,
+    sujiaoLowerFirstReviewDraft,
     sujiaoPlaneRecognitionDraft,
+    sujiaoPlaneReviewDraft,
     sujiaoPlaneCuttingDraft,
     sujiaoCompositeCountingDraft,
     sujiaoPlanePatternsDraft,
@@ -143,6 +158,14 @@ it('releases independent copies of released tested packs and leaves unfinished c
     sujiaoEstimationDraft,
     sujiaoFiftyDraft,
     sujiaoLowerFinalNumbersDraft,
+    sujiaoFinalClassificationReviewDraft,
+    sujiaoFinalDataQuestionsDraft,
+    sujiaoFinalEquationsDraft,
+    sujiaoFinalCountingDraft,
+    sujiaoFinalNumbersShapesDraft,
+    sujiaoFinalFourShapesDraft,
+    sujiaoFinalParadeDraft,
+    sujiaoFinalEmbeddedDraft,
     sujiaoLowerFinalRelationsDraft,
     sujiaoTwelveSticksDraft,
     sujiaoFoldCutJoinDraft,
@@ -156,6 +179,7 @@ it('releases independent copies of released tested packs and leaves unfinished c
     sujiaoCrossBalanceDraft,
     sujiaoSymbolDigitsDraft,
     sujiaoCalculationLinksDraft,
+    sujiaoCalculationReviewDraft,
     sujiaoPracticalProblemsDraft,
     sujiaoQuantityDifferenceDraft,
     sujiaoComparisonTargetDraft,
@@ -164,16 +188,17 @@ it('releases independent copies of released tested packs and leaves unfinished c
     sujiaoTwoDigitTensDraft,
     sujiaoTwoDigitOnesDraft,
   ].filter((l) => l.id.startsWith('sj-lower-'));
-  expect(sujiaoLowerLessons).toHaveLength(75);
+  expect(sujiaoLowerLessons).toHaveLength(87);
   expect(
     book.units[0]!.lessons.filter((l) => l.status === 'available'),
   ).toEqual(sujiaoLowerLessons.filter((l) => l.page < 22));
   expect(book.units[1]!.lessons[0]!.id).toBe('sj-lower-plane-recognition');
   expect(sujiaoLowerLessons.map((l) => l.page)).toEqual([
-    2, 4, 6, 7, 8, 10, 14, 17, 17, 18, 18, 20, 23, 25, 26, 27, 28, 29, 29, 30,
-    30, 31, 31, 31, 32, 33, 35, 37, 38, 38, 39, 39, 40, 40, 41, 41, 43, 45, 45,
-    46, 46, 47, 47, 48, 49, 50, 50, 51, 52, 52, 52, 53, 58, 60, 63, 64, 66, 68,
-    69, 70, 72, 74, 76, 77, 79, 80, 81, 82, 84, 84, 85, 88, 89, 92, 92,
+    2, 4, 6, 7, 8, 10, 14, 16, 17, 17, 18, 18, 20, 21, 23, 25, 26, 27, 28, 29,
+    29, 30, 30, 31, 31, 31, 31, 32, 33, 35, 37, 38, 38, 39, 39, 40, 40, 41, 41,
+    43, 45, 45, 46, 46, 47, 47, 48, 49, 50, 50, 51, 52, 52, 52, 53, 58, 60, 63,
+    64, 66, 68, 69, 70, 70, 72, 74, 76, 77, 79, 80, 81, 82, 84, 84, 85, 88, 88,
+    89, 90, 90, 91, 91, 92, 92, 93, 93, 94,
   ]);
   for (const live of sujiaoLowerLessons) {
     const draft = drafts.find((l) => l.id === live.id)!;
@@ -196,14 +221,14 @@ it('releases independent copies of released tested packs and leaves unfinished c
   }
   expect(
     new Set(book.units.flatMap((u) => u.lessons).map((l) => l.id)).size,
-  ).toBe(82);
+  ).toBe(87);
   const questions = sujiaoLowerLessons.flatMap((l) => l.questions);
   expect(
     questions.filter((q) => !['manual', 'reflection'].includes(q.rule.kind)),
-  ).toHaveLength(958);
-  expect(questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(245);
+  ).toHaveLength(1102);
+  expect(questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(303);
   expect(questions.filter((q) => q.rule.kind === 'reflection')).toHaveLength(
-    96,
+    143,
   );
 });
 it('starts every released lesson with lower-volume identity while preserving upper and PEP sessions and backups', async () => {
@@ -229,7 +254,7 @@ it('starts every released lesson with lower-volume identity while preserving upp
     expect(session.lessonVersion).toBe(lesson.version);
     expect(session.questions).toHaveLength(lesson.questions.length);
   }
-  expect(library.sessions.value).toHaveLength(77);
+  expect(library.sessions.value).toHaveLength(89);
   expect(library.sessions.value.find((s) => s.id === upperSession.id)).toEqual(
     upperSession,
   );
@@ -242,12 +267,11 @@ it('starts every released lesson with lower-volume identity while preserving upp
     saved.sessions,
   );
   for (const pending of [
-    book.units[0]!.lessons.at(-1)!,
-    book.units[1]!.lessons.at(-1)!,
+    { ...book.units[0]!.lessons[0]!, status: 'preparing' as const },
   ]) {
     await expect(library.start(pending, book.id)).rejects.toThrow(
       'educationLearning.notAvailable',
     );
   }
-  expect(library.sessions.value).toHaveLength(77);
+  expect(library.sessions.value).toHaveLength(89);
 });

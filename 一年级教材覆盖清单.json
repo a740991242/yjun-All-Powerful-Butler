@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-01T17:15:56.490Z",
+  "generatedAt": "2026-10-02T11:21:08.888Z",
   "scope": "一年级原有人教语文/数学四册与苏教数学上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -10354,13 +10354,13 @@
       "resourceId": "978-7-5743-1099-5",
       "verifiedAt": "2026-10-01",
       "summary": {
-        "availablePacks": 38,
-        "pendingEntries": 6,
+        "availablePacks": 71,
+        "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 433,
-          "manual": 120,
-          "reflection": 2
+          "objective": 769,
+          "manual": 269,
+          "reflection": 42
         }
       },
       "units": [
@@ -10738,6 +10738,93 @@
               }
             },
             {
+              "id": "sj-upper-colour-count",
+              "title": "数与画：拨珠、分类、完整涂格与补图",
+              "textbookTitle": "认识0～5·想想做做与练习",
+              "page": 15,
+              "version": 1,
+              "status": "available",
+              "goal": "实际拨珠表示0～5，分别数整体与子类；完成五列涂格、五行涂与未涂记录，以及多个不同目标的补图。",
+              "prerequisite": "认识0～5；准备纸笔、安全色笔及每颗表示1的儿童计数架。没有计数架可先做纸笔部分，拨珠任务保留待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 5,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-colour-count-full-colour-record",
+                "sj-upper-colour-count-multiple-targets",
+                "sj-upper-colour-count-already-complete",
+                "sj-upper-colour-count-whole-and-subsets",
+                "sj-upper-colour-count-no-double-count",
+                "sj-upper-colour-count-bead-comparison",
+                "sj-upper-colour-count-colour-keeps-total",
+                "sj-upper-colour-count-zero-is-a-number",
+                "sj-upper-colour-count-actual-beads",
+                "sj-upper-colour-count-actual-subsets",
+                "sj-upper-colour-count-actual-columns",
+                "sj-upper-colour-count-actual-rows",
+                "sj-upper-colour-count-actual-completion"
+              ],
+              "questionKinds": ["steps", "number", "choice", "manual"],
+              "visualKinds": ["count"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "已读0～5实际操作范围核验",
+                "notes": "ISBN 978-7-5743-1099-5第13、15、19、22～23页，原创任务。复习换行顺序、补图目标及已有数、鸟群数量和计数区比较。最终教师审校未核验，不将本课声明成完整单元。"
+              }
+            },
+            {
+              "id": "sj-upper-direction-comparison",
+              "title": "位置与比较：楼层、运动方向和多种填法",
+              "textbookTitle": "几和第几·练习一",
+              "page": 17,
+              "version": 1,
+              "status": "available",
+              "goal": "按底层向上数楼层；明确上坡、下坡和游动的队首，观察前人离开；包括0的完整范围比较，实际写出开放比较的多种合法答案。",
+              "prerequisite": "能数0～5；准备5张人物卡、0～5数字卡、纸笔，一位家人可共同选卡。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 4,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-direction-comparison-floor-rank",
+                "sj-upper-direction-comparison-floor-neighbours",
+                "sj-upper-direction-comparison-moving-front",
+                "sj-upper-direction-comparison-reverse-motion",
+                "sj-upper-direction-comparison-departing-front",
+                "sj-upper-direction-comparison-all-smaller-with-zero",
+                "sj-upper-direction-comparison-all-greater-bounded",
+                "sj-upper-direction-comparison-multiple-open-comparison",
+                "sj-upper-direction-comparison-actual-floors",
+                "sj-upper-direction-comparison-actual-directions",
+                "sj-upper-direction-comparison-actual-partner-game",
+                "sj-upper-direction-comparison-actual-open-comparison"
+              ],
+              "questionKinds": ["number", "steps", "set", "manual"],
+              "visualKinds": ["queue"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "已读方向与开放比较范围核验",
+                "notes": "ISBN 978-7-5743-1099-5第16～17、23～24页，原创楼层、方向、人物与数值条件，复习改变方向、目标人物、楼层和严格比较范围；不声称整单元或最终教师审校完成。"
+              }
+            },
+            {
               "id": "sj-upper-first-add",
               "title": "5以内加法：合起来与接着数",
               "textbookTitle": "加法",
@@ -10963,33 +11050,57 @@
               }
             },
             {
-              "id": "sj-upper-pending-u1",
-              "title": "0～5的认识和加减法",
-              "textbookTitle": "0～5的认识和加减法",
-              "page": 11,
+              "id": "sj-upper-card-review",
+              "title": "第一单元完整整理：算式卡、同图多式与自评",
+              "textbookTitle": "练习二与单元评价",
+              "page": 31,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "制作并整理完整十张加法卡和十张减法卡，写全和为5的正数有序搭配，同一自画图编四式；独立回顾识写比较、计算讲故事和表达提问。",
+              "prerequisite": "认识0～5及5以内加减；准备纸笔、20张安全纸卡与5件学具。可请家人帮读和原话代写，实际判断由孩子做。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 9,
+                "manual": 5,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 9,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": [
+                "sj-upper-card-review-all-add-cards",
+                "sj-upper-card-review-all-subtract-cards",
+                "sj-upper-card-review-add-result-groups",
+                "sj-upper-card-review-subtract-result-groups",
+                "sj-upper-card-review-all-positive-pairs",
+                "sj-upper-card-review-one-picture-four-equations",
+                "sj-upper-card-review-duplicate-not-new",
+                "sj-upper-card-review-zero-outside-card-scope",
+                "sj-upper-card-review-podium-rank",
+                "sj-upper-card-review-actual-add-table",
+                "sj-upper-card-review-actual-subtract-table",
+                "sj-upper-card-review-actual-positive-pairs",
+                "sj-upper-card-review-actual-own-picture",
+                "sj-upper-card-review-actual-evaluation-evidence",
+                "sj-upper-card-review-evaluation-recognition",
+                "sj-upper-card-review-evaluation-calculation-story",
+                "sj-upper-card-review-evaluation-expression-question"
+              ],
+              "questionKinds": [
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
+                "date": "2026-10-02",
+                "reviewer": "完整卡表与单元独立评价范围核验",
+                "notes": "ISBN 978-7-5743-1099-530～31页，原创完整卡次序、分类顺序与两群数量；复习改变卡次序、和为4的搭配与图中数量。实际完整制作、自画问题和三项评价分别记录；最终教师审校未核验。"
               }
             }
           ]
@@ -11131,6 +11242,51 @@
               }
             },
             {
+              "id": "sj-upper-part-tables",
+              "title": "6～9动手数：成对计数与完整分解表",
+              "textbookTitle": "认识6～9·练习三",
+              "page": 39,
+              "version": 1,
+              "status": "available",
+              "goal": "实际表示6～9，分清双与根，完成不同目标的补图，摆写8和9的全部两正部分分解。",
+              "prerequisite": "认识0～9；准备纸笔、9个圆片或安全小棒、两盘及每珠表示1的儿童计数架。缺少材料的实际任务保留待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 6,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-part-tables-full-table-8",
+                "sj-upper-part-tables-full-table-9",
+                "sj-upper-part-tables-paired-units",
+                "sj-upper-part-tables-three-completions",
+                "sj-upper-part-tables-comparison-chain",
+                "sj-upper-part-tables-swap-keeps-total",
+                "sj-upper-part-tables-distribution-need-not-equal",
+                "sj-upper-part-tables-positive-table-boundary",
+                "sj-upper-part-tables-actual-beads",
+                "sj-upper-part-tables-actual-pairs-comparison",
+                "sj-upper-part-tables-actual-three-completions",
+                "sj-upper-part-tables-actual-table-8",
+                "sj-upper-part-tables-actual-table-9",
+                "sj-upper-part-tables-actual-distribution"
+              ],
+              "questionKinds": ["steps", "choice", "number", "manual"],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版第37～39页活动范围与原创教学核对",
+                "notes": "8/9复习改变整表行序，成对组数、补图目标及已有量、比较与分配情境均变化。六项实际任务独立记录，最终教师审校未核验，第二单元其它缺口继续保留。"
+              }
+            },
+            {
               "id": "sj-upper-six-nine-arithmetic",
               "title": "6～9加减法：两部分与总数",
               "textbookTitle": "加法和减法",
@@ -11185,6 +11341,52 @@
               }
             },
             {
+              "id": "sj-upper-numberline",
+              "title": "0～9数线：完整标数与加减跳跃",
+              "textbookTitle": "6～9的加减法·画一画",
+              "page": 41,
+              "version": 1,
+              "status": "available",
+              "goal": "实际画完整等距0～9数线，逐次记录加减与两次变化的落点，分清起点、落点和走过的间隔。",
+              "prerequisite": "认识0～9及加减法；准备纸笔，可用方格纸帮助画等距刻度。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 5,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-numberline-missing-numbers",
+                "sj-upper-numberline-complete-read-order",
+                "sj-upper-numberline-forward-landings",
+                "sj-upper-numberline-backward-landings",
+                "sj-upper-numberline-two-additions",
+                "sj-upper-numberline-two-subtractions",
+                "sj-upper-numberline-add-then-subtract",
+                "sj-upper-numberline-subtract-then-add",
+                "sj-upper-numberline-interval-not-start",
+                "sj-upper-numberline-equal-spacing-distance",
+                "sj-upper-numberline-actual-complete-line",
+                "sj-upper-numberline-actual-addition-lines",
+                "sj-upper-numberline-actual-subtraction-lines",
+                "sj-upper-numberline-actual-two-change-lines",
+                "sj-upper-numberline-actual-distance"
+              ],
+              "questionKinds": ["steps", "number", "manual"],
+              "visualKinds": ["number-line"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "已读数线活动与原创逐次落点核对",
+                "notes": "复习改变缺位、顺倒读、起点跳数、全部两次变化与距离参照。真实画线五项独立人工记录，旧课包与会话保持，最终教师审校未核验，不声明第二单元全部完成。"
+              }
+            },
+            {
               "id": "sj-upper-sequential-arithmetic",
               "title": "两次变化：先算一步，再接着算",
               "textbookTitle": "连加、连减与加减混合",
@@ -11222,6 +11424,48 @@
                 "date": "2026-10-01",
                 "reviewer": "同版原书正文核验与原创教学检查",
                 "notes": "已实际核对ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷的上册第46～48页（https://keben.app/book/0103）。讲解、图示与题目为原创，实物操作和写数须人工查看。仅开放本课范围，不代表其它活动或全册完成；保留人教版独立课包与记录。"
+              }
+            },
+            {
+              "id": "sj-upper-continuous",
+              "title": "连续六步与九项隐藏规律",
+              "textbookTitle": "6～9·练习四与练习五",
+              "page": 48,
+              "version": 1,
+              "status": "available",
+              "goal": "完成两条各六次的连续计算，逐步保存当前数；判断九项重复图案隐藏的第7、第9项，不改变被遮项的位置。",
+              "prerequisite": "会9以内加减与三项一组重复；准备纸笔、9张自己画的形状卡和遮盖用的空白纸。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 3,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-continuous-first-path",
+                "sj-upper-continuous-second-path",
+                "sj-upper-continuous-fifth-step-start",
+                "sj-upper-continuous-start-is-not-output",
+                "sj-upper-continuous-hidden-seven",
+                "sj-upper-continuous-hidden-nine",
+                "sj-upper-continuous-hidden-in-group",
+                "sj-upper-continuous-two-paths-reset",
+                "sj-upper-continuous-actual-first-path",
+                "sj-upper-continuous-actual-second-path",
+                "sj-upper-continuous-actual-hidden-pattern"
+              ],
+              "questionKinds": ["steps", "number", "choice", "manual"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版连续六步与隐藏两位置活动核对",
+                "notes": "复习两条起点/六次变化/全部中间量及隐藏图案分组更换；组内第1/3不变只是位置概念，图案须重新判断。保留旧两步课和会话，最终教师审校未核验，不代表整个第二单元完成。"
               }
             },
             {
@@ -11278,6 +11522,97 @@
               }
             },
             {
+              "id": "sj-upper-full-cards",
+              "title": "9以内完整整理：36加卡与36减卡",
+              "textbookTitle": "6～9·回顾与整理",
+              "page": 49,
+              "version": 1,
+              "status": "available",
+              "goal": "完整整理两组各36张算式卡，观察横竖排列和按得数分组；实际抽卡计算，正确处理6～9的含0运算。",
+              "prerequisite": "会算9以内加减；准备纸笔和0～9数字纸卡，可直接写卡而不用剪刀。可以分次整理，未完成实际任务如实待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 14,
+                "manual": 5,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 14,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-full-cards-add-chunk-0",
+                "sj-upper-full-cards-add-chunk-1",
+                "sj-upper-full-cards-add-chunk-2",
+                "sj-upper-full-cards-add-chunk-3",
+                "sj-upper-full-cards-subtract-chunk-0",
+                "sj-upper-full-cards-subtract-chunk-1",
+                "sj-upper-full-cards-subtract-chunk-2",
+                "sj-upper-full-cards-subtract-chunk-3",
+                "sj-upper-full-cards-add-result-groups",
+                "sj-upper-full-cards-subtract-result-groups",
+                "sj-upper-full-cards-zero-arithmetic",
+                "sj-upper-full-cards-positive-sum-pairs",
+                "sj-upper-full-cards-table-membership",
+                "sj-upper-full-cards-row-column-rule",
+                "sj-upper-full-cards-actual-add-table",
+                "sj-upper-full-cards-actual-subtract-table",
+                "sj-upper-full-cards-actual-zero-operations",
+                "sj-upper-full-cards-actual-draw-cards",
+                "sj-upper-full-cards-actual-own-method"
+              ],
+              "questionKinds": ["steps", "set", "choice", "manual"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "已读整表与含0口算范围核对",
+                "notes": "各九卡复习反转卡序并改为求缺少的第二加数或减数、代回原式核对，两类按得数分组改变指定次序，含0数量、和目标、卡范围与行列情境变化；全表与真实操作独立记录。旧ID和会话保留，最终教师审校未核验，第二单元其余缺口保留。"
+              }
+            },
+            {
+              "id": "sj-upper-open-comparison",
+              "title": "开放比较：两空联动与自主画数量",
+              "textbookTitle": "6～9·复习开放填数",
+              "page": 49,
+              "version": 1,
+              "status": "available",
+              "goal": "在0～9范围自主写不同严格比较，联合检查两空；实际画出比7少与比7多的两组，数量0和未做分清。",
+              "prerequisite": "认识0～9与＜、＞；准备纸笔，能逐一点数和比较两组数量。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 7,
+                "manual": 3,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 7,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-open-comparison-greater-than",
+                "sj-upper-open-comparison-descending-pair",
+                "sj-upper-open-comparison-two-groups-around",
+                "sj-upper-open-comparison-dependent-pair-check",
+                "sj-upper-open-comparison-zero-is-allowed",
+                "sj-upper-open-comparison-strict-excludes-equal",
+                "sj-upper-open-comparison-all-greater-candidates",
+                "sj-upper-open-comparison-actual-open-writings",
+                "sj-upper-open-comparison-actual-two-group-drawings",
+                "sj-upper-open-comparison-actual-explanation"
+              ],
+              "questionKinds": ["number-chain", "choice", "set", "manual"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "已读两空联动与真实补画范围核对",
+                "notes": "复习改变上界8为6、中心7为6与下界5为7，全部合法写法按新条件联合判断。包含0与严格相等边界分别核对，保留旧课和会话，最终教师审校未核验，第二单元其它缺口保留。"
+              }
+            },
+            {
               "id": "sj-upper-six-nine-review",
               "title": "数清对象、比较结果与找规律",
               "textbookTitle": "6～9的认识和加减法综合活动",
@@ -11323,33 +11658,57 @@
               }
             },
             {
-              "id": "sj-upper-pending-u2",
-              "title": "6～9的认识和加减法",
-              "textbookTitle": "6～9的认识和加减法",
-              "page": 35,
+              "id": "sj-upper-exploration-review",
+              "title": "五板续涂、同符号探索与三项自评",
+              "textbookTitle": "6～9·探索与评价",
+              "page": 52,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "实际续涂五张两行五格板，观察有数字的地名，用同一个数验证同符号的两个条件；分别用真实证据自评三个学习方面。",
+              "prerequisite": "准备纸笔、涂色笔与9张纸片，家人协助看记录；地名可从手边地图或书中找，不要求外出。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 8,
+                "manual": 6,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 8,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "sj-upper-exploration-review-five-counts",
+                "sj-upper-exploration-review-five-empty-counts",
+                "sj-upper-exploration-review-change",
+                "sj-upper-exploration-review-same-symbols",
+                "sj-upper-exploration-review-substitute-both",
+                "sj-upper-exploration-review-unequal-triangles",
+                "sj-upper-exploration-review-story-three-and-three",
+                "sj-upper-exploration-review-name-not-measurement",
+                "sj-upper-exploration-review-actual-five-boards",
+                "sj-upper-exploration-review-actual-numbered-name",
+                "sj-upper-exploration-review-actual-symbols",
+                "sj-upper-exploration-review-actual-evaluation-numbers",
+                "sj-upper-exploration-review-actual-evaluation-arithmetic",
+                "sj-upper-exploration-review-actual-evaluation-habits",
+                "sj-upper-exploration-review-reflection-numbers",
+                "sj-upper-exploration-review-reflection-arithmetic",
+                "sj-upper-exploration-review-reflection-habits"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
+                "date": "2026-10-02",
+                "reviewer": "同版探索与三项独立评价核对",
+                "notes": "复习改为五板反向顺序及不同同符号两条件，仍需完整代回。数字地名故事简短转述来源：https://jcj.moa.gov.cn/lzwh/201411/t20141119_4214303.htm。实际活动与自评独立，最终教师审校未核验。"
               }
             }
           ]
@@ -11467,33 +11826,259 @@
               }
             },
             {
-              "id": "sj-upper-pending-u3",
-              "title": "图形的初步认识（一）",
-              "textbookTitle": "图形的初步认识（一）",
-              "page": 53,
+              "id": "sj-upper-solid-instructions",
+              "title": "中心七块与架梁：多方向联合指令",
+              "textbookTitle": "图形的初步认识（一）·位置指令与互说搭建",
+              "page": 58,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "固定观察参照同时检查左右、前后、上下；区分同一作品两张记录，按双柱、横梁、两方块、两球四步实际互说搭建。",
+              "prerequisite": "认识四种立体形状和前后左右上下，准备七块同样大小安全正方体及两柱/一梁/两方块/两球；无材料暂留实际待做。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 13,
+                "manual": 4,
+                "reflection": 1
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 13,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": [
+                "sj-upper-solid-instructions-cross-left",
+                "sj-upper-solid-instructions-cross-right",
+                "sj-upper-solid-instructions-cross-front",
+                "sj-upper-solid-instructions-cross-back",
+                "sj-upper-solid-instructions-upper-two",
+                "sj-upper-solid-instructions-ground-five",
+                "sj-upper-solid-instructions-all-seven",
+                "sj-upper-solid-instructions-same-center",
+                "sj-upper-solid-instructions-bridge-counts",
+                "sj-upper-solid-instructions-bridge-left-support",
+                "sj-upper-solid-instructions-bridge-right-support",
+                "sj-upper-solid-instructions-two-pillars",
+                "sj-upper-solid-instructions-after-pillars",
+                "sj-upper-solid-instructions-actual-central-seven",
+                "sj-upper-solid-instructions-actual-four-step-bridge",
+                "sj-upper-solid-instructions-actual-mutual-instructions",
+                "sj-upper-solid-instructions-actual-new-arrangement",
+                "sj-upper-solid-instructions-reflection"
+              ],
+              "questionKinds": [
+                "choice",
+                "set",
+                "number",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-instructions"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
+                "date": "2026-10-02",
+                "reviewer": "多方向联合与四步支撑指令核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷同版58/60页实际已读。原创语义位置记录，复习换全部编号，固定观察参照不变；实物稳定、原话交流、未来计划分别记录，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-solid-review",
+              "title": "立体作品：数部件、选三块搭高与独立自评",
+              "textbookTitle": "图形的初步认识（一）·练习六与评价",
+              "page": 60,
+              "version": 1,
+              "status": "available",
+              "goal": "对两幅原创分解作品按四种立体分类点数，实际从七块选三块比较搭高；分别记录辨认、拼搭、仔细观察认真做三个方面。",
+              "prerequisite": "认识四种立体形状与0～9；准备七块安全模型、平整桌面，含方块/长盒/直圆柱/球及不同大小；无模型暂留待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 6,
+                "manual": 5,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-solid-review-composition-0",
+                "sj-upper-solid-review-total-0",
+                "sj-upper-solid-review-composition-1",
+                "sj-upper-solid-review-total-1",
+                "sj-upper-solid-review-one-object",
+                "sj-upper-solid-review-height-needs-evidence",
+                "sj-upper-solid-review-actual-two-compositions",
+                "sj-upper-solid-review-actual-three-high",
+                "sj-upper-solid-review-actual-evaluation-recognition",
+                "sj-upper-solid-review-actual-evaluation-building",
+                "sj-upper-solid-review-actual-evaluation-care",
+                "sj-upper-solid-review-reflection-recognition",
+                "sj-upper-solid-review-reflection-building",
+                "sj-upper-solid-review-reflection-care"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-build"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版组合计数、搭高与三项评价核对",
+                "notes": "同版2024年7月第1版、2025年7月第2次印刷正文已核验；两幅作品均换部件组成，不能沿用主课四类数；总块不变仍需按新图核对。实际选三搭高与辨认/拼搭/认真做分别记录，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-cube-pair",
+              "title": "六堆方块：两堆完整拼成目标",
+              "textbookTitle": "图形的初步认识（一）·两堆拼组",
+              "page": 61,
+              "version": 1,
+              "status": "available",
+              "goal": "从六候选堆判断全部可拼配对，保持整堆内部形状、允许整体转向，检查全用、无重叠和空缺；数量相等不代替几何可拼。",
+              "prerequisite": "认识正方体、长方体和0～9，准备同样大安全正方体及纸笔。六候选可先后摆并拆后复用，记录不假装六堆同时保留。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 7,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 7,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-cube-pair-all-candidates",
+                "sj-upper-cube-pair-target-count",
+                "sj-upper-cube-pair-all-valid-pairs",
+                "sj-upper-cube-pair-cd-shape",
+                "sj-upper-cube-pair-count-not-enough",
+                "sj-upper-cube-pair-whole-group",
+                "sj-upper-cube-pair-ae-count",
+                "sj-upper-cube-pair-actual-six-groups",
+                "sj-upper-cube-pair-actual-three-main-pairs",
+                "sj-upper-cube-pair-actual-new-target",
+                "sj-upper-cube-pair-actual-explanation",
+                "sj-upper-cube-pair-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["cube-pair"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "两堆全块几何拼组核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷同版61页实际已读。原创目标及候选，主三合法配对换复习两合法配对，C/D同数量新轮廓不可拼；实际独立、教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-solid-patterns",
+              "title": "三种续摆：两件交替、三形状与大小球",
+              "textbookTitle": "图形的初步认识（一）·规律续摆",
+              "page": 61,
+              "version": 1,
+              "status": "available",
+              "goal": "分别判断三种最小重复小组，填第7/8/9位置，并实际续摆；大小球同形状，换开头与形状需重新判断。",
+              "prerequisite": "认识四种立体形状与0～9，准备长方体、正方体、圆柱、球安全模型及大小球。没有实物时实际任务待做，纸上圆可作符号记录但不冒实物球。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-solid-patterns-alternating-7",
+                "sj-upper-solid-patterns-alternating-8",
+                "sj-upper-solid-patterns-alternating-9",
+                "sj-upper-solid-patterns-three-shapes-7",
+                "sj-upper-solid-patterns-three-shapes-8",
+                "sj-upper-solid-patterns-three-shapes-9",
+                "sj-upper-solid-patterns-ball-sizes-7",
+                "sj-upper-solid-patterns-ball-sizes-8",
+                "sj-upper-solid-patterns-ball-sizes-9",
+                "sj-upper-solid-patterns-group-lengths",
+                "sj-upper-solid-patterns-actual-alternating",
+                "sj-upper-solid-patterns-actual-three-shapes",
+                "sj-upper-solid-patterns-actual-ball-sizes",
+                "sj-upper-solid-patterns-actual-explanation",
+                "sj-upper-solid-patterns-reflection"
+              ],
+              "questionKinds": ["choice", "steps", "manual", "reflection"],
+              "visualKinds": ["solid-pattern"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "三类立体规律分别核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷同版61页已读。复习交替开头、三形状和大小球序列改变；同一球模型同比例缩小，不用平面圆或别的形状替代。真实续摆独立，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-solid-recompose",
+              "title": "完整部件合拼、沿缝拆分与多排计数",
+              "textbookTitle": "图形的初步认识（一）·拼分与数方块",
+              "page": 57,
+              "version": 1,
+              "status": "available",
+              "goal": "保持完整部件合拼，沿真实接缝拆成指定两组；按层与前后排核对方块，不由可见面推总数。",
+              "prerequisite": "认识四种立体形状，能数到9；有同样大方块、同粗不同高度圆柱与同粗同高小圆柱安全模型。没有材料实际活动待做，不要求切割物品。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-solid-recompose-cube-units",
+                "sj-upper-solid-recompose-cube-join",
+                "sj-upper-solid-recompose-cylinder-join",
+                "sj-upper-solid-recompose-cube-split",
+                "sj-upper-solid-recompose-cylinder-split",
+                "sj-upper-solid-recompose-count-stair",
+                "sj-upper-solid-recompose-count-corner",
+                "sj-upper-solid-recompose-count-rows",
+                "sj-upper-solid-recompose-corner-layers",
+                "sj-upper-solid-recompose-rows-front-back",
+                "sj-upper-solid-recompose-actual-cube-join",
+                "sj-upper-solid-recompose-actual-cylinder-join",
+                "sj-upper-solid-recompose-actual-splits",
+                "sj-upper-solid-recompose-actual-layers",
+                "sj-upper-solid-recompose-reflection"
+              ],
+              "questionKinds": [
+                "number",
+                "set",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-recompose"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整拼分与前后层记录核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷57/58页实际读到。组件与候选原创，复习改变材料数/高度/层与前后排，不能沿用原答案。真实操作独立记录、最终教师审校未核验。"
               }
             }
           ]
@@ -11557,6 +12142,308 @@
                 "date": "2026-10-01",
                 "reviewer": "同版原书正文核验与原创教学检查",
                 "notes": "已实际核对ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷的上册第63～65页（https://keben.app/book/0103）。讲解、图示与题目为原创，实物操作和写数须人工查看。仅开放本课范围，不代表其它活动或全册完成；保留人教版独立课包与记录。"
+              }
+            },
+            {
+              "id": "sj-upper-ten-counter",
+              "title": "计数器换十：十个一与一个十",
+              "textbookTitle": "认识10·计数器表示",
+              "page": 63,
+              "version": 1,
+              "status": "available",
+              "goal": "按数位读珠，亲自演示9添1/8添2后十个一换一个十，分清添珠与换十、珠颗数与代表数量。",
+              "prerequisite": "认识0～10和十个一是一个十；有标明十位/个位的儿童计数器或自制两杆计数架及安全珠。每颗在个位代表一，在十位代表十；不是上珠五的传统算盘。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 9,
+                "manual": 3,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-ten-counter-read-0",
+                "sj-upper-ten-counter-read-1",
+                "sj-upper-ten-counter-read-2",
+                "sj-upper-ten-counter-before-parts",
+                "sj-upper-ten-counter-need",
+                "sj-upper-ten-counter-ten-ones",
+                "sj-upper-ten-counter-after-parts",
+                "sj-upper-ten-counter-bead-vs-total",
+                "sj-upper-ten-counter-exchange-conserves",
+                "sj-upper-ten-counter-actual-exchange",
+                "sj-upper-ten-counter-actual-read",
+                "sj-upper-ten-counter-actual-explain",
+                "sj-upper-ten-counter-reflection"
+              ],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["digit-counter", "count"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "计数器单位与真实交换检查",
+                "notes": "2024年7月第1版、2025年7月第2次印刷63～65页实际读到。原创改初始读珠与添珠数量，固定目标10不变；临时十个一与整理后的个位0分清。最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-ten-tables",
+              "title": "十的完整表：五链、九行与加减两列",
+              "textbookTitle": "10的分解整表与补足、减法",
+              "page": 65,
+              "version": 1,
+              "status": "available",
+              "goal": "按完整图表逐行填全，区别一部分/另一部分/合计、行次与数量，反向表重新读，保留差0。",
+              "prerequisite": "认识0～10和10的分合；准备纸笔、十个安全小物件、五条每条十珠的安全链或自画对应记录。无真实珠链可记录纸面替代，不冒实际串珠已完成。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-ten-tables-chains-other",
+                "sj-upper-ten-tables-chains-both",
+                "sj-upper-ten-tables-rows-complements",
+                "sj-upper-ten-tables-rows-totals",
+                "sj-upper-ten-tables-add-complements",
+                "sj-upper-ten-tables-sub-differences",
+                "sj-upper-ten-tables-trend",
+                "sj-upper-ten-tables-equal-parts",
+                "sj-upper-ten-tables-actual-five-chains",
+                "sj-upper-ten-tables-actual-nine-rows",
+                "sj-upper-ten-tables-actual-add-sub",
+                "sj-upper-ten-tables-actual-explain",
+                "sj-upper-ten-tables-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["ten-tables"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整十珠/圈表/加减整表核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷65/67/71页实际读到。复习重排所有行，保持每行十个但改变答案顺序；差0与未填区分，实际涂填独立记录。最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-ten-order",
+              "title": "完整正倒数与十以内两空比较",
+              "textbookTitle": "10的顺序·练习七开放比较",
+              "page": 72,
+              "version": 1,
+              "status": "available",
+              "goal": "按给定起终点完整正倒数，在0～10联合判两空严格比较，范围/相等/0与未答分别检查。",
+              "prerequisite": "认识0～10和＜＞，准备0～10数字卡、纸笔及安全小物件。完整数序包含0与否按题目终点判断。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-ten-order-full-0-10",
+                "sj-upper-ten-order-full-1-10",
+                "sj-upper-ten-order-around-descending",
+                "sj-upper-ten-order-around-ascending",
+                "sj-upper-ten-order-dependent-descending",
+                "sj-upper-ten-order-strict-equal",
+                "sj-upper-ten-order-outside-range",
+                "sj-upper-ten-order-zero-allowed",
+                "sj-upper-ten-order-actual-full-count",
+                "sj-upper-ten-order-actual-around",
+                "sj-upper-ten-order-actual-dependent",
+                "sj-upper-ten-order-actual-explain",
+                "sj-upper-ten-order-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "number-chain",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["number-line"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整数序与开放联合条件核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷64/72页实际查看。复习完整数序方向和中心/最左固定数改变，所有合法组合接受。纸面多写独立，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-number-culture",
+              "title": "诗里的数与数字的不同写法",
+              "textbookTitle": "你知道吗·数字文化",
+              "page": 65,
+              "version": 1,
+              "status": "available",
+              "goal": "实际读古诗发现一至十，对照0～9数字与计数文字，分清数量、写法、0和未答。",
+              "prerequisite": "会认0～10，准备纸笔和0～9数字卡；古字观察需同版纸质教材74页或可靠完整对照，未取得不猜也不确认完成。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-number-culture-modern-digits",
+                "sj-upper-number-culture-poem-numbers",
+                "sj-upper-number-culture-matched-counts",
+                "sj-upper-number-culture-ten-digits",
+                "sj-upper-number-culture-empty-count",
+                "sj-upper-number-culture-history-boundary",
+                "sj-upper-number-culture-digit-types",
+                "sj-upper-number-culture-poem-zero",
+                "sj-upper-number-culture-actual-poem",
+                "sj-upper-number-culture-actual-digits",
+                "sj-upper-number-culture-actual-history",
+                "sj-upper-number-culture-actual-explain",
+                "sj-upper-number-culture-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版数字文化页与实际活动边界核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷65/74页已实际查看。公版诗文与原创教学，无教材扫描或冒充古字的字形；历史对照观察需实际完成，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-ten-evaluation",
+              "title": "认识十单元：三项独立评价",
+              "textbookTitle": "评价与反思·认识10",
+              "page": 74,
+              "version": 1,
+              "status": "available",
+              "goal": "分别记录认识10与计算、解决实际问题、认真思考的实际证据和独立反思，不用网页正确率自动打星。",
+              "prerequisite": "完成认识10、分合与加减、应用问题的学习；准备十件安全物品、数字卡、纸笔，可分几次实际完成。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 6,
+                "manual": 3,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-ten-evaluation-ten-places",
+                "sj-upper-ten-evaluation-sum-ten",
+                "sj-upper-ten-evaluation-ten-subtract",
+                "sj-upper-ten-evaluation-join-story",
+                "sj-upper-ten-evaluation-other-story",
+                "sj-upper-ten-evaluation-care-evidence",
+                "sj-upper-ten-evaluation-actual-recognition",
+                "sj-upper-ten-evaluation-actual-application",
+                "sj-upper-ten-evaluation-actual-care",
+                "sj-upper-ten-evaluation-reflection-recognition",
+                "sj-upper-ten-evaluation-reflection-application",
+                "sj-upper-ten-evaluation-reflection-care"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["digit-counter"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "三项独立评价与条件变式核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷74页已实际查看；三个真实证据与三个反思分别保存，0保留，复习改变所求与条件。教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-ten-open-activities",
+              "title": "十片抛分、三幅补画与开放故事",
+              "textbookTitle": "练习七·实际操作与多种写法",
+              "page": 66,
+              "version": 1,
+              "status": "available",
+              "goal": "真实抛十片记录同部分三算式，三幅各补到十；编同式不同故事，0～10开放等不等接受全部合法写法。",
+              "prerequisite": "会点数0～10、分合与加减和＜＞。准备十张两面标A/B的纸片、纸笔；可用两色但同时标字，不单靠颜色。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 9,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-ten-open-activities-add-equal",
+                "sj-upper-ten-open-activities-add-less",
+                "sj-upper-ten-open-activities-zero-equal",
+                "sj-upper-ten-open-activities-zero-greater",
+                "sj-upper-ten-open-activities-subtract-equal",
+                "sj-upper-ten-open-activities-subtract-less",
+                "sj-upper-ten-open-activities-three-drawings",
+                "sj-upper-ten-open-activities-two-colours",
+                "sj-upper-ten-open-activities-same-equation",
+                "sj-upper-ten-open-activities-actual-toss",
+                "sj-upper-ten-open-activities-actual-draw",
+                "sj-upper-ten-open-activities-actual-stories",
+                "sj-upper-ten-open-activities-actual-open-writings",
+                "sj-upper-ten-open-activities-actual-explain",
+                "sj-upper-ten-open-activities-reflection"
+              ],
+              "questionKinds": [
+                "number",
+                "number-chain",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "真实开放操作与全部合法范围核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷66/67/71/73页已实际查看。复习改变条件、图原有量、双面示例两部分及同式故事，不把示例当实测，最终教师审校未核验。"
               }
             },
             {
@@ -11820,36 +12707,6 @@
                 "reviewer": "同版原书正文核验与原创教学检查",
                 "notes": "依据已实际核对ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第74页（https://keben.app/book/0103）的三数连线拓展。图示数字、位置标识与任务均原创，十字图增加已知上端以形成明确解，不把多解情况错误限制成单一答案。不复制教材插图，保留人教版独立记录；本课不代表全册完成。"
               }
-            },
-            {
-              "id": "sj-upper-pending-u4",
-              "title": "10的认识和加减法",
-              "textbookTitle": "10的认识和加减法",
-              "page": 62,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
-              }
             }
           ]
         },
@@ -11993,6 +12850,338 @@
               }
             },
             {
+              "id": "sj-upper-teens-counter",
+              "title": "计数器的十几：逐珠添取与加减",
+              "textbookTitle": "认识11～19·计数器操作",
+              "page": 79,
+              "version": 1,
+              "status": "available",
+              "goal": "计数器完整表示11～19，分清珠颗数与物品量，实际逐珠添取和不进位不退位计算。",
+              "prerequisite": "认识十与一及11～19；准备有十位/个位两杆标记的儿童计数器，或自制两栏可移动大纸珠模型。小珠由家长保管，不入口。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 11,
+                "manual": 3,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 11,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-teens-counter-read-0",
+                "sj-upper-teens-counter-read-1",
+                "sj-upper-teens-counter-read-2",
+                "sj-upper-teens-counter-read-3",
+                "sj-upper-teens-counter-read-4",
+                "sj-upper-teens-counter-read-5",
+                "sj-upper-teens-counter-read-6",
+                "sj-upper-teens-counter-read-7",
+                "sj-upper-teens-counter-read-8",
+                "sj-upper-teens-counter-add-after",
+                "sj-upper-teens-counter-subtract-after",
+                "sj-upper-teens-counter-actual-nine-states",
+                "sj-upper-teens-counter-actual-add-subtract",
+                "sj-upper-teens-counter-actual-explain",
+                "sj-upper-teens-counter-reflection"
+              ],
+              "questionKinds": ["number", "steps", "manual", "reflection"],
+              "visualKinds": ["digit-counter"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整十几计数器与添取单位核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷79～83页已实际查看。复习九图个位次序改变，加法12添4、减法18取4重新读条件；全部实际操作与网页图分开。教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-teens-numberline",
+              "title": "0～19完整数线：圈十、比较与画跳线",
+              "textbookTitle": "认识11～19·数线与先圈十",
+              "page": 80,
+              "version": 1,
+              "status": "available",
+              "goal": "完整标读0～19和指定起终点，实际圈十接数、相同十组比较、画加减跳线与核对严格范围和距离。",
+              "prerequisite": "认识0～19和十与一；准备十九件安全小物、纸笔和方格纸，0～19数字卡可自写。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-teens-numberline-complete-0-19",
+                "sj-upper-teens-numberline-complete-12-19",
+                "sj-upper-teens-numberline-complete-19-15",
+                "sj-upper-teens-numberline-missing-ticks",
+                "sj-upper-teens-numberline-group-totals",
+                "sj-upper-teens-numberline-equal-ten-compare",
+                "sj-upper-teens-numberline-circle-ten-total",
+                "sj-upper-teens-numberline-forward-landings",
+                "sj-upper-teens-numberline-backward-landings",
+                "sj-upper-teens-numberline-distance",
+                "sj-upper-teens-numberline-near-end",
+                "sj-upper-teens-numberline-all-between",
+                "sj-upper-teens-numberline-actual-full-line",
+                "sj-upper-teens-numberline-actual-circle-ten",
+                "sj-upper-teens-numberline-actual-two-groups",
+                "sj-upper-teens-numberline-actual-jump-lines",
+                "sj-upper-teens-numberline-actual-range-distance",
+                "sj-upper-teens-numberline-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["number-line", "count", "comparison-rows"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整数线与两套圈十/全部落点核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷80/81/84/85页已实际查看。复习改变完整方向/起终点、缺位、A/B数量比较、散物量、跳线条件和严格范围，不只重复末值；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-teens-layouts",
+              "title": "布点不重漏：十九间房与客人编号",
+              "textbookTitle": "练习八·有序点数与房间编号",
+              "page": 84,
+              "version": 1,
+              "status": "available",
+              "goal": "按真实三角/方框布局不重漏点数，完整十九间连续编号，区分房间总数、排中位置和编号。",
+              "prerequisite": "会数1～19，准备十九张房间卡、点贴或纸笔；上下排固定按图位置，不说楼层号。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-teens-layouts-triangle-total",
+                "sj-upper-teens-layouts-triangle-rows",
+                "sj-upper-teens-layouts-frame-total",
+                "sj-upper-teens-layouts-frame-rows",
+                "sj-upper-teens-layouts-room-total",
+                "sj-upper-teens-layouts-room-complete",
+                "sj-upper-teens-layouts-guest-A",
+                "sj-upper-teens-layouts-guest-B",
+                "sj-upper-teens-layouts-guest-C",
+                "sj-upper-teens-layouts-guest-D",
+                "sj-upper-teens-layouts-upper-continues",
+                "sj-upper-teens-layouts-corners-once",
+                "sj-upper-teens-layouts-actual-triangles",
+                "sj-upper-teens-layouts-actual-frames",
+                "sj-upper-teens-layouts-actual-rooms",
+                "sj-upper-teens-layouts-actual-guests",
+                "sj-upper-teens-layouts-actual-explain",
+                "sj-upper-teens-layouts-reflection"
+              ],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["teen-layout"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "实际布点与十九房位置/连续编号核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷84页已实际查看。原创图示不复制动物或教材扫描，复习改变点阵行数、可见编号及客人位置，不改变连续编号规则；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-teens-tables",
+              "title": "四行算式与自己的十几故事",
+              "textbookTitle": "十几加减·完整练习表与自主故事",
+              "page": 85,
+              "version": 1,
+              "status": "available",
+              "goal": "完整两列各四行独立算式，真实圈划三式，区分变化与部分整体，自创四指定式的故事并检验。",
+              "prerequisite": "会11～19组成及不进位不退位加减，备19根棒或等长纸棒、一条代表十的十格长棒、纸笔。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 28,
+                "manual": 6,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 28,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-teens-tables-rods-join",
+                "sj-upper-teens-tables-rods-take",
+                "sj-upper-teens-tables-rods-ten",
+                "sj-upper-teens-tables-table-add",
+                "sj-upper-teens-tables-table-subtract",
+                "sj-upper-teens-tables-equation-0",
+                "sj-upper-teens-tables-equation-1",
+                "sj-upper-teens-tables-equation-2",
+                "sj-upper-teens-tables-equation-3",
+                "sj-upper-teens-tables-equation-4",
+                "sj-upper-teens-tables-equation-5",
+                "sj-upper-teens-tables-chain-0",
+                "sj-upper-teens-tables-chain-1",
+                "sj-upper-teens-tables-chain-2",
+                "sj-upper-teens-tables-chain-3",
+                "sj-upper-teens-tables-compare-0",
+                "sj-upper-teens-tables-compare-1",
+                "sj-upper-teens-tables-compare-2",
+                "sj-upper-teens-tables-compare-3",
+                "sj-upper-teens-tables-compare-4",
+                "sj-upper-teens-tables-compare-5",
+                "sj-upper-teens-tables-complete-ten",
+                "sj-upper-teens-tables-add-story",
+                "sj-upper-teens-tables-subtract-story",
+                "sj-upper-teens-tables-ten-add-story",
+                "sj-upper-teens-tables-ten-subtract-story",
+                "sj-upper-teens-tables-story-structure-add",
+                "sj-upper-teens-tables-story-structure-subtract",
+                "sj-upper-teens-tables-actual-circle-mark",
+                "sj-upper-teens-tables-actual-full-tables",
+                "sj-upper-teens-tables-actual-story-add",
+                "sj-upper-teens-tables-actual-story-subtract",
+                "sj-upper-teens-tables-actual-story-ten-add",
+                "sj-upper-teens-tables-actual-story-ten-subtract",
+                "sj-upper-teens-tables-reflection"
+              ],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["teen-arithmetic-grid"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版算式表与故事结构实际核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷82/83/85/86页已实际查看。原创棒图/表和故事变化，不复制扫描，完整六比较/四连算/三补十另核对；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-month-record",
+              "title": "三十条整月记录：逐日分类与合并",
+              "textbookTitle": "练习八·整月天气记录",
+              "page": 86,
+              "version": 1,
+              "status": "available",
+              "goal": "完整三组各十条一日一类，分类计数、合并指定两类，核对遗漏重复并区分模拟和真实观察。",
+              "prerequisite": "会本范围加法与分类，备纸笔和三十张记录卡；家长辅助读20～30日期标签，不要求三十加减。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-month-record-group-0",
+                "sj-upper-month-record-group-1",
+                "sj-upper-month-record-group-2",
+                "sj-upper-month-record-all-counts",
+                "sj-upper-month-record-combine",
+                "sj-upper-month-record-compare",
+                "sj-upper-month-record-every-day",
+                "sj-upper-month-record-same-kind",
+                "sj-upper-month-record-simulation",
+                "sj-upper-month-record-complete-month",
+                "sj-upper-month-record-actual-full-record",
+                "sj-upper-month-record-actual-classify",
+                "sj-upper-month-record-actual-combine",
+                "sj-upper-month-record-actual-explain",
+                "sj-upper-month-record-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["month-weather"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版整月条数与本站分类/合并逐条核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷86页已实际查看。完整30条模拟与每条分类/指定两类合并，不复制教材扫描；真实天气尚需实际观察，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-teens-evaluation",
+              "title": "认识十几：三项自评与计数的约定",
+              "textbookTitle": "评价与反思·你知道吗",
+              "page": 87,
+              "version": 1,
+              "status": "available",
+              "goal": "认识组成、学具有序操作、说清十几加减三项实际证据与独立反思，体验三种一一对应计数及一大代表十的约定。",
+              "prerequisite": "已学11～19和本范围加减；准备19个安全模型、十位个位儿童计数器或明确标位的可移动纸珠、小纸卡、安全绳和纸笔。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 7,
+                "manual": 4,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 7,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-teens-evaluation-composition",
+                "sj-upper-teens-evaluation-all-ones",
+                "sj-upper-teens-evaluation-add-process",
+                "sj-upper-teens-evaluation-subtract-process",
+                "sj-upper-teens-evaluation-ten-marker",
+                "sj-upper-teens-evaluation-agreement",
+                "sj-upper-teens-evaluation-independent-evidence",
+                "sj-upper-teens-evaluation-actual-recognition",
+                "sj-upper-teens-evaluation-actual-operation",
+                "sj-upper-teens-evaluation-actual-process",
+                "sj-upper-teens-evaluation-actual-culture",
+                "sj-upper-teens-evaluation-reflection-recognition",
+                "sj-upper-teens-evaluation-reflection-operation",
+                "sj-upper-teens-evaluation-reflection-process"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["digit-counter"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "三项独立评价与计数约定实际核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷87页已实际查看。原创安全计数体验、三项各manual及reflection与变式，不复制古代插画或冒历史原物；教师最终审校未核验。"
+              }
+            },
+            {
               "id": "sj-upper-teen-arithmetic",
               "title": "保留整十，算清单个一",
               "textbookTitle": "十几加几和相应的减法",
@@ -12129,36 +13318,6 @@
                 "reviewer": "同版正文核验与原创教学检查",
                 "notes": "依据已实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第85页（https://keben.app/book/0103）活动与时刻观察。原创钟面、情境、例示安排及题目，不复制教材插图；半时时短针位置按实际比例绘制，不扩展至任意分钟或经过时间计算。本课不宣称全第五单元或全年完成。"
               }
-            },
-            {
-              "id": "sj-upper-pending-u5",
-              "title": "认识11～19",
-              "textbookTitle": "认识11～19",
-              "page": 78,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
-              }
             }
           ]
         },
@@ -12179,6 +13338,395 @@
             }
           ],
           "lessons": [
+            {
+              "id": "sj-upper-final-calculation",
+              "title": "期末计算：十二基础式与六连算",
+              "textbookTitle": "期末复习·完整计算练习",
+              "page": 91,
+              "version": 1,
+              "status": "available",
+              "goal": "完整十二基础式逐题、六连算中间与最终逐项，运算次序和0边界明确，实际完整计算及方法说明分开记录。",
+              "prerequisite": "会10以内及十几不进位不退位加减；备纸笔、19枚纸片或小棒。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 11,
+                "manual": 3,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 11,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-calculation-basic-row-0",
+                "sj-upper-final-calculation-basic-row-1",
+                "sj-upper-final-calculation-basic-row-2",
+                "sj-upper-final-calculation-chain-0",
+                "sj-upper-final-calculation-chain-1",
+                "sj-upper-final-calculation-chain-2",
+                "sj-upper-final-calculation-chain-3",
+                "sj-upper-final-calculation-chain-4",
+                "sj-upper-final-calculation-chain-5",
+                "sj-upper-final-calculation-order",
+                "sj-upper-final-calculation-zero",
+                "sj-upper-final-calculation-actual-full-board",
+                "sj-upper-final-calculation-actual-six-chains",
+                "sj-upper-final-calculation-actual-methods",
+                "sj-upper-final-calculation-reflection"
+              ],
+              "questionKinds": ["steps", "choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整十二基础式及六连算核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷91页18式逐项已实际查看；本站三行独立四字段、六连算各中间/最终双字段，复习全换数且保留减0/最终0边界。教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-evaluation",
+              "title": "期末自评：五方面分别留证据",
+              "textbookTitle": "期末复习·评价与反思",
+              "page": 94,
+              "version": 1,
+              "status": "available",
+              "goal": "认识数/计算应用/四形体/六方向/操作思考表达五方面各真实证据与独立反思，保留帮助待做，未来计划分开，不自动评星。",
+              "prerequisite": "复习本学期0～19、10以内加减/故事、四形体及位置；备安全小棒/纸卡/模型、纸笔，与家人共同观察。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 5,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-evaluation-all-numbers",
+                "sj-upper-final-evaluation-ten-unit",
+                "sj-upper-final-evaluation-compare",
+                "sj-upper-final-evaluation-arithmetic",
+                "sj-upper-final-evaluation-application",
+                "sj-upper-final-evaluation-solid-feature",
+                "sj-upper-final-evaluation-body-direction",
+                "sj-upper-final-evaluation-independent",
+                "sj-upper-final-evaluation-actual-numbers",
+                "sj-upper-final-evaluation-actual-calculation",
+                "sj-upper-final-evaluation-actual-solids",
+                "sj-upper-final-evaluation-actual-position",
+                "sj-upper-final-evaluation-actual-expression",
+                "sj-upper-final-evaluation-reflection-numbers",
+                "sj-upper-final-evaluation-reflection-calculation",
+                "sj-upper-final-evaluation-reflection-solids",
+                "sj-upper-final-evaluation-reflection-position",
+                "sj-upper-final-evaluation-reflection-expression"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["digit-counter", "solid-row"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "五方面各真实证据与独立反思核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷94页已实际查看，五项分别对应manual和reflection，未来计划分开；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-pairs",
+              "title": "期末形体：两种分类与同形双块拼搭",
+              "textbookTitle": "期末复习·图形的认识",
+              "page": 89,
+              "version": 1,
+              "status": "available",
+              "goal": "四种形体按两种明确规则完整分类；两相同正方体、长方体、圆柱各真实拼搭，原块数/作品/整体形状分清。",
+              "prerequisite": "认识四种形体；备四模型及各两相同正方体、长方体、圆柱，桌面安全摆放，可用真实可拼的纸模型并注明替代。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-pairs-curved-rule",
+                "sj-upper-final-pairs-flat-rule",
+                "sj-upper-final-pairs-cylinder-both",
+                "sj-upper-final-pairs-cube-pair",
+                "sj-upper-final-pairs-cylinder-pair",
+                "sj-upper-final-pairs-cube-materials",
+                "sj-upper-final-pairs-cylinder-materials",
+                "sj-upper-final-pairs-whole-cube",
+                "sj-upper-final-pairs-cuboid-condition",
+                "sj-upper-final-pairs-join-condition",
+                "sj-upper-final-pairs-size",
+                "sj-upper-final-pairs-actual",
+                "sj-upper-final-pairs-actual-two-sorts",
+                "sj-upper-final-pairs-actual-cubes",
+                "sj-upper-final-pairs-actual-cuboids",
+                "sj-upper-final-pairs-actual-cylinders",
+                "sj-upper-final-pairs-actual-explain",
+                "sj-upper-final-pairs-reflection"
+              ],
+              "questionKinds": [
+                "set",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-row", "solid-recompose"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "双规则分类与三种同形双块真实操作核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷89页已实际查看。原创两规则分类及固定双块候选，实际三形分别人工，不教面积体积或从静态图证明稳定；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-organize",
+              "title": "期末整理：完整数线与两种算式分类",
+              "textbookTitle": "期末复习·完整整理与多种表示",
+              "page": 88,
+              "version": 1,
+              "status": "available",
+              "goal": "完整0～19数序/缺位/严格范围及全部九十几组成，三种独立数量表示，完整算式卡按符号与范围各整理一次。",
+              "prerequisite": "会0～19及不进位不退位加减，备数字卡、小棒/儿童计数器或标位可移动纸珠、纸笔和八张式卡。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 19,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 19,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-organize-full-sequence",
+                "sj-upper-final-organize-missing-values",
+                "sj-upper-final-organize-all-strict",
+                "sj-upper-final-organize-strict-count",
+                "sj-upper-final-organize-composition-0",
+                "sj-upper-final-organize-composition-1",
+                "sj-upper-final-organize-composition-2",
+                "sj-upper-final-organize-composition-3",
+                "sj-upper-final-organize-composition-4",
+                "sj-upper-final-organize-composition-5",
+                "sj-upper-final-organize-composition-6",
+                "sj-upper-final-organize-composition-7",
+                "sj-upper-final-organize-composition-8",
+                "sj-upper-final-organize-scatter",
+                "sj-upper-final-organize-bundle",
+                "sj-upper-final-organize-counter",
+                "sj-upper-final-organize-equation-operator",
+                "sj-upper-final-organize-equation-range",
+                "sj-upper-final-organize-classification-rule",
+                "sj-upper-final-organize-actual-full-line",
+                "sj-upper-final-organize-actual-nine-compositions",
+                "sj-upper-final-organize-actual-three-representations",
+                "sj-upper-final-organize-actual-two-card-sorts",
+                "sj-upper-final-organize-actual-explain",
+                "sj-upper-final-organize-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "set",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "number-line",
+                "digit-counter",
+                "place-value",
+                "count"
+              ],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "同版完整整理与多表示逐项核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷88/90页已实际查看。完整范围/九组成/三表示/两种八式分类原创，复习改变方向/缺位/所求范围/全部式卡，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-reading",
+              "title": "期末读表：六格填写与已读未读",
+              "textbookTitle": "期末复习·阅读记录",
+              "page": 93,
+              "version": 1,
+              "status": "available",
+              "goal": "先由两人三天记录填全六格，再同日/三天比较；同书已读与未读反向比较，未知总页数不猜剩余，真实记录分开。",
+              "prerequisite": "会10以内与十几不进位加减，备空六格纸表、纸笔及自己的阅读记录；家人可以帮读题。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 4,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 10,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-reading-six-cells",
+                "sj-upper-final-reading-day-0",
+                "sj-upper-final-reading-day-1",
+                "sj-upper-final-reading-day-2",
+                "sj-upper-final-reading-totals",
+                "sj-upper-final-reading-read-more",
+                "sj-upper-final-reading-unread-more",
+                "sj-upper-final-reading-unread-difference",
+                "sj-upper-final-reading-unknown-total",
+                "sj-upper-final-reading-meaning",
+                "sj-upper-final-reading-actual-six-cells",
+                "sj-upper-final-reading-actual-comparison",
+                "sj-upper-final-reading-actual-record",
+                "sj-upper-final-reading-actual-explain",
+                "sj-upper-final-reading-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["reading-table"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "完整六格及已读未读条件核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷93页已实际查看，六空由记录填写，不由已给值表替代；全新两人六值重填，同书未读反向比较/未知具体剩余边界明确。教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-stories",
+              "title": "期末故事：四情境与自己的加减问题",
+              "textbookTitle": "期末复习·数量关系",
+              "page": 89,
+              "version": 1,
+              "status": "available",
+              "goal": "完整两合并/两减少图故事及加入、仅一类剩余，原创多类动物图自主问题，已知所求/类别/图式/单位/答句核对。",
+              "prerequisite": "会10以内和十几范围加减，备纸笔/小棒/安全纸卡，家人可以帮读；本站图为原创示意。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 13,
+                "manual": 9,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 13,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-stories-equation-fruit",
+                "sj-upper-final-stories-equation-books",
+                "sj-upper-final-stories-equation-bottles",
+                "sj-upper-final-stories-equation-rabbits",
+                "sj-upper-final-stories-playground",
+                "sj-upper-final-stories-one-kind",
+                "sj-upper-final-stories-all-food",
+                "sj-upper-final-stories-garden-ducks",
+                "sj-upper-final-stories-garden-rabbits",
+                "sj-upper-final-stories-garden-birds",
+                "sj-upper-final-stories-static-action",
+                "sj-upper-final-stories-open-many",
+                "sj-upper-final-stories-complete-story",
+                "sj-upper-final-stories-actual-fruit",
+                "sj-upper-final-stories-actual-books",
+                "sj-upper-final-stories-actual-bottles",
+                "sj-upper-final-stories-actual-rabbits",
+                "sj-upper-final-stories-actual-playground",
+                "sj-upper-final-stories-actual-one-kind",
+                "sj-upper-final-stories-actual-open-garden",
+                "sj-upper-final-stories-actual-explain",
+                "sj-upper-final-stories-actual-textbook",
+                "sj-upper-final-stories-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["final-stories"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "四完整故事及多类自主问题逐项核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷89/91/92页已实际查看。原创七已知情境及新数量/叉号，每物一次，静态与时间变化边界明确，四场景各实际人工及自主多问题，不复制教材插图；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "sj-upper-final-moves",
+              "title": "期末探索：先移两块，再自由拼长方体",
+              "textbookTitle": "期末复习·两阶段移块",
+              "page": 94,
+              "version": 1,
+              "status": "available",
+              "goal": "先完成两块移动，再从新状态自由找长方体目标，区分还需、总次数和保留块数，用实际操作与不能更少的说明核对。",
+              "prerequisite": "认识正方体和长方体，会10以内计数；备9个同样大小方块与纸笔。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 9,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-upper-final-moves-initial",
+                "sj-upper-final-moves-next",
+                "sj-upper-final-moves-preserve",
+                "sj-upper-final-moves-minimum",
+                "sj-upper-final-moves-kept",
+                "sj-upper-final-moves-total",
+                "sj-upper-final-moves-target",
+                "sj-upper-final-moves-proof",
+                "sj-upper-final-moves-free",
+                "sj-upper-final-moves-actual-first",
+                "sj-upper-final-moves-actual-free",
+                "sj-upper-final-moves-actual-review",
+                "sj-upper-final-moves-actual-textbook",
+                "sj-upper-final-moves-actual-explain",
+                "sj-upper-final-moves-reflection"
+              ],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["cube-columns"],
+              "audit": {
+                "date": "2026-10-02",
+                "reviewer": "原两阶段与自由目标核对",
+                "notes": "2024年7月第1版、2025年7月第2次印刷同版94页先移两块再自由拼。旧固定前三列练习保留独立条件；新状态主最少2/反向3，程序枚举全方向及可能重合位置，真实操作分五项人工。教师最终审校未核验。"
+              }
+            },
             {
               "id": "sj-upper-final-numbers",
               "title": "期末复习：0～19的分类、数序与十个一",
@@ -12448,36 +13996,6 @@
                 "reviewer": "同版已保存原书正文与原创教学检查",
                 "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第94页（https://keben.app/book/0103）的积木移动、数量规律、评价与反思。原创图、列高、题目及目标条件，不复制教材插图；仅开放该页对应复习，遮挡珠串加入明确条件的原创例示；不复刻原图，不据例示宣称全部细项已完成，不宣称全册已完成。"
               }
-            },
-            {
-              "id": "sj-upper-pending-review",
-              "title": "期末复习",
-              "textbookTitle": "期末复习",
-              "page": 88,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，完整原创教学与活动仍在制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书目录核验",
-                "notes": "仅登记目录与纸面起始页，不开放尚未完成的课包。"
-              }
             }
           ]
         }
@@ -12494,13 +14012,13 @@
       "resourceId": "978-7-5743-1295-1",
       "verifiedAt": "2026-10-01",
       "summary": {
-        "availablePacks": 75,
-        "pendingEntries": 7,
+        "availablePacks": 87,
+        "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 958,
-          "manual": 245,
-          "reflection": 96
+          "objective": 1102,
+          "manual": 303,
+          "reflection": 143
         }
       },
       "units": [
@@ -12821,6 +14339,51 @@
               }
             },
             {
+              "id": "sj-lower-first-practice",
+              "title": "第一单元练习：完整输入表、圈十与移物规律",
+              "textbookTitle": "进位加法和退位减法·想想做做与练习",
+              "page": 16,
+              "version": 1,
+              "status": "available",
+              "goal": "完整对应加9与减9输入，实际圈十和划去物品，分清分步与独立计算，验证两部分一增一减的总量。",
+              "prerequisite": "会20以内进位加法与退位减法；准备纸笔和19件安全学具。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 9,
+                "manual": 5,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-first-practice-whole-add-list",
+                "sj-lower-first-practice-whole-subtract-list",
+                "sj-lower-first-practice-balanced-results",
+                "sj-lower-first-practice-balanced-reason",
+                "sj-lower-first-practice-balanced-missing",
+                "sj-lower-first-practice-equivalent-add",
+                "sj-lower-first-practice-equivalent-subtract",
+                "sj-lower-first-practice-subtract-inputs",
+                "sj-lower-first-practice-blank-not-zero",
+                "sj-lower-first-practice-manual-0",
+                "sj-lower-first-practice-manual-1",
+                "sj-lower-first-practice-manual-2",
+                "sj-lower-first-practice-manual-3",
+                "sj-lower-first-practice-manual-4"
+              ],
+              "questionKinds": ["steps", "choice", "number", "manual"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站第一单元练习：完整输入表、圈十与移物规律对应纸面第16页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
               "id": "sj-lower-conditions-pairs",
               "title": "综合应用：补条件、提问题与两盒数量比较",
               "textbookTitle": "进位加法和退位减法",
@@ -13052,33 +14615,58 @@
               }
             },
             {
-              "id": "sj-lower-pending-u1",
-              "title": "第一单元 · 其余内容制作中",
-              "textbookTitle": "进位加法和退位减法",
-              "page": 1,
+              "id": "sj-lower-first-review",
+              "title": "第一单元回顾：选条件、自己提问与三项自评",
+              "textbookTitle": "进位加法和退位减法·练习与回顾",
+              "page": 21,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "选择所需条件，分清全部与其中一部分，实际自主提问、写多种算式、做数卡游戏，并分别回顾计算、应用与表达。",
+              "prerequisite": "会20以内进位加法与退位减法；准备纸笔、19件安全学具，可请家人参与。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 9,
+                "manual": 5,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 9,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "sj-lower-first-review-choose-parts",
+                "sj-lower-first-review-selected-total",
+                "sj-lower-first-review-nested-part",
+                "sj-lower-first-review-no-double-count",
+                "sj-lower-first-review-missing-price",
+                "sj-lower-first-review-needed-condition",
+                "sj-lower-first-review-unread",
+                "sj-lower-first-review-open-equations",
+                "sj-lower-first-review-multiple-answers",
+                "sj-lower-first-review-manual-0",
+                "sj-lower-first-review-manual-1",
+                "sj-lower-first-review-manual-2",
+                "sj-lower-first-review-manual-3",
+                "sj-lower-first-review-manual-4",
+                "sj-lower-first-review-evaluation-calculation",
+                "sj-lower-first-review-evaluation-application",
+                "sj-lower-first-review-evaluation-expression"
+              ],
+              "questionKinds": [
+                "set",
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
                 "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站第一单元回顾：选条件、自己提问与三项自评对应纸面第21页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
               }
             }
           ]
@@ -13523,6 +15111,58 @@
               }
             },
             {
+              "id": "sj-lower-plane-review",
+              "title": "图形整理：分类印面、完整拼图与分别回顾",
+              "textbookTitle": "图形的初步认识（二）·练习与评价",
+              "page": 31,
+              "version": 1,
+              "status": "available",
+              "goal": "实际分类涂色计数、印不同面、制作完全一样轮廓，用全部指定片拼完整正方形，并分别评价认图、操作和观察。",
+              "prerequisite": "完成认图、描面、补图、剪拼、折纸与数图课；准备纸笔和安全积木，实物材料缺少的活动可待做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-plane-review-count-circle",
+                "sj-lower-plane-review-count-square",
+                "sj-lower-plane-review-count-rectangle",
+                "sj-lower-plane-review-count-triangle",
+                "sj-lower-plane-review-piece-total",
+                "sj-lower-plane-review-piece-rectangles",
+                "sj-lower-plane-review-piece-squares",
+                "sj-lower-plane-review-whole-outline",
+                "sj-lower-plane-review-circle-straight",
+                "sj-lower-plane-review-actual-print",
+                "sj-lower-plane-review-seams",
+                "sj-lower-plane-review-same-category",
+                "sj-lower-plane-review-manual-0",
+                "sj-lower-plane-review-manual-1",
+                "sj-lower-plane-review-manual-2",
+                "sj-lower-plane-review-manual-3",
+                "sj-lower-plane-review-manual-4",
+                "sj-lower-plane-review-evaluation-recognition",
+                "sj-lower-plane-review-evaluation-construction",
+                "sj-lower-plane-review-evaluation-observation",
+                "sj-lower-plane-review-reflection"
+              ],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["plane-cards", "partitioned-square"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站图形整理：分类印面、完整拼图与分别回顾对应纸面第31页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
               "id": "sj-lower-composite-counting",
               "title": "综合数图：小图、大图与不重不漏",
               "textbookTitle": "图形的初步认识（二）·练习四数图探索",
@@ -13665,36 +15305,6 @@
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站钉点板改围：斜边变直角对应纸面第31页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
               }
-            },
-            {
-              "id": "sj-lower-pending-u2",
-              "title": "图形的初步认识（二）",
-              "textbookTitle": "图形的初步认识（二）",
-              "page": 22,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
-              }
             }
           ]
         },
@@ -13832,16 +15442,16 @@
               "title": "混合图形创作：材料统计与作品故事",
               "textbookTitle": "图形的拼组·用不同图形拼与反思评价",
               "page": 35,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "观察混合图形作品，按原始材料分类计数，先计划后创作，讲述故事、展示交流并记录反思。",
               "prerequisite": "认识四类平面图形，会逐片点数到10，能说一个简单想法。",
               "referenceQuery": null,
-              "steps": 4,
+              "steps": 5,
               "tasks": {
                 "objective": 24,
-                "manual": 3,
-                "reflection": 2
+                "manual": 5,
+                "reflection": 5
               },
               "reviewTasks": {
                 "objective": 24,
@@ -13876,8 +15486,13 @@
                 "sj-lower-mixed-collages-manual-0",
                 "sj-lower-mixed-collages-manual-1",
                 "sj-lower-mixed-collages-manual-2",
+                "sj-lower-mixed-collages-manual-3",
+                "sj-lower-mixed-collages-manual-4",
                 "sj-lower-mixed-collages-art-story",
-                "sj-lower-mixed-collages-reflection"
+                "sj-lower-mixed-collages-reflection",
+                "sj-lower-mixed-collages-reflection-digits",
+                "sj-lower-mixed-collages-reflection-relations",
+                "sj-lower-mixed-collages-reflection-creation"
               ],
               "questionKinds": [
                 "number",
@@ -13891,36 +15506,6 @@
                 "date": "2026-10-01",
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站混合图形创作：材料统计与作品故事对应纸面第35页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
-              }
-            },
-            {
-              "id": "sj-lower-pending-shape-joining",
-              "title": "图形的拼组",
-              "textbookTitle": "图形的拼组",
-              "page": 32,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
               }
             }
           ]
@@ -15801,33 +17386,62 @@
               }
             },
             {
-              "id": "sj-lower-pending-u5",
-              "title": "两位数加、减整十数和一位数",
-              "textbookTitle": "两位数加、减整十数和一位数",
-              "page": 57,
+              "id": "sj-lower-calculation-review",
+              "title": "计算整理：先判断、说理由与减两位数探索",
+              "textbookTitle": "两位数加减·练习与回顾",
+              "page": 70,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "先判断得数几十多再核对、不计算比较并说理由，实际提问解答交流，探索分两次减并分别自评。",
+              "prerequisite": "学过两位数加减整十数与一位数（含进退位）；准备纸笔、安全小棒或计数器，可与家人交流。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 12,
+                "manual": 5,
+                "reflection": 4
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 12,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": [
+                "sj-lower-calculation-review-estimate-add",
+                "sj-lower-calculation-review-estimate-tens",
+                "sj-lower-calculation-review-estimate-subtract",
+                "sj-lower-calculation-review-compare-add",
+                "sj-lower-calculation-review-compare-subtract",
+                "sj-lower-calculation-review-compare-exchange",
+                "sj-lower-calculation-review-split-subtrahend",
+                "sj-lower-calculation-review-exploration-steps",
+                "sj-lower-calculation-review-middle-not-final",
+                "sj-lower-calculation-review-total-removed",
+                "sj-lower-calculation-review-check-exploration",
+                "sj-lower-calculation-review-complete-question",
+                "sj-lower-calculation-review-manual-0",
+                "sj-lower-calculation-review-manual-1",
+                "sj-lower-calculation-review-manual-2",
+                "sj-lower-calculation-review-manual-3",
+                "sj-lower-calculation-review-manual-4",
+                "sj-lower-calculation-review-evaluation-representation",
+                "sj-lower-calculation-review-evaluation-calculation",
+                "sj-lower-calculation-review-evaluation-application",
+                "sj-lower-calculation-review-reflection"
+              ],
+              "questionKinds": [
+                "choice",
+                "number",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
                 "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站计算整理：先判断、说理由与减两位数探索对应纸面第70页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
               }
             }
           ]
@@ -15960,7 +17574,7 @@
               "title": "数量关系应用：读线段图与改变求问",
               "textbookTitle": "简单的数量关系·综合应用",
               "page": 76,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "读懂示意图的已知与问号范围，同情境区分合计、差与部分，共同基准分别求数量并检查配套。",
               "prerequisite": "会按比较标准求较多/较少数量，能分十与一计算；准备纸笔。",
@@ -15968,8 +17582,8 @@
               "steps": 5,
               "tasks": {
                 "objective": 12,
-                "manual": 3,
-                "reflection": 2
+                "manual": 4,
+                "reflection": 5
               },
               "reviewTasks": {
                 "objective": 12,
@@ -15992,8 +17606,12 @@
                 "sj-lower-quantity-applications-manual-0",
                 "sj-lower-quantity-applications-manual-1",
                 "sj-lower-quantity-applications-manual-2",
+                "sj-lower-quantity-applications-manual-3",
                 "sj-lower-quantity-applications-own-question",
-                "sj-lower-quantity-applications-reflection"
+                "sj-lower-quantity-applications-reflection",
+                "sj-lower-quantity-applications-evaluation-understanding",
+                "sj-lower-quantity-applications-evaluation-application",
+                "sj-lower-quantity-applications-evaluation-representation"
               ],
               "questionKinds": [
                 "number",
@@ -16060,36 +17678,6 @@
                 "date": "2026-10-01",
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站同样多探索：只添只拿与两边移物对应纸面第77页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
-              }
-            },
-            {
-              "id": "sj-lower-pending-u6",
-              "title": "简单的数量关系（一）",
-              "textbookTitle": "简单的数量关系（一）",
-              "page": 71,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
               }
             }
           ]
@@ -16429,7 +18017,7 @@
               "title": "数学连环画：找信息、画故事与交流修改",
               "textbookTitle": "数学连环画",
               "page": 85,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "从生活故事中找数学信息，分清编号和数量，按顺序画原创连环画，交流、核对并修改自己的作品。",
               "prerequisite": "会读两位数，能计算两位数加减一位数；准备纸、笔或安全图形纸片，可以请家长帮读题。",
@@ -16437,7 +18025,7 @@
               "steps": 5,
               "tasks": {
                 "objective": 10,
-                "manual": 5,
+                "manual": 6,
                 "reflection": 2
               },
               "reviewTasks": {
@@ -16461,6 +18049,7 @@
                 "sj-lower-math-comic-manual-2",
                 "sj-lower-math-comic-manual-3",
                 "sj-lower-math-comic-manual-4",
+                "sj-lower-math-comic-manual-5",
                 "sj-lower-math-comic-reflection-0",
                 "sj-lower-math-comic-reflection-1"
               ],
@@ -16476,36 +18065,6 @@
                 "date": "2026-10-01",
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站数学连环画：找信息、画故事与交流修改对应纸面第85页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
-              }
-            },
-            {
-              "id": "sj-lower-pending-math-comic",
-              "title": "数学连环画",
-              "textbookTitle": "数学连环画",
-              "page": 85,
-              "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
-              "referenceQuery": null,
-              "steps": 0,
-              "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "reviewTasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
-              },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
-              "audit": {
-                "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
               }
             }
           ]
@@ -16591,6 +18150,67 @@
               }
             },
             {
+              "id": "sj-lower-final-numbers-shapes",
+              "title": "期末数与形：列全、拼组和四向观察",
+              "textbookTitle": "期末复习：开区间组成、图形命名拼组与观察",
+              "page": 88,
+              "version": 1,
+              "status": "available",
+              "goal": "自主列全严格区间的九个数并逐个说组成，命名五类平面图形；三种两片同形纸片分别实际拼组，从四个位置观察同一本字典并记录。",
+              "prerequisite": "认识100以内数和十位个位、五类平面图形；准备纸笔、成对同形纸片及一本字典，家长可预备纸片。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 21,
+                "manual": 6,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 21,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-numbers-shapes-all-between",
+                "sj-lower-final-numbers-shapes-composition-0",
+                "sj-lower-final-numbers-shapes-composition-1",
+                "sj-lower-final-numbers-shapes-composition-2",
+                "sj-lower-final-numbers-shapes-composition-3",
+                "sj-lower-final-numbers-shapes-composition-4",
+                "sj-lower-final-numbers-shapes-composition-5",
+                "sj-lower-final-numbers-shapes-composition-6",
+                "sj-lower-final-numbers-shapes-composition-7",
+                "sj-lower-final-numbers-shapes-composition-8",
+                "sj-lower-final-numbers-shapes-name-0",
+                "sj-lower-final-numbers-shapes-name-1",
+                "sj-lower-final-numbers-shapes-name-2",
+                "sj-lower-final-numbers-shapes-name-3",
+                "sj-lower-final-numbers-shapes-name-4",
+                "sj-lower-final-numbers-shapes-join-0",
+                "sj-lower-final-numbers-shapes-join-1",
+                "sj-lower-final-numbers-shapes-join-2",
+                "sj-lower-final-numbers-shapes-endpoints",
+                "sj-lower-final-numbers-shapes-same-dictionary",
+                "sj-lower-final-numbers-shapes-views-not-fixed",
+                "sj-lower-final-numbers-shapes-manual-0",
+                "sj-lower-final-numbers-shapes-manual-1",
+                "sj-lower-final-numbers-shapes-manual-2",
+                "sj-lower-final-numbers-shapes-manual-3",
+                "sj-lower-final-numbers-shapes-manual-4",
+                "sj-lower-final-numbers-shapes-manual-5",
+                "sj-lower-final-numbers-shapes-reflection-0",
+                "sj-lower-final-numbers-shapes-reflection-1",
+                "sj-lower-final-numbers-shapes-reflection-2"
+              ],
+              "questionKinds": ["steps", "choice", "manual", "reflection"],
+              "visualKinds": ["shape", "two-piece-join"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末数与形：列全、拼组和四向观察对应纸面第88页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
               "id": "sj-lower-final-relations",
               "title": "期末应用：数量关系与教室安排",
               "textbookTitle": "期末复习：数量关系与综合应用",
@@ -16651,6 +18271,237 @@
                 "date": "2026-10-01",
                 "reviewer": "已读原书范围、原创活动与学习流程核验",
                 "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末应用：数量关系与教室安排对应纸面第89页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-classification-review",
+              "title": "期末分类与回顾：标志、衣柜和七项自评",
+              "textbookTitle": "期末复习：数据分类与评价反思",
+              "page": 90,
+              "version": 1,
+              "status": "available",
+              "goal": "将标志和衣服按明确标准分类、逐项表示，比较改换标准后的分组；分别回顾本学期七个方面，记录强项与新问题。",
+              "prerequisite": "会分类和一对一记录；准备教材90、93、94页或可访问的电子教材，纸笔与纸卡。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 3,
+                "reflection": 9
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-classification-review-sign-triangle",
+                "sj-lower-final-classification-review-sign-circle",
+                "sj-lower-final-classification-review-sign-rectangle",
+                "sj-lower-final-classification-review-sign-blue",
+                "sj-lower-final-classification-review-clothes-upper",
+                "sj-lower-final-classification-review-clothes-red",
+                "sj-lower-final-classification-review-sign-count-0",
+                "sj-lower-final-classification-review-sign-count-1",
+                "sj-lower-final-classification-review-sign-count-2",
+                "sj-lower-final-classification-review-clothes-count",
+                "sj-lower-final-classification-review-conserve",
+                "sj-lower-final-classification-review-unknown",
+                "sj-lower-final-classification-review-manual-0",
+                "sj-lower-final-classification-review-manual-1",
+                "sj-lower-final-classification-review-manual-2",
+                "sj-lower-final-classification-review-evaluation-numbers",
+                "sj-lower-final-classification-review-evaluation-calculation",
+                "sj-lower-final-classification-review-evaluation-relations",
+                "sj-lower-final-classification-review-evaluation-shapes",
+                "sj-lower-final-classification-review-evaluation-observation",
+                "sj-lower-final-classification-review-evaluation-classification",
+                "sj-lower-final-classification-review-evaluation-engagement",
+                "sj-lower-final-classification-review-evaluation-strength",
+                "sj-lower-final-classification-review-evaluation-new-question"
+              ],
+              "questionKinds": [
+                "set",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["classification-record"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末分类与回顾：标志、衣柜和七项自评对应纸面第90页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-counting",
+              "title": "期末数书与数轴：先标点再排序",
+              "textbookTitle": "期末复习：分组计数与直线上表示各数",
+              "page": 90,
+              "version": 1,
+              "status": "available",
+              "goal": "用五本和十本两种方式数同一批书，区分组数和本数；实际把六个数分别标在等距直线上，再按位置排序并核对。",
+              "prerequisite": "认识100以内数，能以5和10递增计数，准备纸笔和书或纸书卡。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 4,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-counting-groups-5",
+                "sj-lower-final-counting-books-5",
+                "sj-lower-final-counting-groups-10",
+                "sj-lower-final-counting-books-10",
+                "sj-lower-final-counting-five-accumulation",
+                "sj-lower-final-counting-ten-accumulation",
+                "sj-lower-final-counting-six-points",
+                "sj-lower-final-counting-ordered-points",
+                "sj-lower-final-counting-point-range",
+                "sj-lower-final-counting-interval-count",
+                "sj-lower-final-counting-regroup-total",
+                "sj-lower-final-counting-unknown-not-zero",
+                "sj-lower-final-counting-manual-0",
+                "sj-lower-final-counting-manual-1",
+                "sj-lower-final-counting-manual-2",
+                "sj-lower-final-counting-manual-3",
+                "sj-lower-final-counting-reflection-0",
+                "sj-lower-final-counting-reflection-1",
+                "sj-lower-final-counting-reflection-2"
+              ],
+              "questionKinds": [
+                "number",
+                "steps",
+                "sequence",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["book-groups", "number-line-grid"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末数书与数轴：先标点再排序对应纸面第90页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-data-questions",
+              "title": "期末读数据：联合配对与自己提问",
+              "textbookTitle": "期末复习：相对数量、三人数据与自主提问",
+              "page": 91,
+              "version": 1,
+              "status": "available",
+              "goal": "联合核对四人的相对数量描述，按三人记录比较不同两人，并根据两条已知数量自己提出、解答和交流问题。",
+              "prerequisite": "能读100以内数、求合计与相差；准备纸笔或纸卡，不需上传姓名和个人成绩。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 11,
+                "manual": 4,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 11,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-data-questions-joint-reading",
+                "sj-lower-final-data-questions-relative-not-equal",
+                "sj-lower-final-data-questions-relative-no-threshold",
+                "sj-lower-final-data-questions-jump-rain-sun",
+                "sj-lower-final-data-questions-jump-sun-wind",
+                "sj-lower-final-data-questions-jump-rain-wind",
+                "sj-lower-final-data-questions-jump-data-limit",
+                "sj-lower-final-data-questions-objects-total",
+                "sj-lower-final-data-questions-objects-difference",
+                "sj-lower-final-data-questions-question-conditions",
+                "sj-lower-final-data-questions-own-question-record",
+                "sj-lower-final-data-questions-manual-0",
+                "sj-lower-final-data-questions-manual-1",
+                "sj-lower-final-data-questions-manual-2",
+                "sj-lower-final-data-questions-manual-3",
+                "sj-lower-final-data-questions-reflection-0",
+                "sj-lower-final-data-questions-reflection-1",
+                "sj-lower-final-data-questions-reflection-2"
+              ],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末读数据：联合配对与自己提问对应纸面第91页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-equations",
+              "title": "期末运算探索：小表与等式两边",
+              "textbookTitle": "期末复习：小算式表与图形未知数",
+              "page": 91,
+              "version": 1,
+              "status": "available",
+              "goal": "读三行三列加减小表，逐格计算并找多条相同得数算式；试完整未知数并代回两边核对，区分一位数字与整个数。",
+              "prerequisite": "会20以内加减及两位数加减整十数或一位数，准备纸笔或数字卡。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 4,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-equations-table-add",
+                "sj-lower-final-equations-table-subtract",
+                "sj-lower-final-equations-equal-add",
+                "sj-lower-final-equations-equal-subtract",
+                "sj-lower-final-equations-left-unknown",
+                "sj-lower-final-equations-right-unknown",
+                "sj-lower-final-equations-missing-subtrahend",
+                "sj-lower-final-equations-zero-unknown",
+                "sj-lower-final-equations-whole-number",
+                "sj-lower-final-equations-equal-meaning",
+                "sj-lower-final-equations-check-candidate",
+                "sj-lower-final-equations-keep-operation",
+                "sj-lower-final-equations-manual-0",
+                "sj-lower-final-equations-manual-1",
+                "sj-lower-final-equations-manual-2",
+                "sj-lower-final-equations-manual-3",
+                "sj-lower-final-equations-reflection-0",
+                "sj-lower-final-equations-reflection-1",
+                "sj-lower-final-equations-reflection-2"
+              ],
+              "questionKinds": [
+                "steps",
+                "set",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["small-arithmetic"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末运算探索：小表与等式两边对应纸面第91页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
               }
             },
             {
@@ -16760,33 +18611,158 @@
               }
             },
             {
-              "id": "sj-lower-pending-review",
-              "title": "期末复习",
-              "textbookTitle": "期末复习",
-              "page": 88,
+              "id": "sj-lower-final-parade",
+              "title": "期末看花车：同一物体的先后",
+              "textbookTitle": "期末复习：花车经过的时序",
+              "page": 93,
               "version": 1,
-              "status": "preparing",
-              "goal": "原书目录已核验，尚未完成的原创教学与活动继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "结合固定观众与持续方向，排列同一花车的三个时刻，区分位置、远近、图片编号和实际时间。",
+              "prerequisite": "能辨认左右和箭头；准备一张花车纸卡、观众P纸卡和纸路，不需要观看真实道路游行。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 10,
+                "manual": 4,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 10,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": [
+                "sj-lower-final-parade-order",
+                "sj-lower-final-parade-first",
+                "sj-lower-final-parade-last",
+                "sj-lower-final-parade-beside",
+                "sj-lower-final-parade-distance-only",
+                "sj-lower-final-parade-same-drawing-size",
+                "sj-lower-final-parade-speed",
+                "sj-lower-final-parade-changed-observer",
+                "sj-lower-final-parade-one-float",
+                "sj-lower-final-parade-real-task",
+                "sj-lower-final-parade-manual-0",
+                "sj-lower-final-parade-manual-1",
+                "sj-lower-final-parade-manual-2",
+                "sj-lower-final-parade-manual-3",
+                "sj-lower-final-parade-reflection-0",
+                "sj-lower-final-parade-reflection-1",
+                "sj-lower-final-parade-reflection-2"
+              ],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["parade-frames"],
               "audit": {
                 "date": "2026-10-01",
-                "reviewer": "目录范围核验",
-                "notes": "只登记真实目录，不开放未完成内容。版权版次与印次仍未核验。"
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末看花车：同一物体的先后对应纸面第93页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-embedded",
+              "title": "期末找图形：单位片与大小轮廓",
+              "textbookTitle": "期末复习：数三角单位与找其它图形",
+              "page": 93,
+              "version": 1,
+              "status": "available",
+              "goal": "对三幅原创图案分别按参考三角单位计数，找到内部不同大小的三角形、正方形及其它完整轮廓，区分材料片、网格和所选区域。",
+              "prerequisite": "认识三角形、正方形、长方形和平行四边形；准备纸笔、等大直角三角纸片，剪裁由家长协助。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 4,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-embedded-count-0",
+                "sj-lower-final-embedded-count-1",
+                "sj-lower-final-embedded-count-2",
+                "sj-lower-final-embedded-outline-0",
+                "sj-lower-final-embedded-outline-1",
+                "sj-lower-final-embedded-outline-2",
+                "sj-lower-final-embedded-outline-3",
+                "sj-lower-final-embedded-outline-4",
+                "sj-lower-final-embedded-outline-5",
+                "sj-lower-final-embedded-internal",
+                "sj-lower-final-embedded-different-size",
+                "sj-lower-final-embedded-actual-work",
+                "sj-lower-final-embedded-manual-0",
+                "sj-lower-final-embedded-manual-1",
+                "sj-lower-final-embedded-manual-2",
+                "sj-lower-final-embedded-manual-3",
+                "sj-lower-final-embedded-reflection-0",
+                "sj-lower-final-embedded-reflection-1",
+                "sj-lower-final-embedded-reflection-2"
+              ],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["embedded-shapes"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末找图形：单位片与大小轮廓对应纸面第93页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
+              }
+            },
+            {
+              "id": "sj-lower-final-four-shapes",
+              "title": "期末选四种图形：直边、曲边与完整拼组",
+              "textbookTitle": "期末复习：选附页材料拼四种目标图形",
+              "page": 94,
+              "version": 1,
+              "status": "available",
+              "goal": "根据目标选择匹配纸片，实际分别拼正方形、长方形、平行四边形和圆，区别外轮廓、内部接缝、缺片和材料数。",
+              "prerequisite": "会命名相关平面图形，准备纸笔及匹配图形材料，家长可协助预裁曲边片。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 5,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 12,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [
+                "sj-lower-final-four-shapes-whole-0",
+                "sj-lower-final-four-shapes-whole-1",
+                "sj-lower-final-four-shapes-whole-2",
+                "sj-lower-final-four-shapes-circle-complete",
+                "sj-lower-final-four-shapes-missing-piece",
+                "sj-lower-final-four-shapes-piece-count",
+                "sj-lower-final-four-shapes-outer-straight",
+                "sj-lower-final-four-shapes-select-curved",
+                "sj-lower-final-four-shapes-kit-total",
+                "sj-lower-final-four-shapes-matched-material",
+                "sj-lower-final-four-shapes-straight-circle",
+                "sj-lower-final-four-shapes-real-record",
+                "sj-lower-final-four-shapes-manual-0",
+                "sj-lower-final-four-shapes-manual-1",
+                "sj-lower-final-four-shapes-manual-2",
+                "sj-lower-final-four-shapes-manual-3",
+                "sj-lower-final-four-shapes-manual-4",
+                "sj-lower-final-four-shapes-reflection-0",
+                "sj-lower-final-four-shapes-reflection-1",
+                "sj-lower-final-four-shapes-reflection-2"
+              ],
+              "questionKinds": [
+                "choice",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["quarter-circle", "two-piece-join"],
+              "audit": {
+                "date": "2026-10-01",
+                "reviewer": "已读原书范围、原创活动与学习流程核验",
+                "notes": "已实际核对公开扫描ISBN 978-7-5743-1295-1与印刷第1～94页及附页。本站期末选四种图形：直边、曲边与完整拼组对应纸面第94页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。"
               }
             }
           ]

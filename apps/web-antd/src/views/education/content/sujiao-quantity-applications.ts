@@ -154,7 +154,7 @@ export const sujiaoQuantityApplicationsDraft: Lesson = {
   title: '数量关系应用：读线段图与改变求问',
   textbookTitle: '简单的数量关系·综合应用',
   page: 76,
-  version: 1,
+  version: 2,
   status: 'preparing',
   goal: '读懂示意图的已知与问号范围，同情境区分合计、差与部分，共同基准分别求数量并检查配套。',
   prerequisite: '会按比较标准求较多/较少数量，能分十与一计算；准备纸笔。',
@@ -194,7 +194,7 @@ export const sujiaoQuantityApplicationsDraft: Lesson = {
     },
     {
       title: '配套和自己提出问题',
-      text: '23件上衣与30条裤子，一套各1，保持裤子不动，补上衣7件。原有信息可提出多个问题，但求价格要补单价、求创作者人数要补每人作品情况，不能凭作品幅数猜人数。真实画图、问题与过程独立保存。',
+      text: '23件上衣与30条裤子，一套各1，保持裤子不动，补上衣7件。原有信息可提出多个问题，但求价格要补单价、求创作者人数要补每人作品情况，不能凭作品幅数猜人数。真实画图、问题与过程独立保存。另选本课已有条件提出不同的问题，逐个说求谁、用哪几个条件并解答；缺条件先补问，不编答案。最后分别反思求差关系、加减解决实际问题、摆画帮助理解的表现，记录具体证据或待做，不自动评星。',
       activity: '实际用小纸卡一一配套，并根据已有信息提出一个能解答的问题。',
     },
   ],
@@ -204,6 +204,7 @@ export const sujiaoQuantityApplicationsDraft: Lesson = {
       '实际画32与多7、26与少4两张原创线段关系图，问号各盖B整段，标条件并说明不按比例量答案。',
       '实际用绘画26、书法20、成人绘画16的纸面记录分别编合计、差与学生绘画问题，核对数量范围。',
       '实际用黄30、红多24、绿少7分别列式，再用小卡模拟上衣23与裤子30的一一配套，口述各自基准。',
+      '实际根据绘画26、书法20、成人绘画16等本课已给条件，口述或在纸上提出至少两个不同的问题，分别标清所求范围、所用条件并解答；给家人或同伴说明。可以有不同合法问题，缺条件先补问。没实际提问解答或交流就记录待做，网页反思不代替此项。',
     ].map((prompt, i): Question => ({
       id: `${id}-manual-${i}`,
       knowledge: `${id}-manual-${i}`,
@@ -230,6 +231,30 @@ export const sujiaoQuantityApplicationsDraft: Lesson = {
       hint: '保留原话。',
       explanation: '反思null，与真实任务独立。',
     },
+    ...(
+      [
+        [
+          'understanding',
+          '你能说明同单位两数量相差多少的关系吗？用自己本次的一例说明较多、较少与差；还没理解如实写待学习。',
+        ],
+        [
+          'application',
+          '你能按数量关系用加减解决实际问题吗？记录自己解过的一问、所用条件和检查过程；只有计划就说明尚未做。',
+        ],
+        [
+          'representation',
+          '摆一摆或画一画怎样帮助你理解数量关系？记录自己真实用过的摆法或图及发现；没做如实写待做。',
+        ],
+      ] as const
+    ).map(([key, prompt]): Question => ({
+      id: `${id}-evaluation-${key}`,
+      knowledge: `${id}-evaluation-${key}`,
+      prompt,
+      rule: { kind: 'reflection' },
+      hint: '按自己实际经历分别反思，不要求全部达到或给固定星数。',
+      explanation:
+        '开放表达保留原话、correct为null，不由答题成绩推定能力或确认实际活动。',
+    })),
   ],
   reviewQuestions: tasks(true),
   review: {

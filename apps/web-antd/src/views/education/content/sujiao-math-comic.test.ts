@@ -46,7 +46,7 @@ it('distinguishes shelf identifiers, intermediate quantities and returned borrow
   ).toBe(main.initial);
   expect(lesson.steps).toHaveLength(5);
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    5,
+    6,
   );
   expect(
     lesson.questions.filter((q) => q.rule.kind === 'reflection'),
@@ -120,4 +120,41 @@ it('rejects forged answers and arbitrary comic variants in imported snapshots', 
   delete q.visual.final;
   q.rule = q.visual;
   expect(() => parseBackup(JSON.stringify(backup))).toThrow(Error);
+});
+
+it('keeps version-one saved stories while requiring a separate actual exhibition in version two', () => {
+  expect(lesson.version).toBe(2);
+  const display = lesson.questions.find((q) =>
+    q.knowledge.endsWith('-manual-5'),
+  )!;
+  expect(display.rule.kind).toBe('manual');
+  expect(display.prompt).toContain('经作者同意');
+  expect(display.prompt).toContain('没有课堂条件');
+  expect(display.prompt).toContain('具体理由');
+  const oldLesson = {
+    ...lesson,
+    version: 1,
+    questions: lesson.questions.filter((q) => q.id !== display.id),
+  };
+  const library = initialLibrary('旧作品记录');
+  library.sessions.push(
+    createSession(
+      oldLesson,
+      'sujiao-math-p1-lower-9787574312951',
+      library.activeProfileId,
+    ),
+  );
+  const restored = parseBackup(exportBackup(library)).data.sessions[0]!;
+  expect(restored.lessonVersion).toBe(1);
+  expect(restored.questions).toHaveLength(17);
+  expect(restored.questions.some((q) => q.id === display.id)).toBe(false);
+  const current = createSession(
+    lesson,
+    'sujiao-math-p1-lower-9787574312951',
+    library.activeProfileId,
+  );
+  expect(current.questions).toHaveLength(18);
+  const response =
+    current.responses[current.questions.findIndex((q) => q.id === display.id)]!;
+  expect(response.submissions).toHaveLength(0);
 });

@@ -13,6 +13,7 @@ import ArithmeticGrid from './ArithmeticGrid.vue';
 import AssemblyCandidates from './AssemblyCandidates.vue';
 import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
+import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
 import CardGame from './CardGame.vue';
 import ChildActivities from './ChildActivities.vue';
@@ -26,9 +27,12 @@ import ComparisonRows from './ComparisonRows.vue';
 import CompositeShapes from './CompositeShapes.vue';
 import CrossBalance from './CrossBalance.vue';
 import CubeColumns from './CubeColumns.vue';
+import CubePair from './CubePair.vue';
 import CupCards from './CupCards.vue';
 import DigitCounter from './DigitCounter.vue';
+import EmbeddedShapes from './EmbeddedShapes.vue';
 import EstimateDots from './EstimateDots.vue';
+import FinalStories from './FinalStories.vue';
 import FoldCutJoin from './FoldCutJoin.vue';
 import GeoboardShift from './GeoboardShift.vue';
 import GridPaths from './GridPaths.vue';
@@ -36,13 +40,17 @@ import { hundredPosition } from './hundred-chart';
 import MagicGrid from './MagicGrid.vue';
 import MathStory from './MathStory.vue';
 import MonthCalendar from './MonthCalendar.vue';
+import MonthWeather from './MonthWeather.vue';
 import MotionFrames from './MotionFrames.vue';
 import MotionSequences from './MotionSequences.vue';
 import NatureCards from './NatureCards.vue';
 import NumberFrame from './NumberFrame.vue';
+import NumberLineGrid from './NumberLineGrid.vue';
 import NumberTower from './NumberTower.vue';
 import OcclusionViews from './OcclusionViews.vue';
 import PaperFold from './PaperFold.vue';
+import ParadeFrames from './ParadeFrames.vue';
+import PartitionedSquare from './PartitionedSquare.vue';
 import PeriodicFlags from './PeriodicFlags.vue';
 import PeriodicShapes from './PeriodicShapes.vue';
 import { pinyinTone } from './pinyin-tone';
@@ -50,6 +58,7 @@ import { exchangePlaceValue, placeValue } from './place-value';
 import PlaneCards from './PlaneCards.vue';
 import PoolScene from './PoolScene.vue';
 import QuantityTable from './QuantityTable.vue';
+import QuarterCircle from './QuarterCircle.vue';
 import ReadingTable from './ReadingTable.vue';
 import RectangleCut from './RectangleCut.vue';
 import RegionPair from './RegionPair.vue';
@@ -66,18 +75,26 @@ import {
 } from './shape-join';
 import ShapeCollage from './ShapeCollage.vue';
 import ShapePatch from './ShapePatch.vue';
+import SmallArithmetic from './SmallArithmetic.vue';
 import SolidBuild from './SolidBuild.vue';
 import SolidFaceTraces from './SolidFaceTraces.vue';
+import SolidInstructions from './SolidInstructions.vue';
+import SolidPattern from './SolidPattern.vue';
+import SolidRecompose from './SolidRecompose.vue';
 import SolidRow from './SolidRow.vue';
 import SquareMosaic from './SquareMosaic.vue';
 import StickOutline from './StickOutline.vue';
 import StockTable from './StockTable.vue';
 import SumLines from './SumLines.vue';
 import SurveyTable from './SurveyTable.vue';
+import TeenArithmeticGrid from './TeenArithmeticGrid.vue';
+import TeenLayout from './TeenLayout.vue';
+import TenTables from './TenTables.vue';
 import ThreePieceJoin from './ThreePieceJoin.vue';
 import TileGrid from './TileGrid.vue';
 import TriangleMosaic from './TriangleMosaic.vue';
 import TriangleMove from './TriangleMove.vue';
+import TwoPieceJoin from './TwoPieceJoin.vue';
 import ViewpointHouse from './ViewpointHouse.vue';
 import ViewpointJug from './ViewpointJug.vue';
 import ZeroNumberChart from './ZeroNumberChart.vue';
@@ -241,7 +258,17 @@ const shapeDescription = computed(() =>
     class="learning-visual my-4 rounded-xl border border-border bg-muted/30 p-4"
     :aria-label="$t('educationLearning.diagram')"
   >
-    <CubeColumns v-if="visual.kind === 'cube-columns'" :visual="visual" />
+    <QuarterCircle v-if="visual.kind === 'quarter-circle'" :visual="visual" />
+    <TwoPieceJoin
+      v-else-if="visual.kind === 'two-piece-join'"
+      :visual="visual"
+    />
+    <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
+    <NumberLineGrid
+      v-else-if="visual.kind === 'number-line-grid'"
+      :visual="visual"
+    />
+    <CubeColumns v-else-if="visual.kind === 'cube-columns'" :visual="visual" />
     <PeriodicFlags
       v-else-if="visual.kind === 'periodic-flags'"
       :visual="visual"
@@ -261,12 +288,38 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <PlaneCards v-else-if="visual.kind === 'plane-cards'" :visual="visual" />
+    <PartitionedSquare
+      v-else-if="visual.kind === 'partitioned-square'"
+      :visual="visual"
+    />
+    <SmallArithmetic
+      v-else-if="visual.kind === 'small-arithmetic'"
+      :visual="visual"
+    />
     <ArithmeticGrid
       v-else-if="visual.kind === 'arithmetic-grid'"
       :visual="visual"
     />
+    <TenTables v-else-if="visual.kind === 'ten-tables'" :visual="visual" />
+    <SolidRecompose
+      v-else-if="visual.kind === 'solid-recompose'"
+      :visual="visual"
+    />
+    <SolidPattern
+      v-else-if="visual.kind === 'solid-pattern'"
+      :visual="visual"
+    />
+    <CubePair v-else-if="visual.kind === 'cube-pair'" :visual="visual" />
+    <SolidInstructions
+      v-else-if="visual.kind === 'solid-instructions'"
+      :visual="visual"
+    />
     <SolidBuild v-else-if="visual.kind === 'solid-build'" :visual="visual" />
     <BeadChain v-else-if="visual.kind === 'bead-chain'" :visual="visual" />
+    <FinalStories
+      v-else-if="visual.kind === 'final-stories'"
+      :visual="visual"
+    />
     <ReadingTable
       v-else-if="visual.kind === 'reading-table'"
       :visual="visual"
@@ -291,6 +344,15 @@ const shapeDescription = computed(() =>
     <RegionPair v-else-if="visual.kind === 'region-pair'" :visual="visual" />
     <GridPaths v-else-if="visual.kind === 'grid-paths'" :visual="visual" />
     <SeatGrid v-else-if="visual.kind === 'seat-grid'" :visual="visual" />
+    <TeenArithmeticGrid
+      v-else-if="visual.kind === 'teen-arithmetic-grid'"
+      :visual="visual"
+    />
+    <MonthWeather
+      v-else-if="visual.kind === 'month-weather'"
+      :visual="visual"
+    />
+    <TeenLayout v-else-if="visual.kind === 'teen-layout'" :visual="visual" />
     <div v-else-if="visual.kind === 'count-groups'" class="flex flex-col gap-4">
       <p class="text-base text-muted-foreground">
         {{ $t('educationLearning.countGroupsInstruction') }}
@@ -933,6 +995,14 @@ const shapeDescription = computed(() =>
     />
     <MotionSequences
       v-else-if="visual.kind === 'motion-sequences'"
+      :visual="visual"
+    />
+    <EmbeddedShapes
+      v-else-if="visual.kind === 'embedded-shapes'"
+      :visual="visual"
+    />
+    <ParadeFrames
+      v-else-if="visual.kind === 'parade-frames'"
       :visual="visual"
     />
     <MotionFrames

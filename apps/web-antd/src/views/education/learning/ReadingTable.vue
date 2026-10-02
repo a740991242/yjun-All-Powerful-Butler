@@ -26,14 +26,25 @@ const rows = computed(() =>
   props.visual.pages.map((values, i) => ({
     id: i,
     name: props.visual.names[i],
-    ...Object.fromEntries(values.map((value, c) => [String(c), value])),
+    ...Object.fromEntries(
+      values.map((value, c) => [
+        String(c),
+        props.visual.display === 'blanks' ? '①②③④⑤⑥'[i * 3 + c] : value,
+      ]),
+    ),
   })),
 );
 </script>
 <template>
   <div class="flex min-w-0 flex-col gap-3">
     <p class="text-sm leading-6 text-muted-foreground">
-      {{ $t('educationLearning.readingTableInstruction') }}
+      {{
+        $t(
+          visual.display === 'blanks'
+            ? 'educationLearning.readingTableBlankInstruction'
+            : 'educationLearning.readingTableInstruction',
+        )
+      }}
     </p>
     <Table
       :columns="columns"
@@ -43,10 +54,22 @@ const rows = computed(() =>
       :scroll="{ x: 370 }"
       bordered
       size="middle"
-      :aria-label="$t('educationLearning.readingTableLabel')"
+      :aria-label="
+        $t(
+          visual.display === 'blanks'
+            ? 'educationLearning.readingTableBlankLabel'
+            : 'educationLearning.readingTableLabel',
+        )
+      "
     />
     <p class="text-sm leading-6 text-muted-foreground">
-      {{ $t('educationLearning.readingTableNotice') }}
+      {{
+        $t(
+          visual.display === 'blanks'
+            ? 'educationLearning.readingTableBlankNotice'
+            : 'educationLearning.readingTableNotice',
+        )
+      }}
     </p>
   </div>
 </template>

@@ -14,7 +14,7 @@ export function isPlaneCardsVisual(value: unknown): value is PlaneCardsVisual {
     model.kind === 'plane-cards' &&
     Array.isArray(model.cards) &&
     model.cards.length > 0 &&
-    model.cards.length <= 6 &&
+    model.cards.length <= 10 &&
     [...model.cards].every((value) => {
       if (!value || typeof value !== 'object' || Array.isArray(value))
         return false;

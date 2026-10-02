@@ -4,6 +4,8 @@ import type { Textbook } from './textbooks';
 import { sujiaoAssemblyCandidatesDraft } from './sujiao-assembly-candidates';
 import { sujiaoBeadBudgetDraft } from './sujiao-bead-budget';
 import { sujiaoCalculationLinksDraft } from './sujiao-calculation-links';
+import { sujiaoCalculationReviewDraft } from './sujiao-calculation-review';
+import { sujiaoCalculationUnitAudit } from './sujiao-calculation-unit-audit';
 import { sujiaoChildActivitiesDraft } from './sujiao-child-activities';
 import { sujiaoCircularNumbersDraft } from './sujiao-circular-numbers';
 import { sujiaoClassSurveysDraft } from './sujiao-class-surveys';
@@ -23,14 +25,28 @@ import { sujiaoEstimationDraft } from './sujiao-estimation';
 import { sujiaoFaceTracingDraft } from './sujiao-face-tracing';
 import { sujiaoFiftyDraft } from './sujiao-fifty';
 import { sujiaoFiftyAudit } from './sujiao-fifty-audit';
+import { sujiaoFinalClassificationReviewDraft } from './sujiao-final-classification-review';
+import { sujiaoFinalCountingDraft } from './sujiao-final-counting';
+import { sujiaoFinalDataQuestionsDraft } from './sujiao-final-data-questions';
+import { sujiaoFinalEmbeddedDraft } from './sujiao-final-embedded';
+import { sujiaoFinalEquationsDraft } from './sujiao-final-equations';
+import { sujiaoFinalFourShapesDraft } from './sujiao-final-four-shapes';
+import { sujiaoFinalNumbersShapesDraft } from './sujiao-final-numbers-shapes';
+import { sujiaoFinalParadeDraft } from './sujiao-final-parade';
+import { sujiaoFinalUnitAudit } from './sujiao-final-unit-audit';
 import { sujiaoFirstDrafts } from './sujiao-first-drafts';
 import { sujiaoFoldCutJoinDraft } from './sujiao-fold-cut-join';
 import { sujiaoGeoboardShiftDraft } from './sujiao-geoboard-shift';
 import { sujiaoGuessAndDigitsDraft } from './sujiao-guess-and-digits';
+import { sujiaoJoiningUnitAudit } from './sujiao-joining-unit-audit';
 import { sujiaoLowerFinalNumbersDraft } from './sujiao-lower-final-numbers';
 import { sujiaoLowerFinalRelationsDraft } from './sujiao-lower-final-relations';
+import { sujiaoLowerFirstPracticeDraft } from './sujiao-lower-first-practice';
+import { sujiaoLowerFirstReviewDraft } from './sujiao-lower-first-review';
+import { sujiaoLowerFirstUnitAudit } from './sujiao-lower-first-unit-audit';
 import { sujiaoLowerSource as source } from './sujiao-lower-source';
 import { sujiaoMathComicDraft } from './sujiao-math-comic';
+import { sujiaoMathComicAudit } from './sujiao-math-comic-audit';
 import { sujiaoMixedCollagesDraft } from './sujiao-mixed-collages';
 import { sujiaoMonthCalendarDraft } from './sujiao-month-calendar';
 import { sujiaoMotionOrderDraft } from './sujiao-motion-order';
@@ -48,6 +64,8 @@ import { sujiaoPaperFoldsDraft } from './sujiao-paper-folds';
 import { sujiaoPlaneCuttingDraft } from './sujiao-plane-cutting';
 import { sujiaoPlanePatternsDraft } from './sujiao-plane-patterns';
 import { sujiaoPlaneRecognitionDraft } from './sujiao-plane-recognition';
+import { sujiaoPlaneReviewDraft } from './sujiao-plane-review';
+import { sujiaoPlaneUnitAudit } from './sujiao-plane-unit-audit';
 import { sujiaoPoolClassificationDraft } from './sujiao-pool-classification';
 import { sujiaoPracticalProblemsDraft } from './sujiao-practical-problems';
 import { sujiaoQuantityApplicationsDraft } from './sujiao-quantity-applications';
@@ -55,6 +73,7 @@ import {
   sujiaoComparisonTargetDraft,
   sujiaoQuantityDifferenceDraft,
 } from './sujiao-quantity-relations';
+import { sujiaoQuantityUnitAudit } from './sujiao-quantity-unit-audit';
 import {
   sujiaoBorrowSubtractDraft,
   sujiaoCarryAddDraft,
@@ -87,6 +106,7 @@ const releasedIds = new Set([
   'sj-lower-borrow-subtract',
   'sj-lower-calculation-applications',
   'sj-lower-calculation-links',
+  'sj-lower-calculation-review',
   'sj-lower-carry-add',
   'sj-lower-child-activities',
   'sj-lower-circular-numbers',
@@ -109,8 +129,18 @@ const releasedIds = new Set([
   'sj-lower-estimation',
   'sj-lower-face-tracing',
   'sj-lower-fifty',
+  'sj-lower-final-classification-review',
+  'sj-lower-final-counting',
+  'sj-lower-final-data-questions',
+  'sj-lower-final-embedded',
+  'sj-lower-final-equations',
+  'sj-lower-final-four-shapes',
   'sj-lower-final-numbers',
+  'sj-lower-final-numbers-shapes',
+  'sj-lower-final-parade',
   'sj-lower-final-relations',
+  'sj-lower-first-practice',
+  'sj-lower-first-review',
   'sj-lower-fold-cut-join',
   'sj-lower-geoboard-shift',
   'sj-lower-guess-and-digits',
@@ -135,6 +165,7 @@ const releasedIds = new Set([
   'sj-lower-plane-cutting',
   'sj-lower-plane-patterns',
   'sj-lower-plane-recognition',
+  'sj-lower-plane-review',
   'sj-lower-pool-classification',
   'sj-lower-practical-problems',
   'sj-lower-quantity-applications',
@@ -159,7 +190,10 @@ const releasedIds = new Set([
 ]);
 export const sujiaoLowerLessons: Lesson[] = [
   ...sujiaoFirstDrafts,
+  sujiaoLowerFirstPracticeDraft,
+  sujiaoLowerFirstReviewDraft,
   sujiaoPlaneRecognitionDraft,
+  sujiaoPlaneReviewDraft,
   sujiaoPlaneCuttingDraft,
   sujiaoCompositeCountingDraft,
   sujiaoPlanePatternsDraft,
@@ -202,6 +236,14 @@ export const sujiaoLowerLessons: Lesson[] = [
   sujiaoEstimationDraft,
   sujiaoFiftyDraft,
   sujiaoLowerFinalNumbersDraft,
+  sujiaoFinalClassificationReviewDraft,
+  sujiaoFinalDataQuestionsDraft,
+  sujiaoFinalEquationsDraft,
+  sujiaoFinalCountingDraft,
+  sujiaoFinalNumbersShapesDraft,
+  sujiaoFinalFourShapesDraft,
+  sujiaoFinalParadeDraft,
+  sujiaoFinalEmbeddedDraft,
   sujiaoLowerFinalRelationsDraft,
   sujiaoTwelveSticksDraft,
   sujiaoFoldCutJoinDraft,
@@ -215,6 +257,7 @@ export const sujiaoLowerLessons: Lesson[] = [
   sujiaoCrossBalanceDraft,
   sujiaoSymbolDigitsDraft,
   sujiaoCalculationLinksDraft,
+  sujiaoCalculationReviewDraft,
   sujiaoPracticalProblemsDraft,
   sujiaoQuantityDifferenceDraft,
   sujiaoComparisonTargetDraft,
@@ -236,10 +279,17 @@ export const sujiaoLowerLessons: Lesson[] = [
   }));
 // Only remove a unit placeholder after its page-to-task coverage audit.
 const implementedOriginalTeachingUnits = new Set<string>([
+  sujiaoCalculationUnitAudit.unit,
   sujiaoClassificationAudit.unit,
   sujiaoFiftyAudit.unit,
+  sujiaoFinalUnitAudit.unit,
+  sujiaoJoiningUnitAudit.unit,
+  sujiaoLowerFirstUnitAudit.unit,
+  sujiaoMathComicAudit.unit,
   sujiaoNumberUnitAudit.unit,
   sujiaoObservationAudit.unit,
+  sujiaoPlaneUnitAudit.unit,
+  sujiaoQuantityUnitAudit.unit,
 ]);
 function pending(item: (typeof source.contents)[number]): Lesson {
   return {

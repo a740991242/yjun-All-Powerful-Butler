@@ -1,34 +1,70 @@
 <script setup lang="ts">
 import type { RegionalEditionQuery } from './regional-editions';
 
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { Alert, Button, Select, Tag } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
 import { resolveRegionalEdition } from './regional-editions';
+import {
+  regionalCities,
+  regionalProvinces,
+  regionalSchools,
+} from './regional-locations';
 
 const emit = defineEmits<{
   apply: [edition: 'pep-2024' | 'sujiao', volume: 'lower' | 'upper'];
 }>();
+const province = ref('jiangsu');
+const city = ref('suzhou');
 const school = ref('none');
 const academicYear = ref('2026-2027');
 const volume = ref<'lower' | 'upper'>('upper');
+const provinces = computed(() =>
+  regionalProvinces.map((value) => ({
+    value,
+    label: $t(`educationLearning.regionalProvince_${value}`),
+  })),
+);
+const cities = computed(() => [
+  { value: 'none', label: $t('educationLearning.regionalNoCity') },
+  ...regionalCities(province.value).map((value) => ({
+    value,
+    label: $t(`educationLearning.regionalCity_${value}`),
+  })),
+]);
 const schools = computed(() => [
   { value: 'none', label: $t('educationLearning.regionalNoSchool') },
-  {
-    value: 'wujiang-choudu-primary',
-    label: $t('educationLearning.regionalChoudu'),
-  },
+  ...regionalSchools(province.value, city.value).map((value) => ({
+    value,
+    label: $t(`educationLearning.regionalSchool_${value}`),
+  })),
 ]);
+// An old school must never survive a location change, even when returning to Jiangsu.
+watch(
+  province,
+  () => {
+    city.value = 'none';
+    school.value = 'none';
+  },
+  { flush: 'sync' },
+);
+watch(
+  city,
+  () => {
+    school.value = 'none';
+  },
+  { flush: 'sync' },
+);
 const volumes = computed(() => [
   { value: 'upper', label: $t('educationLearning.upper') },
   { value: 'lower', label: $t('educationLearning.lower') },
 ]);
 const query = computed<RegionalEditionQuery>(() => ({
-  province: 'jiangsu',
-  city: 'suzhou',
+  province: province.value,
+  city: city.value === 'none' ? '' : city.value,
   school: school.value === 'none' ? '' : school.value,
   academicYear: academicYear.value,
   stage: 'primary',
@@ -60,6 +96,39 @@ function apply() {
     <p class="leading-7 text-muted-foreground">
       {{ $t('educationLearning.regionalScope') }}
     </p>
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="flex min-w-0 flex-col gap-2">
+        <label for="education-region-province">
+          {{ $t('educationLearning.regionalProvince') }}
+        </label>
+        <Select
+          id="education-region-province"
+          v-model:value="province"
+          size="large"
+          :options="provinces"
+          show-search
+          :filter-option="
+            (input, option) =>
+              String(option?.label ?? '')
+                .toLowerCase()
+                .includes(input.toLowerCase())
+          "
+          :aria-label="$t('educationLearning.regionalProvince')"
+        />
+      </div>
+      <div class="flex min-w-0 flex-col gap-2">
+        <label for="education-region-city">
+          {{ $t('educationLearning.regionalCity') }}
+        </label>
+        <Select
+          id="education-region-city"
+          v-model:value="city"
+          size="large"
+          :options="cities"
+          :aria-label="$t('educationLearning.regionalCity')"
+        />
+      </div>
+    </div>
     <div class="grid gap-4 md:grid-cols-3">
       <div class="flex min-w-0 flex-col gap-2">
         <label for="education-region-school">

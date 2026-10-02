@@ -68,16 +68,16 @@ it('rejects unsupported layouts, answer fields and arbitrary replacement geometr
     expect(isShapeCollageVisual(v)).toBe(false);
 });
 it('separates material counts, all present categories, physical work and open stories, with actual new review conditions', () => {
-  expect(lesson.steps).toHaveLength(4);
-  expect(lesson.questions).toHaveLength(29);
-  expect(new Set(lesson.questions.map((q) => q.knowledge)).size).toBe(29);
+  expect(lesson.steps).toHaveLength(5);
+  expect(lesson.questions).toHaveLength(34);
+  expect(new Set(lesson.questions.map((q) => q.knowledge)).size).toBe(34);
   expect(lesson.reviewQuestions).toHaveLength(24);
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    3,
+    5,
   );
   expect(
     lesson.questions.filter((q) => q.rule.kind === 'reflection'),
-  ).toHaveLength(2);
+  ).toHaveLength(5);
   for (const questions of [lesson.questions, lesson.reviewQuestions!])
     for (const q of questions) {
       if (q.visual?.kind !== 'shape-collage') continue;
@@ -159,4 +159,59 @@ it('preserves a partially selected category set before correction and open story
     >
   ).answer = 4;
   expect(() => parseBackup(exportBackup(bad))).toThrow(Error);
+});
+it('keeps version-one snapshots intact and records three independent recollections without confirming physical work', () => {
+  const library = initialLibrary('图形实践');
+  const previous = createSession(
+    {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.filter(
+        (q) =>
+          ![
+            `${lesson.id}-manual-3`,
+            `${lesson.id}-manual-4`,
+            `${lesson.id}-reflection-creation`,
+            `${lesson.id}-reflection-digits`,
+            `${lesson.id}-reflection-relations`,
+          ].includes(q.id),
+      ),
+    },
+    'sujiao-math-p1-lower-9787574312951',
+    library.activeProfileId,
+  );
+  expect(previous.questions).toHaveLength(29);
+  const oldSnapshot = structuredClone(previous);
+  const current = createSession(
+    lesson,
+    previous.bookId,
+    library.activeProfileId,
+  );
+  expect(current.lessonVersion).toBe(2);
+  for (const suffix of ['digits', 'relations', 'creation']) {
+    const index = current.questions.findIndex(
+      (q) => q.id === `${lesson.id}-reflection-${suffix}`,
+    );
+    current.responses[index]!.draft =
+      `${suffix}：还没有实物，想下次试，这是计划。`;
+    current.responses[index] = submitResponse(
+      current.questions[index]!,
+      current.responses[index]!,
+    );
+    expect(current.responses[index]!.submissions[0]!.correct).toBeNull();
+  }
+  const actualWork = current.questions.flatMap((q, index) =>
+    q.rule.kind === 'manual' ? [current.responses[index]!] : [],
+  );
+  expect(actualWork).toHaveLength(5);
+  expect(actualWork.every((r) => r.submissions.length === 0)).toBe(true);
+  for (const q of previous.questions) {
+    const replacement = current.questions.find((item) => item.id === q.id)!;
+    expect(replacement.knowledge).toBe(q.knowledge);
+    expect(replacement.rule).toEqual(q.rule);
+  }
+  library.sessions.push(previous, current);
+  const restored = parseBackup(exportBackup(library)).data;
+  expect(restored.sessions[0]).toEqual(oldSnapshot);
+  expect(restored.sessions[1]).toEqual(current);
 });

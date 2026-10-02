@@ -4,17 +4,34 @@ import type { ClockCountingVisual } from './clock-counting';
 import type { ComparisonBarsVisual } from './comparison-bars';
 import type { ComparisonRowsVisual } from './comparison-rows';
 import type { CrossBalanceModel } from './cross-balance';
+import type { CubePairVisual } from './cube-pair';
 import type { DigitCounterVisual } from './digit-counter';
+import type { EmbeddedShapesVisual } from './embedded-shapes';
 import type { EstimateDotsState, EstimateDotsVisual } from './estimate-dots';
+import type { BookGroupsVisual, NumberLineGridVisual } from './final-counting';
+import type { FinalStoriesVisual } from './final-stories';
 import type { MathStoryVisual } from './math-story';
 import type { MonthCalendarVisual } from './month-calendar';
+import type { MonthWeatherVisual } from './month-weather';
 import type { MotionFramesVisual } from './motion-frames';
 import type { MotionSequencesVisual } from './motion-sequences';
+import type { NumberChainRule } from './number-chain';
 import type { NumberFrameVisual } from './number-frame';
 import type { NumberPicksRule } from './number-picks';
 import type { OcclusionViewsVisual } from './occlusion-views';
+import type { ParadeFramesVisual } from './parade-frames';
+import type { PartitionedSquareVisual } from './partitioned-square';
+import type { QuarterCircleVisual } from './quarter-circle';
 import type { RegroupSticksVisual } from './regroup-sticks';
+import type { SmallArithmeticVisual } from './small-arithmetic';
+import type { SolidInstructionsVisual } from './solid-instructions';
+import type { SolidPatternVisual } from './solid-pattern';
+import type { SolidRecomposeVisual } from './solid-recompose';
 import type { StockTableVisual } from './stock-table';
+import type { TeenArithmeticGridVisual } from './teen-arithmetic-grid';
+import type { TeenLayoutVisual } from './teen-layout';
+import type { TenTablesVisual } from './ten-tables';
+import type { TwoPieceJoinVisual } from './two-piece-join';
 import type { ViewpointHouseVisual } from './viewpoint-house';
 import type { ViewpointJugVisual } from './viewpoint-jug';
 import type { ZeroNumberChartVisual } from './zero-number-chart';
@@ -259,6 +276,8 @@ export interface CountGroupsVisual {
 
 export interface ReadingTableVisual {
   kind: 'reading-table';
+  /** Omitted in existing filled-table snapshots. Blank mode labels six input positions only. */
+  display?: 'blanks';
   names: [string, string];
   days: [string, string, string];
   pages: [[number, number, number], [number, number, number]];
@@ -372,6 +391,7 @@ export interface GeoboardShiftVisual extends GeoboardShiftState {
 
 export type AnswerRule =
   | CrossBalanceModel
+  | NumberChainRule
   | NumberPicksRule
   | { kind: 'choice'; value: string }
   | { kind: 'magic-grid'; cells: MagicCells }
@@ -390,6 +410,7 @@ export type Visual =
   | AssemblyCandidatesVisual
   | BeadChainVisual
   | BlockCardsVisual
+  | BookGroupsVisual
   | CardGameVisual
   | ChildActivitiesVisual
   | CircularNumberArrayVisual
@@ -403,27 +424,35 @@ export type Visual =
   | CountGroupsVisual
   | CrossBalanceModel
   | CubeColumnsVisual
+  | CubePairVisual
   | CupCardsVisual
   | DigitCounterVisual
+  | EmbeddedShapesVisual
   | EstimateDotsVisual
+  | FinalStoriesVisual
   | FoldCutJoinVisual
   | GeoboardShiftVisual
   | GridPathsVisual
   | MagicGridVisual
   | MathStoryVisual
   | MonthCalendarVisual
+  | MonthWeatherVisual
   | MotionFramesVisual
   | MotionSequencesVisual
   | NatureCardsVisual
   | NumberFrameVisual
+  | NumberLineGridVisual
   | NumberTowerVisual
   | OcclusionViewsVisual
   | PaperFoldVisual
+  | ParadeFramesVisual
+  | PartitionedSquareVisual
   | PeriodicFlagsVisual
   | PeriodicShapesVisual
   | PlaneCardsVisual
   | PoolSceneVisual
   | QuantityTableVisual
+  | QuarterCircleVisual
   | QueueVisual
   | ReadingTableVisual
   | RectangleCutVisual
@@ -433,17 +462,25 @@ export type Visual =
   | SeatGridVisual
   | ShapeCollageVisual
   | ShapePatchVisual
+  | SmallArithmeticVisual
   | SolidBuildVisual
   | SolidFaceTracesVisual
+  | SolidInstructionsVisual
+  | SolidPatternVisual
+  | SolidRecomposeVisual
   | SolidRowVisual
   | SquareMosaicVisual
   | StickOutlineVisual
   | StockTableVisual
   | SumLinesVisual
   | SurveyTableVisual
+  | TeenArithmeticGridVisual
+  | TeenLayoutVisual
+  | TenTablesVisual
   | TileGridVisual
   | TriangleMosaicVisual
   | TriangleMoveVisual
+  | TwoPieceJoinVisual
   | ViewpointHouseVisual
   | ViewpointJugVisual
   | ZeroNumberChartVisual

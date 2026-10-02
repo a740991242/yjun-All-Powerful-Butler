@@ -19,7 +19,7 @@ it('bounds shape cards and rejects unsupported shapes, rotations, sparse data an
   for (const cards of [
     [],
     sparseArray(1),
-    Array.from({ length: 7 }, () => card),
+    Array.from({ length: 11 }, () => card),
     [{ ...card, shape: 'cube' }],
     [{ ...card, size: 0 }],
     [{ ...card, size: '2' }],
@@ -29,6 +29,12 @@ it('bounds shape cards and rejects unsupported shapes, rotations, sparse data an
   ])
     expect(isPlaneCardsVisual({ ...model, cards })).toBe(false);
   expect(isPlaneCardsVisual({ ...model, answer: 'square' })).toBe(false);
+  expect(
+    isPlaneCardsVisual({
+      ...model,
+      cards: Array.from({ length: 10 }, () => card),
+    }),
+  ).toBe(true);
 });
 it('separates category, straight-edge counts and congruence under rotation and scale', () => {
   for (const [review, questions] of [

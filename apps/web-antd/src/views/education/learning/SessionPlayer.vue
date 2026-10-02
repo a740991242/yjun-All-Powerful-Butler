@@ -30,6 +30,7 @@ import { MAX_REFLECTION_LENGTH, statistics, validAnswer } from './engine';
 import { answerLabel } from './history';
 import { studyLibrary } from './library';
 import { magicBlankCount } from './magic-grid';
+import { numberChainBlankCount } from './number-chain';
 import { towerBlankCount } from './number-tower';
 import Visual from './Visual.vue';
 
@@ -62,6 +63,7 @@ const fieldCount = computed(() => {
   if (rule?.kind === 'tower') return towerBlankCount(rule.rows);
   if (rule?.kind === 'cross-balance') return rule.values.length;
   if (rule?.kind === 'number-picks') return rule.fields.length;
+  if (rule?.kind === 'number-chain') return numberChainBlankCount(rule);
   return (() => {
     if (rule?.kind === 'partition') return rule.parts;
     return rule?.kind === 'steps' || rule?.kind === 'sequence'
@@ -462,6 +464,7 @@ async function finish() {
                 question.rule.kind === 'partition' ||
                 question.rule.kind === 'cross-balance' ||
                 question.rule.kind === 'number-picks' ||
+                question.rule.kind === 'number-chain' ||
                 question.rule.kind === 'steps' ||
                 question.rule.kind === 'tower' ||
                 question.rule.kind === 'magic-grid'
@@ -479,7 +482,8 @@ async function finish() {
                     question.rule.kind === 'magic-grid' ||
                     question.visual?.kind === 'number-frame' ||
                     question.visual?.kind === 'stock-table' ||
-                    question.rule.kind === 'cross-balance'
+                    question.rule.kind === 'cross-balance' ||
+                    question.rule.kind === 'number-chain'
                       ? $t('educationLearning.towerBlank', {
                           letter: String.fromCharCode(64 + field),
                         })

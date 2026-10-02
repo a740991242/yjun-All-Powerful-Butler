@@ -17,10 +17,14 @@ import { isCompositeShapesVisual } from './composite-shapes';
 import { isCountGroupsVisual } from './count-groups';
 import { isCrossBalanceModel } from './cross-balance';
 import { isCubeColumnsVisual } from './cube-columns';
+import { isCubePairVisual } from './cube-pair';
 import { isCupCardsVisual } from './cup-cards';
 import { isDigitCounterVisual } from './digit-counter';
+import { isEmbeddedShapesVisual } from './embedded-shapes';
 import { evaluate, MAX_REFLECTION_LENGTH, validAnswer } from './engine';
 import { isEstimateDotsState, isEstimateDotsVisual } from './estimate-dots';
+import { isBookGroupsVisual, isNumberLineGridVisual } from './final-counting';
+import { isFinalStoriesVisual } from './final-stories';
 import { fold } from './fold';
 import { isFoldCutJoinVisual } from './fold-cut-join';
 import { isGeoboardShiftState, isGeoboardShiftVisual } from './geoboard-shift';
@@ -32,9 +36,11 @@ import {
 } from './magic-grid';
 import { isMathStoryVisual } from './math-story';
 import { isMonthCalendarVisual } from './month-calendar';
+import { isMonthWeatherVisual } from './month-weather';
 import { isMotionFramesVisual } from './motion-frames';
 import { isMotionSequencesVisual } from './motion-sequences';
 import { isNatureCardsVisual } from './nature-cards';
+import { isNumberChainRule, numberChainBlankCount } from './number-chain';
 import { isNumberFrameVisual } from './number-frame';
 import { isNumberPicksRule } from './number-picks';
 import {
@@ -44,12 +50,15 @@ import {
 } from './number-tower';
 import { isOcclusionViewsVisual } from './occlusion-views';
 import { isPaperFoldVisual } from './paper-fold';
+import { isParadeFramesVisual } from './parade-frames';
+import { isPartitionedSquareVisual } from './partitioned-square';
 import { isPeriodicFlagsVisual } from './periodic-flags';
 import { isPeriodicShapesVisual } from './periodic-shapes';
 import { isPlaceValueState } from './place-value';
 import { isPlaneCardsVisual } from './plane-cards';
 import { isPoolSceneVisual } from './pool-scene';
 import { isQuantityTableVisual } from './quantity-table';
+import { isQuarterCircleVisual } from './quarter-circle';
 import { isQueueVisual } from './queue';
 import { isReadingTableVisual } from './reading-table';
 import { isRectangleCutVisual } from './rectangle-cut';
@@ -61,8 +70,12 @@ import { isSeatGridVisual } from './seat-grid';
 import { isShapeCollageVisual } from './shape-collage';
 import { isShapeJoinState } from './shape-join';
 import { isShapePatchVisual } from './shape-patch';
+import { isSmallArithmeticVisual } from './small-arithmetic';
 import { isSolidBuildVisual } from './solid-build';
 import { isSolidFaceTracesVisual } from './solid-face-traces';
+import { isSolidInstructionsVisual } from './solid-instructions';
+import { isSolidPatternVisual } from './solid-pattern';
+import { isSolidRecomposeVisual } from './solid-recompose';
 import { isSolidRowVisual } from './solid-row';
 import {
   isSquareMosaicState,
@@ -77,6 +90,9 @@ import {
   isSurveyTableVisual,
   matchingSurveyState,
 } from './survey-table';
+import { isTeenArithmeticGridVisual } from './teen-arithmetic-grid';
+import { isTeenLayoutVisual } from './teen-layout';
+import { isTenTablesVisual } from './ten-tables';
 import { isThreePieceJoinState } from './three-piece-join';
 import { isTileGridVisual } from './tile-grid';
 import {
@@ -85,6 +101,7 @@ import {
   isTriangleMoveVisual,
   matchingTriangleState,
 } from './triangle-mosaic';
+import { isTwoPieceJoinVisual } from './two-piece-join';
 import { isViewpointHouseVisual } from './viewpoint-house';
 import { isViewpointJugVisual } from './viewpoint-jug';
 import { isZeroNumberChartVisual } from './zero-number-chart';
@@ -147,6 +164,9 @@ function rule(value: unknown) {
     }
     case 'number-picks': {
       return isNumberPicksRule(value);
+    }
+    case 'number-chain': {
+      return isNumberChainRule(value);
     }
     case 'magic-grid': {
       return isMagicGridRule(value);
@@ -232,6 +252,21 @@ function visual(value: unknown) {
     case 'arithmetic-grid': {
       return isArithmeticGridVisual(value);
     }
+    case 'quarter-circle': {
+      return isQuarterCircleVisual(value);
+    }
+    case 'two-piece-join': {
+      return isTwoPieceJoinVisual(value);
+    }
+    case 'book-groups': {
+      return isBookGroupsVisual(value);
+    }
+    case 'number-line-grid': {
+      return isNumberLineGridVisual(value);
+    }
+    case 'small-arithmetic': {
+      return isSmallArithmeticVisual(value);
+    }
     case 'magic-grid': {
       return isMagicGridVisual(value);
     }
@@ -243,6 +278,15 @@ function visual(value: unknown) {
     }
     case 'cube-columns': {
       return isCubeColumnsVisual(value);
+    }
+    case 'teen-arithmetic-grid': {
+      return isTeenArithmeticGridVisual(value);
+    }
+    case 'month-weather': {
+      return isMonthWeatherVisual(value);
+    }
+    case 'teen-layout': {
+      return isTeenLayoutVisual(value);
     }
     case 'count-groups': {
       return isCountGroupsVisual(value);
@@ -256,11 +300,29 @@ function visual(value: unknown) {
     case 'quantity-table': {
       return isQuantityTableVisual(value);
     }
+    case 'ten-tables': {
+      return isTenTablesVisual(value);
+    }
+    case 'solid-recompose': {
+      return isSolidRecomposeVisual(value);
+    }
+    case 'solid-pattern': {
+      return isSolidPatternVisual(value);
+    }
+    case 'cube-pair': {
+      return isCubePairVisual(value);
+    }
+    case 'solid-instructions': {
+      return isSolidInstructionsVisual(value);
+    }
     case 'solid-build': {
       return isSolidBuildVisual(value);
     }
     case 'bead-chain': {
       return isBeadChainVisual(value);
+    }
+    case 'final-stories': {
+      return isFinalStoriesVisual(value);
     }
     case 'reading-table': {
       return isReadingTableVisual(value);
@@ -354,6 +416,12 @@ function visual(value: unknown) {
     }
     case 'motion-sequences': {
       return isMotionSequencesVisual(value);
+    }
+    case 'embedded-shapes': {
+      return isEmbeddedShapesVisual(value);
+    }
+    case 'parade-frames': {
+      return isParadeFramesVisual(value);
     }
     case 'motion-frames': {
       return isMotionFramesVisual(value);
@@ -452,6 +520,9 @@ function visual(value: unknown) {
     }
     case 'square-mosaic': {
       return isSquareMosaicVisual(value);
+    }
+    case 'partitioned-square': {
+      return isPartitionedSquareVisual(value);
     }
     case 'assembly-candidates': {
       return isAssemblyCandidatesVisual(value);
@@ -885,6 +956,20 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
       response.draft !== null &&
       (!Array.isArray(response.draft) ||
         response.draft.length !== magicBlankCount(current.rule.cells) ||
+        ![...response.draft].every(
+          (item) =>
+            item === null ||
+            (typeof item === 'number' &&
+              Number.isSafeInteger(item) &&
+              Math.abs(item) <= 100_000),
+        ))
+    )
+      return false;
+    if (
+      current.rule.kind === 'number-chain' &&
+      response.draft !== null &&
+      (!Array.isArray(response.draft) ||
+        response.draft.length !== numberChainBlankCount(current.rule) ||
         ![...response.draft].every(
           (item) =>
             item === null ||

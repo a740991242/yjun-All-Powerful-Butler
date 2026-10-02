@@ -2,6 +2,7 @@ import type { Book, Lesson } from '../learning/types';
 import type { Textbook } from './textbooks';
 
 import { sujiaoComparisonDraft } from './sujiao-comparison';
+import { sujiaoDirectionComparisonLesson } from './sujiao-direction-comparison';
 import { sujiaoFillArithmeticLesson } from './sujiao-fill-arithmetic';
 import { sujiaoFinalArithmeticLesson } from './sujiao-final-arithmetic';
 import { sujiaoFinalBuildingLesson } from './sujiao-final-building';
@@ -44,11 +45,43 @@ import {
 import { sujiaoTenReviewLesson } from './sujiao-ten-review';
 import { sujiaoTilingLesson } from './sujiao-tiling';
 import { sujiaoEverydayTimeLesson } from './sujiao-time';
+import { sujiaoUpperCardReviewLesson } from './sujiao-upper-card-review';
+import { sujiaoUpperColourCountLesson } from './sujiao-upper-colour-count';
+import { sujiaoUpperContinuousLesson } from './sujiao-upper-continuous';
 import {
   sujiaoFourFiveDraft,
   sujiaoOrdinalDraft,
 } from './sujiao-upper-count-order';
+import { sujiaoUpperCubePairLesson } from './sujiao-upper-cube-pair';
+import { sujiaoUpperExplorationReviewLesson } from './sujiao-upper-exploration-review';
+import { sujiaoUpperFinalCalculationLesson } from './sujiao-upper-final-calculation';
+import { sujiaoUpperFinalEvaluationLesson } from './sujiao-upper-final-evaluation';
+import { sujiaoUpperFinalMovesLesson } from './sujiao-upper-final-moves';
+import { sujiaoUpperFinalOrganizeLesson } from './sujiao-upper-final-organize';
+import { sujiaoUpperFinalPairsLesson } from './sujiao-upper-final-pairs';
+import { sujiaoUpperFinalReadingLesson } from './sujiao-upper-final-reading';
+import { sujiaoUpperFinalStoriesLesson } from './sujiao-upper-final-stories';
+import { sujiaoUpperFullCardsLesson } from './sujiao-upper-full-cards';
+import { sujiaoUpperMonthRecordLesson } from './sujiao-upper-month-record';
+import { sujiaoUpperNumberCultureLesson } from './sujiao-upper-number-culture';
+import { sujiaoUpperNumberlineLesson } from './sujiao-upper-numberline';
+import { sujiaoUpperOpenComparisonLesson } from './sujiao-upper-open-comparison';
+import { sujiaoUpperPartTablesLesson } from './sujiao-upper-part-tables';
+import { sujiaoUpperSolidInstructionsLesson } from './sujiao-upper-solid-instructions';
+import { sujiaoUpperSolidPatternsLesson } from './sujiao-upper-solid-patterns';
+import { sujiaoUpperSolidRecomposeLesson } from './sujiao-upper-solid-recompose';
+import { sujiaoUpperSolidReviewLesson } from './sujiao-upper-solid-review';
 import { sujiaoUpperSource as source } from './sujiao-upper-source';
+import { sujiaoUpperTeensCounterLesson } from './sujiao-upper-teens-counter';
+import { sujiaoUpperTeensEvaluationLesson } from './sujiao-upper-teens-evaluation';
+import { sujiaoUpperTeensLayoutsLesson } from './sujiao-upper-teens-layouts';
+import { sujiaoUpperTeensNumberlineLesson } from './sujiao-upper-teens-numberline';
+import { sujiaoUpperTeensTablesLesson } from './sujiao-upper-teens-tables';
+import { sujiaoUpperTenCounterLesson } from './sujiao-upper-ten-counter';
+import { sujiaoUpperTenEvaluationLesson } from './sujiao-upper-ten-evaluation';
+import { sujiaoUpperTenOpenActivitiesLesson } from './sujiao-upper-ten-open-activities';
+import { sujiaoUpperTenOrderLesson } from './sujiao-upper-ten-order';
+import { sujiaoUpperTenTablesLesson } from './sujiao-upper-ten-tables';
 import {
   sujiaoZeroArithmeticDraft,
   sujiaoZeroRecognitionDraft,
@@ -236,12 +269,14 @@ export const sujiaoBooks: Book[] = [
               sujiaoZeroRecognitionLesson,
               sujiaoComparisonLesson,
               sujiaoRecognitionReviewLesson,
+              sujiaoUpperColourCountLesson,
+              sujiaoDirectionComparisonLesson,
               sujiaoFirstAdditionLesson,
               sujiaoFirstSubtractionLesson,
               sujiaoZeroArithmeticLesson,
               sujiaoFillArithmeticLesson,
               sujiaoFirstUnitReviewLesson,
-              pending(item),
+              sujiaoUpperCardReviewLesson,
             ];
           return (() => {
             if (item.id === 'position') return [sujiaoPositionLesson];
@@ -249,30 +284,44 @@ export const sujiaoBooks: Book[] = [
               if (item.id === 'u2')
                 return [
                   sujiaoSixNineRecognitionLesson,
+                  sujiaoUpperPartTablesLesson,
                   sujiaoSixNineArithmeticLesson,
+                  sujiaoUpperNumberlineLesson,
                   sujiaoSequentialLesson,
+                  sujiaoUpperContinuousLesson,
                   sujiaoNineConsolidationLesson,
+                  sujiaoUpperFullCardsLesson,
+                  sujiaoUpperOpenComparisonLesson,
                   sujiaoSixNineReviewLesson,
-                  pending(item),
+                  sujiaoUpperExplorationReviewLesson,
                 ];
               return (() => {
                 if (item.id === 'u3')
                   return [
                     sujiaoSolidRecognitionLesson,
                     sujiaoSolidBuildLesson,
-                    pending(item),
+                    sujiaoUpperSolidInstructionsLesson,
+                    sujiaoUpperSolidReviewLesson,
+                    sujiaoUpperCubePairLesson,
+                    sujiaoUpperSolidPatternsLesson,
+                    sujiaoUpperSolidRecomposeLesson,
                   ];
                 return (() => {
                   if (item.id === 'u4')
                     return [
                       sujiaoTenRecognitionLesson,
+                      sujiaoUpperTenCounterLesson,
+                      sujiaoUpperTenTablesLesson,
+                      sujiaoUpperTenOrderLesson,
+                      sujiaoUpperNumberCultureLesson,
+                      sujiaoUpperTenEvaluationLesson,
+                      sujiaoUpperTenOpenActivitiesLesson,
                       sujiaoTenCompositionLesson,
                       sujiaoTenArithmeticLesson,
                       sujiaoMissingAddendLesson,
                       sujiaoTenReviewLesson,
                       sujiaoTilingLesson,
                       sujiaoSumLinesLesson,
-                      pending(item),
                     ];
                   return (() => {
                     if (item.id === 'take-ten') return [sujiaoTakeTenLesson];
@@ -280,19 +329,30 @@ export const sujiaoBooks: Book[] = [
                       if (item.id === 'u5')
                         return [
                           sujiaoTeensRecognitionLesson,
+                          sujiaoUpperTeensCounterLesson,
+                          sujiaoUpperTeensNumberlineLesson,
+                          sujiaoUpperTeensLayoutsLesson,
+                          sujiaoUpperTeensTablesLesson,
+                          sujiaoUpperMonthRecordLesson,
+                          sujiaoUpperTeensEvaluationLesson,
                           sujiaoTeenArithmeticLesson,
                           sujiaoTeensReviewLesson,
                           sujiaoEverydayTimeLesson,
-                          pending(item),
                         ];
                       return item.id === 'review'
                         ? [
+                            sujiaoUpperFinalCalculationLesson,
+                            sujiaoUpperFinalEvaluationLesson,
+                            sujiaoUpperFinalPairsLesson,
+                            sujiaoUpperFinalOrganizeLesson,
+                            sujiaoUpperFinalReadingLesson,
+                            sujiaoUpperFinalStoriesLesson,
+                            sujiaoUpperFinalMovesLesson,
                             sujiaoFinalNumbersLesson,
                             sujiaoFinalArithmeticLesson,
                             sujiaoFinalShapesLesson,
                             sujiaoFinalExplorationLesson,
                             sujiaoFinalBuildingLesson,
-                            pending(item),
                           ]
                         : [pending(item)];
                     })();

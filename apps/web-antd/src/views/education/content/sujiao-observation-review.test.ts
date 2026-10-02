@@ -26,7 +26,7 @@ it('maps each inspected observation page to actual implemented knowledge and act
     sujiaoLowerBook.units.some((u) =>
       u.lessons.some((l) => l.status === 'preparing'),
     ),
-  ).toBe(true);
+  ).toBe(false);
 });
 it('keeps real room, bag, numbered views and future drawing separate from three ungraded evaluations', () => {
   expect(draft.questions).toHaveLength(17);

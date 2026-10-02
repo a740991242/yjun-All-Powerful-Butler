@@ -60,3 +60,21 @@ it('rejects incomplete cells, wrong dimensions, duplicate labels and hidden resu
   Reflect.deleteProperty(sparse.pages[0], '1');
   expect(isReadingTableVisual(sparse)).toBe(false);
 });
+
+it('accepts numbered blank display while preserving existing filled snapshots and rejecting unknown modes or hidden extra answers', () => {
+  expect(
+    isReadingTableVisual({ ...sujiaoReadingTable, display: 'blanks' }),
+  ).toBe(true);
+  expect(isReadingTableVisual(sujiaoReadingTable)).toBe(true);
+  for (const display of ['filled', 'answers', true, null, ['blanks']])
+    expect(isReadingTableVisual({ ...sujiaoReadingTable, display })).toBe(
+      false,
+    );
+  expect(
+    isReadingTableVisual({
+      ...sujiaoReadingTable,
+      display: 'blanks',
+      answers: [1, 2, 3, 4, 5, 6],
+    }),
+  ).toBe(false);
+});

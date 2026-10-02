@@ -25,7 +25,7 @@ it('maps six inspected classification pages to available objective, actual and u
     sujiaoLowerBook.units
       .find((u) => u.id === 'u1')
       ?.lessons.some((l) => l.status === 'preparing'),
-  ).toBe(true);
+  ).toBe(false);
 });
 it('keeps real coloring, survey and library work separate from two open evaluations and unknown counts', () => {
   const lesson = sujiaoLowerLessons.find(

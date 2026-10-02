@@ -25,7 +25,7 @@ it('maps four inspected practice pages to actual version-two tasks and removes o
   ).toEqual(['sj-lower-fifty']);
   expect(
     sujiaoLowerBook.units
-      .find((u) => u.id === 'u5')
+      .find((u) => u.id === 'u1')
       ?.lessons.some((l) => l.status === 'preparing'),
-  ).toBe(true);
+  ).toBe(false);
 });
