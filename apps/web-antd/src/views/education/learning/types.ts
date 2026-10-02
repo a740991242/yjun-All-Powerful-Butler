@@ -10,6 +10,7 @@ import type { EmbeddedShapesVisual } from './embedded-shapes';
 import type { EstimateDotsState, EstimateDotsVisual } from './estimate-dots';
 import type { BookGroupsVisual, NumberLineGridVisual } from './final-counting';
 import type { FinalStoriesVisual } from './final-stories';
+import type { HundredFragmentsVisual } from './hundred-fragments';
 import type { MathStoryVisual } from './math-story';
 import type { MonthCalendarVisual } from './month-calendar';
 import type { MonthWeatherVisual } from './month-weather';
@@ -434,6 +435,7 @@ export type Visual =
   | FoldCutJoinVisual
   | GeoboardShiftVisual
   | GridPathsVisual
+  | HundredFragmentsVisual
   | MagicGridVisual
   | MathStoryVisual
   | MonthCalendarVisual

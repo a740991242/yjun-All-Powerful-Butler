@@ -115,3 +115,29 @@ it('changes review groups and context while not grading the initial estimate', (
       lesson.questions.find((o) => o.knowledge === q.knowledge)!.prompt,
     );
 });
+
+it('adds hundred-range estimation while preserving the original 99 boundary and dot layouts', () => {
+  for (const [variant, total] of [
+    ['hundred-main', 63],
+    ['hundred-review', 47],
+  ] as const) {
+    expect(estimateDots(variant)).toHaveLength(total);
+    const state = {
+      ...initialEstimateDots(variant),
+      estimate: 100,
+      locked: true,
+      counted: total,
+    };
+    expect(isEstimateDotsState(state)).toBe(true);
+    expect(isEstimateDotsState({ ...state, estimate: 101 })).toBe(false);
+    expect(isEstimateDotsState({ ...state, counted: 101 })).toBe(false);
+    expect(isEstimateDotsState({ ...state, estimate: null })).toBe(false);
+    expect(isEstimateDotsVisual({ kind: 'estimate-dots', variant })).toBe(true);
+    expect(
+      isEstimateDotsVisual({ kind: 'estimate-dots', variant: [variant] }),
+    ).toBe(false);
+  }
+  expect(
+    isEstimateDotsState({ ...initialEstimateDots('main'), estimate: 100 }),
+  ).toBe(false);
+});

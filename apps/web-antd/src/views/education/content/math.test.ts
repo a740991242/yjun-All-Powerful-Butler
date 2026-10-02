@@ -17,6 +17,8 @@ describe('reviewed PEP mathematics lesson packs', () => {
           [0, 7, 5],
           [1, 3, 6],
           [1, 3, 7],
+          [1, 5, 6],
+          [1, 0, 8],
         ],
       ],
       [
@@ -26,6 +28,8 @@ describe('reviewed PEP mathematics lesson packs', () => {
           [0, 4, 3],
           [1, 5, 2],
           [1, 6, 2],
+          [1, 4, 6],
+          [1, 6, 3],
         ],
       ],
     ] as const) {
@@ -34,12 +38,12 @@ describe('reviewed PEP mathematics lesson packs', () => {
           .flatMap((unit) => unit.lessons)
           .find((item) => item.id === id),
       );
-      expect(course.version).toBe(2);
+      expect(course.version).toBe(3);
       expect(course.questions.slice(0, 6).map((item) => item.id)).toEqual(
         Array.from({ length: 6 }, (_, index) => `${id}-q${index + 1}`),
       );
-      const methods = course.questions.filter(
-        (item) => item.rule.kind === 'steps',
+      const methods = course.questions.filter((item) =>
+        item.id.startsWith(`${id}-method`),
       );
       expect(methods.map((item) => item.rule)).toEqual(
         expected.map((values) => ({ kind: 'steps', values: [...values] })),
@@ -136,7 +140,13 @@ describe('reviewed PEP mathematics lesson packs', () => {
   });
   it('provides manipulatives for all three break-ten courses without changing their numeric grading', () => {
     const book = mathBooks.find((item) => item.volume === 'lower')!;
-    const courses = book.units.find((unit) => unit.id === 'u2')!.lessons;
+    const courses = book.units
+      .find((unit) => unit.id === 'u2')!
+      .lessons.filter((lesson) =>
+        ['ml-borrow-eight', 'ml-borrow-nine', 'ml-borrow-small'].includes(
+          lesson.id,
+        ),
+      );
     expect(courses).toHaveLength(3);
     for (const course of courses) {
       expect(course.steps[0]?.visual?.kind).toBe('break-ten');

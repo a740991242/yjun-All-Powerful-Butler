@@ -9,6 +9,7 @@ import { $t } from '#/locales';
 
 import {
   estimateDots,
+  estimateDotsMaximum,
   initialEstimateDots,
   isEstimateDotsState,
 } from './estimate-dots';
@@ -82,7 +83,7 @@ function update(patch: Partial<EstimateDotsState>) {
           :value="current.estimate ?? undefined"
           :disabled="current.locked"
           :min="0"
-          :max="99"
+          :max="estimateDotsMaximum(visual.variant)"
           :precision="0"
           class="min-h-11 !w-full"
           :aria-label="$t('educationLearning.estimateFirst')"
@@ -104,7 +105,7 @@ function update(patch: Partial<EstimateDotsState>) {
           :value="current.counted ?? undefined"
           :disabled="!current.locked"
           :min="0"
-          :max="99"
+          :max="estimateDotsMaximum(visual.variant)"
           :precision="0"
           class="min-h-11 !w-full"
           :aria-label="$t('educationLearning.estimateCounted')"

@@ -270,7 +270,7 @@ async function finish() {
           </CollapsePanel>
         </Collapse>
         <h3 class="text-xl font-semibold">{{ step?.title }}</h3>
-        <p class="whitespace-pre-line text-lg leading-8">{{ step?.text }}</p>
+        <p class="whitespace-pre-line text-xl leading-8">{{ step?.text }}</p>
         <Visual
           v-if="step?.visual"
           :visual="step.visual"
@@ -279,7 +279,7 @@ async function finish() {
           @update:state="setLearningTool"
         />
         <div v-if="step?.activity" class="rounded-lg border border-border p-4">
-          <p class="mb-4 leading-7">{{ step.activity }}</p>
+          <p class="mb-4 text-xl leading-8">{{ step.activity }}</p>
           <Button
             class="!min-h-11"
             :disabled="session.activities.includes(`step-${session.step}`)"
@@ -350,7 +350,7 @@ async function finish() {
         <h3 class="text-xl font-semibold leading-8">{{ question.prompt }}</h3>
         <p
           v-if="question.material"
-          class="whitespace-pre-line text-lg leading-8"
+          class="whitespace-pre-line text-xl leading-8"
         >
           {{ question.material }}
         </p>
@@ -427,7 +427,7 @@ async function finish() {
                 v-for="option in question.choices"
                 :key="option.id"
                 :value="option.id"
-                class="!m-0 rounded border border-border !p-3"
+                class="!m-0 !min-h-11 rounded border border-border !p-3 !text-xl !leading-8"
               >
                 {{ option.label }}
               </Radio>
@@ -481,6 +481,7 @@ async function finish() {
                     question.rule.kind === 'tower' ||
                     question.rule.kind === 'magic-grid' ||
                     question.visual?.kind === 'number-frame' ||
+                    question.visual?.kind === 'hundred-fragments' ||
                     question.visual?.kind === 'stock-table' ||
                     question.rule.kind === 'cross-balance' ||
                     question.rule.kind === 'number-chain'
@@ -514,7 +515,7 @@ async function finish() {
                 v-for="option in question.choices"
                 :key="option.id"
                 :value="option.id"
-                class="!m-0 rounded border border-border !p-3"
+                class="!m-0 !min-h-11 rounded border border-border !p-3 !text-xl !leading-8"
               >
                 {{ option.label }}
               </Checkbox>
@@ -534,6 +535,9 @@ async function finish() {
                 <Select
                   :key="`${formId}-${field}`"
                   :id="`${formId}-${field}`"
+                  class="!h-11 !w-full min-w-32"
+                  popup-class-name="[&_.ant-select-item-option]:!min-h-11 [&_.ant-select-item-option-content]:!text-xl [&_.ant-select-item-option-content]:!leading-8"
+                  :list-item-height="44"
                   :value="sequencePart(field - 1)"
                   :options="
                     question.choices?.map((item) => ({

@@ -87,13 +87,24 @@ const lowerGroups: Group[] = [
       'ml-hundred-compare',
       'ml-hundred-sequence',
       'ml-hundred-chart',
+      'ml-hundred-counting',
+      'ml-hundred-digits',
+      'ml-hundred-links',
+      'ml-hundred-patterns',
+      'ml-hundred-ordering',
     ],
   ],
   [
     'borrowing',
     '20以内退位减法',
     '结合破十与想加算减，练习不同退位组合。',
-    ['ml-borrow-nine', 'ml-borrow-eight', 'ml-borrow-small'],
+    [
+      'ml-borrow-nine',
+      'ml-borrow-eight',
+      'ml-borrow-small',
+      'ml-borrow-process',
+      'ml-borrow-organize',
+    ],
   ],
   [
     'calculation',
@@ -117,7 +128,14 @@ const lowerGroups: Group[] = [
     'relations',
     '数量关系与生活应用',
     '联系加减法，用图示理解整体、部分与差。',
-    ['ml-relations', 'ml-review-story'],
+    [
+      'ml-relations',
+      'ml-review-story',
+      'ml-borrow-relations',
+      'ml-relations-parts',
+      'ml-relations-comparison',
+      'ml-relations-organize',
+    ],
   ],
 ];
 
@@ -134,11 +152,20 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
       let version = 1;
       if (
         id === 'shapes' ||
-        (volume === 'lower' && id === 'money') ||
+        (volume === 'lower' &&
+          [
+            'borrowing',
+            'calculation',
+            'money',
+            'numbers',
+            'relations',
+          ].includes(id)) ||
         (volume === 'upper' &&
           ['calculation', 'count', 'relations'].includes(id))
       )
         version = 2;
+      if (volume === 'lower' && ['calculation', 'relations'].includes(id))
+        version = 3;
       if (volume === 'upper' && ['count', 'shapes'].includes(id)) version = 3;
       if (volume === 'upper' && ['calculation', 'relations'].includes(id))
         version = 4;

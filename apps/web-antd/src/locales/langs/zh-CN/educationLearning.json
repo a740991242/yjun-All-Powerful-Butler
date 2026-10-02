@@ -978,5 +978,8 @@
   "semesterGrid_numbers": "行和列都从1数到10；每格的数是行号加列号再减1，从1排到19。行号、列号不是格里的数。",
   "semesterGrid_addition": "行列加数均为0～10，每格表示本行加数加本列加数，包括0+0、0+10、10+0与10+10，共121格。",
   "semesterGridMark": "带●的格表示数值或和为{value}，标记不只靠颜色。",
-  "semesterGridNotice": "这是本站按数学规律绘制的表，不是教材原版图。空格字母只编号，答案填在题目输入框；完整纸表、路径与口算仍须实际做。"
+  "semesterGridNotice": "这是本站按数学规律绘制的表，不是教材原版图。空格字母只编号，答案填在题目输入框；完整纸表、路径与口算仍须实际做。",
+  "hundredFragmentTitle": "百数表碎片{number}",
+  "hundredFragmentDescription": "按百数表位置画出的原创碎片，字母表示待填格，数字为已知数。",
+  "hundredFragmentCell": "碎片第{row}行第{column}列：{label}"
 }

@@ -978,5 +978,8 @@
   "semesterGrid_numbers": "Rows and columns run from 1 to 10. Each cell is its row plus column minus 1, from 1 to 19. Row and column labels are not cell values.",
   "semesterGrid_addition": "Both addends run from 0 to 10. Each cell shows row + column, including 0+0, 0+10, 10+0 and 10+10: 121 cells in total.",
   "semesterGridMark": "A dot marks cells whose value or sum is {value}; color is not the only indication.",
-  "semesterGridNotice": "This original diagram follows a mathematical pattern; it is not a textbook scan. Letters identify blanks; enter answers in the question fields. Complete paper grids, paths and oral calculations remain actual activities."
+  "semesterGridNotice": "This original diagram follows a mathematical pattern; it is not a textbook scan. Letters identify blanks; enter answers in the question fields. Complete paper grids, paths and oral calculations remain actual activities.",
+  "hundredFragmentTitle": "Hundred-chart fragment {number}",
+  "hundredFragmentDescription": "Original fragment at chart positions: letters mark blanks; numbers are given.",
+  "hundredFragmentCell": "Fragment row {row}, column {column}: {label}"
 }

@@ -8,9 +8,12 @@ import type {
 } from '../learning/types';
 
 import { required } from '../learning/required';
+import { borrowPracticeLessons } from './math-borrow-practice';
 import { carryPracticeLessons } from './math-carry-practice';
 import { finalPracticeLessons } from './math-final-practice';
+import { hundredPracticeLessons } from './math-hundred-practice';
 import { planePracticeLessons } from './math-plane-practice';
+import { relationPracticeLessons } from './math-relations-practice';
 import { mathReviewQuestions } from './math-review';
 import { shapeJoinLesson } from './math-shape-join';
 import { shoppingPracticeLesson } from './math-shopping-practice';
@@ -271,7 +274,7 @@ function arithmetic(
     calculations[0] ? diagram(calculations[0]) : undefined,
   );
   if (id === 'ml-written-add' || id === 'ml-written-sub') {
-    course.version = 2;
+    course.version = 3;
     course.steps.push({
       title: '把方法与结果分开检查',
       text:
@@ -282,33 +285,31 @@ function arithmetic(
         '选一道本课算式在纸上列竖式，指着相同数位说明对齐方式，讲出每一步。由孩子或家长确认实际书写与讲解；屏幕填数不评价笔迹和书写质量。',
     });
     course.questions.push(
-      ...calculations
-        .slice(0, 4)
-        .map(([left, operator, right], index): Question => {
-          const leftOnes = left % 10;
-          const rightOnes = right % 10;
-          const exchange =
-            operator === '+'
-              ? Number(leftOnes + rightOnes >= 10)
-              : Number(leftOnes < rightOnes);
-          const ones =
-            operator === '+'
-              ? (leftOnes + rightOnes) % 10
-              : leftOnes + exchange * 10 - rightOnes;
-          const tens =
-            operator === '+'
-              ? Math.floor(left / 10) + Math.floor(right / 10) + exchange
-              : Math.floor(left / 10) - exchange - Math.floor(right / 10);
-          return {
-            id: `${id}-method${index + 1}`,
-            knowledge: id,
-            prompt: `${left} ${operator} ${right}：依次填写${operator === '+' ? '向十位进的数' : '从十位退的数'}、结果个位数字、结果十位数字；不进或不退填0。`,
-            rule: { kind: 'steps', values: [exchange, ones, tens] },
-            hint: '先看个位，再考虑十位；三个空分别记录换位、个位结果和十位结果。',
-            explanation: `换位记录为${exchange}，结果个位为${ones}，十位为${tens}，合起来是${tens * 10 + ones}。方法填数与整道算式结果分别记录，不代表已经完成纸笔书写。`,
-            visual: diagram([left, operator, right]),
-          };
-        }),
+      ...calculations.map(([left, operator, right], index): Question => {
+        const leftOnes = left % 10;
+        const rightOnes = right % 10;
+        const exchange =
+          operator === '+'
+            ? Number(leftOnes + rightOnes >= 10)
+            : Number(leftOnes < rightOnes);
+        const ones =
+          operator === '+'
+            ? (leftOnes + rightOnes) % 10
+            : leftOnes + exchange * 10 - rightOnes;
+        const tens =
+          operator === '+'
+            ? Math.floor(left / 10) + Math.floor(right / 10) + exchange
+            : Math.floor(left / 10) - exchange - Math.floor(right / 10);
+        return {
+          id: `${id}-method${index + 1}`,
+          knowledge: id,
+          prompt: `${left} ${operator} ${right}：依次填写${operator === '+' ? '向十位进的数' : '从十位退的数'}、结果个位数字、结果十位数字；不进或不退填0。`,
+          rule: { kind: 'steps', values: [exchange, ones, tens] },
+          hint: '先看个位，再考虑十位；三个空分别记录换位、个位结果和十位结果。',
+          explanation: `换位记录为${exchange}，结果个位为${ones}，十位为${tens}，合起来是${tens * 10 + ones}。方法填数与整道算式结果分别记录，不代表已经完成纸笔书写。`,
+          visual: diagram([left, operator, right]),
+        };
+      }),
       {
         id: `${id}-paper`,
         knowledge: id,
@@ -320,12 +321,275 @@ function arithmetic(
           '这是实际书写与讲解的人工记录，不自动判对，不计入客观题正确率。',
       },
     );
+    const addition = id === 'ml-written-add';
+    course.steps.push({
+      title: '一位数对齐与结果里的0',
+      text: addition
+        ? '57+8的一位数8写在个位，十位没有数字按0参与计算。个位7+8得15，写5并向十位进1，再算5+0+1得6。19+61的个位和是10，个位写0，十位还要加进来的1，结果80。0不能省略，也不能把15整个写在个位。'
+        : '43−7的一位数7写在个位。个位不够，先把4个十换成3个十和13个一，再分别减。80−16的个位0不代表不能减：把8个十换成7个十和10个一，个位10−6得4，十位7−1得6。退位后不能仍用原来的8个十。',
+      activity:
+        '实际把一位数算式与含0算式各写一次，逐位指着讲。每道从原量重新开始；没有实际写与讲，可暂时跳过。',
+    });
+    const correctMethods = addition
+      ? ['把8对在个位', '个位15写5并向十位进1']
+      : ['80先换成7个十和10个一', '个位10−6得4，十位7−1得6'];
+    course.questions.push(
+      {
+        id: `${id}-alignment`,
+        knowledge: id,
+        prompt: addition
+          ? '列竖式算57+8，选出所有正确的写法和步骤。'
+          : '列竖式算80−16，选出所有正确的步骤。',
+        choices: [
+          ...correctMethods,
+          addition ? '把8对在十位' : '退位后十位仍按8−1计算',
+          addition ? '把15整个写在个位' : '个位是0，所以不能减',
+        ].map((label) => ({ id: label, label })),
+        rule: { kind: 'set', values: correctMethods },
+        hint: '数位对齐；进退位改变十和一的分组，不改变原来表示的数量。',
+        explanation: addition
+          ? '8表示8个一，必须对个位；15个一换成1个十和5个一。'
+          : '原80等于7个十和10个一；取走1个十和6个一，剩6个十和4个一。',
+        visual: diagram(addition ? [57, '+', 8] : [80, '-', 16]),
+      },
+      {
+        id: `${id}-check`,
+        knowledge: id,
+        prompt: addition
+          ? '已算57+8=65、19+61=80。分别用65−8、80−61验算，依次填两个结果。'
+          : '已算80−16=64、43−7=36。分别用64+16、36+7验算，依次填两个结果。',
+        rule: { kind: 'steps', values: addition ? [57, 19] : [80, 43] },
+        hint: '重新计算验算式，看是否回到对应原数，不把验算当新的实物完成记录。',
+        explanation: addition
+          ? '65−8=57，80−61=19，两次都回到相应加数。'
+          : '64+16=80，36+7=43，两次都回到相应被减数。',
+      },
+      {
+        id: `${id}-zero-paper`,
+        knowledge: id,
+        prompt: addition
+          ? '实际在纸上分别写57+8与19+61，指着一位数对齐处、进1和结果个位0讲清步骤。'
+          : '实际在纸上分别写43−7与80−16，指着一位数对齐处、退位后的十与一讲清步骤。',
+        rule: { kind: 'manual' },
+        hint: '纸上写与实际讲分别完成后才确认；没做请跳过，不以网页填数替代。',
+        explanation: '仅记录实际纸笔与讲解，不自动评分字迹或掌握程度。',
+      },
+      {
+        id: `${id}-reflection`,
+        knowledge: id,
+        prompt:
+          '如实记录数位对齐、进退位与验算中一次实际检查，仍不明白的地方可写；未来练习计划另记。',
+        rule: { kind: 'reflection' },
+        hint: '未做纸笔就如实说未做，不必写统一感想。',
+        explanation: '反思保留原话，不计客观正确率，也不自动确认实际书写。',
+      },
+    );
+    const reviewCalculations: Calculation[] = addition
+      ? [
+          [34, '+', 25],
+          [37, '+', 28],
+          [69, '+', 7],
+          [27, '+', 43],
+        ]
+      : [
+          [79, '-', 34],
+          [63, '-', 28],
+          [90, '-', 17],
+          [54, '-', 8],
+        ];
+    const reviewValues = addition
+      ? [
+          [0, 9, 5],
+          [1, 5, 6],
+          [1, 6, 7],
+          [1, 0, 7],
+        ]
+      : [
+          [0, 5, 4],
+          [1, 5, 3],
+          [1, 3, 7],
+          [1, 6, 4],
+        ];
+    course.reviewQuestions = [
+      ...mathReviewQuestions(course),
+      ...reviewCalculations.map((calculation, index): Question => ({
+        id: `${id}-method-review${index + 1}`,
+        knowledge: id,
+        prompt: `${calculation[0]} ${calculation[1]} ${calculation[2]}：依次填${addition ? '进的十数' : '退的十数'}、结果个位数字、结果十位数字；不进或不退填0。`,
+        rule: { kind: 'steps', values: required(reviewValues[index]) },
+        hint: '换了算式，重新检查个位与十位；一位数对个位，0仍占位。',
+        explanation: '方法分三项独立记录，结果十位与个位合回原式核对。',
+        visual: diagram(calculation),
+      })),
+    ];
     course.review = {
       ...course.review,
       date: '2026-10-03',
       reviewer: '原创笔算步骤与记录边界程序核对',
       notes:
-        '保留原六道结果题及其稳定ID；补充同题的进退位、个位与十位记录及实际纸笔确认。该补充依据既有笔算范围，不声称完成教材逐页审校。',
+        '保留原六道结果题及v2前四道方法题ID与判分；补齐六道方法记录、一位数对齐、含0、验算、实际纸笔与反思，并保留原结果复习另加新过程题。该补充依据既有笔算范围，不声称完成教材逐页审校。',
+    };
+  }
+  if (id === 'ml-oral-add' || id === 'ml-oral-sub') {
+    const addition = id === 'ml-oral-add';
+    course.version = 2;
+    required(course.steps[0]).visual = {
+      kind: 'place-value',
+      value: addition ? 32 : 48,
+    };
+    required(course.steps[0]).activity =
+      '看清这个数有几个十、几个一；实际摆出后读数，不把屏幕观察记作已经摆棒。';
+    course.steps.push(
+      {
+        title: '换位前后，数量保持不变',
+        text: addition
+          ? '27加6：个位7加6是13个一。先有2个十、13个一，再把其中10个一换成1个十，成为3个十、3个一，即33。加整十数改变十的数量，如32加20是5个十、2个一，不把20当2个一。控件先显示原数；拆换后总数保持27，加6还需实际摆棒或纸画。'
+          : '32减6：2个一不够减6，从3个十中拆1个十，成为2个十、12个一；12减6剩6个一，与2个十合成26。减整十数，如48减20，先减2个十，8个一保持，得28。控件拆十前后总数仍32，取走6还需实际操作或纸画。',
+        visual: { kind: 'place-value', value: addition ? 27 : 32 },
+        activity: addition
+          ? '实际摆27并添6，换十后数清十与一；再摆32添20，分别说明单位。'
+          : '实际摆32并拆十，再拿走6；再摆48拿走20，分别说明取走的单位。',
+      },
+      {
+        title: '不同口算办法，分别核对过程',
+        text: addition
+          ? '27加6也可把27分成20和7：7加6是13，再加20得33；或把6分成3和3，27加3到30，再加3得33。不同办法都要保持加数总量，不把7加6的13写成两百多。'
+          : '32减6也可把6分成2和4：先减2到30，再减4得26；或把32分成20和12，12减6得6，再加20得26。连续减去的两部分合起来必须是6，不能重复减6。',
+        activity:
+          '实际用纸棒或纸画试两种办法，分别说每一步和最后结果；只填网页题不自动代表讲解或实做完成。',
+      },
+    );
+    course.questions.push(
+      ...calculations.map(([left, operator, right], index): Question => {
+        const ones = left % 10;
+        const rightOnes = right % 10;
+        const exchange =
+          operator === '+'
+            ? Number(ones + rightOnes >= 10)
+            : Number(ones < rightOnes);
+        const result = operator === '+' ? left + right : left - right;
+        const values =
+          operator === '+'
+            ? [ones + rightOnes, exchange, Math.floor(result / 10), result]
+            : [
+                exchange,
+                ones + 10 * exchange,
+                Math.floor(left / 10) - exchange,
+                result,
+              ];
+        return {
+          id: `${id}-oral-method${index + 1}`,
+          knowledge: id,
+          prompt:
+            operator === '+'
+              ? `${left}+${right}：依次填换十前共有几个一、向十位换出的十数（不换填0）、最后共有几个十、结果。`
+              : `${left}−${right}：依次填拆出的十数（不拆填0）、减之前可用几个一、拆十后减之前剩几个十、结果。`,
+          rule: { kind: 'steps', values },
+          hint: '每空都标明操作时刻；换位前后数量相同，取走或添上另算。0不是空白。',
+          explanation:
+            operator === '+'
+              ? `换前${values[0]}个一，换${exchange}个十，最后${Math.floor(result / 10)}个十，结果${result}。`
+              : `拆${exchange}个十，可用${values[1]}个一，减之前剩${values[2]}个十；还要按单位取走${right}，得${result}。`,
+        };
+      }),
+      {
+        id: `${id}-oral-alternative`,
+        knowledge: id,
+        prompt: addition
+          ? '27+6，把6拆成两部分：先添几到30、再添几、最后结果？'
+          : '32−6，把6拆成两部分：先减几到30、再减几、最后结果？',
+        rule: { kind: 'steps', values: addition ? [3, 3, 33] : [2, 4, 26] },
+        hint: '两部分合起来是6，不重复计算。',
+        explanation: addition
+          ? '6分3和3，先30，再33。'
+          : '6分2和4，先30，再26。',
+      },
+      {
+        id: `${id}-oral-strategies`,
+        knowledge: id,
+        prompt: addition
+          ? '27+6，选出所有正确的口算办法。'
+          : '32−6，选出所有正确的口算办法。',
+        choices: (addition
+          ? [
+              'A：7+6=13，再20+13=33',
+              'B：27+3=30，再30+3=33',
+              'C：27+6=33，再33+6=39',
+            ]
+          : [
+              'A：12−6=6，再20+6=26',
+              'B：32−2=30，再30−4=26',
+              'C：32−6=26，再26−6=20',
+            ]
+        ).map((label) => ({ id: label, label })),
+        rule: {
+          kind: 'set',
+          values: addition
+            ? ['A：7+6=13，再20+13=33', 'B：27+3=30，再30+3=33']
+            : ['A：12−6=6，再20+6=26', 'B：32−2=30，再30−4=26'],
+        },
+        hint: '原算式只有一个6，别重复添或拿走。',
+        explanation: 'A、B保持原数量，C重复用了6。',
+      },
+      {
+        id: `${id}-oral-objects`,
+        knowledge: id,
+        prompt: addition
+          ? '实际摆棒完成27添6换十，再完成32添20，分别说添的是几个一或十。'
+          : '实际摆棒完成32拆十拿走6，再完成48拿走20，分别说拿走的是几个一或十。',
+        rule: { kind: 'manual' },
+        hint: '没有材料可纸画；未实际做请跳过。',
+        explanation: '实做人工记录，不自动计对错。',
+      },
+      {
+        id: `${id}-oral-explain`,
+        knowledge: id,
+        prompt:
+          '实际用两种口算办法计算一题，把每步讲给家长或独自说清；屏幕填数不替代讲解。',
+        rule: { kind: 'manual' },
+        hint: '说明分成的两部分和原数的关系。',
+        explanation: '只确认实际讲解，不自动判断质量。',
+      },
+      {
+        id: `${id}-oral-reflection`,
+        knowledge: id,
+        prompt:
+          '记录一次实际检查的办法与仍不明白的地方；没做活动请如实写，计划另记。',
+        rule: { kind: 'reflection' },
+        hint: '不需要写统一标准感想。',
+        explanation: '反思不计客观正确率。',
+      },
+    );
+    course.reviewQuestions = (
+      addition
+        ? [
+            [8, 0, 4, 48],
+            [12, 1, 6, 62],
+            [1, 0, 7, 71],
+            [5, 0, 9, 95],
+          ]
+        : [
+            [0, 9, 5, 52],
+            [1, 13, 4, 45],
+            [1, 10, 7, 76],
+            [0, 6, 7, 36],
+          ]
+    ).map((values, index) => ({
+      id: `${id}-oral-review${index + 1}`,
+      knowledge: id,
+      prompt: addition
+        ? `${required(['43+5', '54+8', '41+30', '75+20'][index])}：依次填换十前几个一、换出的十数、最后几个十、结果。`
+        : `${required(['59−7', '53−8', '80−4', '76−40'][index])}：依次填拆出的十数、减之前可用几个一、拆十后减之前剩几个十、结果。`,
+      rule: { kind: 'steps', values },
+      hint: '新数需要重新核对每步，不沿用旧答案。',
+      explanation: '按指定时刻分别记录十和一，再计算结果。',
+    }));
+    course.review = {
+      ...course.review,
+      date: '2026-10-03',
+      reviewer: '原创口算方法与旧记录独立程序核对',
+      notes:
+        '保留原六道结果题稳定ID，补充十和一、进退位过程、不同算法、实做与反思。官方43～55页当前返回验证页，未读取；此改进依据现有课程与规划要求，不声称完成教材逐页或全部课后活动审校。',
     };
   }
   return course;
@@ -998,6 +1262,7 @@ const lower: Record<string, Lesson[]> = {
       ],
       'break-ten',
     ),
+    ...borrowPracticeLessons,
   ],
   u3: [
     placeValues(
@@ -1094,6 +1359,7 @@ const lower: Record<string, Lesson[]> = {
       ],
       { kind: 'hundred-chart', value: 35 },
     ),
+    ...hundredPracticeLessons,
   ],
   u4: [
     arithmetic(
@@ -1165,7 +1431,10 @@ const lower: Record<string, Lesson[]> = {
       'column',
     ),
   ],
-  u6: [relations('ml-relations', '数量间的加减关系', 69, true)],
+  u6: [
+    relations('ml-relations', '数量间的加减关系', 69, true),
+    ...relationPracticeLessons,
+  ],
   shopping: shopping(),
   u7: [
     arithmetic(

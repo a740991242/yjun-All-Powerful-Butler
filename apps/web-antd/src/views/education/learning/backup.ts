@@ -29,6 +29,7 @@ import { fold } from './fold';
 import { isFoldCutJoinVisual } from './fold-cut-join';
 import { isGeoboardShiftState, isGeoboardShiftVisual } from './geoboard-shift';
 import { isGridPathsVisual } from './grid-paths';
+import { isHundredFragmentsVisual } from './hundred-fragments';
 import { isKnowledgeCard } from './knowledge-cards';
 import {
   isMagicGridRule,
@@ -469,6 +470,9 @@ function visual(value: unknown) {
     }
     case 'zero-number-chart': {
       return isZeroNumberChartVisual(value);
+    }
+    case 'hundred-fragments': {
+      return isHundredFragmentsVisual(value);
     }
     case 'hundred-chart': {
       return integer(value.value, 100) && value.value >= 1;

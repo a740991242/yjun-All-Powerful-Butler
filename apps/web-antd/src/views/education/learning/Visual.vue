@@ -37,6 +37,7 @@ import FoldCutJoin from './FoldCutJoin.vue';
 import GeoboardShift from './GeoboardShift.vue';
 import GridPaths from './GridPaths.vue';
 import { hundredPosition } from './hundred-chart';
+import HundredFragments from './HundredFragments.vue';
 import { knowledgeCards, selectedKnowledgeCard } from './knowledge-cards';
 import MagicGrid from './MagicGrid.vue';
 import MathStory from './MathStory.vue';
@@ -735,6 +736,10 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <HundredFragments
+      v-else-if="visual.kind === 'hundred-fragments'"
+      :visual="visual"
+    />
     <div
       v-else-if="visual.kind === 'hundred-chart' && chart"
       class="flex flex-col gap-4"
