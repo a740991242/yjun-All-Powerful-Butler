@@ -1050,5 +1050,7 @@
   "bnuBuildingPiece": "物件{label}：{shape}；{placement}。",
   "bnuBuildingUpright": "盒形模型立放",
   "bnuBuildingShown": "按当前图示朝向",
-  "bnuBuildingGround": "最下面一层在桌面上；球是否能通过及整座是否稳定，须用实物实际核对。"
+  "bnuBuildingGround": "最下面一层在桌面上；球是否能通过及整座是否稳定，须用实物实际核对。",
+  "bnuDayClockDescription": "钟面：较短粗实线针刚过9，较长细虚线针指向1，已走过12。",
+  "bnuDayClockNotice": "对应原书第80页的原创观察图：这是刚过9时，既非整时也非半时。本课只辨别刚过，不要求计算具体分钟。钟面本身不说明上午或晚上。"
 }

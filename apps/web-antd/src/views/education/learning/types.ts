@@ -4,6 +4,7 @@ import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
 import type { ClassCapacityVisual } from './class-capacity';
+import type { BnuDayClockVisual } from './clock';
 import type { ClockCountingVisual } from './clock-counting';
 import type { ColumnDigitsRule } from './column-digits';
 import type { ComparisonBarsVisual } from './comparison-bars';
@@ -426,6 +427,7 @@ export type Visual =
   | BlockCardsVisual
   | BnuBuildingVisual
   | BnuCaterpillarVisual
+  | BnuDayClockVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual
   | CardEquationRule

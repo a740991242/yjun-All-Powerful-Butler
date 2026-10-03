@@ -26,3 +26,17 @@ export function clockPoint(degrees: number, length: number) {
     y: 120 - length * Math.cos(radians),
   };
 }
+
+export interface BnuDayClockVisual {
+  kind: 'bnu-day-clock';
+}
+export function isBnuDayClockVisual(
+  value: unknown,
+): value is BnuDayClockVisual {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const model = value as Record<string, unknown>;
+  return Object.keys(model).length === 1 && model.kind === 'bnu-day-clock';
+}
+export function bnuDayClockHands() {
+  return { hour: 272.5, minute: 30 };
+}

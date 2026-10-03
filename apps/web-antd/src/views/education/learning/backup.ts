@@ -13,7 +13,7 @@ import { isChildActivitiesVisual } from './child-activities';
 import { isCircularNumberArrayVisual } from './circular-number-array';
 import { isClassCapacityVisual } from './class-capacity';
 import { isClassificationRecordVisual } from './classification-record';
-import { isClockVisual } from './clock';
+import { isBnuDayClockVisual, isClockVisual } from './clock';
 import { isClockCountingVisual } from './clock-counting';
 import { columnDigitBlankCount, isColumnDigitsRule } from './column-digits';
 import { isComparisonBarsVisual } from './comparison-bars';
@@ -362,6 +362,9 @@ function visual(value: unknown) {
     }
     case 'reading-table': {
       return isReadingTableVisual(value);
+    }
+    case 'bnu-day-clock': {
+      return isBnuDayClockVisual(value);
     }
     case 'clock': {
       return isClockVisual(value);

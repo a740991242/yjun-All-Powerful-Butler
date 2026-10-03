@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T17:51:46.787Z",
+  "generatedAt": "2026-10-03T18:17:22.906Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 25,
-        "pendingEntries": 2,
+        "availablePacks": 26,
+        "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 373,
-          "manual": 160,
-          "reflection": 46
+          "objective": 390,
+          "manual": 167,
+          "reflection": 58
         }
       },
       "units": [
@@ -29227,33 +29227,40 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-day-pending",
-              "title": "记录我的一天",
+              "id": "bnu-upper-day-record",
+              "title": "整时半时、自己的一天与分享",
               "textbookTitle": "记录我的一天",
               "page": 78,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "辨认整时半时，把实际时间与事情一起记录并分享，分别反思记录、按时安排、倾听表达。",
+              "prerequisite": "认识钟面1～12，会说事情发生的先后。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 17,
+                "manual": 7,
+                "reflection": 12
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-day-record"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "sequence",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["clock", "bnu-day-clock"],
               "audit": {
                 "date": "2026-10-04",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "原书78～80页大图逐页阅读与原创钟面核对",
+                "notes": "第三方0061阅读器页82～84；原78六时刻为7/8半/9半/12/4/9，79举例上午9数学下课、下午4半足球，80星期日六时刻7/8半/9/12/4/9半；底部钟面短针刚过9长针在1。全为示例不冒学生真实记录。源ISBN版印次未知。"
               }
             }
           ]

@@ -13,6 +13,7 @@ import {
 } from './bnu-classification';
 import { bnuClassroomLesson } from './bnu-classroom';
 import { bnuComparisonLesson } from './bnu-comparison';
+import { bnuDayRecordLesson } from './bnu-day';
 import { bnuFiveAddLesson } from './bnu-five-add';
 import {
   bnuFiveOrganizeLesson,
@@ -305,6 +306,7 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
     return [bnuFiveAddLesson, bnuFiveSubtractLesson, bnuFiveOrganizeLesson];
   if (key === 'classroom') return [bnuClassroomLesson];
   if (key === 'u3') return [bnuRoomSortLesson, bnuClassificationLesson];
+  if (key === 'day') return [bnuDayRecordLesson];
   if (key === 'games') return [bnuSixCardGameLesson];
   const pending: Lesson = {
     id: `bnu-upper-${key}-pending`,

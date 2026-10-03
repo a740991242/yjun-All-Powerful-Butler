@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 25
+          .count()) !== 26
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1119,6 +1119,29 @@ const widths = process.argv.includes('--mobile-only')
               .getByRole('spinbutton')
               .nth(index)
               .fill(String(rule.values[index]));
+        } else if (rule.kind === 'sequence') {
+          for (let index = 0; index < rule.values.length; index++) {
+            const option = question.choices.find(
+              (item) => item.id === rule.values[index],
+            );
+            const input = p.getByRole('combobox', {
+              name: `第${index + 1}项`,
+              exact: true,
+            });
+            await input.focus();
+            await input.press('ArrowDown');
+            const listId = await input.getAttribute('aria-controls');
+            if (!listId)
+              throw new Error('Sequence select has no associated popup');
+            const popup = p
+              .locator('.ant-select-dropdown')
+              .filter({ has: p.locator(`[id="${listId}"]`) });
+            await popup
+              .locator('.ant-select-item-option-content')
+              .getByText(option.label, { exact: true })
+              .click();
+            await popup.waitFor({ state: 'hidden' });
+          }
         } else if (rule.kind === 'equal-pairs') {
           const cards = rule.values.toSorted((a, b) => a - b);
           const arranged = [];
@@ -1237,6 +1260,7 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        ['整时半时、自己的一天与分享', 6, 36, 7, 'bnu-upper-day-record'],
         ['八件搭高、稳定与合作重试', 6, 24, 7, 'bnu-upper-building-tower'],
         [
           '按指令搭建、上下关系与通道观察',
@@ -1493,6 +1517,31 @@ const widths = process.argv.includes('--mobile-only')
               });
             }
           }
+          if (lessonId === 'bnu-upper-day-record' && step === 4) {
+            const clock = p.locator('[data-clock-kind="bnu-day-clock"]');
+            await clock.waitFor();
+            const actual = await clock.locator('line').evaluateAll((lines) =>
+              lines.map((line) => ({
+                x: Number(line.getAttribute('x2')),
+                y: Number(line.getAttribute('y2')),
+              })),
+            );
+            if (
+              actual.length !== 2 ||
+              Math.abs(actual[0].x - 161) > 0.01 ||
+              Math.abs(actual[0].y - 48.9859168897) > 0.01 ||
+              actual[1].x >= 120 ||
+              actual[1].y >= 120
+            )
+              throw new Error('After-nine observation hand positions differ');
+            await clock.evaluate((element) =>
+              element.scrollIntoView({ behavior: 'instant', block: 'center' }),
+            );
+            await p.waitForTimeout(250);
+            await p.screenshot({
+              path: `/tmp/butler-bnu-day-clock-${width}.png`,
+            });
+          }
           if (lessonId === 'bnu-upper-solid-recognition' && step === 3) {
             const diagram = p.locator('.learning-visual');
             const models = diagram.locator('svg[role="img"]');
@@ -1561,8 +1610,11 @@ const widths = process.argv.includes('--mobile-only')
           await p.getByText(question.prompt, { exact: true }).waitFor();
           if (question.rule.kind === 'manual') await click('暂时跳过');
           else if (question.rule.kind === 'reflection') {
+            const personalSlot = question.id.match(/-record-([1-6])$/)?.[1];
             const draft =
-              '隔离测试：实际纸片和原书活动未做，记录一个待核对的问题。';
+              personalSlot && lessonId === 'bnu-upper-day-record'
+                ? `隔离测试记录位置${personalSlot}：未选，尚未实际观察。`
+                : '隔离测试：实际纸片和原书活动未做，记录一个待核对的问题。';
             await p
               .getByRole('textbox', { name: '我的学习反思', exact: true })
               .fill(draft);
@@ -1578,6 +1630,38 @@ const widths = process.argv.includes('--mobile-only')
             )
               throw new Error('Activity reflection reload');
             await click('保存反思');
+            if (personalSlot === '1' || personalSlot === '6') {
+              await p.getByText('已记录反思', { exact: true }).waitFor();
+              await p
+                .getByRole('textbox', { name: '我的学习反思', exact: true })
+                .evaluate((element) =>
+                  element.scrollIntoView({
+                    behavior: 'instant',
+                    block: 'center',
+                  }),
+                );
+              await p.waitForTimeout(350);
+              const input = p.getByRole('textbox', {
+                name: '我的学习反思',
+                exact: true,
+              });
+              const visible = await input.evaluate((element) => {
+                const box = element.getBoundingClientRect();
+                return (
+                  box.left >= 0 &&
+                  box.right <= innerWidth &&
+                  box.top >= 0 &&
+                  box.bottom <= innerHeight
+                );
+              });
+              if (!visible)
+                throw new Error(
+                  `Personal record textarea not visible: ${JSON.stringify(await input.boundingBox())}`,
+                );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-day-record-slot-${personalSlot}-${width}.png`,
+              });
+            }
           } else {
             if (question.id.endsWith('-q1')) {
               if (question.rule.kind === 'number') {
@@ -1752,6 +1836,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-solid-recognition-counts': [0, null, null, null],
               'bnu-upper-building-instructions-counts': [0, null, null, null],
               'bnu-upper-building-tower-counts': [0, null, null, null],
+              'bnu-upper-day-record-clock-parts': [0, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1791,6 +1876,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-solid-recognition': '-counts',
                   'bnu-upper-building-instructions': '-counts',
                   'bnu-upper-building-tower': '-counts',
+                  'bnu-upper-day-record': '-clock-parts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1821,6 +1907,7 @@ const widths = process.argv.includes('--mobile-only')
                 [
                   'bnu-upper-building-instructions',
                   'bnu-upper-building-tower',
+                  'bnu-upper-day-record',
                   'bnu-upper-difference-transfer',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
@@ -1986,7 +2073,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 25,
+          bnuCourse: 26,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

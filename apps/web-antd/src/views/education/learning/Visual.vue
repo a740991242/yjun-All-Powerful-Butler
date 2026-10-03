@@ -399,7 +399,10 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'quantity-table'"
       :visual="visual"
     />
-    <Clock v-else-if="visual.kind === 'clock'" :visual="visual" />
+    <Clock
+      v-else-if="visual.kind === 'clock' || visual.kind === 'bnu-day-clock'"
+      :visual="visual"
+    />
     <CardGame
       v-else-if="visual.kind === 'card-game'"
       :visual="visual"
