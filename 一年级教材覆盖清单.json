@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T18:17:22.906Z",
+  "generatedAt": "2026-10-03T18:35:09.589Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 26,
+        "availablePacks": 27,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 390,
-          "manual": 167,
-          "reflection": 58
+          "objective": 404,
+          "manual": 173,
+          "reflection": 63
         }
       },
       "units": [
@@ -29283,13 +29283,50 @@
           ],
           "lessons": [
             {
+              "id": "bnu-upper-final-number-talk",
+              "title": "数的含义、开放比较与算式故事",
+              "textbookTitle": "总复习 · 数与代数",
+              "page": 81,
+              "version": 1,
+              "status": "available",
+              "goal": "说清数的对象与单位，接受多种合法比较数量，计算三道算式并自主讲故事、提问题。",
+              "prerequisite": "会点数0～10，认识多与少，会十以内加减及两步变化。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 14,
+                "manual": 6,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-final-number-talk"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "number-picks",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count", "count-groups"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书81页大图逐项阅读与开放数量规则核对",
+                "notes": "第三方0061阅读器页85对应印刷81：举例认识数，圆比4个松鼠多/三角形比6个熊少，0+7/9−4/10−3+1与自选故事，植树图自主提问与解决；一根/一筐单位不同。ISBN和版印次未知。"
+              }
+            },
+            {
               "id": "bnu-upper-final-pending",
-              "title": "总复习",
+              "title": "总复习 · 后续内容制作中",
               "textbookTitle": "总复习",
               "page": 81,
               "version": 1,
               "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
+              "goal": "第81页回顾交流已开放，第82～86页课程仍在制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

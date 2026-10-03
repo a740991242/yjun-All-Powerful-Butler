@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 26
+          .count()) !== 27
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1260,6 +1260,13 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        [
+          '数的含义、开放比较与算式故事',
+          6,
+          25,
+          6,
+          'bnu-upper-final-number-talk',
+        ],
         ['整时半时、自己的一天与分享', 6, 36, 7, 'bnu-upper-day-record'],
         ['八件搭高、稳定与合作重试', 6, 24, 7, 'bnu-upper-building-tower'],
         [
@@ -1837,6 +1844,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-building-instructions-counts': [0, null, null, null],
               'bnu-upper-building-tower-counts': [0, null, null, null],
               'bnu-upper-day-record-clock-parts': [0, null],
+              'bnu-upper-final-number-talk-open-drawing': [0, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1869,6 +1877,47 @@ const widths = process.argv.includes('--mobile-only')
                 throw new Error('BNU application partial zero/null reload');
             }
             await answerObjective(question);
+            if (question.id === 'bnu-upper-final-number-talk-open-drawing') {
+              await p.getByRole('spinbutton').nth(0).fill('4');
+              await p.getByRole('spinbutton').nth(1).fill('6');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              await p.getByRole('spinbutton').nth(0).fill('10');
+              await p.getByRole('spinbutton').nth(1).fill('0');
+              await activityDraft(index, [10, 0]);
+              await p.reload({ waitUntil: 'networkidle' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              await p.getByRole('spinbutton').nth(1).waitFor();
+              await p
+                .locator('#__app-loading__')
+                .waitFor({ state: 'detached' });
+              for (const [field, expected] of ['10', '0'].entries())
+                if (
+                  (await p.getByRole('spinbutton').nth(field).inputValue()) !==
+                  expected
+                )
+                  throw new Error('BNU final valid open quantity reload');
+              await p
+                .getByText(question.prompt, { exact: true })
+                .evaluate((node) =>
+                  node.scrollIntoView({ block: 'center', behavior: 'instant' }),
+                );
+              await p.waitForTimeout(350);
+              const controls = await p.getByRole('spinbutton').all();
+              for (const control of controls) {
+                const box = await control.boundingBox();
+                if (
+                  !box ||
+                  box.x < 0 ||
+                  box.x + box.width > width ||
+                  box.y < 0 ||
+                  box.y + box.height > 1000
+                )
+                  throw new Error('BNU final quantity input outside viewport');
+              }
+            }
             if (
               question.id.endsWith(
                 {
@@ -1877,6 +1926,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-instructions': '-counts',
                   'bnu-upper-building-tower': '-counts',
                   'bnu-upper-day-record': '-clock-parts',
+                  'bnu-upper-final-number-talk': '-open-drawing',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1909,6 +1959,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-tower',
                   'bnu-upper-day-record',
                   'bnu-upper-difference-transfer',
+                  'bnu-upper-final-number-talk',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
                   'bnu-upper-solid-recognition',
@@ -2073,7 +2124,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 26,
+          bnuCourse: 27,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,
