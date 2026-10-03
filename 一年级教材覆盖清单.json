@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T20:41:43.865Z",
+  "generatedAt": "2026-10-03T20:55:52.860Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28182,7 +28182,7 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 510,
+          "objective": 512,
           "manual": 208,
           "reflection": 79
         }
@@ -28240,14 +28240,14 @@
               "title": "操场观察、分组与按条件选物",
               "textbookTitle": "我上学啦",
               "page": 6,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "观察并表达数量关系，按口令分组，依给定特点选物，区分规则与自己的游戏选择。",
               "prerequisite": "能逐个点数少量物品，愿意说清所数对象。",
               "referenceQuery": null,
               "steps": 6,
               "tasks": {
-                "objective": 10,
+                "objective": 12,
                 "manual": 7,
                 "reflection": 1
               },
@@ -28260,7 +28260,7 @@
               "questionKinds": ["number", "choice", "manual", "reflection"],
               "visualKinds": ["comparison-rows", "count-groups"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "公开原书逐页阅读与原创任务核对",
                 "notes": "第三方原书预览0061印刷6～9页实际读取；数量比较、共同起点比高、分组口令和按物品外形选取分别对应。未知ISBN与印次保持未知。"
               }

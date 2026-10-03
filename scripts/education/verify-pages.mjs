@@ -1384,7 +1384,7 @@ const widths = process.argv.includes('--mobile-only')
         ['生活数量整理、序位与自主提问', 6, 23, 7, 'bnu-upper-life-organize'],
         ['六到十的表示、书写与顺倒数', 6, 19, 7, 'bnu-upper-life-six-ten'],
         ['零表示已知没有，空白不等于零', 5, 14, 5, 'bnu-upper-life-zero'],
-        ['操场观察、分组与按条件选物', 6, 18, 7, 'bnu-upper-school-games'],
+        ['操场观察、分组与按条件选物', 6, 20, 7, 'bnu-upper-school-games'],
         [
           '生活物品的大小、长短与轻重观察',
           5,
@@ -2288,6 +2288,37 @@ const widths = process.argv.includes('--mobile-only')
           await verifyFinalSolids('objects');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-school-games' && [2, 3].includes(step)) {
+            await p
+              .getByText(
+                step === 2 ? '分组先听清每组几个' : '改变口令重新检查',
+                { exact: true },
+              )
+              .waitFor();
+            const counts = await p
+              .locator('section[aria-label^="第"]')
+              .evaluateAll((sections) =>
+                sections.map(
+                  (section) => section.querySelectorAll('[role="img"]').length,
+                ),
+              );
+            const expected = step === 2 ? [4, 3] : [3, 3, 1];
+            if (JSON.stringify(counts) !== JSON.stringify(expected))
+              throw new Error(
+                `Regrouping lost cards: ${JSON.stringify(counts)}`,
+              );
+            if (
+              await p.evaluate(
+                () => document.documentElement.scrollWidth > innerWidth,
+              )
+            )
+              throw new Error('Regrouping diagram page overflow');
+            if (step === 3)
+              await p.screenshot({
+                path: `/tmp/butler-bnu-regroup-${width}.png`,
+                fullPage: true,
+              });
+          }
           if (lessonId === 'bnu-upper-final-position-time') {
             if (step === 1) await verifyFinalPosition('flower-filled');
             if (step === 2) await verifyFinalPosition('items', 'main', true);

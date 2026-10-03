@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest';
 
 import { exportBackup, parseBackup } from '../learning/backup';
-import { createSession, evaluate } from '../learning/engine';
+import { createSession, evaluate, submitResponse } from '../learning/engine';
 import { required } from '../learning/required';
 import { bnuUpperBook } from './bnu';
 import {
@@ -60,11 +60,11 @@ it('keeps original activity snapshots and does not manufacture actual confirmati
   const sessions = [games, harvest].map((lesson) =>
     createSession(lesson, bnuUpperBook.id, 'child', { seed: 17, now }),
   );
-  expect(games.questions).toHaveLength(18);
+  expect(games.questions).toHaveLength(20);
   expect(harvest.questions).toHaveLength(13);
   expect(
     new Set([...games.questions, ...harvest.questions].map((q) => q.id)).size,
-  ).toBe(31);
+  ).toBe(33);
   for (const session of sessions) {
     expect(session.responses.every((r) => r.submissions.length === 0)).toBe(
       true,
@@ -91,4 +91,81 @@ it('keeps original activity snapshots and does not manufacture actual confirmati
   expect(parseBackup(exportBackup(data, now)).data).toEqual(
     JSON.parse(JSON.stringify(data)),
   );
+});
+
+it('preserves all seven cards when changing grouping and keeps the six-card example separate', () => {
+  const before = required(games.steps[2]?.visual);
+  const after = required(games.steps[3]?.visual);
+  expect(before.kind).toBe('count-groups');
+  expect(after.kind).toBe('count-groups');
+  if (before.kind !== 'count-groups' || after.kind !== 'count-groups')
+    throw new Error('Missing regrouping diagrams');
+  expect(before.groups.reduce((sum, count) => sum + count, 0)).toBe(7);
+  expect(after.groups.reduce((sum, count) => sum + count, 0)).toBe(7);
+  expect(after.groups.filter((count) => count === 3)).toHaveLength(2);
+  expect(after.groups.filter((count) => count < 3)).toEqual([1]);
+  const question = (suffix: string) =>
+    required(games.questions.find((q) => q.id.endsWith(suffix)));
+  expect(evaluate(question('regroup-total').rule, 7)).toBe(true);
+  expect(evaluate(question('regroup-total').rule, 6)).toBe(false);
+  expect(evaluate(question('regroup-leftover').rule, 1)).toBe(true);
+  expect(evaluate(question('regroup-leftover').rule, 3)).toBe(false);
+  expect(question('q7').prompt).toContain('另取一批6张卡');
+  expect(question('q7').visual).toEqual({
+    kind: 'count-groups',
+    groups: [3, 3],
+  });
+  expect(evaluate(question('q7').rule, 2)).toBe(true);
+  expect(evaluate(question('q8').rule, 6)).toBe(true);
+  expect(games.version).toBe(2);
+});
+
+it('restores a version-one six-card answer without rewriting its saved question or adding new tasks', () => {
+  const now = '2026-10-03T00:00:00.000Z';
+  const oldLesson = {
+    ...games,
+    version: 1,
+    questions: games.questions
+      .filter((q) => !q.id.includes('-regroup-'))
+      .map((q) =>
+        q.id.endsWith('-q7')
+          ? { ...q, prompt: '图中每组3张，共有几组？只填组数。' }
+          : q,
+      ),
+  };
+  const session = createSession(oldLesson, bnuUpperBook.id, 'child', {
+    seed: 17,
+    now,
+  });
+  const index = session.responses.findIndex((r) =>
+    r.questionId.endsWith('-q8'),
+  );
+  const response = required(session.responses[index]);
+  response.draft = 6;
+  session.responses[index] = submitResponse(
+    required(session.questions.find((q) => q.id === response.questionId)),
+    response,
+    now,
+  );
+  const data = {
+    schemaVersion: 1 as const,
+    profiles: [{ id: 'child', nickname: '旧记录测试', createdAt: now }],
+    activeProfileId: 'child',
+    sessions: [session],
+  };
+  const restored = required(
+    parseBackup(exportBackup(data, now)).data.sessions[0],
+  );
+  expect(restored.lessonVersion).toBe(1);
+  expect(restored.questions).toHaveLength(18);
+  expect(restored.questions.find((q) => q.id.endsWith('-q7'))?.prompt).toBe(
+    '图中每组3张，共有几组？只填组数。',
+  );
+  expect(restored.questions.some((q) => q.id.includes('-regroup-'))).toBe(
+    false,
+  );
+  expect(restored.responses[index]?.submissions[0]).toMatchObject({
+    answer: 6,
+    correct: true,
+  });
 });
