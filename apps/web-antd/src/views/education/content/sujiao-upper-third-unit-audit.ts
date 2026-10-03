@@ -1,7 +1,7 @@
 /** Same-edition retained reader pages 60–68, printed 53–61, were actually viewed. */
 export const sujiaoUpperThirdUnitAudit = {
   isbn: '978-7-5743-1099-5',
-  checkedAt: '2026-10-02',
+  checkedAt: '2026-10-04',
   unit: 'u3',
   source: 'https://keben.app/book/0103',
   status: 'original-teaching-implemented',
@@ -60,9 +60,10 @@ export const sujiaoUpperThirdUnitAudit = {
           ['classification-shape', 'physical', 'roll', 'life'],
         ],
         ['sj-upper-build-solids', ['position']],
-        ['sj-upper-solid-review', ['actual-two-compositions']],
+        ['sj-upper-solid-review', ['actual-life-imitation']],
       ],
-      boundary: '真实触摸与自主作品人工，网页识别不冒动手。',
+      boundary:
+        '真实触摸、先选生活物品再模仿并解释形状独立人工记录，自由作品不冒模仿活动。',
     },
     {
       page: 57,
@@ -174,6 +175,7 @@ export const sujiaoUpperThirdUnitAudit = {
             'one-object',
             'height-needs-evidence',
             'actual-two-compositions',
+            'actual-source-two-compositions',
             'actual-three-high',
             'actual-evaluation-building',
           ],
@@ -193,7 +195,7 @@ export const sujiaoUpperThirdUnitAudit = {
         ],
       ],
       boundary:
-        '两原创分解作品与真实七选三比较已有；两柱架梁加双块双球完整指令与真实稳定核对独立记录。',
+        '两原创分解作品与原书两图八处填写/照样搭建分别记录，真实七选三比较已有；两柱架梁加双块双球完整指令与真实稳定核对独立记录。',
     },
     {
       page: 61,
@@ -252,6 +254,14 @@ export const sujiaoUpperThirdUnitAudit = {
     },
   ],
   resolvedGaps: [
+    {
+      id: 'life-imitation-and-source-fill-build',
+      pages: [56, 60],
+      evidence: [
+        'sj-upper-solid-review-actual-life-imitation',
+        'sj-upper-solid-review-actual-source-two-compositions',
+      ],
+    },
     {
       id: 'split-recompose',
       pages: [57, 58],

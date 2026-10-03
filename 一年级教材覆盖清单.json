@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T22:17:13.420Z",
+  "generatedAt": "2026-10-03T22:28:02.909Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -14378,7 +14378,7 @@
         "referenceQueries": 0,
         "tasks": {
           "objective": 769,
-          "manual": 269,
+          "manual": 271,
           "reflection": 42
         }
       },
@@ -15905,15 +15905,15 @@
               "title": "立体作品：数部件、选三块搭高与独立自评",
               "textbookTitle": "图形的初步认识（一）·练习六与评价",
               "page": 60,
-              "version": 1,
+              "version": 2,
               "status": "available",
-              "goal": "对两幅原创分解作品按四种立体分类点数，实际从七块选三块比较搭高；分别记录辨认、拼搭、仔细观察认真做三个方面。",
+              "goal": "对两幅原创分解作品按四种立体分类点数，观察生活物品并用积木模仿，另完成原书两幅图的填数与照样搭建；实际从七块选三块比较搭高，分别记录辨认、拼搭、仔细观察认真做三个方面。",
               "prerequisite": "认识四种立体形状与0～9；准备七块安全模型、平整桌面，含方块/长盒/直圆柱/球及不同大小；无模型暂留待做。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 7,
               "tasks": {
                 "objective": 6,
-                "manual": 5,
+                "manual": 7,
                 "reflection": 3
               },
               "reviewTasks": {
@@ -15935,7 +15935,9 @@
                 "sj-upper-solid-review-actual-evaluation-care",
                 "sj-upper-solid-review-reflection-recognition",
                 "sj-upper-solid-review-reflection-building",
-                "sj-upper-solid-review-reflection-care"
+                "sj-upper-solid-review-reflection-care",
+                "sj-upper-solid-review-actual-life-imitation",
+                "sj-upper-solid-review-actual-source-two-compositions"
               ],
               "questionKinds": [
                 "steps",
@@ -15946,9 +15948,9 @@
               ],
               "visualKinds": ["solid-build"],
               "audit": {
-                "date": "2026-10-02",
-                "reviewer": "同版组合计数、搭高与三项评价核对",
-                "notes": "同版2024年7月第1版、2025年7月第2次印刷正文已核验；两幅作品均换部件组成，不能沿用主课四类数；总块不变仍需按新图核对。实际选三搭高与辨认/拼搭/认真做分别记录，最终教师审校未核验。"
+                "date": "2026-10-04",
+                "reviewer": "同版生活模仿、原图填搭、组合计数与评价核对",
+                "notes": "同版2024年7月第1版、2025年7月第2次印刷正文已核验；两幅作品均换部件组成，不能沿用主课四类数；总块不变仍需按新图核对。实际选三搭高与辨认/拼搭/认真做分别记录。2026-10-04重核第56、60页，另补生活物品模仿和原书两图八处填写及照样搭建，旧14题不改写。最终教师审校未核验。"
               }
             },
             {
@@ -18547,7 +18549,7 @@
           "steps": 1,
           "tasks": {
             "objective": 71,
-            "manual": 29,
+            "manual": 31,
             "reflection": 7
           },
           "reviewTasks": {
@@ -18621,6 +18623,8 @@
             "sj-upper-solid-review-reflection-recognition",
             "sj-upper-solid-review-reflection-building",
             "sj-upper-solid-review-reflection-care",
+            "sj-upper-solid-review-actual-life-imitation",
+            "sj-upper-solid-review-actual-source-two-compositions",
             "sj-upper-cube-pair-all-candidates",
             "sj-upper-cube-pair-target-count",
             "sj-upper-cube-pair-all-valid-pairs",

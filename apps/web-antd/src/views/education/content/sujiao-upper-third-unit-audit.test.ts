@@ -10,7 +10,7 @@ it('maps all nine printed pages to actual tasks with independent actual evidence
   expect(audit.status).toBe('original-teaching-implemented');
   expect(audit.finalTeacherReview).toBe('not-verified');
   expect(audit.gaps).toHaveLength(0);
-  expect(audit.resolvedGaps).toHaveLength(6);
+  expect(audit.resolvedGaps).toHaveLength(7);
   const unit = sujiaoBooks[0]!.units.find((u) => u.id === 'u3')!;
   expect(unit.lessons.some((l) => l.status === 'preparing')).toBe(false);
   for (const gap of audit.resolvedGaps)
