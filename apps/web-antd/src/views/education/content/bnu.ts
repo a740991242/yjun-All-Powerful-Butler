@@ -15,6 +15,7 @@ import { bnuClassroomLesson } from './bnu-classroom';
 import { bnuComparisonLesson } from './bnu-comparison';
 import { bnuDayRecordLesson } from './bnu-day';
 import { bnuFinalNumberTalkLesson } from './bnu-final-numbers';
+import { bnuFinalNumberPracticeLesson } from './bnu-final-practice';
 import { bnuFiveAddLesson } from './bnu-five-add';
 import {
   bnuFiveOrganizeLesson,
@@ -346,10 +347,11 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
   if (key === 'final')
     return [
       bnuFinalNumberTalkLesson,
+      bnuFinalNumberPracticeLesson,
       {
         ...pending,
         title: '总复习 · 后续内容制作中',
-        goal: '第81页回顾交流已开放，第82～86页课程仍在制作。',
+        goal: '第81～82页已开放，第83～86页课程仍在制作。',
       },
     ];
   return [pending];

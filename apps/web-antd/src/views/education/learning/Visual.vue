@@ -55,6 +55,7 @@ import MotionSequences from './MotionSequences.vue';
 import NatureCards from './NatureCards.vue';
 import NumberFrame from './NumberFrame.vue';
 import NumberLineGrid from './NumberLineGrid.vue';
+import NumberStrip from './NumberStrip.vue';
 import NumberTower from './NumberTower.vue';
 import OcclusionViews from './OcclusionViews.vue';
 import PaperFold from './PaperFold.vue';
@@ -317,6 +318,7 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
+    <NumberStrip v-else-if="visual.kind === 'number-strip'" :visual="visual" />
     <NumberLineGrid
       v-else-if="visual.kind === 'number-line-grid'"
       :visual="visual"

@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 27
+          .count()) !== 28
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1157,6 +1157,47 @@ const widths = process.argv.includes('--mobile-only')
               .getByRole('spinbutton')
               .nth(index)
               .fill(String(rule.fields[index][0]));
+        } else if (rule.kind === 'arithmetic-pair') {
+          let pair;
+          for (let a = rule.minimum; a <= rule.maximum && !pair; a++)
+            for (let b = rule.minimum; b <= rule.maximum && !pair; b++)
+              if ((rule.operation === 'add' ? a + b : a - b) === rule.result)
+                pair = [a, b];
+          if (!pair) throw new Error('No arithmetic pair solution');
+          for (const [index, value] of pair.entries())
+            await p.getByRole('spinbutton').nth(index).fill(String(value));
+        } else if (rule.kind === 'number-chain') {
+          const solve = (index, complete, blanks) => {
+            if (index === rule.values.length) return blanks;
+            const given = rule.values[index];
+            const candidates =
+              given === null
+                ? Array.from(
+                    { length: rule.maximum - rule.minimum + 1 },
+                    (_, offset) => rule.minimum + offset,
+                  )
+                : [given];
+            for (const value of candidates) {
+              const previous = complete.at(-1);
+              if (
+                previous !== undefined &&
+                !(rule.direction === 'ascending'
+                  ? previous < value
+                  : previous > value)
+              )
+                continue;
+              const result = solve(
+                index + 1,
+                [...complete, value],
+                given === null ? [...blanks, value] : blanks,
+              );
+              if (result) return result;
+            }
+          };
+          const answer = solve(0, [], []);
+          if (!answer) throw new Error('No number-chain solution');
+          for (const [index, value] of answer.entries())
+            await p.getByRole('spinbutton').nth(index).fill(String(value));
         } else {
           throw new Error(`Unsupported BNU objective ${rule.kind}`);
         }
@@ -1261,6 +1302,13 @@ const widths = process.argv.includes('--mobile-only')
       const activityFlows = [];
       const bnuFlows = [
         [
+          '数列、九人排队与等值算式配对',
+          6,
+          30,
+          7,
+          'bnu-upper-final-number-practice',
+        ],
+        [
           '数的含义、开放比较与算式故事',
           6,
           25,
@@ -1326,6 +1374,114 @@ const widths = process.argv.includes('--mobile-only')
       for (const id of requestedBnu || [])
         if (!bnuFlows.some((flow) => flow[4] === id))
           throw new Error(`Unknown BNU verification lesson: ${id}`);
+      const verifyNumberStrip = async (values, stage, translated = false) => {
+        const figure = p.locator('[data-number-strip]');
+        await figure.waitFor();
+        let blank = 0;
+        const expected = values.map((value) =>
+          value === null ? String.fromCodePoint(65 + blank++) : String(value),
+        );
+        const cards = figure.locator('[data-number-position]');
+        if (
+          JSON.stringify(await cards.allTextContents()) !==
+          JSON.stringify(expected)
+        )
+          throw new Error(
+            'Number row leaks answers or changes blank positions',
+          );
+        for (const [end, card] of [
+          ['left', cards.first()],
+          ['right', cards.last()],
+        ]) {
+          await card.evaluate((node) =>
+            node.scrollIntoView({
+              block: 'center',
+              inline: 'center',
+              behavior: 'instant',
+            }),
+          );
+          await p.waitForTimeout(250);
+          const fits = await card.evaluate((node) => {
+            const box = node.getBoundingClientRect();
+            const region = node
+              .closest('[role="region"]')
+              .getBoundingClientRect();
+            return (
+              box.left >= region.left &&
+              box.right <= region.right &&
+              box.left >= 0 &&
+              box.right <= innerWidth &&
+              box.top >= 0 &&
+              box.bottom <= innerHeight
+            );
+          });
+          if (!fits) throw new Error('Number row endpoint is clipped');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-row-${stage}-${end}-${width}.png`,
+          });
+        }
+        if (translated) {
+          const before = await read();
+          const wasDark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await figure
+            .getByText('Read the number row from left to right', {
+              exact: true,
+            })
+            .waitFor();
+          const blankLabels = await cards
+            .filter({ hasText: /^[A-C]$/ })
+            .evaluateAll((nodes) =>
+              nodes.map((node) => node.getAttribute('aria-label')),
+            );
+          if (blankLabels.some((label) => !label.includes('blank ')))
+            throw new Error('Number row blank ARIA not translated');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (value) =>
+              document.documentElement.classList.contains('dark') === value,
+            !wasDark,
+          );
+          await p.waitForTimeout(350);
+          if (
+            JSON.stringify(await cards.allTextContents()) !==
+            JSON.stringify(expected)
+          )
+            throw new Error('Number row language changed values');
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('Number row page overflow');
+          await figure.screenshot({
+            path: `/tmp/butler-bnu-final-row-english-${width}.png`,
+          });
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (value) =>
+              document.documentElement.classList.contains('dark') === value,
+            wasDark,
+          );
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await figure.getByText('从左到右观察数列', { exact: true }).waitFor();
+          const after = await read();
+          if (
+            JSON.stringify(before.sessions) !== JSON.stringify(after.sessions)
+          )
+            throw new Error('Number row language or theme reset study records');
+        }
+      };
       for (const [
         title,
         stepCount,
@@ -1345,8 +1501,49 @@ const widths = process.argv.includes('--mobile-only')
         const activityId = new URLSearchParams(p.url().split('?')[1]).get(
           'session',
         );
+        if (lessonId === 'bnu-upper-final-number-practice')
+          await verifyNumberStrip([5, null, 7, null, 9, null], 'ascending');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-final-number-practice' && step === 1)
+            await verifyNumberStrip(
+              [10, 8, null, null, 2, null],
+              'descending',
+              true,
+            );
+          if (lessonId === 'bnu-upper-final-number-practice' && step === 2) {
+            const diagram = p.getByRole('img', {
+              name: '原创队列，从画面左到右依次是：A、B、C、D、E、F、G、H、I。队首方向另行标明。',
+              exact: true,
+            });
+            await diagram.waitFor();
+            if ((await diagram.locator('circle').count()) !== 9)
+              throw new Error('Nine-person queue is incomplete');
+            const container = diagram.locator('xpath=..');
+            for (const label of ['A', 'I']) {
+              const target = container.getByText(label, { exact: true });
+              await target.evaluate((node) =>
+                node.scrollIntoView({
+                  block: 'center',
+                  inline: 'center',
+                  behavior: 'instant',
+                }),
+              );
+              await p.waitForTimeout(250);
+              const box = await target.boundingBox();
+              if (
+                !box ||
+                box.x < 0 ||
+                box.x + box.width > width ||
+                box.y < 0 ||
+                box.y + box.height > 1000
+              )
+                throw new Error('Queue endpoint is clipped');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-final-queue-${label}-${width}.png`,
+              });
+            }
+          }
           if (lessonId === 'bnu-upper-ten-organize-game' && step === 4)
             await verifyCaterpillarDemo();
           if (lessonId === 'bnu-upper-six-card-game' && step === 4)
@@ -1845,6 +2042,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-building-tower-counts': [0, null, null, null],
               'bnu-upper-day-record-clock-parts': [0, null],
               'bnu-upper-final-number-talk-open-drawing': [0, null],
+              'bnu-upper-final-number-practice-difference': [null, 0],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1856,7 +2054,10 @@ const widths = process.argv.includes('--mobile-only')
             };
             const applicationPartial = applicationDrafts[question.id];
             if (applicationPartial) {
-              await p.getByRole('spinbutton').nth(0).fill('0');
+              if (applicationPartial[0] === 0)
+                await p.getByRole('spinbutton').nth(0).fill('0');
+              if (applicationPartial[1] === 0)
+                await p.getByRole('spinbutton').nth(1).fill('0');
               if (applicationPartial[2] === 0)
                 await p.getByRole('spinbutton').nth(2).fill('0');
               await activityDraft(index, applicationPartial);
@@ -1877,6 +2078,23 @@ const widths = process.argv.includes('--mobile-only')
                 throw new Error('BNU application partial zero/null reload');
             }
             await answerObjective(question);
+            if (question.id === 'bnu-upper-final-number-practice-difference') {
+              await p.getByRole('spinbutton').nth(0).fill('8');
+              await p.getByRole('spinbutton').nth(1).fill('2');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              await p.getByRole('spinbutton').nth(1).fill('0');
+              await activityDraft(index, [8, 0]);
+              await p.reload({ waitUntil: 'networkidle' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              if (
+                (await p.getByRole('spinbutton').nth(0).inputValue()) !== '8' ||
+                (await p.getByRole('spinbutton').nth(1).inputValue()) !== '0'
+              )
+                throw new Error('Open arithmetic pair zero reload');
+            }
             if (question.id === 'bnu-upper-final-number-talk-open-drawing') {
               await p.getByRole('spinbutton').nth(0).fill('4');
               await p.getByRole('spinbutton').nth(1).fill('6');
@@ -1927,6 +2145,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-tower': '-counts',
                   'bnu-upper-day-record': '-clock-parts',
                   'bnu-upper-final-number-talk': '-open-drawing',
+                  'bnu-upper-final-number-practice': '-difference',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1959,6 +2178,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-tower',
                   'bnu-upper-day-record',
                   'bnu-upper-difference-transfer',
+                  'bnu-upper-final-number-practice',
                   'bnu-upper-final-number-talk',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
@@ -1977,6 +2197,51 @@ const widths = process.argv.includes('--mobile-only')
             }
             await click('提交答案');
             await p.getByText('答对了', { exact: true }).waitFor();
+            if (question.id === 'bnu-upper-final-number-practice-difference') {
+              for (const pair of [
+                [9, 1],
+                [10, 2],
+              ]) {
+                await p.getByRole('spinbutton').nth(0).fill(String(pair[0]));
+                await p.getByRole('spinbutton').nth(1).fill(String(pair[1]));
+                await click('提交答案');
+                await p.getByText('答对了', { exact: true }).waitFor();
+                await activityDraft(index, pair);
+                let submitted = false;
+                for (let attempt = 0; attempt < 50; attempt++) {
+                  const saved = await findSession(activityId);
+                  const last = saved.responses[index].submissions.at(-1);
+                  if (
+                    last?.correct === true &&
+                    JSON.stringify(last.answer) === JSON.stringify(pair)
+                  ) {
+                    submitted = true;
+                    break;
+                  }
+                  await p.waitForTimeout(100);
+                }
+                if (!submitted)
+                  throw new Error(
+                    'Alternative arithmetic answer not persisted',
+                  );
+              }
+              const current = await findSession(activityId);
+              const submissions = current.responses[index].submissions;
+              if (
+                JSON.stringify(
+                  submissions.map((item) => [item.answer, item.correct]),
+                ) !==
+                JSON.stringify([
+                  [[8, 2], false],
+                  [[8, 0], true],
+                  [[9, 1], true],
+                  [[10, 2], true],
+                ])
+              )
+                throw new Error(
+                  'Open arithmetic pair lost alternative answer history',
+                );
+            }
             if (
               lessonId === 'bnu-upper-life-comparison' &&
               question.id.endsWith('-q14')
@@ -2124,7 +2389,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 27,
+          bnuCourse: 28,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

@@ -1052,5 +1052,9 @@
   "bnuBuildingShown": "Orientation shown in the diagram",
   "bnuBuildingGround": "The lowest layer is on the table. Test ball clearance and the stability of the whole building with real objects.",
   "bnuDayClockDescription": "Clock: the short thick hand is just past 9; the long thin dashed hand points to 1, past 12.",
-  "bnuDayClockNotice": "Original observation diagram for printed page 80: just after 9, neither a whole nor a half hour. This task asks only for that distinction, not exact minutes. The face alone does not identify morning or evening."
+  "bnuDayClockNotice": "Original observation diagram for printed page 80: just after 9, neither a whole nor a half hour. This task asks only for that distinction, not exact minutes. The face alone does not identify morning or evening.",
+  "numberStripTitle": "Read the number row from left to right",
+  "numberStripBlank": "Position {position}, blank {letter}",
+  "numberStripKnown": "Position {position}, given number {value}",
+  "numberStripNotice": "Letters mark blanks, not zero. Follow the rule stated in the question and check left to right. Scroll within the diagram on a narrow screen."
 }

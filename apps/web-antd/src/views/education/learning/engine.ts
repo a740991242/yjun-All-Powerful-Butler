@@ -7,6 +7,7 @@ import type {
   Session,
 } from './types';
 
+import { matchesArithmeticPair } from './arithmetic-pair';
 import { matchesCardEquation } from './card-equation';
 import { columnDigitBlankCount, matchesColumnDigits } from './column-digits';
 import { matchesCrossBalance } from './cross-balance';
@@ -57,6 +58,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
     case 'equal-pairs':
     case 'column-digits':
     case 'number-picks':
+    case 'arithmetic-pair':
     case 'number-chain':
     case 'magic-grid':
     case 'tower':
@@ -67,6 +69,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
         answer.length ===
           (() => {
             if (rule.kind === 'card-equation') return 4;
+            if (rule.kind === 'arithmetic-pair') return 2;
             if (rule.kind === 'equal-pairs') return 8;
             if (rule.kind === 'column-digits')
               return columnDigitBlankCount(rule);
@@ -164,6 +167,9 @@ export function evaluate(
     }
     case 'number-picks': {
       return matchesNumberPicks(rule, answer);
+    }
+    case 'arithmetic-pair': {
+      return matchesArithmeticPair(rule, answer);
     }
     case 'number-chain': {
       return matchesNumberChain(rule, answer);

@@ -67,6 +67,7 @@ const fieldCount = computed(() => {
   if (rule?.kind === 'tower') return towerBlankCount(rule.rows);
   if (rule?.kind === 'cross-balance') return rule.values.length;
   if (rule?.kind === 'number-picks') return rule.fields.length;
+  if (rule?.kind === 'arithmetic-pair') return 2;
   if (rule?.kind === 'number-chain') return numberChainBlankCount(rule);
   return (() => {
     if (rule?.kind === 'partition') return rule.parts;
@@ -475,6 +476,7 @@ async function finish() {
                 question.rule.kind === 'column-digits' ||
                 question.rule.kind === 'cross-balance' ||
                 question.rule.kind === 'number-picks' ||
+                question.rule.kind === 'arithmetic-pair' ||
                 question.rule.kind === 'number-chain' ||
                 question.rule.kind === 'steps' ||
                 question.rule.kind === 'tower' ||

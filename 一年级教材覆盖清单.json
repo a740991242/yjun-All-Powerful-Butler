@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T18:35:09.589Z",
+  "generatedAt": "2026-10-03T18:58:52.438Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 27,
+        "availablePacks": 28,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 404,
-          "manual": 173,
-          "reflection": 63
+          "objective": 424,
+          "manual": 180,
+          "reflection": 66
         }
       },
       "units": [
@@ -29320,13 +29320,52 @@
               }
             },
             {
+              "id": "bnu-upper-final-number-practice",
+              "title": "数列、九人排队与等值算式配对",
+              "textbookTitle": "总复习 · 数与代数",
+              "page": 82,
+              "version": 1,
+              "status": "available",
+              "goal": "完整补两列数、标九个序位，计算并配对全部算式，接受开放填空多解并分清隐藏量。",
+              "prerequisite": "会0～10加减、每次加1或减2的数数与从队首数位置。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 7,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-final-number-practice"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "number-chain",
+                "arithmetic-pair",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["number-strip", "queue", "count-groups"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书82页五项完整阅读与多解规则核对",
+                "notes": "第三方0061阅读器86对应印刷82：5起每次加1、10起每次减2，左队首九人；12式六组等值配对；四组填数与猴子/白菜图。ISBN版印次未知。"
+              }
+            },
+            {
               "id": "bnu-upper-final-pending",
               "title": "总复习 · 后续内容制作中",
               "textbookTitle": "总复习",
               "page": 81,
               "version": 1,
               "status": "preparing",
-              "goal": "第81页回顾交流已开放，第82～86页课程仍在制作。",
+              "goal": "第81～82页已开放，第83～86页课程仍在制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

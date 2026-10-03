@@ -1,3 +1,4 @@
+import type { ArithmeticPairRule } from './arithmetic-pair';
 import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
@@ -28,6 +29,7 @@ import type { MotionSequencesVisual } from './motion-sequences';
 import type { NumberChainRule } from './number-chain';
 import type { NumberFrameVisual } from './number-frame';
 import type { NumberPicksRule } from './number-picks';
+import type { NumberStripVisual } from './number-strip';
 import type { OcclusionViewsVisual } from './occlusion-views';
 import type { ParadeFramesVisual } from './parade-frames';
 import type { PartitionedSquareVisual } from './partitioned-square';
@@ -402,6 +404,7 @@ export interface GeoboardShiftVisual extends GeoboardShiftState {
 }
 
 export type AnswerRule =
+  | ArithmeticPairRule
   | CardEquationRule
   | ColumnDigitsRule
   | CrossBalanceModel
@@ -466,6 +469,7 @@ export type Visual =
   | NatureCardsVisual
   | NumberFrameVisual
   | NumberLineGridVisual
+  | NumberStripVisual
   | NumberTowerVisual
   | OcclusionViewsVisual
   | PaperFoldVisual

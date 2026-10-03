@@ -1,6 +1,7 @@
 import type { Answer, Backup, LibraryState, Question, Session } from './types';
 
 import { isArithmeticGridVisual } from './arithmetic-grid';
+import { isArithmeticPairRule } from './arithmetic-pair';
 import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
@@ -53,6 +54,7 @@ import { isNatureCardsVisual } from './nature-cards';
 import { isNumberChainRule, numberChainBlankCount } from './number-chain';
 import { isNumberFrameVisual } from './number-frame';
 import { isNumberPicksRule } from './number-picks';
+import { isNumberStripVisual } from './number-strip';
 import {
   isNumberTowerVisual,
   isTowerRule,
@@ -186,6 +188,9 @@ function rule(value: unknown) {
     case 'number-picks': {
       return isNumberPicksRule(value);
     }
+    case 'arithmetic-pair': {
+      return isArithmeticPairRule(value);
+    }
     case 'number-chain': {
       return isNumberChainRule(value);
     }
@@ -249,6 +254,9 @@ function rule(value: unknown) {
 function visual(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'number-strip': {
+      return isNumberStripVisual(value);
+    }
     case 'bnu-building': {
       return isBnuBuildingVisual(value);
     }
@@ -1105,13 +1113,17 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
       return false;
     if (
       (current.rule.kind === 'number-picks' ||
+        current.rule.kind === 'arithmetic-pair' ||
         current.rule.kind === 'cross-balance') &&
       response.draft !== null &&
       (!Array.isArray(response.draft) ||
         response.draft.length !==
-          (current.rule.kind === 'number-picks'
-            ? current.rule.fields.length
-            : current.rule.values.length) ||
+          (() => {
+            if (current.rule.kind === 'arithmetic-pair') return 2;
+            if (current.rule.kind === 'number-picks')
+              return current.rule.fields.length;
+            return current.rule.values.length;
+          })() ||
         ![...response.draft].every(
           (item) =>
             item === null ||
