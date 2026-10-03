@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T12:45:20.340Z",
+  "generatedAt": "2026-10-03T15:55:02.733Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-03",
       "summary": {
-        "availablePacks": 3,
-        "pendingEntries": 9,
+        "availablePacks": 19,
+        "pendingEntries": 5,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 24,
-          "manual": 15,
-          "reflection": 3
+          "objective": 255,
+          "manual": 120,
+          "reflection": 32
         }
       },
       "units": [
@@ -28315,33 +28315,166 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-u1-pending",
-              "title": "生活中的数",
+              "id": "bnu-upper-life-count-order",
+              "title": "一到十点数、数序与一到五书写",
               "textbookTitle": "生活中的数",
               "page": 12,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "逐一数1～10个对象，用数字表示数量，区分共有几个与第几个，实际练写1～5。",
+              "prerequisite": "能逐个指认物品，无需先会加减法。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 14,
+                "manual": 6,
+                "reflection": 1
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-life-count-order"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["count"],
               "audit": {
                 "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方原书0061印刷12～16页实际读取：1～10点数/对应、数量与序位、物品到小棒手势图形表示、1～5描写、按数涂色和车厢位置。未知ISBN/印次不补造。"
+              }
+            },
+            {
+              "id": "bnu-upper-life-zero",
+              "title": "零表示已知没有，空白不等于零",
+              "textbookTitle": "生活中的数",
+              "page": 17,
+              "version": 1,
+              "status": "available",
+              "goal": "用0表示已知没有，区分未知空白与0，观察数字用途并实际练写0。",
+              "prerequisite": "能逐一数1～5并说明计数对象。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 8,
+                "manual": 5,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-life-zero"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方原书0061印刷17～18页实际读取：已知没有/0、生活数字、0描写与混合读写、点数和按数画记、尺刻度起点。只按已读范围原创，不把教材截图打包。"
+              }
+            },
+            {
+              "id": "bnu-upper-life-six-ten",
+              "title": "六到十的表示、书写与顺倒数",
+              "textbookTitle": "生活中的数",
+              "page": 19,
+              "version": 1,
+              "status": "available",
+              "goal": "逐个表示6～10，联系物品、标记和数字，实际描写6～10，顺数与倒数并明确数路起点。",
+              "prerequisite": "已逐个数1～5并认识0；无需先会列加减算式或学习数位。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 11,
+                "manual": 7,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-life-six-ten"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方原书0061印刷19～22页已实际读取：6～9文具及多种表示、按数补画与描写、两端数路、9添1认识10、十根小棒与手脚表示、10书写及从10倒数到1。ISBN和印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-life-comparison",
+              "title": "逐一配对、比较符号与开放填数",
+              "textbookTitle": "生活中的数",
+              "page": 23,
+              "version": 1,
+              "status": "available",
+              "goal": "逐一配对判断正好、缺少与多余，区分单件和一双，用=、<、>表示数量关系并找出所有符合条件的数。",
+              "prerequisite": "能逐个点数0～10并明确计数对象；无需先列加减算式。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 15,
+                "manual": 8,
+                "reflection": 1
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-life-comparison"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "number-picks",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["comparison-rows", "count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷23～26页已实际读取：餐具与人物配对、正好/缺少/多余、最多最少、按条件画记、一人一双、对应后认识比较符号、反向比较、开放填数和严格大小筛选。"
+              }
+            },
+            {
+              "id": "bnu-upper-life-organize",
+              "title": "生活数量整理、序位与自主提问",
+              "textbookTitle": "生活中的数",
+              "page": 27,
+              "version": 1,
+              "status": "available",
+              "goal": "分类点数、比较最多最少，区分总数与序位，补完整数序，明确同一物品单位并自主提出数量问题。",
+              "prerequisite": "认识0～10的数量、数序和比较符号；无需先学加减列式。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 14,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-life-organize"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups", "comparison-rows", "count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷27～28页实际读取：餐具整理、问题银行、动物序位、毛虫缺数、食物喜好点图、文化物品对应、杯与吸管、按图形类别点数与方法说明。"
               }
             }
           ]
@@ -28364,33 +28497,112 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-u2-pending",
-              "title": "5以内数加与减",
+              "id": "bnu-upper-five-add",
+              "title": "五以内合并、增加与加法含义",
               "textbookTitle": "5以内数加与减",
               "page": 29,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "明确两部分与全部，区分同时存在和后来增加，逐个数或接着数核对5以内的和，并读写加法。",
+              "prerequisite": "能逐个点数0～5并明确所数对象；先理解情境，不要求先背口诀。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 11,
+                "manual": 6,
+                "reflection": 1
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-five-add"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
               "audit": {
                 "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷29～31页已实际查看：两手物品/两类熊猫的总数、逐个与接着数、加号读式、图形表示、静态合并与车辆/鸟到来、用同式说不同故事、按情境列式及每次多一的序列。ISBN和印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-five-subtract",
+              "title": "五以内取走、剩余与零的加减",
+              "textbookTitle": "5以内数加与减",
+              "page": 32,
+              "version": 1,
+              "status": "available",
+              "goal": "区分原有、取走与剩余，数剩余或逐张倒数，解释零的加减并核对连续变化。",
+              "prerequisite": "会点数0～5并理解合并与增加。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 15,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-five-subtract"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷32～36页已实际查看；原有/取走/剩余、减号、画去、不同图说同式、逐次变化、小猫到0、五珠对应与0的加减、八式及缺杯缺勺。"
+              }
+            },
+            {
+              "id": "bnu-upper-five-organize",
+              "title": "五以内加减整理、连续变化与算式卡",
+              "textbookTitle": "5以内数加与减",
+              "page": 37,
+              "version": 1,
+              "status": "available",
+              "goal": "整理整体与部分、零和完整计算，核对缺数多解、不同变化量与同结果的所有候选算式卡。",
+              "prerequisite": "已理解五以内加减含义与0，能顺数倒数0～10。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 20,
+                "manual": 8,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-five-organize"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷37～39页已实际查看：整体/地点与同式图说、自主问题、12式、顺倒缺数、变化率、结果匹配、连续取走与开放卡片。"
               }
             }
           ]
@@ -28413,33 +28625,33 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-classroom-pending",
-              "title": "介绍我的教室",
+              "id": "bnu-upper-classroom",
+              "title": "介绍教室、相对位置与座位定位",
               "textbookTitle": "介绍我的教室",
               "page": 40,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "固定观察方向，结合排与排内位置定位，演练介绍、倾听与真实改进。",
+              "prerequisite": "能点数到3并理解第几个，不要求公开真实同伴资料。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 12,
+                "manual": 7,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-classroom"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["seat-grid"],
               "audit": {
                 "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷40～42页已实际查看；观察教室、位置、角色演练、开放日寻找与介绍改进。ISBN和印次未知，来源不冒出版社官方。"
               }
             }
           ]
@@ -28462,33 +28674,77 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-u3-pending",
-              "title": "整理与分类",
+              "id": "bnu-upper-room-sort",
+              "title": "按用途整理与同批物品换标准",
               "textbookTitle": "整理与分类",
               "page": 43,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "明确分类对象与标准，完整分类后核对；换标准重新分，实际活动另记。",
+              "prerequisite": "能点数到10并按明确的属性识别物品。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 13,
+                "manual": 6,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": ["bnu-upper-room-sort"],
+              "questionKinds": [
+                "number",
+                "set",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
                 "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷43～45页已实际查看；来源不冒出版社托管，ISBN和印次未知。原书实做与本站纸卡分别记录。"
+              }
+            },
+            {
+              "id": "bnu-upper-classification",
+              "title": "完整分类、更换标准与自主整理",
+              "textbookTitle": "整理与分类",
+              "page": 46,
+              "version": 1,
+              "status": "available",
+              "goal": "明确分类对象与标准，完整分类后核对；换标准重新分，实际活动另记。",
+              "prerequisite": "能点数到10并按明确的属性识别物品。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 17,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-classification"],
+              "questionKinds": [
+                "number",
+                "set",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷46～47页已实际查看；来源不冒出版社托管，ISBN和印次未知。原书实做与本站纸卡分别记录。"
               }
             }
           ]
@@ -28511,13 +28767,195 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-u4-pending",
-              "title": "10以内数加与减",
+              "id": "bnu-upper-six-nine-relations",
+              "title": "六到九完整分合与加减关系",
               "textbookTitle": "10以内数加与减",
               "page": 48,
               "version": 1,
+              "status": "available",
+              "goal": "完整列举六到九含0分法与相应算式，区分部分、总数、已知隐藏量和连续变化。",
+              "prerequisite": "会点数0～9并理解五以内合并和取走。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 26,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-six-nine-relations"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开原书逐页阅读与原创任务核对",
+                "notes": "第三方0061印刷48～54页已实际查看；猜数、六七分合与拨珠、土豆变化、课间、八九分合/补画/涂格、图题与开放结果盒。ISBN和印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-ten-partitions",
+              "title": "十的完整分合与开放等和配对",
+              "textbookTitle": "10以内数加与减",
+              "page": 55,
+              "version": 1,
+              "status": "available",
+              "goal": "完整列出十的含零分法，联系加减与补数，并尝试八张数字卡各用一次的四组等和配对。",
+              "prerequisite": "认识0～10，能用两部分解释六到九的加减。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 11,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-ten-partitions"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "equal-pairs",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "已核读公开原书与原创条件核对",
+                "notes": "第三方0061印刷55～56页已实际查看，含10的两部分、完整拨珠、葫芦/台阶、八式和1～8等和配对；来源非出版社托管，ISBN与印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-two-step-changes",
+              "title": "两步变化、乘车与分类范围",
+              "textbookTitle": "10以内数加与减",
+              "page": 57,
+              "version": 1,
+              "status": "available",
+              "goal": "明确两次变化的次序，记录中间量和最终量，从同一批对象的不同分类中提出问题。",
+              "prerequisite": "理解十以内添入、取走与两部分合并。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 18,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-two-step-changes"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "已核读公开原书与原创条件核对",
+                "notes": "第三方0061印刷57～59页：乘车连续上/下、终点全下、合唱两种分类、自主问题、黄瓜/人数/鱼图、六两步式、10人隐藏；来源非出版社托管，ISBN与印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-difference-transfer",
+              "title": "求差、添入与移给的区别",
+              "textbookTitle": "10以内数加与减",
+              "page": 60,
+              "version": 1,
+              "status": "available",
+              "goal": "通过逐一配对求多几或少几，区分少的一方新增与大的一方移给，并核对两边同时变化。",
+              "prerequisite": "会十以内比较、配对与加减。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 14,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-difference-transfer"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count-groups"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "已核读公开原书与原创条件核对",
+                "notes": "第三方0061印刷60～61页：5与3求差、少方再添2、从多方移1、飞机差、四缺数等式、天平；本站情境原创，来源非出版社托管，ISBN与印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-hidden-quantities",
+              "title": "已知总量与连续遮挡",
+              "textbookTitle": "10以内数加与减",
+              "page": 62,
+              "version": 1,
+              "status": "available",
+              "goal": "明确已知总量、可见与遮挡三部分关系，核对连续画面中本次新增遮挡和累计遮挡的区别。",
+              "prerequisite": "会十以内分合与两步变化。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 12,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-hidden-quantities"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "已核读公开原书与原创条件核对",
+                "notes": "第三方0061印刷62～63页四幅企鹅画面、问号、8−2与2添6、8−5和5−2两段及画摆收获；本站纸卡原创，来源非出版社托管，ISBN与印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-u4-pending",
+              "title": "10以内数加与减",
+              "textbookTitle": "10以内数加与减",
+              "page": 64,
+              "version": 1,
               "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
+              "goal": "正文已核读至69页；完整十以内表与整理应用课尚待制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,
@@ -28536,8 +28974,8 @@
               "visualKinds": [],
               "audit": {
                 "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "公开原书逐页核读",
+                "notes": "64～69页已实际查看，但未制作课包；已读不冒教学完成。"
               }
             }
           ]

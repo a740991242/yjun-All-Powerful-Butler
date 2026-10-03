@@ -4,6 +4,7 @@
  * This does not certify curriculum coverage or regional textbook assignments.
  * Usage: rtk proxy node scripts/education/verify-pages.mjs
  * Use --generic-only to check only the Suzhou generic course entry in three widths.
+ * Use --bnu-lessons=id,id for named BNU activity flows plus the shared baseline; default checks all.
  * Use --mobile-only for a focused 375px rerun after verifier-only changes.
  */
 import { Buffer } from 'node:buffer';
@@ -21,6 +22,21 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const genericOnly = process.argv.includes('--generic-only');
+const requestedArgument = process.argv.find((value) =>
+  value.startsWith('--bnu-lessons='),
+);
+const requestedBnu = requestedArgument
+  ?.slice('--bnu-lessons='.length)
+  .split(',');
+if (
+  requestedBnu &&
+  (requestedBnu.some((id) => !/^bnu-upper-[a-z-]+$/.test(id)) ||
+    new Set(requestedBnu).size !== requestedBnu.length ||
+    genericOnly)
+)
+  throw new Error(
+    'Provide distinct BNU lesson IDs and do not combine with generic-only.',
+  );
 const widths = process.argv.includes('--mobile-only')
   ? [375]
   : [375, 768, 1200];
@@ -721,7 +737,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 3
+          .count()) !== 19
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -740,16 +756,47 @@ const widths = process.argv.includes('--mobile-only')
         return session;
       };
       const answerObjective = async (question) => {
-        await (question.rule.kind === 'number'
-          ? p.getByRole('spinbutton').fill(String(question.rule.value))
-          : p
-              .getByRole('radio', {
-                name: question.choices.find(
-                  (item) => item.id === question.rule.value,
-                ).label,
-                exact: true,
-              })
-              .check());
+        const rule = question.rule;
+        if (rule.kind === 'number') {
+          await p.getByRole('spinbutton').fill(String(rule.value));
+        } else if (rule.kind === 'choice') {
+          const option = question.choices.find(
+            (item) => item.id === rule.value,
+          );
+          await p
+            .getByRole('radio', { name: option.label, exact: true })
+            .check();
+        } else if (rule.kind === 'set') {
+          for (const value of rule.values) {
+            const option = question.choices.find((item) => item.id === value);
+            await p
+              .getByRole('checkbox', { name: option.label, exact: true })
+              .check();
+          }
+        } else if (rule.kind === 'steps') {
+          for (let index = 0; index < rule.values.length; index++)
+            await p
+              .getByRole('spinbutton')
+              .nth(index)
+              .fill(String(rule.values[index]));
+        } else if (rule.kind === 'equal-pairs') {
+          const cards = rule.values.toSorted((a, b) => a - b);
+          const arranged = [];
+          while (cards.length > 0) arranged.push(cards.shift(), cards.pop());
+          for (let index = 0; index < arranged.length; index++)
+            await p
+              .getByRole('spinbutton')
+              .nth(index)
+              .fill(String(arranged[index]));
+        } else if (rule.kind === 'number-picks') {
+          for (let index = 0; index < rule.fields.length; index++)
+            await p
+              .getByRole('spinbutton')
+              .nth(index)
+              .fill(String(rule.fields[index][0]));
+        } else {
+          throw new Error(`Unsupported BNU objective ${rule.kind}`);
+        }
       };
       let bnuWrong = false;
       let bnuDraft = false;
@@ -849,7 +896,35 @@ const widths = process.argv.includes('--mobile-only')
       )
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
-      for (const [title, stepCount, taskCount, manualCount, lessonId] of [
+      const bnuFlows = [
+        ['两步变化、乘车与分类范围', 6, 27, 7, 'bnu-upper-two-step-changes'],
+        ['求差、添入与移给的区别', 6, 22, 6, 'bnu-upper-difference-transfer'],
+        ['已知总量与连续遮挡', 5, 20, 6, 'bnu-upper-hidden-quantities'],
+        ['十的完整分合与开放等和配对', 6, 19, 6, 'bnu-upper-ten-partitions'],
+        ['六到九完整分合与加减关系', 7, 35, 7, 'bnu-upper-six-nine-relations'],
+        ['按用途整理与同批物品换标准', 6, 21, 6, 'bnu-upper-room-sort'],
+        ['完整分类、更换标准与自主整理', 6, 25, 6, 'bnu-upper-classification'],
+        ['介绍教室、相对位置与座位定位', 6, 22, 7, 'bnu-upper-classroom'],
+        ['五以内取走、剩余与零的加减', 6, 24, 7, 'bnu-upper-five-subtract'],
+        [
+          '五以内加减整理、连续变化与算式卡',
+          7,
+          31,
+          8,
+          'bnu-upper-five-organize',
+        ],
+        ['五以内合并、增加与加法含义', 6, 18, 6, 'bnu-upper-five-add'],
+        [
+          '一到十点数、数序与一到五书写',
+          6,
+          21,
+          6,
+          'bnu-upper-life-count-order',
+        ],
+        ['逐一配对、比较符号与开放填数', 6, 24, 8, 'bnu-upper-life-comparison'],
+        ['生活数量整理、序位与自主提问', 6, 23, 7, 'bnu-upper-life-organize'],
+        ['六到十的表示、书写与顺倒数', 6, 19, 7, 'bnu-upper-life-six-ten'],
+        ['零表示已知没有，空白不等于零', 5, 14, 5, 'bnu-upper-life-zero'],
         ['操场观察、分组与按条件选物', 6, 18, 7, 'bnu-upper-school-games'],
         [
           '生活物品的大小、长短与轻重观察',
@@ -858,7 +933,19 @@ const widths = process.argv.includes('--mobile-only')
           4,
           'bnu-upper-school-harvest',
         ],
-      ]) {
+      ];
+      for (const id of requestedBnu || [])
+        if (!bnuFlows.some((flow) => flow[4] === id))
+          throw new Error(`Unknown BNU verification lesson: ${id}`);
+      for (const [
+        title,
+        stepCount,
+        taskCount,
+        manualCount,
+        lessonId,
+      ] of bnuFlows.filter(
+        (flow) => !requestedBnu || requestedBnu.includes(flow[4]),
+      )) {
         const previous = await read();
         await p.getByText(title, { exact: true }).waitFor();
         const entry = p.getByText(title, { exact: true }).locator('xpath=..');
@@ -914,6 +1001,9 @@ const widths = process.argv.includes('--mobile-only')
                 await p.getByRole('spinbutton').waitFor();
                 if ((await p.getByRole('spinbutton').inputValue()) !== '0')
                   throw new Error('Activity zero reload');
+                await p
+                  .getByRole('spinbutton')
+                  .fill(question.rule.value === 0 ? '1' : '0');
               } else {
                 const wrong = question.choices.find(
                   (item) => item.id !== question.rule.value,
@@ -927,21 +1017,252 @@ const widths = process.argv.includes('--mobile-only')
                 .getByText('再想一想，可以修改后重试', { exact: true })
                 .waitFor();
             }
+            if (
+              lessonId === 'bnu-upper-life-comparison' &&
+              question.id.endsWith('-q14')
+            ) {
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              await activityDraft(index, [0, null]);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              const first = await p.getByRole('spinbutton').nth(0).inputValue();
+              const second = await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .inputValue();
+              if (first !== '0' || second !== '')
+                throw new Error('BNU open comparison partial zero reload');
+            }
+            if (
+              lessonId === 'bnu-upper-five-add' &&
+              question.id.endsWith('-q5')
+            ) {
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              await p.getByRole('spinbutton').nth(2).fill('3');
+              await activityDraft(index, [0, null, 3]);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((inputs) => inputs.map((input) => input.value));
+              if (JSON.stringify(values) !== '["0","","3"]')
+                throw new Error('BNU addition partial draft reload');
+            }
+            if (
+              (lessonId === 'bnu-upper-room-sort' &&
+                question.id.endsWith('-q5')) ||
+              (lessonId === 'bnu-upper-classification' &&
+                question.id.endsWith('-q12'))
+            ) {
+              const partial =
+                lessonId === 'bnu-upper-room-sort' ? [0, null, 2] : [0, null];
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              if (partial.length === 3)
+                await p.getByRole('spinbutton').nth(2).fill('2');
+              await activityDraft(index, partial);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              const displayed = await p
+                .getByRole('spinbutton')
+                .evaluateAll((inputs) => inputs.map((input) => input.value));
+              if (
+                JSON.stringify(displayed) !==
+                JSON.stringify(
+                  partial.map((value) => (value === null ? '' : String(value))),
+                )
+              )
+                throw new Error('BNU classification partial zero reload');
+              await p
+                .locator('#__app-loading__')
+                .waitFor({ state: 'detached' });
+              await p
+                .getByText(question.prompt, { exact: true })
+                .scrollIntoViewIfNeeded();
+              await p.screenshot({
+                path: `/tmp/butler-${lessonId}-counts-${width}.png`,
+                fullPage: true,
+              });
+            }
+            if (
+              lessonId === 'bnu-upper-six-nine-relations' &&
+              question.id.endsWith('-partition-9')
+            ) {
+              const partial = [
+                0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+              ];
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              await p.getByRole('spinbutton').nth(9).fill('0');
+              await activityDraft(index, partial);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((inputs) => inputs.map((input) => input.value));
+              if (
+                JSON.stringify(values) !==
+                JSON.stringify(
+                  partial.map((value) => (value === null ? '' : String(value))),
+                )
+              )
+                throw new Error('BNU nine-partition partial zero reload');
+              await p
+                .locator('#__app-loading__')
+                .waitFor({ state: 'detached' });
+            }
+            if (
+              lessonId === 'bnu-upper-ten-partitions' &&
+              (question.id === 'bnu-upper-ten-partitions-parts' ||
+                question.id.endsWith('-pairs'))
+            ) {
+              const partial =
+                question.id === 'bnu-upper-ten-partitions-parts'
+                  ? [0, null, null, null, null, null, null, null, null, null, 0]
+                  : [1, null, null, null, null, null, null, 8];
+              await p.getByRole('spinbutton').nth(0).fill(String(partial[0]));
+              await p
+                .getByRole('spinbutton')
+                .nth(partial.length - 1)
+                .fill(String(partial.at(-1)));
+              await activityDraft(index, partial);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              await p
+                .locator('#__app-loading__')
+                .waitFor({ state: 'detached' });
+              const displayed = await p
+                .getByRole('spinbutton')
+                .evaluateAll((inputs) => inputs.map((input) => input.value));
+              if (
+                JSON.stringify(displayed) !==
+                JSON.stringify(
+                  partial.map((n) => (n === null ? '' : String(n))),
+                )
+              )
+                throw new Error('BNU ten partition/pair partial draft reload');
+              if (question.rule.kind === 'equal-pairs') {
+                const repeated = [1, 8, 1, 8, 1, 8, 1, 8];
+                for (let field = 0; field < repeated.length; field++)
+                  await p
+                    .getByRole('spinbutton')
+                    .nth(field)
+                    .fill(String(repeated[field]));
+                await click('提交答案');
+                await p
+                  .getByText('再想一想，可以修改后重试', { exact: true })
+                  .waitFor();
+              }
+            }
+            const applicationDrafts = {
+              'bnu-upper-two-step-changes-terminal': [0, null],
+              'bnu-upper-difference-transfer-move': [0, null],
+              'bnu-upper-hidden-quantities-stages': [0, null, 0],
+            };
+            const applicationPartial = applicationDrafts[question.id];
+            if (applicationPartial) {
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              if (applicationPartial.length === 3)
+                await p.getByRole('spinbutton').nth(2).fill('0');
+              await activityDraft(index, applicationPartial);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByRole('spinbutton').nth(0).waitFor();
+              await p
+                .locator('#__app-loading__')
+                .waitFor({ state: 'detached' });
+              const displayed = await p
+                .getByRole('spinbutton')
+                .evaluateAll((inputs) => inputs.map((input) => input.value));
+              if (
+                JSON.stringify(displayed) !==
+                JSON.stringify(
+                  applicationPartial.map((n) => (n === null ? '' : String(n))),
+                )
+              )
+                throw new Error('BNU application partial zero/null reload');
+            }
             await answerObjective(question);
             if (
               question.id.endsWith(
-                lessonId === 'bnu-upper-school-games' ? '-q7' : '-q4',
+                {
+                  'bnu-upper-school-games': '-q7',
+                  'bnu-upper-school-harvest': '-q4',
+                  'bnu-upper-life-count-order': '-q10',
+                  'bnu-upper-life-zero': '-q1',
+                  'bnu-upper-life-six-ten': '-q5',
+                  'bnu-upper-life-comparison': '-q14',
+                  'bnu-upper-life-organize': '-q1',
+                  'bnu-upper-five-add': '-q5',
+                  'bnu-upper-five-subtract': '-q9',
+                  'bnu-upper-classroom': '-q4',
+                  'bnu-upper-six-nine-relations': '-partition-9',
+                  'bnu-upper-ten-partitions': '-pairs',
+                  'bnu-upper-two-step-changes': '-terminal',
+                  'bnu-upper-difference-transfer': '-move',
+                  'bnu-upper-hidden-quantities': '-stages',
+                  'bnu-upper-room-sort': '-q9',
+                  'bnu-upper-classification': '-q14',
+                  'bnu-upper-five-organize': '-q16',
+                }[lessonId],
               )
             ) {
               await p
                 .getByText(question.prompt, { exact: true })
                 .scrollIntoViewIfNeeded();
+              if (
+                [
+                  'bnu-upper-difference-transfer',
+                  'bnu-upper-hidden-quantities',
+                  'bnu-upper-two-step-changes',
+                ].includes(lessonId)
+              )
+                await p
+                  .getByRole('button', { name: '提交答案', exact: true })
+                  .scrollIntoViewIfNeeded();
               await p.screenshot({
                 path: `/tmp/butler-${lessonId}-${width}.png`,
               });
             }
             await click('提交答案');
             await p.getByText('答对了', { exact: true }).waitFor();
+            if (
+              lessonId === 'bnu-upper-life-comparison' &&
+              question.id.endsWith('-q14')
+            ) {
+              await activityDraft(index, [0, 0]);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              await p.getByText('答对了', { exact: true }).waitFor();
+              for (let field = 0; field < 2; field++) {
+                const value = await p
+                  .getByRole('spinbutton')
+                  .nth(field)
+                  .inputValue();
+                if (value !== '0')
+                  throw new Error(
+                    'Correct open zero pair did not survive reload',
+                  );
+              }
+            }
+            if (
+              question.rule.kind === 'number' &&
+              question.rule.value === 0 &&
+              question.id.endsWith('-q1')
+            ) {
+              await activityDraft(index, 0);
+              await p.reload({ waitUntil: 'domcontentloaded' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              await p.getByText('答对了', { exact: true }).waitFor();
+              if ((await p.getByRole('spinbutton').inputValue()) !== '0')
+                throw new Error('Correct zero did not survive reload');
+            }
           }
           if (index === session.questions.length - 1) break;
           if (question.rule.kind !== 'manual') await click('下一题');
@@ -1057,7 +1378,8 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 11,
+          bnuCourse: 19,
+          bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,
           taskFlow: 15,

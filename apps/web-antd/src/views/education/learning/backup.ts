@@ -24,6 +24,7 @@ import { isCupCardsVisual } from './cup-cards';
 import { isDigitCounterVisual } from './digit-counter';
 import { isEmbeddedShapesVisual } from './embedded-shapes';
 import { evaluate, MAX_REFLECTION_LENGTH, validAnswer } from './engine';
+import { isEqualPairsRule } from './equal-pairs';
 import { isEstimateDotsState, isEstimateDotsVisual } from './estimate-dots';
 import { isBookGroupsVisual, isNumberLineGridVisual } from './final-counting';
 import { isFinalPlaneCardsVisual } from './final-plane-cards';
@@ -167,6 +168,9 @@ function answer(value: unknown): value is Answer {
 function rule(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'equal-pairs': {
+      return isEqualPairsRule(value);
+    }
     case 'card-equation': {
       return isCardEquationRule(value);
     }
@@ -1041,10 +1045,12 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
     )
       return false;
     if (
-      current.rule.kind === 'card-equation' &&
+      (current.rule.kind === 'card-equation' ||
+        current.rule.kind === 'equal-pairs') &&
       response.draft !== null &&
       (!Array.isArray(response.draft) ||
-        response.draft.length !== 4 ||
+        response.draft.length !==
+          (current.rule.kind === 'equal-pairs' ? 8 : 4) ||
         ![...response.draft].every(
           (n) =>
             n === null ||

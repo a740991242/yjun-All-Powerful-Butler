@@ -10,6 +10,7 @@ import type {
 import { matchesCardEquation } from './card-equation';
 import { columnDigitBlankCount, matchesColumnDigits } from './column-digits';
 import { matchesCrossBalance } from './cross-balance';
+import { matchesEqualPairs } from './equal-pairs';
 import { fold } from './fold';
 import { magicBlankCount, matchesMagicGrid } from './magic-grid';
 import { matchesNumberChain, numberChainBlankCount } from './number-chain';
@@ -53,6 +54,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
     }
     case 'cross-balance':
     case 'card-equation':
+    case 'equal-pairs':
     case 'column-digits':
     case 'number-picks':
     case 'number-chain':
@@ -65,6 +67,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
         answer.length ===
           (() => {
             if (rule.kind === 'card-equation') return 4;
+            if (rule.kind === 'equal-pairs') return 8;
             if (rule.kind === 'column-digits')
               return columnDigitBlankCount(rule);
             if (rule.kind === 'number-picks') return rule.fields.length;
@@ -152,6 +155,9 @@ export function evaluate(
     }
     case 'column-digits': {
       return matchesColumnDigits(rule, answer);
+    }
+    case 'equal-pairs': {
+      return matchesEqualPairs(rule, answer);
     }
     case 'card-equation': {
       return matchesCardEquation(rule, answer);

@@ -9,6 +9,7 @@ import type { CrossBalanceModel } from './cross-balance';
 import type { CubePairVisual } from './cube-pair';
 import type { DigitCounterVisual } from './digit-counter';
 import type { EmbeddedShapesVisual } from './embedded-shapes';
+import type { EqualPairsRule } from './equal-pairs';
 import type { EstimateDotsState, EstimateDotsVisual } from './estimate-dots';
 import type { BookGroupsVisual, NumberLineGridVisual } from './final-counting';
 import type { FinalPlaneCardsVisual } from './final-plane-cards';
@@ -400,6 +401,7 @@ export type AnswerRule =
   | CardEquationRule
   | ColumnDigitsRule
   | CrossBalanceModel
+  | EqualPairsRule
   | NumberChainRule
   | NumberPicksRule
   | { kind: 'choice'; value: string }

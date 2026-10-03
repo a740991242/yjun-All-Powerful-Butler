@@ -61,6 +61,7 @@ const learningCompatible = computed(
 const fieldCount = computed(() => {
   const rule = question.value?.rule;
   if (rule?.kind === 'card-equation') return 4;
+  if (rule?.kind === 'equal-pairs') return 8;
   if (rule?.kind === 'column-digits') return columnDigitBlankCount(rule);
   if (rule?.kind === 'magic-grid') return magicBlankCount(rule.cells);
   if (rule?.kind === 'tower') return towerBlankCount(rule.rows);
@@ -470,6 +471,7 @@ async function finish() {
               v-else-if="
                 question.rule.kind === 'partition' ||
                 question.rule.kind === 'card-equation' ||
+                question.rule.kind === 'equal-pairs' ||
                 question.rule.kind === 'column-digits' ||
                 question.rule.kind === 'cross-balance' ||
                 question.rule.kind === 'number-picks' ||
@@ -489,6 +491,7 @@ async function finish() {
                   {{
                     question.rule.kind === 'tower' ||
                     question.rule.kind === 'card-equation' ||
+                    question.rule.kind === 'equal-pairs' ||
                     question.rule.kind === 'column-digits' ||
                     question.rule.kind === 'magic-grid' ||
                     question.visual?.kind === 'number-frame' ||

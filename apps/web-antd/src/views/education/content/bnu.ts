@@ -2,9 +2,30 @@ import type { Book, Lesson, Question } from '../learning/types';
 import type { Textbook } from './textbooks';
 
 import {
+  bnuDifferenceLesson,
+  bnuHiddenLesson,
+  bnuTwoStepLesson,
+} from './bnu-applications';
+import {
+  bnuClassificationLesson,
+  bnuRoomSortLesson,
+} from './bnu-classification';
+import { bnuClassroomLesson } from './bnu-classroom';
+import { bnuComparisonLesson } from './bnu-comparison';
+import { bnuFiveAddLesson } from './bnu-five-add';
+import {
+  bnuFiveOrganizeLesson,
+  bnuFiveSubtractLesson,
+} from './bnu-five-finish';
+import { bnuCountOrderLesson, bnuZeroLesson } from './bnu-numbers';
+import { bnuOrganizeLesson } from './bnu-organize';
+import {
   bnuSchoolGamesLesson,
   bnuSchoolHarvestLesson,
 } from './bnu-school-activities';
+import { bnuSixNineRelationsLesson } from './bnu-six-nine-relations';
+import { bnuSixTenLesson } from './bnu-six-ten';
+import { bnuTenPartitionsLesson } from './bnu-ten';
 
 // Original textbook pages viewed in a third-party public reader, not publisher-hosted scans.
 export const bnuUpperSource = {
@@ -14,7 +35,12 @@ export const bnuUpperSource = {
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  readPrintedPages: [
+    2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+    23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+    42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+    61, 62, 63, 64, 65, 66, 67, 68, 69,
+  ],
   contents: [
     ['school', '我上学啦', 2],
     ['u1', '生活中的数', 12],
@@ -255,6 +281,59 @@ export const bnuUpperTextbook: Textbook = {
     ],
   })),
 };
+function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
+  if (key === 'school')
+    return [bnuSchoolLesson, bnuSchoolGamesLesson, bnuSchoolHarvestLesson];
+  if (key === 'u1')
+    return [
+      bnuCountOrderLesson,
+      bnuZeroLesson,
+      bnuSixTenLesson,
+      bnuComparisonLesson,
+      bnuOrganizeLesson,
+    ];
+  if (key === 'u2')
+    return [bnuFiveAddLesson, bnuFiveSubtractLesson, bnuFiveOrganizeLesson];
+  if (key === 'classroom') return [bnuClassroomLesson];
+  if (key === 'u3') return [bnuRoomSortLesson, bnuClassificationLesson];
+  const pending: Lesson = {
+    id: `bnu-upper-${key}-pending`,
+    textbookTitle: title,
+    title,
+    page,
+    goal: '教材目录已核对，正文课程尚未制作。',
+    prerequisite: '',
+    parentTip: '不使用其他版本课包改名替代。',
+    version: 1,
+    status: 'preparing',
+    steps: [],
+    questions: [],
+    review: {
+      date: bnuUpperSource.checkedAt,
+      reviewer: '原书两页目录核对',
+      notes: '目录核验不表示正文课程已经完成。',
+    },
+  };
+  if (key === 'u4')
+    return [
+      bnuSixNineRelationsLesson,
+      bnuTenPartitionsLesson,
+      bnuTwoStepLesson,
+      bnuDifferenceLesson,
+      bnuHiddenLesson,
+      {
+        ...pending,
+        page: 64,
+        goal: '正文已核读至69页；完整十以内表与整理应用课尚待制作。',
+        review: {
+          date: bnuUpperSource.checkedAt,
+          reviewer: '公开原书逐页核读',
+          notes: '64～69页已实际查看，但未制作课包；已读不冒教学完成。',
+        },
+      },
+    ];
+  return [pending];
+}
 export const bnuUpperBook: Book = {
   id: bnuUpperTextbook.id,
   subject: 'math',
@@ -267,28 +346,6 @@ export const bnuUpperBook: Book = {
     id: key,
     title,
     page,
-    lessons:
-      key === 'school'
-        ? [bnuSchoolLesson, bnuSchoolGamesLesson, bnuSchoolHarvestLesson]
-        : [
-            {
-              id: `bnu-upper-${key}-pending`,
-              textbookTitle: title,
-              title,
-              page,
-              goal: '教材目录已核对，正文课程尚未制作。',
-              prerequisite: '',
-              parentTip: '不使用其他版本课包改名替代。',
-              version: 1,
-              status: 'preparing',
-              steps: [],
-              questions: [],
-              review: {
-                date: bnuUpperSource.checkedAt,
-                reviewer: '原书两页目录核对',
-                notes: '目录核验不表示正文课程已经完成。',
-              },
-            },
-          ],
+    lessons: lessonsForUnit(key, title, page),
   })),
 };
