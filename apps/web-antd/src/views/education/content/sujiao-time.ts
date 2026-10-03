@@ -139,6 +139,56 @@ function tasks(review: boolean): Question[] {
     },
   ];
 }
+function activityTasks(review: boolean): Question[] {
+  const activities: [string, number, 0 | 30][] = review
+    ? [
+        ['起床', 6, 0],
+        ['早餐', 6, 30],
+        ['出门', 7, 0],
+        ['午后整理', 12, 30],
+      ]
+    : [
+        ['到校', 8, 0],
+        ['升旗', 8, 30],
+        ['上课', 9, 0],
+        ['吃饭', 12, 0],
+      ];
+  const label = (hour: number, minute: 0 | 30) =>
+    `${hour}时${minute === 30 ? '半' : ''}`;
+  const labels = activities.map(([, hour, minute]) => label(hour, minute));
+  return [
+    ...activities.map(([activity, hour, minute], index): Question => ({
+      id: `${id}-${review ? 'r' : 'q'}-activity-${index}`,
+      knowledge: `${id}-activity-${index}`,
+      prompt: `${review ? '本站原创家庭示例' : '教材第85页活动示例'}：“${activity}”。观察原创重绘的钟面，选择相应时刻。这个示例不代表你家或学校的实际安排。`,
+      visual: clock(hour, minute),
+      choices: [...new Set([...labels, '6时', '12时'])].map((value) => ({
+        id: value,
+        label: value,
+      })),
+      rule: { kind: 'choice', value: label(hour, minute) },
+      hint: '先看长针指12还是6，再看短针指向或已过哪个小时数字；活动名称不能代替看针。',
+      explanation:
+        minute === 0
+          ? `长针在12，短针在${hour}，读${hour}时；“${activity}”只是本图示例。`
+          : `长针在6，短针在${hour}与${(hour % 12) + 1}之间，读${hour}时半；“${activity}”只是本图示例。`,
+    })),
+    {
+      id: `${id}-${review ? 'r' : 'q'}-activity-order`,
+      knowledge: `${id}-activity-order`,
+      prompt: review
+        ? '本站原创同一天家庭示例：6时起床、6时半早餐、7时出门、12时半午后整理。按示例先后选择四项，不把这当自己家实际记录。'
+        : '教材的同一天示例：8时到校、8时半升旗、9时上课、12时吃饭。按图示先后选择四项，不把这当你学校的规定。',
+      choices: activities.map(([activity, hour, minute], index) => ({
+        id: String(index),
+        label: `${activity} · ${label(hour, minute)}`,
+      })),
+      rule: { kind: 'sequence', values: ['0', '1', '2', '3'] },
+      hint: '本题已说明是同一天的示例，从早到午后按所给时刻排，不能仅凭习惯猜活动顺序。',
+      explanation: `按这个示例，${activities.map(([activity, hour, minute]) => `${label(hour, minute)}${activity}`).join('→')}。真实作息须另看实际安排。`,
+    },
+  ];
+}
 const manual: [string, string][] = [
   [
     'real',
@@ -163,11 +213,11 @@ export const sujiaoEverydayTimeLesson: Lesson = {
   title: '一天中的活动：整时与半时观察',
   page: 85,
   status: 'available',
-  version: 1,
+  version: 2,
   goal: '观察整时、半时的长短针，联系活动先后和时间情境；区分编号与时刻，实际操作另行确认。',
   prerequisite: '认识1～12；准备真实钟表或可摆动的学习钟、纸笔，由家长协助。',
   parentTip:
-    '本课围绕已核验生活时刻观察补原创教学，不扩展到任意分钟读数、经过时间计算或24小时制。例示作息不是学校规定。长针虚线只是原创图例，实际钟表可能不一样。人工活动不由看图答对自动确认。',
+    '本课围绕已核验生活时刻观察补原创教学，不扩展到任意分钟读数、经过时间计算或24小时制。例示作息不是学校规定。长针虚线只是原创图例，实际钟表可能不一样。人工活动不由看图答对自动确认。第85页四场景分别按原钟面核验：到校8时、升旗8时半、上课9时、吃饭12时，仅属原书示例；不推断具体学校上午/下午制度。',
   steps: [
     {
       title: '找长针与短针',
@@ -194,6 +244,13 @@ export const sujiaoEverydayTimeLesson: Lesson = {
       activity:
         '记录实际三项活动，说明大致时刻与上午、晚上，再按先后整理并解释。',
     },
+    {
+      title: '四个场景，分别看钟面再联系活动',
+      text: '同版教材第85页四幅图：到校钟面长针12短针8；升旗长针6、短针在8与9中间；上课长针12短针9；吃饭两针在12。分别读8时、8时半、9时、12时。本站只原创重绘钟面并文字说明活动，不复制人物插画。每幅都看两针，不能因为叫升旗或吃饭就猜几点。',
+      visual: clock(8, 30),
+      activity:
+        '实际回原书逐幅说活动和时刻，共四幅一个不漏；纸面或学习钟分别摆出这四个钟面，整时/半时长短针都核对，再按该例先后说明。你的真实作息另记，没原书或没实际读摆可暂跳。',
+    },
   ],
   questions: [
     ...tasks(false),
@@ -206,11 +263,22 @@ export const sujiaoEverydayTimeLesson: Lesson = {
       explanation:
         '真实钟表、手工摆针、口述和记录人工确认；图示答对不替代这些活动。',
     })),
+    ...activityTasks(false),
+    {
+      id: `${id}-manual-source-four`,
+      knowledge: `${id}-actual-source-four`,
+      prompt:
+        '实际回同版教材第85页练习八第8项，四幅图分别说红红在做什么、钟面是什么时刻，再分别在纸面或学习钟摆针核对。四幅均处理，不只观察一个整时一个半时；原书图示和自己的实际作息分开，未读或未摆如实记录。',
+      rule: { kind: 'manual' },
+      hint: '看原书实际图与两针，再说活动/时刻；本站重绘答对不能替原书已读或实物已摆。',
+      explanation:
+        '原书四图读取、真实摆针和口述独立人工，完成不代表掌握或学校实际安排相同。',
+    },
   ],
-  reviewQuestions: tasks(true),
+  reviewQuestions: [...tasks(true), ...activityTasks(true)],
   review: {
-    date: source.checkedAt,
+    date: '2026-10-04',
     reviewer: '同版正文核验与原创教学检查',
-    notes: `依据已实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第85页（${source.preview}）活动与时刻观察。原创钟面、情境、例示安排及题目，不复制教材插图；半时时短针位置按实际比例绘制，不扩展至任意分钟或经过时间计算。本课不宣称全第五单元或全年完成。`,
+    notes: `依据已实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第85页（${source.preview}）活动与时刻观察。原创钟面、情境、例示安排及题目，不复制教材插图；半时时短针位置按实际比例绘制，不扩展至任意分钟或经过时间计算。2026-10-04重新查看78～87页，第85页四场景逐钟核对并增加四图题、先后题与独立实际任务；旧13题和9复习保留，旧v1快照不改。本课不宣称全第五单元或全年完成。`,
   },
 };

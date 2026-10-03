@@ -1,7 +1,7 @@
-/** Retained reader pages 85–94, printed 78–87, actually viewed on 2026-10-02. */
+/** Retained reader pages 85–94, printed 78–87, actually viewed again on 2026-10-04. */
 export const sujiaoUpperFifthUnitAudit = {
   isbn: '978-7-5743-1099-5',
-  checkedAt: '2026-10-02',
+  checkedAt: '2026-10-04',
   unit: 'u5',
   source: 'https://keben.app/book/0103',
   status: 'original-teaching-implemented',
@@ -257,6 +257,12 @@ export const sujiaoUpperFifthUnitAudit = {
             'sj-upper-everyday-time-whole',
             'sj-upper-everyday-time-half',
             'sj-upper-everyday-time-physical-real',
+            'sj-upper-everyday-time-activity-0',
+            'sj-upper-everyday-time-activity-1',
+            'sj-upper-everyday-time-activity-2',
+            'sj-upper-everyday-time-activity-3',
+            'sj-upper-everyday-time-activity-order',
+            'sj-upper-everyday-time-actual-source-four',
           ],
         ],
       ],

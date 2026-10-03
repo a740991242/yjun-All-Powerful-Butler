@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T23:03:34.231Z",
+  "generatedAt": "2026-10-03T23:12:08.136Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -14377,8 +14377,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 806,
-          "manual": 276,
+          "objective": 811,
+          "manual": 277,
           "reflection": 42
         }
       },
@@ -17344,19 +17344,19 @@
               "title": "一天中的活动：整时与半时观察",
               "textbookTitle": "练习八：活动与时刻",
               "page": 85,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "观察整时、半时的长短针，联系活动先后和时间情境；区分编号与时刻，实际操作另行确认。",
               "prerequisite": "认识1～12；准备真实钟表或可摆动的学习钟、纸笔，由家长协助。",
               "referenceQuery": null,
-              "steps": 4,
+              "steps": 5,
               "tasks": {
-                "objective": 9,
-                "manual": 4,
+                "objective": 14,
+                "manual": 5,
                 "reflection": 0
               },
               "reviewTasks": {
-                "objective": 9,
+                "objective": 14,
                 "manual": 0,
                 "reflection": 0
               },
@@ -17373,14 +17373,20 @@
                 "sj-upper-everyday-time-physical-real",
                 "sj-upper-everyday-time-physical-dial",
                 "sj-upper-everyday-time-physical-day",
-                "sj-upper-everyday-time-physical-reflect"
+                "sj-upper-everyday-time-physical-reflect",
+                "sj-upper-everyday-time-activity-0",
+                "sj-upper-everyday-time-activity-1",
+                "sj-upper-everyday-time-activity-2",
+                "sj-upper-everyday-time-activity-3",
+                "sj-upper-everyday-time-activity-order",
+                "sj-upper-everyday-time-actual-source-four"
               ],
               "questionKinds": ["number", "choice", "sequence", "manual"],
               "visualKinds": ["clock"],
               "audit": {
-                "date": "2026-10-01",
+                "date": "2026-10-04",
                 "reviewer": "同版正文核验与原创教学检查",
-                "notes": "依据已实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第85页（https://keben.app/book/0103）活动与时刻观察。原创钟面、情境、例示安排及题目，不复制教材插图；半时时短针位置按实际比例绘制，不扩展至任意分钟或经过时间计算。本课不宣称全第五单元或全年完成。"
+                "notes": "依据已实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第85页（https://keben.app/book/0103）活动与时刻观察。原创钟面、情境、例示安排及题目，不复制教材插图；半时时短针位置按实际比例绘制，不扩展至任意分钟或经过时间计算。2026-10-04重新查看78～87页，第85页四场景逐钟核对并增加四图题、先后题与独立实际任务；旧13题和9复习保留，旧v1快照不改。本课不宣称全第五单元或全年完成。"
               }
             }
           ]
@@ -19042,12 +19048,12 @@
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 134,
-            "manual": 41,
+            "objective": 139,
+            "manual": 42,
             "reflection": 8
           },
           "reviewTasks": {
-            "objective": 134,
+            "objective": 139,
             "manual": 0,
             "reflection": 0
           },
@@ -19234,7 +19240,13 @@
             "sj-upper-everyday-time-physical-real",
             "sj-upper-everyday-time-physical-dial",
             "sj-upper-everyday-time-physical-day",
-            "sj-upper-everyday-time-physical-reflect"
+            "sj-upper-everyday-time-physical-reflect",
+            "sj-upper-everyday-time-activity-0",
+            "sj-upper-everyday-time-activity-1",
+            "sj-upper-everyday-time-activity-2",
+            "sj-upper-everyday-time-activity-3",
+            "sj-upper-everyday-time-activity-order",
+            "sj-upper-everyday-time-actual-source-four"
           ],
           "questionKinds": [
             "number",
@@ -26340,7 +26352,7 @@
             "reflection": 0
           },
           "reviewTasks": {
-            "objective": 300,
+            "objective": 305,
             "manual": 0,
             "reflection": 0
           },
