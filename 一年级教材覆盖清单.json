@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T21:57:04.979Z",
+  "generatedAt": "2026-10-03T22:04:05.957Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -20,7 +20,7 @@
         "referenceQueries": 4,
         "tasks": {
           "objective": 1069,
-          "manual": 347,
+          "manual": 349,
           "reflection": 62
         }
       },
@@ -3638,7 +3638,7 @@
               "title": "语文园地六",
               "textbookTitle": "语文园地六",
               "page": 80,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "认九字写工厂门卫，联系职业读音和偏旁，生活识字、看图写说、复用笔顺、古诗与亲子共读。",
               "prerequisite": "准备第80—83页原书、田字格纸和安全纸卡，可请家长陪读。",
@@ -3646,7 +3646,7 @@
               "steps": 12,
               "tasks": {
                 "objective": 33,
-                "manual": 12,
+                "manual": 14,
                 "reflection": 2
               },
               "reviewTasks": {
@@ -3692,8 +3692,10 @@
                 "cu-u6-5-manual-jobs",
                 "cu-u6-5-manual-sound",
                 "cu-u6-5-manual-components",
+                "cu-u6-5-manual-components-complete",
                 "cu-u6-5-manual-sign",
                 "cu-u6-5-manual-picture-write",
+                "cu-u6-5-manual-picture-write-complete",
                 "cu-u6-5-manual-picture-say",
                 "cu-u6-5-manual-write",
                 "cu-u6-5-manual-order",
@@ -3706,9 +3708,9 @@
               "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": ["characters"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书四页与原创教学范围校验",
-                "notes": "实读80—83四页，职业九认四写、八词读音、偏旁生活字、看图写词说话、复用笔顺、李白节选与亲子共读分别覆盖。未知ISBN版印次不补造，现代全文原画录音外部共读。开放表达不唯一判分，新增认写与活动字分开，实际活动人工确认、反思null、计划不当完成。教师最终审校与全年仍待逐项验收。"
+                "date": "2026-10-04",
+                "reviewer": "原书四页与两组偏旁、三处写词完整尝试范围复核",
+                "notes": "实读80—83四页，职业九认四写、八词读音、偏旁生活字、看图写词说话、复用笔顺、李白节选与亲子共读分别覆盖。未知ISBN版印次不补造，现代全文原画录音外部共读。开放表达不唯一判分，新增认写与活动字分开，实际活动人工确认、反思null、计划不当完成。教师最终审校与全年仍待逐项验收。2026-10-04重新查看此前正常公开预览保存的80～83页：保留任选一组与写一个词的入门记录，另补两组全部八字及原图三处写词的完整尝试；不预设开放图词唯一答案，也不自动确认纸笔质量。"
               }
             },
             {
@@ -5273,7 +5275,7 @@
           "steps": 1,
           "tasks": {
             "objective": 0,
-            "manual": 350,
+            "manual": 352,
             "reflection": 0
           },
           "reviewTasks": {
@@ -5520,8 +5522,10 @@
             "cu-u6-5-manual-jobs",
             "cu-u6-5-manual-sound",
             "cu-u6-5-manual-components",
+            "cu-u6-5-manual-components-complete",
             "cu-u6-5-manual-sign",
             "cu-u6-5-manual-picture-write",
+            "cu-u6-5-manual-picture-write-complete",
             "cu-u6-5-manual-picture-say",
             "cu-u6-5-manual-write",
             "cu-u6-5-manual-order",

@@ -27,7 +27,7 @@ it('publishes the observed formal lesson separately from recognition history wit
   expect(gardenSixPageAudit.provider).toContain('第三方');
   expect(l.steps).toHaveLength(12);
   expect(l.questions.filter((q) => q.rule.kind === 'choice')).toHaveLength(33);
-  expect(l.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(12);
+  expect(l.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(14);
   expect(l.questions.filter((q) => q.rule.kind === 'reflection')).toHaveLength(
     2,
   );
@@ -51,6 +51,64 @@ it('publishes the observed formal lesson separately from recognition history wit
   expect(
     l.questions.find((q) => q.id.endsWith('-manual-write'))!.prompt,
   ).toContain('工厂门卫');
+});
+
+it('records both source character groups and all three picture blanks without grading real reading or handwriting, preserving v1 history', () => {
+  const l = gardenSixLesson;
+  const additions = l.questions.filter((q) => q.id.endsWith('-complete'));
+  expect(additions).toHaveLength(2);
+  const groups = additions.find((q) => q.id.includes('components'))!;
+  expect(groups.prompt).toContain('树林桃桥、花草莲菜两组全部八字');
+  expect(groups.prompt).toContain('尚未读全可跳过');
+  const picture = additions.find((q) => q.id.includes('picture-write'))!;
+  expect(picture.prompt).toContain('第81页原图三处空格');
+  expect(picture.prompt).toContain('尚未尝试完整可跳过');
+  expect(picture.material).toContain('不预设唯一的三个答案');
+  const now = '2026-10-04T00:00:00.000Z';
+  const current = createSession(l, chineseBooks[0]!.id, 'child', {
+    seed: 81,
+    now,
+  });
+  expect(current.questions).toHaveLength(49);
+  current.phase = 'practice';
+  for (const q of additions) {
+    const index = current.questions.findIndex((entry) => entry.id === q.id);
+    current.responses[index] = submitResponse(
+      q,
+      { ...current.responses[index]!, draft: 'confirmed' },
+      now,
+    );
+    expect(current.responses[index]!.submissions.at(-1)!.correct).toBeNull();
+  }
+  const old = createSession(
+    {
+      ...l,
+      version: 1,
+      questions: l.questions.filter(
+        (q) => !additions.some((a) => a.id === q.id),
+      ),
+    },
+    chineseBooks[0]!.id,
+    'child',
+    { seed: 81, now },
+  );
+  expect(old.questions).toHaveLength(47);
+  expect(
+    old.questions.find((q) => q.id.endsWith('-manual-components'))!.prompt,
+  ).toContain('树林桃桥或花草莲菜');
+  expect(
+    old.questions.find((q) => q.id.endsWith('-manual-picture-write'))!.prompt,
+  ).toContain('一个或几个');
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '陪读', createdAt: now }],
+      sessions: [old, current],
+    }),
+  ).data;
+  expect(restored.schemaVersion).toBe(1);
+  expect(restored.sessions).toEqual([old, current]);
 });
 it('covers all observed garden columns with changed conditions and distinguishes source text, illustration and original picture prompts', () => {
   const l = gardenSixLesson;
