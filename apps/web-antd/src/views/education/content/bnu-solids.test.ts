@@ -73,7 +73,12 @@ it('keeps original actual activities, open reflection and remaining geometry sep
     ).toBeNull();
   const unit = required(bnuUpperBook.units.find((item) => item.id === 'u5'));
   expect(unit.lessons).toContain(lesson);
-  expect(unit.lessons.some((item) => item.status === 'preparing')).toBe(true);
+  expect(unit.lessons.every((item) => item.status === 'available')).toBe(true);
+  expect(
+    bnuUpperBook.units
+      .flatMap((item) => item.lessons)
+      .some((item) => item.status === 'preparing'),
+  ).toBe(true);
   expect(lesson.steps.map((step) => step.text).join('')).toContain('横放');
   expect(lesson.steps.map((step) => step.text).join('')).toContain('竖放');
   expect(lesson.steps.map((step) => step.text).join('')).toContain(

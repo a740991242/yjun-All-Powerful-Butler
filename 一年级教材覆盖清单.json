@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T17:42:29.872Z",
+  "generatedAt": "2026-10-03T17:51:46.787Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 24,
-        "pendingEntries": 3,
+        "availablePacks": 25,
+        "pendingEntries": 2,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 360,
-          "manual": 153,
-          "reflection": 42
+          "objective": 373,
+          "manual": 160,
+          "reflection": 46
         }
       },
       "units": [
@@ -29171,33 +29171,40 @@
               }
             },
             {
-              "id": "bnu-upper-u5-pending",
-              "title": "使用全部材料搭得高（制作中）",
-              "textbookTitle": "有趣的立体图形",
+              "id": "bnu-upper-building-tower",
+              "title": "八件搭高、稳定与合作重试",
+              "textbookTitle": "怎样搭得高",
               "page": 76,
               "version": 1,
-              "status": "preparing",
-              "goal": "72～75页认识分类与按指令搭建已制作；76～77页使用全部材料搭高尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "全部八件材料都用上，合作实际搭高且不倒，发现困难、改变摆法并解释真实调整。",
+              "prerequisite": "认识四类立体，能按指令说上下并数到八。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 13,
+                "manual": 7,
+                "reflection": 4
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-building-tower"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-row", "bnu-building"],
               "audit": {
                 "date": "2026-10-04",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "原书76～77页逐页阅读与原创计划核对",
+                "notes": "第三方0061预览：八物全用的合作任务、搭不成/不稳/放偏、再次试、平放与立放、下部大平面与上下对齐、向他组学习、最喜欢活动及疑问。未给实测高度，不补造厘米或最优证明；ISBN版印次未知。"
               }
             }
           ]

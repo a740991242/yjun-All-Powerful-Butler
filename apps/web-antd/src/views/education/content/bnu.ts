@@ -33,6 +33,7 @@ import {
   bnuTenFactTablesLesson,
   bnuTenOrganizeGameLesson,
 } from './bnu-ten-finish';
+import { bnuBuildingTowerLesson } from './bnu-tower';
 
 // Original textbook pages viewed in a third-party public reader, not publisher-hosted scans.
 export const bnuUpperSource = {
@@ -327,12 +328,7 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
     return [
       bnuSolidRecognitionLesson,
       bnuBuildingInstructionsLesson,
-      {
-        ...pending,
-        title: '使用全部材料搭得高（制作中）',
-        page: 76,
-        goal: '72～75页认识分类与按指令搭建已制作；76～77页使用全部材料搭高尚未制作。',
-      },
+      bnuBuildingTowerLesson,
     ];
   if (key === 'u4')
     return [

@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 24
+          .count()) !== 25
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1237,6 +1237,7 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        ['八件搭高、稳定与合作重试', 6, 24, 7, 'bnu-upper-building-tower'],
         [
           '按指令搭建、上下关系与通道观察',
           6,
@@ -1401,6 +1402,94 @@ const widths = process.argv.includes('--mobile-only')
                 );
               await p.screenshot({
                 path: `/tmp/butler-bnu-building-${scene}-${position}-${width}.png`,
+              });
+            }
+          }
+          if (
+            lessonId === 'bnu-upper-building-tower' &&
+            (step === 1 || step === 2)
+          ) {
+            const scene = step === 1 ? 'tower-flat' : 'tower-upright';
+            const diagram = p.locator(
+              `[data-bnu-building][data-building-scene="${scene}"]`,
+            );
+            await diagram.waitFor();
+            const pieces = diagram.locator('[data-building-label]');
+            const rows = await pieces.evaluateAll((elements) =>
+              elements.map((element) => [
+                element.dataset.buildingLabel,
+                element.dataset.buildingShape,
+                Number(
+                  element.closest('[data-building-level]').dataset
+                    .buildingLevel,
+                ),
+              ]),
+            );
+            const expected = [
+              ['H', 'sphere', 8],
+              ['G', 'cylinder', 7],
+              ['F', 'cylinder', 6],
+              ['E', 'cube', 5],
+              ['D', 'cube', 4],
+              ['C', 'cuboid', 3],
+              ['B', 'cuboid', 2],
+              ['A', 'cuboid', 1],
+            ];
+            if (JSON.stringify(rows) !== JSON.stringify(expected))
+              throw new Error('Tower plan lost or duplicated a piece');
+            const bounds = await diagram
+              .locator('svg')
+              .evaluateAll((elements) =>
+                elements.every((svg) => {
+                  const group = svg.querySelector('g');
+                  const box = group.getBBox();
+                  const transform =
+                    group.transform.baseVal.consolidate()?.matrix ||
+                    new DOMMatrix();
+                  return [
+                    [box.x, box.y],
+                    [box.x + box.width, box.y],
+                    [box.x, box.y + box.height],
+                    [box.x + box.width, box.y + box.height],
+                  ].every(([x, y]) => {
+                    const point = new DOMPoint(x, y).matrixTransform(transform);
+                    return (
+                      point.x >= 0 &&
+                      point.y >= 0 &&
+                      point.x <= 240 &&
+                      point.y <= 180
+                    );
+                  });
+                }),
+              );
+            if (!bounds)
+              throw new Error('Rotated tower glyph escapes view box');
+            for (const [position, piece] of [
+              ['top', pieces.first()],
+              ['bottom', pieces.last()],
+            ]) {
+              await piece.evaluate((element) =>
+                element.scrollIntoView({
+                  behavior: 'instant',
+                  block: 'center',
+                }),
+              );
+              await p.waitForTimeout(250);
+              const visible = await piece.evaluate((element) => {
+                const box = element.getBoundingClientRect();
+                return (
+                  box.left >= 0 &&
+                  box.right <= innerWidth &&
+                  box.top >= 0 &&
+                  box.bottom <= innerHeight
+                );
+              });
+              if (!visible)
+                throw new Error(
+                  'Tower piece not fully visible after scrolling',
+                );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-${scene}-${position}-${width}.png`,
               });
             }
           }
@@ -1662,6 +1751,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-six-card-game-third-legal': [0, null, null],
               'bnu-upper-solid-recognition-counts': [0, null, null, null],
               'bnu-upper-building-instructions-counts': [0, null, null, null],
+              'bnu-upper-building-tower-counts': [0, null, null, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1700,6 +1790,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-six-card-game': '-third-legal',
                   'bnu-upper-solid-recognition': '-counts',
                   'bnu-upper-building-instructions': '-counts',
+                  'bnu-upper-building-tower': '-counts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1729,6 +1820,7 @@ const widths = process.argv.includes('--mobile-only')
               if (
                 [
                   'bnu-upper-building-instructions',
+                  'bnu-upper-building-tower',
                   'bnu-upper-difference-transfer',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
@@ -1894,7 +1986,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 24,
+          bnuCourse: 25,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,
