@@ -17,17 +17,27 @@ async function main() {
     const page = await context.newPage();
     await page.goto(base.origin, { waitUntil: 'networkidle' });
     report = await page.evaluate(async () => {
-      const [cn, math, sj, textbooks, characters, ethics, ethicsMessages, bnu] =
-        await Promise.all([
-          import('/src/views/education/content/chinese.ts'),
-          import('/src/views/education/content/math.ts'),
-          import('/src/views/education/content/sujiao.ts'),
-          import('/src/views/education/content/textbooks.ts'),
-          import('/src/views/education/content/characters.ts'),
-          import('/src/views/education/content/ethics.ts'),
-          import('/src/locales/langs/zh-CN/educationEthics.json'),
-          import('/src/views/education/content/bnu.ts'),
-        ]);
+      const [
+        cn,
+        math,
+        sj,
+        textbooks,
+        characters,
+        ethics,
+        ethicsMessages,
+        bnu,
+        bnuAudit,
+      ] = await Promise.all([
+        import('/src/views/education/content/chinese.ts'),
+        import('/src/views/education/content/math.ts'),
+        import('/src/views/education/content/sujiao.ts'),
+        import('/src/views/education/content/textbooks.ts'),
+        import('/src/views/education/content/characters.ts'),
+        import('/src/views/education/content/ethics.ts'),
+        import('/src/locales/langs/zh-CN/educationEthics.json'),
+        import('/src/views/education/content/bnu.ts'),
+        import('/src/views/education/content/bnu-final-audit.ts'),
+      ]);
       const models = [
         ...textbooks.textbooks,
         textbooks.findTextbook('math', 'sujiao', 'upper'),
@@ -151,6 +161,9 @@ async function main() {
                   };
                 }),
                 lessons: actual.lessons.map((lesson) => lessonRow(lesson)),
+                ...(book.id === bnu.bnuUpperBook.id && unit.id === 'final'
+                  ? { sourceAudit: bnuAudit.bnuFinalAudit }
+                  : {}),
               };
             }),
             specialties: (book.specialties || []).map((lesson) =>
