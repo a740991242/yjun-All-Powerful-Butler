@@ -76,7 +76,14 @@ it('strictly accepts fixed scene and variant only, rejects answer injection and 
   );
   for (const extra of [{ scene: 'other' }, { answer: [2, 8, 2, 4] }]) {
     const data = JSON.parse(original);
-    Object.assign(data.data.sessions[0].questions[0].visual, extra);
+    // Sessions shuffle questions. Locate the actual model, not an arbitrary
+    // first question which may legitimately have no visual.
+    const visual = data.data.sessions[0].questions.find(
+      (question: { visual?: { kind?: string } }) =>
+        question.visual?.kind === 'bnu-final-solids',
+    )?.visual;
+    expect(visual).toBeDefined();
+    Object.assign(visual, extra);
     expect(() => parseBackup(JSON.stringify(data))).toThrow(
       'educationLearning.invalidBackup',
     );

@@ -203,6 +203,35 @@ function extras(review: boolean): Question[] {
     ),
   ];
 }
+/** A complete column adds ordered whole-day reading to single-cell lookup.
+ * The three-period original example is not the textbook's six-period table.
+ */
+function dayQuestions(review: boolean): Question[] {
+  const source = review
+    ? required(timetableLesson.reviewQuestions)[0]
+    : timetableLesson.questions[0];
+  const table = required(source).visual;
+  if (!table || table.kind !== 'timetable')
+    throw new Error('Expected the original timetable exercise');
+  return table.days.map((day, index) => {
+    const courses = table.rows.map((row) => required(row.subjects[index]));
+    const value = courses.join(' → ');
+    return choose(
+      `${review ? 'r' : 'q'}-day-${index}`,
+      `whole-day-${index}`,
+      `只看这张原创练习表，${day}从第一节到第三节依次是什么课？`,
+      [
+        value,
+        courses.toReversed().join(' → '),
+        courses.slice(0, 2).join(' → '),
+      ],
+      value,
+      `固定${day}这一列，从第一节逐行读到第三节，顺序是${value}。不能只读第一格、漏掉最后一节或倒着读；这张表只列三节，不据此推断真实学校全天安排。`,
+      '本站原创三节课练习表；箭头表示节次先后，不是教室位置。原书完整课程表与真实学校安排另看。',
+      structuredClone(table),
+    );
+  });
+}
 const manual = (
   suffix: string,
   prompt: string,
@@ -230,6 +259,7 @@ const reflection = (suffix: string, prompt: string): Question => ({
 export const gardenThreeLesson: Lesson = {
   ...structuredClone(timetableLesson),
   id,
+  version: 2,
   title: '语文园地三',
   textbookTitle: '语文园地三',
   page: 42,
@@ -238,6 +268,13 @@ export const gardenThreeLesson: Lesson = {
     '已查看第三方原书公开预览42—44页，来源不冒充官方。课程表与图卡为原创例子；语音、纸面、动作及共读人工确认，不采集学校课表或家庭信息。会写午下，其它会认字不自动加入写字范围。',
   steps: [
     ...structuredClone(timetableLesson.steps),
+    {
+      title: '读出某一天的全部课程',
+      text: '找某一天有什么课，要固定星期这一列，按节次从上到下逐格读，不能只找到一格就结束。本站原创表只列三节课，练习时完整读出这三节的顺序；原书第42页另有上午、下午及课间操等信息，不能把简化练习表当作真实全天安排。',
+      visual: structuredClone(required(timetableLesson.questions[0]).visual),
+      activity:
+        '先读本站练习表星期二的三节课，再与家长看原书第42页星期二这一列，逐节查看上午、下午。课间操不是一门课；空格只表示表上未写课程，不擅自说一定没课。',
+    },
     {
       title: '认课程表里的字',
       text: '第42页会认午、星、期、语、文、数、写、会。可联系中午、星期、语文、数学、写字、班会等词；数在数学中读shù，会在班会中读huì。家长示范词语，孩子指字，不要求填真实学校名称。',
@@ -310,6 +347,11 @@ export const gardenThreeLesson: Lesson = {
   questions: [
     ...copied(timetableLesson.questions),
     ...extras(false),
+    ...dayQuestions(false),
+    manual(
+      'manual-whole-day',
+      '实际与家长查看原书第42页星期二这一列，按节次查看上午、下午各格，说出表上写明的课程；再比较本站三节课练习表，说明哪里是简化。空格不补猜课程，课间操不混作课程。没有原书可以暂时跳过，不要求提供真实学校课表。',
+    ),
     manual(
       'manual-write',
       '对照第42页规范示范，用田字格纸写午和下，再请家长查看。',
@@ -355,11 +397,12 @@ export const gardenThreeLesson: Lesson = {
   reviewQuestions: [
     ...copied(required(timetableLesson.reviewQuestions)),
     ...extras(true),
+    ...dayQuestions(true),
   ],
   review: {
-    date: '2026-10-01',
-    reviewer: '原书三页栏目与原创课包核对',
+    date: '2026-10-04',
+    reviewer: '原书三页栏目与整列读表范围复核',
     notes:
-      '实际查看第三方原书公开预览 https://keben.app/book/0025 封面、编写出版信息、目录及印刷42—44页。课程表识字、书写午下、摆字母、平翘舌、词语动作、图与量词、六词积累、亲子民间歌谣分别覆盖。ISBN、版次、印次未知，不冒充官方入口。不打包原表/原图/现代作品或规范录音/笔顺图；课程表与图卡为原创，真实发音、纸面、动作与共读人工确认，尚待教师最终审校，开放不代表整册或全年完成。',
+      '实际查看第三方原书公开预览 https://keben.app/book/0025 封面、编写出版信息、目录及印刷42—44页。课程表识字、书写午下、摆字母、平翘舌、词语动作、图与量词、六词积累、亲子民间歌谣分别覆盖。ISBN、版次、印次未知，不冒充官方入口。不打包原表/原图/现代作品或规范录音/笔顺图；课程表与图卡为原创，真实发音、纸面、动作与共读人工确认，尚待教师最终审校，开放不代表整册或全年完成。2026-10-04重看此前正常预览保存的第42～44页，补某一天逐节完整读表及原书全列人工观察；原创表只列三节，不复制原书全天表或推断空格。',
   },
 };

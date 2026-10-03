@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T21:35:44.361Z",
+  "generatedAt": "2026-10-03T21:43:08.746Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -19,8 +19,8 @@
         "pendingEntries": 0,
         "referenceQueries": 4,
         "tasks": {
-          "objective": 1066,
-          "manual": 341,
+          "objective": 1069,
+          "manual": 342,
           "reflection": 62
         }
       },
@@ -1908,19 +1908,19 @@
               "title": "语文园地三",
               "textbookTitle": "语文园地三",
               "page": 42,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "读课程表，认午星期语文数写会、写午下；摆字母、辨平翘舌写法、读词做动作，联系图与量词，积累词语并亲子共读。",
               "prerequisite": "知道星期和第一、第二等顺序词；家长可以帮读题和课程名称。",
               "referenceQuery": null,
-              "steps": 12,
+              "steps": 13,
               "tasks": {
-                "objective": 30,
-                "manual": 9,
+                "objective": 33,
+                "manual": 10,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 30,
+                "objective": 33,
                 "manual": 0,
                 "reflection": 0
               },
@@ -1951,6 +1951,10 @@
                 "cu-u3-6-song-animal",
                 "cu-u3-6-song-how",
                 "cu-u3-6-song-action",
+                "cu-u3-6-whole-day-0",
+                "cu-u3-6-whole-day-1",
+                "cu-u3-6-whole-day-2",
+                "cu-u3-6-manual-whole-day",
                 "cu-u3-6-manual-write",
                 "cu-u3-6-manual-shape",
                 "cu-u3-6-manual-sounds",
@@ -1964,9 +1968,9 @@
               "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": ["timetable", "characters", "nature-cards"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书三页栏目与原创课包核对",
-                "notes": "实际查看第三方原书公开预览 https://keben.app/book/0025 封面、编写出版信息、目录及印刷42—44页。课程表识字、书写午下、摆字母、平翘舌、词语动作、图与量词、六词积累、亲子民间歌谣分别覆盖。ISBN、版次、印次未知，不冒充官方入口。不打包原表/原图/现代作品或规范录音/笔顺图；课程表与图卡为原创，真实发音、纸面、动作与共读人工确认，尚待教师最终审校，开放不代表整册或全年完成。"
+                "date": "2026-10-04",
+                "reviewer": "原书三页栏目与整列读表范围复核",
+                "notes": "实际查看第三方原书公开预览 https://keben.app/book/0025 封面、编写出版信息、目录及印刷42—44页。课程表识字、书写午下、摆字母、平翘舌、词语动作、图与量词、六词积累、亲子民间歌谣分别覆盖。ISBN、版次、印次未知，不冒充官方入口。不打包原表/原图/现代作品或规范录音/笔顺图；课程表与图卡为原创，真实发音、纸面、动作与共读人工确认，尚待教师最终审校，开放不代表整册或全年完成。2026-10-04重看此前正常预览保存的第42～44页，补某一天逐节完整读表及原书全列人工观察；原创表只列三节，不复制原书全天表或推断空格。"
               }
             },
             {
@@ -4681,12 +4685,12 @@
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 489,
+            "objective": 492,
             "manual": 0,
             "reflection": 20
           },
           "reviewTasks": {
-            "objective": 490,
+            "objective": 493,
             "manual": 0,
             "reflection": 0
           },
@@ -4955,6 +4959,9 @@
             "cu-u3-6-song-animal",
             "cu-u3-6-song-how",
             "cu-u3-6-song-action",
+            "cu-u3-6-whole-day-0",
+            "cu-u3-6-whole-day-1",
+            "cu-u3-6-whole-day-2",
             "cu-u3-6-reflection-find",
             "cu-u3-6-reflection-question",
             "cu-u4-1-cu-vowel-ai-shape",
@@ -5261,7 +5268,7 @@
           "steps": 1,
           "tasks": {
             "objective": 0,
-            "manual": 344,
+            "manual": 345,
             "reflection": 0
           },
           "reviewTasks": {
@@ -5376,6 +5383,7 @@
             "cu-u3-5-manual-poem",
             "cu-yw-manual",
             "cu-u3-6-cu-timetable-manual",
+            "cu-u3-6-manual-whole-day",
             "cu-u3-6-manual-write",
             "cu-u3-6-manual-shape",
             "cu-u3-6-manual-sounds",
