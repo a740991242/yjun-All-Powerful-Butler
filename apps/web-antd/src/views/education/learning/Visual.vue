@@ -15,6 +15,7 @@ import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
+import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
@@ -321,6 +322,10 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
+    <BnuFinalClassification
+      v-else-if="visual.kind === 'bnu-final-classification'"
+      :visual="visual"
+    />
     <BnuFinalSolids
       v-else-if="visual.kind === 'bnu-final-solids'"
       :visual="visual"

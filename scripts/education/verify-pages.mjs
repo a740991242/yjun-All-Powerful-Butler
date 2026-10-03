@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 30
+          .count()) !== 31
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1301,6 +1301,13 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        [
+          '动物分类、活动分组与六物品换标准',
+          6,
+          30,
+          7,
+          'bnu-upper-final-classification',
+        ],
         ['立体分类、材料配对与机器人计数', 6, 31, 7, 'bnu-upper-final-solids'],
         [
           '完整计算、涂色区域与圆点规律',
@@ -1382,6 +1389,163 @@ const widths = process.argv.includes('--mobile-only')
       for (const id of requestedBnu || [])
         if (!bnuFlows.some((flow) => flow[4] === id))
           throw new Error(`Unknown BNU verification lesson: ${id}`);
+      const verifyFinalClassification = async (
+        scene,
+        variant = 'main',
+        translated = false,
+      ) => {
+        const figure = p.locator(
+          `[data-bnu-final-classification][data-classification-scene="${scene}"]`,
+        );
+        await figure.waitFor();
+        const animalNames = {
+          legs: ['chicken', 'goose', 'duck', 'cat'],
+          habitat: ['shark', 'eagle', 'seaTurtle', 'starfish'],
+          motion: [
+            'flyingBird',
+            'panda',
+            'sheep',
+            'rabbit',
+            'goldfish',
+            'swallow',
+            'shrimp',
+          ],
+        };
+        const cards = figure.locator(
+          scene === 'objects'
+            ? '[data-classification-object]'
+            : '[data-animal-card]',
+        );
+        const check = async () => {
+          const contained = await cards.locator('p').evaluateAll((nodes) =>
+            nodes.every((node) => {
+              const bounds = node.getBoundingClientRect();
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              return [...range.getClientRects()].every(
+                (line) =>
+                  line.left >= bounds.left - 1 &&
+                  line.right <= bounds.right + 1,
+              );
+            }),
+          );
+          if (!contained) throw new Error('Classification text overflows card');
+
+          if (scene === 'objects') {
+            const shapes = await cards.evaluateAll((nodes) =>
+              nodes.map((node) => node.dataset.objectShape),
+            );
+            const expected =
+              variant === 'main'
+                ? [
+                    'cuboid',
+                    'sphere',
+                    'cylinder',
+                    'cuboid',
+                    'sphere',
+                    'cylinder',
+                  ]
+                : [
+                    'cylinder',
+                    'cylinder',
+                    'cuboid',
+                    'sphere',
+                    'sphere',
+                    'cuboid',
+                  ];
+            if (JSON.stringify(shapes) !== JSON.stringify(expected))
+              throw new Error('Six-object classification order');
+            const inside = await cards.locator('svg').evaluateAll((nodes) =>
+              nodes.every((svg) => {
+                const view = svg.viewBox.baseVal;
+                const box = svg.getBBox();
+                return (
+                  box.x >= -2 &&
+                  box.y >= -2 &&
+                  box.x + box.width <= view.width + 2 &&
+                  box.y + box.height <= view.height + 2
+                );
+              }),
+            );
+            if (!inside) throw new Error('Classification shape clipped');
+          } else {
+            const names = await cards.evaluateAll((nodes) =>
+              nodes.map((node) => node.dataset.animalName),
+            );
+            let order = animalNames[scene].map((_, i) => i);
+            if (variant === 'review')
+              order = scene === 'motion' ? [4, 3, 1, 0, 6, 2, 5] : [3, 2, 1, 0];
+            if (
+              JSON.stringify(names) !==
+              JSON.stringify(order.map((i) => animalNames[scene][i]))
+            )
+              throw new Error('Incomplete or misidentified animal group');
+          }
+        };
+        await check();
+        for (const index of [0, (await cards.count()) - 1]) {
+          const card = cards.nth(index);
+          await card.evaluate((node) =>
+            node.scrollIntoView({ block: 'center' }),
+          );
+          await p.waitForTimeout(200);
+          const inside = await card.evaluate((node) => {
+            const box = node.getBoundingClientRect();
+            return (
+              box.left >= 0 &&
+              box.right <= innerWidth + 1 &&
+              box.top >= 0 &&
+              box.bottom <= innerHeight
+            );
+          });
+          if (!inside) throw new Error('Classification card outside viewport');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-classification-${scene}-${variant}-${index}-${width}.png`,
+          });
+        }
+        if (translated) {
+          const before = await read();
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          const caption =
+            scene === 'objects'
+              ? 'Sort all six objects again using a new criterion'
+              : 'Sort by the stated activity criterion';
+          await figure.getByText(caption, { exact: true }).waitFor();
+          const text = await cards.allTextContents();
+          if (text.some((value) => /[\u4E00-\u9FFF]/.test(value)))
+            throw new Error('Classification cards not translated');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await check();
+          await figure.screenshot({
+            path: `/tmp/butler-bnu-final-classification-${scene}-english-${width}.png`,
+          });
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await figure
+            .getByText(
+              scene === 'objects'
+                ? '同一批六件物品，换标准重新分'
+                : '按明确的活动方式标准分一分',
+              { exact: true },
+            )
+            .waitFor();
+          const after = await read();
+          if (
+            JSON.stringify(before.sessions) !== JSON.stringify(after.sessions)
+          )
+            throw new Error('Classification language reset records');
+        }
+      };
       const verifyFinalSolids = async (
         scene,
         variant = 'main',
@@ -1805,10 +1969,19 @@ const widths = process.argv.includes('--mobile-only')
         );
         if (lessonId === 'bnu-upper-final-number-practice')
           await verifyNumberStrip([5, null, 7, null, 9, null], 'ascending');
+        if (lessonId === 'bnu-upper-final-classification')
+          await verifyFinalClassification('legs');
         if (lessonId === 'bnu-upper-final-solids')
           await verifyFinalSolids('objects');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-final-classification') {
+            if (step === 1) await verifyFinalClassification('habitat');
+            if (step === 2)
+              await verifyFinalClassification('motion', 'main', true);
+            if (step === 3)
+              await verifyFinalClassification('objects', 'main', true);
+          }
           if (lessonId === 'bnu-upper-final-solids') {
             if (step === 1) await verifyFinalSolids('stability');
             if (step === 3) await verifyFinalSolids('materials');
@@ -2395,6 +2568,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-final-number-practice-difference': [null, 0],
               'bnu-upper-final-color-patterns-dots-next': [0, null, null],
               'bnu-upper-final-solids-robot-counts': [0, null, 0, null],
+              'bnu-upper-final-classification-shape-counts': [0, null, 0],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -2428,6 +2602,26 @@ const widths = process.argv.includes('--mobile-only')
                 )
               )
                 throw new Error('BNU application partial zero/null reload');
+            }
+            if (question.id === 'bnu-upper-final-classification-running') {
+              for (const value of ['B', 'C'])
+                await p
+                  .getByRole('checkbox', { name: value, exact: true })
+                  .check();
+              await activityDraft(index, ['B', 'C']);
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              await p.reload({ waitUntil: 'networkidle' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              for (const value of ['B', 'C'])
+                if (
+                  !(await p
+                    .getByRole('checkbox', { name: value, exact: true })
+                    .isChecked())
+                )
+                  throw new Error('Classification selected draft lost');
             }
             if (question.id === 'bnu-upper-final-solids-robot-counts') {
               for (const [field, value] of [2, 8, 2, 6].entries())
@@ -2537,6 +2731,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-final-number-practice': '-difference',
                   'bnu-upper-final-color-patterns': '-dots-next',
                   'bnu-upper-final-solids': '-robot-counts',
+                  'bnu-upper-final-classification': '-shape-counts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -2569,6 +2764,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-tower',
                   'bnu-upper-day-record',
                   'bnu-upper-difference-transfer',
+                  'bnu-upper-final-classification',
                   'bnu-upper-final-color-patterns',
                   'bnu-upper-final-number-practice',
                   'bnu-upper-final-number-talk',
@@ -2701,6 +2897,17 @@ const widths = process.argv.includes('--mobile-only')
           )
             throw new Error('Painted eye mistake history lost');
         }
+        if (lessonId === 'bnu-upper-final-classification') {
+          const running = complete.responses.find((r) =>
+            r.questionId.endsWith('-running'),
+          );
+          if (
+            JSON.stringify(running.submissions.map((s) => s.correct)) !==
+              '[false,true]' ||
+            JSON.stringify(running.submissions[0].answer) !== '["B","C"]'
+          )
+            throw new Error('Classification incomplete-set history lost');
+        }
         const first = complete.responses.find((r) =>
           r.questionId.endsWith('-q1'),
         );
@@ -2734,6 +2941,8 @@ const widths = process.argv.includes('--mobile-only')
         for (let index = 0; index < fresh.questions.length; index++) {
           const question = fresh.questions[index];
           await p.getByText(question.prompt, { exact: true }).waitFor();
+          if (lessonId === 'bnu-upper-final-classification' && question.visual)
+            await verifyFinalClassification(question.visual.scene, 'review');
           if (lessonId === 'bnu-upper-final-solids' && question.visual)
             await verifyFinalSolids(question.visual.scene, 'review');
           await answerObjective(question);
@@ -2806,7 +3015,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 30,
+          bnuCourse: 31,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

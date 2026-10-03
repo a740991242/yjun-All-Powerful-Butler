@@ -7,6 +7,7 @@ import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
+import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
@@ -334,6 +335,9 @@ function visual(value: unknown) {
     }
     case 'teen-layout': {
       return isTeenLayoutVisual(value);
+    }
+    case 'bnu-final-classification': {
+      return isBnuFinalClassificationVisual(value);
     }
     case 'bnu-final-solids': {
       return isBnuFinalSolidsVisual(value);

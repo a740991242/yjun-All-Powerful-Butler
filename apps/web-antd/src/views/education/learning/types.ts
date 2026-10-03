@@ -1,6 +1,7 @@
 import type { ArithmeticPairRule } from './arithmetic-pair';
 import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
+import type { BnuFinalClassificationVisual } from './bnu-final-classification';
 import type { BnuFinalColorVisual } from './bnu-final-color';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
@@ -434,6 +435,7 @@ export type Visual =
   | BnuBuildingVisual
   | BnuCaterpillarVisual
   | BnuDayClockVisual
+  | BnuFinalClassificationVisual
   | BnuFinalColorVisual
   | BnuFinalSolidsVisual
   | BnuSixCardGameVisual

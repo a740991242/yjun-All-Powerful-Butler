@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T19:45:06.373Z",
+  "generatedAt": "2026-10-03T20:04:30.454Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 30,
+        "availablePacks": 31,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 467,
-          "manual": 193,
-          "reflection": 72
+          "objective": 487,
+          "manual": 200,
+          "reflection": 75
         }
       },
       "units": [
@@ -29436,13 +29436,50 @@
               }
             },
             {
+              "id": "bnu-upper-final-classification",
+              "title": "动物分类、活动分组与六物品换标准",
+              "textbookTitle": "总复习 · 统计与概率",
+              "page": 85,
+              "version": 1,
+              "status": "available",
+              "goal": "覆盖两组动物的分类讨论、七动物飞跑游、六物品按不同标准完整重分，说明条件与依据。",
+              "prerequisite": "会按明确标准分类、点数并区分类别数与对象数。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 7,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-final-classification"],
+              "questionKinds": [
+                "number",
+                "set",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-final-classification"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书85页全项与分类条件核对",
+                "notes": "重新实际查看本地第三方0061阅读器89对应印刷85大图；原两组各4、应用动物7、物品6。ISBN和印次未知，未复制原画。"
+              }
+            },
+            {
               "id": "bnu-upper-final-pending",
               "title": "总复习 · 后续内容制作中",
               "textbookTitle": "总复习",
               "page": 81,
               "version": 1,
               "status": "preparing",
-              "goal": "第81～84页已开放，第85～86页课程仍在制作。",
+              "goal": "第81～85页已开放，第86页课程仍在制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,
