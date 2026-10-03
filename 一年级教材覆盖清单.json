@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T21:07:37.455Z",
+  "generatedAt": "2026-10-03T21:35:44.361Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -19,8 +19,8 @@
         "pendingEntries": 0,
         "referenceQueries": 4,
         "tasks": {
-          "objective": 1065,
-          "manual": 340,
+          "objective": 1066,
+          "manual": 341,
           "reflection": 62
         }
       },
@@ -1278,19 +1278,19 @@
               "title": "语文园地二",
               "textbookTitle": "语文园地二",
               "page": 28,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "读学习用品信息、认八字写九王；比较声调和形近声母，联系汉字与韵母，读古诗与亲子故事。",
               "prerequisite": "准备教材第28—31页和田字格纸，家长陪读；尚未学的拼音与文字由家长帮助。",
               "referenceQuery": null,
-              "steps": 8,
+              "steps": 9,
               "tasks": {
-                "objective": 26,
-                "manual": 6,
+                "objective": 27,
+                "manual": 7,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 26,
+                "objective": 27,
                 "manual": 0,
                 "reflection": 0
               },
@@ -1321,21 +1321,23 @@
                 "cu-u2-5-rabbit-seed",
                 "cu-u2-5-rabbit-work",
                 "cu-u2-5-rabbit-gift",
+                "cu-u2-5-erhua",
                 "cu-u2-5-info",
                 "cu-u2-5-writing",
                 "cu-u2-5-oral",
                 "cu-u2-5-connect",
                 "cu-u2-5-poem",
                 "cu-u2-5-shared-reading",
+                "cu-u2-5-erhua-oral",
                 "cu-u2-5-story-note",
                 "cu-u2-5-reflection"
               ],
               "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": ["characters"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "原书园地四页栏目核验与原创活动校验",
-                "notes": "实际查看第三方原书公开预览（https://keben.app/book/0025）新版封面、编写出版信息、目录及印刷第28、29、30、31页，范围：学习用品信息、声调与形近声母比较、按韵母联系汉字、古诗画、小白兔和小灰兔共读。认字本学校班级姓名王；会写汉字九王。ISBN、版权版次和印次未知，不称为官方入口。讲解与任务原创，不复制现代韵文全文、教材原画、笔顺图或录音；古诗《画》为公有领域作品。实际发音、书写与共读需规范示范和人工确认，尚待教师最终人工审校；课包开放不证明整册完成。"
+                "date": "2026-10-04",
+                "reviewer": "原书园地四页栏目与第31页儿化脚注复核",
+                "notes": "实际查看第三方原书公开预览（https://keben.app/book/0025）新版封面、编写出版信息、目录及印刷第28、29、30、31页，范围：学习用品信息、声调与形近声母比较、按韵母联系汉字、古诗画、小白兔和小灰兔共读。认字本学校班级姓名王；会写汉字九王。ISBN、版权版次和印次未知，不称为官方入口。讲解与任务原创，不复制现代韵文全文、教材原画、笔顺图或录音；古诗《画》为公有领域作品。实际发音、书写与共读需规范示范和人工确认，尚待教师最终人工审校；课包开放不证明整册完成。 2026-10-04重新查看此前正常公开预览保存的第31页，补哪儿儿化脚注说明、原创辨写题与实际跟读记录；未新增声音资源或改变其它词的读音。"
               }
             }
           ]
@@ -4679,12 +4681,12 @@
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 488,
+            "objective": 489,
             "manual": 0,
             "reflection": 20
           },
           "reviewTasks": {
-            "objective": 489,
+            "objective": 490,
             "manual": 0,
             "reflection": 0
           },
@@ -4798,6 +4800,7 @@
             "cu-u2-5-rabbit-seed",
             "cu-u2-5-rabbit-work",
             "cu-u2-5-rabbit-gift",
+            "cu-u2-5-erhua",
             "cu-u2-5-story-note",
             "cu-u2-5-reflection",
             "cu-u3-1-cu-initial-g-shape",
@@ -5258,7 +5261,7 @@
           "steps": 1,
           "tasks": {
             "objective": 0,
-            "manual": 343,
+            "manual": 344,
             "reflection": 0
           },
           "reviewTasks": {
@@ -5343,6 +5346,7 @@
             "cu-u2-5-connect",
             "cu-u2-5-poem",
             "cu-u2-5-shared-reading",
+            "cu-u2-5-erhua-oral",
             "cu-u3-1-cu-u3-1-initial-blend-manual",
             "cu-u3-1-manual-scene",
             "cu-u3-1-manual-triple",

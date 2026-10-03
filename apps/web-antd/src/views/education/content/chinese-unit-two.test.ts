@@ -169,3 +169,69 @@ it('anchors textbook-dependent modern reading and avoids fake personal info or f
   for (const lesson of Object.values(unitTwoChineseLessons))
     expect(lesson.parentTip).toMatch(/声音|发音|朗读/);
 });
+
+it('keeps the p31 erhua footnote scoped to its word, records actual speech manually and restores v1 snapshots unchanged', () => {
+  const garden = unitTwoChineseLessons['u2-5']!;
+  expect(garden.version).toBe(2);
+  const main = garden.questions.find((q) => q.id === 'cu-u2-5-q-erhua')!;
+  const fresh = garden.reviewQuestions!.find(
+    (q) => q.id === 'cu-u2-5-r-erhua',
+  )!;
+  expect(evaluate(main.rule, '单独读一个ér音节')).toBe(false);
+  expect(evaluate(main.rule, '每个儿字都不发音')).toBe(false);
+  expect(evaluate(fresh.rule, 'nǎr')).toBe(true);
+  expect(evaluate(fresh.rule, 'nǎ ér')).toBe(false);
+  expect(main.material).toContain('第31页脚注');
+  const oral = garden.questions.find((q) => q.id === 'cu-u2-5-manual-erhua')!;
+  expect(oral.rule).toEqual({ kind: 'manual' });
+  expect(oral.prompt).toContain('不自动评价');
+  const now = '2026-10-04T00:00:00.000Z';
+  const current = createSession(garden, chineseBooks[0]!.id, 'child', {
+    now,
+    seed: 31,
+  });
+  const mainIndex = current.questions.findIndex((q) => q.id === main.id);
+  current.responses[mainIndex] = submitResponse(
+    main,
+    {
+      ...current.responses[mainIndex]!,
+      draft: '单独读一个ér音节',
+    },
+    now,
+  );
+  expect(newReviewQuestions(garden, current, [current])).toEqual([fresh]);
+  const oralIndex = current.questions.findIndex((q) => q.id === oral.id);
+  current.responses[oralIndex] = submitResponse(
+    oral,
+    {
+      ...current.responses[oralIndex]!,
+      draft: 'confirmed',
+    },
+    now,
+  );
+  expect(current.responses[oralIndex]!.submissions[0]!.correct).toBeNull();
+  const old = createSession(
+    {
+      ...garden,
+      version: 1,
+      questions: garden.questions.filter(
+        (q) => q.id !== main.id && q.id !== oral.id,
+      ),
+    },
+    chineseBooks[0]!.id,
+    'child',
+    { now, seed: 28 },
+  );
+  expect(old.questions).toHaveLength(34);
+  expect(current.questions).toHaveLength(36);
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '测试档案', createdAt: now }],
+      sessions: [old, current],
+    }),
+  ).data.sessions;
+  expect(restored).toEqual([old, current]);
+  expect(restored[0]!.questions.some((q) => q.id === main.id)).toBe(false);
+});

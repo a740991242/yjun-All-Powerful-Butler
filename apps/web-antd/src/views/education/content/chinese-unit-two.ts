@@ -675,6 +675,25 @@ function gardenTwoTasks(review: boolean): Question[] {
         material,
       ),
     );
+  tasks.push(
+    choose(
+      `${id}-erhua`,
+      `${gardenId}-erhua`,
+      review
+        ? '换看写法：按第31页脚注，哪儿的儿化拼音怎样写？'
+        : '按第31页脚注，哪儿里的儿怎样读？',
+      review
+        ? ['nǎr', 'nǎ ér', 'nǎ r独立读一个音节']
+        : [
+            '不单独发音，跟前面的音节连成儿化音',
+            '单独读一个ér音节',
+            '每个儿字都不发音',
+          ],
+      review ? 'nǎr' : '不单独发音，跟前面的音节连成儿化音',
+      '这里只按哪儿这个词观察儿化：拼音在前面音节后加r，r不另作一个音节。其它词里的儿要按具体语境认读，不能一概省读。选择写法不证明实际发音正确。',
+      '先与家长看原书第31页脚注及故事里的哪儿。原书说明儿化词中的儿不单独发音，在前面音节后加r，表示卷舌动作；实际读音对照教师规范示范。',
+    ),
+  );
   return tasks;
 }
 export const gardenTwoLesson: Lesson = {
@@ -682,7 +701,7 @@ export const gardenTwoLesson: Lesson = {
   title: '语文园地二',
   textbookTitle: '语文园地二',
   page: 28,
-  version: 1,
+  version: 2,
   status: 'available',
   goal: '读学习用品信息、认八字写九王；比较声调和形近声母，联系汉字与韵母，读古诗与亲子故事。',
   prerequisite:
@@ -737,6 +756,12 @@ export const gardenTwoLesson: Lesson = {
         '家长分段读，孩子指角色，再用自己的话说一段；不假设孩子独立读懂全部拼音。',
     },
     {
+      title: '哪儿里的儿化音',
+      text: '原书第31页脚注提示儿化词的读法。故事里的哪儿写作nǎr，儿不单独读成一个ér音节，而是跟前面音节连起来，拼音在前面音节后加r，表示卷舌动作。这里只观察哪儿这个词；不能把所有带儿的词都一概省读。文字和选择题不代替规范声音示范。',
+      activity:
+        '请家长或教师先规范示范哪儿，再让孩子按自己的情况尝试；可以慢读或稍后再练，不要求录音上传。',
+    },
+    {
       title: '说行动与结果',
       text: '把故事里的选择、照料、收获和送菜联系起来，说说自己发现了什么。可以有不同表达，依据故事具体行动讨论，不用寓言评判真实人物的能力或家庭条件。',
       activity: '孩子说完，家长回应；再记录还想练的字、音节或阅读活动。',
@@ -776,6 +801,11 @@ export const gardenTwoLesson: Lesson = {
       `${gardenId}-shared-reading`,
       '亲子实际读第30—31页《小白兔和小灰兔》，孩子分别说一处两只兔的行动，家长听完再回应；网页选择题不替代共读。',
     ),
+    manual(
+      `${gardenId}-manual-erhua`,
+      `${gardenId}-erhua-oral`,
+      '实际对照第31页脚注，请家长或教师规范示范故事中的哪儿，孩子尝试儿化跟读后再确认。没有示范或尚未尝试可以跳过；网页不自动评价卷舌动作或发音。',
+    ),
     {
       id: `${gardenId}-story-note`,
       knowledge: `${gardenId}-story-note`,
@@ -789,9 +819,9 @@ export const gardenTwoLesson: Lesson = {
   ],
   reviewQuestions: gardenTwoTasks(true),
   review: {
-    date: '2026-10-01',
-    reviewer: '原书园地四页栏目核验与原创活动校验',
-    notes: auditNotes('u2-5'),
+    date: '2026-10-04',
+    reviewer: '原书园地四页栏目与第31页儿化脚注复核',
+    notes: `${auditNotes('u2-5')} 2026-10-04重新查看此前正常公开预览保存的第31页，补哪儿儿化脚注说明、原创辨写题与实际跟读记录；未新增声音资源或改变其它词的读音。`,
   },
 };
 unitTwoChineseLessons['u2-5'] = gardenTwoLesson;
