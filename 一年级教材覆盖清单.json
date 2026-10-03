@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T22:04:05.957Z",
+  "generatedAt": "2026-10-03T22:17:13.420Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -5747,7 +5747,7 @@
         "referenceQueries": 3,
         "tasks": {
           "objective": 1109,
-          "manual": 381,
+          "manual": 382,
           "reflection": 79
         }
       },
@@ -8007,7 +8007,7 @@
               "title": "语文园地五",
               "textbookTitle": "语文园地五",
               "page": 56,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "认九字写两字，比较包字族，按词义选字，观察偏旁、音序查字，读歇后语，练游戏交流与两页共读。",
               "prerequisite": "准备原书56—60页、字典与田字格纸，家长可陪读；缺材料可跳过实际任务。",
@@ -8015,7 +8015,7 @@
               "steps": 11,
               "tasks": {
                 "objective": 35,
-                "manual": 13,
+                "manual": 14,
                 "reflection": 2
               },
               "reviewTasks": {
@@ -8062,6 +8062,7 @@
                 "cl-u5-5-manual-recognize",
                 "cl-u5-5-manual-family",
                 "cl-u5-5-manual-fill",
+                "cl-u5-5-manual-fill-complete",
                 "cl-u5-5-manual-groups",
                 "cl-u5-5-manual-dictionary",
                 "cl-u5-5-manual-sayings",
@@ -8078,9 +8079,9 @@
               "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": ["characters"],
               "audit": {
-                "date": "2026-10-01",
-                "reviewer": "下册园地五五页活动范围校验",
-                "notes": "实际查看第三方原书公开预览（https://keben.app/book/0026）56—60五页，九认两写、包字族、选字、偏旁三组、音序查五字、三歇后语、游戏口语和樊家信改选两页共读分别核对。本站问答活动原创，现代全文原画录音外部共读，未知出版元数据不补造。实际任务人工确认、反思null、计划不当完成，旧历史保留，全年及最终审校另验。"
+                "date": "2026-10-04",
+                "reviewer": "下册园地五五页与完整填字活动复核",
+                "notes": "实际查看第三方原书公开预览（https://keben.app/book/0026）56—60五页；2026-10-04重新逐页对照，保留旧读句说明任务并补四处实际填字。九认两写、包字族、选字、偏旁三组、音序查五字、三歇后语、游戏口语和樊家信改选两页共读分别核对。本站问答活动原创，现代全文原画录音外部共读，未知出版元数据不补造。实际任务人工确认、反思null、计划不当完成，旧历史保留，全年及最终审校另验。"
               }
             },
             {
@@ -9721,7 +9722,7 @@
           "steps": 1,
           "tasks": {
             "objective": 0,
-            "manual": 384,
+            "manual": 385,
             "reflection": 0
           },
           "reviewTasks": {
@@ -9930,6 +9931,7 @@
             "cl-u5-5-manual-recognize",
             "cl-u5-5-manual-family",
             "cl-u5-5-manual-fill",
+            "cl-u5-5-manual-fill-complete",
             "cl-u5-5-manual-groups",
             "cl-u5-5-manual-dictionary",
             "cl-u5-5-manual-sayings",

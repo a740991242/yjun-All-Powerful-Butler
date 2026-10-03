@@ -61,7 +61,7 @@ it('covers all five pages with nine recognized and two written characters, famil
   expect(l.steps).toHaveLength(11);
   expect(l.questions.filter((q) => q.rule.kind === 'choice')).toHaveLength(35);
   expect(l.reviewQuestions).toHaveLength(35);
-  expect(l.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(13);
+  expect(l.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(14);
   expect(l.questions.filter((q) => q.rule.kind === 'reflection')).toHaveLength(
     2,
   );
@@ -179,4 +179,51 @@ it('preserves first errors, actual confirmations and reflections across backup a
       }),
     ).data.sessions[0],
   ).toEqual(s);
+});
+
+it('records all four source blanks separately while retaining the original v1 questions and backup snapshots', () => {
+  const added = l.questions.find((q) =>
+    q.id.endsWith('-manual-fill-complete'),
+  )!;
+  expect(l.version).toBe(2);
+  expect(added.prompt).toContain('第56页两句中的四处填字');
+  expect(added.prompt).toContain('青/清两处、再/在两处');
+  expect(added.prompt).toContain('尚未尝试四处可跳过');
+  expect(added.rule).toEqual({ kind: 'manual' });
+  const now = '2026-10-04T00:00:00.000Z';
+  const current = createSession(l, chineseBooks[1]!.id, 'child', {
+    seed: 56,
+    now,
+  });
+  const original = createSession(
+    {
+      ...l,
+      version: 1,
+      questions: l.questions.filter((q) => q.id !== added.id),
+    },
+    chineseBooks[1]!.id,
+    'child',
+    { seed: 56, now },
+  );
+  expect(current.questions).toHaveLength(51);
+  expect(original.questions).toHaveLength(50);
+  expect(
+    original.questions.find((q) => q.id.endsWith('-manual-fill'))!.prompt,
+  ).toBe('实际读青山清泉、在学校门口说再见，说明两个字组的选字理由。');
+  expect(original.questions.some((q) => q.id === added.id)).toBe(false);
+  current.phase = 'practice';
+  const index = current.questions.findIndex((q) => q.id === added.id);
+  current.responses[index] = submitResponse(
+    added,
+    { ...current.responses[index]!, draft: 'confirmed' },
+    now,
+  );
+  expect(current.responses[index]!.submissions.at(-1)!.correct).toBeNull();
+  const data = {
+    schemaVersion: 1 as const,
+    activeProfileId: 'child',
+    profiles: [{ id: 'child', nickname: '测试', createdAt: now }],
+    sessions: [original, current],
+  };
+  expect(parseBackup(exportBackup(data)).data).toEqual(data);
 });
