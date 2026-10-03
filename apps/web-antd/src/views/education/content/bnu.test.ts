@@ -9,6 +9,7 @@ import {
   bnuHiddenLesson,
   bnuTwoStepLesson,
 } from './bnu-applications';
+import { bnuBuildingInstructionsLesson } from './bnu-building';
 import {
   bnuClassificationLesson,
   bnuRoomSortLesson,
@@ -81,6 +82,7 @@ it('registers an independent partial upper book without borrowing PEP scope or i
     bnuTenOrganizeGameLesson,
     bnuSixCardGameLesson,
     bnuSolidRecognitionLesson,
+    bnuBuildingInstructionsLesson,
   ]);
   for (const lesson of lessons.filter((item) => item.status === 'preparing')) {
     expect(lesson.questions).toEqual([]);

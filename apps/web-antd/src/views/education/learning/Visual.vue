@@ -13,6 +13,7 @@ import ArithmeticGrid from './ArithmeticGrid.vue';
 import AssemblyCandidates from './AssemblyCandidates.vue';
 import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
+import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
@@ -320,6 +321,7 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'number-line-grid'"
       :visual="visual"
     />
+    <BnuBuilding v-else-if="visual.kind === 'bnu-building'" :visual="visual" />
     <BnuCaterpillar v-else-if="visual.kind === 'bnu-caterpillar'" />
     <BnuSixCardGame v-else-if="visual.kind === 'bnu-six-card-game'" />
     <FruitMaze v-else-if="visual.kind === 'fruit-maze'" :visual="visual" />

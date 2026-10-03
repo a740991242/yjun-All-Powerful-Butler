@@ -15,7 +15,7 @@ async function main() {
   try {
     const context = await browser.newContext();
     const page = await context.newPage();
-    await page.goto(base.origin, { waitUntil: 'domcontentloaded' });
+    await page.goto(base.origin, { waitUntil: 'networkidle' });
     report = await page.evaluate(async () => {
       const [cn, math, sj, textbooks, characters, ethics, ethicsMessages, bnu] =
         await Promise.all([

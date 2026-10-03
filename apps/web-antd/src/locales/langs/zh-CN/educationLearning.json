@@ -1036,5 +1036,19 @@
   "sixCardActive": "可以再摸一张，也可以选择停止。正好6仍合法，但再摸会超过6。",
   "sixCardDraw": "随机摸一张",
   "sixCardStop": "我不再摸了",
-  "sixCardReset": "重新演示"
+  "sixCardReset": "重新演示",
+  "bnuBuildingTitle": "搭建分层记录图",
+  "bnuBuildingNotice": "本站原创分层示意：从桌面第1层向上记录同一批物件，左、右按当前图看。卡片间隙为阅读排版，不是悬空，不按图量实物高度、间距或证明稳定。",
+  "bnuBuildingScene_beam": "圆柱支撑横梁，上方一块正方体",
+  "bnuBuildingScene_gate": "正方体底座、圆柱、横梁与上方两颗球",
+  "bnuBuildingScene_tower-flat": "八件材料摆法计划：下部三个盒形模型平放",
+  "bnuBuildingScene_tower-upright": "同八件材料摆法计划：下部三个盒形模型改为立放",
+  "bnuBuildingLevel": "第{level}层（桌面为第1层）",
+  "bnuBuildingSide_left": "图中左边",
+  "bnuBuildingSide_right": "图中右边",
+  "bnuBuildingSide_center": "图中中间",
+  "bnuBuildingPiece": "物件{label}：{shape}；{placement}。",
+  "bnuBuildingUpright": "盒形模型立放",
+  "bnuBuildingShown": "按当前图示朝向",
+  "bnuBuildingGround": "最下面一层在桌面上；球是否能通过及整座是否稳定，须用实物实际核对。"
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T17:19:54.782Z",
+  "generatedAt": "2026-10-03T17:42:29.872Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 23,
+        "availablePacks": 24,
         "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 344,
-          "manual": 146,
-          "reflection": 40
+          "objective": 360,
+          "manual": 153,
+          "reflection": 42
         }
       },
       "units": [
@@ -29134,13 +29134,50 @@
               }
             },
             {
-              "id": "bnu-upper-u5-pending",
-              "title": "按指令搭建与搭得高（制作中）",
-              "textbookTitle": "有趣的立体图形",
+              "id": "bnu-upper-building-instructions",
+              "title": "按指令搭建、上下关系与通道观察",
+              "textbookTitle": "我说你做",
               "page": 74,
               "version": 1,
+              "status": "available",
+              "goal": "按次序听说两种搭建，区分底层与上方材料，实际摸摆、比较滚动条件并观察球能否通过。",
+              "prerequisite": "认识四类立体，会逐件计数并说上下。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 16,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-building-instructions"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-building"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书74～75页逐页阅读与原创图核对",
+                "notes": "第三方0061预览：双圆柱架梁加正方体、球下穿问题、摸柱立桌与摸方块放上、横竖圆柱滚动、方块底座城门四指令、四类生活物品。ISBN及版印次未知，不由2024审核封面推断。"
+              }
+            },
+            {
+              "id": "bnu-upper-u5-pending",
+              "title": "使用全部材料搭得高（制作中）",
+              "textbookTitle": "有趣的立体图形",
+              "page": 76,
+              "version": 1,
               "status": "preparing",
-              "goal": "72～73页认识与分类已制作；74～77页按指令搭建、使用全部材料搭高的课程尚未制作。",
+              "goal": "72～75页认识分类与按指令搭建已制作；76～77页使用全部材料搭高尚未制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

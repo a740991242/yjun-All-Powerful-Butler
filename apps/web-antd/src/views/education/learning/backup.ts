@@ -4,6 +4,7 @@ import { isArithmeticGridVisual } from './arithmetic-grid';
 import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
+import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
@@ -248,6 +249,9 @@ function rule(value: unknown) {
 function visual(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'bnu-building': {
+      return isBnuBuildingVisual(value);
+    }
     case 'bnu-six-card-game': {
       return isBnuSixCardGameVisual(value);
     }

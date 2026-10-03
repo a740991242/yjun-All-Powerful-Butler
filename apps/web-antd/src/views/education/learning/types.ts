@@ -1,3 +1,4 @@
+import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
@@ -423,6 +424,7 @@ export type Visual =
   | AssemblyCandidatesVisual
   | BeadChainVisual
   | BlockCardsVisual
+  | BnuBuildingVisual
   | BnuCaterpillarVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual

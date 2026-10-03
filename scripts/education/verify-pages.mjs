@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 23
+          .count()) !== 24
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1238,6 +1238,13 @@ const widths = process.argv.includes('--mobile-only')
       const activityFlows = [];
       const bnuFlows = [
         [
+          '按指令搭建、上下关系与通道观察',
+          6,
+          25,
+          7,
+          'bnu-upper-building-instructions',
+        ],
+        [
           '认识四种立体、分类与七件计数',
           6,
           25,
@@ -1312,6 +1319,91 @@ const widths = process.argv.includes('--mobile-only')
             await verifyCaterpillarDemo();
           if (lessonId === 'bnu-upper-six-card-game' && step === 4)
             await verifySixCardDemo();
+          if (
+            lessonId === 'bnu-upper-building-instructions' &&
+            (step === 1 || step === 4)
+          ) {
+            const scene = step === 1 ? 'beam' : 'gate';
+            const diagram = p.locator(
+              `[data-bnu-building][data-building-scene="${scene}"]`,
+            );
+            await diagram.waitFor();
+            const pieces = diagram.locator('[data-building-label]');
+            const rows = await pieces.evaluateAll((elements) =>
+              elements.map((element) => [
+                element.dataset.buildingLabel,
+                element.dataset.buildingShape,
+                Number(
+                  element.closest('[data-building-level]').dataset
+                    .buildingLevel,
+                ),
+              ]),
+            );
+            const expected =
+              scene === 'beam'
+                ? [
+                    ['D', 'cube', 3],
+                    ['C', 'cuboid', 2],
+                    ['A', 'cylinder', 1],
+                    ['B', 'cylinder', 1],
+                  ]
+                : [
+                    ['F', 'sphere', 4],
+                    ['G', 'sphere', 4],
+                    ['E', 'cuboid', 3],
+                    ['C', 'cylinder', 2],
+                    ['D', 'cylinder', 2],
+                    ['A', 'cube', 1],
+                    ['B', 'cube', 1],
+                  ];
+            if (JSON.stringify(rows) !== JSON.stringify(expected))
+              throw new Error(
+                'Building layer order differs from the source instructions',
+              );
+            const geometry = await diagram
+              .locator('svg')
+              .evaluateAll((elements) =>
+                elements.every((svg) => {
+                  const box = svg.querySelector('g').getBBox();
+                  return (
+                    box.x >= 0 &&
+                    box.y >= 0 &&
+                    box.x + box.width <= 240 &&
+                    box.y + box.height <= 180
+                  );
+                }),
+              );
+            if (!geometry) throw new Error('Building SVG escapes its view box');
+            for (const [position, piece] of [
+              ['top', pieces.first()],
+              ['bottom', pieces.last()],
+            ]) {
+              await piece.evaluate((element) =>
+                element.scrollIntoView({
+                  behavior: 'instant',
+                  block: 'center',
+                  inline: 'nearest',
+                }),
+              );
+              await p.waitForTimeout(250);
+              const visible = await piece.evaluate((element) => {
+                const box = element.getBoundingClientRect();
+                return (
+                  box.left >= 0 &&
+                  box.right <= innerWidth &&
+                  box.top >= 0 &&
+                  box.bottom <= innerHeight
+                );
+              });
+              if (!visible)
+                throw new Error(
+                  'Building piece not fully visible after scrolling',
+                );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-building-${scene}-${position}-${width}.png`,
+              });
+            }
+          }
           if (lessonId === 'bnu-upper-solid-recognition' && step === 3) {
             const diagram = p.locator('.learning-visual');
             const models = diagram.locator('svg[role="img"]');
@@ -1569,6 +1661,7 @@ const widths = process.argv.includes('--mobile-only')
             const applicationDrafts = {
               'bnu-upper-six-card-game-third-legal': [0, null, null],
               'bnu-upper-solid-recognition-counts': [0, null, null, null],
+              'bnu-upper-building-instructions-counts': [0, null, null, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1606,6 +1699,7 @@ const widths = process.argv.includes('--mobile-only')
                 {
                   'bnu-upper-six-card-game': '-third-legal',
                   'bnu-upper-solid-recognition': '-counts',
+                  'bnu-upper-building-instructions': '-counts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1634,6 +1728,7 @@ const widths = process.argv.includes('--mobile-only')
                 .scrollIntoViewIfNeeded();
               if (
                 [
+                  'bnu-upper-building-instructions',
                   'bnu-upper-difference-transfer',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
@@ -1799,7 +1894,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 23,
+          bnuCourse: 24,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

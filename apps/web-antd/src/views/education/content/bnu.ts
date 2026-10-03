@@ -6,6 +6,7 @@ import {
   bnuHiddenLesson,
   bnuTwoStepLesson,
 } from './bnu-applications';
+import { bnuBuildingInstructionsLesson } from './bnu-building';
 import {
   bnuClassificationLesson,
   bnuRoomSortLesson,
@@ -325,11 +326,12 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
   if (key === 'u5')
     return [
       bnuSolidRecognitionLesson,
+      bnuBuildingInstructionsLesson,
       {
         ...pending,
-        title: '按指令搭建与搭得高（制作中）',
-        page: 74,
-        goal: '72～73页认识与分类已制作；74～77页按指令搭建、使用全部材料搭高的课程尚未制作。',
+        title: '使用全部材料搭得高（制作中）',
+        page: 76,
+        goal: '72～75页认识分类与按指令搭建已制作；76～77页使用全部材料搭高尚未制作。',
       },
     ];
   if (key === 'u4')

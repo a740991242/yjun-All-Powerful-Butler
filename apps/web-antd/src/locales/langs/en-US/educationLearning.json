@@ -1036,5 +1036,19 @@
   "sixCardActive": "Draw one more card or choose to stop. Exactly 6 is valid, but another card will exceed 6.",
   "sixCardDraw": "Draw one random card",
   "sixCardStop": "Stop drawing",
-  "sixCardReset": "New demonstration"
+  "sixCardReset": "New demonstration",
+  "bnuBuildingTitle": "Layer record of a building plan",
+  "bnuBuildingNotice": "Original layer diagram: start with layer 1 on the table and follow the same pieces upward. Left and right refer to this view. Card gaps are reading space, not floating pieces. Do not measure real height or gaps from the diagram or treat it as proof of stability.",
+  "bnuBuildingScene_beam": "Cylinders support a beam, with one cube above",
+  "bnuBuildingScene_gate": "Cube bases, cylinders, a beam and two balls above",
+  "bnuBuildingScene_tower-flat": "Eight-piece plan: the three lower box-shaped pieces lie flat",
+  "bnuBuildingScene_tower-upright": "The same eight-piece plan: the three lower box-shaped pieces stand upright",
+  "bnuBuildingLevel": "Layer {level} (layer 1 is on the table)",
+  "bnuBuildingSide_left": "Left in this view",
+  "bnuBuildingSide_right": "Right in this view",
+  "bnuBuildingSide_center": "Centre in this view",
+  "bnuBuildingPiece": "Piece {label}: {shape}; {placement}.",
+  "bnuBuildingUpright": "Box-shaped piece upright",
+  "bnuBuildingShown": "Orientation shown in the diagram",
+  "bnuBuildingGround": "The lowest layer is on the table. Test ball clearance and the stability of the whole building with real objects."
 }
