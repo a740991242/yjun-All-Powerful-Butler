@@ -156,6 +156,9 @@ export const sujiaoUpperFinalUnitAudit = {
         [
           'sj-upper-final-arithmetic',
           [
+            'sj-upper-final-arithmetic-actual-source-four-equalities',
+            'sj-upper-final-arithmetic-actual-source-three-strict-maxima',
+            'sj-upper-final-arithmetic-actual-source-whole-table',
             'sj-upper-final-arithmetic-equation-0',
             'sj-upper-final-arithmetic-equation-3',
             'sj-upper-final-arithmetic-max-add',

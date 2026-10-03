@@ -186,6 +186,20 @@ function tasks(review: boolean): Question[] {
     },
   ];
 }
+const sourceManual: [string, string][] = [
+  [
+    'four-equalities',
+    '实际回同版教材第91页第6项，四个空格分别独立填写，再把每个完整等式两边分别计算、核对相等，保留四题全部记录与改正。空格位置不同，不能将左边得数直接抄入；本站另一组数不替原页四空已做，没原书或未写暂跳。',
+  ],
+  [
+    'three-strict-maxima',
+    '实际回同版教材第91页第7项，三个严格大小关系分别找最大可填整数，每题说明自己的候选范围，代入最大值验证，再代入相等边界说明为何排除。三个式子都处理，含两边都有加法的一题，不用任选一式代替整组；未实际试写暂跳。',
+  ],
+  [
+    'whole-table',
+    '实际回同版教材第91页第8项，先读原表每行对象和单位、每列两部分与合计，再独立填全三个空，逐列用两部分相加等于合计核对。原表各列独立、不跨列相加，待填不当0；本站红白球表与原表分别记录，不抄另一表的数，未读写暂跳。',
+  ],
+];
 const manual: [string, string][] = [
   [
     'method',
@@ -210,7 +224,7 @@ export const sujiaoFinalArithmeticLesson: Lesson = {
   title: '期末复习：等式、不等式与两部分数量表',
   page: 89,
   status: 'available',
-  version: 1,
+  version: 2,
   goal: '复习加减与连续变化，用两部分关系求缺数，严格检查等号和不等号，逐列表格与故事中的所求对象。',
   prerequisite:
     '掌握10以内加减法及十几不进位、不退位加减，准备19个安全物品、数字卡与纸笔。',
@@ -252,6 +266,12 @@ export const sujiaoFinalArithmeticLesson: Lesson = {
       activity:
         '实际演示两次变化，写中间和最后数量，再挑一题用另一种办法检查并说需要帮助的地方。',
     },
+    {
+      title: '原页四等式、三边界与整表分别核对',
+      text: '同版第91页第6项四个等式空都要填写并代回两边；第7项三个严格大小关系分别说明最大整数和相等边界，不只选一个例子；第8项三列各自填缺项、核对两部分与总数，不跨列合并。本站原创数字题与原页记录分开，全部实际任务未做可暂跳。最大数是在所说明的整数范围中比较，不把小于当小于等于，也不把减得越少和减数越大混同。',
+      activity:
+        '实际回原页逐组完成四空、三个最大数及三列表的全部空，并保留代回核对和帮助记录；没有原书或尚未写可暂跳，网页正确不会自动确认。',
+    },
   ],
   questions: [
     ...tasks(false),
@@ -263,11 +283,20 @@ export const sujiaoFinalArithmeticLesson: Lesson = {
       hint: '实际操作、画图和说出依据后，再由家长确认。',
       explanation: '实物、纸笔与口述人工确认；图示答对不替代活动或掌握判断。',
     })),
+    ...sourceManual.map(([key, prompt]): Question => ({
+      id: `${id}-manual-source-${key}`,
+      knowledge: `${id}-actual-source-${key}`,
+      prompt,
+      rule: { kind: 'manual' },
+      hint: '原书整组逐项读写并核对后独立确认，没有做可暂跳；未来计划另记。',
+      explanation:
+        '原页实践correct为null，本站示例答对不自动确认已经写完原书或掌握。',
+    })),
   ],
   reviewQuestions: tasks(true),
   review: {
-    date: source.checkedAt,
+    date: '2026-10-04',
     reviewer: '同版期末正文核验与原创教学检查',
-    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第89、91页（${source.preview}）运算办法、数量关系、缺数、最大填数与数量表和实际故事。数值、情境及表格均原创，不复制教材图题；本课不代表剩余期末课程或全年已完成。`,
+    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第89、91页（${source.preview}）运算办法、数量关系、缺数、最大填数与数量表和实际故事。数值、情境及表格均原创，不复制教材图题；2026-10-04重新查看第91页，补充原四等式、三严格边界与完整三列表独立实践；旧23主任务、19复习及前六步骤保持，新版26主任务，不改v1历史快照。本课不代表剩余期末课程或全年已完成。`,
   },
 };

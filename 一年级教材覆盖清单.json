@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T23:35:39.738Z",
+  "generatedAt": "2026-10-03T23:44:13.032Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -14378,7 +14378,7 @@
         "referenceQueries": 0,
         "tasks": {
           "objective": 813,
-          "manual": 290,
+          "manual": 293,
           "reflection": 42
         }
       },
@@ -17861,15 +17861,15 @@
               "title": "期末复习：等式、不等式与两部分数量表",
               "textbookTitle": "期末复习：运算、数量关系与实际问题",
               "page": 89,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "复习加减与连续变化，用两部分关系求缺数，严格检查等号和不等号，逐列表格与故事中的所求对象。",
               "prerequisite": "掌握10以内加减法及十几不进位、不退位加减，准备19个安全物品、数字卡与纸笔。",
               "referenceQuery": null,
-              "steps": 6,
+              "steps": 7,
               "tasks": {
                 "objective": 19,
-                "manual": 4,
+                "manual": 7,
                 "reflection": 0
               },
               "reviewTasks": {
@@ -17900,14 +17900,17 @@
                 "sj-upper-final-arithmetic-physical-method",
                 "sj-upper-final-arithmetic-physical-table",
                 "sj-upper-final-arithmetic-physical-boundary",
-                "sj-upper-final-arithmetic-physical-story"
+                "sj-upper-final-arithmetic-physical-story",
+                "sj-upper-final-arithmetic-actual-source-four-equalities",
+                "sj-upper-final-arithmetic-actual-source-three-strict-maxima",
+                "sj-upper-final-arithmetic-actual-source-whole-table"
               ],
               "questionKinds": ["number", "steps", "choice", "manual"],
               "visualKinds": ["quantity-table"],
               "audit": {
-                "date": "2026-10-01",
+                "date": "2026-10-04",
                 "reviewer": "同版期末正文核验与原创教学检查",
-                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第89、91页（https://keben.app/book/0103）运算办法、数量关系、缺数、最大填数与数量表和实际故事。数值、情境及表格均原创，不复制教材图题；本课不代表剩余期末课程或全年已完成。"
+                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第89、91页（https://keben.app/book/0103）运算办法、数量关系、缺数、最大填数与数量表和实际故事。数值、情境及表格均原创，不复制教材图题；2026-10-04重新查看第91页，补充原四等式、三严格边界与完整三列表独立实践；旧23主任务、19复习及前六步骤保持，新版26主任务，不改v1历史快照。本课不代表剩余期末课程或全年已完成。"
               }
             },
             {
@@ -19302,7 +19305,7 @@
           "steps": 1,
           "tasks": {
             "objective": 169,
-            "manual": 72,
+            "manual": 75,
             "reflection": 11
           },
           "reviewTasks": {
@@ -19484,6 +19487,9 @@
             "sj-upper-final-arithmetic-physical-table",
             "sj-upper-final-arithmetic-physical-boundary",
             "sj-upper-final-arithmetic-physical-story",
+            "sj-upper-final-arithmetic-actual-source-four-equalities",
+            "sj-upper-final-arithmetic-actual-source-three-strict-maxima",
+            "sj-upper-final-arithmetic-actual-source-whole-table",
             "sj-upper-final-shapes-build-cube",
             "sj-upper-final-shapes-build-cuboid",
             "sj-upper-final-shapes-build-cylinder",

@@ -93,3 +93,73 @@ it('validates each independent column and preserves first table error and partia
   });
   expect(isLibraryState(bad)).toBe(false);
 });
+
+it('independently substitutes every integer into all eight full equalities', () => {
+  const valueOf = (side: string) => {
+    if (/^\s*\d+\s*$/.test(side)) return Number(side);
+    const m = /^\s*(\d+)\s*([+-])\s*(\d+)\s*$/.exec(side);
+    if (!m) throw new Error('Unexpected full equality');
+    const a = Number(m[1]);
+    const b = Number(m[3]);
+    return m[2] === '+' ? a + b : a - b;
+  };
+  for (const tasks of [lesson.questions, lesson.reviewQuestions!]) {
+    const equations = tasks.filter((q) => /-equation-\d+$/.test(q.id));
+    expect(equations).toHaveLength(4);
+    for (const q of equations)
+      for (let n = 0; n <= 19; n++) {
+        const parts = q.prompt
+          .split('，')[0]!
+          .replace('□', String(n))
+          .split('=');
+        expect(parts).toHaveLength(2);
+        expect(evaluate(q.rule, n)).toBe(
+          valueOf(parts[0]!) === valueOf(parts[1]!),
+        );
+      }
+  }
+});
+it('keeps all source groups separate and restores old v1 together with new manual records', () => {
+  const actual = lesson.questions.filter((q) =>
+    q.knowledge.includes('-actual-source-'),
+  );
+  expect(actual).toHaveLength(3);
+  expect(actual[0]!.prompt).toContain('四题全部记录');
+  expect(actual[1]!.prompt).toContain('三个式子都处理');
+  expect(actual[2]!.prompt).toContain('填全三个空');
+  const state = initialLibrary('原书整组');
+  const old = createSession(
+    {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.slice(0, 23),
+      reviewQuestions: lesson.reviewQuestions!.slice(0, 19),
+      steps: lesson.steps.slice(0, 6),
+    },
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 1 },
+  );
+  const next = createSession(
+    lesson,
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 2 },
+  );
+  for (const q of actual) {
+    expect(q.rule).toEqual({ kind: 'manual' });
+    const i = next.questions.findIndex((x) => x.id === q.id);
+    expect(next.responses[i]!.submissions).toEqual([]);
+    next.responses[i] = submitResponse(next.questions[i]!, {
+      ...next.responses[i]!,
+      draft: 'confirmed',
+    });
+    expect(next.responses[i]!.submissions[0]!.correct).toBeNull();
+  }
+  const table = next.questions.findIndex((q) => q.knowledge.endsWith('-table'));
+  next.responses[table]!.draft = [8, 5, null];
+  state.sessions.push(old, next);
+  expect(parseBackup(exportBackup(state)).data).toEqual(state);
+  expect(old.questions).toHaveLength(23);
+  expect(next.questions).toHaveLength(26);
+});
