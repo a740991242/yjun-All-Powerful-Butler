@@ -230,6 +230,11 @@ export const sujiaoUpperFinalUnitAudit = {
           'sj-upper-final-exploration',
           [
             'sj-upper-final-exploration-groups',
+            'sj-upper-final-exploration-open-partition',
+            'sj-upper-final-exploration-actual-source-partition',
+            'sj-upper-final-exploration-actual-source-queue-total',
+            'sj-upper-final-exploration-actual-source-queue-front',
+            'sj-upper-final-exploration-actual-source-path-unit',
             'sj-upper-final-exploration-equal',
             'sj-upper-final-exploration-reading-lookup',
             'sj-upper-final-exploration-reading-combined',
@@ -239,7 +244,7 @@ export const sujiaoUpperFinalUnitAudit = {
         ],
       ],
       boundary:
-        '六格按故事填写另课逐项，已读/未读同书反向与未知总页数边界明确，实际同单位不同路径已对应。',
+        '六格按故事填写另课逐项，已读/未读同书反向与未知总页数边界明确，开放分盘允许所有合法分法；两幅队列与原图单位线长各有独立实际任务，本站原创路线不冒原颜色图。',
     },
     {
       page: 94,
