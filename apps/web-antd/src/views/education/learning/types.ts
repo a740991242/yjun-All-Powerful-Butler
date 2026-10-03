@@ -1,6 +1,7 @@
 import type { ArithmeticPairRule } from './arithmetic-pair';
 import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
+import type { BnuFinalColorVisual } from './bnu-final-color';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
@@ -45,6 +46,7 @@ import type { TeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import type { TeenLayoutVisual } from './teen-layout';
 import type { TenCellsVisual } from './ten-cells';
 import type { TenTablesVisual } from './ten-tables';
+import type { TriangleRowsVisual } from './triangle-rows';
 import type { TwoPieceJoinVisual } from './two-piece-join';
 import type { ViewpointHouseVisual } from './viewpoint-house';
 import type { ViewpointJugVisual } from './viewpoint-jug';
@@ -431,6 +433,7 @@ export type Visual =
   | BnuBuildingVisual
   | BnuCaterpillarVisual
   | BnuDayClockVisual
+  | BnuFinalColorVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual
   | CardEquationRule
@@ -510,6 +513,7 @@ export type Visual =
   | TileGridVisual
   | TriangleMosaicVisual
   | TriangleMoveVisual
+  | TriangleRowsVisual
   | TwoPieceJoinVisual
   | ViewpointHouseVisual
   | ViewpointJugVisual

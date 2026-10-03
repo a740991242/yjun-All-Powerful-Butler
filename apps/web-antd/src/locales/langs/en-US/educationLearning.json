@@ -1056,5 +1056,14 @@
   "numberStripTitle": "Read the number row from left to right",
   "numberStripBlank": "Position {position}, blank {letter}",
   "numberStripKnown": "Position {position}, given number {value}",
-  "numberStripNotice": "Letters mark blanks, not zero. Follow the rule stated in the question and check left to right. Scroll within the diagram on a narrow screen."
+  "numberStripNotice": "Letters mark blanks, not zero. Follow the rule stated in the question and check left to right. Scroll within the diagram on a narrow screen.",
+  "finalColorTitle": "Observe each expression region",
+  "finalColorRegion": "Region {position}",
+  "finalColorCard": "Region {position}, expression {expression}",
+  "finalColorNotice": "These original region cards use a different layout from the textbook picture. Repeated expressions remain separate regions. Cards do not show answers; calculate and select during practice. Colour the original book separately.",
+  "triangleRowsTitle": "Observe the layers of dots in each figure",
+  "triangleRowsGroup": "Figure {position}",
+  "triangleRowsDiagram": "Original dot figure {position}; count the circles row by row",
+  "triangleRowsDot": "Dot {column} in row {row}",
+  "triangleRowsNotice": "Each circle represents one dot. The number of rows differs from the total number of dots. Larger figures keep every dot, including totals above 10. Observing the webpage does not replace drawing the next figures."
 }

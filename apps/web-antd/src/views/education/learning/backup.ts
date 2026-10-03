@@ -7,6 +7,7 @@ import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
+import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
@@ -115,6 +116,7 @@ import {
   isTriangleMoveVisual,
   matchingTriangleState,
 } from './triangle-mosaic';
+import { isTriangleRowsVisual } from './triangle-rows';
 import { isTwoPieceJoinVisual } from './two-piece-join';
 import { isViewpointHouseVisual } from './viewpoint-house';
 import { isViewpointJugVisual } from './viewpoint-jug';
@@ -331,6 +333,12 @@ function visual(value: unknown) {
     }
     case 'teen-layout': {
       return isTeenLayoutVisual(value);
+    }
+    case 'bnu-final-color': {
+      return isBnuFinalColorVisual(value);
+    }
+    case 'triangle-rows': {
+      return isTriangleRowsVisual(value);
     }
     case 'count-groups': {
       return isCountGroupsVisual(value);

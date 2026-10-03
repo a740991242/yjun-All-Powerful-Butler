@@ -1056,5 +1056,14 @@
   "numberStripTitle": "从左到右观察数列",
   "numberStripBlank": "第{position}个位置，待填{letter}",
   "numberStripKnown": "第{position}个位置，已知数{value}",
-  "numberStripNotice": "字母表示待填位置，不是0。按题目给出的变化规则，从左到右核对；窄屏可在图内横向滚动。"
+  "numberStripNotice": "字母表示待填位置，不是0。按题目给出的变化规则，从左到右核对；窄屏可在图内横向滚动。",
+  "finalColorTitle": "逐区域观察算式",
+  "finalColorRegion": "区域{position}",
+  "finalColorCard": "区域{position}，算式{expression}",
+  "finalColorNotice": "这是本站原创区域卡排列，位置与教材涂色图不同；同一算式在不同区域仍分别保留。卡片不显示答案，练习中逐项计算后选择，原书涂色另做。",
+  "triangleRowsTitle": "逐幅观察圆点的层次",
+  "triangleRowsGroup": "第{position}幅",
+  "triangleRowsDiagram": "第{position}幅原创圆点图，逐行数圆点",
+  "triangleRowsDot": "第{row}行第{column}个圆点",
+  "triangleRowsNotice": "每个圆圈表示一个圆点。行数和全部圆点数不同；较大的图保留全部圆点，不截到10。网页观察不代替实际接着画。"
 }

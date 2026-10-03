@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T18:58:52.438Z",
+  "generatedAt": "2026-10-03T19:18:01.835Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 28,
+        "availablePacks": 29,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 424,
-          "manual": 180,
-          "reflection": 66
+          "objective": 446,
+          "manual": 186,
+          "reflection": 69
         }
       },
       "units": [
@@ -29359,13 +29359,54 @@
               }
             },
             {
+              "id": "bnu-upper-final-color-patterns",
+              "title": "完整计算、涂色区域与圆点规律",
+              "textbookTitle": "总复习 · 计算、涂色与规律",
+              "page": 83,
+              "version": 1,
+              "status": "available",
+              "goal": "完成12式和两幅小鸡图，逐区域计算全部29处，按指定结果选区域并接着画六幅圆点图。",
+              "prerequisite": "会10以内加法、连加连减与整体减去可见部分；会逐行数点。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 22,
+                "manual": 6,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-final-color-patterns"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "count-groups",
+                "bnu-final-color",
+                "triangle-rows"
+              ],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书83页完整四项与区域逐项核对",
+                "notes": "第三方0061阅读器87对应印刷83，重新查看本地已读取大图；ISBN印次未知。12式、两图、29区域及六幅圆点接画完整对应，不打包原扫描画。"
+              }
+            },
+            {
               "id": "bnu-upper-final-pending",
               "title": "总复习 · 后续内容制作中",
               "textbookTitle": "总复习",
               "page": 81,
               "version": 1,
               "status": "preparing",
-              "goal": "第81～82页已开放，第83～86页课程仍在制作。",
+              "goal": "第81～83页已开放，第84～86页课程仍在制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

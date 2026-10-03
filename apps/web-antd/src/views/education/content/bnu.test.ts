@@ -18,6 +18,7 @@ import { bnuClassroomLesson } from './bnu-classroom';
 import { bnuComparisonLesson } from './bnu-comparison';
 import { bnuDayRecordLesson } from './bnu-day';
 import { bnuFinalNumberTalkLesson } from './bnu-final-numbers';
+import { bnuFinalColorPatternsLesson } from './bnu-final-patterns';
 import { bnuFinalNumberPracticeLesson } from './bnu-final-practice';
 import { bnuFiveAddLesson } from './bnu-five-add';
 import {
@@ -91,6 +92,7 @@ it('registers an independent partial upper book without borrowing PEP scope or i
     bnuDayRecordLesson,
     bnuFinalNumberTalkLesson,
     bnuFinalNumberPracticeLesson,
+    bnuFinalColorPatternsLesson,
   ]);
   for (const lesson of lessons.filter((item) => item.status === 'preparing')) {
     expect(lesson.questions).toEqual([]);

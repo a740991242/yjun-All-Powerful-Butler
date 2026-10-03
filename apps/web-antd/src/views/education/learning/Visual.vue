@@ -15,6 +15,7 @@ import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
+import BnuFinalColor from './BnuFinalColor.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
@@ -106,6 +107,7 @@ import ThreePieceJoin from './ThreePieceJoin.vue';
 import TileGrid from './TileGrid.vue';
 import TriangleMosaic from './TriangleMosaic.vue';
 import TriangleMove from './TriangleMove.vue';
+import TriangleRows from './TriangleRows.vue';
 import TwoPieceJoin from './TwoPieceJoin.vue';
 import ViewpointHouse from './ViewpointHouse.vue';
 import ViewpointJug from './ViewpointJug.vue';
@@ -318,6 +320,14 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
+    <BnuFinalColor
+      v-else-if="visual.kind === 'bnu-final-color'"
+      :visual="visual"
+    />
+    <TriangleRows
+      v-else-if="visual.kind === 'triangle-rows'"
+      :visual="visual"
+    />
     <NumberStrip v-else-if="visual.kind === 'number-strip'" :visual="visual" />
     <NumberLineGrid
       v-else-if="visual.kind === 'number-line-grid'"

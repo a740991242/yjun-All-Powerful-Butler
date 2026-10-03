@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 28
+          .count()) !== 29
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1302,6 +1302,13 @@ const widths = process.argv.includes('--mobile-only')
       const activityFlows = [];
       const bnuFlows = [
         [
+          '完整计算、涂色区域与圆点规律',
+          6,
+          31,
+          6,
+          'bnu-upper-final-color-patterns',
+        ],
+        [
           '数列、九人排队与等值算式配对',
           6,
           30,
@@ -1482,6 +1489,138 @@ const widths = process.argv.includes('--mobile-only')
             throw new Error('Number row language or theme reset study records');
         }
       };
+      const verifyFinalDiagram = async (kind, expected, translated = false) => {
+        const figure = p.locator(
+          kind === 'color' ? '[data-bnu-final-color]' : '[data-triangle-rows]',
+        );
+        const cards = figure.locator(
+          kind === 'color' ? '[data-region]' : '[data-triangle-position]',
+        );
+        await figure.waitFor();
+        if ((await cards.count()) !== expected.length)
+          throw new Error('Incomplete final review diagram');
+        if (kind === 'color') {
+          const expressions = await cards
+            .locator('span:last-child')
+            .allTextContents();
+          if (JSON.stringify(expressions) !== JSON.stringify(expected))
+            throw new Error('Missing or merged expression regions');
+        } else {
+          const actual = await cards.evaluateAll((nodes) =>
+            nodes.map((node) => node.querySelectorAll('circle').length),
+          );
+          if (JSON.stringify(actual) !== JSON.stringify(expected))
+            throw new Error('Triangle dots truncated or wrong layers');
+          const fits = await figure.locator('circle').evaluateAll((nodes) =>
+            nodes.every((node) => {
+              const { x, y, width, height } = node.getBBox();
+              const { width: w, height: h } =
+                node.ownerSVGElement.viewBox.baseVal;
+              return x >= 0 && y >= 0 && x + width <= w && y + height <= h;
+            }),
+          );
+          if (!fits) throw new Error('Triangle circle outside SVG');
+        }
+        for (const [end, target] of [
+          ['first', cards.first()],
+          ['last', cards.last()],
+        ]) {
+          await target.evaluate((node) =>
+            node.scrollIntoView({
+              block: 'center',
+              inline: 'center',
+              behavior: 'instant',
+            }),
+          );
+          await p.waitForTimeout(200);
+          const box = await target.boundingBox();
+          if (
+            !box ||
+            box.x < 0 ||
+            box.x + box.width > width ||
+            box.y < 0 ||
+            box.y + box.height > 1000
+          )
+            throw new Error('Final review diagram card clipped');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-${kind}-${expected.length}-${end}-${width}.png`,
+          });
+        }
+        if (translated) {
+          const before = await read();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await figure
+            .getByText(
+              kind === 'color'
+                ? 'Observe each expression region'
+                : 'Observe the layers of dots in each figure',
+              { exact: true },
+            )
+            .waitFor();
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (value) =>
+              document.documentElement.classList.contains('dark') === value,
+            !dark,
+          );
+          if (kind === 'color') {
+            const label = await cards.first().getAttribute('aria-label');
+            if (!label.startsWith('Region 1,'))
+              throw new Error('Color card ARIA not translated');
+          } else {
+            const label = await cards
+              .first()
+              .locator('svg')
+              .getAttribute('aria-label');
+            if (!label.startsWith('Original dot figure 1;'))
+              throw new Error('Triangle ARIA not translated');
+          }
+          await cards
+            .last()
+            .evaluate((node) =>
+              node.scrollIntoView({ block: 'center', behavior: 'instant' }),
+            );
+          await p.waitForTimeout(700);
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-${kind}-english-${width}.png`,
+          });
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (value) =>
+              document.documentElement.classList.contains('dark') === value,
+            dark,
+          );
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await figure
+            .getByText(
+              kind === 'color' ? '逐区域观察算式' : '逐幅观察圆点的层次',
+              { exact: true },
+            )
+            .waitFor();
+          const after = await read();
+          if (
+            JSON.stringify(after.sessions) !== JSON.stringify(before.sessions)
+          )
+            throw new Error('Final diagram language/theme changed records');
+        }
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Final review diagram page overflow');
+      };
       for (const [
         title,
         stepCount,
@@ -1505,6 +1644,47 @@ const widths = process.argv.includes('--mobile-only')
           await verifyNumberStrip([5, null, 7, null, 9, null], 'ascending');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-final-color-patterns') {
+            if (step === 3)
+              await verifyFinalDiagram(
+                'color',
+                [
+                  '1+3',
+                  '4+2',
+                  '3+3',
+                  '5+1',
+                  '5+4',
+                  '2+2+6',
+                  '9+1',
+                  '4+4+2',
+                  '2+8',
+                  '1+9',
+                  '7+1+2',
+                  '0+8',
+                  '2+1',
+                  '6+4',
+                  '7+3',
+                  '5+2',
+                  '8+2',
+                  '3+7',
+                  '4+4',
+                  '0+10',
+                  '3+6',
+                  '10+0',
+                  '5+5',
+                  '2+3+5',
+                  '1+1+8',
+                  '4+6',
+                  '0+8',
+                  '2+7',
+                  '1+7',
+                ],
+                true,
+              );
+            if (step === 4) await verifyFinalDiagram('dots', [1, 3, 6]);
+            if (step === 5)
+              await verifyFinalDiagram('dots', [1, 3, 6, 10, 15, 21], true);
+          }
           if (lessonId === 'bnu-upper-final-number-practice' && step === 1)
             await verifyNumberStrip(
               [10, 8, null, null, 2, null],
@@ -2043,6 +2223,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-day-record-clock-parts': [0, null],
               'bnu-upper-final-number-talk-open-drawing': [0, null],
               'bnu-upper-final-number-practice-difference': [null, 0],
+              'bnu-upper-final-color-patterns-dots-next': [0, null, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -2076,6 +2257,35 @@ const widths = process.argv.includes('--mobile-only')
                 )
               )
                 throw new Error('BNU application partial zero/null reload');
+            }
+            if (question.id === 'bnu-upper-final-color-patterns-color-select') {
+              for (const value of ['R12', 'R27']) {
+                const option = question.choices.find(
+                  (item) => item.id === value,
+                );
+                await p
+                  .getByRole('checkbox', { name: option.label, exact: true })
+                  .check();
+              }
+              await activityDraft(index, ['R12', 'R27']);
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              await p.reload({ waitUntil: 'networkidle' });
+              await p.getByText(question.prompt, { exact: true }).waitFor();
+              for (const value of ['R12', 'R27']) {
+                const option = question.choices.find(
+                  (item) => item.id === value,
+                );
+                const checkbox = p.getByRole('checkbox', {
+                  name: option.label,
+                  exact: true,
+                });
+                if (!(await checkbox.isChecked()))
+                  throw new Error('Repeated-region draft lost');
+                await checkbox.uncheck();
+              }
             }
             await answerObjective(question);
             if (question.id === 'bnu-upper-final-number-practice-difference') {
@@ -2146,6 +2356,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-day-record': '-clock-parts',
                   'bnu-upper-final-number-talk': '-open-drawing',
                   'bnu-upper-final-number-practice': '-difference',
+                  'bnu-upper-final-color-patterns': '-dots-next',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -2178,6 +2389,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-building-tower',
                   'bnu-upper-day-record',
                   'bnu-upper-difference-transfer',
+                  'bnu-upper-final-color-patterns',
                   'bnu-upper-final-number-practice',
                   'bnu-upper-final-number-talk',
                   'bnu-upper-hidden-quantities',
@@ -2286,6 +2498,17 @@ const widths = process.argv.includes('--mobile-only')
           complete.responses.filter((r) => r.skipped).length !== manualCount
         )
           throw new Error('Activity completion identity');
+        if (lessonId === 'bnu-upper-final-color-patterns') {
+          const color = complete.responses.find((r) =>
+            r.questionId.endsWith('-color-select'),
+          );
+          if (
+            JSON.stringify(color.submissions.map((s) => s.correct)) !==
+              '[false,true]' ||
+            JSON.stringify(color.submissions[0].answer) !== '["R12","R27"]'
+          )
+            throw new Error('Region mistake history lost');
+        }
         const first = complete.responses.find((r) =>
           r.questionId.endsWith('-q1'),
         );
@@ -2389,7 +2612,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 28,
+          bnuCourse: 29,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,
