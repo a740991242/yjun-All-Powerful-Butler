@@ -60,7 +60,7 @@ it('retains wrong body-reference answers and does not auto-confirm physical acti
     );
   }
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    5,
+    7,
   );
   expect(
     lesson.questions.find((q) => q.id === `${lesson.id}-manual-composite`)?.rule
@@ -72,4 +72,56 @@ it('retains wrong body-reference answers and does not auto-confirm physical acti
   }
   state.sessions.push(session);
   expect(parseBackup(exportBackup(state)).data).toEqual(state);
+});
+
+it('keeps original-page activities independent and restores v2 alongside v3 without auto-confirmation', () => {
+  const state = initialLibrary('来源活动');
+  const old = createSession(
+    {
+      ...lesson,
+      version: 2,
+      questions: lesson.questions.slice(0, 24),
+      reviewQuestions: lesson.reviewQuestions!.slice(0, 19),
+      steps: lesson.steps.slice(0, 6),
+    },
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 1 },
+  );
+  const next = createSession(
+    lesson,
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 2 },
+  );
+  const actual = next.questions.filter((q) =>
+    q.knowledge.includes('-actual-source-'),
+  );
+  expect(actual).toHaveLength(2);
+  for (const q of actual) expect(q.rule).toEqual({ kind: 'manual' });
+  const i = next.questions.findIndex((q) =>
+    q.knowledge.endsWith('four-counts'),
+  );
+  expect(next.responses[i]!.submissions).toEqual([]);
+  next.responses[i] = submitResponse(next.questions[i]!, {
+    ...next.responses[i]!,
+    draft: 'confirmed',
+  });
+  expect(next.responses[i]!.submissions[0]!.correct).toBeNull();
+  state.sessions.push(old, next);
+  expect(parseBackup(exportBackup(state)).data).toEqual(state);
+  expect(old.questions).toHaveLength(24);
+  expect(next.questions).toHaveLength(26);
+});
+
+it('requires complete source matching and all four source counts rather than one example', () => {
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('object-links'))!.prompt,
+  ).toContain('全部生活物品');
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('four-counts'))!.prompt,
+  ).toContain('全部四个数量');
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('four-counts'))!.prompt,
+  ).toContain('不直接抄本站数量');
 });

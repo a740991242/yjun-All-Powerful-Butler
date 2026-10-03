@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T23:28:04.223Z",
+  "generatedAt": "2026-10-03T23:35:39.738Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -14378,7 +14378,7 @@
         "referenceQueries": 0,
         "tasks": {
           "objective": 813,
-          "manual": 285,
+          "manual": 290,
           "reflection": 42
         }
       },
@@ -17915,15 +17915,15 @@
               "title": "期末复习：立体分类、六块拼搭与转身方向",
               "textbookTitle": "期末复习：立体图形、拼搭与位置",
               "page": 92,
-              "version": 2,
+              "version": 3,
               "status": "available",
               "goal": "按整体立体形状分类计数，区分单块与整体、总数与高度，实际拼搭并以身体朝向描述位置。",
               "prerequisite": "认识四类立体与前后左右，准备安全物品、2块相同长方体和6块相同正方体积木。",
               "referenceQuery": null,
-              "steps": 6,
+              "steps": 7,
               "tasks": {
                 "objective": 19,
-                "manual": 5,
+                "manual": 7,
                 "reflection": 0
               },
               "reviewTasks": {
@@ -17955,14 +17955,16 @@
                 "sj-upper-final-shapes-physical-sort",
                 "sj-upper-final-shapes-physical-tall",
                 "sj-upper-final-shapes-physical-six",
-                "sj-upper-final-shapes-physical-body"
+                "sj-upper-final-shapes-physical-body",
+                "sj-upper-final-shapes-actual-source-object-links",
+                "sj-upper-final-shapes-actual-source-four-counts"
               ],
               "questionKinds": ["number", "choice", "manual"],
               "visualKinds": ["solid-build", "solid-row", "cube-columns"],
               "audit": {
-                "date": "2026-10-01",
+                "date": "2026-10-04",
                 "reviewer": "同版正文核验与原创教学检查",
-                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷第89、92页（https://keben.app/book/0103）分类、实物对应、立体计数、搭高、六块拼搭及身体位置。排列、计数、人物和情境原创，不复制教材图片；其他期末细项仍需完成。"
+                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷第89、92页（https://keben.app/book/0103）分类、实物对应、立体计数、搭高、六块拼搭及身体位置。排列、计数、人物和情境原创，不复制教材图片；2026-10-04重看第92页，新增原页全部连线和四类完整填数两个实际任务；旧v2的24主任务、19复习和前6步骤保持，新版26主任务，旧快照不改；其余课目与全册逐项核对另验。"
               }
             },
             {
@@ -18029,15 +18031,15 @@
               "title": "期末复习：积木重排与数量规律",
               "textbookTitle": "期末复习：积木重排、规律与评价",
               "page": 94,
-              "version": 2,
+              "version": 3,
               "status": "available",
               "goal": "逐列计数，理解重排不改变总数、单块与整体形状的区别，按明确规则继续排列，实际操作并反思。",
               "prerequisite": "会10以内加法，认识长方体与正方体；准备10个同样大小积木与纸笔。",
               "referenceQuery": null,
-              "steps": 6,
+              "steps": 7,
               "tasks": {
                 "objective": 17,
-                "manual": 5,
+                "manual": 8,
                 "reflection": 0
               },
               "reviewTasks": {
@@ -18067,14 +18069,17 @@
                 "sj-upper-final-building-physical-build",
                 "sj-upper-final-building-physical-move",
                 "sj-upper-final-building-physical-pattern",
-                "sj-upper-final-building-physical-reflect"
+                "sj-upper-final-building-physical-reflect",
+                "sj-upper-final-building-actual-source-paired-pattern",
+                "sj-upper-final-building-actual-source-stair-pattern",
+                "sj-upper-final-building-actual-source-original-beads"
               ],
               "questionKinds": ["number", "steps", "choice", "manual"],
               "visualKinds": ["bead-chain", "cube-columns"],
               "audit": {
-                "date": "2026-10-01",
+                "date": "2026-10-04",
                 "reviewer": "同版已保存原书正文与原创教学检查",
-                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第94页（https://keben.app/book/0103）的积木移动、数量规律、评价与反思。原创图、列高、题目及目标条件，不复制教材插图；仅开放该页对应复习，遮挡珠串加入明确条件的原创例示；不复刻原图，不据例示宣称全部细项已完成，不宣称全册已完成。"
+                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第94页（https://keben.app/book/0103）的积木移动、数量规律、评价与反思。原创图、列高、题目及目标条件，不复制教材插图；仅开放该页对应复习，遮挡珠串加入明确条件的原创例示；2026-10-04重看第94页，新增两组原积木规律及原黄绿珠串三个实际任务；旧v2的22主任务、17复习和前6步骤保持，新版25主任务，旧快照不改。不复刻原图，不据例示宣称全册已完成。"
               }
             }
           ]
@@ -19297,7 +19302,7 @@
           "steps": 1,
           "tasks": {
             "objective": 169,
-            "manual": 67,
+            "manual": 72,
             "reflection": 11
           },
           "reviewTasks": {
@@ -19503,6 +19508,8 @@
             "sj-upper-final-shapes-physical-tall",
             "sj-upper-final-shapes-physical-six",
             "sj-upper-final-shapes-physical-body",
+            "sj-upper-final-shapes-actual-source-object-links",
+            "sj-upper-final-shapes-actual-source-four-counts",
             "sj-upper-final-exploration-groups",
             "sj-upper-final-exploration-total",
             "sj-upper-final-exploration-equal",
@@ -19552,7 +19559,10 @@
             "sj-upper-final-building-physical-build",
             "sj-upper-final-building-physical-move",
             "sj-upper-final-building-physical-pattern",
-            "sj-upper-final-building-physical-reflect"
+            "sj-upper-final-building-physical-reflect",
+            "sj-upper-final-building-actual-source-paired-pattern",
+            "sj-upper-final-building-actual-source-stair-pattern",
+            "sj-upper-final-building-actual-source-original-beads"
           ],
           "questionKinds": [
             "steps",

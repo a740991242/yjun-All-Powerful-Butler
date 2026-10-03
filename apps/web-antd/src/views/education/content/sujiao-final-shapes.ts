@@ -157,6 +157,16 @@ function tasks(review: boolean): Question[] {
     },
   ];
 }
+const sourceManual: [string, string][] = [
+  [
+    'object-links',
+    '实际回同版教材第92页第12项，逐个观察全部生活物品的整体近似形状，对应四类模型并连完整，不只挑一个球或罐子。说明看的是整个物体而非底面，模糊处记录待核对，保留全部连线与解释；没原书或未连暂跳。',
+  ],
+  [
+    'four-counts',
+    '实际回同版教材第92页第13项原组合作品，按长方体、正方体、圆柱、球分别指完整部件，填写全部四个数量并用合计核对。露出的面和装饰不另增物，作品整体不另加1；原图与本站九件分解图分别记录，不直接抄本站数量，没读写暂跳。',
+  ],
+];
 const manual: [string, string][] = [
   [
     'composite',
@@ -185,7 +195,7 @@ export const sujiaoFinalShapesLesson: Lesson = {
   title: '期末复习：立体分类、六块拼搭与转身方向',
   page: 92,
   status: 'available',
-  version: 2,
+  version: 3,
   goal: '按整体立体形状分类计数，区分单块与整体、总数与高度，实际拼搭并以身体朝向描述位置。',
   prerequisite:
     '认识四类立体与前后左右，准备安全物品、2块相同长方体和6块相同正方体积木。',
@@ -228,6 +238,12 @@ export const sujiaoFinalShapesLesson: Lesson = {
       text: '前后左右以孩子身体朝向为参照。面向门时门在前，背后书架在后；转半圈后书架在前、门在后，原来左右的物品也换到身体另一边。物品没有移动，参照朝向改变了。',
       activity: '安全站好并原地转半圈，实际指出前后左右，向家长说明参照谁。',
     },
+    {
+      title: '原书全部连线与四类完整填数',
+      text: '第92页第12项需全部物品对应模型，第13项需四类部件所有空分别填写。原物品只说整体近似，原组合作品按完整部件逐个数；露出多个面不增加部件，作品整体也不另加1。本站原创排图和九件分解图另有自己的数量，不能用它们的答案代替原图。搭高、六块拼搭及身体方向继续按已有实际任务核对。',
+      activity:
+        '实际回原书逐项观察、读写、摆画并核对，保留作品和原话；没有原书或未做可暂跳，未来计划另记，不由网页答对自动确认。',
+    },
   ],
   questions: [
     ...tasks(false),
@@ -239,11 +255,20 @@ export const sujiaoFinalShapesLesson: Lesson = {
       hint: '实际观察、拼搭或转身并说明后，由家长确认。',
       explanation: '允许有依据的不同作品；实际活动不由图示答案自动确认。',
     })),
+    ...sourceManual.map(([key, prompt]): Question => ({
+      id: `${id}-manual-source-${key}`,
+      knowledge: `${id}-actual-source-${key}`,
+      prompt,
+      rule: { kind: 'manual' },
+      hint: '先实际处理原图的完整任务，再独立确认；帮助、未知与未完成部分如实记录。',
+      explanation:
+        '原图实际活动独立人工记录，correct为null；本站示例或计划不能替代已经读写和摆画。',
+    })),
   ],
   reviewQuestions: tasks(true),
   review: {
-    date: source.checkedAt,
+    date: '2026-10-04',
     reviewer: '同版正文核验与原创教学检查',
-    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷第89、92页（${source.preview}）分类、实物对应、立体计数、搭高、六块拼搭及身体位置。排列、计数、人物和情境原创，不复制教材图片；其他期末细项仍需完成。`,
+    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷第89、92页（${source.preview}）分类、实物对应、立体计数、搭高、六块拼搭及身体位置。排列、计数、人物和情境原创，不复制教材图片；2026-10-04重看第92页，新增原页全部连线和四类完整填数两个实际任务；旧v2的24主任务、19复习和前6步骤保持，新版26主任务，旧快照不改；其余课目与全册逐项核对另验。`,
   },
 };

@@ -40,7 +40,7 @@ it('keeps one-cube depth, conserved quantities, explicit patterns and manual ref
   ).toEqual({ kind: 'number', value: 2 });
   expect(lesson.parentTip).toContain('不能把有限数列');
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    5,
+    8,
   );
 });
 it('preserves confusing column count with total and restores the expanded reviewed diagrams', () => {
@@ -68,4 +68,62 @@ it('preserves confusing column count with total and restores the expanded review
     heights: [4, 4, 4],
   });
   expect(isLibraryState(bad)).toBe(false);
+});
+
+it('keeps original-page activities independent and restores v2 alongside v3 without auto-confirmation', () => {
+  const state = initialLibrary('来源活动');
+  const old = createSession(
+    {
+      ...lesson,
+      version: 2,
+      questions: lesson.questions.slice(0, 22),
+      reviewQuestions: lesson.reviewQuestions!.slice(0, 17),
+      steps: lesson.steps.slice(0, 6),
+    },
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 1 },
+  );
+  const next = createSession(
+    lesson,
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 2 },
+  );
+  const actual = next.questions.filter((q) =>
+    q.knowledge.includes('-actual-source-'),
+  );
+  expect(actual).toHaveLength(3);
+  for (const q of actual) expect(q.rule).toEqual({ kind: 'manual' });
+  const i = next.questions.findIndex((q) =>
+    q.knowledge.endsWith('original-beads'),
+  );
+  expect(next.responses[i]!.submissions).toEqual([]);
+  next.responses[i] = submitResponse(next.questions[i]!, {
+    ...next.responses[i]!,
+    draft: 'confirmed',
+  });
+  expect(next.responses[i]!.submissions[0]!.correct).toBeNull();
+  state.sessions.push(old, next);
+  expect(parseBackup(exportBackup(state)).data).toEqual(state);
+  expect(old.questions).toHaveLength(22);
+  expect(next.questions).toHaveLength(25);
+});
+
+it('separates both source patterns and keeps original-bead conditions independent of fixed four-group examples', () => {
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('paired-pattern'))!
+      .prompt,
+  ).toContain('新增块数与全部块数');
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('stair-pattern'))!.prompt,
+  ).toContain('不把完成左组');
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('original-beads'))!
+      .prompt,
+  ).toContain('不能直接当原图条件或答案');
+  expect(
+    lesson.questions.find((q) => q.knowledge.endsWith('original-beads'))!
+      .prompt,
+  ).toContain('不能唯一确定');
 });
