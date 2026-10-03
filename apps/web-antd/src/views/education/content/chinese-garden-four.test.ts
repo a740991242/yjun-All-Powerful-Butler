@@ -10,7 +10,11 @@ import {
 import { newReviewQuestions } from '../learning/review';
 import { upperCharacters } from './characters';
 import { chineseBooks } from './chinese';
-import { gardenFourLesson, gardenFourPageAudit } from './chinese-garden-four';
+import {
+  gardenFourLesson,
+  gardenFourPageAudit,
+  gardenFourSyllableGroups,
+} from './chinese-garden-four';
 
 it('covers all four inspected garden pages with exact character scopes and separate actual activities', () => {
   const lesson = gardenFourLesson;
@@ -28,7 +32,7 @@ it('covers all four inspected garden pages with exact character scopes and separ
     38,
   );
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    10,
+    15,
   );
   expect(
     lesson.questions.filter((q) => q.rule.kind === 'reflection'),
@@ -115,7 +119,7 @@ it('keeps wrong-first history and manual/reflection evidence through backup with
     if (q.rule.kind !== 'choice')
       expect(s.responses[i]!.submissions.at(-1)!.correct).toBeNull();
   }
-  expect(statistics(s).manual).toBe(10);
+  expect(statistics(s).manual).toBe(15);
   expect(s.responses.filter((r) => r.submissions.length === 2)).toHaveLength(1);
   const review = newReviewQuestions(gardenFourLesson, s, [s]);
   expect(review).toHaveLength(1);
@@ -131,4 +135,66 @@ it('keeps wrong-first history and manual/reflection evidence through backup with
       }),
     ).data.sessions[0],
   ).toEqual(s);
+});
+
+it('covers all eleven p56 syllables as five independent actual attempts and preserves the old fifty-task snapshot', () => {
+  expect(gardenFourLesson.version).toBe(2);
+  expect(gardenFourSyllableGroups).toEqual([
+    ['yǎn', 'yuǎn'],
+    ['yīn', 'yīng'],
+    ['jiǎn', 'juǎn'],
+    ['zuān', 'zhuān'],
+    ['chán', 'chuán', 'chuáng'],
+  ]);
+  const tasks = gardenFourLesson.questions.filter((q) =>
+    q.id.includes('-compare-complete-'),
+  );
+  expect(tasks).toHaveLength(5);
+  expect(
+    tasks.map((q) =>
+      q.visual?.kind === 'characters' ? q.visual.characters : null,
+    ),
+  ).toEqual(gardenFourSyllableGroups);
+  expect(gardenFourSyllableGroups.flat()).toHaveLength(11);
+  const now = '2026-10-04T00:00:00.000Z';
+  const current = createSession(
+    gardenFourLesson,
+    chineseBooks[0]!.id,
+    'child',
+    { seed: 56, now },
+  );
+  for (const task of tasks) {
+    expect(task.rule).toEqual({ kind: 'manual' });
+    expect(task.prompt).toContain('尚未读全可跳过');
+    const index = current.questions.findIndex((q) => q.id === task.id);
+    current.responses[index] = submitResponse(
+      task,
+      { ...current.responses[index]!, draft: 'confirmed' },
+      now,
+    );
+    expect(current.responses[index]!.submissions[0]!.correct).toBeNull();
+  }
+  expect(statistics(current).manual).toBe(5);
+  const old = createSession(
+    {
+      ...gardenFourLesson,
+      version: 1,
+      questions: gardenFourLesson.questions.filter((q) => !tasks.includes(q)),
+    },
+    chineseBooks[0]!.id,
+    'child',
+    { seed: 56, now },
+  );
+  expect(old.questions).toHaveLength(50);
+  expect(current.questions).toHaveLength(55);
+  expect(
+    parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '测试档案', createdAt: now }],
+        sessions: [old, current],
+      }),
+    ).data.sessions,
+  ).toEqual([old, current]);
 });

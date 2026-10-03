@@ -1,4 +1,4 @@
-import type { Lesson, Question } from '../learning/types';
+import type { Lesson, Question, Visual } from '../learning/types';
 
 import { required } from '../learning/required';
 import { unitFourPageAudits } from './chinese-unit-four';
@@ -7,6 +7,16 @@ export const gardenFourPageAudit = required(
   unitFourPageAudits.find((a) => a.itemId === 'u4-6'),
 );
 const id = 'cu-u4-6';
+/** All five pairs/groups observed on printed p56. Attempts are recorded
+ * separately from spelling questions and are never automatic audio scores.
+ */
+export const gardenFourSyllableGroups = [
+  ['yǎn', 'yuǎn'],
+  ['yīn', 'yīng'],
+  ['jiǎn', 'juǎn'],
+  ['zuān', 'zhuān'],
+  ['chán', 'chuán', 'chuáng'],
+];
 const characters = [
   ['晚', '晚上中的第一个字。', '晚饭中的第一个字。'],
   ['昨', '昨天中的第一个字。', '昨日中的第一个字。'],
@@ -379,12 +389,18 @@ function objective(review: boolean): Question[] {
     ),
   ];
 }
-function manual(key: string, prompt: string, material?: string): Question {
+function manual(
+  key: string,
+  prompt: string,
+  material?: string,
+  visual?: Visual,
+): Question {
   return {
     id: `${id}-${key}`,
     knowledge: `${id}-${key}`,
     prompt,
     material,
+    visual,
     rule: { kind: 'manual' },
     hint: '实际活动完成后由家长确认；没有原书或规范示范可跳过。',
     explanation:
@@ -396,7 +412,7 @@ export const gardenFourLesson: Lesson = {
   title: '语文园地四',
   textbookTitle: '语文园地四',
   page: 56,
-  version: 1,
+  version: 2,
   status: 'available',
   goal: '认时间词，写个去；比较拼音并表达秋游想法，积累车字词语、填写已学字，与家长读古诗和小鸟念书。',
   prerequisite:
@@ -448,7 +464,7 @@ export const gardenFourLesson: Lesson = {
         ],
       },
       activity:
-        '任选两组参考规范示范实际尝试读，再比较字形差异；没有标准示范可跳过实际发音。',
+        '可先选两组作为入门，再将五组逐组参考规范示范尝试读和比较字形；每组有独立人工记录，没有示范或尚未尝试可跳过，不要求一次全部读准。',
     },
     {
       title: 'ie ei和iu ui不能看反',
@@ -522,6 +538,14 @@ export const gardenFourLesson: Lesson = {
       'compare-read',
       '从第56页五组音节中任选两组，参考标准示范实际陪听、尝试读并比较写法；字形题不代替发音。',
     ),
+    ...gardenFourSyllableGroups.map((group, index) =>
+      manual(
+        `compare-complete-${index}`,
+        `实际对照第56页第${index + 1}组 ${group.join(' / ')}，先听家长或教师规范示范，再尝试读这组全部音节并比较写法。完成尝试后才确认；没有示范或尚未读全可跳过，不以辨形题代替实际跟读，也不要求一次读准。`,
+        '这是原书五组音节的完整尝试记录；原有任选两组是入门活动，不代表全部五组已做。本站普通字体仅供观察，未提供标准录音或自动声音判分。',
+        { kind: 'characters', grid: 'pinyin', characters: [...group] },
+      ),
+    ),
     manual(
       'words-read',
       '实际尝试读第57页ie/ei、iu/ui对应的六个词，指定一个音节比较；家长确认尝试，不自动评声音。',
@@ -572,9 +596,9 @@ export const gardenFourLesson: Lesson = {
   ],
   reviewQuestions: objective(true),
   review: {
-    date: '2026-10-01',
-    reviewer: '原书四页栏目与原创活动校验',
+    date: '2026-10-04',
+    reviewer: '原书四页栏目与五组完整尝试范围复核',
     notes:
-      '第三方预览实际印刷56—59页，ISBN版印次未知。按各栏目补齐，公有领域古诗注明原书作者，现代作品外部共读；不复制现代全文原画录音。实际声音、纸笔和交流人工确认，反思null；教师最终审校、整册与全年覆盖仍未完成。',
+      '第三方预览实际印刷56—59页，ISBN版印次未知。按各栏目补齐，公有领域古诗注明原书作者，现代作品外部共读；不复制现代全文原画录音。实际声音、纸笔和交流人工确认，反思null；教师最终审校、整册与全年覆盖仍未完成。2026-10-04重新查看此前正常公开预览保存的第56～59页，发现任选两组不覆盖五组全部11音节，保留旧题并增五组独立尝试记录；未把实际确认当自动发音评分。',
   },
 };
