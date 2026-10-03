@@ -1077,7 +1077,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 29
+          .count()) !== 30
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1301,6 +1301,7 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        ['立体分类、材料配对与机器人计数', 6, 31, 7, 'bnu-upper-final-solids'],
         [
           '完整计算、涂色区域与圆点规律',
           6,
@@ -1381,6 +1382,168 @@ const widths = process.argv.includes('--mobile-only')
       for (const id of requestedBnu || [])
         if (!bnuFlows.some((flow) => flow[4] === id))
           throw new Error(`Unknown BNU verification lesson: ${id}`);
+      const verifyFinalSolids = async (
+        scene,
+        variant = 'main',
+        translated = false,
+      ) => {
+        const figure = p.locator(
+          `[data-bnu-final-solids][data-final-scene="${scene}"]`,
+        );
+        await figure.waitFor();
+        const inventory = async () => {
+          if (scene === 'robot') {
+            const counts = await figure
+              .locator('[data-robot-piece]')
+              .evaluateAll((nodes) => {
+                const result = { cuboid: 0, cylinder: 0, cube: 0, sphere: 0 };
+                for (const node of nodes) result[node.dataset.robotShape]++;
+                return Object.values(result);
+              });
+            const expected = variant === 'main' ? [2, 8, 2, 4] : [1, 6, 2, 2];
+            if (JSON.stringify(counts) !== JSON.stringify(expected))
+              throw new Error('Robot independent part inventory');
+            if (
+              (await figure.locator('[data-robot-paint] circle').count()) !== 2
+            )
+              throw new Error('Robot painted eyes missing');
+          }
+          if (scene === 'materials') {
+            const expected =
+              variant === 'main'
+                ? [
+                    [2, 3, 2, 0, 1],
+                    [2, 0, 4, 0, 2],
+                  ]
+                : [
+                    [2, 1, 3, 0, 1],
+                    [1, 1, 3, 0, 1],
+                  ];
+            for (const [index, label] of ['A', 'B'].entries()) {
+              const counts = await figure
+                .locator(
+                  `[data-material-group="${label}"] [data-material-piece]`,
+                )
+                .evaluateAll((nodes) => {
+                  const result = {
+                    cuboid: 0,
+                    cylinder: 0,
+                    cube: 0,
+                    sphere: 0,
+                    roof: 0,
+                  };
+                  for (const node of nodes)
+                    result[node.dataset.materialShape]++;
+                  return Object.values(result);
+                });
+              if (JSON.stringify(counts) !== JSON.stringify(expected[index]))
+                throw new Error('Incomplete material group inventory');
+            }
+          }
+          if (scene === 'objects') {
+            const names = await figure
+              .locator('[data-life-object] p')
+              .allTextContents();
+            if (
+              names.length !== 7 ||
+              !names[0].includes(variant === 'main' ? '罐' : '方块')
+            )
+              throw new Error('Seven object order');
+          }
+          if (
+            scene === 'stability' &&
+            (await figure.locator('[data-stability-plan]').count()) !== 3
+          )
+            throw new Error('Missing stability condition');
+          const inside = await figure.locator('svg').evaluateAll((nodes) =>
+            nodes.every((svg) => {
+              const bounds = svg.getBoundingClientRect();
+              const box = svg.getBBox();
+              const view = svg.viewBox.baseVal;
+              return (
+                bounds.width > 0 &&
+                bounds.left >= 0 &&
+                bounds.right <= innerWidth + 1 &&
+                box.x >= view.x - 2 &&
+                box.y >= view.y - 2 &&
+                box.x + box.width <= view.width + 2 &&
+                box.y + box.height <= view.height + 2
+              );
+            }),
+          );
+          if (!inside) throw new Error('Solid diagram clipped or outside page');
+        };
+        await inventory();
+        const selectors = {
+          materials: '[data-material-piece]',
+          objects: '[data-life-object]',
+          stability: '[data-stability-plan]',
+          robot: '[data-final-robot]',
+        };
+        const cards = figure.locator(selectors[scene]);
+        for (const index of [0, (await cards.count()) - 1]) {
+          const card = cards.nth(index);
+          await card.evaluate((node) =>
+            node.scrollIntoView({ block: 'center' }),
+          );
+          await p.waitForTimeout(200);
+          const visible = await card.evaluate((node) => {
+            const b = node.getBoundingClientRect();
+            return (
+              b.left >= 0 &&
+              b.right <= innerWidth + 1 &&
+              b.top >= 0 &&
+              b.bottom <= innerHeight
+            );
+          });
+          if (!visible)
+            throw new Error('First or last solid card outside viewport');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-solids-${scene}-${variant}-${index}-${width}.png`,
+          });
+        }
+        if (translated) {
+          const before = await read();
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await figure
+            .locator('figcaption')
+            .filter({ hasText: /robot/i })
+            .waitFor();
+          const labels = await figure
+            .locator('svg[role="img"]')
+            .evaluateAll((nodes) =>
+              nodes.map((node) => node.getAttribute('aria-label')),
+            );
+          if (labels.some((label) => !label || /[\u4E00-\u9FFF]/.test(label)))
+            throw new Error('Solid diagram ARIA not translated');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await inventory();
+          await figure.screenshot({
+            path: `/tmp/butler-bnu-final-solids-english-${width}.png`,
+          });
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await figure
+            .locator('figcaption')
+            .filter({ hasText: '机器人' })
+            .waitFor();
+          const after = await read();
+          if (
+            JSON.stringify(before.sessions) !== JSON.stringify(after.sessions)
+          )
+            throw new Error('Solid translation reset records');
+        }
+      };
       const verifyNumberStrip = async (values, stage, translated = false) => {
         const figure = p.locator('[data-number-strip]');
         await figure.waitFor();
@@ -1642,8 +1805,15 @@ const widths = process.argv.includes('--mobile-only')
         );
         if (lessonId === 'bnu-upper-final-number-practice')
           await verifyNumberStrip([5, null, 7, null, 9, null], 'ascending');
+        if (lessonId === 'bnu-upper-final-solids')
+          await verifyFinalSolids('objects');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-final-solids') {
+            if (step === 1) await verifyFinalSolids('stability');
+            if (step === 3) await verifyFinalSolids('materials');
+            if (step === 4) await verifyFinalSolids('robot', 'main', true);
+          }
           if (lessonId === 'bnu-upper-final-color-patterns') {
             if (step === 3)
               await verifyFinalDiagram(
@@ -2224,6 +2394,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-final-number-talk-open-drawing': [0, null],
               'bnu-upper-final-number-practice-difference': [null, 0],
               'bnu-upper-final-color-patterns-dots-next': [0, null, null],
+              'bnu-upper-final-solids-robot-counts': [0, null, 0, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -2257,6 +2428,14 @@ const widths = process.argv.includes('--mobile-only')
                 )
               )
                 throw new Error('BNU application partial zero/null reload');
+            }
+            if (question.id === 'bnu-upper-final-solids-robot-counts') {
+              for (const [field, value] of [2, 8, 2, 6].entries())
+                await p.getByRole('spinbutton').nth(field).fill(String(value));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
             }
             if (question.id === 'bnu-upper-final-color-patterns-color-select') {
               for (const value of ['R12', 'R27']) {
@@ -2357,6 +2536,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-final-number-talk': '-open-drawing',
                   'bnu-upper-final-number-practice': '-difference',
                   'bnu-upper-final-color-patterns': '-dots-next',
+                  'bnu-upper-final-solids': '-robot-counts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -2392,6 +2572,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-final-color-patterns',
                   'bnu-upper-final-number-practice',
                   'bnu-upper-final-number-talk',
+                  'bnu-upper-final-solids',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
                   'bnu-upper-solid-recognition',
@@ -2509,6 +2690,17 @@ const widths = process.argv.includes('--mobile-only')
           )
             throw new Error('Region mistake history lost');
         }
+        if (lessonId === 'bnu-upper-final-solids') {
+          const robot = complete.responses.find((r) =>
+            r.questionId.endsWith('-robot-counts'),
+          );
+          if (
+            JSON.stringify(robot.submissions.map((s) => s.correct)) !==
+              '[false,true]' ||
+            JSON.stringify(robot.submissions[0].answer) !== '[2,8,2,6]'
+          )
+            throw new Error('Painted eye mistake history lost');
+        }
         const first = complete.responses.find((r) =>
           r.questionId.endsWith('-q1'),
         );
@@ -2542,6 +2734,8 @@ const widths = process.argv.includes('--mobile-only')
         for (let index = 0; index < fresh.questions.length; index++) {
           const question = fresh.questions[index];
           await p.getByText(question.prompt, { exact: true }).waitFor();
+          if (lessonId === 'bnu-upper-final-solids' && question.visual)
+            await verifyFinalSolids(question.visual.scene, 'review');
           await answerObjective(question);
           await click('提交答案');
           await p.getByText('答对了', { exact: true }).waitFor();
@@ -2612,7 +2806,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 29,
+          bnuCourse: 30,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

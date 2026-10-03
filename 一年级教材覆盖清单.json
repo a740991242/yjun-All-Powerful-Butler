@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T19:18:01.835Z",
+  "generatedAt": "2026-10-03T19:45:06.373Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 29,
+        "availablePacks": 30,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 446,
-          "manual": 186,
-          "reflection": 69
+          "objective": 467,
+          "manual": 193,
+          "reflection": 72
         }
       },
       "units": [
@@ -29400,13 +29400,49 @@
               }
             },
             {
+              "id": "bnu-upper-final-solids",
+              "title": "立体分类、材料配对与机器人计数",
+              "textbookTitle": "总复习 · 图形与几何",
+              "page": 84,
+              "version": 1,
+              "status": "available",
+              "goal": "完整分类七物品、比较三搭法、配对两件作品和全部材料，逐件区分机器人四类部件与表面画记。",
+              "prerequisite": "认识四种基本立体、会按整体特征分类与逐件计数。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 21,
+                "manual": 7,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-final-solids"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-final-solids"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书84页全项及原PDF部件放大核对",
+                "notes": "第三方0061阅读器88对应印刷84；实际重新阅读并以原PDF300dpi查看机器人，四类2/8/2/4。ISBN印次未知，PDF文件生成时间不冒出版印次。"
+              }
+            },
+            {
               "id": "bnu-upper-final-pending",
               "title": "总复习 · 后续内容制作中",
               "textbookTitle": "总复习",
               "page": 81,
               "version": 1,
               "status": "preparing",
-              "goal": "第81～83页已开放，第84～86页课程仍在制作。",
+              "goal": "第81～84页已开放，第85～86页课程仍在制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

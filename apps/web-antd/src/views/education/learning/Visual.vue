@@ -16,6 +16,7 @@ import BlockCards from './BlockCards.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
+import BnuFinalSolids from './BnuFinalSolids.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
@@ -320,6 +321,10 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
+    <BnuFinalSolids
+      v-else-if="visual.kind === 'bnu-final-solids'"
+      :visual="visual"
+    />
     <BnuFinalColor
       v-else-if="visual.kind === 'bnu-final-color'"
       :visual="visual"

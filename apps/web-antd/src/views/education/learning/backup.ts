@@ -8,6 +8,7 @@ import { isBlockCardsVisual } from './block-cards';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isBnuFinalColorVisual } from './bnu-final-color';
+import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
@@ -333,6 +334,9 @@ function visual(value: unknown) {
     }
     case 'teen-layout': {
       return isTeenLayoutVisual(value);
+    }
+    case 'bnu-final-solids': {
+      return isBnuFinalSolidsVisual(value);
     }
     case 'bnu-final-color': {
       return isBnuFinalColorVisual(value);
