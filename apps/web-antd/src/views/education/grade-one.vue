@@ -8,6 +8,7 @@ import { Alert, Button, Card, Empty, Select, Tag } from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
+import { bnuUpperBook } from './content/bnu';
 import { chineseBooks } from './content/chinese';
 import { editionTarget } from './content/edition-targets';
 import { createEthicsBooks } from './content/ethics';
@@ -42,6 +43,7 @@ watch(
 const editionOptions = computed(() => [
   { value: 'pep-2024', label: $t('educationLearning.pepEdition') },
   { value: 'sujiao', label: $t('educationLearning.sujiaoEdition') },
+  { value: 'bnu-2024', label: $t('educationLearning.bnuEdition') },
 ]);
 function chooseMathEdition(value: unknown) {
   if (
@@ -60,6 +62,7 @@ const textbook = computed(() =>
 const book = computed(() =>
   [
     ...mathBooks,
+    bnuUpperBook,
     ...chineseBooks,
     ...sujiaoBooks,
     ...createEthicsBooks($t),
@@ -151,8 +154,20 @@ function choose(subject: string, volume: string) {
         v-if="target?.status === 'preparing'"
         type="info"
         show-icon
-        :message="$t('educationLearning.sujiaoPreparingTitle')"
-        :description="$t('educationLearning.sujiaoPreparingNotice')"
+        :message="
+          $t(
+            target.edition === 'bnu-2024'
+              ? 'educationLearning.bnuLowerPreparingTitle'
+              : 'educationLearning.sujiaoPreparingTitle',
+          )
+        "
+        :description="
+          $t(
+            target.edition === 'bnu-2024'
+              ? 'educationLearning.bnuLowerPreparingNotice'
+              : 'educationLearning.sujiaoPreparingNotice',
+          )
+        "
       />
       <Empty
         v-else-if="!textbook"

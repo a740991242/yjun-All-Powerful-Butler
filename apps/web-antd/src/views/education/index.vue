@@ -18,6 +18,7 @@ import {
 } from './edition-preferences';
 import { regionalActionPath } from './regional-application';
 import RegionalEditionPanel from './RegionalEditionPanel.vue';
+import SuzhouCoursePreset from './SuzhouCoursePreset.vue';
 defineOptions({ name: 'Education' });
 const route = useRoute();
 const router = useRouter();
@@ -25,9 +26,10 @@ const current = computed(() => selection(route.query.stage, route.query.grade));
 const editionOptions = computed(() => [
   { value: 'sujiao', label: $t('educationLearning.sujiaoEdition') },
   { value: 'pep-2024', label: $t('educationLearning.pepEdition') },
+  { value: 'bnu-2024', label: $t('educationLearning.bnuEdition') },
 ]);
 function chooseEdition(value: unknown) {
-  if (value === 'sujiao' || value === 'pep-2024')
+  if (value === 'sujiao' || value === 'pep-2024' || value === 'bnu-2024')
     mathEditionPreference.value = value;
 }
 const regionalApplied = ref<RegionalEditionAction[]>([]);
@@ -107,6 +109,10 @@ function choose(stage?: string, grade?: string) {
           v-if="current.stage.id === 'primary' && current.grade === 'p1'"
           class="flex flex-col gap-4"
         >
+          <SuzhouCoursePreset
+            @apply="applyRegionalEdition"
+            @clear="regionalApplied = []"
+          />
           <RegionalEditionPanel
             @apply="applyRegionalEdition"
             @clear="regionalApplied = []"

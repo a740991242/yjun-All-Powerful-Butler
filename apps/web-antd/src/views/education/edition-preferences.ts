@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue';
 
-type MathEdition = 'pep-2024' | 'sujiao';
+type MathEdition = 'bnu-2024' | 'pep-2024' | 'sujiao';
 type PreferenceStorage = Pick<Storage, 'getItem' | 'setItem'>;
 export const MATH_EDITION_KEY = 'butler-grade-one-math-edition-v1';
 
@@ -12,7 +12,8 @@ export function createMathEditionPreference(
   const persistenceFailed = ref(false);
   try {
     const saved = getStorage()?.getItem(MATH_EDITION_KEY);
-    if (saved === 'pep-2024' || saved === 'sujiao') edition.value = saved;
+    if (saved === 'pep-2024' || saved === 'sujiao' || saved === 'bnu-2024')
+      edition.value = saved;
   } catch {
     persistenceFailed.value = true;
   }

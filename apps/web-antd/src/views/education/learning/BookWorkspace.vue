@@ -36,12 +36,16 @@ import { specialtyQuestions } from './specialties';
 
 const props = defineProps<{ book: Book }>();
 const textbookLinkKey = computed(() => {
+  if (props.book.edition === 'bnu-2024')
+    return 'educationLearning.bnuSourceLink';
   if (props.book.subject === 'ethics') return 'educationEthics.sourceLink';
   if (props.book.edition === 'sujiao')
     return 'educationLearning.sujiaoSourcePreview';
   return 'educationLearning.openTextbook';
 });
 const textbookNoticeKey = computed(() => {
+  if (props.book.edition === 'bnu-2024')
+    return 'educationLearning.bnuSourceNotice';
   if (props.book.subject === 'ethics') return 'educationEthics.sourceNotice';
   if (props.book.edition !== 'sujiao') return 'educationLearning.editionNotice';
   return props.book.volume === 'lower'
@@ -376,7 +380,7 @@ const wrongSessions = computed(() => [
         />
         <Card
           v-if="
-            book.subject === 'math' ||
+            (book.subject === 'math' && book.edition !== 'bnu-2024') ||
             book.edition === 'pep-2024' ||
             book.transitions?.length
           "

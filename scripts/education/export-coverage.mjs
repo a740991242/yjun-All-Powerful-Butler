@@ -17,7 +17,7 @@ async function main() {
     const page = await context.newPage();
     await page.goto(base.origin, { waitUntil: 'domcontentloaded' });
     report = await page.evaluate(async () => {
-      const [cn, math, sj, textbooks, characters, ethics, ethicsMessages] =
+      const [cn, math, sj, textbooks, characters, ethics, ethicsMessages, bnu] =
         await Promise.all([
           import('/src/views/education/content/chinese.ts'),
           import('/src/views/education/content/math.ts'),
@@ -26,12 +26,14 @@ async function main() {
           import('/src/views/education/content/characters.ts'),
           import('/src/views/education/content/ethics.ts'),
           import('/src/locales/langs/zh-CN/educationEthics.json'),
+          import('/src/views/education/content/bnu.ts'),
         ]);
       const models = [
         ...textbooks.textbooks,
         textbooks.findTextbook('math', 'sujiao', 'upper'),
         textbooks.findTextbook('math', 'sujiao', 'lower'),
         ...ethics.ethicsTextbooks,
+        bnu.bnuUpperTextbook,
       ];
       const ethicsText = (key) => {
         let value = ethicsMessages.default;
@@ -49,6 +51,7 @@ async function main() {
         ...math.mathBooks,
         ...sj.sujiaoBooks,
         ...ethics.createEthicsBooks(ethicsText),
+        bnu.bnuUpperBook,
       ];
       const taskCounts = (qs) => ({
         objective: qs.filter(
@@ -85,7 +88,7 @@ async function main() {
         schemaVersion: 1,
         generatedAt: new Date().toISOString(),
         scope:
-          '一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。',
+          '一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。',
         limitation:
           '本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。',
         fullPlanCompletion: 'not-verified',

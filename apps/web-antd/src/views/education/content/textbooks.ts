@@ -1,5 +1,6 @@
 import type { Subject, Volume } from '../learning/types';
 
+import { bnuUpperTextbook } from './bnu';
 import { ethicsTextbooks } from './ethics';
 import { sujiaoUpperTextbook } from './sujiao';
 import { sujiaoLowerTextbook } from './sujiao-lower';
@@ -19,7 +20,7 @@ export interface Textbook {
   id: string;
   subject: Subject;
   volume: Volume;
-  edition: 'pep-2024' | 'sujiao';
+  edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
   resourceId: string;
   source: string;
   verifiedAt: string;
@@ -220,7 +221,7 @@ export function findTextbook(
     if (volume === 'upper') return sujiaoUpperTextbook;
     if (volume === 'lower') return sujiaoLowerTextbook;
   }
-  return [...textbooks, ...ethicsTextbooks].find(
+  return [...textbooks, ...ethicsTextbooks, bnuUpperTextbook].find(
     (item) =>
       item.subject === subject &&
       item.edition === edition &&

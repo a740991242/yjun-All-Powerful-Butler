@@ -3,6 +3,8 @@
  * Tests eight catalog routes and one representative complete learning/backup flow.
  * This does not certify curriculum coverage or regional textbook assignments.
  * Usage: rtk proxy node scripts/education/verify-pages.mjs
+ * Use --generic-only to check only the Suzhou generic course entry in three widths.
+ * Use --mobile-only for a focused 375px rerun after verifier-only changes.
  */
 import { Buffer } from 'node:buffer';
 import * as fs from 'node:fs/promises';
@@ -18,6 +20,10 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 );
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
+const genericOnly = process.argv.includes('--generic-only');
+const widths = process.argv.includes('--mobile-only')
+  ? [375]
+  : [375, 768, 1200];
 (async () => {
   const server = http.createServer(async (req, res) => {
     try {
@@ -57,7 +63,7 @@ const root = `${repo}/apps/web-antd/dist`;
   let p;
   try {
     browser = await chromium.launch({ channel: 'chrome', headless: true });
-    for (const width of [375, 768, 1200]) {
+    for (const width of widths) {
       const ctx = await browser.newContext({
         viewport: { width, height: 1000 },
       });
@@ -132,6 +138,138 @@ const root = `${repo}/apps/web-antd/dist`;
           .getByText(label, { exact: true })
           .click();
       };
+      // Generic learning preferences must work without any school/year matching.
+      const generic = p.getByRole('region', {
+        name: '苏州通用课程 · 一年级',
+        exact: true,
+      });
+      const beforeGeneric = await read();
+      await chooseArea('education-entry-math-edition', '人教版（2024审定）');
+      const applyGeneric = generic.getByRole('button', {
+        name: '一键选择苏州通用课程',
+        exact: true,
+      });
+      await applyGeneric.click();
+      for (const name of [
+        '语文 · 人教版（2024审定） · 上册',
+        '数学 · 苏教版 · 上册',
+        '道德与法治 · 人教版（2024审定） · 上册',
+      ]) {
+        await p.getByRole('button', { name, exact: true }).waitFor();
+      }
+      await chooseArea('education-generic-volume', '下册');
+      if (
+        await p
+          .getByText(
+            '已应用3个学科课程入口。未适用学科保留原选择，可从下方进入对应册次。',
+            { exact: true },
+          )
+          .count()
+      )
+        throw new Error('stale generic applied volume');
+      await applyGeneric.click();
+      await p
+        .getByRole('button', {
+          name: '数学 · 苏教版 · 下册',
+          exact: true,
+        })
+        .waitFor();
+      if (
+        (await p.evaluate(() =>
+          localStorage.getItem('butler-grade-one-math-edition-v1'),
+        )) !== 'sujiao'
+      )
+        throw new Error('generic math preference');
+      if (JSON.stringify(await read()) !== JSON.stringify(beforeGeneric))
+        throw new Error('generic course choice changed learning records');
+      if (
+        await p.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth,
+        )
+      )
+        throw new Error('generic course overflow');
+      await p
+        .locator('button[aria-haspopup="menu"]')
+        .filter({ has: p.locator('svg.lucide-languages') })
+        .click();
+      await p.getByText('English', { exact: true }).click();
+      const genericEnglish = p.getByRole('region', {
+        name: 'Suzhou general courses · Grade 1',
+        exact: true,
+      });
+      await genericEnglish.waitFor();
+      const genericEnglishText = await genericEnglish.innerText();
+      if (!genericEnglishText.includes('without a school or academic year'))
+        throw new Error('generic English boundary');
+      const wasDark = await p.evaluate(() =>
+        document.documentElement.classList.contains('dark'),
+      );
+      await p.locator('.theme-toggle svg').click();
+      await p.waitForFunction(
+        (value) =>
+          document.documentElement.classList.contains('dark') !== value,
+        wasDark,
+      );
+      await p.waitForTimeout(700);
+      if (
+        await p.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth,
+        )
+      )
+        throw new Error('generic English overflow');
+      await genericEnglish.screenshot({
+        path: `/tmp/butler-generic-courses-en-${width}.png`,
+      });
+      await p.locator('.theme-toggle svg').click();
+      await p.waitForFunction(
+        (value) =>
+          document.documentElement.classList.contains('dark') === value,
+        wasDark,
+      );
+      await p.waitForTimeout(700);
+      await p
+        .locator('button[aria-haspopup="menu"]')
+        .filter({ has: p.locator('svg.lucide-languages') })
+        .click();
+      await p.getByText('简体中文', { exact: true }).click();
+      await generic.waitFor();
+      await generic.screenshot({
+        path: `/tmp/butler-generic-courses-${width}.png`,
+      });
+      await p
+        .getByRole('button', {
+          name: '数学 · 苏教版 · 下册',
+          exact: true,
+        })
+        .click();
+      await p.waitForURL(`${url}#/education/primary/p1/math/sujiao/lower`);
+      await p.getByRole('button', { name: '导出备份', exact: true }).waitFor();
+      await p.goto(`${url}#/education?stage=primary&grade=p1`, {
+        waitUntil: 'domcontentloaded',
+      });
+      await p
+        .getByRole('combobox', { name: '省份 / 地区', exact: true })
+        .waitFor();
+      if (genericOnly) {
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            genericCourses: true,
+            volumeSwitch: true,
+            preference: true,
+            recordsUnchanged: true,
+            languagesAndThemes: true,
+            hashBase: true,
+            errors,
+            bad,
+            api,
+          }),
+        );
+        await ctx.close();
+        continue;
+      }
       const region = p.getByRole('region', {
         name: '按地区与学校资料选教材',
         exact: true,
@@ -569,6 +707,348 @@ const root = `${repo}/apps/web-antd/dist`;
           exact: false,
         })
         .waitFor();
+      const beforeBnu = await read();
+      await p.goto(`${url}#/education/primary/p1/math/bnu-2024/upper`, {
+        waitUntil: 'domcontentloaded',
+      });
+      await p.waitForFunction(
+        () =>
+          [...document.querySelectorAll('button')].filter(
+            (button) => button.textContent.trim() === '导出备份',
+          ).length === 1,
+      );
+      await p.getByRole('button', { name: '导出备份', exact: true }).waitFor();
+      if (
+        (await p
+          .getByRole('button', { name: '进入课程', exact: true })
+          .count()) !== 3
+      )
+        throw new Error('BNU partial availability');
+      await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
+      await p
+        .getByRole('button', { name: '进入课程', exact: true })
+        .first()
+        .click();
+      await p.getByRole('button', { name: '下一步', exact: true }).waitFor();
+      const bnuId = new URLSearchParams(p.url().split('?')[1]).get('session');
+      for (let step = 0; step < 4; step++) await click('下一步');
+      await click('开始练习');
+      const findSession = async (id) => {
+        const library = await read();
+        const session = library.sessions.find((item) => item.id === id);
+        if (!session) throw new Error(`Missing session ${id}`);
+        return session;
+      };
+      const answerObjective = async (question) => {
+        await (question.rule.kind === 'number'
+          ? p.getByRole('spinbutton').fill(String(question.rule.value))
+          : p
+              .getByRole('radio', {
+                name: question.choices.find(
+                  (item) => item.id === question.rule.value,
+                ).label,
+                exact: true,
+              })
+              .check());
+      };
+      let bnuWrong = false;
+      let bnuDraft = false;
+      const savedDraft = async (index, draft) => {
+        for (let attempt = 0; attempt < 50; attempt++) {
+          const stored = await findSession(bnuId);
+          const value = stored.responses[index]?.draft;
+          if (JSON.stringify(value) === JSON.stringify(draft)) return;
+          await p.waitForTimeout(100);
+        }
+        throw new Error('BNU draft did not reach IndexedDB');
+      };
+      while (true) {
+        const session = await findSession(bnuId);
+        const question = session.questions[session.questionIndex];
+        await p.getByText(question.prompt, { exact: true }).waitFor();
+        if (question.rule.kind === 'manual') await click('暂时跳过');
+        else if (question.rule.kind === 'reflection') {
+          const draft = '隔离测试：原书与实际交流未做，保留一个数字用途问题。';
+          await p
+            .getByRole('textbox', { name: '我的学习反思', exact: true })
+            .fill(draft);
+          await savedDraft(session.questionIndex, draft);
+          await p.reload({ waitUntil: 'domcontentloaded' });
+          await p
+            .getByRole('textbox', { name: '我的学习反思', exact: true })
+            .waitFor();
+          if (
+            (await p
+              .getByRole('textbox', { name: '我的学习反思', exact: true })
+              .inputValue()) !== draft
+          )
+            throw new Error('BNU reflection reload');
+          await click('保存反思');
+        } else {
+          if (question.id.endsWith('q1')) {
+            await p.getByRole('spinbutton').fill('0');
+            await savedDraft(session.questionIndex, 0);
+            await p.reload({ waitUntil: 'domcontentloaded' });
+            await p.getByRole('spinbutton').waitFor();
+            if ((await p.getByRole('spinbutton').inputValue()) !== '0')
+              throw new Error('BNU zero draft');
+            bnuDraft = true;
+            await p.getByRole('spinbutton').fill('2');
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            bnuWrong = true;
+          }
+          await answerObjective(question);
+          if (question.id.endsWith('q2')) {
+            await p
+              .getByText(question.prompt, { exact: true })
+              .scrollIntoViewIfNeeded();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-practice-${width}.png`,
+            });
+          }
+          await click('提交答案');
+          await p.getByText('答对了', { exact: true }).waitFor();
+        }
+        if (session.questionIndex === session.questions.length - 1) break;
+        if (question.rule.kind !== 'manual') await click('下一题');
+      }
+      await click('完成并保存记录');
+      await p.getByText('本次学习已完成', { exact: true }).waitFor();
+      const afterBnu = await read();
+      const bnuSession = afterBnu.sessions.find((item) => item.id === bnuId);
+      if (
+        !bnuWrong ||
+        !bnuDraft ||
+        bnuSession.bookId !== 'bnu-math-p1-upper-2024' ||
+        bnuSession.questions.length !== 11 ||
+        bnuSession.responses.filter((item) => item.skipped).length !== 4
+      )
+        throw new Error('BNU course completion');
+      for (const session of beforeBnu.sessions) {
+        if (
+          JSON.stringify(
+            afterBnu.sessions.find((item) => item.id === session.id),
+          ) !== JSON.stringify(session)
+        )
+          throw new Error('BNU changed old session');
+      }
+      await click('返回课程目录');
+      const bnuDownload = p.waitForEvent('download');
+      await click('导出备份');
+      const bnuFile = await bnuDownload;
+      const bnuBackup = JSON.parse(
+        await fs.readFile(await bnuFile.path(), 'utf8'),
+      );
+      if (
+        JSON.stringify(
+          bnuBackup.data.sessions.find((item) => item.id === bnuId),
+        ) !== JSON.stringify(bnuSession)
+      )
+        throw new Error('BNU export lost snapshot');
+      const activityFlows = [];
+      for (const [title, stepCount, taskCount, manualCount, lessonId] of [
+        ['操场观察、分组与按条件选物', 6, 18, 7, 'bnu-upper-school-games'],
+        [
+          '生活物品的大小、长短与轻重观察',
+          5,
+          13,
+          4,
+          'bnu-upper-school-harvest',
+        ],
+      ]) {
+        const previous = await read();
+        await p.getByText(title, { exact: true }).waitFor();
+        const entry = p.getByText(title, { exact: true }).locator('xpath=..');
+        await entry
+          .getByRole('button', { name: '进入课程', exact: true })
+          .click();
+        await p.getByRole('button', { name: '下一步', exact: true }).waitFor();
+        const activityId = new URLSearchParams(p.url().split('?')[1]).get(
+          'session',
+        );
+        for (let step = 1; step < stepCount; step++) await click('下一步');
+        await click('开始练习');
+        const activityDraft = async (index, draft) => {
+          for (let attempt = 0; attempt < 50; attempt++) {
+            const stored = await findSession(activityId);
+            const response = stored.responses[index];
+            if (JSON.stringify(response?.draft) === JSON.stringify(draft))
+              return;
+            await p.waitForTimeout(100);
+          }
+          throw new Error('Activity draft not saved');
+        };
+        while (true) {
+          const session = await findSession(activityId);
+          const index = session.questionIndex;
+          const question = session.questions[index];
+          await p.getByText(question.prompt, { exact: true }).waitFor();
+          if (question.rule.kind === 'manual') await click('暂时跳过');
+          else if (question.rule.kind === 'reflection') {
+            const draft =
+              '隔离测试：实际纸片和原书活动未做，记录一个待核对的问题。';
+            await p
+              .getByRole('textbox', { name: '我的学习反思', exact: true })
+              .fill(draft);
+            await activityDraft(index, draft);
+            await p.reload({ waitUntil: 'domcontentloaded' });
+            await p
+              .getByRole('textbox', { name: '我的学习反思', exact: true })
+              .waitFor();
+            if (
+              (await p
+                .getByRole('textbox', { name: '我的学习反思', exact: true })
+                .inputValue()) !== draft
+            )
+              throw new Error('Activity reflection reload');
+            await click('保存反思');
+          } else {
+            if (question.id.endsWith('-q1')) {
+              if (question.rule.kind === 'number') {
+                await p.getByRole('spinbutton').fill('0');
+                await activityDraft(index, 0);
+                await p.reload({ waitUntil: 'domcontentloaded' });
+                await p.getByRole('spinbutton').waitFor();
+                if ((await p.getByRole('spinbutton').inputValue()) !== '0')
+                  throw new Error('Activity zero reload');
+              } else {
+                const wrong = question.choices.find(
+                  (item) => item.id !== question.rule.value,
+                );
+                await p
+                  .getByRole('radio', { name: wrong.label, exact: true })
+                  .check();
+              }
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            await answerObjective(question);
+            if (
+              question.id.endsWith(
+                lessonId === 'bnu-upper-school-games' ? '-q7' : '-q4',
+              )
+            ) {
+              await p
+                .getByText(question.prompt, { exact: true })
+                .scrollIntoViewIfNeeded();
+              await p.screenshot({
+                path: `/tmp/butler-${lessonId}-${width}.png`,
+              });
+            }
+            await click('提交答案');
+            await p.getByText('答对了', { exact: true }).waitFor();
+          }
+          if (index === session.questions.length - 1) break;
+          if (question.rule.kind !== 'manual') await click('下一题');
+        }
+        await click('完成并保存记录');
+        await p.getByText('本次学习已完成', { exact: true }).waitFor();
+        const complete = await findSession(activityId);
+        if (
+          complete.questions.length !== taskCount ||
+          complete.lessonId !== lessonId ||
+          complete.responses.filter((r) => r.skipped).length !== manualCount
+        )
+          throw new Error('Activity completion identity');
+        const first = complete.responses.find((r) =>
+          r.questionId.endsWith('-q1'),
+        );
+        if (
+          JSON.stringify(first.submissions.map((s) => s.correct)) !==
+          '[false,true]'
+        )
+          throw new Error('Activity mistake history');
+        await click('返回课程目录');
+        const newReview = p
+          .getByText(title, { exact: true })
+          .filter({ visible: true })
+          .last()
+          .locator('xpath=..');
+        await newReview
+          .getByRole('button', { name: '同知识点新题', exact: true })
+          .click();
+        await p
+          .getByRole('button', { name: '提交答案', exact: true })
+          .waitFor();
+        const reviewId = new URLSearchParams(p.url().split('?')[1]).get(
+          'session',
+        );
+        const fresh = await findSession(reviewId);
+        if (
+          fresh.questions.length !== 4 ||
+          fresh.originalSessionId !== activityId
+        )
+          throw new Error('Activity fresh review identity');
+        for (let index = 0; index < fresh.questions.length; index++) {
+          const question = fresh.questions[index];
+          await p.getByText(question.prompt, { exact: true }).waitFor();
+          await answerObjective(question);
+          await click('提交答案');
+          await p.getByText('答对了', { exact: true }).waitFor();
+          if (index < fresh.questions.length - 1) await click('下一题');
+        }
+        await click('完成并保存记录');
+        await p.getByText('本次学习已完成', { exact: true }).waitFor();
+        await click('返回课程目录');
+        const after = await read();
+        if (
+          JSON.stringify(after.sessions.find((s) => s.id === activityId)) !==
+          JSON.stringify(complete)
+        )
+          throw new Error('Review altered main attempt');
+        for (const session of previous.sessions)
+          if (
+            JSON.stringify(after.sessions.find((s) => s.id === session.id)) !==
+            JSON.stringify(session)
+          )
+            throw new Error('Activity changed old record');
+        const downloading = p.waitForEvent('download');
+        await click('导出备份');
+        const backupFile = await downloading;
+        const backup = JSON.parse(
+          await fs.readFile(await backupFile.path(), 'utf8'),
+        );
+        if (
+          JSON.stringify(backup.data.sessions) !==
+          JSON.stringify(after.sessions)
+        )
+          throw new Error('Activity backup changed sessions');
+        activityFlows.push({
+          lessonId,
+          taskCount,
+          review: 4,
+          skipped: manualCount,
+        });
+      }
+      await click('数学 · 下册');
+      await p.getByText('北师大版下册课程筹备中', { exact: true }).waitFor();
+      await p.waitForFunction(
+        () =>
+          [...document.querySelectorAll('button')].filter(
+            (button) => button.textContent.trim() === '导出备份',
+          ).length === 0,
+      );
+      if (
+        await p.getByRole('button', { name: '进入课程', exact: true }).count()
+      )
+        throw new Error('BNU lower uses another book');
+      await chooseArea('grade-one-math-edition', '苏教版');
+      await p.waitForURL('**/math/sujiao/lower');
+      await p.waitForFunction(
+        () =>
+          [...document.querySelectorAll('button')].filter(
+            (button) => button.textContent.trim() === '导出备份',
+          ).length === 1,
+      );
+      await p.getByRole('button', { name: '导出备份', exact: true }).waitFor();
+      const switchedLibrary = await read();
+      if (!switchedLibrary.sessions.some((item) => item.id === bnuId))
+        throw new Error('BNU switch lost history');
       if (errors.length > 0 || bad.length > 0 || api.length > 0)
         throw new Error(JSON.stringify({ errors, bad, api }));
       console.log(
@@ -577,6 +1057,9 @@ const root = `${repo}/apps/web-antd/dist`;
           login: true,
           provinceGuard: true,
           catalogs: 8,
+          bnuCourse: 11,
+          activityFlows,
+          bnuUnavailableLower: true,
           taskFlow: 15,
           draftReload: true,
           backupExport: true,

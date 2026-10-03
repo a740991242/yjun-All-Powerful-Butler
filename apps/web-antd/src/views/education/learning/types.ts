@@ -603,7 +603,7 @@ export interface Book {
   id: string;
   subject: Subject;
   volume: Volume;
-  edition: 'pep-2024' | 'sujiao';
+  edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
   title: string;
   source: string;
   verifiedAt: string;
