@@ -2,6 +2,7 @@ import type { CountGroupsVisual, Lesson, Question } from '../learning/types';
 
 import { countGroupsTotal } from '../learning/count-groups';
 import { required } from '../learning/required';
+import { tenPracticeGroups } from './sujiao-ten-practice-groups';
 import { sujiaoUpperSource as source } from './sujiao-upper-source';
 
 const id = 'sj-upper-ten-review';
@@ -146,8 +147,8 @@ export const sujiaoTenReviewLesson: Lesson = {
   title: '10的综合活动：分组、补足与等式',
   page: 67,
   status: 'available',
-  version: 1,
-  goal: '区分组数和物品总数，用补足与加减关系解决实际问题，检查等式两边和不等号的严格含义。',
+  version: 2,
+  goal: '区分组数与总数，完整练十二式/十式配对/六连算/三应用/六等式；独立完成原页整组，检查两边与严格比较。',
   prerequisite:
     '认识0～10，会10的分与合及加减法；准备10个安全小物件、容器、数字卡和纸笔。',
   parentTip:
@@ -177,6 +178,24 @@ export const sujiaoTenReviewLesson: Lesson = {
       text: '把问题中的两部分画清，再按问题选择合起来还是求剩下。连加、连减和加减混合从左到右；先得到中间结果，再继续算。检查算式、物品名称和数量是否一致。完成练习不等于已经熟练掌握。',
       activity:
         '自己编一个总数不超过10的小故事，画图列式，解释为何用加法或减法。再挑一题说出不同办法，实际摆物验证。',
+    },
+    {
+      title: '十二式与十式配对，逐条不漏',
+      text: '本站新增十二条原创加减练习，分别看符号和实际数量，含全部拿走得到0。十式配对则先算每条，再选结果；同一个结果可以配多条，不能配过一次就删去结果卡。它们帮助练方法，不自动证明原书整组已完成。',
+      activity:
+        '实际回第67页第4项完成全部12式，再回第72页第5项完成十条配对。逐条核对并保留错误修正，本站练习与原书作业分别记录。',
+    },
+    {
+      title: '六条连算与三个相关问题',
+      text: '连算先算左边一步，再用中间结果继续；每条都写中间与最后结果。三个相关问题给的是同一组数量事实，分别问总数或不同的另一部分，不能因为数字相同就用同一种算式。本站卡片情境与原书情境独立，列式后用两部分合起来核对总数。',
+      activity:
+        '实际完成第73页第9项全部六条及第10项三问题，每题圈条件/问题、画图或摆物、列式、写单位与答句。未实际做可暂跳，不把未来计划当完成。',
+    },
+    {
+      title: '连接算式后，仍要检查完整两边',
+      text: '先分别求两条算式的结果，如果一样，再写成两边相等的关系。本站先用两条连接例练习，再练四条等式空格；填空须让整个右边与左边一样，空格通常不是左边的结果。把填数代回两边，分别计算作检查。',
+      activity:
+        '实际完成第73页第11项两组连接前后，再完成第74页第12项全部四空，每个等式逐边核对。拿自己的纸面作品说明一次错误怎样修正，记录真实帮助。',
     },
   ],
   questions: [
@@ -210,11 +229,42 @@ export const sujiaoTenReviewLesson: Lesson = {
       hint: '按讲解实际完成，不只在页面点击确认。',
       explanation: required(explanation),
     })),
+    ...tenPracticeGroups(false),
+    ...[
+      [
+        'source-oral',
+        '回同版教材第67页想想做做第4项，实际纸面逐条完成全部12式，再逐条核对。遇错保留原结果并修正；本站十二式是原创练习，不能替原书已做记录。',
+      ],
+      [
+        'source-matching',
+        '回同版教材第72页练习七第5项，实际处理全部十条算式，再逐条与结果配对。相同结果可对应多条，不遗漏两行任何一条；本站十式不替原页已做。',
+      ],
+      [
+        'source-sequential',
+        '回同版教材第73页练习七第9项，实际完成全部六条连算，每条写第一步中间结果和最后结果，逐条说明从左往右怎样接着算。未做或有困难如实记录。',
+      ],
+      [
+        'source-applications',
+        '回同版教材第73页练习七第10项，实际分别完成三个相关问题。每题圈清已知数量和所求对象，画两部分或摆物，写算式、单位与完整答句；求总数与求另一部分不能混，本站卡片故事不冒原书三题已完成。',
+      ],
+      [
+        'source-equalities',
+        '回同版教材第73页练习七第11项，实际完成两组连接前的算式和连接后的等式，再完成第74页第12项全部四个空格。每个等式都把填数代回两边检查，不能将左边得数直接抄进空格；原书共两组连接与四空分别核对。',
+      ],
+    ].map(([key, prompt]): Question => ({
+      id: `${id}-manual-${required(key)}`,
+      knowledge: `${id}-actual-${required(key)}`,
+      prompt: required(prompt),
+      rule: { kind: 'manual' },
+      hint: '需要实际原书与纸笔，完整处理该组后再确认；未做暂跳，不由网页答对自动确认。',
+      explanation:
+        '实际原页练习独立人工记录，错误修正、帮助和未完成如实记；不复制完整题文或原扫描。',
+    })),
   ],
-  reviewQuestions: tasks(true),
+  reviewQuestions: [...tasks(true), ...tenPracticeGroups(true)],
   review: {
-    date: source.checkedAt,
+    date: '2026-10-04',
     reviewer: '同版原书正文核验与原创教学检查',
-    notes: `已实际核对ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第67、69、71～74页（${source.preview}）。原创分组与配对情境、算式和反思活动，不复制教材插图与题文。只开放本课范围，不代表全单元全部拓展或全册完成，保留人教版独立记录。`,
+    notes: `已实际核对ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第67、69、71～74页（${source.preview}）。原创分组与配对情境、算式和反思活动，不复制教材插图与题文。2026-10-04重新查看62～74页，补原页12式/十式配对/六连算/三应用/两组连接及四等式空格的完整实践，并提供对应完整数量的原创练习。旧14题与10复习保持，v1历史继续按快照恢复。只开放本课范围，不代表全单元全部拓展或全册完成，保留人教版独立记录。`,
   },
 };

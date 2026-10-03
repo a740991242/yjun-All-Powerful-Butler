@@ -1,7 +1,7 @@
-/** Retained same-edition reader 69–81, printed 62–74, actually viewed on 2026-10-02. */
+/** Retained same-edition reader 69–81, printed 62–74, actually viewed again on 2026-10-04. */
 export const sujiaoUpperFourthUnitAudit = {
   isbn: '978-7-5743-1099-5',
-  checkedAt: '2026-10-02',
+  checkedAt: '2026-10-04',
   unit: 'u4',
   source: 'https://keben.app/book/0103',
   status: 'original-teaching-implemented',
@@ -125,6 +125,7 @@ export const sujiaoUpperFourthUnitAudit = {
       page: 67,
       scope: '九行涂圈完整加法表、开放写式与两件一组',
       evidence: [
+        ['sj-upper-ten-review', ['sj-upper-ten-review-actual-source-oral']],
         [
           'sj-upper-ten-open-activities',
           ['sj-upper-ten-open-activities-actual-open-writings'],
@@ -242,6 +243,7 @@ export const sujiaoUpperFourthUnitAudit = {
       page: 72,
       scope: '完整倒数10到1、联合严格比较、配对补缺',
       evidence: [
+        ['sj-upper-ten-review', ['sj-upper-ten-review-actual-source-matching']],
         [
           'sj-upper-ten-order',
           [
@@ -268,6 +270,14 @@ export const sujiaoUpperFourthUnitAudit = {
       page: 73,
       scope: '两部分三算式、开放等与不等、连续运算、等式两边',
       evidence: [
+        [
+          'sj-upper-ten-review',
+          [
+            'sj-upper-ten-review-actual-source-sequential',
+            'sj-upper-ten-review-actual-source-applications',
+            'sj-upper-ten-review-actual-source-equalities',
+          ],
+        ],
         [
           'sj-upper-ten-open-activities',
           [
@@ -300,6 +310,10 @@ export const sujiaoUpperFourthUnitAudit = {
       page: 74,
       scope: '等式两边、完整铺图、三数连线、三项自评及古文字计数',
       evidence: [
+        [
+          'sj-upper-ten-review',
+          ['sj-upper-ten-review-actual-source-equalities'],
+        ],
         [
           'sj-upper-ten-evaluation',
           [
