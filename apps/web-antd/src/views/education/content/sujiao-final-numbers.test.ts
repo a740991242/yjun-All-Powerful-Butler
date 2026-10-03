@@ -20,10 +20,10 @@ it('keeps ten in the chosen category but excludes it from strictly greater than 
   }
   expect(lesson.parentTip).toContain('多种合理规则');
   expect(lesson.questions.filter((q) => q.rule.kind !== 'manual')).toHaveLength(
-    12,
+    13,
   );
   expect(lesson.questions.filter((q) => q.rule.kind === 'manual')).toHaveLength(
-    4,
+    8,
   );
 });
 it('restores partial composition and immutable first floor-count error after retry', () => {
@@ -82,4 +82,79 @@ it('uses a new review order and treats arrangement, movement and reading as diff
   expect(
     lesson.questions.find((q) => q.id.endsWith('-manual-reflect'))?.rule.kind,
   ).toBe('manual');
+});
+
+it('counts descending gaps independently from endpoint labels and keeps all original-page groups manual', () => {
+  const q = lesson.questions.find((q) => q.knowledge.endsWith('-floor-down'))!;
+  const r = lesson.reviewQuestions!.find((q) =>
+    q.knowledge.endsWith('-floor-down'),
+  )!;
+  expect(evaluate(q.rule, 6)).toBe(true);
+  expect(evaluate(q.rule, 7)).toBe(false);
+  expect(evaluate(q.rule, 20)).toBe(false);
+  expect(evaluate(r.rule, 9)).toBe(true);
+  expect(evaluate(r.rule, 10)).toBe(false);
+  expect(q.prompt).toContain('本站原创');
+  expect(r.prompt).not.toEqual(q.prompt);
+  const actual = lesson.questions.filter((q) =>
+    q.knowledge.includes('-actual-source-'),
+  );
+  expect(actual).toHaveLength(4);
+  for (const q of actual) expect(q.rule).toEqual({ kind: 'manual' });
+  expect(
+    actual.find((q) => q.knowledge.endsWith('floor-directions'))!.prompt,
+  ).toContain('三问均处理');
+  expect(
+    actual.find((q) => q.knowledge.endsWith('four-compositions'))!.prompt,
+  ).toContain('所有空');
+});
+it('keeps old sixteen-task sessions, new source work, drafts and mistakes together in schema1 backups', () => {
+  const state = initialLibrary('测试');
+  const old = createSession(
+    {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.slice(0, 16),
+      reviewQuestions: lesson.reviewQuestions!.slice(0, 12),
+      steps: lesson.steps.slice(0, 5),
+    },
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 1 },
+  );
+  const next = createSession(
+    lesson,
+    'sujiao-math-p1-upper-2024',
+    state.activeProfileId,
+    { seed: 2 },
+  );
+  const i = next.questions.findIndex((q) =>
+    q.knowledge.endsWith('-floor-down'),
+  );
+  next.responses[i] = submitResponse(next.questions[i]!, {
+    ...next.responses[i]!,
+    draft: 7,
+  });
+  next.responses[i] = submitResponse(next.questions[i]!, {
+    ...next.responses[i]!,
+    draft: 6,
+  });
+  const actual = next.questions.findIndex((q) =>
+    q.knowledge.endsWith('floor-directions'),
+  );
+  expect(next.responses[actual]!.submissions).toEqual([]);
+  next.responses[actual] = submitResponse(next.questions[actual]!, {
+    ...next.responses[actual]!,
+    draft: 'confirmed',
+  });
+  expect(next.responses[actual]!.submissions[0]!.correct).toBeNull();
+  next.responses[0]!.draft = ['13'];
+  state.sessions.push(old, next);
+  expect(parseBackup(exportBackup(state)).data).toEqual(state);
+  expect(old.questions).toHaveLength(16);
+  expect(next.questions).toHaveLength(21);
+  expect(next.responses[i]!.submissions.map((s) => s.correct)).toEqual([
+    false,
+    true,
+  ]);
 });

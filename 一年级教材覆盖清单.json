@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T23:12:08.136Z",
+  "generatedAt": "2026-10-03T23:21:41.824Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -14377,8 +14377,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 811,
-          "manual": 277,
+          "objective": 812,
+          "manual": 281,
           "reflection": 42
         }
       },
@@ -17802,19 +17802,19 @@
               "title": "期末复习：0～19的分类、数序与十个一",
               "textbookTitle": "期末复习：数的整理与应用",
               "page": 88,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "按明确规则整理0～19，区分大于10与10和十几，读写组成、比较与数序，联系楼层先后和移动次数。",
               "prerequisite": "认识0～19和一个十、几个一，准备数字卡、19根安全小棒、纸笔；数位图只用于观察和讲解。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 6,
               "tasks": {
-                "objective": 12,
-                "manual": 4,
+                "objective": 13,
+                "manual": 8,
                 "reflection": 0
               },
               "reviewTasks": {
-                "objective": 12,
+                "objective": 13,
                 "manual": 0,
                 "reflection": 0
               },
@@ -17834,7 +17834,12 @@
                 "sj-upper-final-numbers-physical-classify",
                 "sj-upper-final-numbers-physical-bundle",
                 "sj-upper-final-numbers-physical-floor",
-                "sj-upper-final-numbers-physical-reflect"
+                "sj-upper-final-numbers-physical-reflect",
+                "sj-upper-final-numbers-floor-down",
+                "sj-upper-final-numbers-actual-source-three-images",
+                "sj-upper-final-numbers-actual-source-four-compositions",
+                "sj-upper-final-numbers-actual-source-five-number-order",
+                "sj-upper-final-numbers-actual-source-floor-directions"
               ],
               "questionKinds": [
                 "set",
@@ -17846,9 +17851,9 @@
               ],
               "visualKinds": ["place-value"],
               "audit": {
-                "date": "2026-10-01",
+                "date": "2026-10-04",
                 "reviewer": "同版期末正文核验与原创教学检查",
-                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第88、90页（https://keben.app/book/0103）的数分类、数序、组成、大小与楼层应用。原创数字、情境与讲解，明确分类与严格大于的边界和楼层编号约定，不复制教材图；本课不代表其余期末课或全年完成。"
+                "notes": "依据实际查看ISBN 978-7-5743-1099-5、2024年7月第1版、2025年7月第2次印刷上册第88、90页（https://keben.app/book/0103）的数分类、数序、组成、大小与楼层应用。原创数字、情境与讲解，明确分类与严格大于的边界和楼层编号约定，不复制教材图；2026-10-04重新查看88～94七页，补充第90页四组原书实际任务与原创下降计数。旧16主任务、12复习和前五步骤保留；新版21主任务、13复习，不改旧v1快照。本课不代表其余期末课或全年完成。"
               }
             },
             {
@@ -19286,12 +19291,12 @@
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 167,
-            "manual": 59,
+            "objective": 168,
+            "manual": 63,
             "reflection": 11
           },
           "reviewTasks": {
-            "objective": 167,
+            "objective": 168,
             "manual": 0,
             "reflection": 0
           },
@@ -19441,6 +19446,11 @@
             "sj-upper-final-numbers-physical-bundle",
             "sj-upper-final-numbers-physical-floor",
             "sj-upper-final-numbers-physical-reflect",
+            "sj-upper-final-numbers-floor-down",
+            "sj-upper-final-numbers-actual-source-three-images",
+            "sj-upper-final-numbers-actual-source-four-compositions",
+            "sj-upper-final-numbers-actual-source-five-number-order",
+            "sj-upper-final-numbers-actual-source-floor-directions",
             "sj-upper-final-arithmetic-calculate-0",
             "sj-upper-final-arithmetic-calculate-1",
             "sj-upper-final-arithmetic-calculate-2",

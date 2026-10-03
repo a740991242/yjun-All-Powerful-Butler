@@ -153,6 +153,36 @@ function tasks(review: boolean): Question[] {
     },
   ];
 }
+function descendingTask(review: boolean): Question {
+  const start = review ? 18 : 13;
+  const end = review ? 9 : 7;
+  return {
+    id: `${id}-${review ? 'r' : 'q'}-floor-down`,
+    knowledge: `${id}-floor-down`,
+    prompt: `本站原创连续编号楼层示例：电梯从${start}楼下降到${end}楼，每经过相邻两层算下降一层，起点不算一次。一共下降几层？`,
+    rule: { kind: 'number', value: start - end },
+    hint: '先判断是下降；数相邻楼层之间的移动次数，不把起点也算一次。',
+    explanation: `${start}−${end}=${start - end}，下降${start - end}层。若把两个端点的楼层标签都数进去，会多算一次；下降不是把两层编号相加。`,
+  };
+}
+const sourceManual: [string, string][] = [
+  [
+    'three-images',
+    '实际回同版教材第90页第1项，分别看散物、小棒和计数器三幅图，逐件或按十/个读数量，独立写全三处并核对单位。本站原创图不能代替原图已经读写；没原书或未读写可暂跳。',
+  ],
+  [
+    'four-compositions',
+    '实际回同版教材第90页第2项，完成全部四个小题的所有空，分别解释接近10、几个一换成一个十、十与一合成总量和十几的组成。每空对应所求单位，保留逐项核对与帮助；不把一个示例当四题已做。',
+  ],
+  [
+    'five-number-order',
+    '实际回同版教材第90页第3项，使用原题给出的五个数，分别填写最大、最小、严格大于10的个数，再完整写五数从小到大的顺序并核对四个小于号。相等于10不计入严格大于，本站另一组数不能代替原页。',
+  ],
+  [
+    'floor-directions',
+    '实际回同版教材第90页第4项，分别说明从低处上升先到谁家、从高处下降先到谁家，再算两家之间上升的层数。纸上保留原题连续楼层编号，用棋子分别演示上升与下降先后及两家移动，起点不算一次；原页三问均处理，没实际演示暂跳。',
+  ],
+];
 const manual: [string, string][] = [
   [
     'classify',
@@ -177,7 +207,7 @@ export const sujiaoFinalNumbersLesson: Lesson = {
   title: '期末复习：0～19的分类、数序与十个一',
   page: 88,
   status: 'available',
-  version: 1,
+  version: 2,
   goal: '按明确规则整理0～19，区分大于10与10和十几，读写组成、比较与数序，联系楼层先后和移动次数。',
   prerequisite:
     '认识0～19和一个十、几个一，准备数字卡、19根安全小棒、纸笔；数位图只用于观察和讲解。',
@@ -212,6 +242,12 @@ export const sujiaoFinalNumbersLesson: Lesson = {
       activity:
         '展示自己的数字卡、书写与捆棒，举例解释，让家长分别查看并记录。',
     },
+    {
+      title: '回原页，四组练习分别完成',
+      text: '同版第90页第1至4项：三幅数量图分别读写；四个组成与接近问题所有空分别回答；五数的最大、最小、严格大于10个数和完整排列分别填写；楼层题分别处理上升先后、下降先后及两家间的移动次数。本站原创练习和原书实际任务分开，少量示例不能代替整组。下降移动次数同样数相邻层之间的变化，起点不算一次。',
+      activity:
+        '实际回第90页依次处理四组，保留全部空格、数序和三问的纸面作品；棋子演示两个方向的先后及移动。没有原书或尚未实际操作可暂跳，未来计划另记。',
+    },
   ],
   questions: [
     ...tasks(false),
@@ -224,11 +260,21 @@ export const sujiaoFinalNumbersLesson: Lesson = {
       explanation:
         '读写、摆物和反思独立人工确认，图示作答不能替代，也不自动产生掌握判断。',
     })),
+    descendingTask(false),
+    ...sourceManual.map(([key, prompt]): Question => ({
+      id: `${id}-manual-source-${key}`,
+      knowledge: `${id}-actual-source-${key}`,
+      prompt,
+      rule: { kind: 'manual' },
+      hint: '回原页逐项读写和实际操作，未完成可以暂跳，不能用本站客观题答对自动确认。',
+      explanation:
+        '原页实际任务独立人工确认，correct为null，不自动判掌握或评星；保留帮助与未完成部分。',
+    })),
   ],
-  reviewQuestions: tasks(true),
+  reviewQuestions: [...tasks(true), descendingTask(true)],
   review: {
-    date: source.checkedAt,
+    date: '2026-10-04',
     reviewer: '同版期末正文核验与原创教学检查',
-    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第88、90页（${source.preview}）的数分类、数序、组成、大小与楼层应用。原创数字、情境与讲解，明确分类与严格大于的边界和楼层编号约定，不复制教材图；本课不代表其余期末课或全年完成。`,
+    notes: `依据实际查看ISBN ${source.isbn}、2024年7月第1版、2025年7月第2次印刷上册第88、90页（${source.preview}）的数分类、数序、组成、大小与楼层应用。原创数字、情境与讲解，明确分类与严格大于的边界和楼层编号约定，不复制教材图；2026-10-04重新查看88～94七页，补充第90页四组原书实际任务与原创下降计数。旧16主任务、12复习和前五步骤保留；新版21主任务、13复习，不改旧v1快照。本课不代表其余期末课或全年完成。`,
   },
 };

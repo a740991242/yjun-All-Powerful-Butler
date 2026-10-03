@@ -1,7 +1,7 @@
-/** Reader95–101, printed88–94, actually viewed 2026-10-02. */
+/** Reader95–101, printed88–94, actually viewed again 2026-10-04. */
 export const sujiaoUpperFinalUnitAudit = {
   isbn: '978-7-5743-1099-5',
-  checkedAt: '2026-10-02',
+  checkedAt: '2026-10-04',
   source: 'https://keben.app/book/0103',
   unit: 'review',
   status: 'original-teaching-implemented',
@@ -112,11 +112,17 @@ export const sujiaoUpperFinalUnitAudit = {
             'sj-upper-final-numbers-nearest',
             'sj-upper-final-numbers-floor-order',
             'sj-upper-final-numbers-floor-change',
+            'sj-upper-final-numbers-floor-down',
+            'sj-upper-final-numbers-actual-source-three-images',
+            'sj-upper-final-numbers-actual-source-four-compositions',
+            'sj-upper-final-numbers-actual-source-five-number-order',
+            'sj-upper-final-numbers-actual-source-floor-directions',
             'sj-upper-final-numbers-physical-floor',
           ],
         ],
       ],
-      boundary: '楼层纸面模拟已有，三种独立表征与全范围数序已有独立对应。',
+      boundary:
+        '原创楼层两个方向先后与上升/下降移动分别处理；原页第1至4项完整读写及楼层三问各有实际任务，不以本站示例代替原书。',
     },
     {
       page: 91,
