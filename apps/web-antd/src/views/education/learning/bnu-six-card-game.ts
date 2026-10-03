@@ -38,7 +38,7 @@ export function sixCardStatus(
   round: SixCardRound,
 ): 'active' | 'finished' | 'out' {
   if (sixCardTotal(round) > 6) return 'out';
-  if (round.hand.length === 3 || round.stopped) return 'finished';
+  if (round.stopped) return 'finished';
   return 'active';
 }
 export function drawSixCard(

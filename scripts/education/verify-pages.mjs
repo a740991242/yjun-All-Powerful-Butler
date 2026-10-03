@@ -216,7 +216,7 @@ const widths = process.argv.includes('--mobile-only')
         if (targets.some((target) => target.height < 44 || target.font < 20))
           throw new Error('Six-card button target size');
         const values = [];
-        for (let count = 1; count <= 3; count++) {
+        for (let count = 1; count <= 6; count++) {
           const drawButton = tool.getByRole('button', {
             name: '随机摸一张',
             exact: true,
@@ -264,13 +264,10 @@ const widths = process.argv.includes('--mobile-only')
               throw new Error('Drawing continued after out');
             break;
           }
-          if (
-            count === 3 &&
-            !(await tool
-              .getByRole('button', { name: '随机摸一张', exact: true })
-              .isDisabled())
-          )
-            throw new Error('Fourth card allowed');
+          if (await drawButton.isDisabled())
+            throw new Error(
+              'An invented card-count limit blocked a legal total',
+            );
         }
         await tool
           .getByRole('button', { name: '重新演示', exact: true })
@@ -279,6 +276,57 @@ const widths = process.argv.includes('--mobile-only')
         await tool.getByText('未摸纸卡还剩20张', { exact: true }).waitFor();
         if (await tool.locator('ol li').count())
           throw new Error('Reset kept six-card hand');
+        // Controlled random inputs use normal UI buttons to prove fourth/fifth-card availability.
+        const indices = [0, 4, 8, 12, 0, 3];
+        for (let turn = 0; turn < indices.length; turn++) {
+          await p.evaluate(
+            (fraction) => {
+              globalThis.sixCardOriginalRandom = Math.random;
+              Math.random = () => fraction;
+            },
+            (indices[turn] + 0.1) / (20 - turn),
+          );
+          try {
+            await tool
+              .getByRole('button', { name: '随机摸一张', exact: true })
+              .click();
+            await p.waitForFunction(
+              (count) =>
+                document.querySelectorAll('.six-card-tool ol li').length ===
+                count,
+              turn + 1,
+            );
+          } finally {
+            await p.evaluate(() => {
+              Math.random = globalThis.sixCardOriginalRandom;
+              delete globalThis.sixCardOriginalRandom;
+            });
+          }
+          const expectedValues = [1, 1, 1, 1, 2, 2]
+            .slice(0, turn + 1)
+            .map(String);
+          if (
+            JSON.stringify(
+              await tool.locator('ol li .text-3xl').allTextContents(),
+            ) !== JSON.stringify(expectedValues)
+          )
+            throw new Error('Controlled physical deck draw mismatch');
+          const total = [1, 2, 3, 4, 6, 8][turn];
+          await tool
+            .getByText(`已摸${turn + 1}张，累计和${total}`, { exact: true })
+            .waitFor();
+          const disabled = await tool
+            .getByRole('button', { name: '随机摸一张', exact: true })
+            .isDisabled();
+          if (disabled !== (turn === 5))
+            throw new Error(
+              'Fourth/fifth card or strict-six boundary mismatch',
+            );
+        }
+        await tool
+          .getByRole('button', { name: '重新演示', exact: true })
+          .click();
+
         await tool
           .getByRole('button', { name: '随机摸一张', exact: true })
           .click();

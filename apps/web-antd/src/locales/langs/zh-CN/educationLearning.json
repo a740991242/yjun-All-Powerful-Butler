@@ -1026,7 +1026,7 @@
   "caterpillarReset": "重新演示",
   "caterpillarHistory": "演示回合记录",
   "sixCardTitle": "摸数卡规则演示",
-  "sixCardNotice": "单人规则演示：20张纸卡，每个数1～5各4张，随机摸牌，最多三张。演示不计学习成绩，刷新重开；真实轮流与比较另记。",
+  "sixCardNotice": "单人规则演示：20张纸卡，每个数1～5各4张，随机摸牌，每次一张，没有另加三张上限。演示不计学习成绩，刷新重开；真实轮流与比较另记。",
   "sixCardSummary": "已摸{count}张，累计和{total}",
   "sixCardRemaining": "未摸纸卡还剩{count}张",
   "sixCardHand": "本次摸到的数卡",

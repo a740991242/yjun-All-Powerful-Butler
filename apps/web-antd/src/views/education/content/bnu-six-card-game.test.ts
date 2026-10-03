@@ -47,35 +47,45 @@ it('deals from exactly twenty distinct cards without replacement or mutating the
       'educationLearning.invalidRecord',
     );
 });
-it('checks every one-to-three-card sequence, including the equal-six boundary, overshooting and the three-card quota', () => {
-  for (let a = 1; a <= 5; a++)
-    for (let b = 1; b <= 5; b++)
-      for (let c = 1; c <= 5; c++) {
-        const initial = newSixCardRound();
-        const first = drawValue(initial, a);
-        expect(sixCardStatus(first)).toBe('active');
-        const second = drawValue(first, b);
-        expect(sixCardTotal(second)).toBe(a + b);
-        expect(sixCardStatus(second)).toBe(a + b > 6 ? 'out' : 'active');
-        if (a + b > 6) expect(drawSixCard(second, 0)).toBeNull();
-        else {
-          const third = drawValue(second, c);
-          expect(sixCardTotal(third)).toBe(a + b + c);
-          expect(sixCardStatus(third)).toBe(a + b + c > 6 ? 'out' : 'finished');
-          expect(drawSixCard(third, 0)).toBeNull();
-          expect(third.hand).toHaveLength(3);
-        }
-      }
+it('checks every possible value sequence from the actual deck, with no invented three-card limit', () => {
+  function visit(round: ReturnType<typeof newSixCardRound>, total: number) {
+    expect(sixCardTotal(round)).toBe(total);
+    expect(sixCardStatus(round)).toBe(total > 6 ? 'out' : 'active');
+    expect(round.hand.length).toBeLessThanOrEqual(6);
+    if (total > 6) {
+      expect(drawSixCard(round, 0)).toBeNull();
+      return;
+    }
+    const stopped = stopSixCard(round);
+    expect(sixCardStatus(stopped)).toBe('finished');
+    expect(drawSixCard(stopped, 0)).toBeNull();
+    for (let value = 1; value <= 5; value++)
+      if (round.deck.some((card) => card.value === value))
+        visit(drawValue(round, value), total + value);
+  }
+  visit(newSixCardRound(), 0);
+  let four = newSixCardRound();
+  for (let count = 0; count < 4; count++) four = drawValue(four, 1);
+  expect(four.hand).toHaveLength(4);
+  expect(sixCardStatus(four)).toBe('active');
+  const five = drawValue(four, 2);
+  expect(five.hand).toHaveLength(5);
+  expect(sixCardTotal(five)).toBe(6);
+  expect(sixCardStatus(five)).toBe('active');
+  expect(sixCardTotal(drawValue(five, 2))).toBe(8);
+  expect(sixCardStatus(drawValue(five, 2))).toBe('out');
   const six = drawValue(drawValue(newSixCardRound(), 3), 3);
   expect(sixCardStatus(six)).toBe('active');
-  const stopped = stopSixCard(six);
-  expect(sixCardStatus(stopped)).toBe('finished');
-  expect(drawSixCard(stopped, 0)).toBeNull();
-  expect(six.stopped).toBe(false);
   expect(sixCardTotal(drawValue(six, 5))).toBe(11);
   expect(sixCardStatus(drawValue(six, 5))).toBe('out');
+  expect(six.stopped).toBe(false);
 });
 it('keeps valid winners, joint winners, unknown next cards and total-versus-card-count distinct', () => {
+  expect(lesson.version).toBe(2);
+  expect(evaluate(by('four-count').rule, 4)).toBe(true);
+  expect(evaluate(required(lesson.reviewQuestions?.[2]).rule, '允许')).toBe(
+    true,
+  );
   expect(lesson.steps).toHaveLength(6);
   expect(lesson.questions).toHaveLength(29);
   expect(
@@ -100,7 +110,7 @@ it('keeps valid winners, joint winners, unknown next cards and total-versus-card
     ['larger-out', '甲'],
     ['not-more-cards', '乙'],
     ['unknown', '不能断定'],
-    ['used-three', '不可以'],
+    ['used-three', '可以'],
     ['out-stop', '不可以'],
     ['equal', '未出局'],
     ['early-stop', '可以停止'],

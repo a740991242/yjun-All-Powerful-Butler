@@ -1026,7 +1026,7 @@
   "caterpillarReset": "Restart demonstration",
   "caterpillarHistory": "Demonstration turns",
   "sixCardTitle": "Number-card rule demonstration",
-  "sixCardNotice": "One-player demonstration: 20 paper cards, four of each number from 1 to 5. Draw at random, up to three cards. This is unscored and restarts on refresh; real turn-taking and comparison are recorded separately.",
+  "sixCardNotice": "One-player demonstration: 20 paper cards, four of each number from 1 to 5. Draw one random card at a time; there is no added three-card limit. This is unscored and restarts on refresh; real turn-taking and comparison are recorded separately.",
   "sixCardSummary": "Cards drawn: {count}; total: {total}",
   "sixCardRemaining": "Undrawn paper cards: {count}",
   "sixCardHand": "Cards drawn this round",
