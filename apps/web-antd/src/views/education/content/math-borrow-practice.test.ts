@@ -176,7 +176,7 @@ describe('pep lower borrowing method, relations and complete table', () => {
     expect(JSON.stringify(state.sessions.slice(0, 3))).toBe(original);
     for (const [id, version] of [
       ['ms-lower-borrowing', 2],
-      ['ms-lower-relations', 3],
+      ['ms-lower-relations', 4],
     ] as const)
       expect(book.specialties?.find((l) => l.id === id)?.version).toBe(version);
     expect(

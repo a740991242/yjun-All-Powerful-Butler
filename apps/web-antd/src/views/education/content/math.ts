@@ -11,7 +11,16 @@ import { required } from '../learning/required';
 import { borrowPracticeLessons } from './math-borrow-practice';
 import { carryPracticeLessons } from './math-carry-practice';
 import { finalPracticeLessons } from './math-final-practice';
+import { hundredFinishLesson } from './math-hundred-finish';
 import { hundredPracticeLessons } from './math-hundred-practice';
+import { lowerFinalApplicationsLesson } from './math-lower-final-applications';
+import { lowerFinalCalculationLesson } from './math-lower-final-calculation';
+import { lowerFinalGrowthLesson } from './math-lower-final-growth';
+import { lowerFinalNumbersLesson } from './math-lower-final-numbers';
+import { lowerFinalShapesLesson } from './math-lower-final-shapes';
+import { oralCompareLesson } from './math-oral-compare';
+import { oralGroupsLesson } from './math-oral-groups';
+import { oralOrganizeLesson } from './math-oral-organize';
 import { planePracticeLessons } from './math-plane-practice';
 import { relationPracticeLessons } from './math-relations-practice';
 import { mathReviewQuestions } from './math-review';
@@ -21,6 +30,21 @@ import { solidPracticeLessons } from './math-solid-practice';
 import { mathSpecialties } from './math-specialties';
 import { mathTransitions } from './math-transitions';
 import { twentyPracticeLessons } from './math-twenty-practice';
+import { upperFiveMethodsLesson } from './math-upper-five-methods';
+import { upperFiveObserveLesson } from './math-upper-five-observe';
+import { upperFiveOrganizeLesson } from './math-upper-five-organize';
+import { upperFiveSummaryLesson } from './math-upper-five-summary';
+import { upperGamesActionsLesson } from './math-upper-games-actions';
+import { upperGamesCampusLesson } from './math-upper-games-campus';
+import { upperTenApplicationsLesson } from './math-upper-ten-applications';
+import { upperTenFullCardsLesson } from './math-upper-ten-full-cards';
+import { upperTenPartitionLesson } from './math-upper-ten-partition';
+import { upperTenRelationsLesson } from './math-upper-ten-relations';
+import { upperTenRepresentationsLesson } from './math-upper-ten-representations';
+import { upperTenUnitSummaryLesson } from './math-upper-ten-unit-summary';
+import { writtenCorrectLesson } from './math-written-correct';
+import { writtenOrganizeLesson } from './math-written-organize';
+import { writtenPracticeLessons } from './math-written-practice';
 import { textbooks } from './textbooks';
 
 type Draft = Omit<Question, 'id' | 'knowledge'>;
@@ -908,6 +932,8 @@ const upper: Record<string, Lesson[]> = {
       [4, 4],
     ]),
     partitionLesson('mu-partition', '数学游戏', 1, [4, 5, 3, 6, 4, 5]),
+    upperGamesCampusLesson,
+    upperGamesActionsLesson,
   ],
   u1: [
     countLesson('mu-five', '5以内数的认识和加、减法', 12, [1, 2, 3, 4, 5, 3]),
@@ -1006,6 +1032,10 @@ const upper: Record<string, Lesson[]> = {
         number('白卡从左数第几个？', 5, '从红卡开始数。', '白卡第5个。'),
       ],
     ),
+    upperFiveOrganizeLesson,
+    upperFiveObserveLesson,
+    upperFiveSummaryLesson,
+    upperFiveMethodsLesson,
   ],
   u2: [
     countLesson('mu-ten', '6～10的认识和加、减法', 34, [6, 7, 8, 9, 10, 8]),
@@ -1070,6 +1100,12 @@ const upper: Record<string, Lesson[]> = {
         };
       }),
     ),
+    upperTenPartitionLesson,
+    upperTenRelationsLesson,
+    upperTenApplicationsLesson,
+    upperTenFullCardsLesson,
+    upperTenUnitSummaryLesson,
+    upperTenRepresentationsLesson,
   ],
   u3: [
     shapes(
@@ -1360,6 +1396,7 @@ const lower: Record<string, Lesson[]> = {
       { kind: 'hundred-chart', value: 35 },
     ),
     ...hundredPracticeLessons,
+    hundredFinishLesson,
   ],
   u4: [
     arithmetic(
@@ -1394,6 +1431,9 @@ const lower: Record<string, Lesson[]> = {
         [40, '-', 5],
       ],
     ),
+    oralCompareLesson,
+    oralGroupsLesson,
+    oralOrganizeLesson,
   ],
   u5: [
     arithmetic(
@@ -1430,6 +1470,9 @@ const lower: Record<string, Lesson[]> = {
       ],
       'column',
     ),
+    ...writtenPracticeLessons,
+    writtenCorrectLesson,
+    writtenOrganizeLesson,
   ],
   u6: [
     relations('ml-relations', '数量间的加减关系', 69, true),
@@ -1455,6 +1498,11 @@ const lower: Record<string, Lesson[]> = {
       'column',
     ),
     relations('ml-review-story', '复习与关联', 83, true),
+    lowerFinalNumbersLesson,
+    lowerFinalCalculationLesson,
+    lowerFinalApplicationsLesson,
+    lowerFinalShapesLesson,
+    lowerFinalGrowthLesson,
   ],
 };
 

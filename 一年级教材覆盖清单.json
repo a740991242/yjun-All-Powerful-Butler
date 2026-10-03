@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T22:55:38.016Z",
+  "generatedAt": "2026-10-03T04:53:11.459Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册及人教道法上下册；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -10216,13 +10216,13 @@
       "resourceId": "1221001101241",
       "verifiedAt": "2026-09-30",
       "summary": {
-        "availablePacks": 38,
+        "availablePacks": 50,
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 269,
-          "manual": 56,
-          "reflection": 19
+          "objective": 549,
+          "manual": 138,
+          "reflection": 44
         }
       },
       "units": [
@@ -10331,6 +10331,66 @@
                 "date": "2026-09-30",
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
+              }
+            },
+            {
+              "id": "mu-games-campus",
+              "title": "校园观察、教室位置与学习准备",
+              "textbookTitle": "数学游戏",
+              "page": 2,
+              "version": 1,
+              "status": "available",
+              "goal": "找生活中的数量、位置和形状，分清数量与编号，按明确自身朝向描述座位和桌面，真实介绍、倾听及准备。",
+              "prerequisite": "可由陪学人读题；本站九张字母卡是纸面示意，不是本校实际名单或座位，缺现场信息可如实待核对。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-games-campus"],
+              "questionKinds": ["steps", "choice", "manual", "reflection"],
+              "visualKinds": ["seat-grid", "shape"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方数学游戏十一页实际核读与方向范围核对",
+                "notes": "1221001101241图片7～17实际查看；本课对应校园/教室观察与准备，操场/指令/人椅配对游戏另补。原创seat-grid固定朝上九卡复用，不发布原图，原三课和快照保持，教师最终审校尚未核验。"
+              }
+            },
+            {
+              "id": "mu-games-actions",
+              "title": "口令结组、左右动作与逐一配对",
+              "textbookTitle": "数学游戏",
+              "page": 4,
+              "version": 1,
+              "status": "available",
+              "goal": "按约定口令判断动作与结组，分清自己的左右和从自己起数，比较数量、逐一配对并说明材料的形状与用途。",
+              "prerequisite": "可由陪学人读题；使用明确数量的纸卡即可，不要求跑跳、蹲站或抢坐真实椅子。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 18,
+                "manual": 8,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-games-actions"],
+              "questionKinds": ["steps", "choice", "manual", "reflection"],
+              "visualKinds": ["shape", "comparison-rows"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方数学游戏原页与规则范围核对",
+                "notes": "1221001101241官方图片10、11、14、15已实际查看；对应印刷4、5、8、9页。原创题与原图实做独立记录，不发布原图。教师最终审校尚未核验，原三基础课及校园课版本保持。"
               }
             }
           ]
@@ -10591,6 +10651,145 @@
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
               }
+            },
+            {
+              "id": "mu-five-organize",
+              "title": "逐一比较、完整分合与算式故事",
+              "textbookTitle": "5以内数的认识和加、减法",
+              "page": 17,
+              "version": 1,
+              "status": "available",
+              "goal": "按明确范围点数与一一对应比较，列全非空两堆分法，记录倒数减去的步骤，解释故事与两边相等的算式。",
+              "prerequisite": "可用1～5张纸卡或允许学具，陪学人可读题；纸面记录不自动评价书写质量。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 15,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-five-organize"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "set",
+                "partition",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["comparison-rows", "count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "五份既有官方临时原图与明确范围核对",
+                "notes": "资源1221001101241图18/23/26/33/35与印刷12/17/20/27/29实际查看。其它17页本轮未取得，不补造已读状态。新情境为原创，原课ID/版本/快照保持，教师最终审校尚未核验。"
+              }
+            },
+            {
+              "id": "mu-five-observe",
+              "title": "数量与顺序、遮挡后的数量",
+              "textbookTitle": "5以内数的认识和加、减法",
+              "page": 19,
+              "version": 1,
+              "status": "available",
+              "goal": "明确几个与第几个、前后人数和圈选范围；根据已知总量求藏数，区分未知与0，检查均分和开放比较的所有合法答案。",
+              "prerequisite": "可用五张不同字母纸卡和允许的学具；陪学人可读题，涉及图的起点均有明确说明。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-five-observe"],
+              "questionKinds": [
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["queue"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "公开第三方预览实际页码与数量范围核对",
+                "notes": "课本网0013阅读器19～28对应印刷14～23，已实际查看扫描封面/编写信息/目录及13～67。内容与既有官方34/56页交叉一致，ISBN与版印日期仍未知，不标为出版社官方扫描。本课为原创任务，不复制原图；旧u1九课与快照保持，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "mu-five-summary",
+              "title": "0与五以内完整运算整理",
+              "textbookTitle": "5以内数的认识和加、减法",
+              "page": 30,
+              "version": 1,
+              "status": "available",
+              "goal": "区分空量和起点的0，完整计算12条含0算式、21条加法与21条减法，按条件接受开放比较的全部答案，实际制作知识图与算式卡。",
+              "prerequisite": "可用纸笔、0～5张卡和允许的尺子；陪学人可读题，书写按合法示范，0输入不留空。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 28,
+                "manual": 8,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-five-summary"],
+              "questionKinds": [
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "四页实际扫描与完整运算集合核对",
+                "notes": "公开课本网0013阅读器35～38对应印刷30～33已实际查看。0操作、知识图、完整21+21、12独立计算、两图/比較/开放条件/成长栏目分别对应。第三方非官方，ISBN/版印未知；不发布原图，旧u1十课与快照保持，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "mu-five-methods",
+              "title": "五以内加减含义、方法与完整图题",
+              "textbookTitle": "5以内数的认识和加、减法",
+              "page": 24,
+              "version": 1,
+              "status": "available",
+              "goal": "分别理解合并/新增/去掉、点全部/接着数/分合方法，读加减式与单位；完整八式和静态/动态图题分别核对，实际摆写说。",
+              "prerequisite": "已认识1～5与分合；可用安全纸卡和纸笔，合法原书实做可分次继续，陪学人可读题。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 26,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-five-methods"],
+              "questionKinds": ["steps", "choice", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "加减含义与方法、八算式及原图活动逐项核对",
+                "notes": "第三方0013阅读器29～31/33对应印刷24～26/28已实际重看。文字条件与实际原图分开；ISBN版印未知、非官方，教师最终审校未核验。旧u1十一课ID版本及历史保持。"
+              }
             }
           ]
         },
@@ -10819,6 +11018,204 @@
                 "date": "2026-09-30",
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
+              }
+            },
+            {
+              "id": "mu-ten-full-partition",
+              "title": "六到十完整分合、数序与数卡",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 39,
+              "version": 1,
+              "status": "available",
+              "goal": "列全6～10的有序非空分法，完整填每个部分，分清数与第几、已知藏数与未知，正确使用两张不同实体卡并填写分合连接图所有中间量。",
+              "prerequisite": "已有0～5、逐一数数和分合经验；备纸笔、10张允许的小卡与0～10数字卡，陪学人可读题。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 27,
+                "manual": 9,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-full-partition"],
+              "questionKinds": [
+                "set",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "实际源页与全部分法/实体卡条件核对",
+                "notes": "正常公开第三方0013阅读器42～48、59～60、62对应印刷37～43、54～55、57页已实际查看；39～41完整分合、43连接图和实体卡/57数序对应。ISBN/版印仍未知，非官方来源、不发布扫描，旧u2七课和快照保持；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "mu-ten-relations",
+              "title": "六到十成套算式与独立计算",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 44,
+              "version": 1,
+              "status": "available",
+              "goal": "用完整分合写成套加减关系，独立计算箭头、四轮盘与原练习，分清缺少加数和两侧等式，保留0与重复实卡条件。",
+              "prerequisite": "已能列6～10分合；备允许的纸笔/数字卡/点卡，陪学人可逐项读题。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 34,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-relations"],
+              "questionKinds": ["steps", "set", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "成套算式和源页独立行核对",
+                "notes": "第三方0013阅读器49/52～55/57/61～63对应44/47～50/52/56～58已实际查看，旧u2八课与快照保持；ISBN/版印未知，非官方、不发布原扫描，不声称最终教师审校。"
+              }
+            },
+            {
+              "id": "mu-ten-applications",
+              "title": "六到十应用与两步数量变化",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 45,
+              "version": 1,
+              "status": "available",
+              "goal": "分清合并/新增与剩下、筛选相关条件，完整填写连加连减混合的每步中间量与结果，核对数链和三数成10约束，实际提出有条件的问题与故事。",
+              "prerequisite": "能逐一数6～10、分清总与部分和加减符号；可用允许纸笔、十张卡、陪学人读题。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 39,
+                "manual": 8,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-applications"],
+              "questionKinds": ["steps", "set", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "相关条件、原行与中间量核对",
+                "notes": "第三方0013阅读器50～54、56、58、63～67对应45～49、51、53、58～62已实际查看，旧u2九课与快照保持。第三方非官方，ISBN/版印未知，不发布原图，不声称最终教师审校。"
+              }
+            },
+            {
+              "id": "mu-ten-full-cards",
+              "title": "十内完整算式卡与排列规律",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 64,
+              "version": 1,
+              "status": "available",
+              "goal": "完整计算0～10的66条加法和66条减法含0，分组不漏不重复；核对第一列、末项与自己的排列，实际制作和任指解释。",
+              "prerequisite": "已理解0与10内分合；准备允许的纸笔/小卡，题多可分次继续，不强制计时，陪学人可逐条读题。",
+              "referenceQuery": null,
+              "steps": 4,
+              "tasks": {
+                "objective": 26,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-full-cards"],
+              "questionKinds": ["steps", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "已读完整表与132条有限集合核对",
+                "notes": "公开第三方0013阅读器69对应印刷64已实际查看。加法/减法各66含0，完整制作、任指、第一列与自主规律分别对应；第三方非官方，ISBN/版印未知，不发布扫描，旧u2十课与快照保持，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "mu-ten-unit-summary",
+              "title": "六到十单元回顾与自主整理",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 63,
+              "version": 1,
+              "status": "available",
+              "goal": "建立自己的完整知识图与联系，核对六连算/六比较、四最小整数、两数序及多信息所求，实际自主提问、写式与成长回顾。",
+              "prerequisite": "已认识0～10、分合与两步变化；允许纸笔/小卡和合法原书，陪学人可读题，可分次继续。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 8,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-unit-summary"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "单元回顾四页的所求/数量/范围核对",
+                "notes": "第三方0013阅读器68～71对应63～66已实际查看，完整66+66在独立课包。知识图、两连线、六混合、多信息图/瓶猴自主问题、六比较/四最小整数、给定数自主算式/成长分别对应。非官方，ISBN/版印未知，不发布原图，旧u2十一课与快照保持；教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "mu-ten-representations",
+              "title": "六到九情境点数与多种表示",
+              "textbookTitle": "6～10的认识和加、减法",
+              "page": 36,
+              "version": 1,
+              "status": "available",
+              "goal": "确定同类范围、逐一点数6/7/8/9，分别联系数字、十格、生活数量、拨珠与0～9数轴；原场景与本站原创点图分开实际核对。",
+              "prerequisite": "已会逐一数到5；安全纸卡/十格纸与允许的算盘可作替代，可分次继续，陪学人可读题。",
+              "referenceQuery": null,
+              "steps": 4,
+              "tasks": {
+                "objective": 15,
+                "manual": 4,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["mu-ten-representations"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["ten-cells", "number-line", "count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "引导情境与四种数量表示逐项核对",
+                "notes": "第三方0013阅读器39～41对应34～36已实际重看；第36页四框/十格/生活例子/四拨珠与0～9尺数轴分别对应。原海底场景有小范围导航遮挡，不猜不可见对象或种类/自然分类事实。非官方、ISBN版印未知、无原扫描，教师最终审校未核验。旧u2十二课及快照保持。"
               }
             }
           ]
@@ -11869,13 +12266,13 @@
       "resourceId": "1221001102241",
       "verifiedAt": "2026-09-30",
       "summary": {
-        "availablePacks": 32,
+        "availablePacks": 44,
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 276,
-          "manual": 88,
-          "reflection": 39
+          "objective": 451,
+          "manual": 170,
+          "reflection": 75
         }
       },
       "units": [
@@ -12561,6 +12958,43 @@
                 "reviewer": "官方教材23～41页实际阅读与原创任务程序核对",
                 "notes": "资源1221001102241图片29～47已逐页查看；图片48返回验证页，尚未声称读过印刷42页。原四课既有版本保持；本文件补计数、读写意义、简单计算、珠子探索、百数表与相对大小，不声称本单元所有栏目最终完成。"
               }
+            },
+            {
+              "id": "ml-hundred-finish",
+              "title": "沿路点数、数字卡列全与学习回顾",
+              "textbookTitle": "100以内数的认识",
+              "page": 42,
+              "version": 1,
+              "status": "available",
+              "goal": "只数所走路径，完整列举符合条件的两位数；分别回顾换百和自己的百数表发现。",
+              "prerequisite": "会读写100以内数与按数位比较；可准备纸、笔和两套0～9数卡，没有材料可跳过实做。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 5,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-hundred-finish"],
+              "questionKinds": [
+                "steps",
+                "set",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["fruit-maze"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方42页实际阅读及原创任务核对",
+                "notes": "官方图片48实际已读。原教材迷宫、数卡与两项评价均提供独立实际任务；新迷宫4×4，四个墙格不可穿过，A入口L出口，四邻接、每格最多一次，仅两条合法路径。教师最终审校未核验。"
+              }
             }
           ]
         },
@@ -12652,6 +13086,111 @@
                 "reviewer": "原创口算方法与旧记录独立程序核对",
                 "notes": "保留原六道结果题稳定ID，补充十和一、进退位过程、不同算法、实做与反思。官方43～55页当前返回验证页，未读取；此改进依据现有课程与规划要求，不声称完成教材逐页或全部课后活动审校。"
               }
+            },
+            {
+              "id": "ml-oral-compare",
+              "title": "同单位口算、两步方法与先判断",
+              "textbookTitle": "100以内的口算加、减法",
+              "page": 43,
+              "version": 1,
+              "status": "available",
+              "goal": "同单位相加减，比较不同合法口算方法；区分计划与已做、独立情境与连续变化，实际先判十位再算。",
+              "prerequisite": "会十位个位与20以内加减；可准备纸笔或小棒，缺学具可纸画替代并如实记录。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 16,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-oral-compare"],
+              "questionKinds": ["steps", "set", "manual", "reflection"],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方口算页实际阅读与原创方法核对",
+                "notes": "1221001102241官方图片49～55、57～58已查看。保留ml-oral-add/sub v2，补非进退位两位数口算、完整两步、不同合法策略、最终结果十位和情境口径；完整纠错/补位/匹配/箭头及整理仍另待补，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "ml-oral-groups",
+              "title": "圈整组、反复减与剩余数量",
+              "textbookTitle": "100以内的口算加、减法",
+              "page": 50,
+              "version": 1,
+              "status": "available",
+              "goal": "用圈组和反复减求满组及剩余，用加法核对；区分满组数、装完全部和搬完全部的次数。",
+              "prerequisite": "会100以内加减，准备纸笔或29张纸卡；可以纸画替代，不要求购买水果或真实搬运。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 16,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-oral-groups"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["count"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方整组应用页实际阅读与原创情境核对",
+                "notes": "1221001102241官方图片56～58、60～61已实际查看。对应整组/余数、重复加减、不同每组数量、完整制作件数、搬完全部；本站新条件与原教材分开。真实活动人工、反思null，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "ml-oral-organize",
+              "title": "辨错补位、开放填数与自主整理",
+              "textbookTitle": "100以内的口算加、减法",
+              "page": 45,
+              "version": 1,
+              "status": "available",
+              "goal": "判断中保留正确项，独立计算匹配和箭头；找全容量配对，按条件填数，实际制作自己的知识图与两项回顾。",
+              "prerequisite": "会100以内口算及几位数意义；准备纸笔或纸卡，不要求真实外出、乘船或收集材料。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 8,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-oral-organize"],
+              "questionKinds": [
+                "set",
+                "steps",
+                "sequence",
+                "number",
+                "number-picks",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方整理练习页实际阅读与原创任务核对",
+                "notes": "1221001102241图片51～52、57、59～61已实际查看。补含正确项的判断订正、补十位、混合计算、结果匹配、比较含等于、独立箭头/逆关系、容量全部配对、开放整数与知识图及两项成长评价。保留旧课版本快照，不将程序验收当真实活动或教师最终审校。"
+              }
             }
           ]
         },
@@ -12742,6 +13281,117 @@
                 "date": "2026-10-03",
                 "reviewer": "原创笔算步骤与记录边界程序核对",
                 "notes": "保留原六道结果题及v2前四道方法题ID与判分；补齐六道方法记录、一位数对齐、含0、验算、实际纸笔与反思，并保留原结果复习另加新过程题。该补充依据既有笔算范围，不声称完成教材逐页审校。"
+              }
+            },
+            {
+              "id": "ml-written-compare",
+              "title": "展开计算、简写与顺序比较",
+              "textbookTitle": "100以内的笔算加、减法",
+              "page": 57,
+              "version": 1,
+              "status": "available",
+              "goal": "联系分位计算和简写竖式，说明进退位标记，比较计算顺序而不否定合法算法。",
+              "prerequisite": "会数位、100以内加减与基本竖式，能区分个位数字和几个一。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 13,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-written-compare"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["column"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方正文核读与原创方法独立核对",
+                "notes": "官方资源1221001102241图片62～74实际查看。本课对应57～59、62～63、66、68页的方法比较，不冒充整章课后覆盖或教师最终审校。"
+              }
+            },
+            {
+              "id": "ml-written-correct",
+              "title": "辨错改正与竖式缺位填数",
+              "textbookTitle": "100以内的笔算加、减法",
+              "page": 60,
+              "version": 1,
+              "status": "available",
+              "goal": "说清具体错因再改正，按整条竖式检验缺位填数，保留所有合法解。",
+              "prerequisite": "会基本笔算与进退位，能区分已知数字和待填字母。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 13,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-written-correct"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "column-digits",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["column-digits"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方正文核读与原创辨错/缺位约束核对",
+                "notes": "官方资源1221001102241图片62～74逐页读取。独立原创数值、原书活动分开，完整单元及教师审校另核。"
+              }
+            },
+            {
+              "id": "ml-written-organize",
+              "title": "独立计算、开放探索与自主整理",
+              "textbookTitle": "100以内的笔算加、减法",
+              "page": 64,
+              "version": 1,
+              "status": "available",
+              "goal": "按完整原条件计算和分类，自主提出问题、整理方法与探索所有合法数卡排列。",
+              "prerequisite": "会基本加减、比较和竖式，能区分已知所求；实际纸笔材料按家庭条件准备。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 14,
+                "manual": 8,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-written-organize"],
+              "questionKinds": [
+                "steps",
+                "set",
+                "choice",
+                "number",
+                "card-equation",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["card-equation"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方逐页核读与原创整理探索核对",
+                "notes": "资源1221001102241图片62～74已实际查看，本课补60～61、63～68页整理应用与自主活动，不冒本校人数或旅行，不替教师最终审校。"
               }
             }
           ]
@@ -13097,6 +13747,193 @@
                 "reviewer": "教材范围核验与原创题目程序校验",
                 "notes": "标题归属与知识范围依据人教社2024审定六三学制教材；讲解、情境和练习为本项目原创。细分课标题为平台教学组织，不冒充教材目录。"
               }
+            },
+            {
+              "id": "ml-final-numbers",
+              "title": "0起点数表与数位整理",
+              "textbookTitle": "复习与关联",
+              "page": 85,
+              "version": 1,
+              "status": "available",
+              "goal": "完整对照0～99与1～100数表，按方向读取位置和片段，自己选数计算，联系数位、读写与换百。",
+              "prerequisite": "已学习100以内的数与加减法，准备纸笔或轻小计数材料；真实操作允许分次。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 18,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-final-numbers"],
+              "questionKinds": [
+                "steps",
+                "sequence",
+                "choice",
+                "number-picks",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["zero-number-chart", "place-value"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "人教下册期末数位与数表要求实际核读",
+                "notes": "资源1221001102241图片89～93已实际查看，册末至98也已查看；数表起点0、首行0～9/末行90～99，与32页1～100有区别。先补数表/数位/读写/完整实际整理，期末计算、应用、拼组与九项自评仍另待补，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "ml-final-calculation",
+              "title": "完整计算、逐步链与比较整理",
+              "textbookTitle": "复习与关联",
+              "page": 87,
+              "version": 1,
+              "status": "available",
+              "goal": "分别记录十二独立算式、两条完整四步链、六连算中间值和六比较，联系数位、进退位与不同合法方法。",
+              "prerequisite": "已学100以内加减及进退位方法，准备纸笔或已有轻小计数材料，真实任务可以分次。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 5,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-final-calculation"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-value"],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方期末计算要求实际核读与独立算术核对",
+                "notes": "1221001102241图片89～90和93～94已实际查看。补完整十二式/两四步链/六连算及六比较含等于，方法时刻与数量分清；未打包原扫描/原题集合，生活应用/图形/九自评另继续，教师最终审校未核验。"
+              }
+            },
+            {
+              "id": "ml-final-applications",
+              "title": "生活应用、满减与数量关系整理",
+              "textbookTitle": "复习与关联",
+              "page": 88,
+              "version": 1,
+              "status": "available",
+              "goal": "联系整体部分和比较关系，明确满减边界、装满与余数、数的规律，并完整寻找两物搭配。",
+              "prerequisite": "已学100以内加减和数量关系，准备纸笔或已有轻小纸片；不用购买或真实消费。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 18,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-final-applications"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方期末应用要求实际核读与独立关系枚举",
+                "notes": "1221001102241图片92、94、95已实际查看。原盒图逐槽为2行4槽；本站明确8容量。单笔满50仅减10、恰好达标、满盒/余量/全部容器、少多少反求较多及全部两物搭配分清；未打包原书图或完整原题，最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "ml-final-shapes",
+              "title": "图形分类、拼组与完整计数整理",
+              "textbookTitle": "复习与关联",
+              "page": 85,
+              "version": 1,
+              "status": "available",
+              "goal": "联系五类平面图形与材料来源，分清原片、拼缝和外轮廓，按明确范围完整分类，实际拼组并提出图形问题。",
+              "prerequisite": "已认识五类平面图形，准备已有纸片或七巧板；尺寸和材料条件明确，没有可保留待做。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 12,
+                "manual": 6,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-final-shapes"],
+              "questionKinds": [
+                "steps",
+                "set",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "final-plane-cards",
+                "composite-shapes",
+                "shape-join"
+              ],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方期末图形要求核读与原创分类范围核对",
+                "notes": "1221001102241图片91～92、95已实际查看。五类图形、同样三角形/四同方块/七巧板、原片和整体、拼图分类及所需圆分别对应。新图固定12/13块且逐块标字母，原教材计数范围不能从装饰猜；最终教师审校未核验。"
+              }
+            },
+            {
+              "id": "ml-final-growth",
+              "title": "自主知识图与九方面学习回顾",
+              "textbookTitle": "复习与关联",
+              "page": 90,
+              "version": 1,
+              "status": "available",
+              "goal": "自己整理数认识、数运算和数量关系的联系，分别回顾九方面真实学习经历与下一步计划，不自动评星。",
+              "prerequisite": "已学习本学期内容，可参考自己的纸笔或学习记录；没有某种经历可以诚实记录，不强迫制造表现。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 5,
+                "manual": 12,
+                "reflection": 12
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["ml-final-growth"],
+              "questionKinds": [
+                "set",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-03",
+                "reviewer": "官方期末自主整理与九方面回顾实际核读",
+                "notes": "1221001102241图片89～90及96已实际查看。完整自主三分支与方法、实际生活问题分别记录；九方面各一项人工回顾与独立反思，正确性null、未来计划另列，没有经历可如实记。尚未教师最终审校，不自动发布成长等级。"
+              }
             }
           ]
         }
@@ -13107,19 +13944,19 @@
           "title": "100以内数感",
           "textbookTitle": "平台专项练习",
           "page": 23,
-          "version": 2,
+          "version": 4,
           "status": "available",
           "goal": "十位个位、数序与比较，联系数的组成。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 78,
-            "manual": 26,
-            "reflection": 9
+            "objective": 106,
+            "manual": 38,
+            "reflection": 13
           },
           "reviewTasks": {
-            "objective": 44,
+            "objective": 52,
             "manual": 0,
             "reflection": 0
           },
@@ -13132,7 +13969,9 @@
             "ml-hundred-digits",
             "ml-hundred-links",
             "ml-hundred-patterns",
-            "ml-hundred-ordering"
+            "ml-hundred-ordering",
+            "ml-hundred-finish",
+            "ml-final-numbers"
           ],
           "questionKinds": [
             "steps",
@@ -13141,19 +13980,21 @@
             "manual",
             "reflection",
             "set",
-            "number-picks"
+            "number-picks",
+            "sequence"
           ],
           "visualKinds": [
             "place-value",
             "count",
             "hundred-chart",
             "estimate-dots",
-            "hundred-fragments"
+            "hundred-fragments",
+            "fruit-maze"
           ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：看数位，读写数（教材第23页起）；一一对应比多少（教材第23页起）；数的顺序与整十数（教材第23页起）；百数表：横看竖看（教材第23页起）；估数、逐个点数与换成百（教材第24页起）；读写数、数字意义与两个0（教材第26页起）；整十计算、珠子摆数与生活应用（教材第37页起）；百数表涂色、碎片与边界（教材第32页起）；数的大小、多解与相对多少（教材第33页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：看数位，读写数（教材第23页起）；一一对应比多少（教材第23页起）；数的顺序与整十数（教材第23页起）；百数表：横看竖看（教材第23页起）；估数、逐个点数与换成百（教材第24页起）；读写数、数字意义与两个0（教材第26页起）；整十计算、珠子摆数与生活应用（教材第37页起）；百数表涂色、碎片与边界（教材第32页起）；数的大小、多解与相对多少（教材第33页起）；沿路点数、数字卡列全与学习回顾（教材第42页起）；0起点数表与数位整理（教材第85页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -13204,34 +14045,52 @@
           "title": "100以内口算与笔算",
           "textbookTitle": "平台专项练习",
           "page": 43,
-          "version": 3,
+          "version": 10,
           "status": "available",
           "goal": "比较口算和竖式策略，注意进位、退位与数位对齐。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 56,
-            "manual": 8,
-            "reflection": 4
+            "objective": 168,
+            "manual": 54,
+            "reflection": 20
           },
           "reviewTasks": {
-            "objective": 28,
+            "objective": 56,
             "manual": 0,
             "reflection": 0
           },
           "knowledge": [
             "ml-oral-add",
             "ml-oral-sub",
+            "ml-oral-compare",
+            "ml-oral-groups",
+            "ml-oral-organize",
             "ml-written-add",
-            "ml-written-sub"
+            "ml-written-sub",
+            "ml-written-compare",
+            "ml-written-correct",
+            "ml-written-organize",
+            "ml-final-calculation"
           ],
-          "questionKinds": ["number", "steps", "set", "manual", "reflection"],
-          "visualKinds": ["column"],
+          "questionKinds": [
+            "number",
+            "steps",
+            "set",
+            "manual",
+            "reflection",
+            "choice",
+            "sequence",
+            "number-picks",
+            "column-digits",
+            "card-equation"
+          ],
+          "visualKinds": ["count", "column", "column-digits", "card-equation"],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：两位数加一位数、整十数（教材第43页起）；两位数减一位数、整十数（教材第43页起）；列竖式加法与进位（教材第56页起）；列竖式减法与退位（教材第56页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：两位数加一位数、整十数（教材第43页起）；两位数减一位数、整十数（教材第43页起）；同单位口算、两步方法与先判断（教材第43页起）；圈整组、反复减与剩余数量（教材第50页起）；辨错补位、开放填数与自主整理（教材第45页起）；列竖式加法与进位（教材第56页起）；列竖式减法与退位（教材第56页起）；展开计算、简写与顺序比较（教材第57页起）；辨错改正与竖式缺位填数（教材第60页起）；独立计算、开放探索与自主整理（教材第64页起）；完整计算、逐步链与比较整理（教材第87页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -13239,19 +14098,19 @@
           "title": "平面图形辨认与拼组",
           "textbookTitle": "平台专项练习",
           "page": 1,
-          "version": 2,
+          "version": 3,
           "status": "available",
           "goal": "辨认平面图形，观察拼组后的外轮廓。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 23,
-            "manual": 16,
-            "reflection": 4
+            "objective": 35,
+            "manual": 22,
+            "reflection": 6
           },
           "reviewTasks": {
-            "objective": 15,
+            "objective": 19,
             "manual": 2,
             "reflection": 2
           },
@@ -13259,21 +14118,30 @@
             "ml-flat",
             "ml-flat-join",
             "ml-plane-observe",
-            "ml-plane-build"
+            "ml-plane-build",
+            "ml-final-shapes"
           ],
-          "questionKinds": ["choice", "manual", "number", "reflection"],
+          "questionKinds": [
+            "choice",
+            "manual",
+            "number",
+            "reflection",
+            "steps",
+            "set"
+          ],
           "visualKinds": [
             "shape",
             "shape-join",
             "plane-cards",
             "composite-shapes",
             "tile-grid",
-            "periodic-shapes"
+            "periodic-shapes",
+            "final-plane-cards"
           ],
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：认一认平面图形（教材第1页起）；两块三角形：移动、旋转与拼组（教材第1页起）；描面、分类与围画图形（教材第1页起）；拼剪图形、七巧板与规律（教材第3页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：认一认平面图形（教材第1页起）；两块三角形：移动、旋转与拼组（教材第1页起）；描面、分类与围画图形（教材第1页起）；拼剪图形、七巧板与规律（教材第3页起）；图形分类、拼组与完整计数整理（教材第85页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         },
         {
@@ -13318,19 +14186,19 @@
           "title": "数量关系与生活应用",
           "textbookTitle": "平台专项练习",
           "page": 17,
-          "version": 3,
+          "version": 4,
           "status": "available",
           "goal": "联系加减法，用图示理解整体、部分与差。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 54,
-            "manual": 21,
-            "reflection": 9
+            "objective": 72,
+            "manual": 27,
+            "reflection": 11
           },
           "reviewTasks": {
-            "objective": 28,
+            "objective": 32,
             "manual": 0,
             "reflection": 0
           },
@@ -13340,7 +14208,8 @@
             "ml-borrow-relations",
             "ml-relations-parts",
             "ml-relations-comparison",
-            "ml-relations-organize"
+            "ml-relations-organize",
+            "ml-final-applications"
           ],
           "questionKinds": [
             "number",
@@ -13359,7 +14228,7 @@
           "audit": {
             "date": "2026-09-30",
             "reviewer": "课包范围组织与程序校验",
-            "notes": "复用原创课包：先找数量关系，再列式（教材第69页起）；先找数量关系，再列式（教材第83页起）；读题、整体与部分及退位应用（教材第17页起）；整体、部分与不同所求（教材第69页起）；求差、较多量与较少量（教材第70页起）；两步问题、共同参照与自主表达（教材第73页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
+            "notes": "复用原创课包：先找数量关系，再列式（教材第69页起）；先找数量关系，再列式（教材第83页起）；读题、整体与部分及退位应用（教材第17页起）；整体、部分与不同所求（教材第69页起）；求差、较多量与较少量（教材第70页起）；两步问题、共同参照与自主表达（教材第73页起）；生活应用、满减与数量关系整理（教材第88页起）。保留每道题的原ID和知识点，专项不是教材正式单元。"
           }
         }
       ],

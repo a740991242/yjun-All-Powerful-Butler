@@ -132,7 +132,8 @@ describe('pep hundred counting, digit meaning and simple calculation', () => {
       'ml-hundred-sequence',
       'ml-hundred-chart',
     ]);
-    expect(lessons.slice(4)).toEqual(hundredPracticeLessons);
+    expect(lessons.slice(4, 9)).toEqual(hundredPracticeLessons);
+    expect(lessons[9]?.id).toBe('ml-hundred-finish');
     const state = initialLibrary('百以内数核验');
     for (const [i, l] of lessons.slice(0, 4).entries()) {
       const s = createSession(l, book.id, state.activeProfileId);
@@ -175,7 +176,7 @@ describe('pep hundred counting, digit meaning and simple calculation', () => {
     const pool = required(
       book.specialties?.find((l) => l.id === 'ms-lower-numbers'),
     );
-    expect(pool.version).toBe(2);
+    expect(pool.version).toBe(4);
     expect(pool.questions).toContainEqual(find(2, 'q6'));
   });
 });

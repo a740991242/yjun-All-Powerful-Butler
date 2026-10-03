@@ -15,6 +15,7 @@ import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
+import CardEquation from './CardEquation.vue';
 import CardGame from './CardGame.vue';
 import ChildActivities from './ChildActivities.vue';
 import CircularNumberArray from './CircularNumberArray.vue';
@@ -22,6 +23,7 @@ import ClassCapacity from './ClassCapacity.vue';
 import ClassificationRecord from './ClassificationRecord.vue';
 import Clock from './Clock.vue';
 import ClockCounting from './ClockCounting.vue';
+import ColumnDigits from './ColumnDigits.vue';
 import ComparisonBars from './ComparisonBars.vue';
 import ComparisonRows from './ComparisonRows.vue';
 import CompositeShapes from './CompositeShapes.vue';
@@ -32,8 +34,10 @@ import CupCards from './CupCards.vue';
 import DigitCounter from './DigitCounter.vue';
 import EmbeddedShapes from './EmbeddedShapes.vue';
 import EstimateDots from './EstimateDots.vue';
+import FinalPlaneCards from './FinalPlaneCards.vue';
 import FinalStories from './FinalStories.vue';
 import FoldCutJoin from './FoldCutJoin.vue';
+import FruitMaze from './FruitMaze.vue';
 import GeoboardShift from './GeoboardShift.vue';
 import GridPaths from './GridPaths.vue';
 import { hundredPosition } from './hundred-chart';
@@ -92,6 +96,7 @@ import SumLines from './SumLines.vue';
 import SurveyTable from './SurveyTable.vue';
 import TeenArithmeticGrid from './TeenArithmeticGrid.vue';
 import TeenLayout from './TeenLayout.vue';
+import { toggleTenCell } from './ten-cells';
 import TenTables from './TenTables.vue';
 import ThreePieceJoin from './ThreePieceJoin.vue';
 import TileGrid from './TileGrid.vue';
@@ -311,6 +316,15 @@ const shapeDescription = computed(() =>
     <BookGroups v-else-if="visual.kind === 'book-groups'" :visual="visual" />
     <NumberLineGrid
       v-else-if="visual.kind === 'number-line-grid'"
+      :visual="visual"
+    />
+    <FruitMaze v-else-if="visual.kind === 'fruit-maze'" :visual="visual" />
+    <CardEquation
+      v-else-if="visual.kind === 'card-equation'"
+      :visual="visual"
+    />
+    <ColumnDigits
+      v-else-if="visual.kind === 'column-digits'"
       :visual="visual"
     />
     <CubeColumns v-else-if="visual.kind === 'cube-columns'" :visual="visual" />
@@ -561,6 +575,37 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <div v-else-if="visual.kind === 'ten-cells'" class="flex flex-col gap-4">
+      <p class="text-xl">{{ $t('educationLearning.tenCellsInstruction') }}</p>
+      <div
+        class="grid w-full max-w-sm grid-cols-5 gap-2"
+        :aria-label="$t('educationLearning.tenCellsBoard')"
+      >
+        <Button
+          v-for="cell in 10"
+          :key="cell"
+          class="!min-h-11 !min-w-11 !p-0 !text-xl"
+          :type="toolState.tenCells?.includes(cell - 1) ? 'primary' : 'default'"
+          :aria-label="$t('educationLearning.tenCellsCell', { number: cell })"
+          :aria-pressed="toolState.tenCells?.includes(cell - 1) ?? false"
+          :disabled="!interactive"
+          @click="
+            change({
+              tenCells: toggleTenCell(toolState.tenCells ?? [], cell - 1),
+            })
+          "
+        >
+          {{ toolState.tenCells?.includes(cell - 1) ? '●' : '○' }}
+        </Button>
+      </div>
+      <Button
+        v-if="interactive"
+        class="!min-h-11 self-start"
+        @click="change({ tenCells: [] })"
+      >
+        {{ $t('educationLearning.resetVisual') }}
+      </Button>
+    </div>
     <div v-else-if="visual.kind === 'ten-frame'" class="flex flex-col gap-4">
       <div
         v-for="(count, group) in frames"
@@ -794,7 +839,10 @@ const shapeDescription = computed(() =>
     <div v-else-if="visual.kind === 'queue'" class="flex flex-col gap-2">
       <div class="overflow-x-auto">
         <div
-          :style="{ minWidth: `${Math.max(280, visual.labels.length * 64)}px` }"
+          :style="{
+            minWidth:
+              visual.labels.length > 5 ? `${visual.labels.length * 64}px` : '0',
+          }"
         >
           <div class="flex justify-between text-sm text-muted-foreground">
             <span>
@@ -1111,7 +1159,7 @@ const shapeDescription = computed(() =>
           <Button
             v-for="n in visual.maximum - visual.minimum + 1"
             :key="n"
-            class="!h-11 !min-w-11 !p-0"
+            class="!h-11 !min-w-11 !p-0 !text-xl !leading-8"
             :type="n + visual.minimum - 1 === position ? 'primary' : 'default'"
             :aria-pressed="n + visual.minimum - 1 === position"
             :disabled="!interactive"
@@ -1207,6 +1255,10 @@ const shapeDescription = computed(() =>
     />
     <ClassificationRecord
       v-else-if="visual.kind === 'classification-record'"
+      :visual="visual"
+    />
+    <FinalPlaneCards
+      v-else-if="visual.kind === 'final-plane-cards'"
       :visual="visual"
     />
     <ShapeCollage

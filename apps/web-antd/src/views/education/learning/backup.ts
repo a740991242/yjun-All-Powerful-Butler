@@ -4,6 +4,7 @@ import { isArithmeticGridVisual } from './arithmetic-grid';
 import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
+import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
 import { isChildActivitiesVisual } from './child-activities';
 import { isCircularNumberArrayVisual } from './circular-number-array';
@@ -11,6 +12,7 @@ import { isClassCapacityVisual } from './class-capacity';
 import { isClassificationRecordVisual } from './classification-record';
 import { isClockVisual } from './clock';
 import { isClockCountingVisual } from './clock-counting';
+import { columnDigitBlankCount, isColumnDigitsRule } from './column-digits';
 import { isComparisonBarsVisual } from './comparison-bars';
 import { isComparisonRowsVisual } from './comparison-rows';
 import { isCompositeShapesVisual } from './composite-shapes';
@@ -24,9 +26,11 @@ import { isEmbeddedShapesVisual } from './embedded-shapes';
 import { evaluate, MAX_REFLECTION_LENGTH, validAnswer } from './engine';
 import { isEstimateDotsState, isEstimateDotsVisual } from './estimate-dots';
 import { isBookGroupsVisual, isNumberLineGridVisual } from './final-counting';
+import { isFinalPlaneCardsVisual } from './final-plane-cards';
 import { isFinalStoriesVisual } from './final-stories';
 import { fold } from './fold';
 import { isFoldCutJoinVisual } from './fold-cut-join';
+import { isFruitMazeVisual } from './fruit-maze';
 import { isGeoboardShiftState, isGeoboardShiftVisual } from './geoboard-shift';
 import { isGridPathsVisual } from './grid-paths';
 import { isHundredFragmentsVisual } from './hundred-fragments';
@@ -95,6 +99,7 @@ import {
 } from './survey-table';
 import { isTeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import { isTeenLayoutVisual } from './teen-layout';
+import { isTenCellsState, isTenCellsVisual } from './ten-cells';
 import { isTenTablesVisual } from './ten-tables';
 import { isThreePieceJoinState } from './three-piece-join';
 import { isTileGridVisual } from './tile-grid';
@@ -162,6 +167,12 @@ function answer(value: unknown): value is Answer {
 function rule(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'card-equation': {
+      return isCardEquationRule(value);
+    }
+    case 'column-digits': {
+      return isColumnDigitsRule(value);
+    }
     case 'cross-balance': {
       return isCrossBalanceModel(value);
     }
@@ -394,6 +405,9 @@ function visual(value: unknown) {
         (value.other === undefined || integer(value.other))
       );
     }
+    case 'ten-cells': {
+      return isTenCellsVisual(value);
+    }
     case 'ten-frame': {
       return integer(value.left, 10) && integer(value.right, 10);
     }
@@ -471,8 +485,17 @@ function visual(value: unknown) {
     case 'zero-number-chart': {
       return isZeroNumberChartVisual(value);
     }
+    case 'column-digits': {
+      return isColumnDigitsRule(value);
+    }
     case 'hundred-fragments': {
       return isHundredFragmentsVisual(value);
+    }
+    case 'card-equation': {
+      return isCardEquationRule(value);
+    }
+    case 'fruit-maze': {
+      return isFruitMazeVisual(value);
     }
     case 'hundred-chart': {
       return integer(value.value, 100) && value.value >= 1;
@@ -520,6 +543,9 @@ function visual(value: unknown) {
     }
     case 'classification-record': {
       return isClassificationRecordVisual(value);
+    }
+    case 'final-plane-cards': {
+      return isFinalPlaneCardsVisual(value);
     }
     case 'shape-collage': {
       return isShapeCollageVisual(value);
@@ -624,6 +650,24 @@ function question(value: unknown): value is Question {
   }
   const answerRule = value.rule;
   if (
+    isCardEquationRule(answerRule) &&
+    (!isCardEquationRule(value.visual) ||
+      JSON.stringify(answerRule.values) !== JSON.stringify(value.visual.values))
+  )
+    return false;
+  if (
+    isColumnDigitsRule(answerRule) &&
+    (!isColumnDigitsRule(value.visual) ||
+      answerRule.operator !== value.visual.operator ||
+      JSON.stringify([answerRule.left, answerRule.right, answerRule.result]) !==
+        JSON.stringify([
+          value.visual.left,
+          value.visual.right,
+          value.visual.result,
+        ]))
+  )
+    return false;
+  if (
     record(answerRule) &&
     ['choice', 'sequence', 'set'].includes(String(answerRule.kind))
   ) {
@@ -677,6 +721,7 @@ function tools(value: unknown) {
           'shapeJoin',
           'squareMosaic',
           'surveyTable',
+          'tenCells',
           'threePieceJoin',
           'touched',
           'transferred',
@@ -716,6 +761,8 @@ function tools(value: unknown) {
       state.knowledgeCard !== undefined &&
       !isKnowledgeCard(state.knowledgeCard)
     )
+      return false;
+    if (state.tenCells !== undefined && !isTenCellsState(state.tenCells))
       return false;
     if (state.transferred !== undefined && !integer(state.transferred, 10))
       return false;
@@ -797,6 +844,16 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
     return false;
   if (record(value.tools)) {
     for (const [key, state] of Object.entries(value.tools)) {
+      if (
+        record(state) &&
+        state.tenCells !== undefined &&
+        key.startsWith('question-')
+      ) {
+        const bound = value.questions.find(
+          (q) => record(q) && key === `question-${q.id}`,
+        );
+        if (!bound || !isTenCellsVisual(bound.visual)) return false;
+      }
       if (
         record(state) &&
         state.estimateDots !== undefined &&
@@ -974,6 +1031,34 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
       response.draft !== null &&
       (!Array.isArray(response.draft) ||
         response.draft.length !== magicBlankCount(current.rule.cells) ||
+        ![...response.draft].every(
+          (item) =>
+            item === null ||
+            (typeof item === 'number' &&
+              Number.isSafeInteger(item) &&
+              Math.abs(item) <= 100_000),
+        ))
+    )
+      return false;
+    if (
+      current.rule.kind === 'card-equation' &&
+      response.draft !== null &&
+      (!Array.isArray(response.draft) ||
+        response.draft.length !== 4 ||
+        ![...response.draft].every(
+          (n) =>
+            n === null ||
+            (typeof n === 'number' &&
+              Number.isSafeInteger(n) &&
+              Math.abs(n) <= 100_000),
+        ))
+    )
+      return false;
+    if (
+      current.rule.kind === 'column-digits' &&
+      response.draft !== null &&
+      (!Array.isArray(response.draft) ||
+        response.draft.length !== columnDigitBlankCount(current.rule) ||
         ![...response.draft].every(
           (item) =>
             item === null ||

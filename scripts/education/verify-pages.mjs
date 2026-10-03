@@ -177,8 +177,8 @@ const root = `${repo}/apps/web-antd/dist`;
       const volumes = [
         ['chinese', 'pep-2024', 'upper', 72],
         ['chinese', 'pep-2024', 'lower', 46],
-        ['math', 'pep-2024', 'upper', 38],
-        ['math', 'pep-2024', 'lower', 32],
+        ['math', 'pep-2024', 'upper', 50],
+        ['math', 'pep-2024', 'lower', 44],
         ['math', 'sujiao', 'upper', 71],
         ['math', 'sujiao', 'lower', 87],
         ['ethics', 'pep-2024', 'upper', 16],

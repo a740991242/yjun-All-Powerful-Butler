@@ -171,7 +171,7 @@ describe('written algorithms, one-digit alignment and zero boundaries', () => {
     const pool = required(
       book().specialties?.find((l) => l.id === 'ms-lower-calculation'),
     );
-    expect(pool.version).toBe(3);
+    expect(pool.version).toBe(10);
     for (const f of fixtures) {
       const s = createSession(pool, book().id, 'child');
       const index = s.questions.findIndex((q) => q.id === `${f.id}-method5`);

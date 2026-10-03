@@ -7,6 +7,8 @@ import type {
   Session,
 } from './types';
 
+import { matchesCardEquation } from './card-equation';
+import { columnDigitBlankCount, matchesColumnDigits } from './column-digits';
 import { matchesCrossBalance } from './cross-balance';
 import { fold } from './fold';
 import { magicBlankCount, matchesMagicGrid } from './magic-grid';
@@ -50,6 +52,8 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
       );
     }
     case 'cross-balance':
+    case 'card-equation':
+    case 'column-digits':
     case 'number-picks':
     case 'number-chain':
     case 'magic-grid':
@@ -60,6 +64,9 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
         Array.isArray(answer) &&
         answer.length ===
           (() => {
+            if (rule.kind === 'card-equation') return 4;
+            if (rule.kind === 'column-digits')
+              return columnDigitBlankCount(rule);
             if (rule.kind === 'number-picks') return rule.fields.length;
             if (rule.kind === 'number-chain')
               return numberChainBlankCount(rule);
@@ -142,6 +149,12 @@ export function evaluate(
     }
     case 'cross-balance': {
       return matchesCrossBalance(rule, answer);
+    }
+    case 'column-digits': {
+      return matchesColumnDigits(rule, answer);
+    }
+    case 'card-equation': {
+      return matchesCardEquation(rule, answer);
     }
     case 'number-picks': {
       return matchesNumberPicks(rule, answer);

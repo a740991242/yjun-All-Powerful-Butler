@@ -26,6 +26,7 @@ import {
 
 import { $t } from '#/locales';
 
+import { columnDigitBlankCount } from './column-digits';
 import { MAX_REFLECTION_LENGTH, statistics, validAnswer } from './engine';
 import { answerLabel } from './history';
 import { studyLibrary } from './library';
@@ -59,6 +60,8 @@ const learningCompatible = computed(
 );
 const fieldCount = computed(() => {
   const rule = question.value?.rule;
+  if (rule?.kind === 'card-equation') return 4;
+  if (rule?.kind === 'column-digits') return columnDigitBlankCount(rule);
   if (rule?.kind === 'magic-grid') return magicBlankCount(rule.cells);
   if (rule?.kind === 'tower') return towerBlankCount(rule.rows);
   if (rule?.kind === 'cross-balance') return rule.values.length;
@@ -281,7 +284,7 @@ async function finish() {
         <div v-if="step?.activity" class="rounded-lg border border-border p-4">
           <p class="mb-4 text-xl leading-8">{{ step.activity }}</p>
           <Button
-            class="!min-h-11"
+            class="!h-auto !min-h-11 !max-w-full !whitespace-normal !py-2"
             :disabled="session.activities.includes(`step-${session.step}`)"
             @click="confirmActivity"
           >
@@ -366,6 +369,7 @@ async function finish() {
           @update:state="setQuestionTool"
           :interactive="
             question.visual.kind === 'shape-join' ||
+            question.visual.kind === 'ten-cells' ||
             question.visual.kind === 'card-game' ||
             (question.rule.kind === 'manual' &&
               [
@@ -391,6 +395,7 @@ async function finish() {
         />
         <Form
           :model="response"
+          class="learning-answer-form"
           layout="vertical"
           @finish="perform(() => studyLibrary.submit(sessionId))"
         >
@@ -411,6 +416,7 @@ async function finish() {
                 typeof response.draft === 'number' ? response.draft : undefined
               "
               :precision="0"
+              :controls="false"
               class="!min-h-11 !w-full sm:!w-56"
               @update:value="
                 (value) => setDraft(typeof value === 'number' ? value : null)
@@ -443,6 +449,7 @@ async function finish() {
                 "
                 :maxlength="MAX_REFLECTION_LENGTH"
                 :auto-size="{ minRows: 4, maxRows: 10 }"
+                class="!text-xl !leading-8"
                 show-count
                 :placeholder="$t('educationLearning.reflectionPlaceholder')"
                 @update:value="setDraft"
@@ -455,13 +462,15 @@ async function finish() {
               v-else-if="question.rule.kind === 'text'"
               :id="formId"
               :value="typeof response.draft === 'string' ? response.draft : ''"
-              class="!min-h-11"
+              class="!min-h-11 !text-xl !leading-8"
               autocomplete="off"
               @update:value="setDraft"
             />
             <div
               v-else-if="
                 question.rule.kind === 'partition' ||
+                question.rule.kind === 'card-equation' ||
+                question.rule.kind === 'column-digits' ||
                 question.rule.kind === 'cross-balance' ||
                 question.rule.kind === 'number-picks' ||
                 question.rule.kind === 'number-chain' ||
@@ -479,6 +488,8 @@ async function finish() {
                 <label :for="`${formId}-${field}`">
                   {{
                     question.rule.kind === 'tower' ||
+                    question.rule.kind === 'card-equation' ||
+                    question.rule.kind === 'column-digits' ||
                     question.rule.kind === 'magic-grid' ||
                     question.visual?.kind === 'number-frame' ||
                     question.visual?.kind === 'hundred-fragments' ||
@@ -495,6 +506,7 @@ async function finish() {
                   :id="`${formId}-${field}`"
                   :value="numericPart(field - 1) ?? undefined"
                   :precision="0"
+                  :controls="false"
                   class="!min-h-11 !w-28"
                   @update:value="(value) => setNumericPart(field - 1, value)"
                 />
@@ -785,3 +797,30 @@ async function finish() {
     </div>
   </Card>
 </template>
+
+<style scoped>
+.learning-answer-form :deep(label) {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.learning-answer-form :deep(.ant-form-item-label > label) {
+  height: auto;
+}
+
+.learning-answer-form :deep(.ant-input-number-input) {
+  height: 44px;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.learning-answer-form :deep(.ant-input) {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.learning-answer-form :deep(.ant-select-selection-item),
+.learning-answer-form :deep(.ant-select-selection-placeholder) {
+  font-size: 20px;
+}
+</style>

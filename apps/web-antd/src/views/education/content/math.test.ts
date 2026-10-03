@@ -214,6 +214,9 @@ describe('reviewed PEP mathematics lesson packs', () => {
     expect(written.map((lesson) => lesson.id)).toEqual([
       'ml-written-add',
       'ml-written-sub',
+      'ml-written-compare',
+      'ml-written-correct',
+      'ml-written-organize',
     ]);
     expect(
       written[0]?.questions.find(

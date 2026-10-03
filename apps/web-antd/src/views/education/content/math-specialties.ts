@@ -92,6 +92,8 @@ const lowerGroups: Group[] = [
       'ml-hundred-links',
       'ml-hundred-patterns',
       'ml-hundred-ordering',
+      'ml-hundred-finish',
+      'ml-final-numbers',
     ],
   ],
   [
@@ -110,13 +112,31 @@ const lowerGroups: Group[] = [
     'calculation',
     '100以内口算与笔算',
     '比较口算和竖式策略，注意进位、退位与数位对齐。',
-    ['ml-oral-add', 'ml-oral-sub', 'ml-written-add', 'ml-written-sub'],
+    [
+      'ml-oral-add',
+      'ml-oral-sub',
+      'ml-oral-compare',
+      'ml-oral-groups',
+      'ml-oral-organize',
+      'ml-written-add',
+      'ml-written-sub',
+      'ml-written-compare',
+      'ml-written-correct',
+      'ml-written-organize',
+      'ml-final-calculation',
+    ],
   ],
   [
     'shapes',
     '平面图形辨认与拼组',
     '辨认平面图形，观察拼组后的外轮廓。',
-    ['ml-flat', 'ml-flat-join', 'ml-plane-observe', 'ml-plane-build'],
+    [
+      'ml-flat',
+      'ml-flat-join',
+      'ml-plane-observe',
+      'ml-plane-build',
+      'ml-final-shapes',
+    ],
   ],
   [
     'money',
@@ -135,6 +155,7 @@ const lowerGroups: Group[] = [
       'ml-relations-parts',
       'ml-relations-comparison',
       'ml-relations-organize',
+      'ml-final-applications',
     ],
   ],
 ];
@@ -166,6 +187,10 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
         version = 2;
       if (volume === 'lower' && ['calculation', 'relations'].includes(id))
         version = 3;
+      if (volume === 'lower' && id === 'calculation') version = 10;
+      if (volume === 'lower' && id === 'numbers') version = 4;
+      if (volume === 'lower' && id === 'relations') version = 4;
+      if (volume === 'lower' && id === 'shapes') version = 3;
       if (volume === 'upper' && ['count', 'shapes'].includes(id)) version = 3;
       if (volume === 'upper' && ['calculation', 'relations'].includes(id))
         version = 4;

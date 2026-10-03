@@ -49,7 +49,7 @@ function label(value: number) {
       <template #bodyCell="{ text }">
         <span
           v-if="typeof text === 'number'"
-          class="flex min-h-11 min-w-11 items-center justify-center rounded border border-transparent text-base"
+          class="flex min-h-11 min-w-11 items-center justify-center rounded border border-transparent text-xl"
           :class="
             text === props.visual.value
               ? 'border-primary bg-primary/10 font-semibold text-primary'

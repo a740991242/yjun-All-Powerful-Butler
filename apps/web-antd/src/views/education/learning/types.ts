@@ -1,6 +1,8 @@
+import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
 import type { ClassCapacityVisual } from './class-capacity';
 import type { ClockCountingVisual } from './clock-counting';
+import type { ColumnDigitsRule } from './column-digits';
 import type { ComparisonBarsVisual } from './comparison-bars';
 import type { ComparisonRowsVisual } from './comparison-rows';
 import type { CrossBalanceModel } from './cross-balance';
@@ -9,7 +11,9 @@ import type { DigitCounterVisual } from './digit-counter';
 import type { EmbeddedShapesVisual } from './embedded-shapes';
 import type { EstimateDotsState, EstimateDotsVisual } from './estimate-dots';
 import type { BookGroupsVisual, NumberLineGridVisual } from './final-counting';
+import type { FinalPlaneCardsVisual } from './final-plane-cards';
 import type { FinalStoriesVisual } from './final-stories';
+import type { FruitMazeVisual } from './fruit-maze';
 import type { HundredFragmentsVisual } from './hundred-fragments';
 import type { MathStoryVisual } from './math-story';
 import type { MonthCalendarVisual } from './month-calendar';
@@ -32,6 +36,7 @@ import type { SolidRecomposeVisual } from './solid-recompose';
 import type { StockTableVisual } from './stock-table';
 import type { TeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import type { TeenLayoutVisual } from './teen-layout';
+import type { TenCellsVisual } from './ten-cells';
 import type { TenTablesVisual } from './ten-tables';
 import type { TwoPieceJoinVisual } from './two-piece-join';
 import type { ViewpointHouseVisual } from './viewpoint-house';
@@ -392,6 +397,8 @@ export interface GeoboardShiftVisual extends GeoboardShiftState {
 }
 
 export type AnswerRule =
+  | CardEquationRule
+  | ColumnDigitsRule
   | CrossBalanceModel
   | NumberChainRule
   | NumberPicksRule
@@ -413,6 +420,7 @@ export type Visual =
   | BeadChainVisual
   | BlockCardsVisual
   | BookGroupsVisual
+  | CardEquationRule
   | CardGameVisual
   | ChildActivitiesVisual
   | CircularNumberArrayVisual
@@ -420,6 +428,7 @@ export type Visual =
   | ClassificationRecordVisual
   | ClockCountingVisual
   | ClockVisual
+  | ColumnDigitsRule
   | ComparisonBarsVisual
   | ComparisonRowsVisual
   | CompositeShapesVisual
@@ -431,8 +440,10 @@ export type Visual =
   | DigitCounterVisual
   | EmbeddedShapesVisual
   | EstimateDotsVisual
+  | FinalPlaneCardsVisual
   | FinalStoriesVisual
   | FoldCutJoinVisual
+  | FruitMazeVisual
   | GeoboardShiftVisual
   | GridPathsVisual
   | HundredFragmentsVisual
@@ -480,6 +491,7 @@ export type Visual =
   | SurveyTableVisual
   | TeenArithmeticGridVisual
   | TeenLayoutVisual
+  | TenCellsVisual
   | TenTablesVisual
   | TileGridVisual
   | TriangleMosaicVisual
@@ -521,6 +533,7 @@ export interface VisualState {
   broken?: boolean;
   removed?: number;
   touched?: number[];
+  tenCells?: number[];
   transferred?: number;
   position?: number;
   placeValue?: { value: number; hundreds: number; tens: number };

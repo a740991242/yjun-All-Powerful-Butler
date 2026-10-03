@@ -30,6 +30,8 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Test browser login, cached routes and calculators
         run: pnpm exec vitest run apps/web-antd/src/router/restore-tabs.test.ts apps/web-antd/src/api/local-auth.test.ts apps/web-antd/src/utils/public-asset.test.ts apps/web-antd/src/locales/tools.test.ts apps/web-antd/src/views/life-tools/calculations.test.ts
+      - name: Test curriculum, learning records and backup compatibility
+        run: pnpm exec vitest run apps/web-antd/src/views/education
       - name: Check application types
         run: pnpm -F @vben/web-antd typecheck
       - name: Build static website

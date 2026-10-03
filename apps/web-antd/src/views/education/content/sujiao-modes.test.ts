@@ -95,13 +95,13 @@ describe('sujiao edition-specific practice and bridges', () => {
   it('includes the added PEP operation tasks in versioned specialty pools and keeps v1 saved practice restorable', () => {
     const upper = required(mathBooks.find((b) => b.volume === 'upper'));
     const lower = required(mathBooks.find((b) => b.volume === 'lower'));
-    for (const [book, id, sourceId, originalId] of [
-      [upper, 'ms-upper-shapes', 'mu-solid-observe', 'mu-solid'],
-      [lower, 'ms-lower-shapes', 'ml-plane-build', 'ml-flat'],
-      [lower, 'ms-lower-money', 'ml-shopping-practice', 'ml-money'],
+    for (const [book, id, sourceId, originalId, version] of [
+      [upper, 'ms-upper-shapes', 'mu-solid-observe', 'mu-solid', 3],
+      [lower, 'ms-lower-shapes', 'ml-plane-build', 'ml-flat', 3],
+      [lower, 'ms-lower-money', 'ml-shopping-practice', 'ml-money', 2],
     ] as const) {
       const group = required(book.specialties?.find((l) => l.id === id));
-      expect(group.version).toBe(book.volume === 'upper' ? 3 : 2);
+      expect(group.version).toBe(version);
       expect(group.questions.some((q) => q.knowledge === sourceId)).toBe(true);
       const original = required(
         book.units.flatMap((u) => u.lessons).find((l) => l.id === originalId),

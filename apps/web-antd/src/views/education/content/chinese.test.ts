@@ -7,7 +7,7 @@ import {
   statistics,
   submitResponse,
 } from '../learning/engine';
-import { upperCharacters } from './characters';
+import { characterScopes, upperCharacters } from './characters';
 import { chineseBooks } from './chinese';
 import { firstPhonics, firstReading } from './chinese-first-packs';
 import { textbooks } from './textbooks';
@@ -255,5 +255,70 @@ describe('source-scoped original Chinese recognition supplement', () => {
         }),
       ).data.sessions[0],
     ).toEqual(session);
+  });
+});
+
+describe('complete formal Chinese directory and recognition coverage', () => {
+  it('keeps every formal course separate from supplements and covers every verified new recognition character', () => {
+    for (const book of chineseBooks) {
+      const textbook = textbooks.find((item) => item.id === book.id)!;
+      const scopes = characterScopes(book.volume);
+      const prefix = book.volume === 'upper' ? 'cu' : 'cl';
+      const lessons = book.units.flatMap((unit) => unit.lessons);
+      expect(new Set(lessons.map((lesson) => lesson.id)).size).toBe(
+        lessons.length,
+      );
+      for (const item of textbook.units.flatMap((unit) => unit.items)) {
+        const matches = lessons.filter(
+          (lesson) => lesson.id === `${prefix}-${item.id}`,
+        );
+        expect(
+          matches,
+          `${book.volume}/${item.id}: formal course`,
+        ).toHaveLength(1);
+        const lesson = matches[0]!;
+        expect(lesson.textbookTitle).toBe(item.title);
+        expect(lesson.page).toBe(item.page);
+        if (item.kind === 'reference') {
+          expect(lesson.reference).toBeDefined();
+          expect(lesson.questions).toEqual([]);
+          continue;
+        }
+        expect(lesson.status).toBe('available');
+        expect(lesson.steps.length).toBeGreaterThan(0);
+        expect(lesson.questions.length).toBeGreaterThan(0);
+        const recognition = new Set(
+          lesson.questions.flatMap((question) =>
+            question.rule.kind === 'choice' ? [question.rule.value] : [],
+          ),
+        );
+        for (const character of scopes[item.id]?.recognize ?? '')
+          expect(
+            recognition.has(character),
+            `${book.volume}/${item.id}: ${character}`,
+          ).toBe(true);
+        if (scopes[item.id]?.write) {
+          const writing = lesson.questions.filter(
+            (question) =>
+              question.rule.kind === 'manual' && question.prompt.includes('写'),
+          );
+          expect(
+            writing.length,
+            `${book.volume}/${item.id}: writing task`,
+          ).toBeGreaterThan(0);
+          const writingInstructions = [
+            ...writing.map((question) => question.prompt),
+            ...lesson.steps
+              .filter((step) => step.text.includes('写'))
+              .map((step) => step.text),
+          ].join('\n');
+          for (const character of scopes[item.id]!.write)
+            expect(
+              writingInstructions,
+              `${book.volume}/${item.id}: write ${character}`,
+            ).toContain(character);
+        }
+      }
+    }
   });
 });

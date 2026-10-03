@@ -142,7 +142,7 @@ describe('oral unit methods and original lesson records', () => {
     expect(
       required(book().specialties?.find((l) => l.id === 'ms-lower-calculation'))
         .version,
-    ).toBe(3);
+    ).toBe(10);
   });
   it('uses unseen new method variants for actual errors in the combined calculation specialty', () => {
     const pool = required(
