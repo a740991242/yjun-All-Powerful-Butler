@@ -1087,7 +1087,7 @@ const widths = process.argv.includes('--mobile-only')
         .click();
       await p.getByRole('button', { name: '下一步', exact: true }).waitFor();
       const bnuId = new URLSearchParams(p.url().split('?')[1]).get('session');
-      for (let step = 0; step < 4; step++) await click('下一步');
+      for (let step = 0; step < 5; step++) await click('下一步');
       await click('开始练习');
       const findSession = async (id) => {
         const library = await read();
@@ -1274,8 +1274,8 @@ const widths = process.argv.includes('--mobile-only')
         !bnuWrong ||
         !bnuDraft ||
         bnuSession.bookId !== 'bnu-math-p1-upper-2024' ||
-        bnuSession.questions.length !== 11 ||
-        bnuSession.responses.filter((item) => item.skipped).length !== 4
+        bnuSession.questions.length !== 14 ||
+        bnuSession.responses.filter((item) => item.skipped).length !== 5
       )
         throw new Error('BNU course completion');
       for (const session of beforeBnu.sessions) {
@@ -1301,6 +1301,7 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        ['校园里的数量与认识新同伴', 6, 14, 5, 'bnu-upper-school-observe'],
         [
           '位置作图、四钟连线与附页学具',
           6,
@@ -1387,9 +1388,9 @@ const widths = process.argv.includes('--mobile-only')
         ['操场观察、分组与按条件选物', 6, 20, 7, 'bnu-upper-school-games'],
         [
           '生活物品的大小、长短与轻重观察',
+          6,
+          16,
           5,
-          13,
-          4,
           'bnu-upper-school-harvest',
         ],
       ];
@@ -2269,8 +2270,10 @@ const widths = process.argv.includes('--mobile-only')
         (flow) => !requestedBnu || requestedBnu.includes(flow[4]),
       )) {
         const previous = await read();
-        await p.getByText(title, { exact: true }).waitFor();
-        const entry = p.getByText(title, { exact: true }).locator('xpath=..');
+        await p.getByRole('heading', { name: title, exact: true }).waitFor();
+        const entry = p
+          .getByRole('heading', { name: title, exact: true })
+          .locator('xpath=..');
         await entry
           .getByRole('button', { name: '进入课程', exact: true })
           .click();
@@ -2288,6 +2291,35 @@ const widths = process.argv.includes('--mobile-only')
           await verifyFinalSolids('objects');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-school-observe' && step === 4) {
+            await p.getByText('观察物品的外形', { exact: true }).waitFor();
+            const cards = p.locator('svg[viewBox="0 0 144 144"]');
+            if (
+              (await cards.count()) !== 2 ||
+              (await cards.nth(0).locator('circle').count()) !== 1 ||
+              (await cards.nth(1).locator('rect').count()) !== 1
+            )
+              throw new Error(
+                'Missing original circle/rectangle appearance cards',
+              );
+            if (
+              await p.evaluate(
+                () => document.documentElement.scrollWidth > innerWidth,
+              )
+            )
+              throw new Error('Appearance observation page overflow');
+            await p.screenshot({
+              path: `/tmp/butler-bnu-appearance-observe-${width}.png`,
+              fullPage: true,
+            });
+          }
+          if (lessonId === 'bnu-upper-school-harvest' && step === 4) {
+            await p.getByText('外形描述与比较分开', { exact: true }).waitFor();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-appearance-harvest-${width}.png`,
+              fullPage: true,
+            });
+          }
           if (lessonId === 'bnu-upper-school-games' && [2, 3].includes(step)) {
             await p
               .getByText(
@@ -3287,7 +3319,13 @@ const widths = process.argv.includes('--mobile-only')
         const fresh = await findSession(reviewId);
         if (
           fresh.questions.length !==
-            (lessonId === 'bnu-upper-solid-recognition' ? 5 : 4) ||
+            ([
+              'bnu-upper-school-harvest',
+              'bnu-upper-school-observe',
+              'bnu-upper-solid-recognition',
+            ].includes(lessonId)
+              ? 5
+              : 4) ||
           fresh.originalSessionId !== activityId
         )
           throw new Error('Activity fresh review identity');

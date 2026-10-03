@@ -3,7 +3,7 @@ import { expect, it } from 'vitest';
 import { exportBackup, parseBackup } from '../learning/backup';
 import { createSession, evaluate, submitResponse } from '../learning/engine';
 import { required } from '../learning/required';
-import { bnuUpperBook } from './bnu';
+import { bnuUpperBook, bnuSchoolLesson as observe } from './bnu';
 import {
   bnuSchoolGamesLesson as games,
   bnuSchoolHarvestLesson as harvest,
@@ -61,10 +61,10 @@ it('keeps original activity snapshots and does not manufacture actual confirmati
     createSession(lesson, bnuUpperBook.id, 'child', { seed: 17, now }),
   );
   expect(games.questions).toHaveLength(20);
-  expect(harvest.questions).toHaveLength(13);
+  expect(harvest.questions).toHaveLength(16);
   expect(
     new Set([...games.questions, ...harvest.questions].map((q) => q.id)).size,
-  ).toBe(33);
+  ).toBe(36);
   for (const session of sessions) {
     expect(session.responses.every((r) => r.submissions.length === 0)).toBe(
       true,
@@ -91,6 +91,78 @@ it('keeps original activity snapshots and does not manufacture actual confirmati
   expect(parseBackup(exportBackup(data, now)).data).toEqual(
     JSON.parse(JSON.stringify(data)),
   );
+});
+
+it('separates appearance from quantity, weight and an unverified personal reference', () => {
+  for (const [lesson, suffix, correct, wrong] of [
+    [observe, 'shape-description', '物品的外形', '物品的重量'],
+    [observe, 'flat-round', '不能，纸片与球分别观察', '能，完全同一种物体'],
+    [harvest, 'shape-description', '它们的外形', '它们谁更重'],
+    [
+      harvest,
+      'shape-reference',
+      '不能，还需明确两个对象并比较',
+      '能，圆圆的都一样大',
+    ],
+  ] as const) {
+    const q = required(
+      lesson.questions.find((q) => q.id.endsWith(`-${suffix}`)),
+    );
+    expect(evaluate(q.rule, correct)).toBe(true);
+    expect(evaluate(q.rule, wrong)).toBe(false);
+    expect(lesson.version).toBe(2);
+    const manual = required(
+      lesson.questions.find((q) => q.id.endsWith('-actual-shape')),
+    );
+    expect(evaluate(manual.rule, 'confirmed')).toBeNull();
+    const review = required(
+      lesson.reviewQuestions?.find((q) => q.id.endsWith('-r-shape')),
+    );
+    expect(review.prompt).not.toBe(q.prompt);
+  }
+  const shape = required(
+    observe.steps.find((s) => s.title === '观察物品的外形'),
+  );
+  expect(shape.visual).toMatchObject({
+    kind: 'plane-cards',
+    cards: [{ shape: 'circle' }, { shape: 'rectangle' }],
+  });
+});
+
+it('keeps version-one observation and harvest snapshots separate from the added appearance tasks', () => {
+  const now = '2026-10-03T00:00:00.000Z';
+  const sessions = [observe, harvest].map((lesson) =>
+    createSession(
+      {
+        ...lesson,
+        version: 1,
+        questions: lesson.questions.filter(
+          (q) =>
+            !q.id.endsWith('-actual-shape') &&
+            !q.id.endsWith('-shape-description') &&
+            !q.id.endsWith('-flat-round') &&
+            !q.id.endsWith('-shape-reference'),
+        ),
+      },
+      bnuUpperBook.id,
+      'child',
+      { now, seed: 17 },
+    ),
+  );
+  const restored = parseBackup(
+    exportBackup(
+      {
+        schemaVersion: 1,
+        profiles: [{ id: 'child', nickname: '旧外形课前记录', createdAt: now }],
+        activeProfileId: 'child',
+        sessions,
+      },
+      now,
+    ),
+  ).data.sessions;
+  expect(restored.map((s) => s.questions.length)).toEqual([11, 13]);
+  expect(restored.every((s) => s.lessonVersion === 1)).toBe(true);
+  expect(restored).toEqual(JSON.parse(JSON.stringify(sessions)));
 });
 
 it('preserves all seven cards when changing grouping and keeps the six-card example separate', () => {

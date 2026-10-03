@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T20:55:52.860Z",
+  "generatedAt": "2026-10-03T21:07:37.455Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28182,8 +28182,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 512,
-          "manual": 208,
+          "objective": 516,
+          "manual": 210,
           "reflection": 79
         }
       },
@@ -28210,29 +28210,29 @@
               "title": "校园里的数量与认识新同伴",
               "textbookTitle": "我上学啦",
               "page": 2,
-              "version": 1,
+              "version": 2,
               "status": "available",
-              "goal": "从校园物品和虚构自我介绍中找到数量，区分身份编号与数量，并真实介绍自己。",
+              "goal": "从校园物品和虚构自我介绍中找到数量，区分编号、数量与外形描述，并真实介绍自己。",
               "prerequisite": "会逐个指认少量物品；无需先会写数字或做加减法。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 6,
               "tasks": {
-                "objective": 6,
-                "manual": 4,
+                "objective": 8,
+                "manual": 5,
                 "reflection": 1
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 5,
                 "manual": 0,
                 "reflection": 0
               },
               "knowledge": ["bnu-upper-school-observe"],
               "questionKinds": ["number", "choice", "manual", "reflection"],
-              "visualKinds": ["count"],
+              "visualKinds": ["count", "plane-cards"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "原书公开预览逐页阅读与程序核对",
-                "notes": "封面2024审核、目录两页及印刷2～8页已实际查看；本课仅对应2～5页。第三方预览不冒出版社官方。ISBN和印次未见，保持未知。"
+                "notes": "封面2024审核、目录两页及印刷2～8页已实际查看；本课仅对应2～5页。2026-10-04重看本地原书第3页补外形观察，不冒再次联网读取；第三方预览不冒出版社官方，ISBN与印次保持未知。"
               }
             },
             {
@@ -28270,19 +28270,19 @@
               "title": "生活物品的大小、长短与轻重观察",
               "textbookTitle": "我上学啦",
               "page": 10,
-              "version": 1,
+              "version": 2,
               "status": "available",
-              "goal": "明确比较对象与特点，观察大小长短，区分外形判断与实际轻重，表达自己的发现。",
+              "goal": "明确比较对象与特点，观察大小长短，区分外形描述、具体参照与实际轻重，表达自己的发现。",
               "prerequisite": "愿意观察并指明两个比较对象；不要求先会测量或质量单位。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 6,
               "tasks": {
-                "objective": 8,
-                "manual": 4,
+                "objective": 10,
+                "manual": 5,
                 "reflection": 1
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 5,
                 "manual": 0,
                 "reflection": 0
               },
@@ -28290,9 +28290,9 @@
               "questionKinds": ["choice", "manual", "reflection"],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "公开原书逐页阅读与原创任务核对",
-                "notes": "第三方原书0061印刷10～11页实际读取；大小参照、与已有物比较轻重、手与物长短、外形观察分别对应，不编造原图隐藏数量或重量。"
+                "notes": "第三方原书0061印刷10～11页实际读取；2026-10-04重看本地原书补第11页外形描述与具体比较参照，不冒再次联网读取。大小参照、轻重、手与物长短、外形分别对应，不编造隐藏数量或重量。"
               }
             }
           ]
