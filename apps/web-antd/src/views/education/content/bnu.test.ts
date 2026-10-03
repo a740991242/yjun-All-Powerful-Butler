@@ -29,6 +29,10 @@ import {
 import { bnuSixNineRelationsLesson } from './bnu-six-nine-relations';
 import { bnuSixTenLesson } from './bnu-six-ten';
 import { bnuTenPartitionsLesson } from './bnu-ten';
+import {
+  bnuTenFactTablesLesson,
+  bnuTenOrganizeGameLesson,
+} from './bnu-ten-finish';
 import { editionTarget } from './edition-targets';
 import { mathBooks } from './math';
 import { findTextbook } from './textbooks';
@@ -71,6 +75,8 @@ it('registers an independent partial upper book without borrowing PEP scope or i
     bnuTwoStepLesson,
     bnuDifferenceLesson,
     bnuHiddenLesson,
+    bnuTenFactTablesLesson,
+    bnuTenOrganizeGameLesson,
   ]);
   for (const lesson of lessons.filter((item) => item.status === 'preparing')) {
     expect(lesson.questions).toEqual([]);

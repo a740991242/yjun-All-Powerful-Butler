@@ -4,6 +4,7 @@ import { isArithmeticGridVisual } from './arithmetic-grid';
 import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
+import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
 import { isChildActivitiesVisual } from './child-activities';
@@ -246,6 +247,9 @@ function rule(value: unknown) {
 function visual(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'bnu-caterpillar': {
+      return isBnuCaterpillarVisual(value);
+    }
     case 'shape-patch': {
       return isShapePatchVisual(value);
     }

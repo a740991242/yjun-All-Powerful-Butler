@@ -26,6 +26,10 @@ import {
 import { bnuSixNineRelationsLesson } from './bnu-six-nine-relations';
 import { bnuSixTenLesson } from './bnu-six-ten';
 import { bnuTenPartitionsLesson } from './bnu-ten';
+import {
+  bnuTenFactTablesLesson,
+  bnuTenOrganizeGameLesson,
+} from './bnu-ten-finish';
 
 // Original textbook pages viewed in a third-party public reader, not publisher-hosted scans.
 export const bnuUpperSource = {
@@ -321,16 +325,8 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
       bnuTwoStepLesson,
       bnuDifferenceLesson,
       bnuHiddenLesson,
-      {
-        ...pending,
-        page: 64,
-        goal: '正文已核读至69页；完整十以内表与整理应用课尚待制作。',
-        review: {
-          date: bnuUpperSource.checkedAt,
-          reviewer: '公开原书逐页核读',
-          notes: '64～69页已实际查看，但未制作课包；已读不冒教学完成。',
-        },
-      },
+      bnuTenFactTablesLesson,
+      bnuTenOrganizeGameLesson,
     ];
   return [pending];
 }

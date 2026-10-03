@@ -5,6 +5,7 @@
  * Usage: rtk proxy node scripts/education/verify-pages.mjs
  * Use --generic-only to check only the Suzhou generic course entry in three widths.
  * Use --bnu-lessons=id,id for named BNU activity flows plus the shared baseline; default checks all.
+ * Use --bnu-demo-only for a focused three-width caterpillar interaction/reading check, without the shared baseline.
  * Use --mobile-only for a focused 375px rerun after verifier-only changes.
  */
 import { Buffer } from 'node:buffer';
@@ -22,6 +23,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const genericOnly = process.argv.includes('--generic-only');
+const demoOnly = process.argv.includes('--bnu-demo-only');
 const requestedArgument = process.argv.find((value) =>
   value.startsWith('--bnu-lessons='),
 );
@@ -102,6 +104,103 @@ const widths = process.argv.includes('--mobile-only')
           .filter({ visible: true })
           .last()
           .click();
+      const verifyCaterpillarDemo = async () => {
+        const sizes = await p.locator('.caterpillar-tool').evaluate((tool) => {
+          const selector = tool.querySelector('.ant-select-selector');
+          const item = tool.querySelector('.ant-select-selection-item');
+          const label = tool.querySelector('label');
+          return {
+            height: selector.getBoundingClientRect().height,
+            valueSize: Number.parseFloat(getComputedStyle(item).fontSize),
+            labelSize: Number.parseFloat(getComputedStyle(label).fontSize),
+            buttons: [...tool.querySelectorAll('button')].map(
+              (button) => button.getBoundingClientRect().height,
+            ),
+            circles: tool.querySelectorAll('span.rounded-full').length,
+          };
+        });
+        if (
+          sizes.height < 44 ||
+          sizes.valueSize < 20 ||
+          sizes.labelSize < 20 ||
+          sizes.buttons.some((height) => height < 44) ||
+          sizes.circles !== 10
+        )
+          throw new Error(
+            `Game reading and touch target sizes: ${JSON.stringify(sizes)}`,
+          );
+        for (const [card, count] of [
+          [4, 4],
+          [5, 9],
+          [3, 12],
+          [5, 7],
+          [3, 10],
+        ]) {
+          await p.locator('#bnu-caterpillar-card').focus();
+          await p.locator('#bnu-caterpillar-card').press('ArrowDown');
+          await p.waitForFunction(() => {
+            const item = document.querySelector(
+              '.ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option-content span',
+            );
+            return item && item.getBoundingClientRect().height >= 44;
+          });
+          const menuSize = await p
+            .locator(
+              '.ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option-content span',
+            )
+            .first()
+            .evaluate((item) => ({
+              font: Number.parseFloat(getComputedStyle(item).fontSize),
+              height: item.getBoundingClientRect().height,
+            }));
+          if (menuSize.font < 20 || menuSize.height < 44)
+            throw new Error(
+              `Game menu dimensions: ${JSON.stringify(menuSize)}`,
+            );
+          await p
+            .locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')
+            .locator('.ant-select-item-option-content')
+            .filter({ hasText: new RegExp(`^${card}$`) })
+            .click();
+          await p
+            .locator('.ant-select-dropdown:not(.ant-select-dropdown-hidden)')
+            .waitFor({ state: 'hidden' });
+          await click('模拟这一回合');
+          await p
+            .getByText(`现在铺了${count}个圆片`, { exact: true })
+            .waitFor();
+          if (count === 12) {
+            await p
+              .getByText('超出身体2个；下一回合按摸到的数取走', {
+                exact: true,
+              })
+              .waitFor();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-caterpillar-overflow-${width}.png`,
+            });
+          }
+        }
+        if (
+          !(await p
+            .getByRole('button', { name: '模拟这一回合', exact: true })
+            .isDisabled())
+        )
+          throw new Error('Game continued after reaching ten');
+        await p
+          .getByText('正好10个，成功！这一轮到此结束。', { exact: true })
+          .waitFor();
+        await p.screenshot({
+          path: `/tmp/butler-bnu-caterpillar-success-${width}.png`,
+        });
+        await click('重新演示');
+        await p.getByText('现在铺了0个圆片', { exact: true }).waitFor();
+        if (
+          await p
+            .getByRole('list', { name: '演示回合记录', exact: true })
+            .count()
+        )
+          throw new Error('Game reset retained old turns');
+      };
       const read = (page = p) =>
         page.evaluate(
           () =>
@@ -136,6 +235,40 @@ const widths = process.argv.includes('--mobile-only')
       await p
         .getByRole('button', { name: '导出备份', exact: true })
         .waitFor({ timeout: 60_000 });
+      if (demoOnly) {
+        await p.goto(`${url}#/education/primary/p1/math/bnu-2024/upper`, {
+          waitUntil: 'domcontentloaded',
+        });
+        await p
+          .getByText('十以内整理应用与毛毛虫游戏', { exact: true })
+          .waitFor();
+        await p
+          .getByText('十以内整理应用与毛毛虫游戏', { exact: true })
+          .locator('xpath=..')
+          .getByRole('button', { name: '进入课程', exact: true })
+          .click();
+        for (let step = 0; step < 4; step++) await click('下一步');
+        await verifyCaterpillarDemo();
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(
+            `Demo browser errors: ${JSON.stringify({ errors, bad, api })}`,
+          );
+        console.log(
+          JSON.stringify({
+            width,
+            demoOnly: true,
+            sizes: true,
+            overflow: true,
+            stop: true,
+            reset: true,
+            errors,
+            bad,
+            api,
+          }),
+        );
+        await ctx.close();
+        continue;
+      }
       await p.goto(`${url}#/education?stage=primary&grade=p1`, {
         waitUntil: 'domcontentloaded',
       });
@@ -737,7 +870,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 19
+          .count()) !== 21
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -897,6 +1030,8 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        ['完整加减法表与分类规律', 6, 35, 6, 'bnu-upper-ten-fact-tables'],
+        ['十以内整理应用与毛毛虫游戏', 6, 34, 7, 'bnu-upper-ten-organize-game'],
         ['两步变化、乘车与分类范围', 6, 27, 7, 'bnu-upper-two-step-changes'],
         ['求差、添入与移给的区别', 6, 22, 6, 'bnu-upper-difference-transfer'],
         ['已知总量与连续遮挡', 5, 20, 6, 'bnu-upper-hidden-quantities'],
@@ -956,7 +1091,11 @@ const widths = process.argv.includes('--mobile-only')
         const activityId = new URLSearchParams(p.url().split('?')[1]).get(
           'session',
         );
-        for (let step = 1; step < stepCount; step++) await click('下一步');
+        for (let step = 1; step < stepCount; step++) {
+          await click('下一步');
+          if (lessonId === 'bnu-upper-ten-organize-game' && step === 4)
+            await verifyCaterpillarDemo();
+        }
         await click('开始练习');
         const activityDraft = async (index, draft) => {
           for (let attempt = 0; attempt < 50; attempt++) {
@@ -1162,6 +1301,11 @@ const widths = process.argv.includes('--mobile-only')
               }
             }
             const applicationDrafts = {
+              'bnu-upper-ten-fact-tables-add-10': [
+                0,
+                ...Array.from({ length: 10 }, () => null),
+              ],
+              'bnu-upper-ten-organize-game-game': [0, null, 0, null, null],
               'bnu-upper-two-step-changes-terminal': [0, null],
               'bnu-upper-difference-transfer-move': [0, null],
               'bnu-upper-hidden-quantities-stages': [0, null, 0],
@@ -1169,7 +1313,7 @@ const widths = process.argv.includes('--mobile-only')
             const applicationPartial = applicationDrafts[question.id];
             if (applicationPartial) {
               await p.getByRole('spinbutton').nth(0).fill('0');
-              if (applicationPartial.length === 3)
+              if (applicationPartial[2] === 0)
                 await p.getByRole('spinbutton').nth(2).fill('0');
               await activityDraft(index, applicationPartial);
               await p.reload({ waitUntil: 'domcontentloaded' });
@@ -1192,6 +1336,8 @@ const widths = process.argv.includes('--mobile-only')
             if (
               question.id.endsWith(
                 {
+                  'bnu-upper-ten-fact-tables': '-add-10',
+                  'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
                   'bnu-upper-school-harvest': '-q4',
                   'bnu-upper-life-count-order': '-q10',
@@ -1220,6 +1366,8 @@ const widths = process.argv.includes('--mobile-only')
                 [
                   'bnu-upper-difference-transfer',
                   'bnu-upper-hidden-quantities',
+                  'bnu-upper-ten-fact-tables',
+                  'bnu-upper-ten-organize-game',
                   'bnu-upper-two-step-changes',
                 ].includes(lessonId)
               )
@@ -1378,7 +1526,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 19,
+          bnuCourse: 21,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

@@ -1012,5 +1012,17 @@
   "fruitMazeWall": "Wall",
   "fruitMazeCount": "{count} fruits",
   "finalPlaneNotice": "Count each labelled piece once. Letters, diagram frames and the overall arrangement are not extra pieces.",
-  "finalPlaneDiagram": "Labelled separate pieces of five plane-shape categories"
+  "finalPlaneDiagram": "Labelled separate pieces of five plane-shape categories",
+  "caterpillarTitle": "Caterpillar turn demonstration",
+  "caterpillarNotice": "Choose a number from 1 to 8 for one demonstration turn. This does not score a lesson and restarts on refresh; record actual turn-taking separately.",
+  "caterpillarCount": "Currently {number} counters",
+  "caterpillarBody": "Ten body positions",
+  "caterpillarOverflow": "{number} beyond the body; take counters away next turn",
+  "caterpillarSuccess": "Exactly ten: success! Stop this round here.",
+  "caterpillarTake": "Currently above ten: take away the number drawn next turn.",
+  "caterpillarAdd": "Currently below ten: add the number drawn next turn.",
+  "caterpillarCard": "Number for this turn",
+  "caterpillarPlay": "Demonstrate one turn",
+  "caterpillarReset": "Restart demonstration",
+  "caterpillarHistory": "Demonstration turns"
 }

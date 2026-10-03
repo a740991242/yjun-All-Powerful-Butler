@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T15:55:02.733Z",
+  "generatedAt": "2026-10-03T16:28:13.876Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-03",
       "summary": {
-        "availablePacks": 19,
-        "pendingEntries": 5,
+        "availablePacks": 21,
+        "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 255,
-          "manual": 120,
-          "reflection": 32
+          "objective": 307,
+          "manual": 133,
+          "reflection": 36
         }
       },
       "units": [
@@ -28949,33 +28949,76 @@
               }
             },
             {
-              "id": "bnu-upper-u4-pending",
-              "title": "10以内数加与减",
+              "id": "bnu-upper-ten-fact-tables",
+              "title": "完整加减法表与分类规律",
               "textbookTitle": "10以内数加与减",
               "page": 64,
               "version": 1,
-              "status": "preparing",
-              "goal": "正文已核读至69页；完整十以内表与整理应用课尚待制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "补齐全部十以内加法66条和非负减法66条，按得数或运算数分类，并核对表中不同方向的变化。",
+              "prerequisite": "会十以内分合、加减与缺数。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 27,
+                "manual": 6,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": ["bnu-upper-ten-fact-tables"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-03",
-                "reviewer": "公开原书逐页核读",
-                "notes": "64～69页已实际查看，但未制作课包；已读不冒教学完成。"
+                "date": "2026-10-04",
+                "reviewer": "已核读原书与原创全表条件核对",
+                "notes": "第三方0061印刷64～65页：按得数/包含数整理、完整加减表及竖横斜规律。本站题目原创，来源非出版社托管，ISBN印次未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-ten-organize-game",
+              "title": "十以内整理应用与毛毛虫游戏",
+              "textbookTitle": "10以内数加与减",
+              "page": 66,
+              "version": 1,
+              "status": "available",
+              "goal": "完整核对补图、配对、10减几、等结果连线、图故事与缺数，按条件演示添取到正好10的游戏。",
+              "prerequisite": "会十以内加减表、两步变化与已知总量求部分。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 25,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-ten-organize-game"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-caterpillar"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "已核读原书与原创整理条件核对",
+                "notes": "第三方0061印刷66～69页整理、问题银行、三补图、含两张4的凑8、全11项10减几、两组连线、四图故事、六缺数/遮挡/吸管及毛毛虫每次一张/超10后取走/正好10结束；来源非出版社托管。"
               }
             }
           ]

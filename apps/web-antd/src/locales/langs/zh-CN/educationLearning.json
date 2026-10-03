@@ -1012,5 +1012,17 @@
   "fruitMazeWall": "墙",
   "fruitMazeCount": "{count}个水果",
   "finalPlaneNotice": "只数带字母的独立图块，每块一次；字母、图框和整体排列不是额外图块。",
-  "finalPlaneDiagram": "五类平面图形的带字母独立图块"
+  "finalPlaneDiagram": "五类平面图形的带字母独立图块",
+  "caterpillarTitle": "毛毛虫回合演示",
+  "caterpillarNotice": "选择1～8的数演示一回合。演示不计学习成绩，刷新后重新开始；真实轮流摸卡另行记录。",
+  "caterpillarCount": "现在铺了{number}个圆片",
+  "caterpillarBody": "毛毛虫身体的10个位置",
+  "caterpillarOverflow": "超出身体{number}个；下一回合按摸到的数取走",
+  "caterpillarSuccess": "正好10个，成功！这一轮到此结束。",
+  "caterpillarTake": "当前超过10：下一回合取走摸到的数量。",
+  "caterpillarAdd": "当前不足10：下一回合添上摸到的数量。",
+  "caterpillarCard": "这一回合的数",
+  "caterpillarPlay": "模拟这一回合",
+  "caterpillarReset": "重新演示",
+  "caterpillarHistory": "演示回合记录"
 }
