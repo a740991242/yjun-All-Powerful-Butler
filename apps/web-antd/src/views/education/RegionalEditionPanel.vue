@@ -17,6 +17,7 @@ import {
   regionalProvinces,
   regionalSchools,
 } from './regional-locations';
+import RegionalCustomPreset from './RegionalCustomPreset.vue';
 
 const emit = defineEmits<{
   apply: [actions: RegionalEditionAction[]];
@@ -201,6 +202,11 @@ function apply() {
         ]"
       />
     </div>
+    <RegionalCustomPreset
+      :query="query"
+      @apply="emit('apply', $event)"
+      @clear="emit('clear')"
+    />
     <div class="grid gap-3 sm:grid-cols-2">
       <div
         v-for="item in results"

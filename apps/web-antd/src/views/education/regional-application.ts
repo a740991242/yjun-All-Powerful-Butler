@@ -14,7 +14,7 @@ export interface RegionalApplicationQuery extends RegionalEditionQuery {
 }
 export interface RegionalEditionAction {
   subject: Subject;
-  edition: 'pep-2024' | 'sujiao';
+  edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
   volume: Volume;
 }
 interface PolicySource {

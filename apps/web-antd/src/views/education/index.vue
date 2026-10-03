@@ -140,7 +140,9 @@ function choose(stage?: string, grade?: string) {
                   $t(
                     action.edition === 'sujiao'
                       ? 'educationLearning.sujiaoEdition'
-                      : 'educationLearning.pepEdition',
+                      : action.edition === 'bnu-2024'
+                        ? 'educationLearning.bnuEdition'
+                        : 'educationLearning.pepEdition',
                   )
                 }}
                 · {{ $t(`educationLearning.${action.volume}`) }}
