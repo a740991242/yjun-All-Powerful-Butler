@@ -92,7 +92,7 @@ it('keeps seven physical activities and three independent reflections without re
     expect(evaluate(question.rule, '未做，准备下次核对。')).toBeNull();
   const unit = required(bnuUpperBook.units.find((unit) => unit.id === 'final'));
   expect(unit.lessons).toContainEqual(lesson);
-  expect(unit.lessons.some((item) => item.status === 'preparing')).toBe(true);
+  expect(unit.lessons.some((item) => item.status === 'preparing')).toBe(false);
 });
 it('changes all four review conditions and preserves new rule and diagram snapshots in schema one', () => {
   const review = required(lesson.reviewQuestions);

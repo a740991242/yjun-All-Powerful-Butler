@@ -75,7 +75,7 @@ it('distinguishes real robot pieces from the eye drawings, cylinder ends and exa
   expect(evaluate(by('stability').rule, '第一组')).toBe(true);
   expect(evaluate(by('roof').rule, '不必，另列观察')).toBe(true);
 });
-it('keeps seven independent physical activities, three reflections and the later-page guard', () => {
+it('keeps seven independent physical activities, three reflections and separate full-course registration', () => {
   expect(lesson.steps).toHaveLength(6);
   expect(lesson.questions).toHaveLength(31);
   const manual = lesson.questions.filter((q) => q.rule.kind === 'manual');
@@ -89,7 +89,7 @@ it('keeps seven independent physical activities, three reflections and the later
     expect(evaluate(q.rule, '未做，准备下次核对。')).toBeNull();
   const final = required(bnuUpperBook.units.find((u) => u.id === 'final'));
   expect(final.lessons).toContainEqual(lesson);
-  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(true);
+  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(false);
 });
 it('changes all review conditions and preserves partial zero alongside strict new diagram snapshots', () => {
   const review = required(lesson.reviewQuestions);

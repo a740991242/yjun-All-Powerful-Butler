@@ -119,7 +119,7 @@ it('extends all six point figures above ten and keeps six actual tasks separate 
     expect(evaluate(q.rule, '未做，计划下次画。')).toBeNull();
   const final = required(bnuUpperBook.units.find((u) => u.id === 'final'));
   expect(final.lessons).toContainEqual(lesson);
-  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(true);
+  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(false);
 });
 it('changes all review conditions and round-trips partial zero, selected regions and complete diagram snapshots', () => {
   const review = required(lesson.reviewQuestions);

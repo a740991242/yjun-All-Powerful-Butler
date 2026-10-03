@@ -106,7 +106,7 @@ it('covers actual preparation, both trials, comparison, adjustment, cooperation 
     bnuUpperBook.units
       .flatMap((item) => item.lessons)
       .some((item) => item.status === 'preparing'),
-  ).toBe(true);
+  ).toBe(false);
 });
 it('keeps partial zero drafts and both visual orientations in schema-one snapshots', () => {
   const now = '2026-10-04T00:00:00.000Z';

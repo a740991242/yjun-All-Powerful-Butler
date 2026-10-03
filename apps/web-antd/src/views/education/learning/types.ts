@@ -3,6 +3,7 @@ import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
 import type { BnuFinalClassificationVisual } from './bnu-final-classification';
 import type { BnuFinalColorVisual } from './bnu-final-color';
+import type { BnuFinalPositionVisual } from './bnu-final-position';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
@@ -437,6 +438,7 @@ export type Visual =
   | BnuDayClockVisual
   | BnuFinalClassificationVisual
   | BnuFinalColorVisual
+  | BnuFinalPositionVisual
   | BnuFinalSolidsVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual

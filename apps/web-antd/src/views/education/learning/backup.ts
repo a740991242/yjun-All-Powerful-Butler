@@ -9,6 +9,7 @@ import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
+import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
@@ -338,6 +339,9 @@ function visual(value: unknown) {
     }
     case 'bnu-final-classification': {
       return isBnuFinalClassificationVisual(value);
+    }
+    case 'bnu-final-position': {
+      return isBnuFinalPositionVisual(value);
     }
     case 'bnu-final-solids': {
       return isBnuFinalSolidsVisual(value);

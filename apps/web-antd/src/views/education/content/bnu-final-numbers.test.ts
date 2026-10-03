@@ -75,7 +75,7 @@ it('retains every physical activity and open record separately without releasing
     bnuUpperBook.units.find((unit) => unit.id === 'final'),
   );
   expect(final.lessons[0]).toEqual(lesson);
-  expect(final.lessons.some((item) => item.status === 'preparing')).toBe(true);
+  expect(final.lessons.some((item) => item.status === 'preparing')).toBe(false);
 });
 
 it('preserves incomplete zero drafts, corrected answers and independent story records in schema-one backups', () => {

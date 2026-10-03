@@ -1077,9 +1077,9 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 31
+          .count()) !== 32
       )
-        throw new Error('BNU partial availability');
+        throw new Error('BNU upper availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
       await p
         .getByRole('button', { name: '进入课程', exact: true })
@@ -1302,6 +1302,13 @@ const widths = process.argv.includes('--mobile-only')
       const activityFlows = [];
       const bnuFlows = [
         [
+          '位置作图、四钟连线与附页学具',
+          6,
+          35,
+          8,
+          'bnu-upper-final-position-time',
+        ],
+        [
           '动物分类、活动分组与六物品换标准',
           6,
           30,
@@ -1389,6 +1396,310 @@ const widths = process.argv.includes('--mobile-only')
       for (const id of requestedBnu || [])
         if (!bnuFlows.some((flow) => flow[4] === id))
           throw new Error(`Unknown BNU verification lesson: ${id}`);
+      const verifyFinalPosition = async (
+        scene,
+        variant = 'main',
+        translated = false,
+      ) => {
+        const figure = p.locator(
+          `[data-bnu-final-position][data-position-scene="${scene}"]`,
+        );
+        await figure.waitFor();
+        const check = async () => {
+          if (scene.startsWith('flower')) {
+            const slots = await figure
+              .locator('[data-flower-slot]')
+              .evaluateAll((nodes) =>
+                nodes.map((node) => ({
+                  label: node.dataset.flowerSlot,
+                  transform: node.getAttribute('transform'),
+                  sample: node.dataset.flowerSample,
+                  shape:
+                    node.querySelector('[data-flower-shape]')?.dataset
+                      .flowerShape || null,
+                  text: node.querySelector('text')?.textContent || null,
+                })),
+              );
+            const xs =
+              variant === 'main' ? [150, 40, 150, 260] : [150, 260, 150, 40];
+            const shapes =
+              variant === 'main'
+                ? ['square', 'triangle', 'circle', 'star']
+                : ['circle', 'square', 'triangle', 'star'];
+            for (const [index, slot] of slots.entries()) {
+              if (
+                slot.label !== ['A', 'B', 'C', 'D'][index] ||
+                slot.transform !==
+                  `translate(${xs[index]} ${[40, 150, 260, 150][index]})`
+              )
+                throw new Error('Flower reference or slot moved');
+              const filled = scene === 'flower-filled' || index === 3;
+              if (
+                slot.shape !== (filled ? shapes[index] : null) ||
+                slot.text !== (filled ? null : ['A', 'B', 'C'][index])
+              )
+                throw new Error('Blank diagram leaks or omits drawing');
+            }
+            if (slots.length !== 4) throw new Error('Missing flower direction');
+          }
+          if (scene === 'items') {
+            const actual = await figure
+              .locator('[data-position-item]')
+              .evaluateAll((nodes) =>
+                nodes.map((node) => [
+                  node.dataset.positionName,
+                  Number(node.dataset.positionRow),
+                  Number(node.dataset.positionColumn),
+                ]),
+              );
+            const names =
+              variant === 'main'
+                ? [
+                    'sun',
+                    'balloon',
+                    'moon',
+                    'house',
+                    'lamp',
+                    'pencilCup',
+                    'pinwheel',
+                    'clock',
+                  ]
+                : [
+                    'clock',
+                    'moon',
+                    'pencilCup',
+                    'lamp',
+                    'house',
+                    'sun',
+                    'balloon',
+                    'pinwheel',
+                  ];
+            const expected = names.map((name, i) => [
+              name,
+              Math.floor(i / 4) + 1,
+              (i % 4) + 1,
+            ]);
+            if (JSON.stringify(actual) !== JSON.stringify(expected))
+              throw new Error('Eight-item reference layout');
+            const rows = await figure
+              .locator('[data-position-item]')
+              .evaluateAll((nodes) =>
+                nodes.map((node) => node.getBoundingClientRect().top),
+              );
+            if (
+              rows.slice(0, 4).some((top) => top !== rows[0]) ||
+              rows.slice(4).some((top) => top !== rows[4]) ||
+              rows[4] <= rows[0]
+            )
+              throw new Error('Two-by-four grid folded');
+            const contained = await figure
+              .locator('[data-position-item] p')
+              .evaluateAll((nodes) =>
+                nodes.every((node) => {
+                  const box = node.getBoundingClientRect();
+                  const range = document.createRange();
+                  range.selectNodeContents(node);
+                  return [...range.getClientRects()].every(
+                    (line) =>
+                      line.left >= box.left - 1 && line.right <= box.right + 1,
+                  );
+                }),
+              );
+            if (!contained)
+              throw new Error('Position item text overflows card');
+          }
+          if (scene === 'clocks') {
+            const hands = await figure
+              .locator('[data-final-clock] svg')
+              .evaluateAll((nodes) =>
+                nodes.map((svg) => {
+                  const angle = (selector) => {
+                    const line = svg.querySelector(selector);
+                    return (
+                      ((Math.atan2(
+                        Number(line.getAttribute('x2')) - 120,
+                        120 - Number(line.getAttribute('y2')),
+                      ) *
+                        180) /
+                        Math.PI +
+                        360) %
+                      360
+                    );
+                  };
+                  return [
+                    angle('line[stroke-dasharray]'),
+                    angle('line[stroke-width="6"]'),
+                  ];
+                }),
+              );
+            const expected =
+              variant === 'main'
+                ? [
+                    [0, 0],
+                    [180, 105],
+                    [180, 255],
+                    [180, 315],
+                  ]
+                : [
+                    [180, 165],
+                    [180, 15],
+                    [0, 240],
+                    [0, 300],
+                  ];
+            if (
+              hands.length !== 4 ||
+              hands.some((values, i) =>
+                values.some(
+                  (value, j) => Math.abs(value - expected[i][j]) > 0.001,
+                ),
+              )
+            )
+              throw new Error(
+                'Four clock hands do not match source conditions',
+              );
+          }
+          if (scene === 'annex') {
+            const shapes = await figure
+              .locator('[data-annex-card]')
+              .evaluateAll((nodes) =>
+                nodes.map((node) => [
+                  node.dataset.annexColor,
+                  node.dataset.annexShape,
+                ]),
+              );
+            const original = [
+              ['yellow', 'circle'],
+              ['blue', 'square'],
+              ['yellow', 'triangle'],
+              ['blue', 'circle'],
+              ['green', 'triangle'],
+              ['blue', 'triangle'],
+              ['green', 'square'],
+              ['green', 'circle'],
+              ['yellow', 'square'],
+            ];
+            const order =
+              variant === 'main'
+                ? [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                : [6, 0, 5, 2, 7, 1, 8, 4, 3];
+            if (
+              JSON.stringify(shapes) !==
+              JSON.stringify(order.map((i) => original[i]))
+            )
+              throw new Error('Nine appendix cards missing or mislabeled');
+          }
+          const inside = await figure.locator('svg').evaluateAll((nodes) =>
+            nodes.every((svg) => {
+              const view = svg.viewBox.baseVal;
+              const box = svg.getBBox();
+              return (
+                box.x >= -2 &&
+                box.y >= -2 &&
+                box.x + box.width <= view.width + 2 &&
+                box.y + box.height <= view.height + 2
+              );
+            }),
+          );
+          if (!inside) throw new Error('Position or clock drawing clipped');
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('Position page has horizontal overflow');
+        };
+        await check();
+        const selectors = {
+          items: '[data-position-item]',
+          clocks: '[data-final-clock]',
+          annex: '[data-annex-card]',
+          'flower-blank': 'svg',
+          'flower-filled': 'svg',
+        };
+        const cards = figure.locator(selectors[scene]);
+        for (const index of [0, (await cards.count()) - 1]) {
+          const card = cards.nth(index);
+          await card.evaluate((node) =>
+            node.scrollIntoView({ block: 'center', inline: 'center' }),
+          );
+          await p.waitForTimeout(200);
+          const inside = await card.evaluate((node) => {
+            const b = node.getBoundingClientRect();
+            return (
+              b.left >= 0 &&
+              b.right <= innerWidth + 1 &&
+              b.top >= 0 &&
+              b.bottom <= innerHeight
+            );
+          });
+          if (!inside)
+            throw new Error(
+              'First or last position/clock card outside viewport',
+            );
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-position-${scene}-${variant}-${index}-${width}.png`,
+          });
+        }
+        if (translated) {
+          const before = await read();
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          const caption = {
+            items: 'Keep the two-row, four-column layout',
+            clocks: 'Read all four clock faces in A–D order',
+            annex: 'Nine cards from the textbook appendix',
+            'flower-blank': 'Use the flower as the reference for the blanks',
+            'flower-filled': 'Complete drawing example for checking',
+          };
+          await figure.getByText(caption[scene], { exact: true }).waitFor();
+          const labels = await figure
+            .locator('svg[role="img"]')
+            .evaluateAll((nodes) =>
+              nodes.map((node) => node.getAttribute('aria-label')),
+            );
+          if (labels.some((label) => !label || /[\u4E00-\u9FFF]/.test(label)))
+            throw new Error('Position diagram ARIA not translated');
+          if (scene === 'items') {
+            const names = await figure
+              .locator('[data-position-item] p')
+              .allTextContents();
+            if (
+              names.length !== 8 ||
+              names.some((name) => !name.trim() || /[\u4E00-\u9FFF]/.test(name))
+            )
+              throw new Error('Position item names not translated');
+          }
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await check();
+          await p.screenshot({
+            path: `/tmp/butler-bnu-final-position-${scene}-english-${width}.png`,
+          });
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForTimeout(700);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          const captionCN = {
+            items: '保持两排四列的位置图',
+            clocks: '四个钟面，按A～D完整认读',
+            annex: '附页九张学具卡',
+            'flower-blank': '以花为参照，观察待填位置',
+            'flower-filled': '全部作图的教学核对示意',
+          };
+          await figure.getByText(captionCN[scene], { exact: true }).waitFor();
+          const after = await read();
+          if (
+            JSON.stringify(before.sessions) !== JSON.stringify(after.sessions)
+          )
+            throw new Error('Position translation reset study records');
+        }
+      };
       const verifyFinalClassification = async (
         scene,
         variant = 'main',
@@ -1969,12 +2280,20 @@ const widths = process.argv.includes('--mobile-only')
         );
         if (lessonId === 'bnu-upper-final-number-practice')
           await verifyNumberStrip([5, null, 7, null, 9, null], 'ascending');
+        if (lessonId === 'bnu-upper-final-position-time')
+          await verifyFinalPosition('flower-blank');
         if (lessonId === 'bnu-upper-final-classification')
           await verifyFinalClassification('legs');
         if (lessonId === 'bnu-upper-final-solids')
           await verifyFinalSolids('objects');
         for (let step = 1; step < stepCount; step++) {
           await click('下一步');
+          if (lessonId === 'bnu-upper-final-position-time') {
+            if (step === 1) await verifyFinalPosition('flower-filled');
+            if (step === 2) await verifyFinalPosition('items', 'main', true);
+            if (step === 3) await verifyFinalPosition('clocks', 'main', true);
+            if (step === 5) await verifyFinalPosition('annex', 'main', true);
+          }
           if (lessonId === 'bnu-upper-final-classification') {
             if (step === 1) await verifyFinalClassification('habitat');
             if (step === 2)
@@ -2569,6 +2888,7 @@ const widths = process.argv.includes('--mobile-only')
               'bnu-upper-final-color-patterns-dots-next': [0, null, null],
               'bnu-upper-final-solids-robot-counts': [0, null, 0, null],
               'bnu-upper-final-classification-shape-counts': [0, null, 0],
+              'bnu-upper-final-position-time-long-hands': [0, null, 0, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -2732,6 +3052,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-final-color-patterns': '-dots-next',
                   'bnu-upper-final-solids': '-robot-counts',
                   'bnu-upper-final-classification': '-shape-counts',
+                  'bnu-upper-final-position-time': '-long-hands',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -2768,6 +3089,7 @@ const widths = process.argv.includes('--mobile-only')
                   'bnu-upper-final-color-patterns',
                   'bnu-upper-final-number-practice',
                   'bnu-upper-final-number-talk',
+                  'bnu-upper-final-position-time',
                   'bnu-upper-final-solids',
                   'bnu-upper-hidden-quantities',
                   'bnu-upper-six-card-game',
@@ -2941,6 +3263,8 @@ const widths = process.argv.includes('--mobile-only')
         for (let index = 0; index < fresh.questions.length; index++) {
           const question = fresh.questions[index];
           await p.getByText(question.prompt, { exact: true }).waitFor();
+          if (lessonId === 'bnu-upper-final-position-time' && question.visual)
+            await verifyFinalPosition(question.visual.scene, 'review');
           if (lessonId === 'bnu-upper-final-classification' && question.visual)
             await verifyFinalClassification(question.visual.scene, 'review');
           if (lessonId === 'bnu-upper-final-solids' && question.visual)
@@ -3015,7 +3339,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 31,
+          bnuCourse: 32,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

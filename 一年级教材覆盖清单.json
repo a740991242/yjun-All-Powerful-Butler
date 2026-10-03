@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T20:04:30.454Z",
+  "generatedAt": "2026-10-03T20:27:37.939Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28178,13 +28178,13 @@
       "resourceId": "keben-0061",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 31,
-        "pendingEntries": 1,
+        "availablePacks": 32,
+        "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 487,
-          "manual": 200,
-          "reflection": 75
+          "objective": 510,
+          "manual": 208,
+          "reflection": 79
         }
       },
       "units": [
@@ -29473,33 +29473,40 @@
               }
             },
             {
-              "id": "bnu-upper-final-pending",
-              "title": "总复习 · 后续内容制作中",
-              "textbookTitle": "总复习",
-              "page": 81,
+              "id": "bnu-upper-final-position-time",
+              "title": "位置作图、四钟连线与附页学具",
+              "textbookTitle": "总复习 · 综合与实践",
+              "page": 86,
               "version": 1,
-              "status": "preparing",
-              "goal": "第81～85页已开放，第86页课程仍在制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "完整说明固定参照的位置、完成四方向作图与全部位置填空、认读四钟，并联系附页九卡两轮分类。",
+              "prerequisite": "认识上下左右与前后、整时半时、简单平面图形与分类标准。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 23,
+                "manual": 8,
+                "reflection": 4
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-final-position-time"],
+              "questionKinds": [
+                "choice",
+                "sequence",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-final-position"],
               "audit": {
                 "date": "2026-10-04",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "reviewer": "原书86全项及87附页逐件对应",
+                "notes": "重新实际查看本地第三方0061阅读器90/91对应印刷86/87。原四钟12/3半/8半/10半，附页九卡颜色和形状各三件。ISBN版印次未知，原创图不打包原照片。"
               }
             }
           ]

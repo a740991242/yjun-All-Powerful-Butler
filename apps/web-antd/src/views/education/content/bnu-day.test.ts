@@ -106,7 +106,7 @@ it('keeps six personal records and three self-assessment dimensions ungraded and
     bnuUpperBook.units
       .flatMap((unit) => unit.lessons)
       .some((q) => q.status === 'preparing'),
-  ).toBe(true);
+  ).toBe(false);
 });
 it('round trips observation snapshots, own records and partial zero drafts without rewriting schema one', () => {
   const now = '2026-10-04T00:00:00.000Z';

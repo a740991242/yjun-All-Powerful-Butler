@@ -115,7 +115,7 @@ it('keeps all original physical tasks separate from open criteria and future pla
     expect(evaluate(q.rule, '另一种标准尚未实做，准备下次试。')).toBeNull();
   const final = required(bnuUpperBook.units.find((u) => u.id === 'final'));
   expect(final.lessons).toContainEqual(lesson);
-  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(true);
+  expect(final.lessons.some((l) => l.status === 'preparing')).toBe(false);
 });
 it('changes every review condition and preserves partial zero, selected sets and old snapshots', () => {
   const review = required(lesson.reviewQuestions);

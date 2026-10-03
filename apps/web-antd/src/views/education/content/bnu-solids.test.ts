@@ -78,7 +78,7 @@ it('keeps original actual activities, open reflection and remaining geometry sep
     bnuUpperBook.units
       .flatMap((item) => item.lessons)
       .some((item) => item.status === 'preparing'),
-  ).toBe(true);
+  ).toBe(false);
   expect(lesson.steps.map((step) => step.text).join('')).toContain('横放');
   expect(lesson.steps.map((step) => step.text).join('')).toContain('竖放');
   expect(lesson.steps.map((step) => step.text).join('')).toContain(

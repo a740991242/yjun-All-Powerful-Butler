@@ -20,6 +20,7 @@ import { bnuDayRecordLesson } from './bnu-day';
 import { bnuFinalClassificationLesson } from './bnu-final-classification';
 import { bnuFinalNumberTalkLesson } from './bnu-final-numbers';
 import { bnuFinalColorPatternsLesson } from './bnu-final-patterns';
+import { bnuFinalPositionTimeLesson } from './bnu-final-position';
 import { bnuFinalNumberPracticeLesson } from './bnu-final-practice';
 import { bnuFinalSolidsLesson } from './bnu-final-solids';
 import { bnuFiveAddLesson } from './bnu-five-add';
@@ -47,7 +48,7 @@ import { editionTarget } from './edition-targets';
 import { mathBooks } from './math';
 import { findTextbook } from './textbooks';
 
-it('registers an independent partial upper book without borrowing PEP scope or inventing a lower book', () => {
+it('registers an independent upper book without borrowing PEP scope or inventing a lower book', () => {
   expect(bnuUpperBook.units.map((unit) => [unit.title, unit.page])).toEqual([
     ['我上学啦', 2],
     ['生活中的数', 12],
@@ -97,11 +98,9 @@ it('registers an independent partial upper book without borrowing PEP scope or i
     bnuFinalColorPatternsLesson,
     bnuFinalSolidsLesson,
     bnuFinalClassificationLesson,
+    bnuFinalPositionTimeLesson,
   ]);
-  for (const lesson of lessons.filter((item) => item.status === 'preparing')) {
-    expect(lesson.questions).toEqual([]);
-    expect(lesson.steps).toEqual([]);
-  }
+  expect(lessons.every((lesson) => lesson.status === 'available')).toBe(true);
   expect(bnuUpperSource.isbn).toBeNull();
   expect(bnuUpperSource.printing).toBeNull();
   expect(mathBooks.map((book) => book.id)).toEqual([

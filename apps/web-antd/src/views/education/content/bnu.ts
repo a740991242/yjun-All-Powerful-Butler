@@ -17,6 +17,7 @@ import { bnuDayRecordLesson } from './bnu-day';
 import { bnuFinalClassificationLesson } from './bnu-final-classification';
 import { bnuFinalNumberTalkLesson } from './bnu-final-numbers';
 import { bnuFinalColorPatternsLesson } from './bnu-final-patterns';
+import { bnuFinalPositionTimeLesson } from './bnu-final-position';
 import { bnuFinalNumberPracticeLesson } from './bnu-final-practice';
 import { bnuFinalSolidsLesson } from './bnu-final-solids';
 import { bnuFiveAddLesson } from './bnu-five-add';
@@ -354,11 +355,7 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
       bnuFinalColorPatternsLesson,
       bnuFinalSolidsLesson,
       bnuFinalClassificationLesson,
-      {
-        ...pending,
-        title: '总复习 · 后续内容制作中',
-        goal: '第81～85页已开放，第86页课程仍在制作。',
-      },
+      bnuFinalPositionTimeLesson,
     ];
   return [pending];
 }
