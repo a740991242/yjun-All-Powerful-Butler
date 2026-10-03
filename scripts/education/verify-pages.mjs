@@ -6,6 +6,7 @@
  * Use --generic-only to check only the Suzhou generic course entry in three widths.
  * Use --bnu-lessons=id,id for named BNU activity flows plus the shared baseline; default checks all.
  * Use --bnu-demo-only for a focused three-width caterpillar interaction/reading check, without the shared baseline.
+ * Use --deployed to verify the public GitHub Pages site with fresh profiles.
  * Use --mobile-only for a focused 375px rerun after verifier-only changes.
  */
 import { Buffer } from 'node:buffer';
@@ -22,6 +23,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 );
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
+const deployed = process.argv.includes('--deployed');
 const genericOnly = process.argv.includes('--generic-only');
 const demoOnly = process.argv.includes('--bnu-demo-only');
 const requestedArgument = process.argv.find((value) =>
@@ -75,7 +77,9 @@ const widths = process.argv.includes('--mobile-only')
     }
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  const origin = `http://127.0.0.1:${server.address().port}`;
+  const origin = deployed
+    ? 'https://a740991242.github.io'
+    : `http://127.0.0.1:${server.address().port}`;
   const url = origin + base;
   let browser;
   let p;
@@ -3422,6 +3426,7 @@ const widths = process.argv.includes('--mobile-only')
           recordPreservation: true,
           hashBase: true,
           errors,
+          target: url,
           bad,
           api,
         }),
