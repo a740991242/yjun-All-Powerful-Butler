@@ -139,15 +139,19 @@ it('keeps the exact new review tasks per available course after every other main
     session.responses[index] = submitResponse(question, response, now);
     return session;
   });
-  for (let index = 0; index < lessons.length; index++)
+  for (let index = 0; index < lessons.length; index++) {
+    const lesson = required(lessons[index]);
+    const expected = required(lesson.reviewQuestions);
+    // Compare the complete published task snapshots, not a fixed four-question
+    // count: a source-backed lesson may add more distinct review activities.
+    expect(expected.length, lesson.id).toBeGreaterThanOrEqual(4);
     expect(
-      newReviewQuestions(
-        required(lessons[index]),
-        required(sessions[index]),
-        sessions,
-      ),
-      required(lessons[index]).id,
-    ).toHaveLength(
-      required(lessons[index]).id === 'bnu-upper-solid-recognition' ? 5 : 4,
-    );
+      new Set(expected.map((question) => question.id)).size,
+      lesson.id,
+    ).toBe(expected.length);
+    expect(
+      newReviewQuestions(lesson, required(sessions[index]), sessions),
+      lesson.id,
+    ).toEqual(expected);
+  }
 });
