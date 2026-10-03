@@ -1,4 +1,5 @@
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
+import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
 import type { ClassCapacityVisual } from './class-capacity';
@@ -423,6 +424,7 @@ export type Visual =
   | BeadChainVisual
   | BlockCardsVisual
   | BnuCaterpillarVisual
+  | BnuSixCardGameVisual
   | BookGroupsVisual
   | CardEquationRule
   | CardGameVisual

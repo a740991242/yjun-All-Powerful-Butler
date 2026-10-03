@@ -23,8 +23,10 @@ import {
   bnuSchoolGamesLesson,
   bnuSchoolHarvestLesson,
 } from './bnu-school-activities';
+import { bnuSixCardGameLesson } from './bnu-six-card-game';
 import { bnuSixNineRelationsLesson } from './bnu-six-nine-relations';
 import { bnuSixTenLesson } from './bnu-six-ten';
+import { bnuSolidRecognitionLesson } from './bnu-solids';
 import { bnuTenPartitionsLesson } from './bnu-ten';
 import {
   bnuTenFactTablesLesson,
@@ -35,7 +37,7 @@ import {
 export const bnuUpperSource = {
   preview: 'https://keben.app/book/0061',
   publisherPortal: 'https://jiaoshi.bnupg.com/',
-  checkedAt: '2026-10-03',
+  checkedAt: '2026-10-04',
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
@@ -43,7 +45,8 @@ export const bnuUpperSource = {
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
     23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
     42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-    61, 62, 63, 64, 65, 66, 67, 68, 69,
+    61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+    80,
   ],
   contents: [
     ['school', '我上学啦', 2],
@@ -300,6 +303,7 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
     return [bnuFiveAddLesson, bnuFiveSubtractLesson, bnuFiveOrganizeLesson];
   if (key === 'classroom') return [bnuClassroomLesson];
   if (key === 'u3') return [bnuRoomSortLesson, bnuClassificationLesson];
+  if (key === 'games') return [bnuSixCardGameLesson];
   const pending: Lesson = {
     id: `bnu-upper-${key}-pending`,
     textbookTitle: title,
@@ -318,6 +322,16 @@ function lessonsForUnit(key: string, title: string, page: number): Lesson[] {
       notes: '目录核验不表示正文课程已经完成。',
     },
   };
+  if (key === 'u5')
+    return [
+      bnuSolidRecognitionLesson,
+      {
+        ...pending,
+        title: '按指令搭建与搭得高（制作中）',
+        page: 74,
+        goal: '72～73页认识与分类已制作；74～77页按指令搭建、使用全部材料搭高的课程尚未制作。',
+      },
+    ];
   if (key === 'u4')
     return [
       bnuSixNineRelationsLesson,

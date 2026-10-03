@@ -1024,5 +1024,17 @@
   "caterpillarCard": "这一回合的数",
   "caterpillarPlay": "模拟这一回合",
   "caterpillarReset": "重新演示",
-  "caterpillarHistory": "演示回合记录"
+  "caterpillarHistory": "演示回合记录",
+  "sixCardTitle": "摸数卡规则演示",
+  "sixCardNotice": "单人规则演示：20张纸卡，每个数1～5各4张，随机摸牌，最多三张。演示不计学习成绩，刷新重开；真实轮流与比较另记。",
+  "sixCardSummary": "已摸{count}张，累计和{total}",
+  "sixCardRemaining": "未摸纸卡还剩{count}张",
+  "sixCardHand": "本次摸到的数卡",
+  "sixCardOrdinal": "第{number}张",
+  "sixCardOut": "和超过6，本轮出局；可以重新演示。出局只描述这一轮。",
+  "sixCardFinished": "本轮已停止。结果不超过6；与其他人的合法结果比较后才能判断谁获胜。",
+  "sixCardActive": "可以再摸一张，也可以选择停止。正好6仍合法，但再摸会超过6。",
+  "sixCardDraw": "随机摸一张",
+  "sixCardStop": "我不再摸了",
+  "sixCardReset": "重新演示"
 }

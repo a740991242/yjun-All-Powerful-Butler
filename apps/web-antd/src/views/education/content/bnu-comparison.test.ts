@@ -113,7 +113,7 @@ it('keeps partial zero, reflections and new review rules in schema-one backups',
       );
 });
 
-it('keeps four new review tasks per available course after every other main course was visited', () => {
+it('keeps the exact new review tasks per available course after every other main course was visited', () => {
   const now = '2026-10-03T00:00:00.000Z';
   const lessons = bnuUpperBook.units
     .flatMap((unit) => unit.lessons)
@@ -147,5 +147,7 @@ it('keeps four new review tasks per available course after every other main cour
         sessions,
       ),
       required(lessons[index]).id,
-    ).toHaveLength(4);
+    ).toHaveLength(
+      required(lessons[index]).id === 'bnu-upper-solid-recognition' ? 5 : 4,
+    );
 });

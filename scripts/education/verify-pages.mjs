@@ -201,6 +201,165 @@ const widths = process.argv.includes('--mobile-only')
         )
           throw new Error('Game reset retained old turns');
       };
+      const verifySixCardDemo = async () => {
+        const tool = p.getByRole('region', {
+          name: '摸数卡规则演示',
+          exact: true,
+        });
+        await tool.waitFor();
+        const targets = await tool.locator('button').evaluateAll((buttons) =>
+          buttons.map((button) => ({
+            height: button.getBoundingClientRect().height,
+            font: Number.parseFloat(getComputedStyle(button).fontSize),
+          })),
+        );
+        if (targets.some((target) => target.height < 44 || target.font < 20))
+          throw new Error('Six-card button target size');
+        const values = [];
+        for (let count = 1; count <= 3; count++) {
+          const drawButton = tool.getByRole('button', {
+            name: '随机摸一张',
+            exact: true,
+          });
+          if (count === 2) {
+            await drawButton.focus();
+            await drawButton.press('Enter');
+          } else await drawButton.click();
+          await p.waitForFunction(
+            (count) =>
+              document.querySelectorAll('.six-card-tool ol li').length ===
+              count,
+            count,
+          );
+          const actual = await tool
+            .locator('ol li .text-3xl')
+            .allTextContents();
+          values.push(Number(actual.at(-1)));
+          if (
+            values.some(
+              (value) => !Number.isSafeInteger(value) || value < 1 || value > 5,
+            )
+          )
+            throw new Error('Six-card drawn value outside deck');
+          let total = 0;
+          for (const value of values) total += value;
+          await tool
+            .getByText(`已摸${count}张，累计和${total}`, { exact: true })
+            .waitFor();
+          await tool
+            .getByText(`未摸纸卡还剩${20 - count}张`, { exact: true })
+            .waitFor();
+          if (total > 6) {
+            await tool
+              .getByText(
+                '和超过6，本轮出局；可以重新演示。出局只描述这一轮。',
+                { exact: true },
+              )
+              .waitFor();
+            if (
+              !(await tool
+                .getByRole('button', { name: '随机摸一张', exact: true })
+                .isDisabled())
+            )
+              throw new Error('Drawing continued after out');
+            break;
+          }
+          if (
+            count === 3 &&
+            !(await tool
+              .getByRole('button', { name: '随机摸一张', exact: true })
+              .isDisabled())
+          )
+            throw new Error('Fourth card allowed');
+        }
+        await tool
+          .getByRole('button', { name: '重新演示', exact: true })
+          .click();
+        await tool.getByText('已摸0张，累计和0', { exact: true }).waitFor();
+        await tool.getByText('未摸纸卡还剩20张', { exact: true }).waitFor();
+        if (await tool.locator('ol li').count())
+          throw new Error('Reset kept six-card hand');
+        await tool
+          .getByRole('button', { name: '随机摸一张', exact: true })
+          .click();
+        await p.waitForFunction(
+          () => document.querySelectorAll('.six-card-tool ol li').length === 1,
+        );
+        await tool
+          .getByRole('button', { name: '我不再摸了', exact: true })
+          .click();
+        await tool
+          .getByText(
+            '本轮已停止。结果不超过6；与其他人的合法结果比较后才能判断谁获胜。',
+            { exact: true },
+          )
+          .waitFor();
+        if (
+          !(await tool
+            .getByRole('button', { name: '随机摸一张', exact: true })
+            .isDisabled())
+        )
+          throw new Error('Drawing continued after voluntary stop');
+        const beforeLanguage = await tool
+          .locator('ol li .text-3xl')
+          .allTextContents();
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        const englishTool = p.getByRole('region', {
+          name: 'Number-card rule demonstration',
+          exact: true,
+        });
+        await englishTool.waitFor();
+        if (
+          JSON.stringify(
+            await englishTool.locator('ol li .text-3xl').allTextContents(),
+          ) !== JSON.stringify(beforeLanguage)
+        )
+          throw new Error('Six-card locale switch reset hand');
+        if (
+          !(await englishTool
+            .getByRole('button', { name: 'Draw one random card', exact: true })
+            .isDisabled())
+        )
+          throw new Error('Six-card locale switch reset stop');
+        const englishTargets = await englishTool
+          .locator('button')
+          .evaluateAll((buttons) =>
+            buttons.map((button) => ({
+              height: button.getBoundingClientRect().height,
+              font: Number.parseFloat(getComputedStyle(button).fontSize),
+            })),
+          );
+        if (
+          englishTargets.some(
+            (target) => target.height < 44 || target.font < 20,
+          )
+        )
+          throw new Error('Six-card English touch size');
+        await englishTool
+          .getByRole('button', { name: 'New demonstration', exact: true })
+          .evaluate((button) => button.scrollIntoView({ block: 'center' }));
+        await p.screenshot({
+          path: `/tmp/butler-bnu-six-card-demo-en-${width}.png`,
+        });
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await tool
+          .getByRole('button', { name: '重新演示', exact: true })
+          .evaluate((button) => button.scrollIntoView({ block: 'center' }));
+        await p.screenshot({
+          path: `/tmp/butler-bnu-six-card-demo-${width}.png`,
+        });
+        await p.reload({ waitUntil: 'domcontentloaded' });
+        await p.getByText('已摸0张，累计和0', { exact: true }).waitFor();
+        await p.getByText('未摸纸卡还剩20张', { exact: true }).waitFor();
+      };
       const read = (page = p) =>
         page.evaluate(
           () =>
@@ -870,7 +1029,7 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 21
+          .count()) !== 23
       )
         throw new Error('BNU partial availability');
       await p.getByText('校园里的数量与认识新同伴', { exact: true }).waitFor();
@@ -1030,6 +1189,14 @@ const widths = process.argv.includes('--mobile-only')
         throw new Error('BNU export lost snapshot');
       const activityFlows = [];
       const bnuFlows = [
+        [
+          '认识四种立体、分类与七件计数',
+          6,
+          25,
+          7,
+          'bnu-upper-solid-recognition',
+        ],
+        ['摸数卡、六的边界与共同获胜', 6, 29, 6, 'bnu-upper-six-card-game'],
         ['完整加减法表与分类规律', 6, 35, 6, 'bnu-upper-ten-fact-tables'],
         ['十以内整理应用与毛毛虫游戏', 6, 34, 7, 'bnu-upper-ten-organize-game'],
         ['两步变化、乘车与分类范围', 6, 27, 7, 'bnu-upper-two-step-changes'],
@@ -1095,6 +1262,57 @@ const widths = process.argv.includes('--mobile-only')
           await click('下一步');
           if (lessonId === 'bnu-upper-ten-organize-game' && step === 4)
             await verifyCaterpillarDemo();
+          if (lessonId === 'bnu-upper-six-card-game' && step === 4)
+            await verifySixCardDemo();
+          if (lessonId === 'bnu-upper-solid-recognition' && step === 3) {
+            const diagram = p.locator('.learning-visual');
+            const models = diagram.locator('svg[role="img"]');
+            if ((await models.count()) !== 7)
+              throw new Error('Incomplete seven-object solid diagram');
+            const shapeDescriptions = JSON.parse(
+              await fs.readFile(
+                `${repo}/apps/web-antd/src/locales/langs/zh-CN/educationLearning.json`,
+                'utf8',
+              ),
+            );
+            const expected = [
+              'cuboid',
+              'cube',
+              'sphere',
+              'cuboid',
+              'cylinder',
+              'cuboid',
+              'cylinder',
+            ].map((shape) => shapeDescriptions[`shape_${shape}`]);
+            for (let model = 0; model < expected.length; model++)
+              if (
+                (await models.nth(model).getAttribute('aria-label')) !==
+                `从左起第${model + 1}个模型：${expected[model]}`
+              )
+                throw new Error('Solid diagram and accessible sequence differ');
+            await diagram.scrollIntoViewIfNeeded();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-solid-row-start-${width}.png`,
+            });
+            const scroller = diagram.locator('.overflow-x-auto');
+            await scroller.evaluate((element) => {
+              element.scrollLeft = element.scrollWidth;
+            });
+            await p.waitForTimeout(200);
+            const visible = await models.last().evaluate((element) => {
+              const box = element.getBoundingClientRect();
+              const parent =
+                element.parentElement.parentElement.getBoundingClientRect();
+              return (
+                box.left >= parent.left - 1 && box.right <= parent.right + 1
+              );
+            });
+            if (!visible)
+              throw new Error('Last solid is clipped after local scroll');
+            await p.screenshot({
+              path: `/tmp/butler-bnu-solid-row-end-${width}.png`,
+            });
+          }
         }
         await click('开始练习');
         const activityDraft = async (index, draft) => {
@@ -1301,6 +1519,8 @@ const widths = process.argv.includes('--mobile-only')
               }
             }
             const applicationDrafts = {
+              'bnu-upper-six-card-game-third-legal': [0, null, null],
+              'bnu-upper-solid-recognition-counts': [0, null, null, null],
               'bnu-upper-ten-fact-tables-add-10': [
                 0,
                 ...Array.from({ length: 10 }, () => null),
@@ -1336,6 +1556,8 @@ const widths = process.argv.includes('--mobile-only')
             if (
               question.id.endsWith(
                 {
+                  'bnu-upper-six-card-game': '-third-legal',
+                  'bnu-upper-solid-recognition': '-counts',
                   'bnu-upper-ten-fact-tables': '-add-10',
                   'bnu-upper-ten-organize-game': '-game',
                   'bnu-upper-school-games': '-q7',
@@ -1366,6 +1588,8 @@ const widths = process.argv.includes('--mobile-only')
                 [
                   'bnu-upper-difference-transfer',
                   'bnu-upper-hidden-quantities',
+                  'bnu-upper-six-card-game',
+                  'bnu-upper-solid-recognition',
                   'bnu-upper-ten-fact-tables',
                   'bnu-upper-ten-organize-game',
                   'bnu-upper-two-step-changes',
@@ -1449,7 +1673,8 @@ const widths = process.argv.includes('--mobile-only')
         );
         const fresh = await findSession(reviewId);
         if (
-          fresh.questions.length !== 4 ||
+          fresh.questions.length !==
+            (lessonId === 'bnu-upper-solid-recognition' ? 5 : 4) ||
           fresh.originalSessionId !== activityId
         )
           throw new Error('Activity fresh review identity');
@@ -1490,7 +1715,7 @@ const widths = process.argv.includes('--mobile-only')
         activityFlows.push({
           lessonId,
           taskCount,
-          review: 4,
+          review: fresh.questions.length,
           skipped: manualCount,
         });
       }
@@ -1526,7 +1751,7 @@ const widths = process.argv.includes('--mobile-only')
           login: true,
           provinceGuard: true,
           catalogs: 8,
-          bnuCourse: 21,
+          bnuCourse: 23,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
           bnuUnavailableLower: true,

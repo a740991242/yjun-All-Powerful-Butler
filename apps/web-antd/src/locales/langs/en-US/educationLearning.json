@@ -1024,5 +1024,17 @@
   "caterpillarCard": "Number for this turn",
   "caterpillarPlay": "Demonstrate one turn",
   "caterpillarReset": "Restart demonstration",
-  "caterpillarHistory": "Demonstration turns"
+  "caterpillarHistory": "Demonstration turns",
+  "sixCardTitle": "Number-card rule demonstration",
+  "sixCardNotice": "One-player demonstration: 20 paper cards, four of each number from 1 to 5. Draw at random, up to three cards. This is unscored and restarts on refresh; real turn-taking and comparison are recorded separately.",
+  "sixCardSummary": "Cards drawn: {count}; total: {total}",
+  "sixCardRemaining": "Undrawn paper cards: {count}",
+  "sixCardHand": "Cards drawn this round",
+  "sixCardOrdinal": "Card {number}",
+  "sixCardOut": "The total exceeds 6: this round is out. Try a new demonstration. This describes the round only.",
+  "sixCardFinished": "This round has stopped with a total no greater than 6. Compare other players’ valid totals before deciding who wins.",
+  "sixCardActive": "Draw one more card or choose to stop. Exactly 6 is valid, but another card will exceed 6.",
+  "sixCardDraw": "Draw one random card",
+  "sixCardStop": "Stop drawing",
+  "sixCardReset": "New demonstration"
 }

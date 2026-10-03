@@ -14,6 +14,7 @@ import AssemblyCandidates from './AssemblyCandidates.vue';
 import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
+import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
 import CardEquation from './CardEquation.vue';
@@ -320,6 +321,7 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <BnuCaterpillar v-else-if="visual.kind === 'bnu-caterpillar'" />
+    <BnuSixCardGame v-else-if="visual.kind === 'bnu-six-card-game'" />
     <FruitMaze v-else-if="visual.kind === 'fruit-maze'" :visual="visual" />
     <CardEquation
       v-else-if="visual.kind === 'card-equation'"

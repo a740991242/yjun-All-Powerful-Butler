@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T16:28:13.876Z",
+  "generatedAt": "2026-10-03T17:10:14.119Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -28176,15 +28176,15 @@
       "title": "一年级数学上册 · 北师大版（2024审核）",
       "source": "https://keben.app/book/0061",
       "resourceId": "keben-0061",
-      "verifiedAt": "2026-10-03",
+      "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 21,
-        "pendingEntries": 4,
+        "availablePacks": 23,
+        "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 307,
-          "manual": 133,
-          "reflection": 36
+          "objective": 344,
+          "manual": 146,
+          "reflection": 40
         }
       },
       "units": [
@@ -29041,33 +29041,40 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-games-pending",
-              "title": "一起做游戏",
+              "id": "bnu-upper-six-card-game",
+              "title": "摸数卡、六的边界与共同获胜",
               "textbookTitle": "一起做游戏",
               "page": 70,
               "version": 1,
-              "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "按每次一张、最多三张和超过6出局的规则累计，区分主动停止、张数用满、出局和合法结果比较，说明同分可共同获胜。",
+              "prerequisite": "会十以内加法、比较大小与边界判断。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 6,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 21,
+                "manual": 6,
+                "reflection": 2
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-upper-six-card-game"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-six-card-game"],
               "audit": {
-                "date": "2026-10-03",
-                "reviewer": "原书两页目录核对",
-                "notes": "目录核验不表示正文课程已经完成。"
+                "date": "2026-10-04",
+                "reviewer": "已逐页核读游戏规则与原创条件核对",
+                "notes": "第三方0061印刷70～71页：每次最多一张/每人最多三张，边摸边加，和大于6出局、合法结果最大获胜、同分共同获胜，初试/四人挑战及回顾反思。ISBN版印次未知，不冒出版社托管。本站条件明确的纸卡练习原创。"
               }
             }
           ]
@@ -29090,13 +29097,50 @@
           ],
           "lessons": [
             {
-              "id": "bnu-upper-u5-pending",
-              "title": "有趣的立体图形",
-              "textbookTitle": "有趣的立体图形",
+              "id": "bnu-upper-solid-recognition",
+              "title": "认识四种立体、分类与七件计数",
+              "textbookTitle": "认识图形",
               "page": 72,
               "version": 1,
+              "status": "available",
+              "goal": "从完整物体认识长方体、正方体、圆柱、球，按形状分类逐件计数，区分圆柱摆放方向与滚动观察，并实际搭建。",
+              "prerequisite": "会逐件数到十，能按一个明确标准分类。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 16,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-upper-solid-recognition"],
+              "questionKinds": [
+                "choice",
+                "steps",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["solid-row"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "原书72～73页逐页阅读与原创条件核对",
+                "notes": "第三方0061公开预览实际查看：生活物品分类、四体认识、玩与说、找朋友、七件四类计数和搭建。封面2024审核不代替ISBN及版印次，未知保持未知。"
+              }
+            },
+            {
+              "id": "bnu-upper-u5-pending",
+              "title": "按指令搭建与搭得高（制作中）",
+              "textbookTitle": "有趣的立体图形",
+              "page": 74,
+              "version": 1,
               "status": "preparing",
-              "goal": "教材目录已核对，正文课程尚未制作。",
+              "goal": "72～73页认识与分类已制作；74～77页按指令搭建、使用全部材料搭高的课程尚未制作。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,
@@ -29114,7 +29158,7 @@
               "questionKinds": [],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "原书两页目录核对",
                 "notes": "目录核验不表示正文课程已经完成。"
               }
@@ -29163,7 +29207,7 @@
               "questionKinds": [],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "原书两页目录核对",
                 "notes": "目录核验不表示正文课程已经完成。"
               }
@@ -29212,7 +29256,7 @@
               "questionKinds": [],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "原书两页目录核对",
                 "notes": "目录核验不表示正文课程已经完成。"
               }

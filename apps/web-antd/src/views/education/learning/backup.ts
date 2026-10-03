@@ -5,6 +5,7 @@ import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
+import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
 import { isChildActivitiesVisual } from './child-activities';
@@ -247,6 +248,9 @@ function rule(value: unknown) {
 function visual(value: unknown) {
   if (!record(value)) return false;
   switch (value.kind) {
+    case 'bnu-six-card-game': {
+      return isBnuSixCardGameVisual(value);
+    }
     case 'bnu-caterpillar': {
       return isBnuCaterpillarVisual(value);
     }
