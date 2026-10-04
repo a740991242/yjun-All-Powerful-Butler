@@ -274,7 +274,7 @@ export const sujiaoLowerLessons: Lesson[] = [
     review: {
       date: source.checkedAt,
       reviewer: '已读原书范围、原创活动与学习流程核验',
-      notes: `已实际核对公开扫描ISBN ${source.isbn}与印刷第1～94页及附页。本站${draft.title}对应纸面第${draft.page}页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。仅开放已完成的本课内容，后续课目继续制作，不证明苏州各校选用；不打包原扫描图文。`,
+      notes: `已实际核对公开扫描ISBN ${source.isbn}与印刷第1～94页及附页。本站${draft.title}对应纸面第${draft.page}页起的已核验活动范围，教学、题目与图示为原创；本课并非该页全部原题或完整单元。封面2024审核年份不代替版权版次；版次与印次仍未核验。本册已开放课程的内容范围以各课任务为准，不证明苏州各校选用；不打包原扫描图文。`,
     },
   }));
 // Only remove a unit placeholder after its page-to-task coverage audit.

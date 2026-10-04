@@ -212,6 +212,10 @@ it('releases independent copies of released tested packs and leaves unfinished c
     expect(live.review.notes).toContain(source.isbn);
     expect(live.review.notes).toContain('版次与印次仍未核验');
     expect(live.review.notes).not.toContain('未注册');
+    expect(live.review.notes).not.toContain('后续课目继续制作');
+    expect(live.review.notes).toContain(
+      '本册已开放课程的内容范围以各课任务为准',
+    );
   }
   for (const pending of book.units
     .flatMap((u) => u.lessons)
