@@ -96,7 +96,7 @@ export const sujiaoIntroGamesLesson: Lesson = {
   status: 'available',
   review: {
     ...sujiaoIntroGamesDraft.review,
-    notes: `${sujiaoIntroGamesDraft.review.notes.replace('保持筹备，未登记成完整教材或替换人教版。', '')} 当前仅开放已核验范围的本课；其它活动与单元仍在制作，不代表全册完成，不替换人教版。`,
+    notes: `${sujiaoIntroGamesDraft.review.notes.replace('保持筹备，未登记成完整教材或替换人教版。', '')} 当前开放已核验范围的本课；拼搭、拼图、围区域与路径由独立课包承接，其它单元按各自课包范围学习。本课完成不代表全册掌握，不替换人教版。`,
   },
 };
 
