@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--farm'))
+    return {
+      index: 3,
+      lessonId: 'bnu-lower-happy-farm',
+      zero: '-zero-ones',
+      retry: '-sum-0',
+      manual: 9,
+      key: 'farm',
+    };
   if (process.argv.includes('--blocks'))
     return {
       index: 2,
@@ -175,7 +184,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 3
+          .count()) !== 4
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -235,6 +244,75 @@ const server = http.createServer(async (req, res) => {
                 .waitFor();
             }
             await p.getByRole('spinbutton').fill(String(q.rule.value));
+          } else if (q.rule.kind === 'steps') {
+            if (q.id.endsWith('-nine-first')) {
+              await p.getByRole('spinbutton').nth(0).fill('1');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[1,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const inputs = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(inputs) !== '["1","","",""]')
+                throw new Error('Partial method draft changed');
+              const sizes = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => ({
+                    height: n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect().height,
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                  })),
+                );
+              if (sizes.some((s) => s.height < 44 || s.font < 20))
+                throw new Error('Method inputs below child size requirements');
+              await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .evaluate((element) =>
+                  element.scrollIntoView({ block: 'center' }),
+                );
+              await p.waitForTimeout(200);
+              const inView = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.every((element) => {
+                    const box = element.getBoundingClientRect();
+                    return (
+                      box.left >= 0 &&
+                      box.right <= innerWidth &&
+                      box.top >= 0 &&
+                      box.bottom <= innerHeight
+                    );
+                  }),
+                );
+              if (!inView)
+                throw new Error(
+                  'Four method inputs do not fit the actual viewport',
+                );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-farm-method-${width}.png`,
+              });
+              for (let field = 0; field < 4; field++)
+                await p
+                  .getByRole('spinbutton')
+                  .nth(field)
+                  .fill(String([1, 5, 10, 14][field]));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            for (let field = 0; field < q.rule.values.length; field++)
+              await p
+                .getByRole('spinbutton')
+                .nth(field)
+                .fill(String(q.rule.values[field]));
           } else if (q.rule.kind === 'choice')
             await p
               .getByRole('radio', { name: q.rule.value, exact: true })
@@ -263,6 +341,22 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'farm') {
+        const method = session.responses.find((r) =>
+          r.questionId.endsWith('-nine-first'),
+        );
+        if (
+          JSON.stringify(
+            method.submissions.map((s) => [s.answer, s.correct]),
+          ) !==
+          JSON.stringify([
+            [[1, 5, 10, 14], false],
+            [[1, 4, 10, 14], true],
+          ])
+        )
+          throw new Error('Method retry history changed');
+      }
+
       if (
         session.responses
           .filter(
@@ -283,9 +377,19 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
-        await (q.rule.kind === 'number'
-          ? p.getByRole('spinbutton').fill(String(q.rule.value))
-          : p.getByRole('radio', { name: q.rule.value, exact: true }).check());
+        if (q.rule.kind === 'steps') {
+          for (let field = 0; field < q.rule.values.length; field++)
+            await p
+              .getByRole('spinbutton')
+              .nth(field)
+              .fill(String(q.rule.values[field]));
+        } else {
+          await (q.rule.kind === 'number'
+            ? p.getByRole('spinbutton').fill(String(q.rule.value))
+            : p
+                .getByRole('radio', { name: q.rule.value, exact: true })
+                .check());
+        }
         await click('提交答案');
         await p.getByText('答对了', { exact: true }).waitFor();
         if (index < 3) {
