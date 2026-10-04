@@ -20,6 +20,7 @@ import {
   bnuLowerTracePrintLesson,
 } from './bnu-lower-shapes';
 import { bnuLowerSubtractionHarvestLesson } from './bnu-lower-subtraction-harvest';
+import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-practice';
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
@@ -379,7 +380,7 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerCountrysideLesson,
     bnuLowerSubtractionTableLesson,
     bnuLowerSubtractionHarvestLesson,
-    pending('u3', '20以内数与减法（第42页起后续课程）', 42),
+    bnuLowerSubtractionPracticeLesson,
   ],
   classroom: [bnuLowerClassroomLesson],
   u1: [

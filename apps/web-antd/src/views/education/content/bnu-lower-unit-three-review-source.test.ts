@@ -48,6 +48,9 @@ it('checks all twelve row-major calculations and separately counted original obj
     missingTables: 5,
   });
   expect(source.furniture.countBasis).toContain('桌子上三、中三、下三');
+  expect(source.activities.find((item) => item.key === 'furniture')?.task).toBe(
+    '14椅9桌每椅配一桌求缺',
+  );
   expect(source.shuttleKicks).toEqual({
     lan: 5,
     gang: 7,

@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--subtraction-practice'))
+    return {
+      index: 21,
+      lessonId: 'bnu-lower-subtraction-practice',
+      zero: '-zero-missing',
+      retry: '-kicks-difference-example',
+      manual: 16,
+      steps: 8,
+      review: 5,
+      key: 'subtraction-practice',
+    };
   if (process.argv.includes('--subtraction-harvest'))
     return {
       index: 20,
@@ -364,7 +375,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 21
+          .count()) !== 22
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1127,6 +1138,63 @@ const server = http.createServer(async (req, res) => {
               .getByRole('spinbutton')
               .nth(1)
               .fill(q.id.endsWith('-free-pair') ? '7' : String(q.rule.result));
+          } else if (
+            q.rule.kind === 'arithmetic-pair' &&
+            flow.key === 'subtraction-practice'
+          ) {
+            if (q.id.endsWith('-free-add-twelve')) {
+              await p.getByRole('spinbutton').first().fill('0');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === '[0,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["0",""]')
+                throw new Error('Practice zero/empty pair lost');
+              for (let i = 0; i < 2; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                await p.waitForTimeout(150);
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Practice pair size or clipping');
+                await input.fill(String([6, 5][i]));
+              }
+              await p.screenshot({
+                path: `/tmp/butler-bnu-subtraction-practice-pair-${width}.png`,
+              });
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            const pair =
+              q.rule.operation === 'subtract'
+                ? [q.rule.maximum, q.rule.maximum - q.rule.result]
+                : [0, q.rule.result];
+            for (const [i, value] of pair.entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (q.rule.kind === 'arithmetic-pair') {
             await p.getByRole('spinbutton').nth(0).fill('0');
             await wait(
@@ -1148,6 +1216,55 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'subtraction-practice' &&
+            q.id.endsWith('-line-each')
+          ) {
+            await p.getByRole('spinbutton').first().fill('17');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft,
+                ) === '[17,null,null,null,null,null,null,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["17","","","","","","","",""]')
+              throw new Error('Nine-step number line partial draft lost');
+            for (const [i, value] of [
+              17, 16, 15, 14, 13, 12, 11, 10, 9,
+            ].entries()) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n.scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const size = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return {
+                  font: Number.parseFloat(getComputedStyle(n).fontSize),
+                  height: r.height,
+                  fits:
+                    r.left >= 0 &&
+                    r.right <= innerWidth &&
+                    r.top >= 0 &&
+                    r.bottom <= innerHeight,
+                };
+              });
+              if (size.font < 20 || size.height < 44 || !size.fits)
+                throw new Error('Nine-step input size or clipping');
+              await input.fill(String(value));
+              if (i === 0 || i === 8)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-subtraction-practice-line-${width}-${i}.png`,
+                });
+            }
           } else if (q.rule.kind === 'steps') {
             if (
               flow.key === 'subtraction-harvest' &&

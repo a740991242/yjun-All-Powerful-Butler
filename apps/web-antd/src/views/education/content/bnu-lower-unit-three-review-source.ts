@@ -106,7 +106,7 @@ export const bnuLowerUnitThreeReviewSource = {
     { page: 42, key: 'circle', task: '两图圈算13−8与15−9' },
     { page: 42, key: 'number-line', task: '18−9完整画数线' },
     { page: 42, key: 'calculations', task: '十二式全部计算' },
-    { page: 42, key: 'furniture', task: '14椅8桌每椅配一桌求缺' },
+    { page: 42, key: 'furniture', task: '14椅9桌每椅配一桌求缺' },
     {
       page: 42,
       key: 'own-kicks',

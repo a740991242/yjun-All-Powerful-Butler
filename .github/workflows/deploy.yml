@@ -27,7 +27,7 @@ jobs:
           corepack enable
           corepack prepare pnpm@11.16.0 --activate
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --registry=https://registry.npmjs.org
       - name: Test browser login, cached routes and calculators
         run: pnpm exec vitest run apps/web-antd/src/router/restore-tabs.test.ts apps/web-antd/src/api/local-auth.test.ts apps/web-antd/src/utils/public-asset.test.ts apps/web-antd/src/locales/tools.test.ts apps/web-antd/src/views/life-tools/calculations.test.ts
       - name: Test curriculum, learning records and backup compatibility

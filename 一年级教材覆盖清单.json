@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T21:23:03.979Z",
+  "generatedAt": "2026-10-04T21:45:10.012Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 21,
-        "pendingEntries": 7,
+        "availablePacks": 22,
+        "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 625,
-          "manual": 195,
-          "reflection": 64
+          "objective": 652,
+          "manual": 211,
+          "reflection": 70
         }
       },
       "units": [
@@ -32863,33 +32863,40 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第42页起后续课程）",
-              "textbookTitle": "20以内数与减法（第42页起后续课程）",
+              "id": "bnu-lower-subtraction-practice",
+              "title": "巩固与应用：完整计算、算式关系与自主问题",
+              "textbookTitle": "整理与复习：巩固与应用",
               "page": 42,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "完整计算与圈画、配桌、自主提问，理解三数组的加减关系，解释图中差与合计并说更多合法算式。",
+              "prerequisite": "会20以内加减，能读懂整体部分、比较多少和一一对应。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 8,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 27,
+                "manual": 16,
+                "reflection": 6
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 5,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
+              "knowledge": ["bnu-lower-subtraction-practice"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "arithmetic-pair",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": [],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-05",
+                "reviewer": "公开扫描42～43全页与圈算、家具、动物局部核对",
+                "notes": "两圈算、数线、全十二式、配桌、两自主问题、三组全四式、动物三数量/差/和/新问题与两个三槽分别对应；最终教师审校未核验。"
               }
             }
           ],
@@ -32900,7 +32907,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～41页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园、做个减法表与我的收获所列活动及明示迁移；原角色分组未知保留核对记录，42页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～43页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园、做个减法表、我的收获与完整巩固应用所列活动及明示迁移；原角色分组未知保留核对记录，第三单元原活动对应已实现，不代表全册、全年或最终教师审校完成。",
             "activities": [
               {
                 "page": 27,
@@ -33866,6 +33873,122 @@
                 "manual": ["actual-twenty", "actual-own-question"],
                 "records": ["own-question", "discovery", "difficulty", "plan"],
                 "boundary": "原25−9为超20拓展，本站演示不冒唯一算法；自主提问/发现/困难/计划null，实做不自动确认。"
+              },
+              {
+                "page": 42,
+                "sourceActivity": "circle",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [1],
+                "objective": ["mushrooms", "peppers", "circle-meaning"],
+                "manual": ["actual-mushrooms", "actual-peppers"],
+                "records": [],
+                "boundary": "两原图圈内8/9与剩余5/6分清，圈线不增物。"
+              },
+              {
+                "page": 42,
+                "sourceActivity": "number-line",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [2],
+                "objective": ["line-to-ten", "line-each"],
+                "manual": ["actual-line"],
+                "records": [],
+                "boundary": "18为起点，九个落点完整；原合理画法开放，本站两示例明示。"
+              },
+              {
+                "page": 42,
+                "sourceActivity": "calculations",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [3],
+                "objective": ["row-one", "row-two", "row-three"],
+                "manual": ["actual-calculations"],
+                "records": [],
+                "boundary": "原十二式按三行各四完整算，不以少量示例替代。"
+              },
+              {
+                "page": 42,
+                "sourceActivity": "furniture",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [4],
+                "objective": [
+                  "furniture",
+                  "furniture-unit",
+                  "zero-missing",
+                  "unknown-furniture"
+                ],
+                "manual": ["actual-furniture"],
+                "records": [],
+                "boundary": "原14椅9桌缺5张；本站完整0与新未知条件分开。"
+              },
+              {
+                "page": 42,
+                "sourceActivity": "own-kicks",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [5],
+                "objective": [
+                  "kicks-counts",
+                  "kicks-total-example",
+                  "kicks-difference-example"
+                ],
+                "manual": ["actual-kicks-one", "actual-kicks-two"],
+                "records": ["own-kicks-one", "own-kicks-two"],
+                "boundary": "原5/7/13两自主问均独立实际与记录，本站例子不作唯一问题。"
+              },
+              {
+                "page": 43,
+                "sourceActivity": "families",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [6],
+                "objective": [
+                  "family-fourteen",
+                  "family-twelve",
+                  "family-thirteen",
+                  "family-order"
+                ],
+                "manual": [
+                  "actual-family-fourteen",
+                  "actual-family-twelve",
+                  "actual-family-thirteen"
+                ],
+                "records": [],
+                "boundary": "三组各完整四式，原两加/两减顺序可交换，本站客观排列不冒唯一纸面填法。"
+              },
+              {
+                "page": 43,
+                "sourceActivity": "animals",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [7],
+                "objective": [
+                  "animals-counts",
+                  "animals-difference",
+                  "animals-addition",
+                  "unknown-animals"
+                ],
+                "manual": [
+                  "actual-animal-counts",
+                  "actual-animal-relations",
+                  "actual-animal-question"
+                ],
+                "records": ["own-animal-question"],
+                "boundary": "三图标10/6/2、差4/合12和再一问分别覆盖，钳子不增物、小壳不冒乌龟。"
+              },
+              {
+                "page": 43,
+                "sourceActivity": "free-equations",
+                "lesson": "bnu-lower-subtraction-practice",
+                "steps": [8],
+                "objective": [
+                  "free-add-twelve",
+                  "free-subtract-twelve",
+                  "free-add-fourteen",
+                  "free-subtract-fourteen"
+                ],
+                "manual": [
+                  "actual-free-twelve",
+                  "actual-free-fourteen",
+                  "actual-exchange"
+                ],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "原六槽完整纸写且更多可继续，网页0～20组合全合法解；有限四网页题不自动确认真实六槽。"
               }
             ]
           }
