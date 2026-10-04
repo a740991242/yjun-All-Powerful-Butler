@@ -83,3 +83,51 @@ it('retains first confusion and partial row counts and rejects damaged tile snap
     expect(() => parseBackup(JSON.stringify(corrupt))).toThrow(Error);
   }
 });
+
+it('keeps the earlier physical-change instruction in version-one snapshots alongside the corrected course', () => {
+  const now = '2026-10-04T08:00:00.000Z';
+  const oldPrompt =
+    '从原图开始实际铺1块，再重新摆回原图取走1块，分别说出已铺增加和空格减少的变化。';
+  const old = createSession(
+    {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.map((q) =>
+        q.id === 'sj-upper-tiling-manual-change'
+          ? { ...q, prompt: oldPrompt }
+          : q,
+      ),
+    },
+    'sujiao-math-p1-upper-2024',
+    'child',
+    { now, seed: 23 },
+  );
+  const current = createSession(lesson, 'sujiao-math-p1-upper-2024', 'child', {
+    now,
+    seed: 24,
+  });
+  expect(lesson.version).toBe(2);
+  const original = old.questions.find(
+    (q) => q.id === 'sj-upper-tiling-manual-change',
+  )!;
+  const corrected = current.questions.find((q) => q.id === original.id)!;
+  expect(original.prompt).toBe(oldPrompt);
+  expect(corrected.prompt).not.toBe(original.prompt);
+  expect(corrected.rule).toEqual({ kind: 'manual' });
+  for (const q of old.questions)
+    if (q.id !== original.id)
+      expect(current.questions.find((item) => item.id === q.id)).toEqual(q);
+  const state = {
+    schemaVersion: 1 as const,
+    activeProfileId: 'child',
+    profiles: [{ id: 'child', nickname: '孩子', createdAt: now }],
+    sessions: [old, current],
+  };
+  expect(parseBackup(exportBackup(state, now)).data.sessions).toEqual([
+    old,
+    current,
+  ]);
+  expect(
+    current.responses.every((r) => r.submissions.length === 0 && !r.skipped),
+  ).toBe(true);
+});
