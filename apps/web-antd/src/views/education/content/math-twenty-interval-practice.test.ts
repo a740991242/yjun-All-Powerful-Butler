@@ -63,11 +63,11 @@ it('counts visible ordinal from the declared hidden prefix and follows elapsed d
     expect(review.rule).not.toEqual(main.rule);
   }
 });
-it('retains v2 and v3 snapshots for all three courses with independent original-source records and partial five-field drafts', () => {
+it('retains v2 and current snapshots for all three courses with independent original-source records and partial five-field drafts', () => {
   const state = initialLibrary('2026-10-04T00:00:00.000Z');
   for (const [index, oldCount, oldSteps, oldReviews, newCount, newSteps] of [
     [0, 23, 6, 4, 25, 7],
-    [1, 25, 6, 11, 38, 7],
+    [1, 25, 6, 11, 44, 8],
     [2, 57, 8, 35, 61, 9],
   ] as const) {
     const lesson = required(twentyPracticeLessons[index]);
@@ -89,7 +89,7 @@ it('retains v2 and v3 snapshots for all three courses with independent original-
       state.activeProfileId,
       { seed: 5 },
     );
-    expect(current.lessonVersion).toBe(3);
+    expect(current.lessonVersion).toBe(index === 1 ? 4 : 3);
     expect(current.questions).toHaveLength(newCount);
     expect(lesson.steps).toHaveLength(newSteps);
     const oldIds = new Set(old.questions.map((q) => q.id));

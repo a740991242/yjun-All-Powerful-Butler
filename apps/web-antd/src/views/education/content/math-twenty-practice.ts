@@ -9,6 +9,8 @@ import {
   twentyIntervalQuestions,
   twentyIntervalSourceTasks,
   twentyLinksRemainingTasks,
+  twentyNeighborQuestions,
+  twentyNeighborSourceTasks,
 } from './math-twenty-interval-practice';
 import {
   twentyDescriptionQuestions,
@@ -319,7 +321,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: position,
-    version: 3,
+    version: 4,
     page: 78,
     title: '数序、之间与连两端的数量',
     goal: '按完整顺序辨认位置，区分编号差、两端之间、连两端共几个与推迟的天数。',
@@ -354,6 +356,10 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '完整正倒序与原位置应用',
         text: '两行数卡分别按方向填全部空格，逐格回看。图前端省略的位置仍在全排中，不能把首个可见物当第1。排队转弯不自动改起点；人数/楼层/站点之间不含两端，阅读从首到末则包含两端。推迟逐天走，原当天不是过去的一天；原找页、连点、两行与各应用题全部独立处理。',
+      },
+      {
+        title: '相邻两个空与两端距离分别检查',
+        text: '大1和小1分别沿各自起点走一格；两个空的方向不能混用。比较接近10还是20，要在等距数轴上分别数到两端的间隔，起点不算已走一格。靠近10、靠近20、同样近三种情况都可能出现；15到10和20各走5格，同样近不能硬选一端。原第78页两空与接近活动分别回书核对，不用原创变式代替。',
       },
     ],
     questions: [
@@ -470,12 +476,17 @@ export const twentyPracticeLessons: Lesson[] = [
         ...activity(position, `actual-source-${key}`, prompt),
         knowledge: `${position}-actual-source-${key}`,
       })),
+      ...twentyNeighborQuestions(false),
+      ...twentyNeighborSourceTasks.map(([key, prompt]): Question => ({
+        ...activity(position, `actual-source-${key}`, prompt),
+        knowledge: `${position}-actual-source-${key}`,
+      })),
     ],
     review: {
       ...base.review,
       date: '2026-10-04',
       notes:
-        '实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。2026-10-04再核78/82/83/84/86原题，追加两九格完整填空、省略前端位置及跨周推迟四客观/复习与九原书manual；v3现7步骤38任务/15复习，旧25任务/11复习/六步保持。',
+        '实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。2026-10-04再核78/82/83/84/86原题，追加两九格完整填空、省略前端位置及跨周推迟四客观/复习与九原书manual；v3现7步骤38任务/15复习，旧25任务/11复习/六步保持。再次核对第78页，v4追加两空相邻数、近10/近20/同样近四题及换条件或换所求复习，两原书任务独立人工记录；现8步骤44任务/19复习，旧v3前38任务/15复习/七步与快照保持。',
     },
     reviewQuestions: [
       numeric(
@@ -509,6 +520,7 @@ export const twentyPracticeLessons: Lesson[] = [
       ),
       ...twentyDescriptionQuestions(true),
       ...twentyIntervalQuestions(true),
+      ...twentyNeighborQuestions(true),
     ],
   },
   {

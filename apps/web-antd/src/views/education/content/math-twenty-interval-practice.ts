@@ -134,3 +134,76 @@ export const twentyLinksRemainingTasks = [
     '实际回第83页练一练第2项，在原松果和松鼠两排逐个一一连线后，核对未配对的松果及问的多几个；同图间距与物体面积不作数量证据，未配对与总数量分清。',
   ],
 ] as const;
+
+export function twentyNeighborQuestions(review: boolean): Question[] {
+  const build = (
+    key: string,
+    prompt: string,
+    rule: Question['rule'],
+    explanation: string,
+  ): Question => ({
+    id: `${position}-${review ? 'r' : 'q'}-neighbor-${key}`,
+    knowledge: `${position}-neighbor-${key}`,
+    prompt,
+    rule,
+    hint: '相邻数沿指定方向走一格；比较接近谁要分别数两边的间隔，起点不算一个间隔。',
+    explanation,
+  });
+  const larger = review ? 16 : 14;
+  const smaller = review ? 13 : 18;
+  const nearTen = review ? 13 : 12;
+  const nearTwenty = review ? 17 : 18;
+  const nearest = (key: string, value: number, result: string): Question => ({
+    ...build(
+      key,
+      `在每格表示1的数轴上，${value}更接近10还是20？`,
+      { kind: 'choice', value: result },
+      `${value}到10有${value - 10}个间隔，到20有${20 - value}个间隔。比较两边的间隔数，少的一边更近；${value}更接近${result}。`,
+    ),
+    choices: ['10', '20', '同样近'].map((label) => ({ id: label, label })),
+    visual: { kind: 'number-line', minimum: 0, maximum: 20, value },
+  });
+  return [
+    build(
+      'adjacent',
+      `比${larger}大1的数、比${smaller}小1的数各是多少？依次填两个空。`,
+      { kind: 'steps', values: [larger + 1, smaller - 1] },
+      `从${larger}向大的方向走1格是${larger + 1}，从${smaller}向小的方向走1格是${smaller - 1}。两空的起点与方向不同，要分别核对。`,
+    ),
+    nearest('near-ten', nearTen, '10'),
+    nearest('near-twenty', nearTwenty, '20'),
+    review
+      ? {
+          ...build(
+            'equal',
+            '15到10、15到20各有几个单位间隔？依次填，并比较两边。',
+            { kind: 'steps', values: [5, 5] },
+            '从15到10走5个单位间隔，从15到20也走5个单位间隔；两边相等，15离10和20同样近。数的是间隔，不是连起点的数字个数。',
+          ),
+          visual: { kind: 'number-line', minimum: 0, maximum: 20, value: 15 },
+        }
+      : {
+          ...build(
+            'equal',
+            '在每格表示1的数轴上，15更接近10还是20？',
+            { kind: 'choice', value: '同样近' },
+            '15到10和到20都要走5个单位间隔；两边一样多，所以同样近，不能强选其中一端。',
+          ),
+          choices: ['10', '20', '同样近'].map((label) => ({
+            id: label,
+            label,
+          })),
+          visual: { kind: 'number-line', minimum: 0, maximum: 20, value: 15 },
+        },
+  ];
+}
+export const twentyNeighborSourceTasks = [
+  [
+    'two-adjacent-blanks',
+    '实际回教材第78页数轴下第（1）项，两空分别按原给定数与“大1/小1”方向填完，再沿原等距数轴逐格核对；只回答一个相邻数或本站原创两空，不代替原两个空。',
+  ],
+  [
+    'near-ten-twenty',
+    '实际回教材第78页第（2）项，按原给定数分别数到10和20的单位间隔，写下两边间隔数、比较并说明更接近谁。原题活动与本站近两端/同样近的变式分别记录；数间隔不把起点多算1，未读或未做可待做。',
+  ],
+] as const;

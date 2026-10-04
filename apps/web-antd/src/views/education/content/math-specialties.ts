@@ -192,9 +192,9 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
       if (volume === 'lower' && id === 'relations') version = 4;
       if (volume === 'lower' && id === 'shapes') version = 3;
       if (volume === 'upper' && id === 'shapes') version = 3;
-      if (volume === 'upper' && id === 'count') version = 5;
-      if (volume === 'upper' && ['calculation', 'relations'].includes(id))
-        version = 7;
+      if (volume === 'upper' && id === 'count') version = 6;
+      if (volume === 'upper' && id === 'calculation') version = 7;
+      if (volume === 'upper' && id === 'relations') version = 8;
       return {
         id: `ms-${volume}-${id}`,
         textbookTitle: '平台专项练习',
