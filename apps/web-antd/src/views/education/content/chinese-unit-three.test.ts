@@ -238,3 +238,210 @@ it('covers four actual initial bodies including three-part spellings, whole syll
     ).map((q) => (q.rule.kind === 'choice' ? q.rule.value : null)),
   ).toEqual(['zhi', 'chi', 'shi', 'ri']);
 });
+
+const oldRecognitionReviews = [
+  {
+    id: 'cu-u3-1-r-character-0',
+    prompt: '选择材料中指定的字。',
+    material: '哥哥来了，找称呼中的第一个字。',
+  },
+  {
+    id: 'cu-u3-1-r-character-1',
+    prompt: '选择材料中指定的字。',
+    material: '弟弟拿来一本书，找这个称呼里的字。',
+  },
+  {
+    id: 'cu-u3-1-r-character-2',
+    prompt: '选择材料中指定的字。',
+    material: '画一朵花，找表示画的字。',
+  },
+  {
+    id: 'cu-u3-1-r-character-3',
+    prompt: '选择材料中指定的字。',
+    material: '花开了，找表示花的字。',
+  },
+  {
+    id: 'cu-u3-2-r-character-0',
+    prompt: '选择材料中指定的字。',
+    material: '打球中的第一个字。',
+  },
+  {
+    id: 'cu-u3-2-r-character-1',
+    prompt: '选择材料中指定的字。',
+    material: '棋盘中的第一个字。',
+  },
+  {
+    id: 'cu-u3-2-r-character-2',
+    prompt: '选择材料中指定的字。',
+    material: '积木叠起来，找物品名的第一个字。',
+  },
+  {
+    id: 'cu-u3-2-r-character-3',
+    prompt: '选择材料中指定的字。',
+    material: '木头中的第一个字。',
+  },
+  {
+    id: 'cu-u3-3-r-character-0',
+    prompt: '选择材料中指定的字。',
+    material: '写字中的第二个字。',
+  },
+  {
+    id: 'cu-u3-3-r-character-1',
+    prompt: '选择材料中指定的字。',
+    material: '认一个词，找表示词的字。',
+  },
+  {
+    id: 'cu-u3-3-r-character-2',
+    prompt: '选择材料中指定的字。',
+    material: '一句话中的第二个字。',
+  },
+  {
+    id: 'cu-u3-3-r-character-3',
+    prompt: '选择材料中指定的字。',
+    material: '桌子中的第二个字。',
+  },
+  {
+    id: 'cu-u3-4-r-character-0',
+    prompt: '选择材料中指定的字。',
+    material: '桌面中的第一个字。',
+  },
+  {
+    id: 'cu-u3-4-r-character-1',
+    prompt: '选择材料中指定的字。',
+    material: '白纸中的第二个字。',
+  },
+  {
+    id: 'cu-u3-4-r-character-2',
+    prompt: '选择材料中指定的字。',
+    material: '读一句话中的第一个字。',
+  },
+  {
+    id: 'cu-u3-4-r-character-3',
+    prompt: '选择材料中指定的字。',
+    material: '书包中的第一个字。',
+  },
+  {
+    id: 'cu-u3-5-r-character-0',
+    prompt: '选择材料中指定的字。',
+    material: '鱼的尾巴摆动。',
+  },
+  {
+    id: 'cu-u3-5-r-character-1',
+    prompt: '选择材料中指定的字。',
+    material: '鸭子在岸边走。',
+  },
+  {
+    id: 'cu-u3-5-r-character-2',
+    prompt: '选择材料中指定的字。',
+    material: '乌黑中的第一个字。',
+  },
+  {
+    id: 'cu-u3-5-r-character-3',
+    prompt: '选择材料中指定的字。',
+    material: '乌鸦停在树枝上，找这个鸟名的第二个字。',
+  },
+];
+it('locates all twenty recognition targets by word position without adding writing requirements', () => {
+  const cases = [
+    [
+      formalUnitThreeInitials['u3-1']!,
+      ['大哥', '小弟', '图画', '花朵'],
+      [1, 1, 1, 0],
+      ['哥', '弟', '画', '花'],
+    ],
+    [
+      formalUnitThreeInitials['u3-2']!,
+      ['拍打', '棋子', '积累', '木头'],
+      [1, 0, 0, 0],
+      ['打', '棋', '积', '木'],
+    ],
+    [
+      formalUnitThreeInitials['u3-3']!,
+      ['写字', '诗词', '语句', '孩子'],
+      [1, 1, 1, 1],
+      ['字', '词', '句', '子'],
+    ],
+    [
+      formalUnitThreeInitials['u3-4']!,
+      ['书桌', '纸张', '朗读', '书包'],
+      [1, 0, 1, 0],
+      ['桌', '纸', '读', '书'],
+    ],
+    [
+      formalYwLesson,
+      ['金鱼', '鸭子', '乌云', '寒鸦'],
+      [1, 0, 0, 1],
+      ['鱼', '鸭', '乌', '鸦'],
+    ],
+  ] as const;
+  for (const [lesson, words, positions, targets] of cases) {
+    expect(lesson.version).toBe(lesson.id === 'cu-u3-5' ? 3 : 2);
+    expect(lesson.parentTip).toContain('无新增会写汉字');
+    targets.forEach((target, i) => {
+      const q = lesson.reviewQuestions!.find(
+        (q) => q.id === `${lesson.id}-r-character-${i}`,
+      )!;
+      expect(q.material).toBe(words[i]);
+      const main = lesson.questions.find(
+        (q) => q.id === `${lesson.id}-q-character-${i}`,
+      )!;
+      expect(main.material).not.toContain(words[i]);
+      expect([...q.material!][positions[i]!]).toBe(target);
+      expect(q.prompt).toContain(`第${positions[i]! + 1}个字`);
+      expect(q.prompt).toBe(`看词语，选出左起第${positions[i]! + 1}个字。`);
+      for (const c of q.choices!)
+        expect(evaluate(q.rule, c.id)).toBe(c.id === target);
+    });
+  }
+  expect(ywLesson.version).toBe(2);
+});
+it('keeps the exact former recognition materials, versions and wrong-first history in backup snapshots', () => {
+  const now = '2026-10-04T00:00:00.000Z';
+  const lessons = [...Object.values(formalUnitThreeInitials), formalYwLesson];
+  const sessions = lessons.map((lesson) => {
+    const old = structuredClone(lesson);
+    old.version = lesson.id === 'cu-u3-5' ? 2 : 1;
+    old.questions = old
+      .reviewQuestions!.filter((q) => q.id.includes('-r-character-'))
+      .map((q) => {
+        const former = oldRecognitionReviews.find((x) => x.id === q.id)!;
+        return { ...q, prompt: former.prompt, material: former.material };
+      });
+    const session = createSession(old, chineseBooks[0]!.id, 'child', {
+      now,
+      seed: 41,
+    });
+    for (const [i, q] of session.questions.entries()) {
+      if (q.rule.kind !== 'choice') throw new Error('expected choice');
+      const answer = q.rule.value;
+      session.responses[i] = submitResponse(
+        q,
+        {
+          ...session.responses[i]!,
+          draft: q.choices!.find((c) => c.id !== answer)!.id,
+        },
+        now,
+      );
+      session.responses[i] = submitResponse(
+        q,
+        { ...session.responses[i]!, draft: answer },
+        now,
+      );
+    }
+    expect(newReviewQuestions(lesson, session, [session])).toEqual([]);
+    return session;
+  });
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '验收', createdAt: now }],
+      sessions,
+    }),
+  ).data.sessions;
+  expect(restored).toEqual(sessions);
+  expect(restored.map((s) => s.lessonVersion)).toEqual([1, 1, 1, 1, 2]);
+  for (const session of restored)
+    for (const r of session.responses)
+      expect(r.submissions.map((x) => x.correct)).toEqual([false, true]);
+});

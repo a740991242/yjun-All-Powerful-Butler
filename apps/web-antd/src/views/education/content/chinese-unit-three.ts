@@ -80,6 +80,38 @@ export const unitThreePageAudits = [
   editionDate: null,
   printingDate: null,
 }));
+const recognitionReviewCards: Record<string, [string, number][]> = {
+  'u3-1': [
+    ['大哥', 1],
+    ['小弟', 1],
+    ['图画', 1],
+    ['花朵', 0],
+  ],
+  'u3-2': [
+    ['拍打', 1],
+    ['棋子', 0],
+    ['积累', 0],
+    ['木头', 0],
+  ],
+  'u3-3': [
+    ['写字', 1],
+    ['诗词', 1],
+    ['语句', 1],
+    ['孩子', 1],
+  ],
+  'u3-4': [
+    ['书桌', 1],
+    ['纸张', 0],
+    ['朗读', 1],
+    ['书包', 0],
+  ],
+  'u3-5': [
+    ['金鱼', 1],
+    ['鸭子', 0],
+    ['乌云', 0],
+    ['寒鸦', 1],
+  ],
+};
 const id = 'cu-u3-5';
 const sourceMaterial =
   '先与家长共读教材印刷第41页《哪座房子最漂亮》，然后回看课文找信息。本站不提供现代作品全文或原图；没有原书可先跳过，勿凭标题猜内容。';
@@ -112,15 +144,19 @@ function choose(
 }
 function extraQuestions(review: boolean): Question[] {
   return [
-    ...characterRows.map(([character, main, changed], index) => ({
+    ...characterRows.map(([character, main], index) => ({
       ...choose(
         `${review ? 'r' : 'q'}-character-${index}`,
         `character-${index}`,
-        '选择材料中指定的字。',
+        review
+          ? `看词语，选出左起第${required(required(recognitionReviewCards['u3-5'])[index])[1] + 1}个字。`
+          : '选择材料中指定的字。',
         letters,
         required(character),
         `本题选${character}。认字与规范发音分开确认，本课没有新增会写汉字。`,
-        review ? changed : main,
+        review
+          ? required(required(recognitionReviewCards['u3-5'])[index])[0]
+          : main,
       ),
       visual: {
         kind: 'characters' as const,
@@ -172,6 +208,7 @@ const copyQuestions = (questions: Question[]) =>
   }));
 export const formalYwLesson: Lesson = {
   ...structuredClone(ywLesson),
+  version: 3,
   id,
   title: 'y w',
   textbookTitle: 'y w',
@@ -463,15 +500,19 @@ function makeInitialBody(body: InitialBody): Lesson {
         review ? `${syllable.slice(0, -1)}ǐ` : syllable,
       ),
     ),
-    ...body.characters.map(([character, main, changed], index) => ({
+    ...body.characters.map(([character, main], index) => ({
       ...pick(
         `${review ? 'r' : 'q'}-character-${index}`,
         `character-${index}`,
-        '选择材料中指定的字。',
+        review
+          ? `看词语，选出左起第${required(required(recognitionReviewCards[body.itemId])[index])[1] + 1}个字。`
+          : '选择材料中指定的字。',
         body.characters.map((row) => row[0]),
         character,
         `选${character}；本课无新增会写汉字，辨形不代表发音已确认。`,
-        review ? changed : main,
+        review
+          ? required(required(recognitionReviewCards[body.itemId])[index])[0]
+          : main,
       ),
       visual: {
         kind: 'characters' as const,
@@ -514,6 +555,7 @@ function makeInitialBody(body: InitialBody): Lesson {
   writingStep.text += `对照教材第${audit.pages[0]}页底部四线三格逐笔示范，先指四条线和上、中、下三格，再看起笔和占格；屏幕普通字体不作为规范手写。`;
   return {
     ...structuredClone(base),
+    version: 2,
     id: lessonId,
     title: audit.title,
     textbookTitle: audit.title,
