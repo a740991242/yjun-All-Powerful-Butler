@@ -75,7 +75,7 @@ it('records all physical activities and independent questions without assigning 
   expect(
     bnuLowerBook.units[0]?.lessons.find(({ status }) => status === 'preparing')
       ?.page,
-  ).toBe(16);
+  ).toBe(2);
 });
 
 it('round-trips partial decomposition, zero and retry history with the earlier addition-table snapshot unchanged', () => {

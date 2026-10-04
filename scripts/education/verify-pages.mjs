@@ -3395,12 +3395,12 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 8
+          .count()) !== 9
       )
         throw new Error(
-          'BNU lower must expose its eight authored independent courses',
+          'BNU lower must expose its nine authored independent courses',
         );
-      await p.getByText('第一单元其余课程', { exact: true }).waitFor();
+      await p.getByText('第一单元覆盖复核', { exact: true }).waitFor();
       await chooseArea('grade-one-math-edition', '苏教版');
       await p.waitForURL('**/math/sujiao/lower');
       await p.waitForFunction(

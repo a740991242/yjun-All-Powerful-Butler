@@ -110,6 +110,7 @@ import {
 import { isTeenAdditionTableVisual } from './teen-addition-table';
 import { isTeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import { isTeenLayoutVisual } from './teen-layout';
+import { isTeenStairsVisual } from './teen-stairs';
 import { isTenCellsState, isTenCellsVisual } from './ten-cells';
 import { isTenTablesVisual } from './ten-tables';
 import { isThreePieceJoinState } from './three-piece-join';
@@ -364,6 +365,9 @@ function visual(value: unknown) {
     }
     case 'quantity-table': {
       return isQuantityTableVisual(value);
+    }
+    case 'teen-stairs': {
+      return isTeenStairsVisual(value);
     }
     case 'teen-addition-table': {
       return isTeenAdditionTableVisual(value);

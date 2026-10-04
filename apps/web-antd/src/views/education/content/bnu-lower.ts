@@ -8,6 +8,7 @@ import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
+import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
 
 /** Public scanned pages were read; approval year is not a printing date. */
 export const bnuLowerSource = {
@@ -19,7 +20,7 @@ export const bnuLowerSource = {
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
   contents: [
     ['u1', '20以内数与加法', 2],
     ['u2', '图形大变身（一）', 18],
@@ -308,11 +309,14 @@ function pending(key: string, title: string, page: number): Lesson {
   return {
     id: `bnu-lower-${key}-pending`,
     textbookTitle: title,
-    title: key === 'u1' ? '第一单元其余课程' : title,
+    title: key === 'u1' ? '第一单元覆盖复核' : title,
     page,
     version: 1,
     status: 'preparing',
-    goal: '目录已核对，尚未发布的正文课程继续制作。',
+    goal:
+      key === 'u1'
+        ? '第2～17页课程已开放，全单元逐页覆盖复核继续进行。'
+        : '目录已核对，尚未发布的正文课程继续制作。',
     prerequisite: '',
     parentTip: '独立下册内容，不用其他版本或上册改名替代。',
     steps: [],
@@ -348,7 +352,8 @@ export const bnuLowerBook: Book = {
             bnuLowerRabbitsLesson,
             bnuLowerAdditionTableLesson,
             bnuLowerUnitOneHarvestLesson,
-            pending(key, title, 16),
+            bnuLowerUnitOnePracticeLesson,
+            pending(key, title, 2),
           ]
         : [pending(key, title, page)],
   })),

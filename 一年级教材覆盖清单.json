@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T15:23:46.580Z",
+  "generatedAt": "2026-10-04T15:49:16.915Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 8,
+        "availablePacks": 9,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 240,
-          "manual": 71,
-          "reflection": 17
+          "objective": 288,
+          "manual": 81,
+          "reflection": 20
         }
       },
       "units": [
@@ -31018,13 +31018,51 @@
               }
             },
             {
-              "id": "bnu-lower-u1-pending",
-              "title": "第一单元其余课程",
-              "textbookTitle": "20以内数与加法",
+              "id": "bnu-lower-unit-one-practice",
+              "title": "台阶序位、完整计算与多解填数",
+              "textbookTitle": "整理与复习 · 巩固与应用",
               "page": 16,
               "version": 1,
+              "status": "available",
+              "goal": "补全第16～17页八项活动的数学条件：判断台阶位置、分别计算相邻两数及九式、数线表示、合并与剩余、完整算式配卡，并接受严格不等式的多种合法填写。",
+              "prerequisite": "能按顺序数到20，认识十与一，说明20以内加减。",
+              "referenceQuery": null,
+              "steps": 8,
+              "tasks": {
+                "objective": 48,
+                "manual": 10,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-unit-one-practice"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "set",
+                "number-picks",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["teen-stairs", "number-strip", "number-line"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第16～17页整页及台阶、桌面放大逐项核对",
+                "notes": "原台阶查询6/9/19及反查10/19；八顶数形成七组相邻相加，首15给定，另六空。九式、两轴6+6/18−5、兔两群6/7、盒9外6、19本余7、两手持与十桌面卡及三多解不等式完整对应。纸面八项各活动manual，开放反思与计划null；不凭遮挡部分猜未露数卡。"
+              }
+            },
+            {
+              "id": "bnu-lower-u1-pending",
+              "title": "第一单元覆盖复核",
+              "textbookTitle": "20以内数与加法",
+              "page": 2,
+              "version": 1,
               "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "goal": "第2～17页课程已开放，全单元逐页覆盖复核继续进行。",
               "prerequisite": "",
               "referenceQuery": null,
               "steps": 0,

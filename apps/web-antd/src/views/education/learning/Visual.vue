@@ -105,6 +105,7 @@ import SurveyTable from './SurveyTable.vue';
 import TeenAdditionTable from './TeenAdditionTable.vue';
 import TeenArithmeticGrid from './TeenArithmeticGrid.vue';
 import TeenLayout from './TeenLayout.vue';
+import TeenStairs from './TeenStairs.vue';
 import { toggleTenCell } from './ten-cells';
 import TenTables from './TenTables.vue';
 import ThreePieceJoin from './ThreePieceJoin.vue';
@@ -393,6 +394,7 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'arithmetic-grid'"
       :visual="visual"
     />
+    <TeenStairs v-else-if="visual.kind === 'teen-stairs'" :visual="visual" />
     <TeenAdditionTable
       v-else-if="visual.kind === 'teen-addition-table'"
       :visual="visual"

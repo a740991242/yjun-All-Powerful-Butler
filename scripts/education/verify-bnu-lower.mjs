@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--unit-one-practice'))
+    return {
+      index: 8,
+      lessonId: 'bnu-lower-unit-one-practice',
+      zero: '-zero-unchecked',
+      retry: '-sold',
+      manual: 10,
+      key: 'practice',
+    };
   if (process.argv.includes('--harvest'))
     return {
       index: 7,
@@ -216,11 +225,11 @@ const server = http.createServer(async (req, res) => {
       await p
         .getByText('一年级数学下册 · 北师大版（2024审核）', { exact: true })
         .waitFor();
-      await p.getByText('第一单元其余课程', { exact: true }).waitFor();
+      await p.getByText('第一单元覆盖复核', { exact: true }).waitFor();
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 8
+          .count()) !== 9
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -313,7 +322,130 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       }
-      for (let step = 0; step < 6; step++) {
+      async function inspectStairs(variant) {
+        const diagram = p.locator('[data-teen-stairs]');
+        const svg = diagram.locator('svg');
+        await svg.waitFor();
+        await p
+          .locator('.ant-notification-notice')
+          .first()
+          .waitFor({ state: 'hidden' });
+        if (
+          (await diagram.locator('[data-stair-marker]').count()) !== 9 ||
+          (await diagram.locator('[data-stair-given]').count()) !== 10
+        )
+          throw new Error('Stair geometry count');
+        if (
+          (await diagram
+            .locator('[data-stair-marker]')
+            .evaluateAll((nodes) =>
+              nodes.map((n) => n.dataset.stairMarker).join(''),
+            )) !== 'ABCDEFGHI'
+        )
+          throw new Error('Stair identities');
+        const geometry = await svg.evaluate((node) =>
+          [...node.querySelectorAll('text')].map((n) => {
+            const r = n.getBBox();
+            return {
+              font: Number.parseFloat(getComputedStyle(n).fontSize),
+              inside:
+                r.x >= 0 &&
+                r.y >= 0 &&
+                r.x + r.width <= 1120 &&
+                r.y + r.height <= 590,
+            };
+          }),
+        );
+        if (geometry.some((g) => g.font < 20 || !g.inside))
+          throw new Error('Stair text size or canvas clipping');
+        await svg.evaluate((n) => n.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(200);
+        const scroll = diagram.locator('[data-teen-stairs-scroll]');
+        await scroll.focus();
+        const before = await scroll.evaluate((n) => n.scrollLeft);
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(200);
+        if (
+          await scroll.evaluate(
+            (n) => n.scrollWidth > n.clientWidth && n.scrollLeft === 0,
+          )
+        )
+          throw new Error('Stair keyboard scroll');
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await p.screenshot({
+          path: `/tmp/butler-bnu-practice-${variant}-left-${width}.png`,
+        });
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 280;
+        });
+        await p.waitForTimeout(200);
+        await p.screenshot({
+          path: `/tmp/butler-bnu-practice-${variant}-middle-${width}.png`,
+        });
+        await scroll.evaluate((n) => {
+          n.scrollLeft = n.scrollWidth;
+        });
+        await p.waitForTimeout(200);
+        await p.screenshot({
+          path: `/tmp/butler-bnu-practice-${variant}-right-${width}.png`,
+        });
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error('Stairs overflow whole page');
+        await scroll.evaluate((n, left) => {
+          n.scrollLeft = left;
+        }, before);
+      }
+      if (flow.key === 'practice') {
+        await inspectStairs('main');
+        const state = JSON.stringify(await read());
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        await p
+          .getByText(
+            'Count horizontal treads from level 1 at the lower left toward the upper right. A–I replace the nine source figures; their levels are not printed directly. Other level numbers remain as references. This diagram does not request climbing real stairs.',
+            { exact: true },
+          )
+          .waitFor();
+        const dark = await p.evaluate(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') !== was,
+          dark,
+        );
+        await p.waitForTimeout(500);
+        await inspectStairs('english-theme');
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') === was,
+          dark,
+        );
+        await p.waitForTimeout(500);
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await p
+          .getByText(
+            '从左下第1级逐级向右上数，每个水平踏面算一级。本站A～I替代原九个图形，字母位置不直接写级数；其它踏面的数字保留作参照。图示不安排实际登台阶活动。',
+            { exact: true },
+          )
+          .waitFor();
+        if (JSON.stringify(await read()) !== state)
+          throw new Error('Stairs language/theme changed learning records');
+      }
+      for (let step = 0; step < (flow.key === 'practice' ? 7 : 6); step++) {
         await click('下一步');
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
@@ -394,6 +526,56 @@ const server = http.createServer(async (req, res) => {
                 .waitFor();
             }
             await p.getByRole('spinbutton').fill(String(q.rule.value));
+          } else if (q.rule.kind === 'number-picks') {
+            await p.getByRole('spinbutton').first().fill('5');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((s) => s.id === sid).responses[index].draft,
+                ) === '[5,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["5","",""]')
+              throw new Error('Inequality partial draft lost');
+            await p
+              .getByRole('spinbutton')
+              .nth(1)
+              .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+            await p.waitForTimeout(200);
+            const fields = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) =>
+                nodes.map((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    height: r.height,
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                }),
+              );
+            if (fields.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+              throw new Error('Inequality fields size or viewport');
+            await p.screenshot({
+              path: `/tmp/butler-bnu-practice-fields-${width}.png`,
+            });
+            for (const [i, v] of [4, 7, 14].entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(v));
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            for (const [i, v] of [12, 15, 13].entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(v));
           } else if (q.rule.kind === 'arithmetic-pair') {
             await p.getByRole('spinbutton').nth(0).fill('0');
             await wait(
@@ -698,6 +880,17 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'practice') {
+        const inequalities = session.responses.find(
+          (r) => r.questionId === 'bnu-lower-unit-one-practice-inequalities',
+        );
+        if (
+          JSON.stringify(
+            inequalities.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[4,7,14],false],[[12,15,13],true]]'
+        )
+          throw new Error('Inequality retry history changed');
+      }
       if (flow.key === 'harvest') {
         const decomposition = session.responses.find((r) =>
           r.questionId.endsWith('-seven-path'),
@@ -776,6 +969,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (flow.key === 'practice' && q.id.endsWith('-review-stair'))
+          await inspectStairs('review');
         if (flow.key === 'addition' && q.id.endsWith('-review-position'))
           await inspectAddition('review');
         if (q.rule.kind === 'set') {
@@ -785,6 +980,9 @@ const server = http.createServer(async (req, res) => {
               .getByRole('checkbox', { name: option.label, exact: true })
               .check();
           }
+        } else if (q.rule.kind === 'number-picks') {
+          for (const [field, values] of q.rule.fields.entries())
+            await p.getByRole('spinbutton').nth(field).fill(String(values[0]));
         } else if (q.rule.kind === 'arithmetic-pair') {
           const left = Math.max(q.rule.minimum, q.rule.result - q.rule.maximum);
           await p.getByRole('spinbutton').nth(0).fill(String(left));

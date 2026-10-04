@@ -48,6 +48,7 @@ import type { StockTableVisual } from './stock-table';
 import type { TeenAdditionTableVisual } from './teen-addition-table';
 import type { TeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import type { TeenLayoutVisual } from './teen-layout';
+import type { TeenStairsVisual } from './teen-stairs';
 import type { TenCellsVisual } from './ten-cells';
 import type { TenTablesVisual } from './ten-tables';
 import type { TriangleRowsVisual } from './triangle-rows';
@@ -516,6 +517,7 @@ export type Visual =
   | TeenAdditionTableVisual
   | TeenArithmeticGridVisual
   | TeenLayoutVisual
+  | TeenStairsVisual
   | TenCellsVisual
   | TenTablesVisual
   | TileGridVisual
