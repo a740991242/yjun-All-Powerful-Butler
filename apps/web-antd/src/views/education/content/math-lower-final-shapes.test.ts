@@ -170,7 +170,7 @@ describe('lower final complete plane classification and real assembly boundaries
     const pool = required(
       book().specialties?.find((l) => l.id === 'ms-lower-shapes'),
     );
-    expect(pool.version).toBe(3);
+    expect(pool.version).toBe(4);
     const s = createSession(pool, book().id, 'child', { seed: 5 });
     const index = s.questions.findIndex((q) => q.id === 'ml-final-shapes-q1');
     required(s.responses[index]).draft = [3, 1, 2, 4, 2, 13];

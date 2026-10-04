@@ -191,7 +191,7 @@ export function mathSpecialties(volume: Volume, lessons: Lesson[]): Lesson[] {
       if (volume === 'lower' && id === 'numbers') version = 4;
       if (volume === 'lower' && id === 'relations') version = 5;
       if (volume === 'lower' && id === 'borrowing') version = 3;
-      if (volume === 'lower' && id === 'shapes') version = 3;
+      if (volume === 'lower' && id === 'shapes') version = 4;
       if (volume === 'upper' && id === 'shapes') version = 4;
       if (volume === 'upper' && id === 'count') version = 7;
       if (volume === 'upper' && id === 'calculation') version = 9;

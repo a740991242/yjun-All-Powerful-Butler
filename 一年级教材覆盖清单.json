@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T01:35:12.648Z",
+  "generatedAt": "2026-10-04T01:48:00.169Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -12792,8 +12792,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 495,
-          "manual": 216,
+          "objective": 500,
+          "manual": 238,
           "reflection": 75
         }
       },
@@ -12880,29 +12880,35 @@
               "title": "描面、分类与围画图形",
               "textbookTitle": "认识平面图形",
               "page": 1,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "区分物体与平面轮廓，不受大小方向影响分类，实际描画、涂色、围线和点阵画图。",
               "prerequisite": "先认识长方形、正方形、平行四边形、三角形和圆；可以由家长代读。",
               "referenceQuery": null,
-              "steps": 4,
+              "steps": 6,
               "tasks": {
-                "objective": 6,
-                "manual": 4,
+                "objective": 9,
+                "manual": 13,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 2,
+                "objective": 5,
                 "manual": 1,
                 "reflection": 1
               },
               "knowledge": ["ml-plane-observe"],
-              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "manual",
+                "reflection",
+                "set"
+              ],
               "visualKinds": ["plane-cards", "shape"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材1～7页实际阅读与原创活动程序核对",
-                "notes": "资源1221001102241图片7～13实际核读；不复制扫描页、原画或原题。原ml-flat与ml-flat-join的ID、v1和旧快照保留。新增描面、围画、拼剪、七巧板、规律和独立成长反思；实际操作不自动判分。"
+                "notes": "资源1221001102241图片7～13实际核读；不复制扫描页、原画或原题。原ml-flat与ml-flat-join的ID、v1和旧快照保留。新增描面、围画、拼剪、七巧板、规律和独立成长反思；实际操作不自动判分。 v2另列完整描面三组与原书实际活动，保留v1题目前缀。"
               }
             },
             {
@@ -12910,19 +12916,19 @@
               "title": "拼剪图形、七巧板与规律",
               "textbookTitle": "认识平面图形",
               "page": 3,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "区分原纸片与整体轮廓，实际拼组和折剪，探索七巧板多种拼法，计数空位与续摆规律，分别记录成长。",
               "prerequisite": "先认识长方形、正方形、平行四边形、三角形和圆；可以由家长代读。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 7,
               "tasks": {
-                "objective": 8,
-                "manual": 9,
+                "objective": 10,
+                "manual": 22,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 2,
+                "objective": 4,
                 "manual": 1,
                 "reflection": 1
               },
@@ -12936,9 +12942,9 @@
                 "plane-cards"
               ],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材1～7页实际阅读与原创活动程序核对",
-                "notes": "资源1221001102241图片7～13实际核读；不复制扫描页、原画或原题。原ml-flat与ml-flat-join的ID、v1和旧快照保留。新增描面、围画、拼剪、七巧板、规律和独立成长反思；实际操作不自动判分。"
+                "notes": "资源1221001102241图片7～13实际核读；不复制扫描页、原画或原题。原ml-flat与ml-flat-join的ID、v1和旧快照保留。新增描面、围画、拼剪、七巧板、规律和独立成长反思；实际操作不自动判分。 v2另列整组拼剪、七巧板和两排规律，原格子3块不是原书错缝墙。"
               }
             }
           ]
@@ -14716,19 +14722,19 @@
           "title": "平面图形辨认与拼组",
           "textbookTitle": "平台专项练习",
           "page": 1,
-          "version": 3,
+          "version": 4,
           "status": "available",
           "goal": "辨认平面图形，观察拼组后的外轮廓。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 35,
-            "manual": 22,
+            "objective": 40,
+            "manual": 44,
             "reflection": 6
           },
           "reviewTasks": {
-            "objective": 19,
+            "objective": 24,
             "manual": 2,
             "reflection": 2
           },
@@ -14744,8 +14750,8 @@
             "manual",
             "number",
             "reflection",
-            "steps",
-            "set"
+            "set",
+            "steps"
           ],
           "visualKinds": [
             "shape",

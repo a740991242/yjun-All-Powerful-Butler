@@ -117,4 +117,108 @@ describe('pep plane observation and physical construction', () => {
     );
     expect(new Set(ids).size).toBe(ids.length);
   });
+  it('accepts every usable circular base and rejects incomplete or extra face choices', () => {
+    for (const course of planePracticeLessons) {
+      if (course.id !== 'ml-plane-observe') continue;
+      for (const group of [course.questions, course.reviewQuestions ?? []]) {
+        const circular = required(group.find((q) => q.id.endsWith('-face-1')));
+        const correct = ['圆柱的圆形底面', '圆锥的圆形底面'];
+        expect(evaluate(circular.rule, correct)).toBe(true);
+        expect(evaluate(circular.rule, correct.toReversed())).toBe(true);
+        expect(evaluate(circular.rule, ['圆柱的圆形底面'])).toBe(false);
+        expect(evaluate(circular.rule, [...correct, '球的弯曲表面'])).toBe(
+          false,
+        );
+        expect(
+          evaluate(required(group.find((q) => q.id.endsWith('-face-2'))).rule, [
+            '三棱柱的三角形端面',
+          ]),
+        ).toBe(true);
+        expect(
+          evaluate(required(group.find((q) => q.id.endsWith('-face-3'))).rule, [
+            '三向长度各不同的长方体的一个面',
+          ]),
+        ).toBe(true);
+        expect(
+          evaluate(required(group.find((q) => q.id.endsWith('-face-3'))).rule, [
+            '正方体的一个面',
+          ]),
+        ).toBe(false);
+      }
+    }
+  });
+  it('keeps source activities distinct and roundtrips a partial multi-select and both attempt histories', () => {
+    const now = '2026-10-04T00:00:00.000Z';
+    const counts = [9, 13];
+    for (const [index, course] of planePracticeLessons.entries()) {
+      expect(course.version).toBe(2);
+      const physical = course.questions.filter((q) =>
+        q.id.includes('-complete-source-'),
+      );
+      expect(physical).toHaveLength(required(counts[index]));
+      expect(physical.every((q) => q.rule.kind === 'manual')).toBe(true);
+      const session = createSession(course, 'pep-math-p1-lower-2024', 'child', {
+        now,
+        seed: 71,
+      });
+      if (index === 0) {
+        const questionIndex = session.questions.findIndex((q) =>
+          q.id.endsWith('-q-face-1'),
+        );
+        const q = required(session.questions[questionIndex]);
+        const response = required(session.responses[questionIndex]);
+        response.draft = ['圆柱的圆形底面'];
+        session.responses[questionIndex] = submitResponse(q, response, now);
+        const retry = required(session.responses[questionIndex]);
+        retry.draft = ['圆柱的圆形底面', '圆锥的圆形底面'];
+        session.responses[questionIndex] = submitResponse(q, retry, now);
+        expect(
+          session.responses[questionIndex]?.submissions.map((a) => a.correct),
+        ).toEqual([false, true]);
+      }
+      const state = {
+        schemaVersion: 1 as const,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '测试', createdAt: now }],
+        sessions: [session],
+      };
+      expect(parseBackup(exportBackup(state)).data).toEqual(state);
+      expect(
+        course.questions
+          .slice(0, index === 0 ? 12 : 19)
+          .every((q) => !q.id.includes('-complete-')),
+      ).toBe(true);
+      expect(course.steps).toHaveLength(index === 0 ? 6 : 7);
+      expect(course.reviewQuestions).toHaveLength(index === 0 ? 7 : 6);
+    }
+    const build = required(planePracticeLessons[1]);
+    expect(
+      evaluate(
+        required(
+          build.questions.find((q) => q.id.endsWith('-complete-tangram-size')),
+        ).rule,
+        '不是',
+      ),
+    ).toBe(true);
+    expect(
+      evaluate(
+        required(build.questions.find((q) => q.id.endsWith('-complete-seam')))
+          .rule,
+        '算',
+      ),
+    ).toBe(false);
+    expect(
+      required(build.questions.find((q) => q.id.endsWith('-p3-eight-targets')))
+        .prompt,
+    ).toContain('八张');
+    expect(
+      required(
+        build.questions.find((q) => q.id.endsWith('-p4-rectangle-square')),
+      ).prompt,
+    ).toContain('长方形和正方形');
+    expect(
+      required(build.questions.find((q) => q.id.endsWith('-p6-staggered-wall')))
+        .prompt,
+    ).toContain('不把本站方格缺3块');
+  });
 });
