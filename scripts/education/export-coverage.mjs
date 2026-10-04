@@ -34,6 +34,7 @@ async function main() {
         bnuPencilsAudit,
         bnuHideAudit,
         bnuComplementAudit,
+        bnuMeetingAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -51,6 +52,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-pencils-audit.ts'),
         import('/src/views/education/content/bnu-lower-hide-audit.ts'),
         import('/src/views/education/content/bnu-lower-complement-audit.ts'),
+        import('/src/views/education/content/bnu-lower-meeting-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -185,12 +187,13 @@ async function main() {
                       sourceAudit: {
                         ...bnuPencilsAudit.bnuLowerPencilsAudit,
                         scope:
-                          '印刷27～32页买铅笔、捉迷藏与凑数游戏所列活动及明示迁移；33页起仍制作中，不代表整单元完成。',
+                          '印刷27～34页买铅笔、捉迷藏、凑数游戏与开会啦所列活动及明示迁移；35页起仍制作中，不代表整单元完成。',
                         activities: [
                           ...bnuPencilsAudit.bnuLowerPencilsAudit.activities,
                           ...bnuHideAudit.bnuLowerHideAudit.activities,
                           ...bnuComplementAudit.bnuLowerComplementAudit
                             .activities,
+                          ...bnuMeetingAudit.bnuLowerMeetingAudit.activities,
                         ],
                       },
                     }

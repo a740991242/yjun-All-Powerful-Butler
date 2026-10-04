@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T19:10:59.125Z",
+  "generatedAt": "2026-10-04T19:27:15.674Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 16,
+        "availablePacks": 17,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 468,
-          "manual": 146,
-          "reflection": 43
+          "objective": 505,
+          "manual": 156,
+          "reflection": 47
         }
       },
       "units": [
@@ -32680,10 +32680,46 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第33页起后续课程）",
-              "textbookTitle": "20以内数与减法（第33页起后续课程）",
+              "id": "bnu-lower-meeting",
+              "title": "开会啦：一一对应与还差多少",
+              "textbookTitle": "开会啦",
               "page": 33,
+              "version": 1,
+              "status": "available",
+              "goal": "逐个对应人数与物品，画图解释还缺多少，用补缺加法和减法解决问题，完整填写两组减法表并说明变化条件。",
+              "prerequisite": "理解整体与部分，能计算20以内减法，能逐个数且不遗漏或重复。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 37,
+                "manual": 10,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-meeting"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["number-strip"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描33～34页逐项阅读与动物苹果局部放大",
+                "notes": "33人物11/椅7、一一对应两种画法、7+(4)=11和11−7=4；34比较两式，12人6铲、12动物7苹果和自主提问、全部八式、原数11～17分别减6/7的完整表及两给定5/10核对。原实做与本站明确条件的迁移分开。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第35页起后续课程）",
+              "textbookTitle": "20以内数与减法（第35页起后续课程）",
+              "page": 35,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32717,7 +32753,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～32页买铅笔、捉迷藏与凑数游戏所列活动及明示迁移；33页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～34页买铅笔、捉迷藏、凑数游戏与开会啦所列活动及明示迁移；35页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -33128,6 +33164,142 @@
                 "manual": ["actual-explain"],
                 "records": ["discovery", "difficulty", "plan"],
                 "boundary": "实做、发现、困惑与计划独立，不评分。"
+              },
+              {
+                "page": 33,
+                "sourceActivity": "match",
+                "scope": "11人与7椅一一对应",
+                "lesson": "bnu-lower-meeting",
+                "steps": [1],
+                "objective": ["people", "chairs", "missing", "paired"],
+                "manual": ["actual-match"],
+                "records": [],
+                "boundary": "每人一把，未配到4，不把人椅合成人数。"
+              },
+              {
+                "page": 33,
+                "sourceActivity": "draw",
+                "scope": "原两种图示与符号约定",
+                "lesson": "bnu-lower-meeting",
+                "steps": [2],
+                "objective": ["diagram", "symbols"],
+                "manual": ["actual-draw"],
+                "records": [],
+                "boundary": "一种符号每个对象，不按形状猜十，实画另记。"
+              },
+              {
+                "page": 33,
+                "sourceActivity": "expressions",
+                "scope": "补缺加法与求缺减法",
+                "lesson": "bnu-lower-meeting",
+                "steps": [3],
+                "objective": [
+                  "addition",
+                  "subtraction",
+                  "full-chairs",
+                  "seven-role"
+                ],
+                "manual": ["actual-expressions"],
+                "records": [],
+                "boundary": "已有/总需/缺量与单位分别说明，括号标待补。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "compare",
+                "scope": "原两式比较与明示相等/多余迁移",
+                "lesson": "bnu-lower-meeting",
+                "steps": [4],
+                "objective": [
+                  "zero-missing",
+                  "extra-missing",
+                  "extra-spare",
+                  "unknown"
+                ],
+                "manual": ["actual-compare"],
+                "records": [],
+                "boundary": "原比较与本站新条件分开，物多则缺0不是负数，未知不猜0。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "shovels",
+                "scope": "原12人6把一一对应",
+                "lesson": "bnu-lower-meeting",
+                "steps": [5],
+                "objective": [
+                  "shovel-people",
+                  "shovel-tools",
+                  "shovel-missing",
+                  "shovel-unit"
+                ],
+                "manual": ["actual-shovels"],
+                "records": [],
+                "boundary": "每人一把共需12，缺6把。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "apples",
+                "scope": "原12动物7苹果及自主问题",
+                "lesson": "bnu-lower-meeting",
+                "steps": [6],
+                "objective": [
+                  "animals",
+                  "apples",
+                  "apple-missing",
+                  "apple-after"
+                ],
+                "manual": ["actual-animals", "actual-question"],
+                "records": ["own-question"],
+                "boundary": "每只一个缺5，补齐总12；不限制自主问题为本站示例。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "calculate",
+                "scope": "原八式与本站两方法",
+                "lesson": "bnu-lower-meeting",
+                "steps": [7],
+                "objective": [
+                  "calculate-0",
+                  "calculate-1",
+                  "calculate-2",
+                  "calculate-3",
+                  "calculate-4",
+                  "calculate-5",
+                  "calculate-6",
+                  "calculate-7",
+                  "parts",
+                  "break"
+                ],
+                "manual": ["actual-calculate"],
+                "records": [],
+                "boundary": "全部八式覆盖，拆原数与拆减数路径分开，原算法开放。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "tables",
+                "scope": "两给定与十二待填格",
+                "lesson": "bnu-lower-meeting",
+                "steps": [8],
+                "objective": [
+                  "given",
+                  "table-six",
+                  "table-seven",
+                  "horizontal",
+                  "same-column"
+                ],
+                "manual": ["actual-tables"],
+                "records": [],
+                "boundary": "首5和末10为给定，两行固定6/7分别算，横向与同列条件不同。"
+              },
+              {
+                "page": 34,
+                "sourceActivity": "explain",
+                "scope": "表达与本站反思计划",
+                "lesson": "bnu-lower-meeting",
+                "steps": [9],
+                "objective": [],
+                "manual": ["actual-explain"],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "实际解释、发现、困难与未来计划分别保存，不评分。"
               }
             ]
           }

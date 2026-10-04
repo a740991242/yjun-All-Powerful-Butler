@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--meeting'))
+    return {
+      index: 16,
+      lessonId: 'bnu-lower-meeting',
+      zero: '-zero-missing',
+      retry: '-shovel-missing',
+      manual: 10,
+      steps: 9,
+      review: 5,
+      key: 'meeting',
+    };
   if (process.argv.includes('--complement'))
     return {
       index: 15,
@@ -309,7 +320,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 16
+          .count()) !== 17
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -694,6 +705,45 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'meeting' && step === 6) {
+          const strip = p.locator('[data-number-strip]');
+          const numbers = await strip.locator('li').allTextContents();
+          if (numbers.map((n) => n.trim()).join(',') !== '11,12,13,14,15,16,17')
+            throw new Error('Meeting table original row changed');
+          const font = await strip
+            .locator('li')
+            .evaluateAll((nodes) =>
+              nodes.every(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+              ),
+            );
+          if (!font) throw new Error('Meeting number row too small');
+          const region = strip.locator('[role="region"]');
+          await region.evaluate((n) => n.scrollIntoView({ block: 'center' }));
+          await region.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          await p.screenshot({
+            path: `/tmp/butler-bnu-meeting-row-left-${width}.png`,
+          });
+          await region.focus();
+          await region.press('End');
+          await region.evaluate((n) => {
+            n.scrollLeft = n.scrollWidth;
+          });
+          const finalFits = await strip
+            .locator('li')
+            .last()
+            .evaluate((n) => {
+              const a = n.getBoundingClientRect();
+              const b = n.closest('[role="region"]').getBoundingClientRect();
+              return a.left >= b.left && a.right <= b.right;
+            });
+          if (!finalFits) throw new Error('Meeting final number inaccessible');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
+          });
+        }
         if (flow.key === 'addition' && step === 0) {
           await inspectAddition('main');
           const state = JSON.stringify(await read());
@@ -1004,6 +1054,54 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'meeting' && q.id.endsWith('-table-six')) {
+              await p.getByRole('spinbutton').first().fill('6');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === '[6,null,null,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["6","","","","",""]')
+                throw new Error('Meeting partial six-place row lost');
+              for (let i = 0; i < 6; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                await p.waitForTimeout(150);
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Meeting row field size or clipping');
+                await input.fill(String(5 + i));
+                if (i === 0 || i === 5)
+                  await p.screenshot({
+                    path: `/tmp/butler-bnu-meeting-input-${i}-${width}.png`,
+                  });
+              }
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (flow.key === 'hide' && q.id.endsWith('-exchange')) {
               await p.getByRole('spinbutton').first().fill('0');
               await wait(
