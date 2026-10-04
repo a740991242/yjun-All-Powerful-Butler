@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--parachute'))
+    return {
+      index: 17,
+      lessonId: 'bnu-lower-parachute',
+      zero: '-zero-difference',
+      retry: '-peach-difference',
+      manual: 10,
+      steps: 9,
+      review: 5,
+      key: 'parachute',
+    };
   if (process.argv.includes('--meeting'))
     return {
       index: 16,
@@ -320,7 +331,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 17
+          .count()) !== 18
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -975,6 +986,57 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             for (const [i, v] of [12, 15, 13].entries())
               await p.getByRole('spinbutton').nth(i).fill(String(v));
+          } else if (
+            q.rule.kind === 'arithmetic-pair' &&
+            flow.key === 'parachute'
+          ) {
+            await p.getByRole('spinbutton').first().fill('9');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft,
+                ) === '[9,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["9",""]')
+              throw new Error('Free difference partial pair lost');
+            for (let i = 0; i < 2; i++) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n.scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const size = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return {
+                  font: Number.parseFloat(getComputedStyle(n).fontSize),
+                  height: r.height,
+                  fits:
+                    r.left >= 0 &&
+                    r.right <= innerWidth &&
+                    r.top >= 0 &&
+                    r.bottom <= innerHeight,
+                };
+              });
+              if (size.font < 20 || size.height < 44 || !size.fits)
+                throw new Error('Free difference input size or clipping');
+              await input.fill(String([14, 6][i]));
+            }
+            await p.screenshot({
+              path: `/tmp/butler-bnu-parachute-pair-${width}.png`,
+            });
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            await p.getByRole('spinbutton').nth(0).fill('20');
+            await p.getByRole('spinbutton').nth(1).fill('11');
           } else if (
             q.rule.kind === 'arithmetic-pair' &&
             flow.key === 'complement'
@@ -1834,12 +1896,14 @@ const server = http.createServer(async (req, res) => {
           for (const [field, values] of q.rule.fields.entries())
             await p.getByRole('spinbutton').nth(field).fill(String(values[0]));
         } else if (q.rule.kind === 'arithmetic-pair') {
-          const left = Math.max(q.rule.minimum, q.rule.result - q.rule.maximum);
+          let left = Math.max(q.rule.minimum, q.rule.result - q.rule.maximum);
+          let right = q.rule.result - left;
+          if (q.rule.operation === 'subtract') {
+            left = q.rule.maximum;
+            right = left - q.rule.result;
+          }
           await p.getByRole('spinbutton').nth(0).fill(String(left));
-          await p
-            .getByRole('spinbutton')
-            .nth(1)
-            .fill(String(q.rule.result - left));
+          await p.getByRole('spinbutton').nth(1).fill(String(right));
         } else if (q.rule.kind === 'steps') {
           for (let field = 0; field < q.rule.values.length; field++)
             await p

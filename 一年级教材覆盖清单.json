@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T19:27:15.674Z",
+  "generatedAt": "2026-10-04T19:46:50.167Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 17,
+        "availablePacks": 18,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 505,
-          "manual": 156,
-          "reflection": 47
+          "objective": 547,
+          "manual": 166,
+          "reflection": 52
         }
       },
       "units": [
@@ -32716,10 +32716,48 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第35页起后续课程）",
-              "textbookTitle": "20以内数与减法（第35页起后续课程）",
+              "id": "bnu-lower-parachute",
+              "title": "跳伞表演：比较多少与差的变化",
+              "textbookTitle": "跳伞表演",
               "page": 35,
+              "version": 1,
+              "status": "available",
+              "goal": "逐组计数并配对解释多几和少几，用同单位减法比较，完整分类十二送信式，并在明示条件下解释两数同增与差不变。",
+              "prerequisite": "能数20以内数量，理解一一对应、整体与部分，能计算十几减几。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 42,
+                "manual": 10,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-parachute"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "arithmetic-pair",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描35～37页逐项阅读，圆图/形状/信件放大核对",
+                "notes": "35红黄多8与蓝红少7、36书与苹果比较/昨天11今天5/三同差9与自主新组、37桃16对7/形状5-14-15/十二信卡与四箱/男女比较活动覆盖；男女原插画角色分组未文字注明，保留实际核对与开放记录，不由外貌补造自动判分。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第38页起后续课程）",
+              "textbookTitle": "20以内数与减法（第38页起后续课程）",
+              "page": 38,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32753,7 +32791,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～34页买铅笔、捉迷藏、凑数游戏与开会啦所列活动及明示迁移；35页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～37页买铅笔、捉迷藏、凑数游戏、开会啦与跳伞表演所列活动及明示迁移；原角色分组未知保留核对记录，38页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -33300,6 +33338,148 @@
                 "manual": ["actual-explain"],
                 "records": ["discovery", "difficulty", "plan"],
                 "boundary": "实际解释、发现、困难与未来计划分别保存，不评分。"
+              },
+              {
+                "page": 35,
+                "sourceActivity": "colors",
+                "scope": "原三色伞全部数量",
+                "lesson": "bnu-lower-parachute",
+                "steps": [1],
+                "objective": ["red", "yellow", "blue"],
+                "manual": ["actual-colors"],
+                "records": [],
+                "boundary": "原14红6黄7蓝，一个符号一伞，不按大小位置增物。"
+              },
+              {
+                "page": 35,
+                "sourceActivity": "pairs",
+                "scope": "原两组对应与明示相等迁移",
+                "lesson": "bnu-lower-parachute",
+                "steps": [2],
+                "objective": [
+                  "red-yellow",
+                  "red-blue",
+                  "inverse",
+                  "zero-difference"
+                ],
+                "manual": ["actual-pair"],
+                "records": [],
+                "boundary": "较大减较小，同差反向多/少；本站相等差0与原图分开。"
+              },
+              {
+                "page": 36,
+                "sourceActivity": "compare-objects",
+                "scope": "书11/8与苹果13/6",
+                "lesson": "bnu-lower-parachute",
+                "steps": [3],
+                "objective": ["books", "apples", "book-unit"],
+                "manual": ["actual-comparisons"],
+                "records": [],
+                "boundary": "本/个不混，总量与差分开。"
+              },
+              {
+                "page": 36,
+                "sourceActivity": "eggs",
+                "scope": "昨天11今天5的比较",
+                "lesson": "bnu-lower-parachute",
+                "steps": [4],
+                "objective": ["eggs", "egg-meaning"],
+                "manual": ["actual-eggs"],
+                "records": [],
+                "boundary": "两天各自产蛋不是拿走或鸡只数。"
+              },
+              {
+                "page": 36,
+                "sourceActivity": "pattern",
+                "scope": "三同差9与自主新组",
+                "lesson": "bnu-lower-parachute",
+                "steps": [5],
+                "objective": [
+                  "pattern-original",
+                  "pattern-condition",
+                  "pattern-continue",
+                  "free-difference"
+                ],
+                "manual": ["actual-pattern"],
+                "records": ["own-formulas"],
+                "boundary": "两数同增1才差不变，0～20是本站范围，原自主组不限定本站续写。"
+              },
+              {
+                "page": 37,
+                "sourceActivity": "peaches",
+                "scope": "原摘7与16比较",
+                "lesson": "bnu-lower-parachute",
+                "steps": [6],
+                "objective": ["peach-person", "peach-difference"],
+                "manual": ["actual-peaches"],
+                "records": [],
+                "boundary": "已摘文字量，不加入未摘树果。"
+              },
+              {
+                "page": 37,
+                "sourceActivity": "shapes",
+                "scope": "原三类全部计数与两比较",
+                "lesson": "bnu-lower-parachute",
+                "steps": [6],
+                "objective": ["shapes", "triangle-less", "square-more"],
+                "manual": ["actual-shapes"],
+                "records": [],
+                "boundary": "三角5圆14方15，旋转不变类别，不漏或重复。"
+              },
+              {
+                "page": 37,
+                "sourceActivity": "mail",
+                "scope": "原十二式全部四箱",
+                "lesson": "bnu-lower-parachute",
+                "steps": [7],
+                "objective": [
+                  "mail-0",
+                  "mail-1",
+                  "mail-2",
+                  "mail-3",
+                  "mail-4",
+                  "mail-5",
+                  "mail-6",
+                  "mail-7",
+                  "mail-8",
+                  "mail-9",
+                  "mail-10",
+                  "mail-11",
+                  "group-6",
+                  "group-7",
+                  "group-8",
+                  "group-9"
+                ],
+                "manual": ["actual-mail"],
+                "records": [],
+                "boundary": "旁列八式加手持四式全覆盖，本站编号，同结果各卡保留。"
+              },
+              {
+                "page": 37,
+                "sourceActivity": "children",
+                "scope": "原比较活动与明确给定新情境",
+                "lesson": "bnu-lower-parachute",
+                "steps": [8],
+                "objective": [
+                  "labeled-difference",
+                  "labeled-inverse",
+                  "labeled-total",
+                  "unknown"
+                ],
+                "manual": ["actual-children"],
+                "records": ["original-children"],
+                "boundary": "原插画分组未文字标明，实际核对/未知原话保存；本站明确9女8男不冒原图核准人数，也不由现实发型服装判断。"
+              },
+              {
+                "page": 37,
+                "sourceActivity": "explain",
+                "scope": "比较说明与本站反思计划",
+                "lesson": "bnu-lower-parachute",
+                "steps": [9],
+                "objective": ["difference-meaning"],
+                "manual": ["actual-explain"],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "差量意义独立，实际解释与发现困难未来计划分开，不评分。"
               }
             ]
           }
