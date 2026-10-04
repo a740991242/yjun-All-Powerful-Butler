@@ -13,6 +13,7 @@ export interface RecognitionPack {
   itemId: string;
   title: string;
   page: number;
+  version?: number;
   activity: string;
   rows: WordRow[];
   distractors?: string[];
@@ -88,7 +89,7 @@ export function makeRecognitionPack(
           : '本包仅覆盖会认字补充，不新增会写字要求，也不根据认字练习推断已经会写。朗读与表达人工确认，不自动评分。';
       })();
     })(),
-    version: 1,
+    version: pack.version ?? 1,
     status: 'available',
     steps: [
       {

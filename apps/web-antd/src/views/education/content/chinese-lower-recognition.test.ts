@@ -14,6 +14,58 @@ import { lowerRecognitionPacks } from './chinese-lower-recognition';
 import { textbooks } from './textbooks';
 
 describe('lower first-unit character-scope supplements', () => {
+  it('provides sufficient Wu surname clues and preserves the old review snapshot after a version change', () => {
+    const lesson = lowerRecognitionPacks['u1-2']!;
+    expect(lesson.version).toBe(2);
+    for (const id of ['u1-1', 'u1-3', 'u1-4'])
+      expect(lowerRecognitionPacks[id]!.version).toBe(1);
+    const question = lesson.reviewQuestions!.find((q) => q.id.endsWith('-r8'))!;
+    expect(question.prompt).toContain('上面是“口”，下面是“天”');
+    expect(question.prompt).not.toContain('不是姓胡');
+    expect(question.rule).toEqual({ kind: 'choice', value: '吴' });
+    for (const choice of question.choices!)
+      expect(evaluate(question.rule, choice.id)).toBe(choice.id === '吴');
+    const now = '2026-10-04T00:00:00.000Z';
+    const original = createSession(
+      { ...lesson, version: 1 },
+      'pep-chinese-p1-lower-2024',
+      'child',
+      {
+        seed: 8,
+        now,
+      },
+    );
+    const oldQuestions = [
+      {
+        ...question,
+        prompt: '把句子里的□补成同一个合适的字：小林的朋友姓□，不是姓胡。',
+        explanation:
+          '这里应选“吴”，补完整是“小林的朋友姓吴，不是姓胡。”。这道题判断字词对应，不自动评价朗读或书写。',
+      },
+    ];
+    const old = createSession(
+      { ...lesson, version: 1 },
+      'pep-chinese-p1-lower-2024',
+      'child',
+      {
+        seed: 8,
+        now,
+        mode: 'review',
+        originalSessionId: original.id,
+        questions: oldQuestions,
+      },
+    );
+    expect(
+      parseBackup(
+        exportBackup({
+          schemaVersion: 1,
+          activeProfileId: 'child',
+          profiles: [{ id: 'child', nickname: '识字', createdAt: now }],
+          sessions: [original, old],
+        }),
+      ).data.sessions[1],
+    ).toEqual(old);
+  });
   it('covers every verified character without inventing writing scope or completing official lessons', () => {
     const book = chineseBooks.find((item) => item.volume === 'lower')!;
     const official = textbooks.find((item) => item.id === book.id)!;
