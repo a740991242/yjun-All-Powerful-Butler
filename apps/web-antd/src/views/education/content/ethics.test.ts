@@ -11,6 +11,96 @@ import { editionTarget } from './edition-targets';
 import { createEthicsBooks } from './ethics';
 import { findTextbook, textbooks } from './textbooks';
 
+it('independently checks the stated answers of all first-eight upper main and review scenarios', () => {
+  const book = required(
+    createEthicsBooks(translation(zh)).find((item) => item.volume === 'upper'),
+  );
+  // Answer text is checked against the specific authored scenario, rather than
+  // treating a fixed first/second option ID as evidence of semantic correctness.
+  const answers: Record<number, [string, string][]> = {
+    1: [
+      ['小禾', '老师'],
+      ['擦干桌面', '放好书'],
+      ['整理铅笔盒', '检查书皮'],
+    ],
+    2: [
+      ['五星红旗', '《义勇军进行曲》'],
+      ['五颗', '四颗'],
+      ['行注目礼', '行队礼'],
+      ['田汉', '聂耳'],
+    ],
+    3: [
+      ['读书区', '音乐室'],
+      ['阅读区', '器材仓库'],
+      ['小竹', '小宁'],
+      ['厨房', '办公室'],
+    ],
+    4: [
+      ['人行道', '车道'],
+      ['小禾', '小竹'],
+      ['小宁', '小安'],
+      ['交通警察', '照顾者'],
+    ],
+    5: [
+      ['周老师', '林老师'],
+      ['A卡', 'B卡'],
+      ['小宁', '小竹'],
+      ['小禾', '小安'],
+    ],
+    6: [
+      ['看书', '画画'],
+      ['小宁', '小安'],
+      ['小竹', '小禾'],
+      ['小禾', '小竹'],
+    ],
+    7: [
+      ['甲桌', '乙桌'],
+      ['小禾', '小竹'],
+      ['小宁的记录', '小安的记录'],
+      ['小禾', '小竹'],
+    ],
+    8: [
+      ['小宁', '小安'],
+      ['小禾', '小竹'],
+      ['小宁的记录', '小安的记录'],
+      ['小禾', '小竹'],
+    ],
+  };
+  let checked = 0;
+  for (const [number, pairs] of Object.entries(answers)) {
+    const lesson = required(
+      book.units
+        .flatMap((unit) => unit.lessons)
+        .find((item) => item.id === `ethics-upper-lesson-${number}`),
+    );
+    const main = lesson.questions.filter(
+      (question) => question.rule.kind === 'choice',
+    );
+    const review = required(lesson.reviewQuestions);
+    expect(main).toHaveLength(pairs.length);
+    expect(review).toHaveLength(pairs.length);
+    for (const [index, labels] of pairs.entries()) {
+      for (const [mode, questions, answer] of [
+        ['main', main, labels[0]],
+        ['review', review, labels[1]],
+      ] as const) {
+        const question = required(questions[index]);
+        expect(question.id).toBe(`${lesson.id}-${mode}-${index}`);
+        const choices = required(question.choices);
+        expect(
+          choices.filter((choice) => choice.label === answer),
+        ).toHaveLength(1);
+        for (const choice of choices)
+          expect(evaluate(question.rule, choice.id)).toBe(
+            choice.label === answer,
+          );
+        checked++;
+      }
+    }
+  }
+  expect(checked).toBe(62);
+});
+
 it('keeps final-lesson requests, consent, source identity and actual contributions distinct', () => {
   for (const messages of [zh, en]) {
     for (const book of createEthicsBooks(translation(messages))) {
