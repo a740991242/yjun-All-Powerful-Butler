@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T17:42:08.256Z",
+  "generatedAt": "2026-10-04T18:17:16.248Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 12,
-        "pendingEntries": 8,
+        "availablePacks": 13,
+        "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 350,
-          "manual": 103,
-          "reflection": 28
+          "objective": 367,
+          "manual": 115,
+          "reflection": 35
         }
       },
       "units": [
@@ -32374,36 +32374,184 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-classroom-pending",
-              "title": "设计教室装饰图",
-              "textbookTitle": "设计教室装饰图",
+              "id": "bnu-lower-classroom-decoration",
+              "title": "找重复规律、合作设计与展示改进",
+              "textbookTitle": "综合实践 · 设计教室装饰图",
               "page": 24,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "观察并表示装饰中的重复规则，商量位置、材料和分工，实际画设计、分享改进，并分别反思设计、合作和倾听。",
+              "prerequisite": "能辨认平面轮廓和同形大小，愿意说明自己的排列规则。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 7,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 17,
+                "manual": 12,
+                "reflection": 7
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-classroom-decoration"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "sequence",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["plane-cards", "periodic-shapes"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-05",
+                "reviewer": "公开扫描24～26页文字、图示及三项评价逐项阅读",
+                "notes": "24观察装饰规律、符号表示和任务说明；25选择地点物品、商量重复单元、分工绘图、一大一小与两个心一花示例；26展示规律与丰富度、倾听后改进、生活中的四季与生肖周期、设计/合作/倾听三项评价分别对应。原自由设计保留多种合理方案，原创图不是原插图，真实活动人工与开放记录分别保存。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "resourceId": "bnu-lower-public-scan-2024",
+            "source": "https://keben.szxuexiao.com/html/10760.html",
+            "checkedAt": "2026-10-05",
+            "unit": "classroom",
+            "status": "original-teaching-implemented",
+            "finalTeacherReview": "not-verified",
+            "scope": "印刷24～26页综合实践所列活动及注明迁移逐项对应；不证明后续单元、全册、全年或实际合作完成。",
+            "activities": [
+              {
+                "page": 24,
+                "sourceActivity": "observe-four-areas",
+                "scope": "观察彩旗、灯笼、气球、花盆规律并说明范围",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [1],
+                "objective": ["unknown-rule"],
+                "manual": ["actual-observe"],
+                "records": ["observations"],
+                "boundary": "未明确规则的有限片段不强判唯一；不猜遮挡或原图全部数量。"
+              },
+              {
+                "page": 24,
+                "sourceActivity": "represent-rule",
+                "scope": "用符号、画图或语言表示重复",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [2],
+                "objective": [
+                  "two-unit",
+                  "two-next-7",
+                  "two-next-8",
+                  "two-shown"
+                ],
+                "manual": ["actual-symbols"],
+                "records": [],
+                "boundary": "本站两位置大/小圆六卡原创模拟，不是原灯笼写实或件数。"
+              },
+              {
+                "page": 24,
+                "sourceActivity": "state-task",
+                "scope": "说清本次活动任务和准备做什么",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [3],
+                "objective": [],
+                "manual": ["actual-task"],
+                "records": [],
+                "boundary": "说明任务不等于已合作完成或已真正布置。"
+              },
+              {
+                "page": 25,
+                "sourceActivity": "choose-place-materials",
+                "scope": "商量装饰地点和物品",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [3],
+                "objective": ["roles"],
+                "manual": ["actual-location"],
+                "records": ["design-record"],
+                "boundary": "独作、待商量和实际约定分工分开。"
+              },
+              {
+                "page": 25,
+                "sourceActivity": "choose-repeat-unit",
+                "scope": "商量物品怎样重复，并说、画规则",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [4],
+                "objective": [
+                  "three-next-7",
+                  "three-next-8",
+                  "three-next-9",
+                  "three-unit",
+                  "three-circles",
+                  "three-types"
+                ],
+                "manual": ["actual-rule"],
+                "records": [],
+                "boundary": "原两个心一花改为原创圆圆三角示例，重复同形仍占两个位置，类型与组长分开。"
+              },
+              {
+                "page": 25,
+                "sourceActivity": "group-design",
+                "scope": "小组分工合作设计装饰图",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [3, 4],
+                "objective": [],
+                "manual": ["actual-group"],
+                "records": [],
+                "boundary": "真实合作独立确认，独自纸图不冒小组共同完成，不要求高处实地布置。"
+              },
+              {
+                "page": 26,
+                "sourceActivity": "display-richness",
+                "scope": "分享各部分规则和丰富度",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [5],
+                "objective": ["richness"],
+                "manual": ["actual-display"],
+                "records": [],
+                "boundary": "允许多种设计；丰富不当无规则乱摆或高花费。"
+              },
+              {
+                "page": 26,
+                "sourceActivity": "listen-and-revise",
+                "scope": "听取分享后提出和实际改进",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [5],
+                "objective": [],
+                "manual": ["actual-revise"],
+                "records": ["improvement"],
+                "boundary": "已听意见、已修改和未来改法分别记录，不强迫接受所有意见。"
+              },
+              {
+                "page": 26,
+                "sourceActivity": "life-cycles",
+                "scope": "四季和生肖每12年例子及自举生活规律",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [6],
+                "objective": ["seasons", "season-count", "zodiac-years"],
+                "manual": ["actual-life"],
+                "records": [],
+                "boundary": "四季名称顺序与照片排版分开；12年不是12月/天，不保证每次天气景象相同。"
+              },
+              {
+                "page": 26,
+                "sourceActivity": "three-evaluations",
+                "scope": "规则设计、合作、认真倾听三方面分别评价",
+                "lesson": "bnu-lower-classroom-decoration",
+                "steps": [7],
+                "objective": ["evaluation"],
+                "manual": [
+                  "actual-evaluate-design",
+                  "actual-evaluate-cooperate",
+                  "actual-evaluate-listen"
+                ],
+                "records": [
+                  "evaluation-design",
+                  "evaluation-cooperate",
+                  "evaluation-listen",
+                  "plan"
+                ],
+                "boundary": "实际回顾、原话自评、帮助与未来计划独立；不自动给星或以客观正确率代评。"
+              }
+            ]
+          }
         },
         {
           "id": "u3",

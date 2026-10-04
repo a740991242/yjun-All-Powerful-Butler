@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--classroom'))
+    return {
+      index: 12,
+      lessonId: 'bnu-lower-classroom-decoration',
+      zero: null,
+      retry: '-two-next-7',
+      manual: 12,
+      steps: 7,
+      review: 4,
+      key: 'classroom',
+    };
   if (process.argv.includes('--trace-print'))
     return {
       index: 9,
@@ -265,7 +276,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 12
+          .count()) !== 13
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -280,6 +291,93 @@ const server = http.createServer(async (req, res) => {
         const state = await read();
         return state.sessions.find((s) => s.id === sid);
       };
+      async function inspectClassroomPattern(variant) {
+        const model = p.locator('[data-periodic-shapes]');
+        const textFits = await model.locator('p').evaluateAll((nodes) =>
+          nodes.every((n) => {
+            const r = document.createRange();
+            r.selectNodeContents(n);
+            const text = r.getBoundingClientRect();
+            const box = n.getBoundingClientRect();
+            return (
+              Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+              text.left >= box.left - 1 &&
+              text.right <= box.right + 1
+            );
+          }),
+        );
+        if (!textFits)
+          throw new Error('Pattern instructions too small or overflowing');
+        const svg = model.locator('svg').first();
+        const counts = await svg.evaluate((n) => ({
+          positions: [...n.children].filter(
+            (x) => x.tagName.toLowerCase() === 'g',
+          ).length,
+          circles: n.querySelectorAll('circle').length,
+          triangles: n.querySelectorAll('path').length,
+          blanks: [...n.querySelectorAll('text')].filter(
+            (x) => x.textContent.trim() === '?',
+          ).length,
+        }));
+        if (
+          JSON.stringify(counts) !==
+          JSON.stringify({ positions: 9, circles: 4, triangles: 2, blanks: 3 })
+        )
+          throw new Error(
+            `Incomplete repeated pattern: ${JSON.stringify(counts)}`,
+          );
+        const text = await svg.locator('text').evaluateAll((nodes) =>
+          nodes.map((n) => {
+            const r = n.getBBox();
+            return {
+              text: n.textContent.trim(),
+              font: Number.parseFloat(getComputedStyle(n).fontSize),
+              inside:
+                r.x >= 0 &&
+                r.y >= 0 &&
+                r.x + r.width <= 648 &&
+                r.y + r.height <= 104,
+            };
+          }),
+        );
+        if (text.some((t) => t.font < 20 || !t.inside))
+          throw new Error('Pattern position font or clipping');
+        if (
+          text
+            .filter((t) => t.text !== '?')
+            .map((t) => t.text)
+            .join(',') !== '1,2,3,4,5,6,7,8,9'
+        )
+          throw new Error('Pattern position labels changed');
+        const scroll = svg.locator('..');
+        await scroll.evaluate((n) => n.scrollIntoView({ block: 'center' }));
+        await scroll.focus();
+        await scroll.press('ArrowRight');
+        await p.waitForTimeout(250);
+        if (
+          await scroll.evaluate(
+            (n) => n.scrollWidth > n.clientWidth && n.scrollLeft === 0,
+          )
+        )
+          throw new Error('Pattern keyboard scroll unavailable');
+        for (const edge of ['left', 'right']) {
+          await scroll.evaluate((n, edge) => {
+            n.scrollLeft = edge === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          await p.screenshot({
+            path: `/tmp/butler-bnu-classroom-${variant}-${edge}-${width}.png`,
+          });
+        }
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error('Pattern overflows page');
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+      }
       async function inspectShadow(variant, english = false) {
         const model = p.locator('[data-shadow-size]');
         const scenes = model.locator('[data-shadow-scene]');
@@ -440,7 +538,7 @@ const server = http.createServer(async (req, res) => {
           .first()
           .waitFor({ state: 'hidden' });
         if (
-          (await diagram.locator('[data-stair-marker]').count()) !== 12 ||
+          (await diagram.locator('[data-stair-marker]').count()) !== 13 ||
           (await diagram.locator('[data-stair-given]').count()) !== 10
         )
           throw new Error('Stair geometry count');
@@ -617,6 +715,48 @@ const server = http.createServer(async (req, res) => {
           (!q.prompt.includes('拨入个位5颗') || q.prompt.includes('拨去'))
         )
           throw new Error('Actual counter task used wrong operation');
+        if (flow.key === 'classroom' && q.id.endsWith('-three-next-7')) {
+          await inspectClassroomPattern('main');
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-periodic-shapes]')
+            .getByText(/^This diagram explicitly repeats/)
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectClassroomPattern('main-en');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('[data-periodic-shapes]')
+            .getByText(/^本图已明确从左起/)
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Pattern language/theme changed learning records');
+        }
         if (q.id.endsWith('-bigger') && flow.key === 'shadow') {
           await inspectShadow('main');
           const state = JSON.stringify(await read());
@@ -1394,6 +1534,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (flow.key === 'classroom' && q.id.endsWith('-review-three-7'))
+          await inspectClassroomPattern('review');
         if (flow.key === 'shadow' && q.id.endsWith('-review-bigger'))
           await inspectShadow('review');
         if (flow.key === 'practice' && q.id.endsWith('-review-stair'))

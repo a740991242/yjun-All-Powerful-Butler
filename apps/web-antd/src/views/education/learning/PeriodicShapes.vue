@@ -30,8 +30,8 @@ const description = computed(() =>
 );
 </script>
 <template>
-  <div class="flex min-w-0 flex-col gap-3">
-    <p class="text-sm text-muted-foreground">
+  <div class="flex min-w-0 flex-col gap-3" data-periodic-shapes>
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.periodicShapeInstruction') }}
     </p>
     <div
@@ -76,7 +76,7 @@ const description = computed(() =>
             :x="index * 72 + 36"
             y="96"
             text-anchor="middle"
-            font-size="14"
+            font-size="20"
             fill="currentColor"
           >
             {{ index + 1 }}
@@ -84,7 +84,7 @@ const description = computed(() =>
         </g>
       </svg>
     </div>
-    <p class="text-sm text-muted-foreground">
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.periodicShapeScroll') }}
     </p>
   </div>
