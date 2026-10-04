@@ -88,3 +88,30 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
     '2025-09-09',
   );
 });
+
+it('keeps Shanxi city-scoped catalog alternatives distinct from a province-wide adoption claim', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = { ...query, province: 'shanxi', volume };
+    const result = regionalMathematicsDefault(local)!;
+    expect(result.edition).toBe('pep-2024');
+    expect(result.catalogYear).toBe('2024');
+    expect(result.alternatives).toEqual(['pep-2024', 'sujiao', 'bnu-2024']);
+    expect(result.evidence[0]).toMatchObject({
+      id: 'shanxi-grade-one-math-catalog-2024',
+      publishedAt: '2024-09-09',
+      checkedAt: '2026-10-04',
+      sourceUrl:
+        'https://xxgk.yczf.gov.cn/xzf/ycjyj/fdzdgknr/gzdt/202409/P020240909607430404832.pdf',
+    });
+    expect(result.evidence[0]!.sourceTitle).toContain('按选用市分列');
+    for (const change of [
+      { city: 'taiyuan' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});

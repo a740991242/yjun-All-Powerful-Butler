@@ -280,6 +280,35 @@ const server = http.createServer(async (req, res) => {
         if (!(await apply.isDisabled()))
           throw new Error('Fujian five-four applied');
         await choose('education-region-system', '六三学制（小学六年）');
+        await choose('education-region-province', '山西', true);
+        await region
+          .locator(
+            'a[href="https://xxgk.yczf.gov.cn/xzf/ycjyj/fdzdgknr/gzdt/202409/P020240909607430404832.pdf"]',
+          )
+          .waitFor();
+        await region.getByText('按选用市分列', { exact: false }).waitFor();
+        for (const volume of ['上册', '下册']) {
+          await choose('education-region-volume', volume);
+          await apply.click();
+          for (const subject of ['语文', '数学', '道德与法治'])
+            await p
+              .getByRole('button', {
+                name: `${subject} · 人教版（2024审定） · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          if (
+            (await p.evaluate(() =>
+              localStorage.getItem('butler-grade-one-math-edition-v1'),
+            )) !== 'pep-2024'
+          )
+            throw new Error('Shanxi math not applied');
+        }
+        await region
+          .getByText('参考2024年省级目录中的可选版本', { exact: false })
+          .evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(300);
+        await p.screenshot({ path: `/tmp/butler-shanxi-default-${width}.png` });
         await choose('education-region-province', '湖南', true);
         await choose('education-region-volume', '上册');
         await region
@@ -432,6 +461,7 @@ const server = http.createServer(async (req, res) => {
             provinceDefaults: true,
             JiangsuUpperLowerThreeSubjects: true,
             FujianUpperLowerThreeSubjects: true,
+            ShanxiUpperLowerThreeSubjects: true,
             HunanUpperThreeSubjectsLowerTwoSubjects: true,
             HunanUpperCatalogNotInheritedByLower: true,
             HunanEnglishDarkCatalog: true,

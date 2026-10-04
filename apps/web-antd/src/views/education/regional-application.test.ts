@@ -58,14 +58,16 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       rows.filter((row) => row.resolution.status === 'guidance'),
     ).toHaveLength(excluded ? 0 : 2);
     let expectedSubjects: string[] = ['chinese', 'ethics'];
-    if (province === 'jiangsu' || province === 'fujian')
+    if (['fujian', 'jiangsu', 'shanxi'].includes(province))
       expectedSubjects = ['chinese', 'math', 'ethics'];
     if (excluded) expectedSubjects = [];
     expect(
       rows.flatMap((row) => (row.action ? [row.action.subject] : [])),
     ).toEqual(expectedSubjects);
     expect(required(rows[1]).resolution.status).toBe(
-      ['fujian', 'jiangsu'].includes(province) ? 'recommended' : 'unknown',
+      ['fujian', 'jiangsu', 'shanxi'].includes(province)
+        ? 'recommended'
+        : 'unknown',
     );
     expect(required(rows[3]).resolution.status).toBe('unknown');
   }
@@ -259,4 +261,38 @@ it('applies Hunan upper-volume combination and preserves an unknown lower-volume
         (row) => !row.action,
       ),
     ).toBe(true);
+});
+
+it('applies Shanxi reference combinations for both volumes while retaining system guards', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      province: 'shanxi',
+      city: '',
+      school: '',
+      volume,
+    };
+    const plan = regionalApplicationPlan(local);
+    expect(
+      plan.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(plan[1]!.resolution).toMatchObject({
+      status: 'recommended',
+      catalogYear: '2024',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+    });
+    expect(plan[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
+  }
 });

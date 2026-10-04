@@ -38,6 +38,23 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'shanxi')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+      catalogYear: '2024',
+      evidence: [
+        {
+          id: 'shanxi-grade-one-math-catalog-2024',
+          sourceUrl:
+            'https://xxgk.yczf.gov.cn/xzf/ycjyj/fdzdgknr/gzdt/202409/P020240909607430404832.pdf',
+          sourceTitle:
+            '山西省2024学年教学用书目录（晋教基〔2024〕9号，阳城县转载PDF第15页，数学一年级上下册按选用市分列）',
+          publishedAt: '2024-09-09',
+          checkedAt: '2026-10-04',
+        },
+      ],
+    };
   if (query.province === 'hunan' && query.volume === 'upper')
     return {
       edition: 'pep-2024',
