@@ -11,7 +11,7 @@ import { editionTarget } from './edition-targets';
 import { createEthicsBooks } from './ethics';
 import { findTextbook, textbooks } from './textbooks';
 
-it('independently checks the stated answers of all first-eight upper main and review scenarios', () => {
+it('independently checks the stated answers of all sixteen upper main and review scenarios', () => {
   const book = required(
     createEthicsBooks(translation(zh)).find((item) => item.volume === 'upper'),
   );
@@ -65,6 +65,54 @@ it('independently checks the stated answers of all first-eight upper main and re
       ['小宁的记录', '小安的记录'],
       ['小禾', '小竹'],
     ],
+    9: [
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['甲卡', '乙卡'],
+      ['小宁的记录', '小安的记录'],
+    ],
+    10: [
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['小宁', '小安'],
+    ],
+    11: [
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['甲卡', '乙卡'],
+      ['小宁', '小安'],
+    ],
+    12: [
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['小宁', '小安'],
+    ],
+    13: [
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['甲卡', '乙卡'],
+      ['甲', '乙'],
+    ],
+    14: [
+      ['甲', '乙'],
+      ['甲行', '乙行'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
+    15: [
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
+    16: [
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
   };
   let checked = 0;
   for (const [number, pairs] of Object.entries(answers)) {
@@ -98,7 +146,7 @@ it('independently checks the stated answers of all first-eight upper main and re
       }
     }
   }
-  expect(checked).toBe(62);
+  expect(checked).toBe(126);
 });
 
 it('keeps final-lesson requests, consent, source identity and actual contributions distinct', () => {
