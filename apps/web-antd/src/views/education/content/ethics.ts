@@ -171,7 +171,7 @@ function authoredLesson(
     title: own(number === 1 ? 'l1' : 'title'),
     textbookTitle: own(number === 1 ? 'l1' : 'title'),
     page,
-    version: 1,
+    version: volume === 'lower' && number === 2 ? 2 : 1,
     status: 'available',
     goal: own('goal'),
     prerequisite: number === 1 ? text('prerequisite') : own('prerequisite'),

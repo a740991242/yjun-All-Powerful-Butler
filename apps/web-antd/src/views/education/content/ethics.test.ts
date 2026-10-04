@@ -379,7 +379,7 @@ it.each([
       expect(first.version).toBe(1);
       expect(first.questions).toHaveLength(9);
       expect(second.id).toBe(`ethics-${volume}-lesson-${number}`);
-      expect(second.version).toBe(1);
+      expect(second.version).toBe(volume === 'lower' && number === 2 ? 2 : 1);
       expect(second.page).toBe(
         required(
           required(findTextbook('ethics', 'pep-2024', volume)).units.flatMap(
@@ -928,4 +928,177 @@ it('preserves unknown observations and formal-status boundaries in lesson fourte
   expect(zh.lower.lesson14.manual[3]).toContain('2025队章');
   expect(zh.lower.lesson14.manual[8]).toContain('不替学校批准');
   expect(zh.lower.lesson14.parentTip).toContain('不从服饰、年龄或网页完成推断');
+});
+
+it('grounds the lower checking answer in both stated lines and preserves old main and review snapshots', () => {
+  const now = '2026-10-04T00:00:00.000Z';
+  for (const [messages, oldMaterial, clue, mainAnswer, reviewAnswer] of [
+    [
+      zh,
+      '本站原创卡：小禾只看第一行，漏了第二行的问题；小安检查时发现了遗漏。',
+      '逐行检查了两行',
+      '只看第一行',
+      '检查两行',
+    ],
+    [
+      en,
+      'Original scenario: Xiao He reads only the first line and misses the second-line question; Xiao An discovers it while checking.',
+      'checks both lines',
+      'Reads only the first line',
+      'Checks both lines',
+    ],
+  ] as const) {
+    const book = required(
+      createEthicsBooks(translation(messages)).find(
+        (b) => b.volume === 'lower',
+      ),
+    );
+    const lesson = required(
+      book.units
+        .flatMap((u) => u.lessons)
+        .find((l) => l.id === 'ethics-lower-lesson-2'),
+    );
+    expect(lesson.version).toBe(2);
+    const main = required(
+      lesson.questions.find((q) => q.id === 'ethics-lower-lesson-2-main-0'),
+    );
+    const review = required(
+      lesson.reviewQuestions?.find(
+        (q) => q.id === 'ethics-lower-lesson-2-review-0',
+      ),
+    );
+    for (const [q, expected] of [
+      [main, mainAnswer],
+      [review, reviewAnswer],
+    ] as const) {
+      expect(q.material).toContain(clue);
+      const choice = required(q.choices?.find((c) => c.label === expected));
+      expect(evaluate(q.rule, choice.id)).toBe(true);
+      for (const other of required(q.choices))
+        expect(evaluate(q.rule, other.id)).toBe(other.label === expected);
+    }
+    expect(required(lesson.steps[1]).text).toContain(clue);
+    const historical = {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.map((q) =>
+        q.id === main.id ? { ...q, material: oldMaterial } : q,
+      ),
+    };
+    const old = createSession(historical, book.id, 'child', { seed: 9, now });
+    const oldReview = createSession(
+      { ...historical, questions: [{ ...review, material: oldMaterial }] },
+      book.id,
+      'child',
+      { seed: 10, now },
+    );
+    const current = createSession(lesson, book.id, 'child', { seed: 11, now });
+    const restored = parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '核对', createdAt: now }],
+        sessions: [old, oldReview, current],
+      }),
+    ).data.sessions;
+    expect(restored).toEqual([old, oldReview, current]);
+    expect(required(restored[0]).lessonVersion).toBe(1);
+    expect(required(restored[1]).questions[0]?.material).toBe(oldMaterial);
+    expect(required(restored[2]).lessonVersion).toBe(2);
+    for (const other of createEthicsBooks(translation(messages)).flatMap((b) =>
+      b.units.flatMap((u) => u.lessons),
+    )) {
+      if (other.id !== lesson.id) expect(other.version).toBe(1);
+    }
+  }
+});
+
+it('independently checks the stated answers of the first eight lower main and review scenarios', () => {
+  const book = required(
+    createEthicsBooks(translation(zh)).find((item) => item.volume === 'lower'),
+  );
+  // Answer text is checked against the specific authored scenario, rather than
+  // treating a fixed first/second option ID as evidence of semantic correctness.
+  const answers: Record<number, [string, string][]> = {
+    1: [
+      ['桌面整齐', '放回两支铅笔'],
+      ['收铅笔', '放书'],
+      ['提出一个目标', '大家讨论并同意'],
+    ],
+    2: [
+      ['只看第一行', '检查两行'],
+      ['橡皮', '铅笔'],
+      ['△', '□'],
+      ['第5位置', '第6位置'],
+    ],
+    3: [
+      ['小禾', '小林'],
+      ['小安', '小宁'],
+      ['赶着收拾，没有看桌面', '先看桌面再取纸'],
+      ['小竹', '小禾'],
+    ],
+    4: [
+      ['小竹', '小宁'],
+      ['小禾', '小安'],
+      ['第一项', '第二项'],
+      ['小宁', '小竹'],
+    ],
+    5: [
+      ['小竹', '小宁'],
+      ['A卡', 'B卡'],
+      ['小禾', '小安'],
+      ['小宁', '小竹'],
+    ],
+    6: [
+      ['A卡', 'B卡'],
+      ['周老师', '林老师'],
+      ['小宁', '小安'],
+      ['小禾', '小竹'],
+    ],
+    7: [
+      ['小禾', '小竹'],
+      ['甲纸卡', '乙纪念物'],
+      ['小宁的记录', '小安的记录'],
+      ['小禾的记录', '小竹的记录'],
+    ],
+    8: [
+      ['甲次', '乙次'],
+      ['小宁', '小安'],
+      ['小禾', '小竹'],
+      ['小鹿', '猴子'],
+    ],
+  };
+  let checked = 0;
+  for (const [number, pairs] of Object.entries(answers)) {
+    const lesson = required(
+      book.units
+        .flatMap((unit) => unit.lessons)
+        .find((item) => item.id === `ethics-lower-lesson-${number}`),
+    );
+    const main = lesson.questions.filter(
+      (question) => question.rule.kind === 'choice',
+    );
+    const review = required(lesson.reviewQuestions);
+    expect(main).toHaveLength(pairs.length);
+    expect(review).toHaveLength(pairs.length);
+    for (const [index, labels] of pairs.entries()) {
+      for (const [mode, questions, answer] of [
+        ['main', main, labels[0]],
+        ['review', review, labels[1]],
+      ] as const) {
+        const question = required(questions[index]);
+        expect(question.id).toBe(`${lesson.id}-${mode}-${index}`);
+        const choices = required(question.choices);
+        expect(
+          choices.filter((choice) => choice.label === answer),
+        ).toHaveLength(1);
+        for (const choice of choices)
+          expect(evaluate(question.rule, choice.id)).toBe(
+            choice.label === answer,
+          );
+        checked++;
+      }
+    }
+  }
+  expect(checked).toBe(62);
 });

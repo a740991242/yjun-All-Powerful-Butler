@@ -1384,7 +1384,7 @@
         },
         {
           "title": "Exploring causes without blame",
-          "text": "Page 7 discusses misreading, rushing and forgetting to check. Original scenario: Xiao He reads only the first line and misses a question on the second; Xiao An notices it while checking. Use the stated cause without labeling real classmates.",
+          "text": "Page 7 discusses misreading, rushing and forgetting to check. Original scenario: Xiao He reads only the first line and misses a question on the second; Xiao An checks both lines and notices the omission. Use the stated cause without labeling real classmates.",
           "activity": "Actually discuss a method that could be adjusted; different reasonable approaches are valid."
         },
         {
@@ -1405,7 +1405,7 @@
       ],
       "pairs": [
         {
-          "material": "Original scenario: Xiao He reads only the first line and misses the second-line question; Xiao An discovers it while checking.",
+          "material": "Original scenario: Xiao He reads only the first line and misses the second-line question; Xiao An checks both lines and discovers the omission.",
           "prompt": "What does Xiao He do before the omission?",
           "first": "Reads only the first line",
           "second": "Checks both lines",
