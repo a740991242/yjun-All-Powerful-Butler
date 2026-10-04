@@ -6,6 +6,53 @@ import { exportBackup, parseBackup } from '../learning/backup';
 import { createSession, evaluate, submitResponse } from '../learning/engine';
 import { initialLibrary } from '../learning/storage';
 import { sujiaoFinalParadeDraft as lesson } from './sujiao-final-parade';
+import { sujiaoLowerLessons } from './sujiao-lower';
+it('keeps the distance premise aligned with changed review labels without rewriting version-one snapshots', () => {
+  const published = sujiaoLowerLessons.find((item) => item.id === lesson.id)!;
+  expect(published.version).toBe(2);
+  const main = published.questions.find((q) =>
+    q.knowledge.endsWith('-distance-only'),
+  )!;
+  const review = published.reviewQuestions!.find((q) =>
+    q.knowledge.endsWith('-distance-only'),
+  )!;
+  expect(main.prompt).toBe(
+    '主图一直向右行驶。B、C都离P较远，只凭距离远就能断定哪张最早吗？',
+  );
+  expect(review.prompt).toBe(
+    '新图一直向左行驶。A、C都离P较远，只凭距离远就能断定哪张最早吗？',
+  );
+  expect(evaluate(review.rule, 'yes')).toBe(false);
+  expect(evaluate(review.rule, 'no')).toBe(true);
+  const state = initialLibrary('历史花车');
+  const old = structuredClone(published);
+  old.version = 1;
+  old.reviewQuestions!.find((q) => q.id === review.id)!.prompt =
+    '新图一直向左行驶。B、C都离P较远，只凭距离远就能断定哪张最早吗？';
+  const historical = createSession(
+    old,
+    'sujiao-math-p1-lower-9787574312951',
+    state.activeProfileId,
+    { mode: 'review', questions: old.reviewQuestions! },
+  );
+  const current = createSession(
+    published,
+    historical.bookId,
+    state.activeProfileId,
+    { mode: 'review', questions: published.reviewQuestions! },
+  );
+  state.sessions.push(historical, current);
+  const restored = parseBackup(exportBackup(state)).data.sessions;
+  expect(restored).toEqual([historical, current]);
+  expect(restored[0]!.lessonVersion).toBe(1);
+  expect(restored[1]!.lessonVersion).toBe(2);
+  expect(
+    restored[0]!.questions.find((q) => q.id === review.id)!.prompt,
+  ).toContain('B、C都');
+  expect(
+    restored[1]!.questions.find((q) => q.id === review.id)!.prompt,
+  ).toContain('A、C都');
+});
 it('changes direction and labels under review without predicting speed or confirming actual source observation', () => {
   const main: Answer[] = [
     'BAC',

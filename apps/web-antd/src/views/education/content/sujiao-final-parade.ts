@@ -69,7 +69,7 @@ function tasks(review: boolean): Question[] {
     ),
     choice(
       'distance-only',
-      'B、C都离P较远，只凭距离远就能断定哪张最早吗？',
+      `${review ? 'A、C' : 'B、C'}都离P较远，只凭距离远就能断定哪张最早吗？`,
       yesNo,
       'no',
       '两侧都能离P远，需结合方向与是否已过P，不把远近直接当时间。',
@@ -118,7 +118,7 @@ export const sujiaoFinalParadeDraft: Lesson = {
   textbookTitle: '期末复习：花车经过的时序',
   page: 93,
   status: 'preparing',
-  version: 1,
+  version: 2,
   goal: '结合固定观众与持续方向，排列同一花车的三个时刻，区分位置、远近、图片编号和实际时间。',
   prerequisite:
     '能辨认左右和箭头；准备一张花车纸卡、观众P纸卡和纸路，不需要观看真实道路游行。',
