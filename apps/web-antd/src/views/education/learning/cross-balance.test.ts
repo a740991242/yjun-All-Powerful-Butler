@@ -1,6 +1,7 @@
 import { expect, it } from 'vitest';
 
 import { sujiaoCrossBalanceDraft as lesson } from '../content/sujiao-cross-balance';
+import { sujiaoLowerLessons } from '../content/sujiao-lower';
 import { exportBackup, parseBackup } from './backup';
 import { isCrossBalanceModel, matchesCrossBalance } from './cross-balance';
 import { createSession, evaluate, submitResponse, validAnswer } from './engine';
@@ -16,12 +17,23 @@ function permutations(values: number[]): number[][] {
   );
 }
 it('accepts all balanced permutations, including different centres, rather than a canonical solution', () => {
+  const published = sujiaoLowerLessons.find((item) => item.id === lesson.id)!;
+  expect(published.status).toBe('available');
   for (const values of [
     [2, 4, 6, 8, 10],
     [3, 5, 7, 9, 11],
     [0, 1, 2, 3, 4],
   ]) {
-    const model = { kind: 'cross-balance' as const, values };
+    // Check the released main/review rules, not only a synthetic pool.
+    // The independent permutation oracle below uses the literal cards above.
+    const model =
+      values[0] === 0
+        ? { kind: 'cross-balance' as const, values }
+        : (values[0] === 2
+            ? published.questions
+            : published.reviewQuestions!
+          ).find((q) => q.rule.kind === 'cross-balance')!.rule;
+    expect(model).toEqual({ kind: 'cross-balance', values });
     expect(isCrossBalanceModel(model)).toBe(true);
     let count = 0;
     const centres = new Set<number>();
