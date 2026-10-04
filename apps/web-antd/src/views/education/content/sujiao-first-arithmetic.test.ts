@@ -7,10 +7,70 @@ import {
   statistics,
   submitResponse,
 } from '../learning/engine';
+import { required } from '../learning/required';
 import { mathBooks } from './math';
+import { sujiaoBooks } from './sujiao';
 import { sujiaoFirstArithmeticDrafts } from './sujiao-first-arithmetic';
 
 describe('sujiao first arithmetic drafts', () => {
+  it('checks all thirty-two published first arithmetic tasks against independent meanings and results', () => {
+    const unit = required(
+      required(sujiaoBooks.find((b) => b.volume === 'upper')).units.find(
+        (u) => u.id === 'u1',
+      ),
+    );
+    const fixtures: {
+      id: string;
+      main: (number | number[] | string)[];
+      review: (number | number[] | string)[];
+    }[] = [
+      {
+        id: 'sj-upper-first-add',
+        main: [2, 3, 4, 5, '+', 4, [4, 5], 'sum'],
+        review: [3, 4, 4, 5, '+', 5, [2, 3], 'sum'],
+      },
+      {
+        id: 'sj-upper-first-subtract',
+        main: [1, 2, 1, 4, '-', 1, [4, 3], 'difference'],
+        review: [1, 3, 2, 2, '-', 2, [3, 2], 'difference'],
+      },
+    ];
+    for (const f of fixtures) {
+      const lesson = required(unit.lessons.find((l) => l.id === f.id));
+      expect(lesson.status).toBe('available');
+      for (const [questions, prefix, answers] of [
+        [lesson.questions.filter((q) => q.rule.kind !== 'manual'), 'q', f.main],
+        [required(lesson.reviewQuestions), 'r', f.review],
+      ] as const) {
+        expect(questions.map((q) => q.id)).toEqual(
+          [
+            ...Array.from({ length: 4 }, (_, i) => `calculate-${i}`),
+            'operator',
+            'story',
+            'path',
+            'term',
+          ].map((suffix) => `${f.id}-${prefix}-${suffix}`),
+        );
+        questions.forEach((q, i) => {
+          const answer = required(answers[i]);
+          expect(evaluate(q.rule, answer)).toBe(true);
+          if (typeof answer === 'number') {
+            for (let n = 0; n <= 5; n++)
+              expect(evaluate(q.rule, n)).toBe(n === answer);
+          } else if (typeof answer === 'string') {
+            for (const option of required(q.choices))
+              expect(evaluate(q.rule, option.id)).toBe(option.id === answer);
+          } else {
+            for (let a = 0; a <= 5; a++)
+              for (let b = 0; b <= 5; b++)
+                expect(evaluate(q.rule, [a, b])).toBe(
+                  a === answer[0] && b === answer[1],
+                );
+          }
+        });
+      }
+    }
+  });
   it('matches story quantities and counts moves without counting the starting point', () => {
     const live = mathBooks.flatMap((book) =>
       book.units.flatMap((unit) => unit.lessons.map((lesson) => lesson.id)),
