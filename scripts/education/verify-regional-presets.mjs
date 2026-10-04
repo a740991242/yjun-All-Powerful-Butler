@@ -309,6 +309,47 @@ const server = http.createServer(async (req, res) => {
           .evaluate((e) => e.scrollIntoView({ block: 'center' }));
         await p.waitForTimeout(300);
         await p.screenshot({ path: `/tmp/butler-shanxi-default-${width}.png` });
+        await choose('education-region-province', '湖北', true);
+        await choose('education-region-volume', '下册');
+        await region
+          .locator(
+            'a[href="https://jyt.hubei.gov.cn/zfxxgk/zc_GK2020/qtzdgkwj_GK2020/202602/t20260224_5879252.shtml"]',
+          )
+          .waitFor();
+        const hubeiCatalog = region.getByText(
+          '参考2026年省级目录中的可选版本',
+          { exact: false },
+        );
+        await hubeiCatalog.waitFor();
+        await apply.click();
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 下册`,
+              exact: true,
+            })
+            .waitFor();
+        const hubeiAlternatives = await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .textContent();
+        if (
+          !hubeiAlternatives.includes('北师大版') ||
+          hubeiAlternatives.includes('苏教版')
+        )
+          throw new Error(
+            'Hubei catalog alternatives differ from verified publishers',
+          );
+        await hubeiCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(300);
+        await p.screenshot({ path: `/tmp/butler-hubei-default-${width}.png` });
+        await choose('education-region-volume', '上册');
+        await apply.click();
+        if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
+          throw new Error('Hubei spring math leaked into upper volume');
+        if (await hubeiCatalog.count())
+          throw new Error('Hubei spring source leaked into upper volume');
         await choose('education-region-province', '湖南', true);
         await choose('education-region-volume', '上册');
         await region

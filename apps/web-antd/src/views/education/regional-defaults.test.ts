@@ -115,3 +115,34 @@ it('keeps Shanxi city-scoped catalog alternatives distinct from a province-wide 
       ).toBeUndefined();
   }
 });
+
+it('keeps Hubei spring alternatives specific to the verified lower volume', () => {
+  const hubei = { ...query, province: 'hubei', volume: 'lower' };
+  const result = regionalMathematicsDefault(hubei)!;
+  expect(result.edition).toBe('pep-2024');
+  expect(result.catalogYear).toBe('2026');
+  expect(result.alternatives).toEqual(['pep-2024', 'bnu-2024']);
+  expect(result.evidence[0]).toMatchObject({
+    id: 'hubei-grade-one-math-lower-catalog-2026',
+    sourceUrl:
+      'https://jyt.hubei.gov.cn/zfxxgk/zc_GK2020/qtzdgkwj_GK2020/202602/t20260224_5879252.shtml',
+    publishedAt: '2026-02-12',
+    checkedAt: '2026-10-04',
+  });
+  expect(result.evidence[0]!.sourceTitle).toContain('第13、339项');
+  for (const change of [
+    { volume: 'upper' },
+    { city: 'wuhan' },
+    { school: 'any-school' },
+    { subject: 'english' },
+    { grade: 'p2' },
+    { academicYear: '2027-2028' },
+  ])
+    expect(regionalMathematicsDefault({ ...hubei, ...change })).toBeUndefined();
+  result.alternatives!.pop();
+  result.evidence[0]!.publishedAt = 'unknown';
+  expect(regionalMathematicsDefault(hubei)!.alternatives).toHaveLength(2);
+  expect(regionalMathematicsDefault(hubei)!.evidence[0]!.publishedAt).toBe(
+    '2026-02-12',
+  );
+});

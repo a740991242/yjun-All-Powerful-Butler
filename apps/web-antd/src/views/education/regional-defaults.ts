@@ -38,6 +38,23 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'hubei' && query.volume === 'lower')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: '2026',
+      evidence: [
+        {
+          id: 'hubei-grade-one-math-lower-catalog-2026',
+          sourceUrl:
+            'https://jyt.hubei.gov.cn/zfxxgk/zc_GK2020/qtzdgkwj_GK2020/202602/t20260224_5879252.shtml',
+          sourceTitle:
+            '湖北省2026年春季中小学教科书及教辅材料零售价格公告（附件1第13、339项，一年级数学下册）',
+          publishedAt: '2026-02-12',
+          checkedAt: '2026-10-04',
+        },
+      ],
+    };
   if (query.province === 'shanxi')
     return {
       edition: 'pep-2024',
