@@ -80,12 +80,12 @@ it('keeps old course snapshots, partial multi-field drafts, wrong history and ev
       state.activeProfileId,
       { seed: 23, now: '2026-10-04T00:01:00Z' },
     );
-    expect(current.lessonVersion).toBe(2);
-    expect(current.questions).toHaveLength(index === 0 ? 23 : 25);
+    expect(current.lessonVersion).toBe(3);
+    expect(current.questions).toHaveLength(index === 0 ? 25 : 38);
     const actual = current.questions.filter((q) =>
       q.id.includes('-actual-source-'),
     );
-    expect(actual).toHaveLength(index === 0 ? 8 : 2);
+    expect(actual).toHaveLength(index === 0 ? 10 : 11);
     for (const q of actual) {
       expect(q.rule.kind).toBe('manual');
       const i = current.questions.indexOf(q);

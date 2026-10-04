@@ -5,6 +5,12 @@ import {
   twentyCompleteSourceTasks,
 } from './math-twenty-complete-practice';
 import {
+  twentyBundleRemainingTasks,
+  twentyIntervalQuestions,
+  twentyIntervalSourceTasks,
+  twentyLinksRemainingTasks,
+} from './math-twenty-interval-practice';
+import {
   twentyDescriptionQuestions,
   twentyPositionSourceTasks,
   twentyRepresentationSourceTasks,
@@ -128,7 +134,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: bundle,
-    version: 2,
+    version: 3,
     page: 74,
     title: '捆十、摆数与两个数字的意义',
     goal: '亲自把十个一换成一个十，读摆10～20，区分数字、数位、材料数量和表示的数。',
@@ -160,6 +166,10 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '原图逐组数，读画珠与摆数完整核对',
         text: '两个圈十图分别数，环形数点标起点；成对、成把的物品仍按指定单个单位计数。珠串、小棒和计数器各自读数，珠颗数不是表示的数量。原书五个指定数全部摆后复原；原计数器读写与画珠全部分别做，个位无珠仍写0。原图实际作品独立记录，不由本站原创示例确认已做，缺原书可暂跳。',
+      },
+      {
+        title: '原三种组成与两图估计分别记录',
+        text: '原第76页三幅小棒组成全部填，0个散根与未填分开。原第86页两物品图各先估再数，估计先保留，不用看到结果后的数字冒原估计；原图、本站示例与真实材料各自记录。',
       },
     ],
     questions: [
@@ -262,12 +272,16 @@ export const twentyPracticeLessons: Lesson[] = [
         ...activity(bundle, `actual-source-${key}`, prompt),
         knowledge: `${bundle}-actual-source-${key}`,
       })),
+      ...twentyBundleRemainingTasks.map(([key, prompt]): Question => ({
+        ...activity(bundle, `actual-source-${key}`, prompt),
+        knowledge: `${bundle}-actual-source-${key}`,
+      })),
     ],
     review: {
       ...base.review,
       date: '2026-10-04',
       notes:
-        '实际重新查看官方留存图81/83/85/92对应印刷75/77/79/86，补八个独立原书完整人工任务。旧15主任务/4复习/五步骤保持，v2共23任务与六步骤，旧快照不改；不冒整册已完成。',
+        '实际重新查看官方留存图81/83/85/92对应印刷75/77/79/86，补八个独立原书完整人工任务。旧15主任务/4复习/五步骤保持，v2共23任务与六步骤，旧快照不改；不冒整册已完成。2026-10-04再核第76/86页，追加原三组成与两图估计两项；v3现7步骤25任务，前23任务/4复习/六步骤保持。',
     },
     reviewQuestions: [
       fields(
@@ -305,7 +319,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: position,
-    version: 2,
+    version: 3,
     page: 78,
     title: '数序、之间与连两端的数量',
     goal: '按完整顺序辨认位置，区分编号差、两端之间、连两端共几个与推迟的天数。',
@@ -336,6 +350,10 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '六种描述和整条数卡分别核对',
         text: '中间的数不包含两端；某数后第1个从下一数开始。几个十和几个一的先后说法不改变组成，不同描述可以表示同一个数。先把完整连续数卡的所有空格填好，再将每条描述分别核对。原旗图左边省略了部分位置，应由给定编号推位置，不把可见首面当第1面；原三种圈法与六条列车描述另行实际记录。',
+      },
+      {
+        title: '完整正倒序与原位置应用',
+        text: '两行数卡分别按方向填全部空格，逐格回看。图前端省略的位置仍在全排中，不能把首个可见物当第1。排队转弯不自动改起点；人数/楼层/站点之间不含两端，阅读从首到末则包含两端。推迟逐天走，原当天不是过去的一天；原找页、连点、两行与各应用题全部独立处理。',
       },
     ],
     questions: [
@@ -447,12 +465,17 @@ export const twentyPracticeLessons: Lesson[] = [
         ...activity(position, `actual-source-${key}`, prompt),
         knowledge: `${position}-actual-source-${key}`,
       })),
+      ...twentyIntervalQuestions(false),
+      ...twentyIntervalSourceTasks.map(([key, prompt]): Question => ({
+        ...activity(position, `actual-source-${key}`, prompt),
+        knowledge: `${position}-actual-source-${key}`,
+      })),
     ],
     review: {
       ...base.review,
       date: '2026-10-04',
       notes:
-        '实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。',
+        '实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。2026-10-04再核78/82/83/84/86原题，追加两九格完整填空、省略前端位置及跨周推迟四客观/复习与九原书manual；v3现7步骤38任务/15复习，旧25任务/11复习/六步保持。',
     },
     reviewQuestions: [
       numeric(
@@ -485,12 +508,13 @@ export const twentyPracticeLessons: Lesson[] = [
         '经过周四1天、周五2天、周六3天。',
       ),
       ...twentyDescriptionQuestions(true),
+      ...twentyIntervalQuestions(true),
     ],
   },
   {
     ...base,
     id: links,
-    version: 2,
+    version: 3,
     page: 81,
     title: '加减联系、按条件整理与成长记录',
     goal: '由十和几联系加减，认识算式名称，依据整体部分与所求解题，实际整理知识并分别反思。',
@@ -533,6 +557,10 @@ export const twentyPracticeLessons: Lesson[] = [
         text: '第86页原路线为四行五列，全部二十式与先前自制三行五列不同；回原页逐步检查结果大1的路径。第87页每个区域独立算式后依指定得数涂色，同结果的不同区域不漏。自制路线或六式分区只是原创练习，不自动表示原书游戏做完。缺原书可待做，实际记录与未来计划分开。',
         activity:
           '回原页保存完整路线和全部涂色区域的实际作品；没有原书或尚未处理可暂跳，不据网页正确自动确认。',
+      },
+      {
+        title: '原整体部分与一一配对完整处理',
+        text: '同一原小棒图要填完整三式；原糖果求合计、原蜡笔求另一部分各自先读条件和所求，再填算式/单位并回看。原松果松鼠一一对应后只数未配对部分求相差，不把图面积或间距当数量。实际作品独立记录，网页答对不自动确认。',
       },
     ],
     questions: [
@@ -662,6 +690,10 @@ export const twentyPracticeLessons: Lesson[] = [
         ...activity(links, `actual-source-${key}`, prompt),
         knowledge: `${links}-actual-source-${key}`,
       })),
+      ...twentyLinksRemainingTasks.map(([key, prompt]): Question => ({
+        ...activity(links, `actual-source-${key}`, prompt),
+        knowledge: `${links}-actual-source-${key}`,
+      })),
     ],
     reviewQuestions: [
       fields(
@@ -700,7 +732,7 @@ export const twentyPracticeLessons: Lesson[] = [
       ...base.review,
       date: '2026-10-04',
       notes:
-        '重新查看官方留存图片84～93对应印刷78～87，补两组各六计算、四组等值配对、六连算、六比较与三缺数原创完整练习，原书对应整组与四行五列路线及所有涂色区域各自人工记录。旧19题、4复习和前六步保持，v2共57主任务及35复习，v1历史快照不改；本课不代表全部教材或教师审校已完成。',
+        '重新查看官方留存图片84～93对应印刷78～87，补两组各六计算、四组等值配对、六连算、六比较与三缺数原创完整练习，原书对应整组与四行五列路线及所有涂色区域各自人工记录。旧19题、4复习和前六步保持，v2共57主任务及35复习，v1历史快照不改；本课不代表全部教材或教师审校已完成。2026-10-04再核81/83原题，追加原三式、两整体部分故事及一一配对四manual；v3现9步骤61任务/35复习，旧57任务/35复习/八步保持。',
     },
   },
 ];

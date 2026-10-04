@@ -70,9 +70,9 @@ it('computes both stages of all twelve chains independently and keeps final zero
 });
 it('preserves v1 questions and restores the expanded lesson with draft, error and separate source confirmations', () => {
   const lesson = twentyPracticeLessons[2]!;
-  expect(lesson.version).toBe(2);
-  expect(lesson.steps).toHaveLength(8);
-  expect(lesson.questions).toHaveLength(57);
+  expect(lesson.version).toBe(3);
+  expect(lesson.steps).toHaveLength(9);
+  expect(lesson.questions).toHaveLength(61);
   expect(lesson.reviewQuestions).toHaveLength(35);
   const state = initialLibrary('整组核对');
   const old = createSession(
@@ -96,7 +96,7 @@ it('preserves v1 questions and restores the expanded lesson with draft, error an
   const sources = next.questions.filter((q) =>
     q.id.includes('-actual-source-'),
   );
-  expect(sources).toHaveLength(7);
+  expect(sources).toHaveLength(11);
   expect(sources.find((q) => q.id.endsWith('-route'))!.prompt).toContain(
     '四行五列全部二十式',
   );

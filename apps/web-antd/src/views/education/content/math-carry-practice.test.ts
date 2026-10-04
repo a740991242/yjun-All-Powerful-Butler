@@ -194,8 +194,8 @@ describe('pep carry process, quantity relations and table scope', () => {
     const relationPool = required(
       book.specialties?.find((l) => l.id === 'ms-upper-relations'),
     );
-    expect(calculation.version).toBe(6);
-    expect(relationPool.version).toBe(6);
+    expect(calculation.version).toBe(7);
+    expect(relationPool.version).toBe(7);
     expect(calculation.questions).toContainEqual(find(0, 'q8'));
     expect(relationPool.questions).toContainEqual(find(1, 'q5'));
     expect(calculation.questions).toContainEqual(find(2, 'q6'));

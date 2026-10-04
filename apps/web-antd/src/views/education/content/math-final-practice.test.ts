@@ -222,9 +222,9 @@ describe('pep final review meanings, intermediate results and actual activities'
     }
     const book = required(mathBooks.find((b) => b.volume === 'upper'));
     for (const [id, version, source] of [
-      ['ms-upper-count', 4, find(0, 'q3')],
-      ['ms-upper-calculation', 6, find(0, 'q17')],
-      ['ms-upper-relations', 6, find(1, 'q5')],
+      ['ms-upper-count', 5, find(0, 'q3')],
+      ['ms-upper-calculation', 7, find(0, 'q17')],
+      ['ms-upper-relations', 7, find(1, 'q5')],
       ['ms-upper-shapes', 3, find(1, 'q11')],
     ] as const) {
       const pool = required(book.specialties?.find((l) => l.id === id));
