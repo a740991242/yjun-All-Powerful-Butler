@@ -23,6 +23,7 @@ const fixtures = [
   {
     id: 'ml-written-add',
     results: [37, 57, 63, 73, 65, 80],
+    reviewResults: [59, 58, 65, 82, 76, 70],
     methods: [
       [0, 7, 3],
       [0, 7, 5],
@@ -43,6 +44,7 @@ const fixtures = [
   {
     id: 'ml-written-sub',
     results: [45, 34, 25, 26, 64, 36],
+    reviewResults: [45, 34, 35, 27, 73, 46],
     methods: [
       [0, 5, 4],
       [0, 4, 3],
@@ -126,6 +128,28 @@ describe('written algorithms, one-digit alignment and zero boundaries', () => {
         ).toBe(true),
       );
       expect(l.reviewQuestions).toHaveLength(10);
+    }
+  });
+  it('accepts only the independently calculated result for all main and changed review sums', () => {
+    for (const f of fixtures) {
+      const l = course(f.id);
+      for (const [questions, prefix, results] of [
+        [l.questions, 'q', f.results],
+        [required(l.reviewQuestions), 'r', f.reviewResults],
+      ] as const) {
+        const numeric = questions.filter((q) => q.rule.kind === 'number');
+        expect(numeric.map((q) => q.id)).toEqual(
+          results.map((_, i) => `${f.id}-${prefix}${i + 1}`),
+        );
+        numeric.forEach((q, i) => {
+          const expected = required(results[i]);
+          for (let candidate = 0; candidate <= 100; candidate++) {
+            expect(evaluate(q.rule, candidate), `${q.id}: ${candidate}`).toBe(
+              candidate === expected,
+            );
+          }
+        });
+      }
     }
   });
   it('keeps v2 eleven-question snapshots exact and real writing/reflections unscored', () => {

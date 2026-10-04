@@ -103,6 +103,29 @@ describe('source-scoped quantity relations, dependency and real activity boundar
       );
     }
   });
+  it('checks all original story results and changed review conditions independently', () => {
+    const original = required(
+      lower()
+        .units.flatMap((u) => u.lessons)
+        .find((l) => l.id === 'ml-relations'),
+    );
+    for (const [questions, prefix, results] of [
+      [original.questions, 'q', [38, 26, 43, 8, 23, 21]],
+      [required(original.reviewQuestions), 'r', [41, 19, 45, 15, 26, 23]],
+    ] as const) {
+      expect(questions.map((q) => q.id)).toEqual(
+        results.map((_, i) => `ml-relations-${prefix}${i + 1}`),
+      );
+      questions.forEach((q, i) => {
+        const expected = required(results[i]);
+        for (let candidate = 0; candidate <= 100; candidate++) {
+          expect(evaluate(q.rule, candidate), `${q.id}: ${candidate}`).toBe(
+            candidate === expected,
+          );
+        }
+      });
+    }
+  });
   it('rejects using a new comparison as the common standard, resetting a sequential remainder or mixing chairs', () => {
     const id = 'ml-relations-organize';
     expect(evaluate(question(id, 'q3').rule, [47, 38])).toBe(false);
