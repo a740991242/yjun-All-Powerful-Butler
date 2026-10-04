@@ -14,7 +14,7 @@ const q = (suffix: string) =>
 it('accepts every ordered twelve-rabbit allocation including explicit empty-house extensions and rejects changed totals', () => {
   expect(lesson.page).toBe(12);
   expect(lesson.steps).toHaveLength(7);
-  expect(lesson.questions).toHaveLength(57);
+  expect(lesson.questions).toHaveLength(61);
   const expected = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
   const accepted: number[][] = [];
   for (let a = 0; a <= 12; a++)
@@ -97,7 +97,7 @@ it('checks the four full ten-making paths, three arithmetic columns, all cookie 
   );
   const review = required(lesson.reviewQuestions);
   expect(evaluate(required(review[0]).rule, 13)).toBe(true);
-  expect(evaluate(required(review[1]).rule, [1, 3, 10, 13])).toBe(true);
+  expect(evaluate(required(review[1]).rule, [3, 6, 10, 13])).toBe(true);
   for (let a = 0; a <= 13; a++)
     expect(evaluate(required(review[2]).rule, [a, 13 - a])).toBe(true);
   expect(
@@ -178,4 +178,73 @@ it('preserves empty-house zero, partial five-part partner drafts and wrong-then-
   const restored = parseBackup(exportBackup(data, now)).data;
   expect(restored).toEqual(JSON.parse(JSON.stringify(data)));
   expect(restored.sessions[0]).toEqual(snapshot);
+});
+
+it('teaches each source first-addend decomposition independently from the existing second-addend method and preserves version-one history', () => {
+  expect(lesson.version).toBe(2);
+  const paths = [
+    [2, 6, 10, 12],
+    [2, 7, 10, 12],
+    [1, 6, 10, 11],
+    [1, 4, 10, 11],
+  ] as const;
+  paths.forEach((path, i) => {
+    expect(evaluate(q(`source-first-${i}`).rule, [...path])).toBe(true);
+    expect(
+      evaluate(q(`source-first-${i}`).rule, [
+        path[1],
+        path[0],
+        path[2],
+        path[3],
+      ]),
+    ).toBe(false);
+  });
+  expect(evaluate(q('source-first-0').rule, [2, 2, 10, 12])).toBe(false);
+  expect(evaluate(q('eight-first').rule, [2, 2, 10, 12])).toBe(true);
+  expect(required(lesson.steps[4]).text).toContain('8分成2和6');
+  const now = '2026-10-05T00:10:00.000Z';
+  const previous = createSession(
+    {
+      ...lesson,
+      version: 1,
+      questions: lesson.questions.filter(
+        ({ id }) => !id.includes('-source-first-'),
+      ),
+    },
+    bnuLowerBook.id,
+    'child',
+    { seed: 1, now },
+  );
+  const previousSnapshot = JSON.parse(JSON.stringify(previous));
+  expect(previous.lessonVersion).toBe(1);
+  expect(previous.questions).toHaveLength(57);
+  const session = createSession(lesson, bnuLowerBook.id, 'child', {
+    seed: 2,
+    now,
+  });
+  expect(session.lessonVersion).toBe(2);
+  const index = session.questions.findIndex(({ id }) =>
+    id.endsWith('-source-first-0'),
+  );
+  const item = required(session.questions[index]);
+  let response = required(session.responses[index]);
+  response.draft = [2, 2, 10, 12];
+  response = submitResponse(item, response, now);
+  response.draft = [2, 6, 10, 12];
+  session.responses[index] = submitResponse(item, response, now);
+  expect(
+    required(session.responses[index]).submissions.map(
+      ({ correct }) => correct,
+    ),
+  ).toEqual([false, true]);
+  required(session.responses[index]).draft = [2, null, null, null];
+  const data = {
+    schemaVersion: 1 as const,
+    profiles: [{ id: 'child', nickname: '测试', createdAt: now }],
+    activeProfileId: 'child',
+    sessions: [previous, session],
+  };
+  const restored = parseBackup(exportBackup(data, now)).data;
+  expect(restored).toEqual(JSON.parse(JSON.stringify(data)));
+  expect(restored.sessions[0]).toEqual(previousSnapshot);
 });

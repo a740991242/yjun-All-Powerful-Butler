@@ -598,6 +598,55 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (q.id === 'bnu-lower-rabbit-homes-source-first-0') {
+              await p.getByRole('spinbutton').first().fill('2');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[2,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["2","","",""]')
+                throw new Error('Source first-addend partial draft lost');
+              await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const geometry = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const r = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: r.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        r.left >= 0 &&
+                        r.right <= innerWidth &&
+                        r.top >= 0 &&
+                        r.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (geometry.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error('Source first-addend fields outside viewport');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-source-first-fields-${width}.png`,
+              });
+              for (const [i, v] of [2, 2, 10, 12].entries())
+                await p.getByRole('spinbutton').nth(i).fill(String(v));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (flow.key === 'harvest' && q.id.endsWith('-seven-path')) {
               await p.getByRole('spinbutton').first().fill('3');
               await wait(
@@ -913,6 +962,17 @@ const server = http.createServer(async (req, res) => {
           throw new Error('Position order retry history lost');
       }
       if (flow.key === 'rabbits') {
+        if (session.lessonVersion !== 2)
+          throw new Error('Rabbit course version did not advance');
+        const decomposition = session.responses.find(
+          (r) => r.questionId === 'bnu-lower-rabbit-homes-source-first-0',
+        );
+        if (
+          JSON.stringify(
+            decomposition.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[2,2,10,12],false],[[2,6,10,12],true]]'
+        )
+          throw new Error('Source first-addend retry history changed');
         const homes = session.responses.find((r) =>
           r.questionId.endsWith('-two-homes'),
         );
