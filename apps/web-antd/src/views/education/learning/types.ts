@@ -1,4 +1,5 @@
 import type { ArithmeticPairRule } from './arithmetic-pair';
+import type { BnuAroundNumbersVisual } from './bnu-around-numbers';
 import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
 import type { BnuFinalClassificationVisual } from './bnu-final-classification';
@@ -441,6 +442,7 @@ export type Visual =
   | AssemblyCandidatesVisual
   | BeadChainVisual
   | BlockCardsVisual
+  | BnuAroundNumbersVisual
   | BnuBuildingVisual
   | BnuCaterpillarVisual
   | BnuDayClockVisual

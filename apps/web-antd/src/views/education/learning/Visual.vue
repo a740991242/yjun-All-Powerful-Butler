@@ -13,6 +13,7 @@ import ArithmeticGrid from './ArithmeticGrid.vue';
 import AssemblyCandidates from './AssemblyCandidates.vue';
 import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
+import BnuAroundNumbers from './BnuAroundNumbers.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
 import BnuFinalClassification from './BnuFinalClassification.vue';
@@ -460,6 +461,10 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <TeenLayout v-else-if="visual.kind === 'teen-layout'" :visual="visual" />
+    <BnuAroundNumbers
+      v-else-if="visual.kind === 'bnu-around-numbers'"
+      :visual="visual"
+    />
     <div v-else-if="visual.kind === 'count-groups'" class="flex flex-col gap-4">
       <p class="text-base text-muted-foreground">
         {{ $t('educationLearning.countGroupsInstruction') }}

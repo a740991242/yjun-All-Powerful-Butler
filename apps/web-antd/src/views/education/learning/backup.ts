@@ -5,6 +5,7 @@ import { isArithmeticPairRule } from './arithmetic-pair';
 import { isAssemblyCandidatesVisual } from './assembly-candidates';
 import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
+import { isBnuAroundNumbersVisual } from './bnu-around-numbers';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
@@ -351,6 +352,9 @@ function visual(value: unknown) {
     }
     case 'bnu-final-color': {
       return isBnuFinalColorVisual(value);
+    }
+    case 'bnu-around-numbers': {
+      return isBnuAroundNumbersVisual(value);
     }
     case 'triangle-rows': {
       return isTriangleRowsVisual(value);

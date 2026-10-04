@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。",
   "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
   "regionalCatalogAlternatives": "该参考目录可选数学版本：",
-  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～43页已接入22份原创课包（第一单元9课、图形3课、教室装饰实践和减法9课），后续仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
+  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～45页已接入23份原创课包（第一单元9课、图形3课、教室装饰实践、减法9课和身边的数），第46页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
   "teenAdditionTotal": "得数",
   "teenAdditionPosition": "位置{position}",
   "teenAdditionNotice": "本站按位置展示加法表：每个加数2～9，得数11～18。A～Z为26处待填算式，每处依次填两个加数。“—”不属于该行，不表示0。给定算式不自动确认纸面任务。",
@@ -1200,5 +1200,15 @@
   "shadowSizeNear": "靠近灯的位置",
   "shadowSizeFar": "远离灯的位置",
   "arithmeticAxis_bnu-subtract": "原数/得数",
-  "arithmeticInstruction_bnu-subtract": "按原第40页的算式顺序，本站添加原数10～18、得数9～1的辅助行列标题。原表共45式，减数和得数均1～9；当前图用{blanks}个字母隐藏待填算式，其余{givens}式显示。每个字母填整条减法式的两个数，不填得数。横杠是表外位置，不是0。"
+  "arithmeticInstruction_bnu-subtract": "按原第40页的算式顺序，本站添加原数10～18、得数9～1的辅助行列标题。原表共45式，减数和得数均1～9；当前图用{blanks}个字母隐藏待填算式，其余{givens}式显示。每个字母填整条减法式的两个数，不填得数。横杠是表外位置，不是0。",
+  "aroundNumbersTitle_circles": "圆点表示图：逐行数，不漏末行",
+  "aroundNumbersTitle_triangles": "大小三角形表示图：先读约定",
+  "aroundNumbersLegend_circles": "每个圆表示1个，按行逐个核对。",
+  "aroundNumbersLegend_triangles": "本图约定：每个大三角形表示10个，每个小三角形表示1个。大小本身不能决定数量。",
+  "aroundNumbersScroll": "图内可左右滚动看完整表示图，键盘也可滚动。",
+  "aroundNumbersNotice_main": "对应原书数量关系的本站原创表示图；真实原图数数、自己作图与解释仍需另做。",
+  "aroundNumbersNotice_review": "本站换数量复习图，需要重新逐个数，不沿用主练习答案。",
+  "aroundNumbersMarker_circle": "第{position}个圆",
+  "aroundNumbersMarker_large": "位置{position}的大三角形",
+  "aroundNumbersMarker_small": "位置{position}的小三角形"
 }

@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--around-numbers'))
+    return {
+      index: 22,
+      lessonId: 'bnu-lower-around-numbers',
+      zero: '-zero-remainder',
+      retry: '-circle-count',
+      manual: 14,
+      steps: 8,
+      review: 5,
+      key: 'around-numbers',
+    };
   if (process.argv.includes('--subtraction-practice'))
     return {
       index: 21,
@@ -337,6 +348,86 @@ const server = http.createServer(async (req, res) => {
           .filter({ visible: true })
           .last()
           .click();
+      const inspectAroundNumbers = async (scene, variant, label) => {
+        const figure = p.locator(
+          `[data-bnu-around-numbers][data-scene="${scene}"][data-variant="${variant}"]`,
+        );
+        await figure.waitFor();
+        const counts = {
+          circles: { main: 62, review: 43 },
+          triangles: { main: 12, review: 14 },
+        };
+        const expected = counts[scene][variant];
+        if ((await figure.locator('[data-around-marker]').count()) !== expected)
+          throw new Error('Around number markers changed');
+        if (
+          scene === 'triangles' &&
+          ((await figure.locator('[data-around-marker="large"]').count()) !==
+            (variant === 'main' ? 7 : 6) ||
+            (await figure.locator('[data-around-marker="small"]').count()) !==
+              (variant === 'main' ? 5 : 8))
+        )
+          throw new Error('Triangle size groups changed');
+        const bounds = await figure.locator('svg').evaluate((svg) => {
+          const r = svg.getBoundingClientRect();
+          return [...svg.querySelectorAll('[data-around-marker]')].every(
+            (n) => {
+              const b = n.getBoundingClientRect();
+              return (
+                b.left >= r.left &&
+                b.right <= r.right &&
+                b.top >= r.top &&
+                b.bottom <= r.bottom
+              );
+            },
+          );
+        });
+        if (!bounds) throw new Error('Around number marker outside SVG');
+        const font = await figure
+          .locator('figcaption')
+          .evaluate((n) => Number.parseFloat(getComputedStyle(n).fontSize));
+        if (font < 20) throw new Error('Around diagram text too small');
+        if (
+          (await figure
+            .locator('[data-around-hint]')
+            .evaluate((n) => Number.parseFloat(getComputedStyle(n).fontSize))) <
+          20
+        )
+          throw new Error('Visible scroll hint missing or too small');
+        const scroller = figure.locator('[data-around-scroll]');
+        await scroller.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await scroller.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(200);
+        const keyboard = await scroller.evaluate(
+          (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+        );
+        if (!keyboard) throw new Error('Around diagram keyboard scroll failed');
+
+        for (const edge of ['first', 'last']) {
+          await scroller.evaluate((n, side) => {
+            n.scrollLeft = side === 'first' ? 0 : n.scrollWidth;
+          }, edge);
+          await scroller.evaluate((n) => n.scrollIntoView({ block: 'center' }));
+          await p.waitForTimeout(150);
+          const fits = await scroller.evaluate((n) => {
+            const r = n.getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              document.documentElement.scrollWidth <= innerWidth
+            );
+          });
+          if (!fits) throw new Error('Around number scroll viewport overflow');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-around-${scene}-${variant}-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -375,7 +466,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 22
+          .count()) !== 23
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -799,6 +890,57 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
         }
+        if (flow.key === 'around-numbers' && (step === 2 || step === 3)) {
+          const scene = step === 2 ? 'circles' : 'triangles';
+          await inspectAroundNumbers(scene, 'main', 'learn');
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .getByText(
+              scene === 'circles'
+                ? 'Each circle represents one item. Check every row.'
+                : 'In this diagram, each large triangle represents ten items and each small triangle one. Size alone does not establish a value.',
+              { exact: true },
+            )
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectAroundNumbers(scene, 'main', 'english-theme');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .getByText(
+              scene === 'circles'
+                ? '每个圆表示1个，按行逐个核对。'
+                : '本图约定：每个大三角形表示10个，每个小三角形表示1个。大小本身不能决定数量。',
+              { exact: true },
+            )
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Around diagram language/theme changed records');
+        }
         if (flow.key === 'addition' && step === 0) {
           await inspectAddition('main');
           const state = JSON.stringify(await read());
@@ -848,6 +990,15 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (
+          flow.key === 'around-numbers' &&
+          q.visual?.kind === 'bnu-around-numbers'
+        )
+          await inspectAroundNumbers(
+            q.visual.scene,
+            q.visual.variant,
+            'question',
+          );
         if (
           q.id === 'bnu-lower-building-blocks-actual-counter' &&
           (!q.prompt.includes('拨入个位5颗') || q.prompt.includes('拨去'))
@@ -1216,6 +1367,59 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'around-numbers' &&
+            q.id.endsWith('-group-fives')
+          ) {
+            await p.getByRole('spinbutton').first().fill('0');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft,
+                ) === '[0,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["0","",""]')
+              throw new Error('Around numbers zero/partial draft lost');
+            for (const [i, value] of [12, 0, 60].entries()) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n.scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const size = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return {
+                  font: Number.parseFloat(getComputedStyle(n).fontSize),
+                  height: r.height,
+                  fits:
+                    r.left >= 0 &&
+                    r.right <= innerWidth &&
+                    r.top >= 0 &&
+                    r.bottom <= innerHeight,
+                };
+              });
+              if (size.font < 20 || size.height < 44 || !size.fits)
+                throw new Error('Around numbers fields clipped or too small');
+              await input.fill(String(value));
+              if (i === 0 || i === 2)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-around-numbers-fields-${width}-${i}.png`,
+                });
+            }
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            for (const [i, value] of [12, 2, 62].entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (
             q.rule.kind === 'steps' &&
             flow.key === 'subtraction-practice' &&
@@ -2191,6 +2395,15 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (
+          flow.key === 'around-numbers' &&
+          q.visual?.kind === 'bnu-around-numbers'
+        )
+          await inspectAroundNumbers(
+            q.visual.scene,
+            q.visual.variant,
+            'question',
+          );
         if (flow.key === 'classroom' && q.id.endsWith('-review-three-7'))
           await inspectClassroomPattern('review');
         if (flow.key === 'shadow' && q.id.endsWith('-review-bigger'))
