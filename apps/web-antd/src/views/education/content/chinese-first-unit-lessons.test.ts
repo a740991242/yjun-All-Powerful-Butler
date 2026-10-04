@@ -10,6 +10,7 @@ import {
 import { newReviewQuestions } from '../learning/review';
 import { upperCharacters } from './characters';
 import { chineseBooks } from './chinese';
+import { firstChineseLesson } from './chinese-first-lesson';
 import {
   firstUnitChineseLessons,
   firstUnitPageAudits,
@@ -114,4 +115,151 @@ it('preserves wrong attempts, manual evidence and reflection independently and s
       ).data.sessions[0],
     ).toEqual(session);
   }
+});
+
+it('independently verifies all first-unit formal recognition and context answers in both practice forms', () => {
+  const cases = [
+    {
+      lesson: firstChineseLesson,
+      main: [
+        '天',
+        '地',
+        '人',
+        '你',
+        '我',
+        '他',
+        '1',
+        '2',
+        '3',
+        '小林',
+        '爸爸',
+        '弟弟',
+      ],
+      review: [
+        '天',
+        '地',
+        '人',
+        '你',
+        '我',
+        '他',
+        '2',
+        '3',
+        '1',
+        '爸爸',
+        '小林',
+        '哥哥',
+      ],
+    },
+    {
+      lesson: firstUnitChineseLessons['u1-2']!,
+      main: [
+        '一',
+        '二',
+        '三',
+        '四',
+        '五',
+        '上',
+        '下',
+        '下面',
+        '横中线',
+        '竖中线',
+        '横',
+      ],
+      review: [
+        '一',
+        '二',
+        '三',
+        '四',
+        '五',
+        '上',
+        '下',
+        '上面',
+        '左右方向',
+        '上下方向',
+        '横',
+      ],
+    },
+    {
+      lesson: firstUnitChineseLessons['u1-3']!,
+      main: [
+        '口',
+        '耳',
+        '目',
+        '手',
+        '足',
+        '站',
+        '坐',
+        '耳',
+        '目',
+        '手',
+        '不是',
+      ],
+      review: [
+        '口',
+        '耳',
+        '目',
+        '手',
+        '足',
+        '站',
+        '坐',
+        '耳',
+        '目',
+        '手',
+        '不是',
+      ],
+    },
+    {
+      lesson: firstUnitChineseLessons['u1-4']!,
+      main: [
+        '日',
+        '月',
+        '山',
+        '川',
+        '水',
+        '火',
+        '田',
+        '禾',
+        '日',
+        '田',
+        '观察形状并联系事物',
+      ],
+      review: [
+        '日',
+        '月',
+        '山',
+        '川',
+        '水',
+        '火',
+        '田',
+        '禾',
+        '日',
+        '田',
+        '观察形状并联系事物',
+      ],
+    },
+  ];
+  let inspected = 0;
+  for (const { lesson, main, review } of cases) {
+    expect(lesson.prerequisite).toContain('不要求');
+    expect(lesson.parentTip).toContain('教材');
+    for (const [questions, answers] of [
+      [lesson.questions, main],
+      [lesson.reviewQuestions!, review],
+    ] as const) {
+      const objective = questions.filter((q) => q.rule.kind === 'choice');
+      expect(objective).toHaveLength(answers.length);
+      for (const [index, q] of objective.entries()) {
+        const answer = answers[index]!;
+        expect(q.rule).toEqual({ kind: 'choice', value: answer });
+        expect(q.choices!.filter((c) => c.id === answer)).toHaveLength(1);
+        expect(q.prompt.trim().length).toBeGreaterThan(0);
+        expect(q.hint.trim().length).toBeGreaterThan(0);
+        expect(q.explanation.trim().length).toBeGreaterThan(0);
+        for (const choice of q.choices!)
+          expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+        inspected++;
+      }
+    }
+  }
+  expect(inspected).toBe(90);
 });
