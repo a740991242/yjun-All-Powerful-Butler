@@ -59,6 +59,22 @@ describe('pEP shopping practical activity', () => {
       'educationLearning.answerRequired',
     );
   });
+  it('recalculates changed review payment units and distinguishes wrong zero from an unanswered field', () => {
+    const change = required(
+      lesson.reviewQuestions?.find((q) => q.id === `${lesson.id}-r1`),
+    );
+    expect(evaluate(change.rule, 5 - 3)).toBe(true);
+    expect(evaluate(change.rule, 3)).toBe(false);
+    const payment = required(
+      lesson.reviewQuestions?.find((q) => q.id === `${lesson.id}-r3`),
+    );
+    expect(evaluate(payment.rule, [12, 20, 8])).toBe(true);
+    expect(evaluate(payment.rule, [24, 30, 6])).toBe(false);
+    expect(evaluate(payment.rule, [12, 20, 0])).toBe(false);
+    expect(() => evaluate(payment.rule, [12, 20, null])).toThrow(
+      'educationLearning.answerRequired',
+    );
+  });
   it('keeps actual buying, selling, both records and six self-assessments outside objective scores and in backups', () => {
     const now = '2026-10-03T00:00:00.000Z';
     const session = createSession(lesson, 'pep-math-p1-lower-2024', 'child', {

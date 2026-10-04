@@ -7,6 +7,44 @@ import { mathBooks } from './math';
 import { textbooks } from './textbooks';
 
 describe('reviewed PEP mathematics lesson packs', () => {
+  it('checks all forty-eight original shopping and final main/review tasks independently', () => {
+    const lower = required(mathBooks.find((book) => book.volume === 'lower'));
+    const fixtures: Record<string, (number | string)[]> = {
+      'ml-money': [10, 10, 30, 5, 46, '2元', 20, 50, 60, 8, 72, '4元'],
+      'ml-shop': [5, 4, 30, 5, '不能', 16, 5, 2, 40, 5, '不能', 27],
+      'ml-review': [6, 53, 47, 64, 36, 70, 6, 63, 48, 72, 36, 90],
+      'ml-review-story': [38, 26, 43, 8, 23, 21, 41, 19, 45, 15, 26, 23],
+    };
+    let checked = 0;
+    for (const [id, answers] of Object.entries(fixtures)) {
+      const course = required(
+        lower.units.flatMap((unit) => unit.lessons).find((l) => l.id === id),
+      );
+      const questions = [
+        ...course.questions,
+        ...required(course.reviewQuestions),
+      ];
+      expect(questions.map((q) => q.id)).toEqual([
+        ...Array.from({ length: 6 }, (_, i) => `${id}-q${i + 1}`),
+        ...Array.from({ length: 6 }, (_, i) => `${id}-r${i + 1}`),
+      ]);
+      questions.forEach((q, i) => {
+        const answer = required(answers[i]);
+        expect(evaluate(q.rule, answer)).toBe(true);
+        if (typeof answer === 'number') {
+          for (let candidate = 0; candidate <= 100; candidate++)
+            expect(evaluate(q.rule, candidate), `${q.id}: ${candidate}`).toBe(
+              candidate === answer,
+            );
+        } else {
+          for (const choice of required(q.choices))
+            expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+        }
+        checked++;
+      });
+    }
+    expect(checked).toBe(48);
+  });
   it('independently checks all forty-eight basic upper unit-four main and review answers', () => {
     const unit = required(
       required(mathBooks.find((book) => book.volume === 'upper')).units.find(
