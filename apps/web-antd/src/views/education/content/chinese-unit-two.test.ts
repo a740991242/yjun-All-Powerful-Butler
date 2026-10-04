@@ -172,7 +172,7 @@ it('anchors textbook-dependent modern reading and avoids fake personal info or f
 
 it('keeps the p31 erhua footnote scoped to its word, records actual speech manually and restores v1 snapshots unchanged', () => {
   const garden = unitTwoChineseLessons['u2-5']!;
-  expect(garden.version).toBe(3);
+  expect(garden.version).toBe(4);
   const main = garden.questions.find((q) => q.id === 'cu-u2-5-q-erhua')!;
   const fresh = garden.reviewQuestions!.find(
     (q) => q.id === 'cu-u2-5-r-erhua',
@@ -273,8 +273,8 @@ it('changes the vowel comparison and locates all eight garden characters in word
       expect(evaluate(q.rule, choice.id)).toBe(choice.id === target);
   });
   expect(unitTwoChineseLessons['u2-2']!.version).toBe(1);
-  expect(unitTwoChineseLessons['u2-3']!.version).toBe(1);
-  expect(unitTwoChineseLessons['u2-4']!.version).toBe(1);
+  expect(unitTwoChineseLessons['u2-3']!.version).toBe(2);
+  expect(unitTwoChineseLessons['u2-4']!.version).toBe(2);
 });
 it('keeps old garden recognition cards and their first errors intact after the version change', () => {
   const now = '2026-10-04T00:00:00.000Z';
@@ -330,4 +330,103 @@ it('keeps old garden recognition cards and their first errors intact after the v
     ),
   ).toBe(true);
   expect(newReviewQuestions(garden, restored, [restored])).toEqual([]);
+});
+
+it('requires word positions for six recognition reviews and genuinely new i/u spelling examples', () => {
+  for (const [item, cards, positions, targets] of [
+    ['u2-3', ['爸爸', '妈妈'], [1, 0], ['爸', '妈']],
+    [
+      'u2-4',
+      ['大小', '小马', '道路', '泥土'],
+      [0, 1, 1, 1],
+      ['大', '马', '路', '土'],
+    ],
+  ] as const) {
+    const lesson = unitTwoChineseLessons[item]!;
+    targets.forEach((target, i) => {
+      const q = lesson.reviewQuestions!.find((q) =>
+        q.id.endsWith(`-r-char-${i}`),
+      )!;
+      expect(q.material).toBe(cards[i]);
+      expect([...q.material!][positions[i]!]).toBe(target);
+      expect(q.prompt).toContain(`第${positions[i]! + 1}个字`);
+      expect(q.prompt).not.toContain(target);
+      for (const c of q.choices!)
+        expect(evaluate(q.rule, c.id)).toBe(c.id === target);
+    });
+  }
+  const garden = unitTwoChineseLessons['u2-5']!;
+  for (const [skill, words, answer] of [
+    ['i', ['mǐ', 'bǐ', 'lí'], 'i'],
+    ['u', ['tú', 'hú', 'kǔ'], 'u'],
+  ] as const) {
+    const q = garden.reviewQuestions!.find((q) =>
+      q.id.endsWith(`-r-vowel-${skill}`),
+    )!;
+    for (const word of words!) expect(q.prompt).toContain(word);
+    for (const c of q.choices!)
+      expect(evaluate(q.rule, c.id)).toBe(c.id === answer);
+    expect(q.explanation).toContain('不增加');
+  }
+});
+
+it('restores pre-change recognition and vowel-review snapshots with their versions and two-attempt history', () => {
+  const now = '2026-10-04T00:00:00.000Z';
+  const snapshots = ['u2-3', 'u2-4', 'u2-5'].map((item) => {
+    const lesson = unitTwoChineseLessons[item]!;
+    const old = structuredClone(lesson);
+    old.version = item === 'u2-5' ? 3 : 1;
+    old.questions = old.reviewQuestions!.filter((q) =>
+      item === 'u2-5' ? /-r-vowel-[iu]$/.test(q.id) : /-r-char-/.test(q.id),
+    );
+    for (const q of old.questions) {
+      if (q.rule.kind !== 'choice') throw new Error('expected choice');
+      if (item === 'u2-5')
+        q.prompt =
+          q.rule.value === 'i'
+            ? '按提示：地dì、你nǐ、七qī，这组与a还是i对应？'
+            : '按提示：土tǔ、足zú、目mù，这组与u还是i对应？';
+      else {
+        q.prompt = `在词语中选出${q.rule.value}。`;
+        q.material = undefined;
+      }
+    }
+    const session = createSession(old, chineseBooks[0]!.id, 'child', {
+      seed: 14,
+      now,
+    });
+    for (const [i, q] of session.questions.entries()) {
+      if (q.rule.kind !== 'choice') throw new Error('expected choice');
+      const answer = q.rule.value;
+      session.responses[i] = submitResponse(
+        q,
+        {
+          ...session.responses[i]!,
+          draft: q.choices!.find((c) => c.id !== answer)!.id,
+        },
+        now,
+      );
+      session.responses[i] = submitResponse(
+        q,
+        { ...session.responses[i]!, draft: q.rule.value },
+        now,
+      );
+    }
+    expect(newReviewQuestions(lesson, session, [session])).toEqual([]);
+    return session;
+  });
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '验收', createdAt: now }],
+      sessions: snapshots,
+    }),
+  ).data.sessions;
+  expect(restored).toEqual(snapshots);
+  expect(restored.map((s) => s.lessonVersion)).toEqual([1, 1, 3]);
+  for (const session of restored)
+    for (const r of session.responses) {
+      expect(r.submissions.map((x) => x.correct)).toEqual([false, true]);
+    }
 });

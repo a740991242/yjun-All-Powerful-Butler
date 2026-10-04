@@ -331,17 +331,30 @@ function initialCourse(itemId: 'u2-3' | 'u2-4'): Lesson {
         `${row.letter} + ${review ? row.review : row.main}`,
       ),
     ]);
+    const wordCards: [string, number][] =
+      itemId === 'u2-3'
+        ? [
+            ['爸爸', 1],
+            ['妈妈', 0],
+          ]
+        : [
+            ['大小', 0],
+            ['小马', 1],
+            ['道路', 1],
+            ['泥土', 1],
+          ];
     [...audit.recognize].forEach((character, index) =>
       tasks.push(
         choose(
           `${id}-${review ? 'r' : 'q'}-char-${index}`,
           `cu-recognize-u${required(character.codePointAt(0)).toString(16)}`,
           review
-            ? `在词语“${({ 爸: '爸爸', 妈: '妈妈', 大: '大地', 马: '马路', 路: '道路', 土: '泥土' } as Record<string, string>)[character]}”中，选出${character}。`
+            ? `看材料中的词，选择从左往右第${required(wordCards[index])[1] + 1}个字。`
             : `选出本课会认字${character}。`,
           [...audit.recognize],
           character,
           `认读${character}并联系词语，本课未增加这些汉字的会写要求。`,
+          review ? required(wordCards[index])[0] : undefined,
         ),
       ),
     );
@@ -437,7 +450,7 @@ function initialCourse(itemId: 'u2-3' | 'u2-4'): Lesson {
     textbookTitle: audit.title,
     title: audit.title,
     page: required(audit.pages[0]),
-    version: 1,
+    version: 2,
     status: 'available',
     goal: `认声母、观察两拼音节，认${audit.recognize}，完成实际拼读和声母书写；课堂情境与读词分开练。`,
     prerequisite: '先认识六个单韵母及四声，家长陪读并准备教材或教师规范示范。',
@@ -588,20 +601,24 @@ function gardenTwoTasks(review: boolean): Question[] {
     [
       'vowel-i',
       '按提示：七qī、地dì、你nǐ，后面的韵母是哪一个？',
-      '按提示：地dì、你nǐ、七qī，这组与a还是i对应？',
+      '换一组音节：米mǐ、笔bǐ、梨lí，后面的单韵母是哪一个？',
       ['a', 'i', 'u'],
       'i',
       'i',
-      '这里韵母是i；地在这里读dì，不把其它语境读音混入。',
+      review
+        ? '米mǐ、笔bǐ、梨lí的韵母都对应i。新词只作原创拼写材料，家长可帮读，不增加本课汉字认写范围。'
+        : '这里韵母是i；地在这里读dì，不把其它语境读音混入。',
     ],
     [
       'vowel-u',
       '按提示：目mù、土tǔ、足zú，后面的韵母是哪一个？',
-      '按提示：土tǔ、足zú、目mù，这组与u还是i对应？',
+      '换一组音节：图tú、壶hú、苦kǔ，后面的单韵母是哪一个？',
       ['a', 'i', 'u'],
       'u',
       'u',
-      '这里韵母是u。尚未学过的声母由家长陪读，不假设孩子已经掌握。',
+      review
+        ? '图tú、壶hú、苦kǔ的韵母都对应u。新词只作原创拼写材料，未学声母请家长帮读，不增加汉字认写范围。'
+        : '这里韵母是u。尚未学过的声母由家长陪读，不假设孩子已经掌握。',
     ],
     [
       'poem-water',
@@ -715,7 +732,7 @@ export const gardenTwoLesson: Lesson = {
   title: '语文园地二',
   textbookTitle: '语文园地二',
   page: 28,
-  version: 3,
+  version: 4,
   status: 'available',
   goal: '读学习用品信息、认八字写九王；比较声调和形近声母，联系汉字与韵母，读古诗与亲子故事。',
   prerequisite:

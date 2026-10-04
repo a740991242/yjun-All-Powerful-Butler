@@ -91,7 +91,7 @@ function choose(subject: string, volume: string) {
     :title="$t('educationLearning.gradeOneTitle')"
     :description="$t('educationLearning.gradeOneDescription')"
   >
-    <div class="mx-auto flex w-full max-w-7xl flex-col gap-4">
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-4 max-sm:pr-8">
       <div class="flex flex-wrap gap-3">
         <Button
           class="!min-h-11"
