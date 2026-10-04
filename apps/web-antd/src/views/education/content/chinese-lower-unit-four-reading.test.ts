@@ -1,3 +1,5 @@
+import type { Lesson } from '../learning/types';
+
 import { expect, it } from 'vitest';
 
 import { exportBackup, parseBackup } from '../learning/backup';
@@ -221,3 +223,255 @@ it.each([
     ).toEqual(s);
   },
 );
+
+it('offers exactly the two characters named by each writing prompt in main and review', () => {
+  for (const [item, main, review] of [
+    ['u4-1', ['思', '静'], ['乡', '疑']],
+    ['u4-2', ['色', '胆'], ['再', '窗']],
+    ['u4-3', ['节', '端'], ['肉', '枣']],
+  ] as const) {
+    const lesson = lessons[item]!;
+    expect(lesson.version).toBe(2);
+    for (const [questions, expected, prefix] of [
+      [lesson.questions, main, 'q'],
+      [lesson.reviewQuestions!, review, 'r'],
+    ] as const) {
+      const question = questions.find(
+        (q) => q.id === `cl-${item}-${prefix}-writing`,
+      )!;
+      expect(question.prompt).toContain(`${expected[0]}与${expected[1]}`);
+      expect(question.choices?.map((choice) => choice.id)).toEqual(expected);
+      expect(lowerCharacters[item]!.write).toContain(expected[0]);
+      expect(lowerCharacters[item]!.write).not.toContain(expected[1]);
+      for (const candidate of expected)
+        expect(evaluate(question.rule, candidate)).toBe(
+          candidate === expected[0],
+        );
+    }
+  }
+});
+
+const oldWritingQuestions = [
+  [
+    'u4-1',
+    [
+      {
+        id: 'cl-u4-1-q-writing',
+        knowledge: 'cl-u4-1-writing',
+        prompt: '思与静中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '思',
+            label: '思',
+          },
+          {
+            id: '乡',
+            label: '乡',
+          },
+          {
+            id: '疑',
+            label: '疑',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '思',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '八认六写分开，实际写字按规范示范。',
+      },
+      {
+        id: 'cl-u4-1-r-writing',
+        knowledge: 'cl-u4-1-writing',
+        prompt: '乡与疑中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '思',
+            label: '思',
+          },
+          {
+            id: '乡',
+            label: '乡',
+          },
+          {
+            id: '疑',
+            label: '疑',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '乡',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '八认六写分开，实际写字按规范示范。',
+      },
+    ],
+  ],
+  [
+    'u4-2',
+    [
+      {
+        id: 'cl-u4-2-q-writing',
+        knowledge: 'cl-u4-2-writing',
+        prompt: '色与胆中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '色',
+            label: '色',
+          },
+          {
+            id: '再',
+            label: '再',
+          },
+          {
+            id: '窗',
+            label: '窗',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '色',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '六写色讲笑把样再，不能把全部会认字都当会写。',
+      },
+      {
+        id: 'cl-u4-2-r-writing',
+        knowledge: 'cl-u4-2-writing',
+        prompt: '再与窗中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '色',
+            label: '色',
+          },
+          {
+            id: '再',
+            label: '再',
+          },
+          {
+            id: '窗',
+            label: '窗',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '再',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '六写色讲笑把样再，不能把全部会认字都当会写。',
+      },
+    ],
+  ],
+  [
+    'u4-3',
+    [
+      {
+        id: 'cl-u4-3-q-writing',
+        knowledge: 'cl-u4-3-writing',
+        prompt: '节与端中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '节',
+            label: '节',
+          },
+          {
+            id: '肉',
+            label: '肉',
+          },
+          {
+            id: '枣',
+            label: '枣',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '节',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '六写节间吃米分肉与十二会认字分开。',
+      },
+      {
+        id: 'cl-u4-3-r-writing',
+        knowledge: 'cl-u4-3-writing',
+        prompt: '肉与枣中，本课会写字是哪项？',
+        material: '先与家长共读指定原书页，按本题信息观察。',
+        choices: [
+          {
+            id: '节',
+            label: '节',
+          },
+          {
+            id: '肉',
+            label: '肉',
+          },
+          {
+            id: '枣',
+            label: '枣',
+          },
+        ],
+        rule: {
+          kind: 'choice',
+          value: '肉',
+        },
+        hint: '先看指定字词与原书信息，需要时请家长帮读。',
+        explanation: '六写节间吃米分肉与十二会认字分开。',
+      },
+    ],
+  ],
+] as const;
+it('restores v1 writing choices and wrong-first histories without replacing them with v2', () => {
+  for (const [item, questions] of oldWritingQuestions) {
+    const now = '2026-10-04T00:00:00.000Z';
+    const oldLesson: Lesson = structuredClone(lessons[item]!);
+    oldLesson.version = 1;
+    oldLesson.questions = JSON.parse(JSON.stringify(questions));
+    const session = createSession(oldLesson, chineseBooks[1]!.id, 'child', {
+      seed: 17,
+      now,
+    });
+    session.phase = 'practice';
+    for (const [index, question] of session.questions.entries()) {
+      if (question.rule.kind !== 'choice')
+        throw new Error('Expected old writing choice');
+      const value = question.rule.value;
+      const wrong = question.choices!.find((choice) => choice.id !== value)!.id;
+      session.responses[index] = submitResponse(
+        question,
+        { ...session.responses[index]!, draft: wrong },
+        now,
+      );
+      session.responses[index] = submitResponse(
+        question,
+        { ...session.responses[index]!, draft: value },
+        now,
+      );
+      expect(
+        session.responses[index]!.submissions.map(
+          (submission) => submission.correct,
+        ),
+      ).toEqual([false, true]);
+    }
+    const restored = parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '测试', createdAt: now }],
+        sessions: [session],
+      }),
+    ).data.sessions[0]!;
+    expect(restored).toEqual(session);
+    expect(restored.lessonVersion).toBe(1);
+    expect(restored.questions.map((q) => q.choices)).toEqual(
+      questions.map((q) => q.choices),
+    );
+    expect(restored.questions[0]!.choices).not.toEqual(
+      lessons[item]!.questions.find((q) => q.id.endsWith('-q-writing'))!
+        .choices,
+    );
+  }
+});

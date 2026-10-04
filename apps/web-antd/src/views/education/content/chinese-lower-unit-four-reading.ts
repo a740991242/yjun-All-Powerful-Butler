@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -128,7 +129,8 @@ const entries: Entry[] = [
           '乡与疑中，本课会写字是哪项？',
         ],
         values: ['思', '乡'],
-        labels: ['思', '乡', '疑'],
+        labels: ['思', '静'],
+        reviewLabels: ['乡', '疑'],
         explanation: '八认六写分开，实际写字按规范示范。',
         material: '先与家长共读指定原书页，按本题信息观察。',
       },
@@ -370,7 +372,8 @@ const entries: Entry[] = [
           '再与窗中，本课会写字是哪项？',
         ],
         values: ['色', '再'],
-        labels: ['色', '再', '窗'],
+        labels: ['色', '胆'],
+        reviewLabels: ['再', '窗'],
         explanation: '六写色讲笑把样再，不能把全部会认字都当会写。',
         material: '先与家长共读指定原书页，按本题信息观察。',
       },
@@ -519,7 +522,8 @@ const entries: Entry[] = [
           '肉与枣中，本课会写字是哪项？',
         ],
         values: ['节', '肉'],
-        labels: ['节', '肉', '枣'],
+        labels: ['节', '端'],
+        reviewLabels: ['肉', '枣'],
         explanation: '六写节间吃米分肉与十二会认字分开。',
         material: '先与家长共读指定原书页，按本题信息观察。',
       },
@@ -664,7 +668,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -678,7 +682,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: `按原书认${e.recognize}、写${e.write}，完成本课词语、观察、朗读与表达。`,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip:
