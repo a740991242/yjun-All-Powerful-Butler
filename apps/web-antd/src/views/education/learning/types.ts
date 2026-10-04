@@ -106,7 +106,12 @@ export interface NumberTowerVisual {
 
 export interface ArithmeticGridVisual {
   kind: 'arithmetic-grid';
-  mode: 'borrow-complete' | 'borrow-subtract' | 'carry-add' | 'sum-grid';
+  mode:
+    | 'bnu-subtract'
+    | 'borrow-complete'
+    | 'borrow-subtract'
+    | 'carry-add'
+    | 'sum-grid';
   /** Zero-based row/column positions, labelled in the supplied order. */
   hidden: [number, number][];
   marked?: number[];

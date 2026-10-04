@@ -19,6 +19,7 @@ import {
   bnuLowerShadowTheatreLesson,
   bnuLowerTracePrintLesson,
 } from './bnu-lower-shapes';
+import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
 
@@ -36,7 +37,7 @@ export const bnuLowerSource = {
   printing: null,
   readPrintedPages: [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-    23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
   ],
   contents: [
     ['u1', '20以内数与加法', 2],
@@ -374,7 +375,8 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerMeetingLesson,
     bnuLowerParachuteLesson,
     bnuLowerCountrysideLesson,
-    pending('u3', '20以内数与减法（第40页起后续课程）', 40),
+    bnuLowerSubtractionTableLesson,
+    pending('u3', '20以内数与减法（第41页起后续课程）', 41),
   ],
   classroom: [bnuLowerClassroomLesson],
   u1: [

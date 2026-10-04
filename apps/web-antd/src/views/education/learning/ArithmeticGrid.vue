@@ -9,20 +9,27 @@ import { $t } from '#/locales';
 
 import { arithmeticAxes, arithmeticCell } from './arithmetic-grid';
 const props = defineProps<{ visual: ArithmeticGridVisual }>();
+const sourceTable = computed(() => props.visual.mode === 'bnu-subtract');
+const cellWidth = computed(() => (sourceTable.value ? 112 : 72));
+const axisWidth = computed(() => (sourceTable.value ? 144 : 72));
+const axisSurface = () =>
+  sourceTable.value ? { style: { backgroundColor: 'hsl(var(--card))' } } : {};
 const axes = computed(() => arithmeticAxes(props.visual.mode));
 const columns = computed(() => [
   {
     title: $t(`educationLearning.arithmeticAxis_${props.visual.mode}`),
     key: 'axis',
     dataIndex: 'axis',
-    width: 72,
+    width: axisWidth.value,
     fixed: 'left' as const,
+    customCell: axisSurface,
+    customHeaderCell: axisSurface,
   },
   ...axes.value.columns.map((n, i) => ({
     title: String(n),
     key: String(i),
     dataIndex: String(i),
-    width: 72,
+    width: cellWidth.value,
     align: 'center' as const,
   })),
 ]);
@@ -65,10 +72,21 @@ const rows = computed(() =>
 </script>
 <template>
   <div class="flex min-w-0 flex-col gap-3" :data-arithmetic-grid="visual.mode">
-    <p class="text-sm text-muted-foreground">
-      {{ $t(`educationLearning.arithmeticInstruction_${visual.mode}`) }}
+    <p
+      class="text-muted-foreground"
+      :class="[sourceTable ? 'text-xl' : 'text-sm']"
+    >
+      {{
+        $t(`educationLearning.arithmeticInstruction_${visual.mode}`, {
+          blanks: visual.hidden.length,
+          givens: 45 - visual.hidden.length,
+        })
+      }}
     </p>
-    <p class="text-sm text-muted-foreground">
+    <p
+      class="text-muted-foreground"
+      :class="[sourceTable ? 'text-xl' : 'text-sm']"
+    >
       {{ $t('educationLearning.arithmeticScrollHint') }}
     </p>
     <Table
@@ -76,16 +94,27 @@ const rows = computed(() =>
       :data-source="rows"
       row-key="id"
       :pagination="false"
-      :scroll="{ x: 72 + axes.columns.length * 72 }"
+      :scroll="{ x: axisWidth + axes.columns.length * cellWidth }"
       bordered
       size="small"
       :aria-label="$t('educationLearning.arithmeticGridLabel')"
     >
+      <template #headerCell="{ title }">
+        <span :class="sourceTable ? 'text-xl' : undefined">{{ title }}</span>
+      </template>
       <template #bodyCell="{ column, text }">
-        <template v-if="column.key === 'axis'">{{ text }}</template>
+        <span
+          v-if="column.key === 'axis'"
+          :class="sourceTable ? 'text-xl' : undefined"
+        >
+          {{ text }}
+        </span>
         <span
           v-else
-          :class="text.marked ? 'font-semibold text-primary' : undefined"
+          :class="[
+            sourceTable ? 'text-xl whitespace-nowrap' : undefined,
+            text.marked ? 'font-semibold text-primary' : undefined,
+          ]"
         >
           {{ text.label }}
           <template v-if="text.marked">
@@ -97,14 +126,21 @@ const rows = computed(() =>
         </span>
       </template>
     </Table>
-    <p v-if="visual.marked?.length" class="text-sm text-muted-foreground">
+    <p
+      v-if="visual.marked?.length"
+      class="text-muted-foreground"
+      :class="[sourceTable ? 'text-xl' : 'text-sm']"
+    >
       {{
         $t('educationLearning.arithmeticMarkNotice', {
           values: visual.marked.join('、'),
         })
       }}
     </p>
-    <p class="text-sm text-muted-foreground">
+    <p
+      class="text-muted-foreground"
+      :class="[sourceTable ? 'text-xl' : 'text-sm']"
+    >
       {{ $t('educationLearning.arithmeticNotice') }}
     </p>
   </div>

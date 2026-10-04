@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--subtraction-table'))
+    return {
+      index: 19,
+      lessonId: 'bnu-lower-subtraction-table',
+      zero: '-zero-complete',
+      retry: '-outside',
+      manual: 10,
+      steps: 8,
+      review: 5,
+      key: 'subtraction-table',
+    };
   if (process.argv.includes('--countryside'))
     return {
       index: 18,
@@ -342,7 +353,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 19
+          .count()) !== 20
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1127,6 +1138,71 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'subtraction-table' && q.id.endsWith('-blank-a')) {
+              await p.getByRole('spinbutton').first().fill('10');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === '[10,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["10",""]')
+                throw new Error('Subtraction operands partial draft lost');
+              const grid = p.locator('[data-arithmetic-grid="bnu-subtract"]');
+              const labels = await grid.locator('tbody td').allTextContents();
+              if (
+                labels.filter((label) => /^空格 [A-S]$/.test(label.trim()))
+                  .length !== 19
+              )
+                throw new Error('Missing original table blanks');
+              const scroller = grid.locator('.ant-table-content');
+              await scroller.evaluate((node) => {
+                node.scrollIntoView({ block: 'start' });
+                node.scrollLeft = 0;
+              });
+              await p.screenshot({
+                path: `/tmp/butler-bnu-subtraction-table-left-${width}.png`,
+              });
+              await scroller.evaluate((node) => {
+                node.scrollLeft = node.scrollWidth;
+              });
+              await p.screenshot({
+                path: `/tmp/butler-bnu-subtraction-table-right-${width}.png`,
+              });
+              for (let i = 0; i < 2; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                await p.waitForTimeout(150);
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Subtraction operand input small or clipped');
+              }
+              await p.getByRole('spinbutton').nth(1).fill('6');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (flow.key === 'countryside' && q.id.endsWith('-six-groups')) {
               await p.getByRole('spinbutton').first().fill('11');
               await wait(
@@ -1512,7 +1588,7 @@ const server = http.createServer(async (req, res) => {
                 .getByText('再想一想，可以修改后重试', { exact: true })
                 .waitFor();
             }
-            if (q.id.endsWith('-horizontal')) {
+            if (flow.key === 'addition' && q.id.endsWith('-horizontal')) {
               await p.getByRole('spinbutton').first().fill('9');
               await wait(
                 (d) =>

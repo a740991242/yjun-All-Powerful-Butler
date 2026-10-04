@@ -1,0 +1,83 @@
+/** Every activity on printed page 40; source coverage is not final teacher review. */
+export const bnuLowerSubtractionTableAudit = {
+  resourceId: 'bnu-lower-public-scan-2024',
+  source: 'https://keben.szxuexiao.com/html/10761.html',
+  checkedAt: '2026-10-05',
+  unit: 'u3',
+  status: 'original-teaching-implemented',
+  finalTeacherReview: 'not-verified',
+  scope:
+    '仅第40页全部找排卡、补表与规律交流，41页后仍制作中；不证明整单元、全册或全年完成。',
+  activities: [
+    {
+      page: 40,
+      sourceActivity: 'result-seven',
+      lesson: 'bnu-lower-subtraction-table',
+      steps: [1, 2],
+      objective: ['card-results-1', 'card-results-2', 'find-result-seven'],
+      manual: ['actual-cards', 'actual-result-seven'],
+      records: [],
+      boundary: '17独立卡身份，得7六张；重复16−9不去重，原自由排法不固定唯一。',
+    },
+    {
+      page: 40,
+      sourceActivity: 'whole-twelve',
+      lesson: 'bnu-lower-subtraction-table',
+      steps: [3],
+      objective: ['find-whole-twelve'],
+      manual: ['actual-whole-twelve'],
+      records: [],
+      boundary: '恢复17全卡再找原数12四张，不在得7组继续筛。',
+    },
+    {
+      page: 40,
+      sourceActivity: 'subtract-nine',
+      lesson: 'bnu-lower-subtraction-table',
+      steps: [3],
+      objective: ['find-subtract-nine'],
+      manual: ['actual-subtract-nine'],
+      records: [],
+      boundary: '恢复全卡找减9七张，不把减数当得数。',
+    },
+    {
+      page: 40,
+      sourceActivity: 'complete-table',
+      lesson: 'bnu-lower-subtraction-table',
+      steps: [4, 5],
+      objective: [
+        ...Array.from(
+          { length: 19 },
+          (_n, i) => `blank-${String.fromCodePoint(97 + i)}`,
+        ),
+        ...Array.from({ length: 9 }, (_n, i) => `row-${10 + i}`),
+      ],
+      manual: ['actual-fill', 'actual-calculate'],
+      records: [],
+      boundary: '原45式、26给定、19空式全部覆盖；补完整式的两数与算得数分开。',
+    },
+    {
+      page: 40,
+      sourceActivity: 'patterns',
+      lesson: 'bnu-lower-subtraction-table',
+      steps: [6, 7, 8],
+      objective: [
+        'horizontal',
+        'vertical',
+        'diagonal-left',
+        'diagonal-right',
+        'outside',
+        'zero-complete',
+        'unknown',
+      ],
+      manual: [
+        'actual-horizontal',
+        'actual-vertical',
+        'actual-diagonal',
+        'actual-exchange',
+      ],
+      records: ['discovery', 'difficulty', 'plan'],
+      boundary:
+        '原开放交流不限本站例子，斜向指明方向；辅助行列为本站，原无标题；完整0条件与表外/未知分开。',
+    },
+  ],
+} as const;
