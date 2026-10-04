@@ -38,6 +38,7 @@ async function main() {
         bnuParachuteAudit,
         bnuCountrysideAudit,
         bnuSubtractionTableAudit,
+        bnuSubtractionHarvestAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -59,6 +60,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-parachute-audit.ts'),
         import('/src/views/education/content/bnu-lower-countryside-audit.ts'),
         import('/src/views/education/content/bnu-lower-subtraction-table-audit.ts'),
+        import('/src/views/education/content/bnu-lower-subtraction-harvest-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -193,7 +195,7 @@ async function main() {
                       sourceAudit: {
                         ...bnuPencilsAudit.bnuLowerPencilsAudit,
                         scope:
-                          '印刷27～40页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园与做个减法表所列活动及明示迁移；原角色分组未知保留核对记录，41页起仍制作中，不代表整单元完成。',
+                          '印刷27～41页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园、做个减法表与我的收获所列活动及明示迁移；原角色分组未知保留核对记录，42页起仍制作中，不代表整单元完成。',
                         activities: [
                           ...bnuPencilsAudit.bnuLowerPencilsAudit.activities,
                           ...bnuHideAudit.bnuLowerHideAudit.activities,
@@ -206,6 +208,8 @@ async function main() {
                             .activities,
                           ...bnuSubtractionTableAudit
                             .bnuLowerSubtractionTableAudit.activities,
+                          ...bnuSubtractionHarvestAudit
+                            .bnuLowerSubtractionHarvestAudit.activities,
                         ],
                       },
                     }

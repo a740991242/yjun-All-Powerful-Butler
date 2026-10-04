@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T21:01:12.750Z",
+  "generatedAt": "2026-10-04T21:23:03.979Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 20,
+        "availablePacks": 21,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 610,
-          "manual": 186,
-          "reflection": 60
+          "objective": 625,
+          "manual": 195,
+          "reflection": 64
         }
       },
       "units": [
@@ -32827,10 +32827,46 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第41页起后续课程）",
-              "textbookTitle": "20以内数与减法（第41页起后续课程）",
+              "id": "bnu-lower-subtraction-harvest",
+              "title": "我的收获：退位减法、生活问题与问题银行",
+              "textbookTitle": "整理与复习：我的收获",
               "page": 41,
+              "version": 1,
+              "status": "available",
+              "goal": "比较认识植物的数量，分别说明两种退位方法与换十，提出完整减法问题并探索新原数。",
+              "prerequisite": "理解多与少、整体与部分，会计算20以内退位减法。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 15,
+                "manual": 9,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-subtraction-harvest"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["comparison-rows", "place-value"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描第41页方法、情境与问题银行核对",
+                "notes": "仅本页原创教学实现，原开放提问不限本站示例；未声称最终教师审校。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第42页起后续课程）",
+              "textbookTitle": "20以内数与减法（第42页起后续课程）",
+              "page": 42,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32864,7 +32900,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～40页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园与做个减法表所列活动及明示迁移；原角色分组未知保留核对记录，41页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～41页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演、美丽的田园、做个减法表与我的收获所列活动及明示迁移；原角色分组未知保留核对记录，42页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -33779,6 +33815,57 @@
                 ],
                 "records": ["discovery", "difficulty", "plan"],
                 "boundary": "原开放交流不限本站例子，斜向指明方向；辅助行列为本站，原无标题；完整0条件与表外/未知分开。"
+              },
+              {
+                "page": 41,
+                "sourceActivity": "plants-methods",
+                "lesson": "bnu-lower-subtraction-harvest",
+                "steps": [1, 2, 3],
+                "objective": [
+                  "plant-counts",
+                  "reverse-difference",
+                  "unit",
+                  "shared-species",
+                  "split-part",
+                  "split-whole",
+                  "counter-initial",
+                  "counter-exchange",
+                  "counter-remaining"
+                ],
+                "manual": [
+                  "actual-plants",
+                  "actual-sticks",
+                  "actual-line",
+                  "actual-whole",
+                  "actual-counter"
+                ],
+                "records": [],
+                "boundary": "种数与具体种类名单分开；原拆减数3/3和拆原数10/3、计数器换十数量守恒各独立。"
+              },
+              {
+                "page": 41,
+                "sourceActivity": "stories",
+                "lesson": "bnu-lower-subtraction-harvest",
+                "steps": [4],
+                "objective": [
+                  "glove-example",
+                  "parking",
+                  "zero-empty",
+                  "unknown"
+                ],
+                "manual": ["actual-hats", "actual-parking"],
+                "records": [],
+                "boundary": "原两图自主问题保持开放，本站帽配手套是额外明示条件；停车单位、完整0和未知分开。"
+              },
+              {
+                "page": 41,
+                "sourceActivity": "own-question",
+                "lesson": "bnu-lower-subtraction-harvest",
+                "steps": [5],
+                "objective": ["twenty-path", "twenty-split"],
+                "manual": ["actual-twenty", "actual-own-question"],
+                "records": ["own-question", "discovery", "difficulty", "plan"],
+                "boundary": "原25−9为超20拓展，本站演示不冒唯一算法；自主提问/发现/困难/计划null，实做不自动确认。"
               }
             ]
           }
