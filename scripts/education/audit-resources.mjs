@@ -125,7 +125,7 @@ async function main() {
         markers.push(location);
       if (
         (value.match(/\n/g)?.length ?? 0) >= 2 &&
-        /[，。？！]/.test(value) &&
+        (location.endsWith('.material') || /[，。？！]/.test(value)) &&
         !location.endsWith('.review.notes')
       ) {
         if (!multiline.has(value)) multiline.set(value, []);
@@ -153,7 +153,7 @@ async function main() {
     schemaVersion: 1,
     inspectedAt: new Date().toISOString(),
     limitation:
-      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline and short-material inventories are review aids, not automatic classifications. Short materials include all registered question materials with fewer than two line breaks, without a length or punctuation threshold; step text and other fields are not included in that list. No learner data is read.',
+      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline and short-material inventories are review aids, not automatic classifications. Short materials include all registered question materials with fewer than two line breaks, without a length or punctuation threshold; step text and other fields are not included in that list. All material fields with two or more line breaks enter the multiline inventory even without Chinese punctuation; questionMaterialCoverage reports any material reference missed by both inventories. No learner data is read.',
     books: report.books.map((book) => {
       const lessons = book.units.flatMap((unit) => unit.lessons);
       return {
@@ -193,6 +193,22 @@ async function main() {
         references,
       }),
     ),
+    questionMaterialCoverage: {
+      references: strings.filter((entry) =>
+        entry.location.endsWith('.material'),
+      ).length,
+      uniqueTexts: new Set(
+        strings
+          .filter((entry) => entry.location.endsWith('.material'))
+          .map((entry) => entry.value),
+      ).size,
+      uncoveredReferences: strings.filter(
+        (entry) =>
+          entry.location.endsWith('.material') &&
+          !shortMaterials.has(entry.value) &&
+          !multiline.has(entry.value),
+      ),
+    },
     multilineReviewCandidates: [...multiline].map(([text, references]) => ({
       text,
       references,
