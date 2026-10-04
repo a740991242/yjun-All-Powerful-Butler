@@ -90,6 +90,7 @@ async function main() {
   }
   const markers = [];
   const multiline = new Map();
+  const shortMaterials = new Map();
   const strings = [];
   const urls = new Map();
   function walk(value, location, lessonId) {
@@ -102,6 +103,17 @@ async function main() {
         walk(entry, `${location}.${key}`, current);
     } else if (typeof value === 'string') {
       strings.push({ value, location, lessonId });
+      // Include short materials even without punctuation or quotation marks.
+      // A character card and a modern quotation both need an inspectable origin.
+      if (
+        location.endsWith('.material') &&
+        (value.match(/\n/g)?.length ?? 0) < 2
+      ) {
+        if (!shortMaterials.has(value)) shortMaterials.set(value, []);
+        shortMaterials
+          .get(value)
+          .push({ location, lessonId: lessonId ?? null });
+      }
       for (const match of value.matchAll(
         /https?:\/\/[A-Za-z0-9:/?#@!$&'()*+,;=%._~-]+/g,
       )) {
@@ -141,7 +153,7 @@ async function main() {
     schemaVersion: 1,
     inspectedAt: new Date().toISOString(),
     limitation:
-      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline detection is only a review aid. No learner data is read.',
+      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline and short-material inventories are review aids, not automatic classifications. Short materials include all registered question materials with fewer than two line breaks, without a length or punctuation threshold; step text and other fields are not included in that list. No learner data is read.',
     books: report.books.map((book) => {
       const lessons = book.units.flatMap((unit) => unit.lessons);
       return {
@@ -175,6 +187,12 @@ async function main() {
           lessonId: lessonId ?? null,
         })),
     })),
+    shortMaterialReviewCandidates: [...shortMaterials].map(
+      ([text, references]) => ({
+        text,
+        references,
+      }),
+    ),
     multilineReviewCandidates: [...multiline].map(([text, references]) => ({
       text,
       references,
