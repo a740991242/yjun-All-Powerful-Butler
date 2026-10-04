@@ -28,6 +28,7 @@ import {
   bnuFiveOrganizeLesson,
   bnuFiveSubtractLesson,
 } from './bnu-five-finish';
+import { bnuLowerBook } from './bnu-lower';
 import { bnuCountOrderLesson, bnuZeroLesson } from './bnu-numbers';
 import { bnuOrganizeLesson } from './bnu-organize';
 import {
@@ -48,7 +49,7 @@ import { editionTarget } from './edition-targets';
 import { mathBooks } from './math';
 import { findTextbook } from './textbooks';
 
-it('registers an independent upper book without borrowing PEP scope or inventing a lower book', () => {
+it('registers an independent upper book without borrowing PEP scope or the independent lower book', () => {
   expect(bnuUpperBook.units.map((unit) => [unit.title, unit.page])).toEqual([
     ['我上学啦', 2],
     ['生活中的数', 12],
@@ -62,8 +63,9 @@ it('registers an independent upper book without borrowing PEP scope or inventing
     ['总复习', 81],
   ]);
   expect(findTextbook('math', 'bnu-2024', 'upper')?.id).toBe(bnuUpperBook.id);
-  expect(editionTarget('math', 'bnu-2024', 'lower')?.status).toBe('preparing');
-  expect(findTextbook('math', 'bnu-2024', 'lower')).toBeUndefined();
+  expect(editionTarget('math', 'bnu-2024', 'lower')?.status).toBe('available');
+  expect(findTextbook('math', 'bnu-2024', 'lower')?.id).toBe(bnuLowerBook.id);
+  expect(bnuLowerBook.id).not.toBe(bnuUpperBook.id);
   expect(editionTarget('chinese', 'bnu-2024', 'upper')).toBeUndefined();
   const lessons = bnuUpperBook.units.flatMap((unit) => unit.lessons);
   expect(lessons.filter((lesson) => lesson.status === 'available')).toEqual([

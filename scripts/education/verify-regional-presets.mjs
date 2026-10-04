@@ -738,9 +738,18 @@ const server = http.createServer(async (req, res) => {
         .locator('.education-regional-preset-options .ant-select-item-option')
         .filter({ hasText: '北师大版' });
       const pendingClass = await pending.getAttribute('class');
-      if (!pendingClass.includes('disabled'))
-        throw new Error('preparing lower edition selectable');
+      if (pendingClass.includes('disabled'))
+        throw new Error('authored BNU lower edition is disabled');
       await p.locator('#education-custom-math').press('Escape');
+      await choose('education-custom-math', '北师大版（2024审核，部分课程）');
+      await click('保存当前地区组合');
+      await click('一键应用我的组合');
+      await p
+        .getByRole('button', {
+          name: '数学 · 北师大版（2024审核，部分课程） · 下册',
+          exact: true,
+        })
+        .waitFor();
       await choose('education-custom-math', '苏教版');
       await click('保存当前地区组合');
       await click('一键应用我的组合');
@@ -959,7 +968,7 @@ const server = http.createServer(async (req, res) => {
           provinceCitySchoolYearVolumeIsolation: true,
           reload: true,
           systemGuard: true,
-          pendingLowerDisabled: true,
+          bnuLowerSelectableAndApplied: true,
           oldNativeSessionUnchanged: true,
           englishDark: true,
           failureRetry: width === 375,

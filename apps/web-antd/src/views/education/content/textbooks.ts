@@ -1,6 +1,7 @@
 import type { Subject, Volume } from '../learning/types';
 
 import { bnuUpperTextbook } from './bnu';
+import { bnuLowerTextbook } from './bnu-lower';
 import { ethicsTextbooks } from './ethics';
 import { sujiaoUpperTextbook } from './sujiao';
 import { sujiaoLowerTextbook } from './sujiao-lower';
@@ -221,7 +222,12 @@ export function findTextbook(
     if (volume === 'upper') return sujiaoUpperTextbook;
     if (volume === 'lower') return sujiaoLowerTextbook;
   }
-  return [...textbooks, ...ethicsTextbooks, bnuUpperTextbook].find(
+  return [
+    ...textbooks,
+    ...ethicsTextbooks,
+    bnuUpperTextbook,
+    bnuLowerTextbook,
+  ].find(
     (item) =>
       item.subject === subject &&
       item.edition === edition &&

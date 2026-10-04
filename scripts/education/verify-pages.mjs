@@ -3385,17 +3385,22 @@ const widths = process.argv.includes('--mobile-only')
         });
       }
       await click('数学 · 下册');
-      await p.getByText('北师大版下册课程筹备中', { exact: true }).waitFor();
-      await p.waitForFunction(
-        () =>
-          [...document.querySelectorAll('button')].filter(
-            (button) => button.textContent.trim() === '导出备份',
-          ).length === 0,
-      );
+      await p
+        .getByText('一年级数学下册 · 北师大版（2024审核）', { exact: true })
+        .waitFor();
+      await p
+        .getByText('逐一对应、十根成捆与十一到二十', { exact: true })
+        .waitFor();
+      await p.getByRole('button', { name: '导出备份', exact: true }).waitFor();
       if (
-        await p.getByRole('button', { name: '进入课程', exact: true }).count()
+        (await p
+          .getByRole('button', { name: '进入课程', exact: true })
+          .count()) !== 1
       )
-        throw new Error('BNU lower uses another book');
+        throw new Error(
+          'BNU lower must expose only its authored independent first course',
+        );
+      await p.getByText('第一单元其余课程', { exact: true }).waitFor();
       await chooseArea('grade-one-math-edition', '苏教版');
       await p.waitForURL('**/math/sujiao/lower');
       await p.waitForFunction(

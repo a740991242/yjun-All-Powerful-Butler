@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T09:56:40.275Z",
-  "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
+  "generatedAt": "2026-10-04T12:43:00.696Z",
+  "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
   "books": [
@@ -30704,6 +30704,550 @@
               }
             ]
           }
+        }
+      ],
+      "specialties": [],
+      "transitions": []
+    },
+    {
+      "id": "bnu-math-p1-lower-2024",
+      "subject": "math",
+      "volume": "lower",
+      "edition": "bnu-2024",
+      "title": "一年级数学下册 · 北师大版（2024审核）",
+      "source": "https://keben.szxuexiao.com/html/10757.html",
+      "resourceId": "bnu-lower-public-scan-2024",
+      "verifiedAt": "2026-10-04",
+      "summary": {
+        "availablePacks": 1,
+        "pendingEntries": 10,
+        "referenceQueries": 0,
+        "tasks": {
+          "objective": 11,
+          "manual": 11,
+          "reflection": 2
+        }
+      },
+      "units": [
+        {
+          "id": "u1",
+          "title": "20以内数与加法",
+          "items": [
+            {
+              "id": "u1-1",
+              "title": "20以内数与加法",
+              "page": 2,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-ancient-count-one",
+              "title": "逐一对应、十根成捆与十一到二十",
+              "textbookTitle": "古人计数（一）",
+              "page": 2,
+              "version": 1,
+              "status": "available",
+              "goal": "用一个标记对应一个对象，实际把10个一组成1个十，读出十和一共同表示的11～20。",
+              "prerequisite": "能逐一数到10，认识数字0～10。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 11,
+                "manual": 11,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-ancient-count-one"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["place-value"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描封面、目录与第2～3页逐项核对",
+                "notes": "核对一根对应一只、11根、10个一组成1个十、11/19/20、石头与圈记、三组圈十点数、三种材料计数、12/15作图和8再添3打结故事。原图数量任务由合法教材实际点数完成，不把原创数字当原图答案；ISBN和印次未知。"
+              }
+            },
+            {
+              "id": "bnu-lower-u1-pending",
+              "title": "第一单元其余课程",
+              "textbookTitle": "20以内数与加法",
+              "page": 4,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u2",
+          "title": "图形大变身（一）",
+          "items": [
+            {
+              "id": "u2-1",
+              "title": "图形大变身（一）",
+              "page": 18,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-u2-pending",
+              "title": "图形大变身（一）",
+              "textbookTitle": "图形大变身（一）",
+              "page": 18,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "classroom",
+          "title": "设计教室装饰图",
+          "items": [
+            {
+              "id": "classroom-1",
+              "title": "设计教室装饰图",
+              "page": 24,
+              "kind": "activity",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-classroom-pending",
+              "title": "设计教室装饰图",
+              "textbookTitle": "设计教室装饰图",
+              "page": 24,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u3",
+          "title": "20以内数与减法",
+          "items": [
+            {
+              "id": "u3-1",
+              "title": "20以内数与减法",
+              "page": 27,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法",
+              "textbookTitle": "20以内数与减法",
+              "page": 27,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u4",
+          "title": "100以内数的认识",
+          "items": [
+            {
+              "id": "u4-1",
+              "title": "100以内数的认识",
+              "page": 44,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-u4-pending",
+              "title": "100以内数的认识",
+              "textbookTitle": "100以内数的认识",
+              "page": 44,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "games",
+          "title": "填数游戏",
+          "items": [
+            {
+              "id": "games-1",
+              "title": "填数游戏",
+              "page": 60,
+              "kind": "activity",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-games-pending",
+              "title": "填数游戏",
+              "textbookTitle": "填数游戏",
+              "page": 60,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u5",
+          "title": "100以内数加与减（一）",
+          "items": [
+            {
+              "id": "u5-1",
+              "title": "100以内数加与减（一）",
+              "page": 62,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-u5-pending",
+              "title": "100以内数加与减（一）",
+              "textbookTitle": "100以内数加与减（一）",
+              "page": 62,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "u6",
+          "title": "有趣的平面图形（一）",
+          "items": [
+            {
+              "id": "u6-1",
+              "title": "有趣的平面图形（一）",
+              "page": 76,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-u6-pending",
+              "title": "有趣的平面图形（一）",
+              "textbookTitle": "有趣的平面图形（一）",
+              "page": 76,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "comic",
+          "title": "画数学连环画",
+          "items": [
+            {
+              "id": "comic-1",
+              "title": "画数学连环画",
+              "page": 87,
+              "kind": "activity",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-comic-pending",
+              "title": "画数学连环画",
+              "textbookTitle": "画数学连环画",
+              "page": 87,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
+        },
+        {
+          "id": "final",
+          "title": "总复习",
+          "items": [
+            {
+              "id": "final-1",
+              "title": "总复习",
+              "page": 90,
+              "kind": "lesson",
+              "formalLessonId": null,
+              "formalLessonStatus": null,
+              "referenceQuery": null,
+              "characters": null,
+              "coverageCompletion": "not-verified"
+            }
+          ],
+          "lessons": [
+            {
+              "id": "bnu-lower-final-pending",
+              "title": "总复习",
+              "textbookTitle": "总复习",
+              "page": 90,
+              "version": 1,
+              "status": "preparing",
+              "goal": "目录已核对，尚未发布的正文课程继续制作。",
+              "prerequisite": "",
+              "referenceQuery": null,
+              "steps": 0,
+              "tasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "reviewTasks": {
+                "objective": 0,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": [],
+              "questionKinds": [],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "两页原书目录核对",
+                "notes": "目录和页码事实不表示正文课程完成。"
+              }
+            }
+          ]
         }
       ],
       "specialties": [],

@@ -710,7 +710,7 @@
   "bnuLowerPreparingTitle": "BNU lower-volume courses are preparing",
   "bnuLowerPreparingNotice": "The lower textbook body and courses are not connected yet. Switch to existing PEP or Sujiao courses; other editions are not relabelled as BNU. Existing records are retained.",
   "bnuSourceLink": "Open BNU textbook preview (third party)",
-  "bnuSourceNotice": "The 2024 approval mark, complete contents and read body pages of BNU Grade 1 upper volume have been checked in a third-party public reader, not publisher hosting. ISBN and printing are unconfirmed. Only authored courses are open; others are preparing. Site questions and diagrams are original, without textbook full text or artwork. The lower volume is not yet connected.",
+  "bnuSourceNotice": "The 2024 approval mark, complete contents and read body pages of BNU Grade 1 upper volume have been checked in a third-party public reader, not publisher hosting. ISBN and printing are unconfirmed. Only authored courses are open; others are preparing. Site questions and diagrams are original, without textbook full text or artwork.",
   "suzhouGenericScope": "Choose Grade 1 courses for the six-three system using your Suzhou textbook preferences, without a school or academic year. This learning combination is not evidence of citywide or individual school adoption.",
   "suzhouGenericSubjects": "Chinese: unified PEP; mathematics: Sujiao; ethics: unified PEP.",
   "suzhouGenericVolume": "Suzhou general course volume",
@@ -1179,5 +1179,6 @@
   "regionalOptionalSources": "Textbook adoption references (optional)",
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
-  "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:"
+  "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
+  "bnuLowerSourceNotice": "The BNU Grade 1 lower-volume 2024 approval mark and complete contents have been checked. The original course for Ancient Counting (1), printed pages 2–3, is available; remaining courses are preparing. The public scan is third-party hosting; ISBN and printing are unknown. A verified contents list does not prove completion of the volume."
 }

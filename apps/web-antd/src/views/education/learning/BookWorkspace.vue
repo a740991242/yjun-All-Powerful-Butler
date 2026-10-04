@@ -45,7 +45,9 @@ const textbookLinkKey = computed(() => {
 });
 const textbookNoticeKey = computed(() => {
   if (props.book.edition === 'bnu-2024')
-    return 'educationLearning.bnuSourceNotice';
+    return props.book.volume === 'lower'
+      ? 'educationLearning.bnuLowerSourceNotice'
+      : 'educationLearning.bnuSourceNotice';
   if (props.book.subject === 'ethics') return 'educationEthics.sourceNotice';
   if (props.book.edition !== 'sujiao') return 'educationLearning.editionNotice';
   return props.book.volume === 'lower'

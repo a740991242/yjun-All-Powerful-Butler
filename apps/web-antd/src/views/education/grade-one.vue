@@ -9,6 +9,7 @@ import { Alert, Button, Card, Empty, Select, Tag } from 'ant-design-vue';
 import { $t } from '#/locales';
 
 import { bnuUpperBook } from './content/bnu';
+import { bnuLowerBook } from './content/bnu-lower';
 import { chineseBooks } from './content/chinese';
 import { editionTarget } from './content/edition-targets';
 import { createEthicsBooks } from './content/ethics';
@@ -63,6 +64,7 @@ const book = computed(() =>
   [
     ...mathBooks,
     bnuUpperBook,
+    bnuLowerBook,
     ...chineseBooks,
     ...sujiaoBooks,
     ...createEthicsBooks($t),

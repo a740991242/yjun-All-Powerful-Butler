@@ -24,7 +24,7 @@ export function editionTarget(
       subject,
       volume,
       edition,
-      status: volume === 'upper' ? 'available' : 'preparing',
+      status: 'available',
     };
   if (subject === 'math' && edition === 'sujiao')
     return {

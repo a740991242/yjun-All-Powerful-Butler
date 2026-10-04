@@ -55,15 +55,17 @@ async function main() {
     const page = await context.newPage();
     await page.goto(base.origin, { waitUntil: 'networkidle' });
     report = await page.evaluate(async () => {
-      const [cn, math, sj, ethics, ethicsMessages, bnu] = await Promise.all([
-        import('/src/views/education/content/chinese.ts'),
-        import('/src/views/education/content/math.ts'),
-        import('/src/views/education/content/sujiao.ts'),
+      const [cn, math, sj, ethics, ethicsMessages, bnu, bnuLower] =
+        await Promise.all([
+          import('/src/views/education/content/chinese.ts'),
+          import('/src/views/education/content/math.ts'),
+          import('/src/views/education/content/sujiao.ts'),
 
-        import('/src/views/education/content/ethics.ts'),
-        import('/src/locales/langs/zh-CN/educationEthics.json'),
-        import('/src/views/education/content/bnu.ts'),
-      ]);
+          import('/src/views/education/content/ethics.ts'),
+          import('/src/locales/langs/zh-CN/educationEthics.json'),
+          import('/src/views/education/content/bnu.ts'),
+          import('/src/views/education/content/bnu-lower.ts'),
+        ]);
       const ethicsText = (key) => {
         let value = ethicsMessages.default;
         for (const part of key.split('.').slice(1)) {
@@ -81,6 +83,7 @@ async function main() {
         ...sj.sujiaoBooks,
         ...ethics.createEthicsBooks(ethicsText),
         bnu.bnuUpperBook,
+        bnuLower.bnuLowerBook,
       ];
       return { books };
     });

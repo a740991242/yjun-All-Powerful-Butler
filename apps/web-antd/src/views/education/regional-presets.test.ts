@@ -108,7 +108,7 @@ it('updates and removes only the current scope and clones records rather than ex
   expect(findRegionalPreset(removed, other)?.editions.math).toBe('pep-2024');
   expect(findRegionalPreset(removed, query)).toBeUndefined();
 });
-it('keeps omitted subjects unchanged and never applies English or an unavailable volume', () => {
+it('keeps omitted subjects unchanged and supports independent BNU volumes without applying English', () => {
   const mathOnly = { ...emptyRegionalEditions(), math: 'sujiao' as const };
   expect(regionalPresetActions(query, mathOnly)).toEqual([
     { subject: 'math', edition: 'sujiao', volume: 'upper' },
@@ -117,10 +117,16 @@ it('keeps omitted subjects unchanged and never applies English or an unavailable
     regionalPresetActions({ ...query, volume: 'lower' }, editions).map(
       (a) => a.subject,
     ),
-  ).toEqual(['chinese', 'ethics']);
-  expect(() =>
-    saveRegionalPreset(empty(), { ...query, volume: 'lower' }, editions),
-  ).toThrow('regionalPresetUnavailable');
+  ).toEqual(['chinese', 'math', 'ethics']);
+  const both = saveRegionalPreset(
+    saveRegionalPreset(empty(), query, editions),
+    { ...query, volume: 'lower' },
+    editions,
+  );
+  expect(both.entries.map((entry) => entry.scope.volume).toSorted()).toEqual([
+    'lower',
+    'upper',
+  ]);
   expect(() =>
     saveRegionalPreset(empty(), query, emptyRegionalEditions()),
   ).toThrow('regionalPresetUnavailable');
