@@ -241,7 +241,7 @@ it('includes both named characters in all current Chinese two-character comparis
 it('limits corrected writing comparisons to the named pair and checks both against the independent character table', () => {
   for (const id of correctedIds) {
     const lesson = lowerLessons.find((candidate) => candidate.id === id)!;
-    expect(lesson.version).toBe(2);
+    expect(lesson.version).toBe(id === 'cl-u7-1' ? 3 : 2);
     const scope = lowerCharacters[id.slice(3)]!.write;
     for (const questions of [lesson.questions, lesson.reviewQuestions!]) {
       const question = questions.find((candidate) =>

@@ -1013,7 +1013,7 @@ it('grounds the lower checking answer in both stated lines and preserves old mai
   }
 });
 
-it('independently checks the stated answers of the first eight lower main and review scenarios', () => {
+it('independently checks the stated answers of all sixteen lower main and review scenarios', () => {
   const book = required(
     createEthicsBooks(translation(zh)).find((item) => item.volume === 'lower'),
   );
@@ -1067,6 +1067,54 @@ it('independently checks the stated answers of the first eight lower main and re
       ['小禾', '小竹'],
       ['小鹿', '猴子'],
     ],
+    9: [
+      ['奶奶', '姥爷'],
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['哥哥', '妹妹'],
+    ],
+    10: [
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['小禾', '小竹'],
+      ['小宁', '小安'],
+    ],
+    11: [
+      ['甲组', '乙组'],
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['小宁', '小安'],
+    ],
+    12: [
+      ['甲', '乙'],
+      ['小禾', '小竹'],
+      ['甲格', '乙格'],
+      ['甲', '乙'],
+    ],
+    13: [
+      ['甲卡', '乙卡'],
+      ['甲', '乙'],
+      ['A书卡', 'B书卡'],
+      ['甲', '乙'],
+    ],
+    14: [
+      ['甲', '乙'],
+      ['甲卡', '乙卡'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
+    15: [
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
+    16: [
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+      ['甲', '乙'],
+    ],
   };
   let checked = 0;
   for (const [number, pairs] of Object.entries(answers)) {
@@ -1100,5 +1148,5 @@ it('independently checks the stated answers of the first eight lower main and re
       }
     }
   }
-  expect(checked).toBe(62);
+  expect(checked).toBe(126);
 });
