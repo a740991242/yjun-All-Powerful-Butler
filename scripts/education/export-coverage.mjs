@@ -42,6 +42,7 @@ async function main() {
         bnuSubtractionPracticeAudit,
         bnuAroundNumbersAudit,
         bnuCountHundredAudit,
+        bnuCountBeansAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -67,6 +68,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-subtraction-practice-audit.ts'),
         import('/src/views/education/content/bnu-lower-around-numbers-audit.ts'),
         import('/src/views/education/content/bnu-lower-count-hundred-audit.ts'),
+        import('/src/views/education/content/bnu-lower-count-beans-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -227,11 +229,13 @@ async function main() {
                       sourceAudit: {
                         ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit,
                         scope:
-                          '仅44～47页身边的数与数一数十四项原活动；48页起仍制作，不证明整个第四单元或全年完成。',
+                          '仅44～49页身边的数、数一数与数豆子二十一项原活动；50页起仍制作，不证明整个第四单元或全年完成。',
                         activities: [
                           ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit
                             .activities,
                           ...bnuCountHundredAudit.bnuLowerCountHundredAudit
+                            .activities,
+                          ...bnuCountBeansAudit.bnuLowerCountBeansAudit
                             .activities,
                         ],
                       },

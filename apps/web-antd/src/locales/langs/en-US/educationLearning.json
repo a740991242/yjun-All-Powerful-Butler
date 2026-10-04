@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-four original courses cover pages 2–47, including counting to 100. Teaching from page 48 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-five original courses cover pages 2–49, including estimating and place-value reading. Teaching from page 50 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",
@@ -1217,5 +1217,16 @@
   "hundredWeatherSunny": "Row {row}, column {column}: sun alone",
   "hundredWeatherCloudy": "Row {row}, column {column}: sun with cloud",
   "hundredWeatherNotice_main": "Original site drawing of the source seven-by-ten category relations. It is not one calendar month or a forecast. Counting and explaining the source picture remain separate actual activities.",
-  "hundredWeatherNotice_review": "A new site review layout with different quantities. Classify every cell again instead of reusing source totals."
+  "hundredWeatherNotice_review": "A new site review layout with different quantities. Classify every cell again instead of reusing source totals.",
+  "placeCountersTitle": "Place-value counters: check each place",
+  "placeCountersLegend": "One hundreds bead represents 100, one tens bead 10 and one ones bead 1. The number of physical beads is different from the number represented.",
+  "placeCountersScroll": "Scroll within the diagram to see all counters in left-to-right order. Keyboard scrolling is supported.",
+  "placeCountersPanel": "Counter {position}",
+  "placeCounters_hundreds": "Hundreds",
+  "placeCounters_tens": "Tens",
+  "placeCounters_ones": "Ones",
+  "placeCountersBead_hundreds": "One bead on the hundreds rod",
+  "placeCountersBead_tens": "One bead on the tens rod",
+  "placeCountersBead_ones": "One bead on the ones rod",
+  "placeCountersNotice": "Original site diagrams without written totals. Actual counter manipulation, drawing, reading, writing and explaining remain separate activities."
 }

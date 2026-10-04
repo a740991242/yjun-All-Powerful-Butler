@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T22:47:00.784Z",
+  "generatedAt": "2026-10-04T23:11:30.560Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 24,
+        "availablePacks": 25,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 712,
-          "manual": 239,
-          "reflection": 85
+          "objective": 746,
+          "manual": 255,
+          "reflection": 92
         }
       },
       "units": [
@@ -34083,10 +34083,46 @@
               }
             },
             {
+              "id": "bnu-lower-count-beans",
+              "title": "数豆子：先估后数、数位读写与生活中的100",
+              "textbookTitle": "数豆子",
+              "page": 48,
+              "version": 1,
+              "status": "available",
+              "goal": "先估后完整数并比较；按百十个位拨认、画珠和写数，解释相同数字在不同数位的意义；辨生活数字的数量与编号。",
+              "prerequisite": "会从十与一完整数到100，知道分组不改变数量。",
+              "referenceQuery": null,
+              "steps": 8,
+              "tasks": {
+                "objective": 34,
+                "manual": 16,
+                "reflection": 7
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-count-beans"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-counters"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "48～49全页及数位珠、42材料与三种100放大核对",
+                "notes": "七原活动逐项对应，源案例与自选活动、珠件数与表示值、编号与数量及未知条件分开。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 48,
+              "page": 50,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34120,7 +34156,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～47页身边的数与数一数十四项原活动；48页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "仅44～49页身边的数、数一数与数豆子二十一项原活动；50页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -34344,6 +34380,133 @@
                   "plan"
                 ],
                 "boundary": "七行十格两类各35，按整格分、不重复太阳，不当自然月或未来天气；总结换捆数量不变、已做与未来计划分开。"
+              },
+              {
+                "page": 48,
+                "sourceActivity": "estimate-grab",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [1],
+                "objective": [
+                  "estimate-cases",
+                  "estimate-order",
+                  "estimate-personal",
+                  "estimate-direction",
+                  "estimate-close"
+                ],
+                "manual": ["actual-estimate", "actual-count", "actual-repeat"],
+                "records": ["own-first-record", "own-repeat-record"],
+                "boundary": "原估50/实28与估20/实22不是自己结果；先估后数、不倒填、无普遍误差阈值。"
+              },
+              {
+                "page": 48,
+                "sourceActivity": "counter-and-write",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [2],
+                "objective": [
+                  "read-pair",
+                  "twenty-eight-parts",
+                  "twenty-eight-beads",
+                  "two-twos",
+                  "beads-and-value"
+                ],
+                "manual": [
+                  "actual-counter-twenty-eight",
+                  "actual-counter-twenty-two"
+                ],
+                "records": ["own-place-record"],
+                "boundary": "28图10珠表示28；22两个2表示20与2，珠数、数位与表示值分开。"
+              },
+              {
+                "page": 48,
+                "sourceActivity": "recognize-hundred",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [3],
+                "objective": [
+                  "near-hundred",
+                  "hundred-parts",
+                  "hundred-beads",
+                  "hundred-value",
+                  "zero-tens",
+                  "unknown-counter",
+                  "read-hundred"
+                ],
+                "manual": [
+                  "actual-ninety-seven",
+                  "actual-ninety-eight",
+                  "actual-ninety-nine",
+                  "actual-hundred"
+                ],
+                "records": [],
+                "boundary": "四数实际分别拨读写，百位一珠不是一件；确定0与未给条件不同，旧计数图契约保持。"
+              },
+              {
+                "page": 49,
+                "sourceActivity": "think-try",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [4],
+                "objective": [
+                  "forty-two-parts",
+                  "make-thirty-four",
+                  "same-forty-two",
+                  "changed-places"
+                ],
+                "manual": ["actual-forty-two", "actual-thirty-four"],
+                "records": [],
+                "boundary": "42两种表示不相加84，原34空框待做，本站补画明确原创，交换数位不同于换表示。"
+              },
+              {
+                "page": 49,
+                "sourceActivity": "practice-twenty-six",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [5],
+                "objective": [
+                  "twenty-six-parts",
+                  "two-bundles",
+                  "twenty-six-beads"
+                ],
+                "manual": ["actual-twenty-six"],
+                "records": [],
+                "boundary": "原左两捆不冒已画六单根，完整摆拨画写另做；8珠与26表示值分开。"
+              },
+              {
+                "page": 49,
+                "sourceActivity": "read-mark-draw-write",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [6],
+                "objective": [
+                  "life-read-values",
+                  "life-twenty-seven",
+                  "life-ninety-nine",
+                  "mission-unit",
+                  "historical-example"
+                ],
+                "manual": [
+                  "actual-life-twenty-seven",
+                  "actual-life-ninety-nine"
+                ],
+                "records": [],
+                "boundary": "原27次与99道弯读标画写分别覆盖，次数非飞船数量、历史信息不冒当前总次数。"
+              },
+              {
+                "page": 49,
+                "sourceActivity": "find-hundred",
+                "lesson": "bnu-lower-count-beans",
+                "steps": [7, 8],
+                "objective": [
+                  "page-hundred",
+                  "door-hundred",
+                  "label-hundred",
+                  "same-hundred",
+                  "unknown-pages"
+                ],
+                "manual": ["actual-find-hundred", "actual-explain"],
+                "records": [
+                  "own-life-record",
+                  "discovery",
+                  "difficulty",
+                  "plan"
+                ],
+                "boundary": "页码/门牌/标示数量不同，未知总页和当前剩余不猜0，个人例开放、未来计划另记。"
               }
             ]
           }

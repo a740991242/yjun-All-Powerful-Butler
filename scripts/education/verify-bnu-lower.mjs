@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--count-beans'))
+    return {
+      index: 24,
+      lessonId: 'bnu-lower-count-beans',
+      zero: '-zero-tens',
+      retry: '-twenty-eight-beads',
+      manual: 16,
+      steps: 8,
+      review: 5,
+      key: 'count-beans',
+    };
   if (process.argv.includes('--count-hundred'))
     return {
       index: 23,
@@ -538,6 +549,99 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectPlaceCounters = async (values, label) => {
+        const figure = p.locator('[data-place-counters]');
+        await figure.waitFor();
+        if (
+          (await figure.locator('[data-counter-panel]').count()) !==
+          values.length
+        )
+          throw new Error('Place counter panel count changed');
+        for (const [i, value] of values.entries()) {
+          const panel = figure.locator('[data-counter-panel]').nth(i);
+          const expected = {
+            hundreds: Math.floor(value / 100),
+            tens: Math.floor(value / 10) % 10,
+            ones: value % 10,
+          };
+          for (const key of ['hundreds', 'tens', 'ones']) {
+            if (
+              (await panel.locator(`[data-counter-bead="${key}"]`).count()) !==
+              expected[key]
+            )
+              throw new Error('Counter bead count or place changed');
+            if (
+              (await panel.locator(`[data-counter-rod="${key}"]`).count()) !== 1
+            )
+              throw new Error('Counter place label missing');
+          }
+          const bounds = await panel.evaluate((svg) => {
+            const r = svg.getBoundingClientRect();
+            return [...svg.querySelectorAll('path,ellipse,text')].every((n) => {
+              const b = n.getBoundingClientRect();
+              return (
+                b.left >= r.left &&
+                b.right <= r.right &&
+                b.top >= r.top &&
+                b.bottom <= r.bottom
+              );
+            });
+          });
+          if (!bounds) throw new Error('Place counter element outside SVG');
+          const fonts = await panel
+            .locator('text')
+            .evaluateAll((nodes) =>
+              nodes.map((n) => Number.parseFloat(getComputedStyle(n).fontSize)),
+            );
+          if (fonts.some((n) => n < 20))
+            throw new Error('Place labels below 20px');
+        }
+        const fonts = await figure
+          .locator('figcaption,p')
+          .evaluateAll((nodes) =>
+            nodes
+              .slice(0, 3)
+              .map((n) => Number.parseFloat(getComputedStyle(n).fontSize)),
+          );
+        if (fonts.some((n) => n < 20))
+          throw new Error('Counter title legend or scroll hint too small');
+        const scroller = figure.locator('[data-counter-scroll]');
+        await scroller.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await scroller.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(200);
+        if (
+          !(await scroller.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Counter keyboard scroll failed');
+        for (const edge of ['first', 'last']) {
+          await scroller.evaluate((n, e) => {
+            n.scrollLeft = e === 'first' ? 0 : n.scrollWidth;
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(150);
+          if (
+            !(await scroller.evaluate((n) => {
+              const r = n.getBoundingClientRect();
+              return (
+                r.left >= 0 &&
+                r.right <= innerWidth &&
+                r.top >= 0 &&
+                r.bottom <= innerHeight &&
+                document.documentElement.scrollWidth <= innerWidth
+              );
+            }))
+          )
+            throw new Error('Counter scroll viewport overflow');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-beans-counters-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -576,7 +680,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 24
+          .count()) !== 25
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1000,6 +1104,47 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
         }
+        if (flow.key === 'count-beans' && (step === 0 || step === 1)) {
+          const values = step === 0 ? [28, 22] : [97, 98, 99, 100];
+          await inspectPlaceCounters(values, `learn-${step + 1}`);
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .getByText(
+              'One hundreds bead represents 100, one tens bead 10 and one ones bead 1. The number of physical beads is different from the number represented.',
+              { exact: true },
+            )
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectPlaceCounters(values, `english-theme-${step + 1}`);
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Counter language/theme changed records');
+        }
         if (flow.key === 'count-hundred' && step === 0) {
           for (const [label, hundreds, tens] of [
             ['1个百拆成10个十', 0, 10],
@@ -1187,6 +1332,8 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'place-counters')
+          await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')
           await inspectHundredWeather(q.visual.variant, 'question');
         if (
@@ -1566,6 +1713,58 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'count-beans' &&
+            q.id.endsWith('-near-hundred')
+          ) {
+            await p.getByRole('spinbutton').first().fill('97');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft,
+                ) === '[97,null,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["97","","",""]')
+              throw new Error('Counter sequence partial draft lost');
+            for (const [i, value] of [97, 98, 99, 1].entries()) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n.scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const fits = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return (
+                  Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                  r.height >= 44 &&
+                  r.left >= 0 &&
+                  r.right <= innerWidth &&
+                  r.top >= 0 &&
+                  r.bottom <= innerHeight
+                );
+              });
+              if (!fits)
+                throw new Error('Counter sequence field clipped or too small');
+              await input.fill(String(value));
+              if (i === 0 || i === 3)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-beans-fields-${width}-${i}.png`,
+                });
+            }
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            for (const [i, value] of q.rule.values.entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (
             q.rule.kind === 'steps' &&
             flow.key === 'count-hundred' &&
@@ -2647,6 +2846,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'place-counters')
+          await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')
           await inspectHundredWeather(q.visual.variant, 'question');
         if (

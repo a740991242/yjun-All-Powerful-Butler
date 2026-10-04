@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。",
   "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
   "regionalCatalogAlternatives": "该参考目录可选数学版本：",
-  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～47页已接入24份原创课包（第一单元9课、图形3课、教室装饰实践、减法9课、身边的数和数到100），第48页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
+  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～49页已接入25份原创课包（第一单元9课、图形3课、教室装饰实践、减法9课、身边的数、数到100与数豆子），第50页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
   "teenAdditionTotal": "得数",
   "teenAdditionPosition": "位置{position}",
   "teenAdditionNotice": "本站按位置展示加法表：每个加数2～9，得数11～18。A～Z为26处待填算式，每处依次填两个加数。“—”不属于该行，不表示0。给定算式不自动确认纸面任务。",
@@ -1217,5 +1217,16 @@
   "hundredWeatherSunny": "第{row}行第{column}列：纯太阳",
   "hundredWeatherCloudy": "第{row}行第{column}列：太阳带云",
   "hundredWeatherNotice_main": "对应原七行十列类别关系的本站原创图。不是一个自然月，也不是现实天气预测；真实原图点数与说明另做。",
-  "hundredWeatherNotice_review": "本站新数量与新排列复习图，重新逐格分类，不沿用原图两类数量。"
+  "hundredWeatherNotice_review": "本站新数量与新排列复习图，重新逐格分类，不沿用原图两类数量。",
+  "placeCountersTitle": "数位计数器：看清每个数位",
+  "placeCountersLegend": "一颗百位珠表示100，一颗十位珠表示10，一颗个位珠表示1；珠子件数不等于表示的数。",
+  "placeCountersScroll": "图内左右滚动查看全部计数器，保持从左到右的顺序；支持键盘滚动。",
+  "placeCountersPanel": "第{position}个计数器",
+  "placeCounters_hundreds": "百位",
+  "placeCounters_tens": "十位",
+  "placeCounters_ones": "个位",
+  "placeCountersBead_hundreds": "百位上一颗珠",
+  "placeCountersBead_tens": "十位上一颗珠",
+  "placeCountersBead_ones": "个位上一颗珠",
+  "placeCountersNotice": "本站原创数位示意，不显示合计答案；真实拨珠、画珠、读写和说明另做。"
 }

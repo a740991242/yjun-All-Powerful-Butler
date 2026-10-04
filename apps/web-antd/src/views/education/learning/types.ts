@@ -39,6 +39,7 @@ import type { NumberStripVisual } from './number-strip';
 import type { OcclusionViewsVisual } from './occlusion-views';
 import type { ParadeFramesVisual } from './parade-frames';
 import type { PartitionedSquareVisual } from './partitioned-square';
+import type { PlaceCountersVisual } from './place-counters';
 import type { QuarterCircleVisual } from './quarter-circle';
 import type { RegroupSticksVisual } from './regroup-sticks';
 import type { SemesterGridVisual } from './semester-grid';
@@ -498,6 +499,7 @@ export type Visual =
   | PartitionedSquareVisual
   | PeriodicFlagsVisual
   | PeriodicShapesVisual
+  | PlaceCountersVisual
   | PlaneCardsVisual
   | PoolSceneVisual
   | QuantityTableVisual

@@ -71,6 +71,7 @@ import PeriodicFlags from './PeriodicFlags.vue';
 import PeriodicShapes from './PeriodicShapes.vue';
 import { pinyinTone } from './pinyin-tone';
 import { exchangePlaceValue, placeValue } from './place-value';
+import PlaceCounters from './PlaceCounters.vue';
 import PlaneCards from './PlaneCards.vue';
 import PoolScene from './PoolScene.vue';
 import QuantityTable from './QuantityTable.vue';
@@ -1272,6 +1273,10 @@ const shapeDescription = computed(() =>
     <StockTable v-else-if="visual.kind === 'stock-table'" :visual="visual" />
     <CrossBalance
       v-else-if="visual.kind === 'cross-balance'"
+      :visual="visual"
+    />
+    <PlaceCounters
+      v-else-if="visual.kind === 'place-counters'"
       :visual="visual"
     />
     <DigitCounter

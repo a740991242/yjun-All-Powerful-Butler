@@ -72,6 +72,7 @@ import { isParadeFramesVisual } from './parade-frames';
 import { isPartitionedSquareVisual } from './partitioned-square';
 import { isPeriodicFlagsVisual } from './periodic-flags';
 import { isPeriodicShapesVisual } from './periodic-shapes';
+import { isPlaceCountersVisual } from './place-counters';
 import { isPlaceValueState } from './place-value';
 import { isPlaneCardsVisual } from './plane-cards';
 import { isPoolSceneVisual } from './pool-scene';
@@ -530,6 +531,9 @@ function visual(value: unknown) {
     }
     case 'cross-balance': {
       return isCrossBalanceModel(value);
+    }
+    case 'place-counters': {
+      return isPlaceCountersVisual(value);
     }
     case 'digit-counter': {
       return isDigitCounterVisual(value);
