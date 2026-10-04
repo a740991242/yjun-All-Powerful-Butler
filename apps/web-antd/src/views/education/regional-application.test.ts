@@ -58,14 +58,14 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       rows.filter((row) => row.resolution.status === 'guidance'),
     ).toHaveLength(excluded ? 0 : 2);
     let expectedSubjects: string[] = ['chinese', 'ethics'];
-    if (province === 'jiangsu')
+    if (province === 'jiangsu' || province === 'fujian')
       expectedSubjects = ['chinese', 'math', 'ethics'];
     if (excluded) expectedSubjects = [];
     expect(
       rows.flatMap((row) => (row.action ? [row.action.subject] : [])),
     ).toEqual(expectedSubjects);
     expect(required(rows[1]).resolution.status).toBe(
-      province === 'jiangsu' ? 'recommended' : 'unknown',
+      ['fujian', 'jiangsu'].includes(province) ? 'recommended' : 'unknown',
     );
     expect(required(rows[3]).resolution.status).toBe('unknown');
   }
@@ -176,5 +176,48 @@ it('applies the Jiangsu default without requiring a city or school, for both vol
       regionalApplicationPlan({ ...local, academicYear: '2027-2028' })[1]!
         .action,
     ).toBeUndefined();
+  }
+});
+
+it('applies Fujian default volumes without asserting a sole provincial edition or changing unbuilt English', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      province: 'fujian',
+      city: '',
+      school: '',
+      volume,
+      academicYear: '2026-2027',
+    };
+    const plan = regionalApplicationPlan(local);
+    expect(plan[1]!.resolution.status).toBe('recommended');
+    if (plan[1]!.resolution.status !== 'recommended')
+      throw new Error('missing default');
+    expect(plan[1]!.resolution.edition).toBe('pep-2024');
+    expect(plan[1]!.resolution.catalogYear).toBe('2024');
+    expect(plan[1]!.resolution.alternatives).toEqual([
+      'pep-2024',
+      'sujiao',
+      'bnu-2024',
+    ]);
+    expect(plan[1]!.resolution.evidence[0]!.sourceUrl).toBe(
+      'https://jyt.fujian.gov.cn/xxgk/zywj/202408/t20240812_6500947.htm',
+    );
+    expect(
+      plan.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(plan[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
   }
 });

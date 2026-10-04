@@ -243,6 +243,43 @@ const server = http.createServer(async (req, res) => {
           )) !== 'sujiao'
         )
           throw new Error('unconfigured math lost preference');
+        await choose('education-region-province', '福建', true);
+        await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .waitFor();
+        const reference = region.locator(
+          'a[href="https://jyt.fujian.gov.cn/xxgk/zywj/202408/t20240812_6500947.htm"]',
+        );
+        await reference.waitFor();
+        await region
+          .getByText('参考2024年省级目录中的可选版本', { exact: false })
+          .waitFor();
+        for (const volume of ['上册', '下册']) {
+          await choose('education-region-volume', volume);
+          await apply.click();
+          for (const subject of ['语文', '数学', '道德与法治'])
+            await p
+              .getByRole('button', {
+                name: `${subject} · 人教版（2024审定） · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          if (
+            (await p.evaluate(() =>
+              localStorage.getItem('butler-grade-one-math-edition-v1'),
+            )) !== 'pep-2024'
+          )
+            throw new Error('Fujian default math not applied');
+        }
+        await region
+          .getByText('参考2024年省级目录中的可选版本', { exact: false })
+          .evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(300);
+        await p.screenshot({ path: `/tmp/butler-fujian-default-${width}.png` });
+        await choose('education-region-system', '五四学制（小学五年）');
+        if (!(await apply.isDisabled()))
+          throw new Error('Fujian five-four applied');
+        await choose('education-region-system', '六三学制（小学六年）');
         await choose('education-region-province', '江苏', true);
         await choose('education-region-volume', '上册');
         await apply.click();
@@ -287,6 +324,20 @@ const server = http.createServer(async (req, res) => {
         const htmlClass = await p.locator('html').getAttribute('class');
         if (!htmlClass.includes('dark'))
           await p.locator('.theme-toggle svg').click();
+        await choose('education-region-province', 'Fujian', true);
+        const englishCatalog = p.getByText(
+          'The 2024 provincial catalog lists alternatives.',
+          { exact: false },
+        );
+        await englishCatalog.waitFor();
+        await p
+          .getByText('Mathematics alternatives in the reference catalog:', {
+            exact: false,
+          })
+          .waitFor();
+        await englishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
         await p.waitForTimeout(500);
         if (
           await p.evaluate(
@@ -311,6 +362,9 @@ const server = http.createServer(async (req, res) => {
             width,
             provinceDefaults: true,
             JiangsuUpperLowerThreeSubjects: true,
+            FujianUpperLowerThreeSubjects: true,
+            provincialCatalogAlternativesShown: true,
+            FujianEnglishDarkCatalog: true,
             schoolOptionalCollapsed: true,
             otherProvinceDoesNotInheritMath: true,
             nativeHistoryUnchanged: true,

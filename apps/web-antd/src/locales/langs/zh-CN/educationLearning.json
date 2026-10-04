@@ -1177,5 +1177,7 @@
   "qingdaoEdition": "青岛版（学制与课包待核验）",
   "regionalStatus_recommended": "默认组合",
   "regionalOptionalSources": "教材选用资料参考（可选）",
-  "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。"
+  "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。",
+  "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
+  "regionalCatalogAlternatives": "该参考目录可选数学版本："
 }

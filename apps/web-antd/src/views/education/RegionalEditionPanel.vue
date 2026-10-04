@@ -92,6 +92,11 @@ const actions = computed(() =>
   results.value.flatMap((item) => (item.action ? [item.action] : [])),
 );
 watch(query, () => emit('clear'), { flush: 'sync' });
+function editionLabel(edition: 'bnu-2024' | 'pep-2024' | 'sujiao') {
+  if (edition === 'sujiao') return $t('educationLearning.sujiaoEdition');
+  if (edition === 'bnu-2024') return $t('educationLearning.bnuEdition');
+  return $t('educationLearning.pepEdition');
+}
 function apply() {
   const available = regionalApplicationPlan(query.value).flatMap((item) =>
     item.action ? [item.action] : [],
@@ -265,6 +270,29 @@ function apply() {
         </span>
         <p class="w-full text-sm leading-6 text-muted-foreground">
           {{ $t(`educationLearning.regionalReason_${item.reason}`) }}
+        </p>
+        <p
+          v-if="
+            item.resolution.status === 'recommended' &&
+            item.resolution.catalogYear
+          "
+          class="w-full text-sm leading-6 text-muted-foreground"
+        >
+          {{
+            $t('educationLearning.regionalCatalogDefaultScope', {
+              year: item.resolution.catalogYear,
+            })
+          }}
+        </p>
+        <p
+          v-if="
+            item.resolution.status === 'recommended' &&
+            item.resolution.alternatives
+          "
+          class="w-full text-sm leading-6"
+        >
+          {{ $t('educationLearning.regionalCatalogAlternatives') }}
+          {{ item.resolution.alternatives.map(editionLabel).join(' / ') }}
         </p>
       </div>
     </div>
