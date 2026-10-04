@@ -82,8 +82,10 @@ it('records all physical activities and independent questions without assigning 
   expect(bnuLowerBook.units[3]?.lessons[1]?.status).toBe('available');
   expect(bnuLowerBook.units[3]?.lessons[0]?.page).toBe(27);
   expect(bnuLowerBook.units[3]?.lessons[1]?.page).toBe(29);
-  expect(bnuLowerBook.units[3]?.lessons[2]?.status).toBe('preparing');
+  expect(bnuLowerBook.units[3]?.lessons[2]?.status).toBe('available');
   expect(bnuLowerBook.units[3]?.lessons[2]?.page).toBe(31);
+  expect(bnuLowerBook.units[3]?.lessons[3]?.status).toBe('preparing');
+  expect(bnuLowerBook.units[3]?.lessons[3]?.page).toBe(33);
   expect(bnuLowerBook.units[1]?.lessons[0]?.page).toBe(18);
 });
 

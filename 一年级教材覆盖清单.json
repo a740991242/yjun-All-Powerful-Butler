@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T18:49:10.691Z",
+  "generatedAt": "2026-10-04T19:10:59.125Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 15,
+        "availablePacks": 16,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 426,
-          "manual": 136,
-          "reflection": 40
+          "objective": 468,
+          "manual": 146,
+          "reflection": 43
         }
       },
       "units": [
@@ -32643,10 +32643,47 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第31页起后续课程）",
-              "textbookTitle": "20以内数与减法（第31页起后续课程）",
+              "id": "bnu-lower-complement-game",
+              "title": "凑十四、减法分解与算式变化规律",
+              "textbookTitle": "凑数游戏",
               "page": 31,
+              "version": 1,
+              "status": "available",
+              "goal": "两人凑14并记录加减联系，解释14−5的四种方法，完整比较三列九式并解决小鸭和苹果数量关系。",
+              "prerequisite": "理解十几减几、整体与部分，能读从左向右的数线。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 42,
+                "manual": 10,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-complement-game"],
+              "questionKinds": [
+                "number",
+                "arithmetic-pair",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["number-line"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描31～32页逐项阅读，小鸭局部放大核对",
+                "notes": "31凑14两轮6/8与5/9、14−5拆原数/拆减数/想加算减/两跳、两人记录五式与排序；32固定14减5～9、四分解13−6/11−6/12−5/15−7、三列九式、前11鸭后外8鸭、15苹果剩8逐项覆盖。原自由分解与本站指定方法分开，遮挡需沿用总量条件。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第33页起后续课程）",
+              "textbookTitle": "20以内数与减法（第33页起后续课程）",
+              "page": 33,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32680,7 +32717,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～30页买铅笔与捉迷藏所列活动及明示迁移；31页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～32页买铅笔、捉迷藏与凑数游戏所列活动及明示迁移；33页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -32948,6 +32985,149 @@
                 "manual": ["actual-explain"],
                 "records": ["discovery", "difficulty", "plan"],
                 "boundary": "实际说明、两份反思与计划独立，correct:null。"
+              },
+              {
+                "page": 31,
+                "sourceActivity": "game",
+                "scope": "两人两轮凑14与自由填数",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [1],
+                "objective": [
+                  "partner-six",
+                  "partner-five",
+                  "partner-seven",
+                  "free-pair"
+                ],
+                "manual": ["actual-game"],
+                "records": [],
+                "boundary": "两人各出7可合法，0～14范围是本站补充，不冒原卡片。"
+              },
+              {
+                "page": 31,
+                "sourceActivity": "break-ten",
+                "scope": "原14拆10与4",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [2],
+                "objective": ["break-ten"],
+                "manual": ["actual-break"],
+                "records": [],
+                "boundary": "拆原数，不把其它正确路径当错。"
+              },
+              {
+                "page": 31,
+                "sourceActivity": "methods",
+                "scope": "拆5与两跳及想加算减",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [3],
+                "objective": ["parts", "line", "think-add"],
+                "manual": ["actual-parts", "actual-line"],
+                "records": [],
+                "boundary": "先减4到10再1，图左−1不是先做。"
+              },
+              {
+                "page": 31,
+                "sourceActivity": "records",
+                "scope": "记录原五轮加减式",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [4],
+                "objective": [
+                  "record-0",
+                  "record-1",
+                  "record-2",
+                  "record-3",
+                  "record-4"
+                ],
+                "manual": ["actual-records"],
+                "records": [],
+                "boundary": "每轮分别记录，真实合作不由网页确认。"
+              },
+              {
+                "page": 32,
+                "sourceActivity": "sorted-change",
+                "scope": "按减数排序、发现与续写",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [4, 5],
+                "objective": [
+                  "sorted",
+                  "fixed-fourteen",
+                  "extend-ten",
+                  "extend-eleven"
+                ],
+                "manual": ["actual-extend"],
+                "records": [],
+                "boundary": "原14固定才每次多减1少1，不推广所有算式。"
+              },
+              {
+                "page": 32,
+                "sourceActivity": "practice-one",
+                "scope": "原四题分解与说法",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [6],
+                "objective": [
+                  "decompose-0",
+                  "method-0",
+                  "decompose-1",
+                  "method-1",
+                  "decompose-2",
+                  "method-2",
+                  "decompose-3",
+                  "method-3"
+                ],
+                "manual": ["actual-decompose"],
+                "records": [],
+                "boundary": "原箭头在原数，自由分解与指定破十路径分开，合对不证明已解释。"
+              },
+              {
+                "page": 32,
+                "sourceActivity": "practice-two",
+                "scope": "原三列全部九式与规律",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [7],
+                "objective": [
+                  "column-0",
+                  "column-1",
+                  "column-2",
+                  "column-3",
+                  "column-4",
+                  "column-5",
+                  "column-6",
+                  "column-7",
+                  "column-8",
+                  "column-one",
+                  "column-three"
+                ],
+                "manual": ["actual-columns"],
+                "records": [],
+                "boundary": "固定减数与固定原数的方向不同。"
+              },
+              {
+                "page": 32,
+                "sourceActivity": "practice-three",
+                "scope": "前后小鸭与苹果未知量",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [8],
+                "objective": [
+                  "ducks-original",
+                  "ducks-outside",
+                  "ducks-hidden",
+                  "ducks-unknown",
+                  "apples-taken",
+                  "apples-eight"
+                ],
+                "manual": ["actual-pictures"],
+                "records": [],
+                "boundary": "同群11无增减、草丛外8才求内3；局部头不加到外部，不把15余8当拿走8。"
+              },
+              {
+                "page": 32,
+                "sourceActivity": "explain",
+                "scope": "方法表达与本站反思计划",
+                "lesson": "bnu-lower-complement-game",
+                "steps": [9],
+                "objective": [],
+                "manual": ["actual-explain"],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "实做、发现、困惑与计划独立，不评分。"
               }
             ]
           }

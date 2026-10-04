@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--complement'))
+    return {
+      index: 15,
+      lessonId: 'bnu-lower-complement-game',
+      zero: null,
+      retry: '-ducks-hidden',
+      manual: 10,
+      steps: 9,
+      review: 5,
+      key: 'complement',
+    };
   if (process.argv.includes('--hide'))
     return {
       index: 14,
@@ -298,7 +309,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 15
+          .count()) !== 16
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -855,7 +866,9 @@ const server = http.createServer(async (req, res) => {
                 throw new Error('Zero draft lost');
             }
             if (q.id.endsWith(flow.retry)) {
-              await p.getByRole('spinbutton').fill('3');
+              await p
+                .getByRole('spinbutton')
+                .fill(flow.key === 'complement' ? '19' : '3');
               await click('提交答案');
               await p
                 .getByText('再想一想，可以修改后重试', { exact: true })
@@ -912,6 +925,63 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             for (const [i, v] of [12, 15, 13].entries())
               await p.getByRole('spinbutton').nth(i).fill(String(v));
+          } else if (
+            q.rule.kind === 'arithmetic-pair' &&
+            flow.key === 'complement'
+          ) {
+            if (q.id.endsWith('-free-pair')) {
+              await p.getByRole('spinbutton').nth(0).fill('0');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[0,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["0",""]')
+                throw new Error('Complement zero/empty draft lost');
+              for (let i = 0; i < 2; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Complement input size or clipping');
+                await input.fill(String([7, 6][i]));
+              }
+              await p.screenshot({
+                path: `/tmp/butler-bnu-complement-pair-${width}.png`,
+              });
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            await p
+              .getByRole('spinbutton')
+              .nth(0)
+              .fill(q.id.endsWith('-free-pair') ? '7' : '0');
+            await p
+              .getByRole('spinbutton')
+              .nth(1)
+              .fill(q.id.endsWith('-free-pair') ? '7' : String(q.rule.result));
           } else if (q.rule.kind === 'arithmetic-pair') {
             await p.getByRole('spinbutton').nth(0).fill('0');
             await wait(
