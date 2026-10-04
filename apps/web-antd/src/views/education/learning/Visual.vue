@@ -102,6 +102,7 @@ import StickOutline from './StickOutline.vue';
 import StockTable from './StockTable.vue';
 import SumLines from './SumLines.vue';
 import SurveyTable from './SurveyTable.vue';
+import TeenAdditionTable from './TeenAdditionTable.vue';
 import TeenArithmeticGrid from './TeenArithmeticGrid.vue';
 import TeenLayout from './TeenLayout.vue';
 import { toggleTenCell } from './ten-cells';
@@ -390,6 +391,10 @@ const shapeDescription = computed(() =>
     />
     <ArithmeticGrid
       v-else-if="visual.kind === 'arithmetic-grid'"
+      :visual="visual"
+    />
+    <TeenAdditionTable
+      v-else-if="visual.kind === 'teen-addition-table'"
       :visual="visual"
     />
     <TenTables v-else-if="visual.kind === 'ten-tables'" :visual="visual" />

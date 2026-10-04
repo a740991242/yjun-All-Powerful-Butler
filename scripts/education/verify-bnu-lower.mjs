@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--addition-table'))
+    return {
+      index: 6,
+      lessonId: 'bnu-lower-make-addition-table',
+      zero: '-zero-ones',
+      retry: '-card-1',
+      manual: 7,
+      key: 'addition',
+    };
   if (process.argv.includes('--rabbits'))
     return {
       index: 5,
@@ -202,7 +211,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 6
+          .count()) !== 7
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -217,11 +226,125 @@ const server = http.createServer(async (req, res) => {
         const state = await read();
         return state.sessions.find((s) => s.id === sid);
       };
+      async function inspectAddition(variant) {
+        const diagram = p.locator('[data-teen-addition-table]');
+        if (
+          (await diagram.locator('[data-teen-addition-blank]').count()) !==
+            26 ||
+          (await diagram.locator('[data-teen-addition-given]').count()) !== 10
+        )
+          throw new Error('Incomplete table geometry');
+        const labels = await diagram
+          .locator('[data-teen-addition-blank]')
+          .allTextContents();
+        if (
+          labels.map((s) => s.trim()).join('') !== 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        )
+          throw new Error('Table letters lost');
+        const totals = await diagram
+          .locator('[data-teen-addition-row]')
+          .allTextContents();
+        if (totals.map((s) => s.trim()).join(',') !== '11,12,13,14,15,16,17,18')
+          throw new Error('Table rows changed');
+        const scroll = diagram.locator('[data-teen-addition-scroll]');
+        await scroll.scrollIntoViewIfNeeded();
+        const size = await scroll.evaluate((n) => ({
+          viewport: n.clientWidth,
+          content: n.scrollWidth,
+        }));
+        if (size.content > size.viewport) {
+          await scroll.focus();
+          await scroll.press('ArrowRight');
+          await p.waitForTimeout(250);
+          if ((await scroll.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Table keyboard scroll unavailable');
+        }
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await p.screenshot({
+          path: `/tmp/butler-bnu-addition-${variant}-left-${width}.png`,
+        });
+        await scroll.evaluate((n) => {
+          n.scrollLeft = n.scrollWidth;
+        });
+        await p.waitForTimeout(100);
+        await p.screenshot({
+          path: `/tmp/butler-bnu-addition-${variant}-right-${width}.png`,
+        });
+        const font = await diagram
+          .locator('[data-teen-addition-blank]')
+          .first()
+          .evaluate((n) => Number.parseFloat(getComputedStyle(n).fontSize));
+        if (font < 20) throw new Error('Table type too small');
+        const textFits = await diagram
+          .locator('.ant-table-cell')
+          .evaluateAll((nodes) =>
+            nodes.every((n) => {
+              const range = document.createRange();
+              range.selectNodeContents(n);
+              const text = range.getBoundingClientRect();
+              const box = n.getBoundingClientRect();
+              return (
+                text.left >= box.left - 1 &&
+                text.right <= box.right + 1 &&
+                text.top >= box.top - 1 &&
+                text.bottom <= box.bottom + 1
+              );
+            }),
+          );
+        if (!textFits) throw new Error('Table text overflows a cell');
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error('Table overflows whole page');
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+      }
       for (let step = 0; step < 6; step++) {
         await click('下一步');
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'addition' && step === 0) {
+          await inspectAddition('main');
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p.getByText('Position 8', { exact: true }).waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectAddition('english-theme');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p.getByText('位置8', { exact: true }).waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Table language/theme changed learning records');
+        }
       }
       await p.screenshot({
         path: `/tmp/butler-bnu-lower-${flow.key}-step-${width}.png`,
@@ -284,6 +407,57 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (q.id.endsWith('-horizontal')) {
+              await p.getByRole('spinbutton').first().fill('9');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[9,null,null,null,null,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const fields = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(fields) !== '["9","","","","","","",""]')
+                throw new Error('Eight-field table draft lost');
+              await p
+                .getByRole('spinbutton')
+                .nth(3)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const sizes = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const r = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: r.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        r.left >= 0 &&
+                        r.right <= innerWidth &&
+                        r.top >= 0 &&
+                        r.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (sizes.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error('Eight table inputs size or viewport');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-addition-fields-${width}.png`,
+              });
+            }
+            if (q.id.endsWith('-blank-A')) {
+              await p.getByRole('spinbutton').nth(0).fill('5');
+              await p.getByRole('spinbutton').nth(1).fill('6');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (q.id.endsWith('-eleven-partners')) {
               await p.getByRole('spinbutton').first().fill('10');
               await wait(
@@ -464,6 +638,16 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'addition') {
+        const cell = session.responses.find((r) =>
+          r.questionId.endsWith('-blank-A'),
+        );
+        if (
+          JSON.stringify(cell.submissions.map((s) => [s.answer, s.correct])) !==
+          '[[[5,6],false],[[6,5],true]]'
+        )
+          throw new Error('Position order retry history lost');
+      }
       if (flow.key === 'rabbits') {
         const homes = session.responses.find((r) =>
           r.questionId.endsWith('-two-homes'),
@@ -521,6 +705,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (flow.key === 'addition' && q.id.endsWith('-review-position'))
+          await inspectAddition('review');
         if (q.rule.kind === 'set') {
           for (const value of q.rule.values) {
             const option = q.choices.find((o) => o.id === value);
@@ -529,8 +715,12 @@ const server = http.createServer(async (req, res) => {
               .check();
           }
         } else if (q.rule.kind === 'arithmetic-pair') {
-          await p.getByRole('spinbutton').nth(0).fill('0');
-          await p.getByRole('spinbutton').nth(1).fill(String(q.rule.result));
+          const left = Math.max(q.rule.minimum, q.rule.result - q.rule.maximum);
+          await p.getByRole('spinbutton').nth(0).fill(String(left));
+          await p
+            .getByRole('spinbutton')
+            .nth(1)
+            .fill(String(q.rule.result - left));
         } else if (q.rule.kind === 'steps') {
           for (let field = 0; field < q.rule.values.length; field++)
             await p

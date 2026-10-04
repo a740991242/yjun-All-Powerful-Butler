@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T14:14:43.159Z",
+  "generatedAt": "2026-10-04T14:43:55.976Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 6,
+        "availablePacks": 7,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 173,
-          "manual": 57,
-          "reflection": 12
+          "objective": 226,
+          "manual": 64,
+          "reflection": 14
         }
       },
       "units": [
@@ -30941,10 +30941,46 @@
               }
             },
             {
+              "id": "bnu-lower-make-addition-table",
+              "title": "完整加法表、按标准分类与行列规律",
+              "textbookTitle": "做个加法表",
+              "page": 14,
+              "version": 1,
+              "status": "available",
+              "goal": "完整填写26处两加数，核对36个表格位置；按得数或第一加数选全卡片，说明同一行与同一列不同变化条件。",
+              "prerequisite": "能说明20以内凑十，知道两个加数与得数，按给定顺序观察。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 53,
+                "manual": 7,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-make-addition-table"],
+              "questionKinds": [
+                "number",
+                "set",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["teen-addition-table", "ten-frame"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第14页整页及桌面、表格放大逐项核对",
+                "notes": "实际核对13张桌面卡、得数14四张与第一加数8三张、八行8至1个位置，原10给定及26空。主表每行左加数递减、第一列9固定；复习反排各行并重编号，第一列改为右加数9固定，不复制原画。实际任务manual、反思null。"
+              }
+            },
+            {
               "id": "bnu-lower-u1-pending",
               "title": "第一单元其余课程",
               "textbookTitle": "20以内数与加法",
-              "page": 14,
+              "page": 15,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",

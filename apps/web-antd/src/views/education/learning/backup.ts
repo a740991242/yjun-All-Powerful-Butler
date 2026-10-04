@@ -107,6 +107,7 @@ import {
   isSurveyTableVisual,
   matchingSurveyState,
 } from './survey-table';
+import { isTeenAdditionTableVisual } from './teen-addition-table';
 import { isTeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import { isTeenLayoutVisual } from './teen-layout';
 import { isTenCellsState, isTenCellsVisual } from './ten-cells';
@@ -363,6 +364,9 @@ function visual(value: unknown) {
     }
     case 'quantity-table': {
       return isQuantityTableVisual(value);
+    }
+    case 'teen-addition-table': {
+      return isTeenAdditionTableVisual(value);
     }
     case 'ten-tables': {
       return isTenTablesVisual(value);

@@ -45,6 +45,7 @@ import type { SolidInstructionsVisual } from './solid-instructions';
 import type { SolidPatternVisual } from './solid-pattern';
 import type { SolidRecomposeVisual } from './solid-recompose';
 import type { StockTableVisual } from './stock-table';
+import type { TeenAdditionTableVisual } from './teen-addition-table';
 import type { TeenArithmeticGridVisual } from './teen-arithmetic-grid';
 import type { TeenLayoutVisual } from './teen-layout';
 import type { TenCellsVisual } from './ten-cells';
@@ -512,6 +513,7 @@ export type Visual =
   | StockTableVisual
   | SumLinesVisual
   | SurveyTableVisual
+  | TeenAdditionTableVisual
   | TeenArithmeticGridVisual
   | TeenLayoutVisual
   | TenCellsVisual

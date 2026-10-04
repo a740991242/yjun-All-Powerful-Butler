@@ -1,6 +1,7 @@
 import type { Book, Lesson, Question } from '../learning/types';
 import type { Textbook } from './textbooks';
 
+import { bnuLowerAdditionTableLesson } from './bnu-lower-addition-table';
 import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
@@ -17,7 +18,7 @@ export const bnuLowerSource = {
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   contents: [
     ['u1', '20以内数与加法', 2],
     ['u2', '图形大变身（一）', 18],
@@ -344,7 +345,8 @@ export const bnuLowerBook: Book = {
             bnuLowerFarmLesson,
             bnuLowerChoresLesson,
             bnuLowerRabbitsLesson,
-            pending(key, title, 14),
+            bnuLowerAdditionTableLesson,
+            pending(key, title, 15),
           ]
         : [pending(key, title, page)],
   })),
