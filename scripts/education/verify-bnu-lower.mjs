@@ -603,6 +603,55 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (q.id === 'bnu-lower-ancient-count-one-source-parts-blocks') {
+              await p.getByRole('spinbutton').first().fill('10');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[10,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["10","",""]')
+                throw new Error('Unit-block grouping partial draft lost');
+              await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const geometry = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const r = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: r.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        r.left >= 0 &&
+                        r.right <= innerWidth &&
+                        r.top >= 0 &&
+                        r.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (geometry.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error('Unit-block grouping fields outside viewport');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-count-fields-${width}.png`,
+              });
+              for (const [i, v] of [1, 8, 18].entries())
+                await p.getByRole('spinbutton').nth(i).fill(String(v));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (q.id === 'bnu-lower-building-blocks-counter-path') {
               await p.getByRole('spinbutton').first().fill('3');
               await wait(
@@ -1014,6 +1063,20 @@ const server = http.createServer(async (req, res) => {
           '[[[5,6],false],[[6,5],true]]'
         )
           throw new Error('Position order retry history lost');
+      }
+      if (flow.key === 'count') {
+        if (session.lessonVersion !== 2)
+          throw new Error('Source count course version did not advance');
+        const grouping = session.responses.find(
+          (r) =>
+            r.questionId === 'bnu-lower-ancient-count-one-source-parts-blocks',
+        );
+        if (
+          JSON.stringify(
+            grouping.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[1,8,18],false],[[10,8,18],true]]'
+        )
+          throw new Error('Unit-block grouping retry history changed');
       }
       if (flow.key === 'blocks') {
         if (session.lessonVersion !== 2)

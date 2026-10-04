@@ -77,17 +77,17 @@ export const bnuLowerAncientCountLesson: Lesson = {
   textbookTitle: '古人计数（一）',
   title: '逐一对应、十根成捆与十一到二十',
   page: 2,
-  version: 1,
+  version: 2,
   status: 'available',
   goal: '用一个标记对应一个对象，实际把10个一组成1个十，读出十和一共同表示的11～20。',
   prerequisite: '能逐一数到10，认识数字0～10。',
   parentTip:
     '对应北师大版下册印刷第2～3页，课程标记和例子原创。大标记代表10、小标记代表1须先约定，不是所有大石头天然代表10。屏幕数位图不代替实际捆小棒；打结故事按教材的计数情境介绍，不把它当已独立考证的历史事实。',
   review: {
-    date: bnuLowerSource.checkedAt,
+    date: '2026-10-05',
     reviewer: '公开扫描封面、目录与第2～3页逐项核对',
     notes:
-      '核对一根对应一只、11根、10个一组成1个十、11/19/20、石头与圈记、三组圈十点数、三种材料计数、12/15作图和8再添3打结故事。原图数量任务由合法教材实际点数完成，不把原创数字当原图答案；ISBN和印次未知。',
+      '核对一根对应一只、11根、10个一组成1个十、11/19/20、石头与圈记、三组圈十点数、三种材料计数、12/15作图和8再添3打结故事。第3页蔬果12/13/17与珠串14、单位方块18、小棒16放大逐项复核，课中明确计数范围；原图实际圈点仍独立人工，不把原创图当原插图；ISBN和印次未知。',
   },
   steps: [
     {
@@ -120,7 +120,7 @@ export const bnuLowerAncientCountLesson: Lesson = {
     },
     {
       title: '回到教材点数与作图',
-      text: '第3页先把每组物品中的10个圈成一组，再接着数剩余的；三个物品组各自计数，不把它们混成一个总数。珠子、方块条与小棒分别点数，不能只数捆或只看高度。按示例分别画12和15。',
+      text: '第3页草莓圈内10个、外2个，共12；胡萝卜13个，圈10后余3；白菜17个，圈10后余7。三组各自计数，不混成一个总数。珠串圈成的一组10颗、外4颗，共14；蓝色两条中的单位方块分别10与8，共18，不是只数成2条；小棒1捆10根、外6根，共16，不是7根。这里每组都先说明单位和十的分组，再接着数。按原书约定分别画12和15，标记个数与表示的数不同。',
       activity: '对照合法教材逐组完成圈十、点数和作图，说明十与一的关系。',
     },
     {
@@ -198,6 +198,29 @@ export const bnuLowerAncientCountLesson: Lesson = {
       { kind: 'number', value: 11 },
       '接着点数9、10、11，11个点对应11件。',
     ),
+    ...(
+      [
+        ['strawberries', '草莓', 2, 12],
+        ['carrots', '胡萝卜', 3, 13],
+        ['cabbages', '白菜', 7, 17],
+        ['beads', '珠串中的珠子', 4, 14],
+        ['blocks', '两条中的单位小方块', 8, 18],
+        ['sticks', '小棒', 6, 16],
+      ] as const
+    ).flatMap(([key, label, rest, total]) => [
+      question(
+        `source-count-${key}`,
+        `第3页${label}先数出一组10，组外还有${rest}，这一组图合计多少？按物品逐个计，不只数条或捆。`,
+        { kind: 'number', value: total },
+        `10和${rest}个一合计${total}；每组单独计数，不能混入别的材料。`,
+      ),
+      question(
+        `source-parts-${key}`,
+        `第3页${label}的计数过程，依次填：组成一个十的单个数量、十外余下的单个数量、这组总数量。`,
+        { kind: 'steps', values: [10, rest, total] },
+        `先取10个一作一组，组外${rest}个一，总共${total}；这里首空问单个数量10，不是组数1。`,
+      ),
+    ]),
     manual(
       'actual-correspond',
       '实际对照教材第2页羊群图，每只对应一根小棒，逐只核对并说出数量；做过再确认。',
@@ -254,10 +277,10 @@ export const bnuLowerAncientCountLesson: Lesson = {
   ],
   reviewQuestions: [
     question(
-      'review-fourteen',
-      '换一组：1捆10根，旁边4根散棒，共有多少根？',
-      { kind: 'number', value: 14 },
-      '1个十和4个一为14。',
+      'review-remainder',
+      '换一个问法：14张纸卡先取10张圈成一组，组外剩几张？',
+      { kind: 'number', value: 4 },
+      '总14已含圈内10，组外4；这次求余下的部分，不是再求总数14。',
     ),
     question(
       'review-eighteen',

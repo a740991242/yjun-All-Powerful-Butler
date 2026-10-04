@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T16:24:22.984Z",
+  "generatedAt": "2026-10-04T16:42:07.511Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30723,7 +30723,7 @@
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 298,
+          "objective": 310,
           "manual": 81,
           "reflection": 20
         }
@@ -30751,14 +30751,14 @@
               "title": "逐一对应、十根成捆与十一到二十",
               "textbookTitle": "古人计数（一）",
               "page": 2,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "用一个标记对应一个对象，实际把10个一组成1个十，读出十和一共同表示的11～20。",
               "prerequisite": "能逐一数到10，认识数字0～10。",
               "referenceQuery": null,
               "steps": 7,
               "tasks": {
-                "objective": 11,
+                "objective": 23,
                 "manual": 11,
                 "reflection": 2
               },
@@ -30768,12 +30768,18 @@
                 "reflection": 0
               },
               "knowledge": ["bnu-lower-ancient-count-one"],
-              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
               "visualKinds": ["place-value"],
               "audit": {
-                "date": "2026-10-04",
+                "date": "2026-10-05",
                 "reviewer": "公开扫描封面、目录与第2～3页逐项核对",
-                "notes": "核对一根对应一只、11根、10个一组成1个十、11/19/20、石头与圈记、三组圈十点数、三种材料计数、12/15作图和8再添3打结故事。原图数量任务由合法教材实际点数完成，不把原创数字当原图答案；ISBN和印次未知。"
+                "notes": "核对一根对应一只、11根、10个一组成1个十、11/19/20、石头与圈记、三组圈十点数、三种材料计数、12/15作图和8再添3打结故事。第3页蔬果12/13/17与珠串14、单位方块18、小棒16放大逐项复核，课中明确计数范围；原图实际圈点仍独立人工，不把原创图当原插图；ISBN和印次未知。"
               }
             },
             {
