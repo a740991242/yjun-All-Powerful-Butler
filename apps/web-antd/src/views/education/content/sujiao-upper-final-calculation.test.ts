@@ -11,6 +11,67 @@ import {
   finalCalculationBoard,
   sujiaoUpperFinalCalculationLesson as lesson,
 } from './sujiao-upper-final-calculation';
+it('checks every published calculation field against independent numerical expectations', () => {
+  const expected = [
+    [
+      [10, 9, 8, 9],
+      [10, 9, 3, 8],
+      [5, 6, 6, 5],
+      [10, 12],
+      [16, 10],
+      [10, 19],
+      [10, 4],
+      [6, 9],
+      [4, 0],
+    ],
+    [
+      [10, 9, 9, 9],
+      [10, 9, 3, 8],
+      [5, 6, 6, 5],
+      [10, 13],
+      [18, 10],
+      [10, 17],
+      [10, 3],
+      [4, 6],
+      [4, 0],
+    ],
+  ];
+  for (const [variant, questions] of [
+    lesson.questions,
+    lesson.reviewQuestions!,
+  ].entries()) {
+    const fields = questions.filter((q) => q.rule.kind === 'steps');
+    const keys = [
+      'basic-row-0',
+      'basic-row-1',
+      'basic-row-2',
+      'chain-0',
+      'chain-1',
+      'chain-2',
+      'chain-3',
+      'chain-4',
+      'chain-5',
+    ];
+    expect(fields.map((q) => q.knowledge).toSorted()).toEqual(
+      keys.map((key) => `${lesson.id}-${key}`).toSorted(),
+    );
+    for (const [index, key] of keys.entries()) {
+      const q = fields.find((q) => q.knowledge === `${lesson.id}-${key}`)!;
+      const values = expected[variant]![index]!;
+      expect(evaluate(q.rule, values)).toBe(true);
+      for (const [cell, value] of values.entries()) {
+        for (let candidate = 0; candidate <= 19; candidate++) {
+          const answer = [...values];
+          answer[cell] = candidate;
+          expect(evaluate(q.rule, answer)).toBe(candidate === value);
+        }
+      }
+      expect(() => evaluate(q.rule, [...values.slice(0, -1), null])).toThrow(
+        'educationLearning.answerRequired',
+      );
+    }
+  }
+});
 it('covers all twelve independent basic operations and all six two-stage chains with changed review and zero boundaries', () => {
   const main = finalCalculationBoard(false);
   const review = finalCalculationBoard(true);
