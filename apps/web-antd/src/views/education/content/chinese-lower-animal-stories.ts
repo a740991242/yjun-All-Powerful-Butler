@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -173,7 +174,8 @@ const entries: Entry[] = [
           '换字：都与熊中，本课会写的是哪项？',
         ],
         values: ['国', '都'],
-        labels: ['国', '都', '任意答案都相同'],
+        labels: ['国', '虎'],
+        reviewLabels: ['都', '熊'],
         explanation: '七会写国百时林都听点单列，认字不代替写字。',
         material:
           '先共读本课原书，原文与插图外部阅读；本站信息卡和问题为原创组织。',
@@ -339,7 +341,8 @@ const entries: Entry[] = [
           '换字：兔与追中，本课会写的是哪项？',
         ],
         values: ['着', '兔'],
-        labels: ['着', '兔', '任意答案都相同'],
+        labels: ['着', '抱'],
+        reviewLabels: ['兔', '追'],
         explanation: '七会写高着瓜进兴往兔；抱是动作词练习，不加新认新写。',
         material:
           '先共读本课原书，原文与插图外部阅读；本站信息卡和问题为原创组织。',
@@ -556,7 +559,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -570,7 +573,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。课文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,

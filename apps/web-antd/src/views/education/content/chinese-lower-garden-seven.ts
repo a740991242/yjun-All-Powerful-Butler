@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -122,7 +123,8 @@ const entries: Entry[] = [
           '换字：洗与澡中，新增会写字是哪项？',
         ],
         values: ['巾', '洗'],
-        labels: ['巾', '洗', '任意项都相同'],
+        labels: ['巾', '刷'],
+        reviewLabels: ['洗', '澡'],
         explanation: '新增两写巾洗，房老着包只为已学字复用。',
         material:
           '先观察原书93—97页指定栏目，本站卡片与问答为原创组织；原图与现代全文外部共读。',
@@ -508,7 +510,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -522,7 +524,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。课文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,

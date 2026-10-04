@@ -562,6 +562,28 @@ export const lowerUnitThreeReadingPageAudits = entries.map((e) => ({
   additionalReadings: e.additionalReadings,
   reciteRequired: false,
 }));
+const writingChoices: Record<string, [string[], string[]]> = {
+  'u3-1': [
+    ['己', '背'],
+    ['河', '忽'],
+  ],
+  'u3-2': [
+    ['从', '孤'],
+    ['回', '邻'],
+  ],
+  'u3-3': [
+    ['快', '跳'],
+    ['毛', '轮'],
+  ],
+};
+function recognitionChoices(
+  itemId: string,
+  index: number,
+  review: boolean,
+): string[] {
+  if (review && itemId === 'u3-1' && index === 11) return ['己', '已'];
+  return required(recognitionRows[itemId]).map((row) => row[0]);
+}
 function makeLesson(e: Entry): Lesson {
   const id = `cl-${e.itemId}`;
   const choice = (
@@ -587,7 +609,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         `char-${i}`,
         r[review ? 2 : 1],
-        required(recognitionRows[e.itemId]).map((x) => x[0]),
+        recognitionChoices(e.itemId, i, review),
         r[0],
         '按指定词语认字，会认与会写清单分开，实际声音需另行确认。',
         review,
@@ -597,7 +619,9 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        p.key === 'writing'
+          ? required(writingChoices[e.itemId])[review ? 1 : 0]
+          : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -611,7 +635,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: `按原书认${e.recognize}、写${e.write}，完成本课词语、观察、朗读与表达。`,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip:

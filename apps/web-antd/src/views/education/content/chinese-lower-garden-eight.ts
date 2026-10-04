@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -229,7 +230,8 @@ const entries: Entry[] = [
         key: 'writing',
         prompts: ['本园地四会写中，页与顶选哪项？', '换字：户与胖中会写哪项？'],
         values: ['页', '户'],
-        labels: ['页', '户', '八会认全部必须写'],
+        labels: ['页', '顶'],
+        reviewLabels: ['户', '胖'],
         explanation: '四写页户交父，顶只是会认，不误扩四字清单。',
         material:
           '先看原书109—113页，再看本站原创信息卡；现代全文原图声音外部阅读。',
@@ -496,7 +498,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -510,7 +512,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。课文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,

@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -126,7 +127,8 @@ const entries: Entry[] = [
           '换字：课与经中，本课会写的是哪项？',
         ],
         values: ['灯', '课'],
-        labels: ['灯', '课', '所有会认都要写'],
+        labels: ['灯', '钟'],
+        reviewLabels: ['课', '经'],
         explanation: '七会写灯站坐师车课老与十一会认分开。',
         material:
           '先共读原书81—83页，再看本站原创信息卡；全文在原书或合法资源阅读。',
@@ -331,7 +333,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -345,7 +347,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。课文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,

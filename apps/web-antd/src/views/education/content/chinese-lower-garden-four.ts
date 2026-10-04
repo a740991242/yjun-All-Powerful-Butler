@@ -54,6 +54,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -455,7 +456,8 @@ const pairs: Pair[] = [
       '衣与被中，本园地新增会写是哪字？',
     ],
     values: ['册', '衣'],
-    labels: ['册', '衣', '被'],
+    labels: ['册', '台'],
+    reviewLabels: ['衣', '被'],
     explanation: '新增四写册电支衣与书写提示四复用字分开。',
     material: '先与家长共读指定原书页，再按本题限定词语和信息观察。',
   },
@@ -496,7 +498,7 @@ function objective(review: boolean): Question[] {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -527,7 +529,7 @@ export const lowerGardenFourLesson: Lesson = {
   textbookTitle: '语文园地四',
   page: 44,
   status: 'available',
-  version: 1,
+  version: 2,
   goal: '认十字写四字，学七量词，读轻声、玩拼音，观察点的书写，积累八词与亲子共读。',
   prerequisite: '准备原书44—47页与纸笔，家长可陪读；无材料可暂时跳过实际任务。',
   parentTip:

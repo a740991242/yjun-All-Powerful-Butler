@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -139,7 +140,8 @@ const entries: Entry[] = [
           '换字：知与仔中，本课会写的是哪项？',
         ],
         values: ['笔', '知'],
-        labels: ['笔', '知', '会认字都要求写'],
+        labels: ['笔', '具'],
+        reviewLabels: ['知', '仔'],
         explanation: '六会写笔道平知放安与十三会认字分开，选择不代替纸面书写。',
         material:
           '先共读指定原书页，再观察本站原创信息卡与问题；不打包现代课文全文。',
@@ -444,7 +446,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -458,7 +460,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: 2,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。诗文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,

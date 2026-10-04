@@ -7,6 +7,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -224,7 +225,8 @@ const entries: Entry[] = [
           '换字：网与蚁中，哪个是本课会写字？',
         ],
         values: ['物', '网'],
-        labels: ['物', '网', '蚁'],
+        labels: ['物', '蚂'],
+        reviewLabels: ['网', '蚁'],
         explanation: '十三认与六写分开；蚂蚁词语不扩大本课会写字清单。',
         material: '先与家长共读原书第48—49页，再按本题信息观察。',
       },
@@ -1024,7 +1026,7 @@ function makeLesson(e: Entry): Lesson {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -1038,7 +1040,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 1,
+    version: e.itemId === 'u5-1' ? 2 : 1,
     goal: `按原书认${e.recognize}、写${e.write}，完成本课词语、观察、朗读与表达。`,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip:

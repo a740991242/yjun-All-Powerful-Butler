@@ -28,6 +28,7 @@ type Pair = {
   prompts: [string, string];
   values: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   explanation: string;
   material: string;
 };
@@ -282,7 +283,8 @@ const pairs: Pair[] = [
       '只比较元与页，本园地会写字是哪项？',
     ],
     values: ['止', '元'],
-    labels: ['止', '元', '页'],
+    labels: ['止', '母'],
+    reviewLabels: ['元', '页'],
     explanation: '正文六写止寸千斤丁元，与字表同一集合但排列不同；旦不是元。',
     material: '先看第35页六个田字格，按规范示范实际写。',
   },
@@ -323,7 +325,7 @@ function objective(review: boolean): Question[] {
       choice(
         p.key,
         p.prompts[review ? 1 : 0],
-        p.labels,
+        review ? (p.reviewLabels ?? p.labels) : p.labels,
         p.values[review ? 1 : 0],
         p.explanation,
         review,
@@ -360,7 +362,7 @@ export const lowerGardenThreeLesson: Lesson = {
   textbookTitle: '语文园地三',
   page: 34,
   status: 'available',
-  version: 1,
+  version: 2,
   goal: '认九字写六字，用音序查字并组词，读唐诗、模拟电话三情境、两页亲子共读。',
   prerequisite:
     '准备原书34—38页、字典与纸笔，家长可陪读；无材料可暂时跳过实际任务。',
