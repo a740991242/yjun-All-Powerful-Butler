@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。",
   "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
   "regionalCatalogAlternatives": "该参考目录可选数学版本：",
-  "bnuLowerSourceNotice": "北师大版一年级下册封面2024审核标识及完整目录已核对；第2～17页“古人计数（一）（二）”、“搭积木”、“开心农场”及“一起做家务”六份原创课程已开放，其余正文课程制作中。来源为第三方公开书页，非出版社托管；ISBN与版印次未知。目录核对不表示全册课程完成。",
+  "bnuLowerSourceNotice": "北师大版一年级下册封面2024审核标识及完整目录已核对；第2～23页第一单元九课与第二单元“做一做、找一找、影子剧场”三课已开放，其余正文课程制作中。来源为第三方公开书页，非出版社托管；ISBN与版印次未知。目录核对不表示全册课程完成。",
   "teenAdditionTotal": "得数",
   "teenAdditionPosition": "位置{position}",
   "teenAdditionNotice": "本站按位置展示加法表：每个加数2～9，得数11～18。A～Z为26处待填算式，每处依次填两个加数。“—”不属于该行，不表示0。给定算式不自动确认纸面任务。",
@@ -1190,5 +1190,13 @@
   "teenStairsReview": "新复习改变了所有字母的位置；按这张新图重新数，不能抄主图答案。",
   "teenStairsScroll": "台阶图，可用左右方向键在图内滚动",
   "teenStairsTitle": "十九级台阶与九个字母标记，从左下往右上逐级排列",
-  "teenStairsMarker": "标记{label}，所在级数未直接标出，请按踏面顺序判断"
+  "teenStairsMarker": "标记{label}，所在级数未直接标出，请按踏面顺序判断",
+  "shadowSizeNotice": "左边点光源和右边屏固定，同一块不透光小板只移动位置。两次分别为A、B；示意用长度不是实测，不自动确认实际影子实验。",
+  "shadowSizeScroll": "影子示意图，可横向滚动",
+  "shadowSizeTitle": "试验{label}：灯和屏固定，同一小板在{position}",
+  "shadowSizeLamp": "灯",
+  "shadowSizeObject": "板",
+  "shadowSizeScreen": "屏",
+  "shadowSizeNear": "靠近灯的位置",
+  "shadowSizeFar": "远离灯的位置"
 }

@@ -84,6 +84,7 @@ import { required } from './required';
 import { isRotatingPatchVisual } from './rotating-patch';
 import { isSeatGridVisual } from './seat-grid';
 import { isSemesterGridVisual } from './semester-grid';
+import { isShadowSizeVisual } from './shadow-size';
 import { isShapeCollageVisual } from './shape-collage';
 import { isShapeJoinState } from './shape-join';
 import { isShapePatchVisual } from './shape-patch';
@@ -625,6 +626,9 @@ function visual(value: unknown) {
     }
     case 'rotating-patch': {
       return isRotatingPatchVisual(value);
+    }
+    case 'shadow-size': {
+      return isShadowSizeVisual(value);
     }
     case 'solid-face-traces': {
       return isSolidFaceTracesVisual(value);

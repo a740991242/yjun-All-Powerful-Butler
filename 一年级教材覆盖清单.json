@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T16:55:26.584Z",
+  "generatedAt": "2026-10-04T17:42:08.256Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 9,
-        "pendingEntries": 9,
+        "availablePacks": 12,
+        "pendingEntries": 8,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 310,
-          "manual": 81,
-          "reflection": 20
+          "objective": 350,
+          "manual": 103,
+          "reflection": 28
         }
       },
       "units": [
@@ -32033,36 +32033,328 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-u2-pending",
-              "title": "图形大变身（一）",
-              "textbookTitle": "图形大变身（一）",
+              "id": "bnu-lower-trace-print",
+              "title": "描轮廓、换接触面与自主印图案",
+              "textbookTitle": "做一做",
               "page": 18,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "先预测再描印，比较同一物品换接触处后的轮廓，用印痕制作自己的图案并交流。",
+              "prerequisite": "能观察物体的外形，知道纸上轮廓与物体本身不同。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 5,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 8,
+                "manual": 8,
+                "reflection": 3
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 4,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-trace-print"],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": ["plane-cards"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-05",
+                "reviewer": "公开扫描18～19页逐项阅读",
+                "notes": "描/印、同一物品换面、自由积木图案交流、找两个物品先预测后验证、三图说像什么再制作各自对应，开放创作不按标准形象评分。"
+              }
+            },
+            {
+              "id": "bnu-lower-find-traces",
+              "title": "找印痕来源：平面、滚印与整个物体",
+              "textbookTitle": "找一找",
+              "page": 20,
+              "version": 1,
+              "status": "available",
+              "goal": "按接触面和操作配对四种轮廓，比较同一积木不同面，说明圆柱平面描印与曲面滚印的区别。",
+              "prerequisite": "知道描印轮廓与整个物体不同，能辨认四种基本平面轮廓。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 22,
+                "manual": 8,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-find-traces"],
+              "questionKinds": ["choice", "manual", "reflection"],
+              "visualKinds": ["plane-cards", "solid-face-traces"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描20～21页及原配对逐项阅读",
+                "notes": "四印痕来源、正方体/长方体换面、圆柱底面圆与侧面滚印长方形、三角与长方来自同一积木、四物描边配对、三实物可能印痕、小屋各部件分别验证；原开放对象不强唯一。"
+              }
+            },
+            {
+              "id": "bnu-lower-shadow-theatre",
+              "title": "影子故事、固定条件与大小变化",
+              "textbookTitle": "影子剧场",
+              "page": 22,
+              "version": 1,
+              "status": "available",
+              "goal": "按原四幕讲影子故事，合作选择材料做影子，在固定灯屏条件下比较同物离灯位置与影子大小，并提出自己的研究问题。",
+              "prerequisite": "能按先后描述图画，区分物体与平面轮廓，愿意记录实际观察。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 10,
+                "manual": 6,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-shadow-theatre"],
+              "questionKinds": ["sequence", "choice", "manual", "reflection"],
+              "visualKinds": ["shadow-size"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描22～23页逐项阅读",
+                "notes": "原四幕顺序与四情节、文具盒花盆/铅笔笔帽嫩芽合作、手兔远近两比较、三手势试做、皮影文化与单元收获问题交流分别对应；实作人工，不用点选替代。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "resourceId": "bnu-lower-public-scan-2024",
+            "source": "https://keben.szxuexiao.com/html/10760.html",
+            "checkedAt": "2026-10-05",
+            "unit": "u2",
+            "status": "original-teaching-implemented",
+            "finalTeacherReview": "not-verified",
+            "scope": "印刷第18～23页所列活动及注明的迁移；只证明原活动与教学任务对应，不证明后续单元、全册、全年或真实操作完成。",
+            "activities": [
+              {
+                "page": 18,
+                "sourceActivity": "trace-print",
+                "scope": "描或印轮廓，三种原材料不强归四类",
+                "lesson": "bnu-lower-trace-print",
+                "steps": [1],
+                "objective": ["whole", "irregular"],
+                "manual": ["actual-trace"],
+                "records": [],
+                "boundary": "原材料轮廓与本站四图卡不同；描图不增加立体对象。"
+              },
+              {
+                "page": 18,
+                "sourceActivity": "change-contact",
+                "scope": "同一物品换接触处再试",
+                "lesson": "bnu-lower-trace-print",
+                "steps": [2],
+                "objective": ["contact"],
+                "manual": ["actual-contact"],
+                "records": [],
+                "boundary": "接触方式改变而不是物品变成另一件；实际试验独立确认。"
+              },
+              {
+                "page": 19,
+                "sourceActivity": "own-pattern",
+                "scope": "积木印喜爱图案并交流",
+                "lesson": "bnu-lower-trace-print",
+                "steps": [3],
+                "objective": [
+                  "main-shape-0",
+                  "main-shape-1",
+                  "main-shape-2",
+                  "main-shape-3"
+                ],
+                "manual": ["actual-pattern", "actual-share"],
+                "records": [],
+                "boundary": "四图卡为辨认迁移，不冒原毛虫/鱼/箭头形作品部件计数；作品与联想开放。"
+              },
+              {
+                "page": 19,
+                "sourceActivity": "two-predictions",
+                "scope": "两个物品先预测后描印比较",
+                "lesson": "bnu-lower-trace-print",
+                "steps": [4],
+                "objective": ["prediction"],
+                "manual": ["actual-first-object", "actual-second-object"],
+                "records": ["prediction-record"],
+                "boundary": "先记录真正预测再验证；不能事后用结果替换原预测。"
+              },
+              {
+                "page": 19,
+                "sourceActivity": "three-pictures",
+                "scope": "三图说像什么，自选制作或改作",
+                "lesson": "bnu-lower-trace-print",
+                "steps": [5],
+                "objective": [],
+                "manual": ["actual-three-pictures", "actual-make"],
+                "records": ["reflection", "plan"],
+                "boundary": "允许有依据的其它联想；反思和未来计划不替代实作。"
+              },
+              {
+                "page": 20,
+                "sourceActivity": "four-traces",
+                "scope": "四印痕对应所选积木接触处",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [1],
+                "objective": [
+                  "main-shape-0",
+                  "main-shape-1",
+                  "main-shape-2",
+                  "main-shape-3"
+                ],
+                "manual": ["actual-four"],
+                "records": [],
+                "boundary": "本站四图卡是分类迁移；原物配对须说明接触处。"
+              },
+              {
+                "page": 20,
+                "sourceActivity": "cube-faces",
+                "scope": "正方体换面描印并叠放比较",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [2],
+                "objective": ["cube-A", "cube-B", "cube-C", "whole"],
+                "manual": ["actual-cube"],
+                "records": [],
+                "boundary": "仅选三面不表示只有三面；同一正方体各面可重合。"
+              },
+              {
+                "page": 20,
+                "sourceActivity": "cuboid-faces",
+                "scope": "同一长方体不同面大小比较",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [3],
+                "objective": ["cuboid-A", "cuboid-B", "cuboid-C", "exact"],
+                "manual": ["actual-cuboid"],
+                "records": [],
+                "boundary": "三方向不同长度是本站已给模型；不能推广所有长方体都有三种大小。"
+              },
+              {
+                "page": 21,
+                "sourceActivity": "cylinder-roll",
+                "scope": "圆柱底面印圆、曲面滚印长方痕迹",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [4],
+                "objective": ["cylinder-bottom", "cylinder-roll"],
+                "manual": ["actual-cylinder"],
+                "records": [],
+                "boundary": "滚动扫出展开痕迹不等于一个长方形平面；非任意滚法均完整。"
+              },
+              {
+                "page": 21,
+                "sourceActivity": "triangle-rectangle",
+                "scope": "同一物品留下三角和长方轮廓",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [5],
+                "objective": ["prism-A", "prism-B", "unique"],
+                "manual": ["actual-triangle-rectangle"],
+                "records": [],
+                "boundary": "本站三棱柱为原创示例；一个三角印痕不能唯一推出整个物体。"
+              },
+              {
+                "page": 21,
+                "sourceActivity": "irregular-pairs",
+                "scope": "十字、细长笔侧面、长方块、小熊轮廓连线",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [6],
+                "objective": [],
+                "manual": ["actual-outlines"],
+                "records": [],
+                "boundary": "异形轮廓不强归四基本类；对照原图逐段比。"
+              },
+              {
+                "page": 21,
+                "sourceActivity": "three-objects",
+                "scope": "正方体、圆柱、长方体各能印什么",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [6],
+                "objective": [],
+                "manual": ["actual-three-objects"],
+                "records": [],
+                "boundary": "开放尝试要说明操作，不能只按物品名称唯一判断。"
+              },
+              {
+                "page": 21,
+                "sourceActivity": "house-parts",
+                "scope": "小屋屋顶、主体、窗、门、烟囱逐部分找来源",
+                "lesson": "bnu-lower-find-traces",
+                "steps": [7],
+                "objective": [
+                  "house-roof",
+                  "house-body",
+                  "house-window",
+                  "house-door",
+                  "house-chimney"
+                ],
+                "manual": ["actual-house"],
+                "records": ["reflection", "plan"],
+                "boundary": "类别与实际描印大小分别核对；材料可替代，不强唯一来源。"
+              },
+              {
+                "page": 22,
+                "sourceActivity": "four-scene-story",
+                "scope": "发芽、长高、开花、结果四幕讲故事",
+                "lesson": "bnu-lower-shadow-theatre",
+                "steps": [1],
+                "objective": ["story-order", "same-plant"],
+                "manual": ["actual-story"],
+                "records": [],
+                "boundary": "同一植物不同时间不加成四盆；画面信息与合理想象分清。"
+              },
+              {
+                "page": 22,
+                "sourceActivity": "cooperative-roles",
+                "scope": "文具盒花盆、铅笔笔帽嫩芽合作做影子",
+                "lesson": "bnu-lower-shadow-theatre",
+                "steps": [2],
+                "objective": ["role"],
+                "manual": ["actual-cooperate"],
+                "records": [],
+                "boundary": "物体与故事角色分开；计划与实际合作分别记录。"
+              },
+              {
+                "page": 23,
+                "sourceActivity": "near-far-light",
+                "scope": "固定灯屏和手势只改变离灯位置比较",
+                "lesson": "bnu-lower-shadow-theatre",
+                "steps": [3],
+                "objective": [
+                  "bigger",
+                  "near-light",
+                  "far-light",
+                  "control",
+                  "body-size",
+                  "simulation"
+                ],
+                "manual": ["actual-far", "actual-near"],
+                "records": ["observations"],
+                "boundary": "原创固定点光源/屏与同板同轴条件明确；示意不量厘米或确认真实实验。"
+              },
+              {
+                "page": 23,
+                "sourceActivity": "three-gestures",
+                "scope": "尝试三手势并说联想",
+                "lesson": "bnu-lower-shadow-theatre",
+                "steps": [4],
+                "objective": ["unknown"],
+                "manual": ["actual-three-gestures"],
+                "records": [],
+                "boundary": "固定距离再比较手势；单个影子不能唯一确定物品。"
+              },
+              {
+                "page": 23,
+                "sourceActivity": "culture-and-harvest",
+                "scope": "皮影简介、单元收获与研究问题交流",
+                "lesson": "bnu-lower-shadow-theatre",
+                "steps": [5],
+                "objective": [],
+                "manual": ["actual-share"],
+                "records": ["question", "plan"],
+                "boundary": "文化知识在步骤及换问法复习；收获问题开放，计划不冒已发生。"
+              }
+            ]
+          }
         },
         {
           "id": "classroom",

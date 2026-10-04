@@ -40,6 +40,7 @@ import type { PartitionedSquareVisual } from './partitioned-square';
 import type { QuarterCircleVisual } from './quarter-circle';
 import type { RegroupSticksVisual } from './regroup-sticks';
 import type { SemesterGridVisual } from './semester-grid';
+import type { ShadowSizeVisual } from './shadow-size';
 import type { SmallArithmeticVisual } from './small-arithmetic';
 import type { SolidInstructionsVisual } from './solid-instructions';
 import type { SolidPatternVisual } from './solid-pattern';
@@ -500,6 +501,7 @@ export type Visual =
   | RotatingPatchVisual
   | SeatGridVisual
   | SemesterGridVisual
+  | ShadowSizeVisual
   | ShapeCollageVisual
   | ShapePatchVisual
   | SmallArithmeticVisual

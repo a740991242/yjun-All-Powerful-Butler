@@ -7,6 +7,11 @@ import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
+import {
+  bnuLowerFindTracesLesson,
+  bnuLowerShadowTheatreLesson,
+  bnuLowerTracePrintLesson,
+} from './bnu-lower-shapes';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
 
@@ -15,12 +20,16 @@ export const bnuLowerSource = {
   preview: 'https://keben.szxuexiao.com/html/10757.html',
   contentsPreview: 'https://keben.szxuexiao.com/html/10758.html',
   firstUnitPreview: 'https://keben.szxuexiao.com/html/10759.html',
+  secondUnitPreview: 'https://keben.szxuexiao.com/html/10760.html',
   publisherPortal: 'https://jiaoshi.bnupg.com/',
   checkedAt: '2026-10-04',
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+  readPrintedPages: [
+    2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+    23,
+  ],
   contents: [
     ['u1', '20以内数与加法', 2],
     ['u2', '图形大变身（一）', 18],
@@ -349,6 +358,25 @@ function pending(key: string, title: string, page: number): Lesson {
   };
 }
 
+const authoredLessons: Record<string, Lesson[]> = {
+  u1: [
+    bnuLowerAncientCountLesson,
+    bnuLowerPlaceValueLesson,
+    bnuLowerBlocksLesson,
+    bnuLowerFarmLesson,
+    bnuLowerChoresLesson,
+    bnuLowerRabbitsLesson,
+    bnuLowerAdditionTableLesson,
+    bnuLowerUnitOneHarvestLesson,
+    bnuLowerUnitOnePracticeLesson,
+  ],
+  u2: [
+    bnuLowerTracePrintLesson,
+    bnuLowerFindTracesLesson,
+    bnuLowerShadowTheatreLesson,
+  ],
+};
+
 export const bnuLowerBook: Book = {
   id: bnuLowerTextbook.id,
   subject: 'math',
@@ -361,19 +389,6 @@ export const bnuLowerBook: Book = {
     id: key,
     title,
     page,
-    lessons:
-      key === 'u1'
-        ? [
-            bnuLowerAncientCountLesson,
-            bnuLowerPlaceValueLesson,
-            bnuLowerBlocksLesson,
-            bnuLowerFarmLesson,
-            bnuLowerChoresLesson,
-            bnuLowerRabbitsLesson,
-            bnuLowerAdditionTableLesson,
-            bnuLowerUnitOneHarvestLesson,
-            bnuLowerUnitOnePracticeLesson,
-          ]
-        : [pending(key, title, page)],
+    lessons: authoredLessons[key] ?? [pending(key, title, page)],
   })),
 };

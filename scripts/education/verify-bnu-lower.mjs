@@ -14,6 +14,40 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--trace-print'))
+    return {
+      index: 9,
+      lessonId: 'bnu-lower-trace-print',
+      zero: null,
+      retry: '-main-shape-0',
+      manual: 8,
+      steps: 5,
+      review: 4,
+      key: 'trace',
+    };
+  if (process.argv.includes('--find-traces'))
+    return {
+      index: 10,
+      lessonId: 'bnu-lower-find-traces',
+      zero: null,
+      retry: '-main-shape-0',
+      manual: 8,
+      steps: 7,
+      review: 5,
+      key: 'find',
+    };
+  if (process.argv.includes('--shadow-theatre'))
+    return {
+      index: 11,
+      lessonId: 'bnu-lower-shadow-theatre',
+      zero: null,
+      retry: '-bigger',
+      manual: 6,
+      steps: 5,
+      review: 4,
+      key: 'shadow',
+    };
+
   if (process.argv.includes('--unit-one-practice'))
     return {
       index: 8,
@@ -231,7 +265,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 9
+          .count()) !== 12
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -246,6 +280,79 @@ const server = http.createServer(async (req, res) => {
         const state = await read();
         return state.sessions.find((s) => s.id === sid);
       };
+      async function inspectShadow(variant, english = false) {
+        const model = p.locator('[data-shadow-size]');
+        const scenes = model.locator('[data-shadow-scene]');
+        if ((await scenes.count()) !== 2)
+          throw new Error('Missing shadow trials');
+        const geometry = await scenes.evaluateAll((nodes) =>
+          nodes.map((n) => {
+            const object = n.querySelector('[data-shadow-object]');
+            const shadow = n.querySelector('[data-shadow-strip]');
+            return {
+              label: n.dataset.shadowScene,
+              objectX: Number(object.getAttribute('x1')),
+              objectSize:
+                Number(object.getAttribute('y2')) -
+                Number(object.getAttribute('y1')),
+              shadowSize:
+                Number(shadow.getAttribute('y2')) -
+                Number(shadow.getAttribute('y1')),
+              aria: n.getAttribute('aria-label'),
+            };
+          }),
+        );
+        const nearIndex = variant === 'main' ? 0 : 1;
+        if (
+          geometry[nearIndex].objectX !== 100 ||
+          geometry[1 - nearIndex].objectX !== 200 ||
+          geometry.some((s) => s.objectSize !== 20) ||
+          geometry[nearIndex].shadowSize <= geometry[1 - nearIndex].shadowSize
+        )
+          throw new Error('Shadow size or controlled conditions changed');
+        if (
+          !geometry[nearIndex].aria.includes(
+            english ? 'nearer the light' : '靠近灯',
+          ) ||
+          !geometry[1 - nearIndex].aria.includes(
+            english ? 'farther from the light' : '远离灯',
+          )
+        )
+          throw new Error('Accessible condition missing');
+        for (let i = 0; i < 2; i++) {
+          const svg = scenes.nth(i);
+          await svg.evaluate((n) => n.scrollIntoView({ block: 'center' }));
+          const scroll = svg.locator('..');
+          const size = await scroll.evaluate((n) => ({
+            visible: n.clientWidth,
+            all: n.scrollWidth,
+          }));
+          if (size.all > size.visible) {
+            await scroll.focus();
+            await scroll.press('ArrowRight');
+            await p.waitForTimeout(200);
+            if ((await scroll.evaluate((n) => n.scrollLeft)) <= 0)
+              throw new Error('Shadow keyboard scrolling unavailable');
+          }
+          for (const edge of ['left', 'right']) {
+            await scroll.evaluate((n, edge) => {
+              n.scrollLeft = edge === 'left' ? 0 : n.scrollWidth;
+            }, edge);
+            await p.screenshot({
+              path: `/tmp/butler-bnu-shadow-${variant}-${english ? 'en' : 'zh'}-${i}-${edge}-${width}.png`,
+            });
+          }
+          await scroll.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+        }
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error('Shadow overflows whole page');
+      }
       async function inspectAddition(variant) {
         const diagram = p.locator('[data-teen-addition-table]');
         if (
@@ -333,7 +440,7 @@ const server = http.createServer(async (req, res) => {
           .first()
           .waitFor({ state: 'hidden' });
         if (
-          (await diagram.locator('[data-stair-marker]').count()) !== 9 ||
+          (await diagram.locator('[data-stair-marker]').count()) !== 12 ||
           (await diagram.locator('[data-stair-given]').count()) !== 10
         )
           throw new Error('Stair geometry count');
@@ -447,7 +554,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
-      for (let step = 0; step < (flow.key === 'practice' ? 7 : 6); step++) {
+      for (
+        let step = 0;
+        step < (flow.steps || (flow.key === 'practice' ? 8 : 7)) - 1;
+        step++
+      ) {
         await click('下一步');
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
@@ -506,6 +617,62 @@ const server = http.createServer(async (req, res) => {
           (!q.prompt.includes('拨入个位5颗') || q.prompt.includes('拨去'))
         )
           throw new Error('Actual counter task used wrong operation');
+        if (q.id.endsWith('-bigger') && flow.key === 'shadow') {
+          await inspectShadow('main');
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-shadow-size]')
+            .getByText(/The point light on the left/)
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectShadow('main', true);
+          const labelFits = await p
+            .locator('[data-shadow-size] span')
+            .evaluateAll((nodes) =>
+              nodes.every((n) => {
+                const r = document.createRange();
+                r.selectNodeContents(n);
+                const a = r.getBoundingClientRect();
+                const b = n.getBoundingClientRect();
+                return a.left >= b.left - 1 && a.right <= b.right + 1;
+              }),
+            );
+          if (!labelFits) throw new Error('English shadow legend overflows');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('[data-shadow-size]')
+            .getByText(/左边点光源和右边屏固定/)
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error(
+              'Shadow language or theme changed learning records',
+            );
+        }
         if (q.rule.kind === 'manual') await click('暂时跳过');
         else if (q.rule.kind === 'reflection') {
           await p
@@ -1005,7 +1172,69 @@ const server = http.createServer(async (req, res) => {
                 .getByRole('checkbox', { name: option.label, exact: true })
                 .check();
             }
+          } else if (q.rule.kind === 'sequence') {
+            for (const [field, value] of q.rule.values.entries()) {
+              const input = p.getByRole('combobox', {
+                name: `第${field + 1}项`,
+                exact: true,
+              });
+              await input.evaluate((n) =>
+                n.closest('.ant-select').scrollIntoView({ block: 'center' }),
+              );
+              await input.focus();
+              await input.press('ArrowDown');
+              await p.waitForTimeout(350);
+              const label = q.choices.find((o) => o.id === value).label;
+              await p
+                .locator(
+                  '.ant-select-dropdown:visible .ant-select-item-option-content',
+                )
+                .filter({ hasText: new RegExp(`^${label}$`) })
+                .click();
+              await p
+                .locator('.ant-select-dropdown:visible')
+                .waitFor({ state: 'hidden' });
+              if (field === 0) {
+                await wait(
+                  (d) =>
+                    d.sessions.find((s) => s.id === sid).responses[index]
+                      .draft?.[0] === value,
+                );
+                await p.reload({ waitUntil: 'networkidle' });
+                if (
+                  (await input.evaluate((n) =>
+                    n
+                      .closest('.ant-select')
+                      ?.querySelector('.ant-select-selection-item')
+                      ?.textContent?.trim(),
+                  )) !== label
+                )
+                  throw new Error('Partial sequence draft lost');
+              }
+            }
           } else if (q.rule.kind === 'choice') {
+            if (q.id.endsWith(flow.retry)) {
+              const wrong = q.choices.find((o) => o.id !== q.rule.value);
+              await p
+                .getByRole('radio', { name: wrong.label, exact: true })
+                .check();
+              await wait(
+                (d) =>
+                  d.sessions.find((s) => s.id === sid).responses[index]
+                    .draft === wrong.id,
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              if (
+                !(await p
+                  .getByRole('radio', { name: wrong.label, exact: true })
+                  .isChecked())
+              )
+                throw new Error('Choice draft lost');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             const label =
               q.choices?.find((o) => o.id === q.rule.value)?.label ||
               q.rule.value;
@@ -1157,13 +1386,16 @@ const server = http.createServer(async (req, res) => {
       const reviewing = await read();
       const review = reviewing.sessions.find((s) => s.mode === 'review');
       if (
-        review.questions.length !== (flow.key === 'blocks' ? 6 : 4) ||
+        review.questions.length !==
+          (flow.review || (flow.key === 'blocks' ? 6 : 4)) ||
         review.originalSessionId !== sid
       )
         throw new Error('Review identity');
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (flow.key === 'shadow' && q.id.endsWith('-review-bigger'))
+          await inspectShadow('review');
         if (flow.key === 'practice' && q.id.endsWith('-review-stair'))
           await inspectStairs('review');
         if (flow.key === 'addition' && q.id.endsWith('-review-position'))
@@ -1195,7 +1427,12 @@ const server = http.createServer(async (req, res) => {
           await (q.rule.kind === 'number'
             ? p.getByRole('spinbutton').fill(String(q.rule.value))
             : p
-                .getByRole('radio', { name: q.rule.value, exact: true })
+                .getByRole('radio', {
+                  name:
+                    q.choices?.find((o) => o.id === q.rule.value)?.label ||
+                    q.rule.value,
+                  exact: true,
+                })
                 .check());
         }
         await click('提交答案');
@@ -1236,7 +1473,7 @@ const server = http.createServer(async (req, res) => {
           mainTasks: session.questions.length,
           reviewTasks: review.questions.length,
           skipped: flow.manual,
-          zeroReload: true,
+          zeroReload: flow.zero !== null,
           retryHistory: true,
           oldSessionUnchanged: true,
           backup: true,

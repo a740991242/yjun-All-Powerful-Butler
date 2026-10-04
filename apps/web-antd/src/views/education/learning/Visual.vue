@@ -81,6 +81,7 @@ import { required } from './required';
 import RotatingPatch from './RotatingPatch.vue';
 import SeatGrid from './SeatGrid.vue';
 import SemesterGrid from './SemesterGrid.vue';
+import ShadowSize from './ShadowSize.vue';
 import {
   initialShapeJoin,
   isShapeJoinState,
@@ -1341,6 +1342,7 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'rotating-patch'"
       :visual="visual"
     />
+    <ShadowSize v-else-if="visual.kind === 'shadow-size'" :visual="visual" />
     <SolidFaceTraces
       v-else-if="visual.kind === 'solid-face-traces'"
       :visual="visual"
