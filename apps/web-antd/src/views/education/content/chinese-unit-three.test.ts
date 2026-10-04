@@ -375,7 +375,9 @@ it('locates all twenty recognition targets by word position without adding writi
     ],
   ] as const;
   for (const [lesson, words, positions, targets] of cases) {
-    expect(lesson.version).toBe(lesson.id === 'cu-u3-5' ? 3 : 2);
+    expect(lesson.version).toBe(
+      ['cu-u3-4', 'cu-u3-5'].includes(lesson.id) ? 3 : 2,
+    );
     expect(lesson.parentTip).toContain('无新增会写汉字');
     targets.forEach((target, i) => {
       const q = lesson.reviewQuestions!.find(
@@ -444,4 +446,72 @@ it('keeps the exact former recognition materials, versions and wrong-first histo
   for (const session of restored)
     for (const r of session.responses)
       expect(r.submissions.map((x) => x.correct)).toEqual([false, true]);
+});
+
+it('uses explicit attested whole-syllable review cards and preserves the old ri snapshot', () => {
+  const lesson = formalUnitThreeInitials['u3-4']!;
+  const cards = lesson.reviewQuestions!.filter((q) =>
+    q.id.includes('-r-whole-'),
+  );
+  expect(cards.map((q) => q.material)).toEqual(['zhǐ', 'chǐ', 'shǐ', 'rì']);
+  expect(cards.map((q) => q.rule)).toEqual(
+    ['zhi', 'chi', 'shi', 'ri'].map((value) => ({ kind: 'choice', value })),
+  );
+  const question = cards[3]!;
+  expect(question.explanation).toContain('rì');
+  expect(evaluate(question.rule, 'ri')).toBe(true);
+  expect(evaluate(question.rule, 'r')).toBe(false);
+  expect(lesson.version).toBe(3);
+  expect(formalUnitThreeInitials['u3-3']!.version).toBe(2);
+  expect(
+    formalUnitThreeInitials['u3-3']!.reviewQuestions!.filter((q) =>
+      q.id.includes('-r-whole-'),
+    ).map((q) => q.material),
+  ).toEqual(['zǐ', 'cǐ', 'sǐ']);
+
+  const old = structuredClone(lesson);
+  old.version = 2;
+  old.questions = [
+    {
+      id: 'cu-u3-4-r-whole-3',
+      knowledge: 'cu-u3-4-whole-3',
+      prompt: '去掉本题调号，找出完整的整体认读写法。',
+      material: 'rǐ',
+      choices: ['zhi', 'chi', 'shi', 'ri'].map((label) => ({
+        id: label,
+        label,
+      })),
+      rule: { kind: 'choice', value: 'ri' },
+      hint: '看清本题声母、介音、韵母和调号；原书阅读题先共读再找信息。',
+      explanation:
+        '这里只辨完整音节的写法；整体认读的实际读音跟规范示范，不把末尾i都当作单韵母i。',
+    },
+  ];
+  const now = '2026-10-04T00:00:00.000Z';
+  const session = createSession(old, chineseBooks[0]!.id, 'child', {
+    seed: 13,
+    now,
+  });
+  session.phase = 'practice';
+  for (const draft of ['zhi', 'ri'])
+    session.responses[0] = submitResponse(
+      session.questions[0]!,
+      { ...session.responses[0]!, draft },
+      now,
+    );
+  expect(session.responses[0]!.submissions.map((s) => s.correct)).toEqual([
+    false,
+    true,
+  ]);
+  expect(
+    parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '陪读', createdAt: now }],
+        sessions: [session],
+      }),
+    ).data.sessions[0],
+  ).toEqual(session);
+  expect(session.questions[0]!.material).toBe('rǐ');
 });

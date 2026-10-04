@@ -275,11 +275,13 @@ export const formalYwLesson: Lesson = {
 
 interface InitialBody {
   itemId: string;
+  version?: number;
   scene: string;
   words: string;
   characters: [string, string, string][];
   triples: [string, string, string, string][];
   whole?: string[];
+  wholeReview?: string[];
   readingTitle: string;
   reading: [string, string[], string, string, string[], string][];
 }
@@ -376,6 +378,7 @@ const initialBodies: InitialBody[] = [
       ['s', 'u', 'ō', 'ǒ'],
     ],
     whole: ['zi', 'ci', 'si'],
+    wholeReview: ['zǐ', 'cǐ', 'sǐ'],
     readingTitle: '过桥',
     reading: [
       [
@@ -398,6 +401,7 @@ const initialBodies: InitialBody[] = [
   },
   {
     itemId: 'u3-4',
+    version: 3,
     scene:
       '观察第38页课堂、日出和字母形状的情境；zh、ch、sh各是一个声母，不把两个字母拆成两个声母。平舌、翘舌发音跟规范示范，网站不判舌位。',
     words:
@@ -415,6 +419,8 @@ const initialBodies: InitialBody[] = [
       ['r', 'u', 'ò', 'ò'],
     ],
     whole: ['zhi', 'chi', 'shi', 'ri'],
+    // Explicit examples: do not manufacture a third tone for every syllable.
+    wholeReview: ['zhǐ', 'chǐ', 'shǐ', 'rì'],
     readingTitle: '绕口令',
     reading: [
       [
@@ -496,8 +502,10 @@ function makeInitialBody(body: InitialBody): Lesson {
           : '选择本题列出的整体认读音节，不能按两个部分拆读。',
         review ? required(body.whole) : [syllable, syllable.slice(0, -1), 'i'],
         syllable,
-        '这里只辨完整音节的写法；整体认读的实际读音跟规范示范，不把末尾i都当作单韵母i。',
-        review ? `${syllable.slice(0, -1)}ǐ` : syllable,
+        review && syllable === 'ri'
+          ? 'rì去掉第四声调号写作ri，可联系已学的日。这里辨整体认读的完整写法，不把ri拆成r与单韵母i；实际读音跟规范示范。'
+          : '这里只辨完整音节的写法；整体认读的实际读音跟规范示范，不把末尾i都当作单韵母i。',
+        review ? required(required(body.wholeReview)[index]) : syllable,
       ),
     ),
     ...body.characters.map(([character, main], index) => ({
@@ -555,7 +563,7 @@ function makeInitialBody(body: InitialBody): Lesson {
   writingStep.text += `对照教材第${audit.pages[0]}页底部四线三格逐笔示范，先指四条线和上、中、下三格，再看起笔和占格；屏幕普通字体不作为规范手写。`;
   return {
     ...structuredClone(base),
-    version: 2,
+    version: body.version ?? 2,
     id: lessonId,
     title: audit.title,
     textbookTitle: audit.title,
