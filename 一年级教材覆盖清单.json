@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T01:15:43.062Z",
+  "generatedAt": "2026-10-04T01:35:12.648Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -12792,8 +12792,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 451,
-          "manual": 170,
+          "objective": 495,
+          "manual": 216,
           "reflection": 75
         }
       },
@@ -13055,23 +13055,41 @@
               "title": "退位减法过程与不同算法",
               "textbookTitle": "20以内的退位减法",
               "page": 9,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "比较平十、破十、想加算减，分别保存中间过程与得数。",
               "prerequisite": "先会分合10、20以内的数与加减；纸笔和纸片按实际准备，缺材料可跳过。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 7,
               "tasks": {
-                "objective": 10,
-                "manual": 6,
+                "objective": 22,
+                "manual": 20,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 16,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": ["ml-borrow-process"],
+              "knowledge": [
+                "ml-borrow-process",
+                "ml-borrow-process-complete-missing-pair",
+                "ml-borrow-process-complete-branches",
+                "ml-borrow-process-actual-source-page-9-methods",
+                "ml-borrow-process-actual-source-page-9-practice",
+                "ml-borrow-process-actual-source-page-10-circle",
+                "ml-borrow-process-actual-source-page-10-match",
+                "ml-borrow-process-actual-source-page-10-wheels",
+                "ml-borrow-process-actual-source-page-10-moving",
+                "ml-borrow-process-actual-source-page-12-method",
+                "ml-borrow-process-actual-source-page-12-practice",
+                "ml-borrow-process-actual-source-page-13-parts",
+                "ml-borrow-process-actual-source-page-13-families",
+                "ml-borrow-process-actual-source-page-13-missing",
+                "ml-borrow-process-actual-source-page-16-missing",
+                "ml-borrow-process-actual-source-page-16-small",
+                "ml-borrow-process-actual-source-page-16-branches"
+              ],
               "questionKinds": [
                 "steps",
                 "choice",
@@ -13081,9 +13099,9 @@
               ],
               "visualKinds": ["count", "number-line", "break-ten"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材8～22页实际阅读与原创任务程序核对",
-                "notes": "资源1221001102241图片14～28逐页实际查看。保留原三课v1和36式表格，补方法、关系与完整45式课包。不发布原扫描、插画或原题集合，学校版本仍需另行确认。"
+                "notes": "资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。"
               }
             },
             {
@@ -13091,23 +13109,43 @@
               "title": "读题、整体与部分及退位应用",
               "textbookTitle": "20以内的退位减法",
               "page": 17,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "识别所求、无关条件、静态分类、原来数量和包含自己的队伍。",
               "prerequisite": "先会分合10、20以内的数与加减；纸笔和纸片按实际准备，缺材料可跳过。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 7,
               "tasks": {
-                "objective": 12,
-                "manual": 4,
+                "objective": 16,
+                "manual": 20,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 8,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": ["ml-borrow-relations"],
+              "knowledge": [
+                "ml-borrow-relations",
+                "ml-borrow-relations-complete-classifications",
+                "ml-borrow-relations-complete-queue",
+                "ml-borrow-relations-actual-source-page-8-scene",
+                "ml-borrow-relations-actual-source-page-11-problems",
+                "ml-borrow-relations-actual-source-page-11-gaps",
+                "ml-borrow-relations-actual-source-page-13-fish",
+                "ml-borrow-relations-actual-source-page-15-cars",
+                "ml-borrow-relations-actual-source-page-15-dumplings",
+                "ml-borrow-relations-actual-source-page-15-swans",
+                "ml-borrow-relations-actual-source-page-17-reading",
+                "ml-borrow-relations-actual-source-page-18-apples",
+                "ml-borrow-relations-actual-source-page-18-hidden",
+                "ml-borrow-relations-actual-source-page-18-dolphins-squirrels",
+                "ml-borrow-relations-actual-source-page-19-problems",
+                "ml-borrow-relations-actual-source-page-21-hidden",
+                "ml-borrow-relations-actual-source-page-21-boats",
+                "ml-borrow-relations-actual-source-page-22-queue",
+                "ml-borrow-relations-actual-source-page-22-story"
+              ],
               "questionKinds": [
                 "number",
                 "choice",
@@ -13117,9 +13155,9 @@
               ],
               "visualKinds": ["stock-table"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材8～22页实际阅读与原创任务程序核对",
-                "notes": "资源1221001102241图片14～28逐页实际查看。保留原三课v1和36式表格，补方法、关系与完整45式课包。不发布原扫描、插画或原题集合，学校版本仍需另行确认。"
+                "notes": "资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。"
               }
             },
             {
@@ -13127,23 +13165,45 @@
               "title": "完整45式退位表与同差应用",
               "textbookTitle": "20以内的退位减法",
               "page": 20,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "明确完整表范围，比较规律、多种同差与两步计算，实际整理另行记录。",
               "prerequisite": "先会分合10、20以内的数与加减；纸笔和纸片按实际准备，缺材料可跳过。",
               "referenceQuery": null,
-              "steps": 6,
+              "steps": 9,
               "tasks": {
-                "objective": 13,
-                "manual": 5,
+                "objective": 41,
+                "manual": 21,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 32,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": ["ml-borrow-organize"],
+              "knowledge": [
+                "ml-borrow-organize",
+                "ml-borrow-organize-complete-compare",
+                "ml-borrow-organize-complete-chain",
+                "ml-borrow-organize-complete-hidden",
+                "ml-borrow-organize-complete-all-pairs",
+                "ml-borrow-organize-actual-source-page-11-chains",
+                "ml-borrow-organize-actual-source-page-14-oral-match",
+                "ml-borrow-organize-actual-source-page-14-wheels",
+                "ml-borrow-organize-actual-source-page-14-moving",
+                "ml-borrow-organize-actual-source-page-14-comparisons",
+                "ml-borrow-organize-actual-source-page-15-matching",
+                "ml-borrow-organize-actual-source-page-15-chains",
+                "ml-borrow-organize-actual-source-page-16-cards",
+                "ml-borrow-organize-actual-source-page-19-branches-match",
+                "ml-borrow-organize-actual-source-page-20-table",
+                "ml-borrow-organize-actual-source-page-21-oral",
+                "ml-borrow-organize-actual-source-page-21-open",
+                "ml-borrow-organize-actual-source-page-22-hidden",
+                "ml-borrow-organize-actual-source-page-22-pairs",
+                "ml-borrow-organize-actual-source-page-22-chains",
+                "ml-borrow-organize-actual-source-page-22-growth"
+              ],
               "questionKinds": [
                 "steps",
                 "number",
@@ -13154,9 +13214,9 @@
               ],
               "visualKinds": ["arithmetic-grid"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材8～22页实际阅读与原创任务程序核对",
-                "notes": "资源1221001102241图片14～28逐页实际查看。保留原三课v1和36式表格，补方法、关系与完整45式课包。不发布原扫描、插画或原题集合，学校版本仍需另行确认。"
+                "notes": "资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。"
               }
             }
           ]
@@ -14524,19 +14584,19 @@
           "title": "20以内退位减法",
           "textbookTitle": "平台专项练习",
           "page": 8,
-          "version": 2,
+          "version": 3,
           "status": "available",
           "goal": "结合破十与想加算减，练习不同退位组合。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 41,
-            "manual": 11,
+            "objective": 81,
+            "manual": 41,
             "reflection": 4
           },
           "reviewTasks": {
-            "objective": 26,
+            "objective": 66,
             "manual": 0,
             "reflection": 0
           },
@@ -14545,7 +14605,43 @@
             "ml-borrow-eight",
             "ml-borrow-small",
             "ml-borrow-process",
-            "ml-borrow-organize"
+            "ml-borrow-process-complete-missing-pair",
+            "ml-borrow-process-complete-branches",
+            "ml-borrow-process-actual-source-page-9-methods",
+            "ml-borrow-process-actual-source-page-9-practice",
+            "ml-borrow-process-actual-source-page-10-circle",
+            "ml-borrow-process-actual-source-page-10-match",
+            "ml-borrow-process-actual-source-page-10-wheels",
+            "ml-borrow-process-actual-source-page-10-moving",
+            "ml-borrow-process-actual-source-page-12-method",
+            "ml-borrow-process-actual-source-page-12-practice",
+            "ml-borrow-process-actual-source-page-13-parts",
+            "ml-borrow-process-actual-source-page-13-families",
+            "ml-borrow-process-actual-source-page-13-missing",
+            "ml-borrow-process-actual-source-page-16-missing",
+            "ml-borrow-process-actual-source-page-16-small",
+            "ml-borrow-process-actual-source-page-16-branches",
+            "ml-borrow-organize",
+            "ml-borrow-organize-complete-compare",
+            "ml-borrow-organize-complete-chain",
+            "ml-borrow-organize-complete-hidden",
+            "ml-borrow-organize-complete-all-pairs",
+            "ml-borrow-organize-actual-source-page-11-chains",
+            "ml-borrow-organize-actual-source-page-14-oral-match",
+            "ml-borrow-organize-actual-source-page-14-wheels",
+            "ml-borrow-organize-actual-source-page-14-moving",
+            "ml-borrow-organize-actual-source-page-14-comparisons",
+            "ml-borrow-organize-actual-source-page-15-matching",
+            "ml-borrow-organize-actual-source-page-15-chains",
+            "ml-borrow-organize-actual-source-page-16-cards",
+            "ml-borrow-organize-actual-source-page-19-branches-match",
+            "ml-borrow-organize-actual-source-page-20-table",
+            "ml-borrow-organize-actual-source-page-21-oral",
+            "ml-borrow-organize-actual-source-page-21-open",
+            "ml-borrow-organize-actual-source-page-22-hidden",
+            "ml-borrow-organize-actual-source-page-22-pairs",
+            "ml-borrow-organize-actual-source-page-22-chains",
+            "ml-borrow-organize-actual-source-page-22-growth"
           ],
           "questionKinds": [
             "number",
@@ -14708,19 +14804,19 @@
           "title": "数量关系与生活应用",
           "textbookTitle": "平台专项练习",
           "page": 17,
-          "version": 4,
+          "version": 5,
           "status": "available",
           "goal": "联系加减法，用图示理解整体、部分与差。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 72,
-            "manual": 27,
+            "objective": 76,
+            "manual": 43,
             "reflection": 11
           },
           "reviewTasks": {
-            "objective": 32,
+            "objective": 36,
             "manual": 0,
             "reflection": 0
           },
@@ -14728,6 +14824,24 @@
             "ml-relations",
             "ml-review-story",
             "ml-borrow-relations",
+            "ml-borrow-relations-complete-classifications",
+            "ml-borrow-relations-complete-queue",
+            "ml-borrow-relations-actual-source-page-8-scene",
+            "ml-borrow-relations-actual-source-page-11-problems",
+            "ml-borrow-relations-actual-source-page-11-gaps",
+            "ml-borrow-relations-actual-source-page-13-fish",
+            "ml-borrow-relations-actual-source-page-15-cars",
+            "ml-borrow-relations-actual-source-page-15-dumplings",
+            "ml-borrow-relations-actual-source-page-15-swans",
+            "ml-borrow-relations-actual-source-page-17-reading",
+            "ml-borrow-relations-actual-source-page-18-apples",
+            "ml-borrow-relations-actual-source-page-18-hidden",
+            "ml-borrow-relations-actual-source-page-18-dolphins-squirrels",
+            "ml-borrow-relations-actual-source-page-19-problems",
+            "ml-borrow-relations-actual-source-page-21-hidden",
+            "ml-borrow-relations-actual-source-page-21-boats",
+            "ml-borrow-relations-actual-source-page-22-queue",
+            "ml-borrow-relations-actual-source-page-22-story",
             "ml-relations-parts",
             "ml-relations-comparison",
             "ml-relations-organize",

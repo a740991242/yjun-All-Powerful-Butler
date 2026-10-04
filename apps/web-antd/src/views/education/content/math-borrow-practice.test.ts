@@ -46,7 +46,10 @@ describe('pep lower borrowing method, relations and complete table', () => {
     );
     expect(evaluate(find(0, 'q8').rule, '需要')).toBe(false);
     expect(evaluate(find(0, 'q10').rule, ['A：17−7=10，再10−1=9'])).toBe(false);
-    const reviews = required(borrowPracticeLessons[0]?.reviewQuestions);
+    const reviews = required(borrowPracticeLessons[0]?.reviewQuestions).slice(
+      0,
+      4,
+    );
     const reviewAnswers: Answer[] = [
       [4, 4, 10, 6],
       [10, 7, 1, 8],
@@ -88,7 +91,10 @@ describe('pep lower borrowing method, relations and complete table', () => {
     ];
     for (const [suffix, wrong] of wrongCases)
       expect(evaluate(find(1, suffix).rule, wrong)).toBe(false);
-    const reviews = required(borrowPracticeLessons[1]?.reviewQuestions);
+    const reviews = required(borrowPracticeLessons[1]?.reviewQuestions).slice(
+      0,
+      4,
+    );
     const reviewAnswers: Answer[] = [8, 13, [5, 6, 9], [1, 8]];
     reviews.forEach((q, i) =>
       expect(evaluate(q.rule, required(reviewAnswers[i]))).toBe(true),
@@ -123,7 +129,10 @@ describe('pep lower borrowing method, relations and complete table', () => {
     expect(() => evaluate(find(2, 'q11').rule, [7, null])).toThrow(
       'educationLearning.answerRequired',
     );
-    const reviews = required(borrowPracticeLessons[2]?.reviewQuestions);
+    const reviews = required(borrowPracticeLessons[2]?.reviewQuestions).slice(
+      0,
+      4,
+    );
     const reviewAnswers: Answer[] = [
       [5, 4, 6],
       ['11−5', '13−7', '15−9'],
@@ -155,7 +164,7 @@ describe('pep lower borrowing method, relations and complete table', () => {
     }
     const original = JSON.stringify(state.sessions);
     borrowPracticeLessons.forEach((l, index) => {
-      expect(l.questions).toHaveLength(required([18, 18, 20][index]));
+      expect(l.questions).toHaveLength(required([44, 38, 64][index]));
       const s = createSession(l, book.id, state.activeProfileId);
       const qIndex = s.questions.findIndex((q) => q.rule.kind === 'steps');
       s.responses[qIndex]!.draft = [null];
@@ -175,8 +184,8 @@ describe('pep lower borrowing method, relations and complete table', () => {
     expect(parseBackup(exportBackup(state)).data).toEqual(state);
     expect(JSON.stringify(state.sessions.slice(0, 3))).toBe(original);
     for (const [id, version] of [
-      ['ms-lower-borrowing', 2],
-      ['ms-lower-relations', 4],
+      ['ms-lower-borrowing', 3],
+      ['ms-lower-relations', 5],
     ] as const)
       expect(book.specialties?.find((l) => l.id === id)?.version).toBe(version);
     expect(

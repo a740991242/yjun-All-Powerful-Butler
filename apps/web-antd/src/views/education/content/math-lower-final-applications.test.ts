@@ -155,7 +155,7 @@ describe('lower final life applications and complete pair enumeration', () => {
     const pool = required(
       book().specialties?.find((l) => l.id === 'ms-lower-relations'),
     );
-    expect(pool.version).toBe(4);
+    expect(pool.version).toBe(5);
     const s = createSession(pool, book().id, 'child', { seed: 5 });
     const index = s.questions.findIndex(
       (q) => q.id === 'ml-final-applications-q8',

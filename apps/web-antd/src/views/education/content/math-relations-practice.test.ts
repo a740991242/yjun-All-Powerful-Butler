@@ -158,7 +158,7 @@ describe('source-scoped quantity relations, dependency and real activity boundar
     const pool = required(
       b.specialties?.find((l) => l.id === 'ms-lower-relations'),
     );
-    expect(pool.version).toBe(4);
+    expect(pool.version).toBe(5);
     for (const f of fixtures) {
       const s = createSession(pool, b.id, 'child');
       const index = s.questions.findIndex((q) => q.id === `${f.id}-q1`);

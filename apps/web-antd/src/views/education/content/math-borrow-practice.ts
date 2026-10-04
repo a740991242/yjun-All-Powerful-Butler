@@ -1,5 +1,19 @@
 import type { Lesson, Question, Visual } from '../learning/types';
 
+import {
+  borrowCompleteBranches,
+  borrowCompleteChains,
+  borrowCompleteClassifications,
+  borrowCompleteComparisons,
+  borrowCompleteHidden,
+  borrowCompleteMissing,
+  borrowCompletePairs,
+  borrowCompleteQueues,
+  borrowOrganizeSourceTasks,
+  borrowProcessSourceTasks,
+  borrowRelationSourceTasks,
+} from './math-borrow-complete-practice';
+
 const base = {
   textbookTitle: '20以内的退位减法',
   version: 1,
@@ -121,6 +135,13 @@ const organize = 'ml-borrow-organize';
 export const borrowPracticeLessons: Lesson[] = [
   {
     ...base,
+    version: 2,
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。',
+    },
     id: process,
     page: 9,
     title: '退位减法过程与不同算法',
@@ -149,6 +170,14 @@ export const borrowPracticeLessons: Lesson[] = [
       {
         title: '先判断够不够减，再完整口算',
         text: '18−8个位够减，不需要退位；10−9原个位0也明确写0。实际逐项口算10～19减9、11～18减8，再计算11减2/3/4/5、12减3/4/5、13减4/5。范围中19−9等对照式不是退位表成员。记录真实没把握的题，不以几道网页题代替整组完成。',
+      },
+      {
+        title: '原整组摆算、圈图与配对分别完成',
+        text: '原两条小棒、两幅圈图、两组轮盘与移动条都回自己的条件，全部位置分别算。原加减对应和全部三个分合组各式独立核对，缺材料如实记未做，不从本站原创变式推原图完成。',
+      },
+      {
+        title: '缺加数与同起点三分支',
+        text: '缺加数放在左边或右边都须代回；加法与对应减法两空分别保存。分支中每条都恢复同一被减数，不能沿分支连续拿走；减数每多1，差少1。本站补六组缺数对和六组三分支，原组纸笔另记。',
       },
     ],
     questions: [
@@ -270,6 +299,12 @@ export const borrowPracticeLessons: Lesson[] = [
         'difficulty-reflection',
         '我哪里仍会漏减或忘记合并？记录真实困难，下一步计划不要当作已完成。',
       ),
+      ...borrowCompleteMissing(false),
+      ...borrowCompleteBranches(false),
+      ...borrowProcessSourceTasks.map(([suffix, prompt]) => ({
+        ...manual(process, `actual-source-${suffix}`, prompt),
+        knowledge: `${process}-actual-source-${suffix}`,
+      })),
     ],
     reviewQuestions: [
       fields(
@@ -301,10 +336,19 @@ export const borrowPracticeLessons: Lesson[] = [
         '不需要',
         '个位5够减5，不必退位。',
       ),
+      ...borrowCompleteMissing(true),
+      ...borrowCompleteBranches(true),
     ],
   },
   {
     ...base,
+    version: 2,
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。',
+    },
     id: relations,
     page: 17,
     title: '读题、整体与部分及退位应用',
@@ -331,6 +375,14 @@ export const borrowPracticeLessons: Lesson[] = [
       {
         title: '自己、间隔与回看',
         text: '全队16人，自己左边7人，右边16−7−1=8人，整体含自己。一排9个标记，每两个相邻之间一个空隙，共8个。自己编题须已知和所求完整，用部分加另一部分回看整体；实际画点、编题和交流另行记录。',
+      },
+      {
+        title: '原书完整情境与三阶段读题',
+        text: '原场景、车辆表、隐藏图、团扇和自己提问分别实际完成，写条件、所求、算式、单位、答句并回看。人数、天数和别的分类信息不能直接当当前部分；看不清原图数量保留待核对。',
+      },
+      {
+        title: '同整体换分类，队伍包含自己',
+        text: '同一份材料按颜色与位置分别分类，两次都恢复原整体，不把两已知部分连减。队伍右边用整体减左边再减自己1；处在队尾右边0合法，0和未填分清。本站新题与原天鹅、原队伍另记。',
       },
     ],
     questions: [
@@ -450,6 +502,12 @@ export const borrowPracticeLessons: Lesson[] = [
         'problem-reflection',
         '我在哪种问题仍会漏掉自己或误用加减？记真实经历与待做，不冒全部熟练。',
       ),
+      ...borrowCompleteClassifications(false),
+      ...borrowCompleteQueues(false),
+      ...borrowRelationSourceTasks.map(([suffix, prompt]) => ({
+        ...manual(relations, `actual-source-${suffix}`, prompt),
+        knowledge: `${relations}-actual-source-${suffix}`,
+      })),
     ],
     reviewQuestions: [
       number(
@@ -481,10 +539,19 @@ export const borrowPracticeLessons: Lesson[] = [
         [1, 8],
         '15−6−1=8，整体含自己。',
       ),
+      ...borrowCompleteClassifications(true),
+      ...borrowCompleteQueues(true),
     ],
   },
   {
     ...base,
+    version: 2,
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '资源1221001102241图片14～28全部15页实际复核。补完整组对应的原创比较、连算、缺数、分支与原书独立实践；保留旧v1题目和学习快照，不以网页正确冒原活动实做或最终审校。',
+    },
     id: organize,
     page: 20,
     title: '完整45式退位表与同差应用',
@@ -519,6 +586,18 @@ export const borrowPracticeLessons: Lesson[] = [
       {
         title: '回顾算法与解决问题',
         text: '计算方法、完整口算、整理纸表、提出问题和实际分享分开回看。移动固定减数9的小卡，可逐项算10、13、16、11、15、18、12、17、14、19减9，含19−9非退位对照。真实未做或部分完成要说明，不由点击课包宣称整组掌握。',
+      },
+      {
+        title: '完整轮盘、配对、表格与口算',
+        text: '原三轮盘、移动7条、左右两组配对、十五卡游戏、七食物连线和十二式口算全部核对。原表四要求各自完成，不把已给格当未填；原右两列按同得数配对包含5，不能套左组6/7/8目标。',
+      },
+      {
+        title: '两边比较与遮数逐空回看',
+        text: '先算两边结果再选大于、小于或等于，符号可以重复。遮数先读未知在哪个位置，缺加数用整体减已知部分，未知被减数用差加减数，再分别代回。原六比较和三个遮数组独立实做。',
+      },
+      {
+        title: '三组连算与全部同差搭配',
+        text: '本站补三组六条连算，每题先算第一步再最终结果，最终0不能留空。找差5须核对全部给定数，不另加跨排条件，原白菜同一排也可选。原11/15/22页整组、自己写同差式和原成长两方面另记实际，未做不冒完成。',
       },
     ],
     questions: [
@@ -672,6 +751,14 @@ export const borrowPracticeLessons: Lesson[] = [
         'relations-reflection',
         '我真正解决了哪些数量问题，怎样检查？游戏、材料或分享没做的部分另记。',
       ),
+      ...borrowCompleteComparisons(false),
+      ...borrowCompleteChains(false),
+      ...borrowCompleteHidden(false),
+      ...borrowCompletePairs(false),
+      ...borrowOrganizeSourceTasks.map(([suffix, prompt]) => ({
+        ...manual(organize, `actual-source-${suffix}`, prompt),
+        knowledge: `${organize}-actual-source-${suffix}`,
+      })),
     ],
     reviewQuestions: [
       fields(
@@ -713,6 +800,10 @@ export const borrowPracticeLessons: Lesson[] = [
         ['9−4', '11−6', '6−1', '14−9'],
         '9−4、11−6、6−1、14−9均为5，14−6=8。',
       ),
+      ...borrowCompleteComparisons(true),
+      ...borrowCompleteChains(true),
+      ...borrowCompleteHidden(true),
+      ...borrowCompletePairs(true),
     ],
   },
 ];

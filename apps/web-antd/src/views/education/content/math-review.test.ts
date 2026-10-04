@@ -37,6 +37,12 @@ describe('separate mathematics review pools and bridge packs', () => {
             ],
             'mu-final-links': ['numbers', 'calculation', 'relations', 'shapes'],
           };
+          const borrowConcepts: Record<string, string[]> = {
+            'ml-borrow-process': ['missing-pair', 'branches'],
+            'ml-borrow-relations': ['classifications', 'queue'],
+            'ml-borrow-organize': ['compare', 'chain', 'hidden', 'all-pairs'],
+          };
+          const borrowed = borrowConcepts[lesson.id];
           const concepts = finalConcepts[lesson.id];
           if (concepts) {
             expect(
@@ -45,6 +51,18 @@ describe('separate mathematics review pools and bridge packs', () => {
             expect(
               lesson.questions.some(
                 (main) => main.knowledge === question.knowledge,
+              ),
+            ).toBe(true);
+          } else if (borrowed) {
+            expect([
+              lesson.id,
+              ...borrowed.map((concept) => `${lesson.id}-complete-${concept}`),
+            ]).toContain(question.knowledge);
+            expect(
+              lesson.questions.some(
+                (main) =>
+                  main.knowledge === question.knowledge &&
+                  !['manual', 'reflection'].includes(main.rule.kind),
               ),
             ).toBe(true);
           } else if (
