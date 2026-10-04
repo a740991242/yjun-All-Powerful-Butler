@@ -48,7 +48,12 @@ describe('separate mathematics review pools and bridge packs', () => {
               ),
             ).toBe(true);
           } else if (
-            ['mu-twenty-links', 'mu-twenty-positions'].includes(lesson.id)
+            [
+              'mu-carry-organize',
+              'mu-carry-process',
+              'mu-twenty-links',
+              'mu-twenty-positions',
+            ].includes(lesson.id)
           ) {
             const knowledge = new Set(
               lesson.questions

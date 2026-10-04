@@ -1,5 +1,13 @@
 import type { Lesson, Question, Visual } from '../learning/types';
 
+import {
+  carryOrganizeCompleteQuestions,
+  carryOrganizeSourceTasks,
+  carryProcessCompleteQuestions,
+  carryProcessSourceTasks,
+  carryRelationsSourceTasks,
+} from './math-carry-complete-practice';
+
 const base = {
   textbookTitle: '20以内的进位加法',
   version: 1,
@@ -125,6 +133,7 @@ export const carryPracticeLessons: Lesson[] = [
   {
     ...base,
     id: process,
+    version: 2,
     page: 89,
     title: '凑十过程与不同算法',
     goal: '分开记录拆数、凑十与最后结果，比较接着数和两种凑十方法。',
@@ -152,6 +161,14 @@ export const carryPracticeLessons: Lesson[] = [
       {
         title: '口算整组，分类和游戏分别实际做',
         text: '9、8分别加0～10；7分别加3～9，6分别加4～9，5加5～9、4加6～9、3加7～9、2加8～9。逐个读式、说得数并用材料或同伴核对，记录真实困难，不由少数网页题宣称整组熟练。用不同算式卡按相同和匹配，再用两边数卡交换一张，使两边的和相等。没有同伴可独自揭卡核对，如实记录。',
+      },
+      {
+        title: '整组六关系与六个缺加数分别检查',
+        text: '比较前先算两边，等于不能当大于或小于；六条分别核对。补加数由整体找缺少部分，再填回原式。相邻数卡的中间一张分别参与左右两组，并非把八数连加。连加的第一步和最后和分开，相关两加数式与它有同一整体。',
+      },
+      {
+        title: '原圈画、轮盘与交换游戏分别实做',
+        text: '89～95页的每组原练习按说明全部处理：两图、三组配对、九行圈十、三轮盘、四组换顺序、三枝计算、原全部卡、四次移动口算、七条相邻连接与原三数交换均回书核对；本站变式与原书实做分开保存，缺原书可待做。',
       },
     ],
     questions: [
@@ -211,17 +228,29 @@ export const carryPracticeLessons: Lesson[] = [
         'oral-reflection',
         '整组口算中我仍不确定哪些算式？实际核对到哪里？不要用网页得分证明口算全部熟练。',
       ),
+      ...carryProcessCompleteQuestions(false),
+      ...carryProcessSourceTasks.map(([key, prompt]): Question => ({
+        ...manual(process, `actual-source-${key}`, prompt),
+        knowledge: `${process}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes: `${base.review.notes} 重新实际核对88～102页，保留v1题目、复习与步骤前缀，v2补完整原书活动独立人工记录和原创成套练习；原图不发布，旧快照/schema1保持。`,
+    },
     reviewQuestions: [
       makeTen(process, 'r1', 9, 8, 'left'),
       makeTen(process, 'r2', 8, 4, 'left'),
       makeTen(process, 'r3', 3, 8, 'right'),
       makeTen(process, 'r4', 6, 4, 'left'),
+      ...carryProcessCompleteQuestions(true),
     ],
   },
   {
     ...base,
     id: relations,
+    version: 2,
     page: 96,
     title: '同一整体、不同分法与实际问题',
     goal: '先辨所求整体与部分，解释拿走后求原总数为什么用加法。',
@@ -246,6 +275,10 @@ export const carryPracticeLessons: Lesson[] = [
       {
         title: '加数变化与回看',
         text: '同一加数不变，另一加数多2，和也多2；可实际添材料核对。用整体与已知部分求未知加数时，先说缺的是哪一部分。编自己的完整问题，再检查已知、所求、算式和单位是否一致，不把静态的两类描述成发生了进入或离开的事件。',
+      },
+      {
+        title: '原三行数量表和各生活问题逐一回看',
+        text: '三行体育用品按各自单位分别合并；不同物品不能混成一个总物品。同一批人按两标准分仍为同一整体。领走、吃掉、借走与剩下都须先辨所求，原前后排队人数不含自己时另计本人；各原例题和故事各自完成表示、算式、单位、答句与回看。',
       },
     ],
     questions: [
@@ -355,7 +388,16 @@ export const carryPracticeLessons: Lesson[] = [
         'application-reflection',
         '我真正提出或解决了什么生活问题？记录真实尝试，不把未来计划当作完成。',
       ),
+      ...carryRelationsSourceTasks.map(([key, prompt]): Question => ({
+        ...manual(relations, `actual-source-${key}`, prompt),
+        knowledge: `${relations}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes: `${base.review.notes} 重新实际核对88～102页，保留v1题目、复习与步骤前缀，v2补完整原书活动独立人工记录和原创成套练习；原图不发布，旧快照/schema1保持。`,
+    },
     reviewQuestions: [
       number(
         relations,
@@ -390,6 +432,7 @@ export const carryPracticeLessons: Lesson[] = [
   {
     ...base,
     id: organize,
+    version: 2,
     page: 100,
     title: '整理加法表、同和分法与拼棒',
     goal: '实际整理完整范围的算式卡，辨认恰好10、重复次序与共有边。',
@@ -424,6 +467,18 @@ export const carryPracticeLessons: Lesson[] = [
       {
         title: '计算方法与解决问题分开回顾',
         text: '分别记会用什么算法、解决了什么实际问题和仍待做什么。方法会说不代表整组口算熟练；完成网页不代表已经实际排卡、拼棒或与同伴交流。',
+      },
+      {
+        title: '完整关系、两边未知与四个符号',
+        text: '数与式、式与式都先计算两边；补加数在加号左右不改变整体与部分关系。选择加减符号要分别代回，不靠数字位置或关键词。主练习与复习更换条件，保留每条作答历史。',
+      },
+      {
+        title: '原完整表、卡片和拼棒各自核对',
+        text: '原表的补全部空、任指口算、第一行和第一列三要求分别实际做；99和101页十二式各全算。原三个小棒图与本站两个图形例子分开，先逐根数再提出新问题；原游戏、两组同和填式、四符号、六缺数与两方面成长记录分别完成，未做不自动确认。',
+      },
+      {
+        title: '允许0的分法与正数分法分开',
+        text: '前面只用两个正整数是本站原创练习的限定。教材第101页分组题未明写这个限制；补充活动用已学0～20的整数，允许0。和为11时从0+11、1+10到11+0，共12种；和为20时从0+20到20+0，共21种。逐组列完再核对，交换次序分别记；没有填的空格不等于0，也不扩展到负数。',
       },
     ],
     questions: [
@@ -559,7 +614,17 @@ export const carryPracticeLessons: Lesson[] = [
         'problem-reflection',
         '我实际解决了什么数量问题，怎样回看？拼棒或游戏未做的部分另写待做。',
       ),
+      ...carryOrganizeCompleteQuestions(false),
+      ...carryOrganizeSourceTasks.map(([key, prompt]): Question => ({
+        ...manual(organize, `actual-source-${key}`, prompt),
+        knowledge: `${organize}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes: `${base.review.notes} 重新实际核对88～102页，保留v1题目、复习与步骤前缀，v2补完整原书活动独立人工记录和原创成套练习；原图不发布，旧快照/schema1保持。`,
+    },
     reviewQuestions: [
       number(
         organize,
@@ -589,6 +654,7 @@ export const carryPracticeLessons: Lesson[] = [
         9,
         '已知部分7，另一部分9，7+9=16。',
       ),
+      ...carryOrganizeCompleteQuestions(true),
     ],
   },
 ];

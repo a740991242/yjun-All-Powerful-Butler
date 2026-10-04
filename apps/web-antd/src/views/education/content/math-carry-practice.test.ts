@@ -158,7 +158,7 @@ describe('pep carry process, quantity relations and table scope', () => {
       expect(original.questions).toHaveLength(6);
     }
     for (const [index, course] of carryPracticeLessons.entries()) {
-      expect(course.questions).toHaveLength(required([18, 17, 19][index]));
+      expect(course.questions).toHaveLength(required([51, 27, 48][index]));
       const session = createSession(course, book.id, 'child', {
         seed: 17,
         now,
@@ -194,8 +194,8 @@ describe('pep carry process, quantity relations and table scope', () => {
     const relationPool = required(
       book.specialties?.find((l) => l.id === 'ms-upper-relations'),
     );
-    expect(calculation.version).toBe(7);
-    expect(relationPool.version).toBe(8);
+    expect(calculation.version).toBe(8);
+    expect(relationPool.version).toBe(9);
     expect(calculation.questions).toContainEqual(find(0, 'q8'));
     expect(relationPool.questions).toContainEqual(find(1, 'q5'));
     expect(calculation.questions).toContainEqual(find(2, 'q6'));
