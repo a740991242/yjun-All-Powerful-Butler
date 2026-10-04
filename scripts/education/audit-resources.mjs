@@ -134,6 +134,31 @@ async function main() {
     }
   }
   walk(report, 'curriculum');
+  const teachingFields = new Set([
+    'activity',
+    'explanation',
+    'goal',
+    'hint',
+    'label',
+    'material',
+    'parentTip',
+    'prerequisite',
+    'prompt',
+    'source',
+    'text',
+    'title',
+  ]);
+  const teachingText = new Map();
+  for (const entry of strings) {
+    const field = entry.location.split('.').at(-1);
+    if (!teachingFields.has(field)) continue;
+    if (!teachingText.has(entry.value)) teachingText.set(entry.value, []);
+    teachingText.get(entry.value).push({
+      field,
+      location: entry.location,
+      lessonId: entry.lessonId ?? null,
+    });
+  }
   const files = await sourceInventory(educationRoot);
   const publicFiles = await sourceInventory(publicRoot);
   const mediaEmbeddingComponents = [];
@@ -153,7 +178,7 @@ async function main() {
     schemaVersion: 1,
     inspectedAt: new Date().toISOString(),
     limitation:
-      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline and short-material inventories are review aids, not automatic classifications. Short materials include all registered question materials with fewer than two line breaks, without a length or punctuation threshold; step text and other fields are not included in that list. All material fields with two or more line breaks enter the multiline inventory even without Chinese punctuation; questionMaterialCoverage reports any material reference missed by both inventories. No learner data is read.',
+      'Inventory of currently registered course text and source files. URLs are provenance references, not proof that a link is live, that editions match, or that rights/content review is complete. Modern quotations and single-line text still require source review; multiline and short-material inventories are review aids, not automatic classifications. Short materials include all registered question materials with fewer than two line breaks, without a length or punctuation threshold; step text and other fields are not included in that list. All material fields with two or more line breaks enter the multiline inventory even without Chinese punctuation; questionMaterialCoverage reports any material reference missed by both inventories. Teaching text candidates include title, source, goal, prerequisite, parentTip, step text/activity, question prompt/hint/explanation, choice label and material; identical strings retain every field and lesson reference. These are unreviewed candidates, not review decisions. No learner data is read.',
     books: report.books.map((book) => {
       const lessons = book.units.flatMap((unit) => unit.lessons);
       return {
@@ -188,6 +213,12 @@ async function main() {
         })),
     })),
     shortMaterialReviewCandidates: [...shortMaterials].map(
+      ([text, references]) => ({
+        text,
+        references,
+      }),
+    ),
+    teachingTextReviewCandidates: [...teachingText].map(
       ([text, references]) => ({
         text,
         references,
