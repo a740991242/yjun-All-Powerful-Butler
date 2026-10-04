@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--countryside'))
+    return {
+      index: 18,
+      lessonId: 'bnu-lower-countryside',
+      zero: '-zero-hidden',
+      retry: '-pencils-hidden',
+      manual: 10,
+      steps: 8,
+      review: 5,
+      key: 'countryside',
+    };
   if (process.argv.includes('--parachute'))
     return {
       index: 17,
@@ -331,7 +342,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 18
+          .count()) !== 19
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1116,6 +1127,54 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'countryside' && q.id.endsWith('-six-groups')) {
+              await p.getByRole('spinbutton').first().fill('11');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === '[11,null,null,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["11","","","","",""]')
+                throw new Error('Countryside partial six-place row lost');
+              for (let i = 0; i < 6; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                await p.waitForTimeout(150);
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Countryside row field size or clipping');
+                await input.fill(String(5 + i));
+                if (i === 0 || i === 5)
+                  await p.screenshot({
+                    path: `/tmp/butler-bnu-countryside-input-${i}-${width}.png`,
+                  });
+              }
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (flow.key === 'meeting' && q.id.endsWith('-table-six')) {
               await p.getByRole('spinbutton').first().fill('6');
               await wait(

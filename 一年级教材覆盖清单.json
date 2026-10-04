@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T19:46:50.167Z",
+  "generatedAt": "2026-10-04T20:19:35.365Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 18,
+        "availablePacks": 19,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 547,
-          "manual": 166,
-          "reflection": 52
+          "objective": 570,
+          "manual": 176,
+          "reflection": 57
         }
       },
       "units": [
@@ -32754,10 +32754,46 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第38页起后续课程）",
-              "textbookTitle": "20以内数与减法（第38页起后续课程）",
+              "id": "bnu-lower-countryside",
+              "title": "美丽的田园：找信息、提问题与藏起来的数量",
+              "textbookTitle": "美丽的田园",
               "page": 38,
+              "version": 1,
+              "status": "available",
+              "goal": "逐组提取数量信息，分清求合计、相差和隐藏的部分，解释算式的对象，自主提出问题并完整解答。",
+              "prerequisite": "能有顺序点数，理解整体与部分，会计算20以内加减。",
+              "referenceQuery": null,
+              "steps": 8,
+              "tasks": {
+                "objective": 23,
+                "manual": 10,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-countryside"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["comparison-rows"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描38～39页全页及动物最近邻局部点数核对",
+                "notes": "六田园组、鸟比较、8＋6意义、两次自主提问、9/14/17三组与两比较、12/3铅笔和11/4羽毛球分别对应。旧版PDF插图不一致，未用来替换当前教材事实。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第40页起后续课程）",
+              "textbookTitle": "20以内数与减法（第40页起后续课程）",
+              "page": 40,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32791,7 +32827,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷27～37页买铅笔、捉迷藏、凑数游戏、开会啦与跳伞表演所列活动及明示迁移；原角色分组未知保留核对记录，38页起仍制作中，不代表整单元完成。",
+            "scope": "印刷27～39页买铅笔、捉迷藏、凑数游戏、开会啦、跳伞表演与美丽的田园所列活动及明示迁移；原角色分组未知保留核对记录，40页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -33480,6 +33516,136 @@
                 "manual": ["actual-explain"],
                 "records": ["discovery", "difficulty", "plan"],
                 "boundary": "差量意义独立，实际解释与发现困难未来计划分开，不评分。"
+              },
+              {
+                "page": 38,
+                "sourceActivity": "six-groups",
+                "scope": "全部六组信息",
+                "lesson": "bnu-lower-countryside",
+                "steps": [1],
+                "objective": ["six-groups"],
+                "manual": ["actual-six"],
+                "records": [],
+                "boundary": "空11树5岸6河8白羊7深羊5；翅膀尾角不增物。"
+              },
+              {
+                "page": 38,
+                "sourceActivity": "bird-comparison",
+                "scope": "原求差与相等迁移",
+                "lesson": "bnu-lower-countryside",
+                "steps": [2],
+                "objective": [
+                  "bird-comparison",
+                  "zero-difference",
+                  "difference-or-total"
+                ],
+                "manual": ["actual-birds"],
+                "records": [],
+                "boundary": "原差6，合计16不同；新相等0条件完整。"
+              },
+              {
+                "page": 38,
+                "sourceActivity": "addition-meaning",
+                "scope": "8＋6解释及本站合鸟合羊例子",
+                "lesson": "bnu-lower-countryside",
+                "steps": [3],
+                "objective": [
+                  "addition-result",
+                  "addition-meaning",
+                  "bird-total",
+                  "sheep-example"
+                ],
+                "manual": ["actual-addition"],
+                "records": [],
+                "boundary": "原河中8只、岸上6只共14，本站合鸟16和合羊12是例子，非原自主题唯一。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "own-countryside",
+                "scope": "原自主提出问题并解答",
+                "lesson": "bnu-lower-countryside",
+                "steps": [4],
+                "objective": [],
+                "manual": ["actual-own-countryside"],
+                "records": ["own-countryside"],
+                "boundary": "保留完整条件、所求、式子、答句与单位，开放多解。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "practice-counts",
+                "scope": "三组全部信息",
+                "lesson": "bnu-lower-countryside",
+                "steps": [5],
+                "objective": ["practice-counts"],
+                "manual": ["actual-practice-counts"],
+                "records": [],
+                "boundary": "松鼠9鹿14鸭17各自点，左树卷尾不作额外身体。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "deer-comparison",
+                "scope": "鹿比松鼠多多少",
+                "lesson": "bnu-lower-countryside",
+                "steps": [5],
+                "objective": ["deer-difference"],
+                "manual": ["actual-practice-compare"],
+                "records": [],
+                "boundary": "14−9=5，不用鸭数量。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "subtraction-meaning",
+                "scope": "17−9所求",
+                "lesson": "bnu-lower-countryside",
+                "steps": [5],
+                "objective": ["duck-difference", "subtraction-meaning"],
+                "manual": [],
+                "records": [],
+                "boundary": "鸭比松鼠多8，原未给游走事件。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "own-practice",
+                "scope": "第二次自主提问和未知迁移",
+                "lesson": "bnu-lower-countryside",
+                "steps": [6],
+                "objective": ["new-practice-question", "unknown-group"],
+                "manual": ["actual-own-practice"],
+                "records": ["own-practice"],
+                "boundary": "本站鸭鹿差3只是例子，未知不能借原9。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "hidden-pencils",
+                "scope": "12总3外求内与指定算法/0/未知迁移",
+                "lesson": "bnu-lower-countryside",
+                "steps": [7, 8],
+                "objective": [
+                  "pencil-formula",
+                  "pencils-hidden",
+                  "pencil-to-ten",
+                  "pencil-break-ten",
+                  "zero-hidden",
+                  "unknown-total"
+                ],
+                "manual": ["actual-pencils"],
+                "records": [],
+                "boundary": "9支，拆原数与拆减数不同；看不见不代表0。"
+              },
+              {
+                "page": 39,
+                "sourceActivity": "hidden-shuttlecocks",
+                "scope": "11总4外求内与说明回顾",
+                "lesson": "bnu-lower-countryside",
+                "steps": [7, 8],
+                "objective": [
+                  "shuttlecock-formula",
+                  "units",
+                  "shuttlecock-to-ten"
+                ],
+                "manual": ["actual-shuttlecocks", "actual-explain"],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "7个，支与个不混；实际说明与发现困难未来计划分别保存。"
               }
             ]
           }
