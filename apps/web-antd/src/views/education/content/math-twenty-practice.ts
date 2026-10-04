@@ -1,5 +1,10 @@
 import type { Lesson, Question, Visual } from '../learning/types';
 
+import {
+  twentyCompleteQuestions,
+  twentyCompleteSourceTasks,
+} from './math-twenty-complete-practice';
+
 const base = {
   textbookTitle: '11～20的认识',
   version: 1,
@@ -448,6 +453,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: links,
+    version: 2,
     page: 81,
     title: '加减联系、按条件整理与成长记录',
     goal: '由十和几联系加减，认识算式名称，依据整体部分与所求解题，实际整理知识并分别反思。',
@@ -478,6 +484,18 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '逐项说发现和待做',
         text: '分别记录：我怎样按十和一读写数；我怎样用数序与端点解决问题；我怎样说明加减或核对方法。实际作品可以和同伴交流，但自己的计划不作已完成证据，不用网页成绩自动评这三方面。',
+      },
+      {
+        title: '整组配对、独立计算与连算',
+        text: '两组六条独立算式分别开始，不接上一题结果。四组等值配对先算每式再比较，交换加数仍可能相等，加减式也可能相等。六条连算每条先写中间量再接第二步，六处比较先算两边再判断，三处缺加数分别代回。本站完整组为原创数字，原书全组另行记录，不用少量代表题代替。',
+        activity:
+          '实际纸写两组六式、四对等值式、六条连算中间量、六处比较及三缺数，逐条核对与说明帮助；原页任务分开，未做暂跳。',
+      },
+      {
+        title: '原书完整路线与每个涂色区域',
+        text: '第86页原路线为四行五列，全部二十式与先前自制三行五列不同；回原页逐步检查结果大1的路径。第87页每个区域独立算式后依指定得数涂色，同结果的不同区域不漏。自制路线或六式分区只是原创练习，不自动表示原书游戏做完。缺原书可待做，实际记录与未来计划分开。',
+        activity:
+          '回原页保存完整路线和全部涂色区域的实际作品；没有原书或尚未处理可暂跳，不据网页正确自动确认。',
       },
     ],
     questions: [
@@ -602,6 +620,11 @@ export const twentyPracticeLessons: Lesson[] = [
         'reflection-method',
         '我怎样说明加减关系、检查结果？记录自己的方法与下一步计划，计划不能当已完成。',
       ),
+      ...twentyCompleteQuestions(false),
+      ...twentyCompleteSourceTasks.map(([key, prompt]): Question => ({
+        ...activity(links, `actual-source-${key}`, prompt),
+        knowledge: `${links}-actual-source-${key}`,
+      })),
     ],
     reviewQuestions: [
       fields(
@@ -634,6 +657,13 @@ export const twentyPracticeLessons: Lesson[] = [
         '>',
         '19−6=13，比12大。',
       ),
+      ...twentyCompleteQuestions(true),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '重新查看官方留存图片84～93对应印刷78～87，补两组各六计算、四组等值配对、六连算、六比较与三缺数原创完整练习，原书对应整组与四行五列路线及所有涂色区域各自人工记录。旧19题、4复习和前六步保持，v2共57主任务及35复习，v1历史快照不改；本课不代表全部教材或教师审校已完成。',
+    },
   },
 ];
