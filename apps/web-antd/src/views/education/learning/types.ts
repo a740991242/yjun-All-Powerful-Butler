@@ -34,6 +34,7 @@ import type { MotionFramesVisual } from './motion-frames';
 import type { MotionSequencesVisual } from './motion-sequences';
 import type { NumberChainRule } from './number-chain';
 import type { NumberFrameVisual } from './number-frame';
+import type { NumberIntervalRule } from './number-interval';
 import type { NumberPicksRule } from './number-picks';
 import type { NumberStripVisual } from './number-strip';
 import type { OcclusionViewsVisual } from './occlusion-views';
@@ -426,6 +427,7 @@ export type AnswerRule =
   | CrossBalanceModel
   | EqualPairsRule
   | NumberChainRule
+  | NumberIntervalRule
   | NumberPicksRule
   | { kind: 'choice'; value: string }
   | { kind: 'magic-grid'; cells: MagicCells }

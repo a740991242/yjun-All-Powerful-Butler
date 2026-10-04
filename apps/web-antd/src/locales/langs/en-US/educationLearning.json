@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-five original courses cover pages 2–49, including estimating and place-value reading. Teaching from page 50 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-six original courses cover pages 2–51, including estimating, place-value reading and number comparison. Teaching from page 52 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",

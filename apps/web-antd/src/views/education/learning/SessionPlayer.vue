@@ -412,7 +412,10 @@ async function finish() {
             :html-for="formId"
           >
             <InputNumber
-              v-if="question.rule.kind === 'number'"
+              v-if="
+                question.rule.kind === 'number' ||
+                question.rule.kind === 'number-interval'
+              "
               :id="formId"
               :value="
                 typeof response.draft === 'number' ? response.draft : undefined

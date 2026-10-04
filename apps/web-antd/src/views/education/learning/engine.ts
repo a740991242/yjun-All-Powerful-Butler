@@ -15,6 +15,7 @@ import { matchesEqualPairs } from './equal-pairs';
 import { fold } from './fold';
 import { magicBlankCount, matchesMagicGrid } from './magic-grid';
 import { matchesNumberChain, numberChainBlankCount } from './number-chain';
+import { matchesNumberInterval } from './number-interval';
 import { matchesNumberPicks } from './number-picks';
 import { matchesTower, towerBlankCount } from './number-tower';
 
@@ -46,6 +47,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
     case 'text': {
       return typeof answer === 'string' && answer.trim().length > 0;
     }
+    case 'number-interval':
     case 'number': {
       return (
         typeof answer === 'number' &&
@@ -116,6 +118,9 @@ export function evaluate(
     case 'manual':
     case 'reflection': {
       return null;
+    }
+    case 'number-interval': {
+      return matchesNumberInterval(rule, answer);
     }
     case 'number':
     case 'choice': {

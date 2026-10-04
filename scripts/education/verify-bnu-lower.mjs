@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--red-fruit'))
+    return {
+      index: 25,
+      lessonId: 'bnu-lower-red-fruit',
+      zero: '-open-below30',
+      retry: '-open-below30',
+      manual: 12,
+      steps: 8,
+      review: 5,
+      key: 'red-fruit',
+    };
   if (process.argv.includes('--count-beans'))
     return {
       index: 24,
@@ -680,7 +691,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 25
+          .count()) !== 26
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1104,8 +1115,15 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
         }
-        if (flow.key === 'count-beans' && (step === 0 || step === 1)) {
-          const values = step === 0 ? [28, 22] : [97, 98, 99, 100];
+        if (
+          (flow.key === 'count-beans' && (step === 0 || step === 1)) ||
+          (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
+        ) {
+          const diagramValues = {
+            'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
+            'red-fruit': { 0: [21, 18], 1: [32, 34, 100, 99], 3: [45, 54] },
+          };
+          const values = diagramValues[flow.key][step];
           await inspectPlaceCounters(values, `learn-${step + 1}`);
           const state = JSON.stringify(await read());
           await p
@@ -1455,7 +1473,55 @@ const server = http.createServer(async (req, res) => {
             .fill('隔离验收：尚未实际操作，计划单独记录。');
           await click('保存反思');
         } else {
-          if (q.rule.kind === 'number') {
+          if (q.rule.kind === 'number-interval') {
+            const input = p.getByRole('spinbutton');
+            if (q.id.endsWith(flow.zero)) {
+              await input.fill('0');
+              await wait(
+                (d) =>
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft === 0,
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              if ((await input.inputValue()) !== '0')
+                throw new Error('Interval zero draft lost');
+            }
+            await input.evaluate((n) =>
+              n
+                .closest('.ant-input-number')
+                .scrollIntoView({ block: 'center' }),
+            );
+            await p.waitForTimeout(200);
+            const fits = await input.evaluate((n) => {
+              const r = n.closest('.ant-input-number').getBoundingClientRect();
+              return (
+                Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                r.height >= 44 &&
+                r.left >= 0 &&
+                r.right <= innerWidth &&
+                r.top >= 0 &&
+                r.bottom <= innerHeight
+              );
+            });
+            if (!fits)
+              throw new Error(
+                'Open number interval field clipped or too small',
+              );
+            if (q.id.endsWith(flow.retry)) {
+              await input.fill('30');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            await input.fill(String(q.rule.minimum));
+            await click('提交答案');
+            await p.getByText('答对了', { exact: true }).waitFor();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-red-open-${q.id}-${width}.png`,
+            });
+            await input.fill(String(q.rule.maximum));
+          } else if (q.rule.kind === 'number') {
             if (q.id.endsWith(flow.zero)) {
               await p.getByRole('spinbutton').fill('0');
               await wait(
@@ -1713,6 +1779,84 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'red-fruit' &&
+            q.id.endsWith('-ruler-ticks')
+          ) {
+            await p.getByRole('spinbutton').first().fill('35');
+            const partial = [35, ...Array.from({ length: 13 }, () => null)];
+            try {
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === JSON.stringify(partial),
+              );
+            } catch (error) {
+              const saved = await current();
+              console.log(
+                'Number line partial diagnostic',
+                JSON.stringify({
+                  questionId: q.id,
+                  index,
+                  draft: saved.responses[index].draft,
+                  inputs: await p
+                    .getByRole('spinbutton')
+                    .evaluateAll((nodes) => nodes.map((n) => n.value)),
+                }),
+              );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-red-ruler-failure-${width}.png`,
+              });
+              throw error;
+            }
+            await p.reload({ waitUntil: 'networkidle' });
+            const drafts = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (
+              JSON.stringify(drafts) !==
+              JSON.stringify(['35', ...Array.from({ length: 13 }, () => '')])
+            )
+              throw new Error('Fourteen-field number line partial draft lost');
+            for (const [i, value] of q.rule.values.entries()) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n
+                  .closest('.ant-input-number')
+                  .scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const fits = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return (
+                  Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                  r.height >= 44 &&
+                  r.left >= 0 &&
+                  r.right <= innerWidth &&
+                  r.top >= 0 &&
+                  r.bottom <= innerHeight
+                );
+              });
+              if (!fits)
+                throw new Error(
+                  'Fourteen-field number line input clipped or too small',
+                );
+              await input.fill(String(i === 13 ? 99 : value));
+              if (i === 0 || i === 13)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-red-ruler-${width}-${i}.png`,
+                });
+            }
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            await p.getByRole('spinbutton').last().fill('100');
           } else if (
             q.rule.kind === 'steps' &&
             flow.key === 'count-beans' &&
@@ -2585,6 +2729,61 @@ const server = http.createServer(async (req, res) => {
                 .nth(field)
                 .fill(String(q.rule.values[field]));
           } else if (q.rule.kind === 'set') {
+            if (flow.key === 'red-fruit' && q.id.endsWith('-connect-less')) {
+              if ((await p.getByRole('checkbox').count()) !== 9)
+                throw new Error('Incomplete original nine-card classification');
+              await p.getByRole('checkbox', { name: '8', exact: true }).check();
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((item) => item.id === sid).responses[index]
+                      .draft,
+                  ) === '["8"]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              if (
+                !(await p
+                  .getByRole('checkbox', { name: '8', exact: true })
+                  .isChecked())
+              )
+                throw new Error('Partial red-fruit card selection lost');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              for (const edge of ['first', 'last']) {
+                const target =
+                  edge === 'first'
+                    ? p.getByRole('checkbox').first()
+                    : p.getByRole('checkbox').last();
+                await target.evaluate((n) =>
+                  n
+                    .closest('.ant-checkbox-wrapper')
+                    .scrollIntoView({ block: 'center' }),
+                );
+                await p.waitForTimeout(200);
+                const fits = await target.evaluate((n) => {
+                  const wrapper = n.closest('.ant-checkbox-wrapper');
+                  const r = wrapper.getBoundingClientRect();
+                  return (
+                    Number.parseFloat(getComputedStyle(wrapper).fontSize) >=
+                      20 &&
+                    r.height >= 44 &&
+                    r.left >= 0 &&
+                    r.right <= innerWidth &&
+                    r.top >= 0 &&
+                    r.bottom <= innerHeight
+                  );
+                });
+                if (!fits)
+                  throw new Error(
+                    'Red-fruit card checkbox clipped or too small',
+                  );
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-red-cards-${width}-${edge}.png`,
+                });
+              }
+            }
             if (q.id.endsWith('-result-twelve')) {
               if ((await p.getByRole('checkbox').count()) !== 28)
                 throw new Error('Incomplete expression card set');
@@ -2712,7 +2911,7 @@ const server = http.createServer(async (req, res) => {
       );
       if (
         JSON.stringify(retry.submissions.map((s) => s.correct)) !==
-        '[false,true]'
+        (flow.key === 'red-fruit' ? '[false,true,true]' : '[false,true]')
       )
         throw new Error('Retry history changed');
       if (flow.key === 'practice') {
@@ -2886,6 +3085,8 @@ const server = http.createServer(async (req, res) => {
           }
           await p.getByRole('spinbutton').nth(0).fill(String(left));
           await p.getByRole('spinbutton').nth(1).fill(String(right));
+        } else if (q.rule.kind === 'number-interval') {
+          await p.getByRole('spinbutton').fill(String(q.rule.minimum));
         } else if (q.rule.kind === 'steps') {
           for (let field = 0; field < q.rule.values.length; field++)
             await p

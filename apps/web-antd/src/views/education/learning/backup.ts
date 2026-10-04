@@ -59,6 +59,7 @@ import { isMotionSequencesVisual } from './motion-sequences';
 import { isNatureCardsVisual } from './nature-cards';
 import { isNumberChainRule, numberChainBlankCount } from './number-chain';
 import { isNumberFrameVisual } from './number-frame';
+import { isNumberIntervalRule } from './number-interval';
 import { isNumberPicksRule } from './number-picks';
 import { isNumberStripVisual } from './number-strip';
 import {
@@ -216,6 +217,9 @@ function rule(value: unknown) {
     }
     case 'reflection': {
       return Object.keys(value).length === 1;
+    }
+    case 'number-interval': {
+      return isNumberIntervalRule(value);
     }
     case 'number': {
       return integer(value.value, 100_000);
@@ -1076,6 +1080,14 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
     )
       return false;
     if (response.draft !== null && !answer(response.draft)) return false;
+    if (
+      current.rule.kind === 'number-interval' &&
+      response.draft !== null &&
+      (typeof response.draft !== 'number' ||
+        !Number.isSafeInteger(response.draft) ||
+        Math.abs(response.draft) > 100_000)
+    )
+      return false;
     if (
       current.rule.kind === 'reflection' &&
       response.draft !== null &&
