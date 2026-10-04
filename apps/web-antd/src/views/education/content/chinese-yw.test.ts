@@ -205,3 +205,40 @@ describe('y w review applies recognition to changed syllable cards', () => {
     }
   });
 });
+
+it('checks actual twelve-tone visual tables and every yi wu yu tone prompt in both lesson forms', () => {
+  const yi = ['yī', 'yí', 'yǐ', 'yì'];
+  const wu = ['wū', 'wú', 'wǔ', 'wù'];
+  const yu = ['yū', 'yú', 'yǔ', 'yù'];
+  const ordinals = ['第一声', '第二声', '第三声', '第四声'];
+  let inspected = 0;
+  for (const lesson of [ywLesson, formalYwLesson]) {
+    const first = lesson.steps.find(
+      (step) => step.title === '四声写法逐组比较',
+    )!.visual!;
+    const umlaut = lesson.steps.find(
+      (step) => step.title === 'yu省两点，仍对应ü',
+    )!.visual!;
+    if (first.kind !== 'characters' || umlaut.kind !== 'characters')
+      throw new Error('whole-tone visual expected');
+    expect(first.characters).toEqual([...yi, ...wu]);
+    expect(umlaut.characters).toEqual(['ü', 'yu', ...yu]);
+    for (const q of [...lesson.questions, ...lesson.reviewQuestions!].filter(
+      (q) => /-[qr][678]$/.test(q.id),
+    )) {
+      let forms = yu;
+      if (q.prompt.includes('yi')) forms = yi;
+      else if (q.prompt.includes('wu')) forms = wu;
+      const number = ordinals.findIndex((word) => q.prompt.includes(word));
+      expect(number).toBeGreaterThanOrEqual(0);
+      const answer = forms[number]!;
+      expect(q.rule).toEqual({ kind: 'choice', value: answer });
+      expect(q.choices!.map((choice) => choice.id)).toEqual(forms);
+      expect(q.explanation).toContain(answer);
+      for (const choice of q.choices!)
+        expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+      inspected++;
+    }
+  }
+  expect(inspected).toBe(12);
+});

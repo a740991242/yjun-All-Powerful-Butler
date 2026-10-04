@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
 import { exportBackup, parseBackup } from '../learning/backup';
-import { createSession, statistics, submitResponse } from '../learning/engine';
+import {
+  createSession,
+  evaluate,
+  statistics,
+  submitResponse,
+} from '../learning/engine';
 import { newReviewQuestions } from '../learning/review';
 import { chineseBooks } from './chinese';
 import { consonantPacks } from './chinese-consonants';
@@ -161,4 +166,41 @@ describe('initial consonant shape and two-part spelling activities', () => {
       ).toEqual(session);
     }
   });
+});
+
+it('checks all formal two-part spelling cards independently of the supplemental lesson rules', () => {
+  const lessons = chineseBooks[0]!.units.flatMap((unit) => unit.lessons);
+  const formalChanges: Record<string, { first: string[]; review: string[] }> = {
+    'u2-3': {
+      first: ['bā', 'pá', 'mǐ', 'fǔ'],
+      review: ['bǐ', 'pǔ', 'mù', 'fā'],
+    },
+    'u2-4': {
+      first: ['dǎ', 'tè', 'nǐ', 'lù'],
+      review: ['dì', 'tǔ', 'ná', 'lé'],
+    },
+  };
+  let inspected = 0;
+  for (const [itemId, expected] of Object.entries(authored)) {
+    const lesson = lessons.find((entry) => entry.id === `cu-${itemId}`)!;
+    const forms = formalChanges[itemId] ?? expected;
+    for (const [questions, answers] of [
+      [lesson.questions, forms.first],
+      [lesson.reviewQuestions!, forms.review],
+    ] as const) {
+      const blends = questions.filter((q) => /-[qr]-blend-\d+$/.test(q.id));
+      expect(blends).toHaveLength(expected.initials.length);
+      blends.forEach((q, index) => {
+        const answer = answers[index]!;
+        expect(q.rule).toEqual({ kind: 'choice', value: answer });
+        expect(q.material!.replaceAll(' + ', '')).toBe(answer);
+        expect(q.explanation).toContain(answer);
+        expect(q.material!.split(' + ')[0]).toBe(expected.initials[index]);
+        for (const choice of q.choices!)
+          expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+        inspected++;
+      });
+    }
+  }
+  expect(inspected).toBe(42);
 });
