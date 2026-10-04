@@ -84,3 +84,38 @@ it('returns independent source records so consumer edits cannot silently change 
   );
   expect(regionalEditionEvidence()[0]!.edition).toBe('sujiao');
 });
+
+it('matches the actual Mingde upper-semester mathematics notice without inventing a school system or other subjects', () => {
+  const local: RegionalEditionQuery = {
+    ...query,
+    province: 'shandong',
+    city: 'yantai',
+    school: 'longkou-mingde-school',
+  };
+  const result = resolveRegionalEdition(local);
+  expect(result.status).toBe('verified');
+  if (result.status !== 'verified') throw new Error('exact source not matched');
+  expect(result.edition).toBe('qingdao');
+  expect(result.evidence).toHaveLength(1);
+  expect(result.evidence[0]!.sourceUrl).toBe(
+    'https://www.yantai.gov.cn/art/2025/7/14/art_97280_3275743.html',
+  );
+  expect(result.evidence[0]!.publishedAt).toBe('2025-07-14');
+  expect(result.evidence[0]!.checkedAt).toBe('2026-10-04');
+  expect('schoolSystem' in result.evidence[0]!).toBe(false);
+  for (const change of [
+    { volume: 'lower' as const },
+    { academicYear: '2026-2027' },
+    { subject: 'english' as const },
+    { subject: 'chinese' as const },
+    { subject: 'ethics' as const },
+    { grade: 'p2' },
+    { stage: 'middle' },
+    { school: '' },
+    { city: '' },
+    { province: 'jiangsu' },
+  ])
+    expect(resolveRegionalEdition({ ...local, ...change }).status).toBe(
+      'unknown',
+    );
+});

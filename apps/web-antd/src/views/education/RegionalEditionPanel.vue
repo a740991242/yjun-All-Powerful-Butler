@@ -237,7 +237,9 @@ function apply() {
             $t(
               item.resolution.edition === 'sujiao'
                 ? 'educationLearning.sujiaoEdition'
-                : 'educationLearning.pepEdition',
+                : item.resolution.edition === 'qingdao'
+                  ? 'educationLearning.qingdaoEdition'
+                  : 'educationLearning.pepEdition',
             )
           }}
         </span>

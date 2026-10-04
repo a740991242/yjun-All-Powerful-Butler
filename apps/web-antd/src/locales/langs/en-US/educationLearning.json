@@ -1171,5 +1171,8 @@
   "regionalPresetRemoveConfirm": "Remove the set for this scope? Courses and learning records will remain.",
   "regionalPresetReadFailed": "Saved textbook sets could not be read. Existing data has not been overwritten. Retry loading.",
   "regionalPresetWriteFailed": "The set could not be saved. The previous set remains. Retry saving.",
-  "regionalPresetRetry": "Retry loading textbook sets"
+  "regionalPresetRetry": "Retry loading textbook sets",
+  "regionalCity_yantai": "Yantai",
+  "regionalSchool_longkou-mingde-school": "Mingde School, Longkou, Yantai",
+  "qingdaoEdition": "Qingdao edition (school system and courses unverified)"
 }

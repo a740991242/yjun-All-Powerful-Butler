@@ -122,7 +122,7 @@ export function regionalApplicationPlan(
       reason: 'available',
       action: {
         subject: target.subject,
-        edition: resolution.edition,
+        edition: target.edition,
         volume: target.volume,
       },
     };

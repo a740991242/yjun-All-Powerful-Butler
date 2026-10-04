@@ -12,7 +12,7 @@ export interface RegionalEditionQuery {
 }
 export interface RegionalEditionEvidence extends RegionalEditionQuery {
   id: string;
-  edition: 'pep-2024' | 'sujiao';
+  edition: 'pep-2024' | 'qingdao' | 'sujiao';
   sourceUrl: string;
   sourceTitle: string;
   publishedAt: string;
@@ -27,8 +27,10 @@ export type RegionalEditionResolution =
       evidence: RegionalEditionEvidence[];
     };
 
-// This source names the school, year, grade, subject and first semester.
-// It does not establish city/province-wide assignments or the next year's edition.
+// These sources name the school, year, grade, subject and first semester.
+// They do not establish city/province-wide assignments or the next year's edition.
+// Qingdao identifies the named publisher only: its school system, exact book
+// identity and course content remain unverified and cannot become a PEP target.
 const schoolEvidence: RegionalEditionEvidence[] = [
   {
     id: 'wujiang-choudu-p1-math-2025-2026-upper',
@@ -45,6 +47,22 @@ const schoolEvidence: RegionalEditionEvidence[] = [
     sourceTitle: '绸都小学2025~2026学年第一学期数学一年级工作计划',
     publishedAt: '2025-10-09',
     checkedAt: '2026-10-01',
+  },
+  {
+    id: 'longkou-mingde-p1-math-2025-2026-upper',
+    province: 'shandong',
+    city: 'yantai',
+    school: 'longkou-mingde-school',
+    academicYear: '2025-2026',
+    stage: 'primary',
+    grade: 'p1',
+    subject: 'math',
+    volume: 'upper',
+    edition: 'qingdao',
+    sourceUrl: 'https://www.yantai.gov.cn/art/2025/7/14/art_97280_3275743.html',
+    sourceTitle: '龙口市明德学校2025-2026学年教材选用目录',
+    publishedAt: '2025-07-14',
+    checkedAt: '2026-10-04',
   },
 ];
 export function regionalEditionEvidence(): RegionalEditionEvidence[] {

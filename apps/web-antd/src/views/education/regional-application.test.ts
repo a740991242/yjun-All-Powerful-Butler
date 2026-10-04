@@ -101,3 +101,36 @@ it('does not apply a conflicting school edition or mutate shared evidence', () =
       .sourceUrl,
   ).toContain('dxs.moe.gov.cn');
 });
+
+it('retains a sourced unbuilt Qingdao edition instead of silently applying a PEP or Sujiao course', () => {
+  const local = {
+    ...query,
+    province: 'shandong',
+    city: 'yantai',
+    school: 'longkou-mingde-school',
+  };
+  const plan = regionalApplicationPlan(local);
+  expect(plan[1]!.resolution.status).toBe('verified');
+  if (plan[1]!.resolution.status !== 'verified')
+    throw new Error('source not matched');
+  expect(plan[1]!.resolution.edition).toBe('qingdao');
+  expect(plan[1]!.reason).toBe('unavailable');
+  expect(plan[1]!.action).toBeUndefined();
+  expect(
+    plan.flatMap((row) => (row.action ? [row.action.subject] : [])),
+  ).toEqual(['chinese', 'ethics']);
+  for (const change of [
+    { academicYear: '2026-2027' },
+    { volume: 'lower' as const },
+    { city: 'suzhou' },
+    { school: 'other-school' },
+  ]) {
+    const result = regionalApplicationPlan({ ...local, ...change })[1]!;
+    expect(result.reason).toBe('unknown');
+    expect(result.action).toBeUndefined();
+  }
+  for (const schoolSystem of ['unknown', 'five-four'] as const) {
+    const guarded = regionalApplicationPlan({ ...local, schoolSystem });
+    expect(guarded.every((row) => row.action === undefined)).toBe(true);
+  }
+});
