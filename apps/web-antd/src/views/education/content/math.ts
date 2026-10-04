@@ -85,6 +85,7 @@ function lesson(
   activity: string,
   drafts: Draft[],
   visual?: Visual,
+  version = 1,
 ): Lesson {
   return {
     id,
@@ -95,7 +96,7 @@ function lesson(
     prerequisite: '可以用实物或学具操作；遇到困难时返回同单元前面的课程。',
     parentTip:
       '先让孩子操作并说明理由，再看提示。不要把家长给出的答案记为独立作答。',
-    version: 1,
+    version,
     status: 'available',
     steps: [
       { title: '观察与思考', text, visual },
@@ -1321,7 +1322,7 @@ const lower: Record<string, Lesson[]> = {
       '数的顺序与整十数',
       23,
       '按一、十接着数，理解跨整十数。',
-      '从29再数一个是30，从99再数一个是100。每次多10，个位通常不变，十位增加1。',
+      '从29再数一个是30，从99再数一个是100。每次多10，在结果小于100时，个位数字不变，十位数字增加1。90再加10得到100，十个十换成一个百，百位是1，十位和个位都是0。',
       '在百数表中从28接着数到35；再从20开始十个十个数到100。',
       [
         [29, 30],
@@ -1339,6 +1340,7 @@ const lower: Record<string, Lesson[]> = {
         ),
       ),
       { kind: 'number-line', minimum: 20, maximum: 40, value: 29 },
+      2,
     ),
     lesson(
       'ml-hundred-chart',

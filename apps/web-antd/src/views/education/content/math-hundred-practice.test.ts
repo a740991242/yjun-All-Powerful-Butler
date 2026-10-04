@@ -137,7 +137,7 @@ describe('pep hundred counting, digit meaning and simple calculation', () => {
     const state = initialLibrary('百以内数核验');
     for (const [i, l] of lessons.slice(0, 4).entries()) {
       const s = createSession(l, book.id, state.activeProfileId);
-      expect(s.lessonVersion).toBe(required([2, 1, 1, 1][i]));
+      expect(s.lessonVersion).toBe(required([2, 1, 2, 1][i]));
       state.sessions.push(s);
     }
     const original = JSON.stringify(state.sessions);

@@ -359,3 +359,67 @@ describe('reviewed PEP mathematics lesson packs', () => {
     expect(evaluate(question.rule, [0, 4])).toBe(false);
   });
 });
+
+it('explains the hundred boundary and independently checks the sequence while preserving version-one snapshots', () => {
+  const book = required(mathBooks.find((b) => b.volume === 'lower'));
+  const course = required(
+    book.units
+      .flatMap((u) => u.lessons)
+      .find((l) => l.id === 'ml-hundred-sequence'),
+  );
+  expect(course.version).toBe(2);
+  const teaching = required(course.steps[0]).text;
+  expect(teaching).toContain('在结果小于100时');
+  expect(teaching).toContain(
+    '90再加10得到100，十个十换成一个百，百位是1，十位和个位都是0',
+  );
+  const questions = [...course.questions, ...required(course.reviewQuestions)];
+  const answers = [
+    29 + 1,
+    39 + 1,
+    59 + 1,
+    99 + 1,
+    70 + 10,
+    90 + 10,
+    19 + 1,
+    49 + 1,
+    69 + 1,
+    79 + 1,
+    30 + 10,
+    80 + 10,
+  ];
+  expect(questions.map((q) => q.id)).toEqual([
+    ...Array.from({ length: 6 }, (_, i) => `${course.id}-q${i + 1}`),
+    ...Array.from({ length: 6 }, (_, i) => `${course.id}-r${i + 1}`),
+  ]);
+  for (const [i, question] of questions.entries()) {
+    const answer = required(answers[i]);
+    for (let n = 0; n <= 100; n++)
+      expect(evaluate(question.rule, n)).toBe(n === answer);
+  }
+  const now = '2026-10-04T00:00:00.000Z';
+  const historical = { ...course, version: 1 };
+  const main = createSession(historical, book.id, 'child', { seed: 1, now });
+  const review = createSession(historical, book.id, 'child', {
+    seed: 2,
+    now,
+    mode: 'review',
+    originalSessionId: main.id,
+    questions: required(course.reviewQuestions),
+  });
+  const current = createSession(course, book.id, 'child', { seed: 1, now });
+  expect(
+    parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '核对', createdAt: now }],
+        sessions: [main, review, current],
+      }),
+    ).data.sessions,
+  ).toEqual([main, review, current]);
+  expect(main.lessonVersion).toBe(1);
+  expect(review.lessonVersion).toBe(1);
+  expect(current.lessonVersion).toBe(2);
+  expect(current.questions).toEqual(main.questions);
+});
