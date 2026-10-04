@@ -98,7 +98,7 @@ describe('pep 11–20 physical units and interval meaning', () => {
     expect(original.lessonVersion).toBe(1);
     expect(original.questions).toHaveLength(6);
     for (const [index, course] of twentyPracticeLessons.entries()) {
-      expect(course.questions).toHaveLength(required([15, 16, 57][index]));
+      expect(course.questions).toHaveLength(required([23, 25, 57][index]));
       const session = createSession(course, book.id, 'child', {
         seed: 17,
         now,
@@ -131,7 +131,7 @@ describe('pep 11–20 physical units and interval meaning', () => {
     const pool = required(
       book.specialties?.find((l) => l.id === 'ms-upper-relations'),
     );
-    expect(pool.version).toBe(5);
+    expect(pool.version).toBe(6);
     expect(pool.questions).toContainEqual(find(1, 'q6'));
     expect(pool.questions).toContainEqual(find(2, 'q8'));
   });

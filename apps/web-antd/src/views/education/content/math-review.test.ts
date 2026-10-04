@@ -47,7 +47,9 @@ describe('separate mathematics review pools and bridge packs', () => {
                 (main) => main.knowledge === question.knowledge,
               ),
             ).toBe(true);
-          } else if (lesson.id === 'mu-twenty-links') {
+          } else if (
+            ['mu-twenty-links', 'mu-twenty-positions'].includes(lesson.id)
+          ) {
             const knowledge = new Set(
               lesson.questions
                 .filter((q) => !['manual', 'reflection'].includes(q.rule.kind))

@@ -4,6 +4,11 @@ import {
   twentyCompleteQuestions,
   twentyCompleteSourceTasks,
 } from './math-twenty-complete-practice';
+import {
+  twentyDescriptionQuestions,
+  twentyPositionSourceTasks,
+  twentyRepresentationSourceTasks,
+} from './math-twenty-representation-practice';
 
 const base = {
   textbookTitle: '11～20的认识',
@@ -123,6 +128,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: bundle,
+    version: 2,
     page: 74,
     title: '捆十、摆数与两个数字的意义',
     goal: '亲自把十个一换成一个十，读摆10～20，区分数字、数位、材料数量和表示的数。',
@@ -150,6 +156,10 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '成对数与生活中的十',
         text: '选16个纸片两两配对，再选15个配对，看看有没有单出的一个。1、3、5……可以叫单数，2、4、6……可以叫双数。找生活中十个一组的例子；若观察玉米，只由成人准备允许使用的横截面，数自己的实际颗数，不假定所有玉米一定相同。',
+      },
+      {
+        title: '原图逐组数，读画珠与摆数完整核对',
+        text: '两个圈十图分别数，环形数点标起点；成对、成把的物品仍按指定单个单位计数。珠串、小棒和计数器各自读数，珠颗数不是表示的数量。原书五个指定数全部摆后复原；原计数器读写与画珠全部分别做，个位无珠仍写0。原图实际作品独立记录，不由本站原创示例确认已做，缺原书可暂跳。',
       },
     ],
     questions: [
@@ -248,7 +258,17 @@ export const twentyPracticeLessons: Lesson[] = [
         'reflection',
         '我怎样分清一捆、一个十和十根？记录自己实际核对的例子；没做的活动另写待做。',
       ),
+      ...twentyRepresentationSourceTasks.map(([key, prompt]): Question => ({
+        ...activity(bundle, `actual-source-${key}`, prompt),
+        knowledge: `${bundle}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '实际重新查看官方留存图81/83/85/92对应印刷75/77/79/86，补八个独立原书完整人工任务。旧15主任务/4复习/五步骤保持，v2共23任务与六步骤，旧快照不改；不冒整册已完成。',
+    },
     reviewQuestions: [
       fields(
         bundle,
@@ -285,6 +305,7 @@ export const twentyPracticeLessons: Lesson[] = [
   {
     ...base,
     id: position,
+    version: 2,
     page: 78,
     title: '数序、之间与连两端的数量',
     goal: '按完整顺序辨认位置，区分编号差、两端之间、连两端共几个与推迟的天数。',
@@ -311,6 +332,10 @@ export const twentyPracticeLessons: Lesson[] = [
       {
         title: '推迟与画图检查',
         text: '原定星期二的活动推迟2天：过1天到星期三，过2天到星期四，原来那天不当第1个过去的日子。将书页、两人之间、楼层或站点任选两种，实际画两图并标出包含与不包含的端点，再解释自己的结果。',
+      },
+      {
+        title: '六种描述和整条数卡分别核对',
+        text: '中间的数不包含两端；某数后第1个从下一数开始。几个十和几个一的先后说法不改变组成，不同描述可以表示同一个数。先把完整连续数卡的所有空格填好，再将每条描述分别核对。原旗图左边省略了部分位置，应由给定编号推位置，不把可见首面当第1面；原三种圈法与六条列车描述另行实际记录。',
       },
     ],
     questions: [
@@ -417,7 +442,18 @@ export const twentyPracticeLessons: Lesson[] = [
         'reflection',
         '我怎样判断要不要算上两端？记录实际画过的例子，另记尚未完成的活动。',
       ),
+      ...twentyDescriptionQuestions(false),
+      ...twentyPositionSourceTasks.map(([key, prompt]): Question => ({
+        ...activity(position, `actual-source-${key}`, prompt),
+        knowledge: `${position}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes:
+        '实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。',
+    },
     reviewQuestions: [
       numeric(
         position,
@@ -448,6 +484,7 @@ export const twentyPracticeLessons: Lesson[] = [
         '星期六',
         '经过周四1天、周五2天、周六3天。',
       ),
+      ...twentyDescriptionQuestions(true),
     ],
   },
   {

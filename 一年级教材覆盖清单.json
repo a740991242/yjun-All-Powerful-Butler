@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T23:59:08.861Z",
+  "generatedAt": "2026-10-04T00:09:10.762Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -10248,8 +10248,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 580,
-          "manual": 145,
+          "objective": 587,
+          "manual": 155,
           "reflection": 44
         }
       },
@@ -11505,15 +11505,15 @@
               "title": "捆十、摆数与两个数字的意义",
               "textbookTitle": "11～20的认识",
               "page": 74,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "亲自把十个一换成一个十，读摆10～20，区分数字、数位、材料数量和表示的数。",
               "prerequisite": "先能逐个点数到10；纸笔、数卡和捆十材料按实际准备，缺材料可跳过。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 6,
               "tasks": {
                 "objective": 8,
-                "manual": 6,
+                "manual": 14,
                 "reflection": 1
               },
               "reviewTasks": {
@@ -11521,7 +11521,17 @@
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": ["mu-twenty-bundles"],
+              "knowledge": [
+                "mu-twenty-bundles",
+                "mu-twenty-bundles-actual-source-ten-groups",
+                "mu-twenty-bundles-actual-source-draw-counters",
+                "mu-twenty-bundles-actual-source-tadpoles",
+                "mu-twenty-bundles-actual-source-five-numbers",
+                "mu-twenty-bundles-actual-source-group-counts",
+                "mu-twenty-bundles-actual-source-three-representations",
+                "mu-twenty-bundles-actual-source-read-counters",
+                "mu-twenty-bundles-actual-source-complete-counters"
+              ],
               "questionKinds": [
                 "steps",
                 "number",
@@ -11531,9 +11541,9 @@
               ],
               "visualKinds": ["place-value"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材73～87页实际阅读与原创任务程序核对",
-                "notes": "资源1221001101241图片79～93逐页实际查看。保留原数序、数位、比较、加减四课v1及题目ID，追加独立捆十、位置范围与关系整理课。教材图、原题及全文不发布；真实材料活动和个人反思分开记录。"
+                "notes": "实际重新查看官方留存图81/83/85/92对应印刷75/77/79/86，补八个独立原书完整人工任务。旧15主任务/4复习/五步骤保持，v2共23任务与六步骤，旧快照不改；不冒整册已完成。"
               }
             },
             {
@@ -11541,23 +11551,34 @@
               "title": "数序、之间与连两端的数量",
               "textbookTitle": "11～20的认识",
               "page": 78,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "按完整顺序辨认位置，区分编号差、两端之间、连两端共几个与推迟的天数。",
               "prerequisite": "先能逐个点数到10；纸笔、数卡和捆十材料按实际准备，缺材料可跳过。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 6,
               "tasks": {
-                "objective": 10,
-                "manual": 5,
+                "objective": 17,
+                "manual": 7,
                 "reflection": 1
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 11,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": ["mu-twenty-positions"],
+              "knowledge": [
+                "mu-twenty-positions",
+                "mu-twenty-positions-description-0",
+                "mu-twenty-positions-description-1",
+                "mu-twenty-positions-description-2",
+                "mu-twenty-positions-description-3",
+                "mu-twenty-positions-description-4",
+                "mu-twenty-positions-description-5",
+                "mu-twenty-positions-description-strip",
+                "mu-twenty-positions-actual-source-flag-ranges",
+                "mu-twenty-positions-actual-source-train-descriptions"
+              ],
               "questionKinds": [
                 "steps",
                 "choice",
@@ -11565,11 +11586,11 @@
                 "manual",
                 "reflection"
               ],
-              "visualKinds": ["number-line"],
+              "visualKinds": ["number-line", "number-strip"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材73～87页实际阅读与原创任务程序核对",
-                "notes": "资源1221001101241图片79～93逐页实际查看。保留原数序、数位、比较、加减四课v1及题目ID，追加独立捆十、位置范围与关系整理课。教材图、原题及全文不发布；真实材料活动和个人反思分开记录。"
+                "notes": "实际查看官方图86对应印刷80，追加六条独立数字描述与完整三空数卡的原创练习及新条件复习，两项原旗图/列车完整人工任务。旧16主任务/4复习/五步骤保持，v2共25任务/11复习/六步骤，旧快照不改；不同描述可同数。"
               }
             },
             {
@@ -12043,19 +12064,19 @@
           "title": "数数与数序",
           "textbookTitle": "平台专项练习",
           "page": 1,
-          "version": 3,
+          "version": 4,
           "status": "available",
           "goal": "点数、接着数、前后顺序与第几。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 77,
-            "manual": 15,
+            "objective": 84,
+            "manual": 25,
             "reflection": 3
           },
           "reviewTasks": {
-            "objective": 53,
+            "objective": 60,
             "manual": 0,
             "reflection": 0
           },
@@ -12068,7 +12089,24 @@
             "mu-twenty-sequence",
             "mu-ordinal",
             "mu-twenty-bundles",
+            "mu-twenty-bundles-actual-source-ten-groups",
+            "mu-twenty-bundles-actual-source-draw-counters",
+            "mu-twenty-bundles-actual-source-tadpoles",
+            "mu-twenty-bundles-actual-source-five-numbers",
+            "mu-twenty-bundles-actual-source-group-counts",
+            "mu-twenty-bundles-actual-source-three-representations",
+            "mu-twenty-bundles-actual-source-read-counters",
+            "mu-twenty-bundles-actual-source-complete-counters",
             "mu-twenty-positions",
+            "mu-twenty-positions-description-0",
+            "mu-twenty-positions-description-1",
+            "mu-twenty-positions-description-2",
+            "mu-twenty-positions-description-3",
+            "mu-twenty-positions-description-4",
+            "mu-twenty-positions-description-5",
+            "mu-twenty-positions-description-strip",
+            "mu-twenty-positions-actual-source-flag-ranges",
+            "mu-twenty-positions-actual-source-train-descriptions",
             "mu-final-grids-number-grid",
             "mu-final-grids-addition-grid",
             "mu-final-grids-calculation",
@@ -12086,6 +12124,7 @@
             "count",
             "place-value",
             "number-line",
+            "number-strip",
             "semester-grid"
           ],
           "audit": {
@@ -12137,7 +12176,7 @@
           "title": "20以内数与计算",
           "textbookTitle": "平台专项练习",
           "page": 12,
-          "version": 5,
+          "version": 6,
           "status": "available",
           "goal": "数位、0、基础加减、连加连减及凑十进位。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
@@ -12145,7 +12184,7 @@
           "steps": 1,
           "tasks": {
             "objective": 160,
-            "manual": 40,
+            "manual": 48,
             "reflection": 12
           },
           "reviewTasks": {
@@ -12162,6 +12201,14 @@
             "mu-twenty-place",
             "mu-twenty-addsub",
             "mu-twenty-bundles",
+            "mu-twenty-bundles-actual-source-ten-groups",
+            "mu-twenty-bundles-actual-source-draw-counters",
+            "mu-twenty-bundles-actual-source-tadpoles",
+            "mu-twenty-bundles-actual-source-five-numbers",
+            "mu-twenty-bundles-actual-source-group-counts",
+            "mu-twenty-bundles-actual-source-three-representations",
+            "mu-twenty-bundles-actual-source-read-counters",
+            "mu-twenty-bundles-actual-source-complete-counters",
             "mu-twenty-links",
             "mu-twenty-links-complete-oral-0",
             "mu-twenty-links-complete-oral-1",
@@ -12304,19 +12351,19 @@
           "title": "图示与数量关系",
           "textbookTitle": "平台专项练习",
           "page": 34,
-          "version": 5,
+          "version": 6,
           "status": "available",
           "goal": "联系整体和部分，理解图示与生活问题。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 97,
-            "manual": 34,
+            "objective": 104,
+            "manual": 36,
             "reflection": 11
           },
           "reviewTasks": {
-            "objective": 69,
+            "objective": 76,
             "manual": 0,
             "reflection": 0
           },
@@ -12324,6 +12371,15 @@
             "mu-story",
             "mu-review-story",
             "mu-twenty-positions",
+            "mu-twenty-positions-description-0",
+            "mu-twenty-positions-description-1",
+            "mu-twenty-positions-description-2",
+            "mu-twenty-positions-description-3",
+            "mu-twenty-positions-description-4",
+            "mu-twenty-positions-description-5",
+            "mu-twenty-positions-description-strip",
+            "mu-twenty-positions-actual-source-flag-ranges",
+            "mu-twenty-positions-actual-source-train-descriptions",
             "mu-twenty-links",
             "mu-twenty-links-complete-oral-0",
             "mu-twenty-links-complete-oral-1",
@@ -12383,6 +12439,7 @@
           "visualKinds": [
             "bars",
             "number-line",
+            "number-strip",
             "place-value",
             "arithmetic-grid",
             "ten-frame",
