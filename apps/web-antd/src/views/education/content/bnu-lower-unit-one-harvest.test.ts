@@ -73,9 +73,10 @@ it('records all physical activities and independent questions without assigning 
   expect(q('question-bank').prompt).toContain('可以不同于示例');
   expect(lesson.parentTip).toContain('不含第16～17页');
   expect(
-    bnuLowerBook.units[0]?.lessons.find(({ status }) => status === 'preparing')
-      ?.page,
-  ).toBe(2);
+    bnuLowerBook.units[0]?.lessons.some((l) => l.status === 'preparing'),
+  ).toBe(false);
+  expect(bnuLowerBook.units[1]?.lessons[0]?.status).toBe('preparing');
+  expect(bnuLowerBook.units[1]?.lessons[0]?.page).toBe(18);
 });
 
 it('round-trips partial decomposition, zero and retry history with the earlier addition-table snapshot unchanged', () => {

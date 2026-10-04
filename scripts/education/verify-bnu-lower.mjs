@@ -225,7 +225,9 @@ const server = http.createServer(async (req, res) => {
       await p
         .getByText('一年级数学下册 · 北师大版（2024审核）', { exact: true })
         .waitFor();
-      await p.getByText('第一单元覆盖复核', { exact: true }).waitFor();
+      await p.getByText('图形大变身（一）', { exact: true }).first().waitFor();
+      if (await p.getByText('第一单元覆盖复核', { exact: true }).count())
+        throw new Error('Completed unit one still has the review placeholder');
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })

@@ -54,7 +54,10 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerUnitOneHarvestLesson,
     bnuLowerUnitOnePracticeLesson,
   ]);
-  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(10);
+  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(9);
+  expect(
+    bnuLowerBook.units[0]?.lessons.every((l) => l.status === 'available'),
+  ).toBe(true);
   expect(
     all
       .filter(({ status }) => status === 'preparing')

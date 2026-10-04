@@ -332,14 +332,11 @@ function pending(key: string, title: string, page: number): Lesson {
   return {
     id: `bnu-lower-${key}-pending`,
     textbookTitle: title,
-    title: key === 'u1' ? '第一单元覆盖复核' : title,
+    title,
     page,
     version: 1,
     status: 'preparing',
-    goal:
-      key === 'u1'
-        ? '第2～17页课程已开放，全单元逐页覆盖复核继续进行。'
-        : '目录已核对，尚未发布的正文课程继续制作。',
+    goal: '目录已核对，尚未发布的正文课程继续制作。',
     prerequisite: '',
     parentTip: '独立下册内容，不用其他版本或上册改名替代。',
     steps: [],
@@ -376,7 +373,6 @@ export const bnuLowerBook: Book = {
             bnuLowerAdditionTableLesson,
             bnuLowerUnitOneHarvestLesson,
             bnuLowerUnitOnePracticeLesson,
-            pending(key, title, 2),
           ]
         : [pending(key, title, page)],
   })),
