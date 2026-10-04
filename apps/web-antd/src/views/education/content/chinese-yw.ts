@@ -29,18 +29,21 @@ function choose(
     explanation,
   };
 }
+const reviewForms = { yi: 'yǐ', wu: 'wù', yu: 'yú' };
 const recognize = (suffix: string, value: 'wu' | 'yi' | 'yu', review = false) =>
   choose(
     suffix,
     `cu-yw-${value}-whole`,
     review
-      ? '找出与所示音节相同的整体写法。'
+      ? '去掉材料中的声调标记，找出完整的整体认读写法。'
       : `选择整体认读音节${value}的写法。`,
     ['yi', 'wu', 'yu'],
     value,
     '把整个音节作为一组看，不把字母分开念。',
-    `这里选择${value}。实际认读参考标准示范，字形选择不代替发音评价。`,
-    review ? value : undefined,
+    review
+      ? `${reviewForms[value]}去掉声调标记是${value}，保留整个音节，不拆成两个部分拼读；这里只辨写法，不评价发音。`
+      : `这里选择${value}。实际认读参考标准示范，字形选择不代替发音评价。`,
+    review ? reviewForms[value] : undefined,
   );
 const tone = (suffix: string, syllable: keyof typeof tones, index: number) =>
   choose(
@@ -62,7 +65,7 @@ export const ywLesson: Lesson = {
     '认识i、u、ü及四声标记；可由家长读题和示范，本站不做听音自动判分。',
   parentTip:
     'y w按2024官方目录单列，不合并到i u ü或21个声母活动。本站用原创材料讲解拼写，未逐页核验整课正文；朗读、纸笔均采用人工确认，不新增汉字会认会写范围。',
-  version: 1,
+  version: 2,
   status: 'available',
   steps: [
     {
@@ -202,22 +205,22 @@ export const ywLesson: Lesson = {
     choose(
       'r1',
       'cu-yw-letter-shape',
-      '字卡是y，选择相同字母。',
+      '观察材料中的音节，选择开头的字母。',
       ['w', 'u', 'y'],
       'y',
-      '先看字卡字形。',
-      '字卡是y。',
-      'y',
+      '先观察音节开头，再比较选项字形，不按英文字母名称读。',
+      'yà开头的字母是y；这里只辨字母，不把这个普通拼读音节当作yi。',
+      'yà',
     ),
     choose(
       'r2',
       'cu-yw-letter-shape',
-      '字卡是w，选择相同字母。',
+      '观察材料中的音节，选择开头的字母。',
       ['y', 'w', 'u'],
       'w',
-      '先看字卡字形。',
-      '字卡是w。',
-      'w',
+      '先观察音节开头，再比较选项字形，不按英文字母名称读。',
+      'wǒ开头的字母是w；这里只辨字母，不把这个普通拼读音节当作wu。',
+      'wǒ',
     ),
     recognize('r3', 'yi', true),
     recognize('r4', 'wu', true),
