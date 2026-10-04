@@ -1,4 +1,4 @@
-import type { Lesson, Question } from './types';
+import type { Answer, AnswerRule, Lesson, Question } from './types';
 
 import { describe, expect, it } from 'vitest';
 
@@ -68,6 +68,62 @@ describe('reviewed question grading', () => {
     );
     expect(evaluate({ kind: 'steps', values: [2, 10, 13] }, [2, 10, 13])).toBe(
       true,
+    );
+  });
+  it('rejects missing array slots before grading or saving a submission', () => {
+    const rules: AnswerRule[] = [
+      { kind: 'sequence', values: ['a', 'b', 'c'] },
+      { kind: 'set', values: ['a', 'b', 'c'] },
+    ];
+    const holes: string[] = [];
+    holes.length = 3;
+    const missingMiddle = ['a', 'b', 'c'];
+    Reflect.deleteProperty(missingMiddle, '1');
+    const missingLast = ['a', 'b', 'c'];
+    Reflect.deleteProperty(missingLast, '2');
+    for (const rule of rules) {
+      const malformedDrafts: Answer[] = [
+        holes,
+        missingMiddle,
+        missingLast,
+        ['a', '', 'c'],
+        [0, null, 2],
+      ];
+      for (const draft of malformedDrafts) {
+        expect(validAnswer(rule, draft)).toBe(false);
+        expect(() => evaluate(rule, draft)).toThrow(
+          'educationLearning.answerRequired',
+        );
+        const task: Question = { ...question, rule };
+        const session = createSession(lesson, 'book', 'profile', {
+          questions: [task],
+        });
+        const response = session.responses[0]!;
+        response.draft = draft;
+        const unchanged = structuredClone(response);
+        expect(() => submitResponse(task, response)).toThrow(
+          'educationLearning.answerRequired',
+        );
+        expect(response).toEqual(unchanged);
+        expect(statistics(session)).toMatchObject({
+          submitted: 0,
+          finalCorrect: 0,
+          independent: 0,
+          accuracy: null,
+        });
+      }
+    }
+    expect(evaluate({ kind: 'sequence', values: ['0', 'a'] }, ['0', 'a'])).toBe(
+      true,
+    );
+    expect(evaluate({ kind: 'sequence', values: ['0', 'a'] }, ['a', '0'])).toBe(
+      false,
+    );
+    expect(evaluate({ kind: 'set', values: ['0', 'a'] }, ['a', '0'])).toBe(
+      true,
+    );
+    expect(evaluate({ kind: 'set', values: ['0', 'a'] }, ['0', '0', 'a'])).toBe(
+      false,
     );
   });
   it('normalizes Unicode tones but does not accept missing tones or v in place of ü', () => {

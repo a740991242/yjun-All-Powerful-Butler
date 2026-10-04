@@ -45,6 +45,39 @@ function library(): LibraryState {
   return value;
 }
 describe('local evidence backups', () => {
+  it('preserves dense sequence and set histories and rejects missing slots in a claimed submission', () => {
+    for (const kind of ['sequence', 'set'] as const) {
+      const state = library();
+      const session = state.sessions[0]!;
+      const question = session.questions[0]!;
+      question.rule = { kind, values: ['a', 'b', 'c'] };
+      question.choices = ['a', 'b', 'c'].map((id) => ({ id, label: id }));
+      delete question.visual;
+      session.responses[0]!.draft = ['c', 'b', 'a'];
+      session.responses[0] = submitResponse(question, session.responses[0]!);
+      session.responses[0]!.draft = ['a', 'b', 'c'];
+      session.responses[0] = submitResponse(question, session.responses[0]!);
+      const backup = exportBackup(state);
+      expect(parseBackup(backup).data).toEqual(state);
+      expect(session.responses[0]!.submissions[0]!.correct).toBe(
+        kind === 'set',
+      );
+      for (const missingIndex of [0, 1, 2]) {
+        const malformed = parseBackup(backup);
+        const answer =
+          malformed.data.sessions[0]!.responses[0]!.submissions[0]!.answer;
+        if (!Array.isArray(answer)) throw new Error('Expected array fixture');
+        Reflect.deleteProperty(answer, String(missingIndex));
+        expect(isLibraryState(malformed.data)).toBe(false);
+        // JSON serializes an array hole as null: neither form is accepted.
+        expect(() => parseBackup(JSON.stringify(malformed))).toThrow(
+          'educationLearning.invalidBackup',
+        );
+        expect(parseBackup(backup).data).toEqual(state);
+      }
+    }
+  });
+
   it('round trips card actions and rejects impossible claims or tools without a saved model', () => {
     const state = library();
     const session = state.sessions[0]!;

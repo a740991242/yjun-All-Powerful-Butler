@@ -100,7 +100,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
       return (
         Array.isArray(answer) &&
         answer.length > 0 &&
-        answer.every((item) => typeof item === 'string' && item.length > 0)
+        [...answer].every((item) => typeof item === 'string' && item.length > 0)
       );
     }
   }
