@@ -3,9 +3,15 @@ import type { Answer } from '../learning/types';
 import { expect, it } from 'vitest';
 
 import { exportBackup, parseBackup } from '../learning/backup';
-import { createSession, evaluate, submitResponse } from '../learning/engine';
+import {
+  createSession,
+  evaluate,
+  submitResponse,
+  validAnswer,
+} from '../learning/engine';
 import { initialLibrary } from '../learning/storage';
 import { sujiaoCalculationLinksDraft as lesson } from './sujiao-calculation-links';
+import { sujiaoLowerLessons } from './sujiao-lower';
 it('independently checks linked facts, updated sequential starts and changing operation directions', () => {
   const main: Answer[] = [
     12,
@@ -41,6 +47,49 @@ it('independently checks linked facts, updated sequential starts and changing op
   ];
   expect(lesson.questions).toHaveLength(18);
   expect(lesson.reviewQuestions).toHaveLength(14);
+  const published = sujiaoLowerLessons.find((item) => item.id === lesson.id)!;
+  expect(published.status).toBe('available');
+  for (const [questions, answers] of [
+    [published.questions.slice(0, 14), main],
+    [published.reviewQuestions!, review],
+  ] as const) {
+    expect(questions).toHaveLength(answers.length);
+    questions.forEach((question, index) => {
+      const expected = answers[index]!;
+      expect(validAnswer(question.rule, null)).toBe(false);
+      if (typeof expected === 'number') {
+        for (let value = 0; value <= 99; value++)
+          expect(evaluate(question.rule, value)).toBe(value === expected);
+      } else if (Array.isArray(expected)) {
+        const values = expected.map((value) => {
+          if (typeof value !== 'number')
+            throw new Error('Expected numeric chain');
+          return value;
+        });
+        for (let field = 0; field < values.length; field++) {
+          const partial: (null | number)[] = [...values];
+          partial[field] = null;
+          expect(validAnswer(question.rule, partial)).toBe(false);
+          // The literal intermediates above do not call the lesson generator.
+          for (let value = 0; value <= 99; value++) {
+            const candidate = [...values];
+            candidate[field] = value;
+            expect(evaluate(question.rule, candidate)).toBe(
+              value === values[field],
+            );
+          }
+        }
+      } else {
+        expect(question.choices?.some((item) => item.id === expected)).toBe(
+          true,
+        );
+        for (const candidate of question.choices!)
+          expect(evaluate(question.rule, candidate.id)).toBe(
+            candidate.id === expected,
+          );
+      }
+    });
+  }
   lesson.questions
     .slice(0, 14)
     .forEach((q, i) => expect(evaluate(q.rule, main[i]!)).toBe(true));
