@@ -3,6 +3,7 @@ import type { PaperFoldVisual } from './types';
 
 import { expect, it } from 'vitest';
 
+import { sujiaoLowerBook } from '../content/sujiao-lower';
 import { sujiaoPaperFoldsDraft as lesson } from '../content/sujiao-paper-folds';
 import { exportBackup, parseBackup } from './backup';
 import { createSession, evaluate, statistics, submitResponse } from './engine';
@@ -22,6 +23,67 @@ const area = (points: FoldPoint[]) =>
       return sum + p[0] * q[1] - p[1] * q[0];
     }),
   ) / 2;
+it('independently checks every published fold answer and candidate against the stated paper and crease sequence', () => {
+  const published = sujiaoLowerBook.units
+    .flatMap((unit) => unit.lessons)
+    .find((item) => item.id === 'sj-lower-paper-folds');
+  expect(published?.status).toBe('available');
+  if (!published) throw new Error('Published fold lesson is missing');
+  // These expectations follow the six explicitly stated physical folds;
+  // they do not call foldShape or use the lesson's stored answer values.
+  const expected = [
+    [
+      'square',
+      'rectangle',
+      'triangle',
+      'rectangle',
+      'rectangle',
+      'triangle',
+      'rectangle',
+      'triangle',
+      'square',
+    ],
+    [
+      'rectangle',
+      'triangle',
+      'triangle',
+      'rectangle',
+      'square',
+      'rectangle',
+      'square',
+      'rectangle',
+      'square',
+    ],
+  ];
+  for (const [review, questions] of [
+    [false, published.questions],
+    [true, published.reviewQuestions!],
+  ] as const) {
+    const prefix = `${published.id}-${review ? 'r' : 'q'}`;
+    const suffixes = [
+      ...Array.from({ length: 6 }, (_, index) => `result-${index}`),
+      ...Array.from({ length: 3 }, (_, index) => `first-${index}`),
+      'fold-count',
+      'unspecified',
+    ];
+    const objectives = questions.filter(
+      (question) => !['manual', 'reflection'].includes(question.rule.kind),
+    );
+    expect(objectives.map((question) => question.id)).toEqual(
+      suffixes.map((suffix) => `${prefix}-${suffix}`),
+    );
+    for (const [index, question] of objectives.entries()) {
+      if (index === 9) {
+        for (let count = 0; count <= 4; count++)
+          expect(evaluate(question.rule, count)).toBe(count === 2);
+      } else {
+        const answer = index === 10 ? 'no' : expected[review ? 1 : 0]![index];
+        for (const choice of question.choices!)
+          expect(evaluate(question.rule, choice.id)).toBe(choice.id === answer);
+      }
+    }
+  }
+});
 it('each fold is a real reflection along the shown crease covering exactly the previous outline in two equal halves', () => {
   for (const paper of ['square', 'rectangle'] as const)
     for (const method of ['cross', 'parallel', 'diagonal'] as const) {
