@@ -7,12 +7,14 @@ type Pair = {
   key: string;
   prompt: [string, string];
   labels: string[];
+  reviewLabels?: string[];
   value: [string, string];
   material?: [string, string];
   explanation: string;
 };
 export type Body = {
   itemId: string;
+  version?: number;
   title: string;
   pages: number[];
   writingPage?: number;
@@ -285,7 +287,7 @@ export function makeFormal(body: Body): Lesson {
         choose(
           q.key,
           q.prompt[index],
-          q.labels,
+          review ? (q.reviewLabels ?? q.labels) : q.labels,
           q.value[index],
           q.explanation,
           review,
@@ -296,11 +298,11 @@ export function makeFormal(body: Body): Lesson {
         choose(
           q.key,
           q.prompt[index],
-          q.labels,
+          review ? (q.reviewLabels ?? q.labels) : q.labels,
           q.value[index],
           q.explanation,
           review,
-          reading,
+          q.material?.[index] ? `${reading}\n${q.material[index]}` : reading,
         ),
       ),
     ];
@@ -321,6 +323,7 @@ export function makeFormal(body: Body): Lesson {
   });
   return {
     ...base,
+    version: body.version ?? base.version,
     id,
     title: body.title,
     textbookTitle: body.title,

@@ -165,3 +165,65 @@ it('preserves wrong-first history and manual/reflection snapshots and offers cha
     ).toEqual(session);
   }
 });
+
+it('uses the story ending to review yielding rather than repeating the same yes-or-no fact', () => {
+  const lesson = formalUnitFourNasal['u4-5']!;
+  expect(lesson.version).toBe(2);
+  expect(formalUnitFourNasal['u4-4']!.version).toBe(1);
+  const main = lesson.questions.find(
+    (q) => q.id === 'cu-u4-5-q-reading-yield',
+  )!;
+  const fresh = lesson.reviewQuestions!.find(
+    (q) => q.id === 'cu-u4-5-r-reading-yield',
+  )!;
+  expect(main.rule).toEqual({ kind: 'choice', value: '都不肯' });
+  expect(fresh.material).toContain('共读教材印刷第55页');
+  expect(fresh.material).toContain('最后顺利走过了小桥');
+  expect(fresh.explanation).toContain('掉进河中');
+  expect(fresh.rule).toEqual({ kind: 'choice', value: '与原文不符' });
+  expect(evaluate(fresh.rule, '与原文相符')).toBe(false);
+  expect(evaluate(fresh.rule, '原文没有结尾')).toBe(false);
+  const now = '2026-10-04T00:00:00.000Z';
+  const s = createSession(lesson, chineseBooks[0]!.id, 'child', {
+    seed: 55,
+    now,
+  });
+  const i = s.questions.findIndex((q) => q.id === main.id);
+  s.responses[i] = submitResponse(
+    main,
+    { ...s.responses[i]!, draft: '都愿意' },
+    now,
+  );
+  expect(newReviewQuestions(lesson, s, [s])).toEqual([fresh]);
+  const old = structuredClone(lesson);
+  old.version = 1;
+  old.questions = [
+    {
+      ...fresh,
+      prompt: '《两只羊》中，遇到的两只羊都愿意让路吗？',
+      material: main.material,
+      choices: main.choices,
+      rule: main.rule,
+    },
+  ];
+  const saved = createSession(old, chineseBooks[0]!.id, 'child', {
+    seed: 55,
+    now,
+  });
+  saved.responses[0] = submitResponse(
+    saved.questions[0]!,
+    { ...saved.responses[0]!, draft: '都不肯' },
+    now,
+  );
+  expect(
+    parseBackup(
+      exportBackup({
+        schemaVersion: 1,
+        activeProfileId: 'child',
+        profiles: [{ id: 'child', nickname: '验收', createdAt: now }],
+        sessions: [saved, s],
+      }),
+    ).data.sessions,
+  ).toEqual([saved, s]);
+  expect(saved.questions[0]!.rule).toEqual({ kind: 'choice', value: '都不肯' });
+});

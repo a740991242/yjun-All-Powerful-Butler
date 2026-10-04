@@ -172,7 +172,7 @@ it('anchors textbook-dependent modern reading and avoids fake personal info or f
 
 it('keeps the p31 erhua footnote scoped to its word, records actual speech manually and restores v1 snapshots unchanged', () => {
   const garden = unitTwoChineseLessons['u2-5']!;
-  expect(garden.version).toBe(2);
+  expect(garden.version).toBe(3);
   const main = garden.questions.find((q) => q.id === 'cu-u2-5-q-erhua')!;
   const fresh = garden.reviewQuestions!.find(
     (q) => q.id === 'cu-u2-5-r-erhua',
@@ -234,4 +234,100 @@ it('keeps the p31 erhua footnote scoped to its word, records actual speech manua
   ).data.sessions;
   expect(restored).toEqual([old, current]);
   expect(restored[0]!.questions.some((q) => q.id === main.id)).toBe(false);
+});
+
+it('changes the vowel comparison and locates all eight garden characters in word cards', () => {
+  const vowels = unitTwoChineseLessons['u2-1']!;
+  expect(vowels.version).toBe(2);
+  const main = vowels.questions.find((q) => q.id.endsWith('-q-marks'))!;
+  const fresh = vowels.reviewQuestions!.find((q) => q.id.endsWith('-r-marks'))!;
+  expect(main.prompt).toContain('á与à');
+  expect(fresh.prompt).toContain('ē与ě');
+  expect(fresh.explanation).toContain('第一声');
+  expect(fresh.explanation).toContain('第三声');
+  expect(evaluate(fresh.rule, '不同')).toBe(true);
+  expect(evaluate(fresh.rule, '相同')).toBe(false);
+  const garden = unitTwoChineseLessons['u2-5']!;
+  const cards = [
+    '本子',
+    '学校',
+    '学校',
+    '班级',
+    '班级',
+    '姓名',
+    '姓名',
+    '王老师',
+  ];
+  const positions = [0, 0, 1, 0, 1, 0, 1, 0];
+  const targets = ['本', '学', '校', '班', '级', '姓', '名', '王'];
+  targets.forEach((target, i) => {
+    const q = garden.reviewQuestions!.find(
+      (q) => q.id === `cu-u2-5-r-char-${i}`,
+    )!;
+    expect(q.material).toBe(cards[i]);
+    expect(q.prompt).toContain(`第${positions[i]! + 1}个字`);
+    expect(q.prompt).not.toContain(`“${target}”`);
+    expect([...q.material!][positions[i]!]).toBe(target);
+    expect(q.rule).toEqual({ kind: 'choice', value: target });
+    for (const choice of q.choices!)
+      expect(evaluate(q.rule, choice.id)).toBe(choice.id === target);
+  });
+  expect(unitTwoChineseLessons['u2-2']!.version).toBe(1);
+  expect(unitTwoChineseLessons['u2-3']!.version).toBe(1);
+  expect(unitTwoChineseLessons['u2-4']!.version).toBe(1);
+});
+it('keeps old garden recognition cards and their first errors intact after the version change', () => {
+  const now = '2026-10-04T00:00:00.000Z';
+  const garden = unitTwoChineseLessons['u2-5']!;
+  const old = structuredClone(garden);
+  old.version = 2;
+  old.questions = old
+    .reviewQuestions!.filter((q) => /-r-char-[0-7]$/.test(q.id))
+    .map((q) => {
+      if (q.rule.kind !== 'choice') throw new Error('expected choice');
+      return {
+        ...q,
+        prompt: `选出字卡“${q.rule.value}”所表示的字。`,
+        material: q.rule.value,
+      };
+    });
+  const saved = createSession(old, chineseBooks[0]!.id, 'child', {
+    seed: 31,
+    now,
+  });
+  for (const [i, q] of saved.questions.entries()) {
+    if (q.rule.kind !== 'choice') throw new Error('expected choice');
+    const answer = q.rule.value;
+    saved.responses[i] = submitResponse(
+      q,
+      {
+        ...saved.responses[i]!,
+        draft: q.choices!.find((c) => c.id !== answer)!.id,
+      },
+      now,
+    );
+    saved.responses[i] = submitResponse(
+      q,
+      { ...saved.responses[i]!, draft: answer },
+      now,
+    );
+  }
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '验收', createdAt: now }],
+      sessions: [saved],
+    }),
+  ).data.sessions[0]!;
+  expect(restored).toEqual(saved);
+  expect(restored.lessonVersion).toBe(2);
+  expect(
+    restored.responses.every(
+      (r) =>
+        r.submissions[0]!.correct === false &&
+        r.submissions[1]!.correct === true,
+    ),
+  ).toBe(true);
+  expect(newReviewQuestions(garden, restored, [restored])).toEqual([]);
 });

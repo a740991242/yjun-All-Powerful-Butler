@@ -183,7 +183,7 @@ function vowelCourse(itemId: 'u2-1' | 'u2-2'): Lesson {
       (() => {
         if (itemId === 'u2-1')
           return review
-            ? 'a的二声与四声只看标记是否相同？'
+            ? '看新字卡ē与ě，上方调号是否相同？'
             : 'á与à的上方调号是否相同？';
         return review
           ? '单独展示ǜ时，两点与调号如何写？'
@@ -199,9 +199,13 @@ function vowelCourse(itemId: 'u2-1' | 'u2-2'): Lesson {
         if (itemId === 'u2-1') return '不同';
         return review ? '两点和调号都保留' : '省去原有小点';
       })(),
-      itemId === 'u2-1'
-        ? '二声调号向右上，四声向右下。'
-        : 'i标调省去原小点；本课ü单独带调，两点与调号同时保留，后续拼写规则不在这里混入。',
+      (() => {
+        if (itemId === 'u2-1')
+          return review
+            ? 'ē是第一声平放的调号，ě是第三声有折转的调号，两者不同；不沿用上一题的二声、四声材料。'
+            : '二声调号向右上，四声向右下。';
+        return 'i标调省去原小点；本课ü单独带调，两点与调号同时保留，后续拼写规则不在这里混入。';
+      })(),
     ),
   ];
   const shapeText =
@@ -245,7 +249,7 @@ function vowelCourse(itemId: 'u2-1' | 'u2-2'): Lesson {
     textbookTitle: audit.title,
     title: audit.title,
     page: required(audit.pages[0]),
-    version: 1,
+    version: itemId === 'u2-1' ? 2 : 1,
     status: 'available',
     goal: '认读三个单韵母与四声，观察教材情境和四线格示范；辨形、跟读、书写分别练习。',
     prerequisite: '请家长陪读题目，准备教材或教师标准示范和四线格纸。',
@@ -489,17 +493,27 @@ const picturePoem =
 function gardenTwoTasks(review: boolean): Question[] {
   const id = `${gardenId}-${review ? 'r' : 'q'}`;
   const labels = ['本', '学', '校', '班', '级', '姓', '名', '王'];
+  const wordCards = [
+    ['本子', 0],
+    ['学校', 0],
+    ['学校', 1],
+    ['班级', 0],
+    ['班级', 1],
+    ['姓名', 0],
+    ['姓名', 1],
+    ['王老师', 0],
+  ] as const;
   const tasks: Question[] = labels.map((character, index) =>
     choose(
       `${id}-char-${index}`,
       `cu-recognize-u${required(character.codePointAt(0)).toString(16)}`,
       review
-        ? `选出字卡“${character}”所表示的字。`
+        ? `看材料中的词，选择从左往右第${required(wordCards[index])[1] + 1}个字。`
         : `在本课会认字中选出${character}。`,
       labels,
       character,
       `认读${character}，联系本、学校、班级、姓名和王这些教材用字词。`,
-      review ? character : undefined,
+      review ? required(wordCards[index])[0] : undefined,
     ),
   );
   const card = review
@@ -701,7 +715,7 @@ export const gardenTwoLesson: Lesson = {
   title: '语文园地二',
   textbookTitle: '语文园地二',
   page: 28,
-  version: 2,
+  version: 3,
   status: 'available',
   goal: '读学习用品信息、认八字写九王；比较声调和形近声母，联系汉字与韵母，读古诗与亲子故事。',
   prerequisite:
