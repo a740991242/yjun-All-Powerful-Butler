@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--chores'))
+    return {
+      index: 4,
+      lessonId: 'bnu-lower-household-chores',
+      zero: '-zero-ones',
+      retry: '-sum-0',
+      manual: 9,
+      key: 'chores',
+    };
   if (process.argv.includes('--farm'))
     return {
       index: 3,
@@ -184,7 +193,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 4
+          .count()) !== 5
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -313,6 +322,46 @@ const server = http.createServer(async (req, res) => {
                 .getByRole('spinbutton')
                 .nth(field)
                 .fill(String(q.rule.values[field]));
+          } else if (q.rule.kind === 'set') {
+            if (q.id.endsWith('-result-twelve')) {
+              if ((await p.getByRole('checkbox').count()) !== 28)
+                throw new Error('Incomplete expression card set');
+              const first = q.choices.find((o) => o.id === 'result-twelve-4');
+              await p
+                .getByRole('checkbox', { name: first.label, exact: true })
+                .check();
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '["result-twelve-4"]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              if (
+                !(await p
+                  .getByRole('checkbox', { name: first.label, exact: true })
+                  .isChecked())
+              )
+                throw new Error('Partial card selection lost');
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+              await p.getByRole('checkbox').first().scrollIntoViewIfNeeded();
+              await p.screenshot({
+                path: `/tmp/butler-bnu-chores-cards-start-${width}.png`,
+              });
+              await p.getByRole('checkbox').last().scrollIntoViewIfNeeded();
+              await p.screenshot({
+                path: `/tmp/butler-bnu-chores-cards-end-${width}.png`,
+              });
+            }
+            for (const value of q.rule.values) {
+              const option = q.choices.find((o) => o.id === value);
+              await p
+                .getByRole('checkbox', { name: option.label, exact: true })
+                .check();
+            }
           } else if (q.rule.kind === 'choice')
             await p
               .getByRole('radio', { name: q.rule.value, exact: true })
@@ -341,6 +390,16 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'chores') {
+        const category = session.responses.find((r) =>
+          r.questionId.endsWith('-result-twelve'),
+        );
+        if (
+          JSON.stringify(category.submissions.map((s) => s.correct)) !==
+          '[false,true]'
+        )
+          throw new Error('Classification retry history lost');
+      }
       if (flow.key === 'farm') {
         const method = session.responses.find((r) =>
           r.questionId.endsWith('-nine-first'),
@@ -377,7 +436,14 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
-        if (q.rule.kind === 'steps') {
+        if (q.rule.kind === 'set') {
+          for (const value of q.rule.values) {
+            const option = q.choices.find((o) => o.id === value);
+            await p
+              .getByRole('checkbox', { name: option.label, exact: true })
+              .check();
+          }
+        } else if (q.rule.kind === 'steps') {
           for (let field = 0; field < q.rule.values.length; field++)
             await p
               .getByRole('spinbutton')
