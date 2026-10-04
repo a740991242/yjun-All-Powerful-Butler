@@ -7,6 +7,7 @@ import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
+import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 
 /** Public scanned pages were read; approval year is not a printing date. */
 export const bnuLowerSource = {
@@ -346,7 +347,8 @@ export const bnuLowerBook: Book = {
             bnuLowerChoresLesson,
             bnuLowerRabbitsLesson,
             bnuLowerAdditionTableLesson,
-            pending(key, title, 15),
+            bnuLowerUnitOneHarvestLesson,
+            pending(key, title, 16),
           ]
         : [pending(key, title, page)],
   })),

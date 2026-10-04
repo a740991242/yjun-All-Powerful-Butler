@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--harvest'))
+    return {
+      index: 7,
+      lessonId: 'bnu-lower-unit-one-harvest',
+      zero: '-zero-ones',
+      retry: '-total',
+      manual: 7,
+      key: 'harvest',
+    };
   if (process.argv.includes('--addition-table'))
     return {
       index: 6,
@@ -211,7 +220,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 7
+          .count()) !== 8
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -407,6 +416,57 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'harvest' && q.id.endsWith('-seven-path')) {
+              await p.getByRole('spinbutton').first().fill('3');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[3,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["3","","",""]')
+                throw new Error('Harvest partial decomposition lost');
+              await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const geometry = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const r = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: r.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        r.left >= 0 &&
+                        r.right <= innerWidth &&
+                        r.top >= 0 &&
+                        r.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (geometry.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error(
+                  'Harvest decomposition fields size or viewport',
+                );
+              await p.screenshot({
+                path: `/tmp/butler-bnu-harvest-fields-${width}.png`,
+              });
+              for (const [i, v] of [2, 5, 10, 15].entries())
+                await p.getByRole('spinbutton').nth(i).fill(String(v));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (q.id.endsWith('-horizontal')) {
               await p.getByRole('spinbutton').first().fill('9');
               await wait(
@@ -638,6 +698,17 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'harvest') {
+        const decomposition = session.responses.find((r) =>
+          r.questionId.endsWith('-seven-path'),
+        );
+        if (
+          JSON.stringify(
+            decomposition.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[2,5,10,15],false],[[3,5,10,15],true]]'
+        )
+          throw new Error('Harvest two-path retry history changed');
+      }
       if (flow.key === 'addition') {
         const cell = session.responses.find((r) =>
           r.questionId.endsWith('-blank-A'),

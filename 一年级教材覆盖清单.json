@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T14:43:55.976Z",
+  "generatedAt": "2026-10-04T15:23:46.580Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 7,
+        "availablePacks": 8,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 226,
-          "manual": 64,
-          "reflection": 14
+          "objective": 240,
+          "manual": 71,
+          "reflection": 17
         }
       },
       "units": [
@@ -30977,10 +30977,51 @@
               }
             },
             {
+              "id": "bnu-lower-unit-one-harvest",
+              "title": "两条凑十路径、表示十五与自主提问",
+              "textbookTitle": "整理与复习 · 我的收获与问题",
+              "page": 15,
+              "version": 1,
+              "status": "available",
+              "goal": "根据两窝卵的数量求合计，分别说明8先凑十与7先凑十；区分小棒根数、珠子颗数和表示值，实际表示15并记录自己的问题。",
+              "prerequisite": "认识十与一，能说明20以内进位加法。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 14,
+                "manual": 7,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-unit-one-harvest"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "ten-frame",
+                "number-line",
+                "place-value",
+                "digit-counter"
+              ],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第15页整页文字、数线、分解与数位图逐项核对",
+                "notes": "两窝8与7合计15枚；数线+2/+5，分解8为5/3再3+7=10。15根小棒、一捆十根与五根散棒；十位1珠个位5珠表示15而材料6颗。原问题银行开放，不把20当最大数；实物manual、自主问题和未来计划分别null保存。第16～17页保留制作中。"
+              }
+            },
+            {
               "id": "bnu-lower-u1-pending",
               "title": "第一单元其余课程",
               "textbookTitle": "20以内数与加法",
-              "page": 15,
+              "page": 16,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
