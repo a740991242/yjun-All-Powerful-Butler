@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T12:59:26.359Z",
+  "generatedAt": "2026-10-04T13:12:19.330Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 2,
+        "availablePacks": 3,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 33,
-          "manual": 20,
-          "reflection": 4
+          "objective": 61,
+          "manual": 29,
+          "reflection": 6
         }
       },
       "units": [
@@ -30781,7 +30781,7 @@
               "title": "十位、个位与二十以内数序比较",
               "textbookTitle": "古人计数（二）",
               "page": 4,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "分清十位与个位的计数意义，表示10～20，读写十加几并按明确顺序比较数量。",
               "prerequisite": "认识10个一是1个十，能表示11～20的十和一。",
@@ -30807,10 +30807,40 @@
               }
             },
             {
+              "id": "bnu-lower-building-blocks",
+              "title": "十几加减几与跳数、配对计算",
+              "textbookTitle": "搭积木",
+              "page": 6,
+              "version": 1,
+              "status": "available",
+              "goal": "在20以内不进位加、不退位减的情境中分清原有、添上和拿走，结合十和一或跳数计算，完整找出指定卡片配对的结果。",
+              "prerequisite": "认识十位个位，能按数序读写11～20，掌握10以内加减。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 28,
+                "manual": 9,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-building-blocks"],
+              "questionKinds": ["number", "manual", "reflection"],
+              "visualKinds": ["place-value"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第6～7页逐项阅读与原创任务独立计算",
+                "notes": "核对13添2/18拿2、先算个位与顺逆点数、两数序跳图、花与笔两加减、计数器填整式、19减6六跳、四车加法与四车非负减法全部两卡配对。计数器原图具体拨去数须实际读图，不猜作0；原图操作与计算表达独立人工，反思计划null。"
+              }
+            },
+            {
               "id": "bnu-lower-u1-pending",
               "title": "第一单元其余课程",
               "textbookTitle": "20以内数与加法",
-              "page": 6,
+              "page": 8,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",

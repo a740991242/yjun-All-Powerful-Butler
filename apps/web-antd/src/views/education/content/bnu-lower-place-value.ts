@@ -42,7 +42,7 @@ export const bnuLowerPlaceValueLesson: Lesson = {
   textbookTitle: '古人计数（二）',
   title: '十位、个位与二十以内数序比较',
   page: 4,
-  version: 1,
+  version: 2,
   status: 'available',
   goal: '分清十位与个位的计数意义，表示10～20，读写十加几并按明确顺序比较数量。',
   prerequisite: '认识10个一是1个十，能表示11～20的十和一。',
@@ -62,7 +62,7 @@ export const bnuLowerPlaceValueLesson: Lesson = {
     },
     {
       title: '十位与个位分别看',
-      text: '个位每个标记代表1，十位每个标记代表10。本站图示十位1个、个位1个表示11；图中2个标记不能直接说总数是2。读18时先看1个十，再看8个一。',
+      text: '个位每个标记代表1，十位每个标记代表10。本站图示十位1个、个位8个表示18；图中9个标记不能直接说总数是9。读18时先看1个十，再看8个一。',
       visual: { kind: 'place-value', value: 18 },
       activity:
         '实际对照教材在计数器上拨11与18；没有计数器可在纸上画两个有名称的数位，并如实说明材料。',

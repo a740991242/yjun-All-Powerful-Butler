@@ -9,6 +9,7 @@ import {
   bnuLowerSource,
   bnuLowerAncientCountLesson as lesson,
 } from './bnu-lower';
+import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { editionTarget } from './edition-targets';
 import { findTextbook } from './textbooks';
@@ -39,6 +40,7 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
   expect(all.filter(({ status }) => status === 'available')).toEqual([
     lesson,
     bnuLowerPlaceValueLesson,
+    bnuLowerBlocksLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(10);
   expect(
