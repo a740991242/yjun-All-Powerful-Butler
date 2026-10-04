@@ -16,6 +16,56 @@ import {
   sujiaoFirstDrafts,
   sujiaoNineAddDraft,
 } from './sujiao-first-drafts';
+import { sujiaoLowerBook } from './sujiao-lower';
+
+it('independently verifies every released nine-add answer in both conditions', () => {
+  const lesson = sujiaoLowerBook.units
+    .flatMap((unit) => unit.lessons)
+    .find((lesson) => lesson.id === 'sj-lower-nine-add')!;
+  expect(lesson.status).toBe('available');
+  const expected: [string, number][][] = [
+    [
+      ['next', 12],
+      ['need-one', 1],
+      ['split', 2],
+      ['zero', 9],
+      ['ten', 19],
+      ['sum-3', 12],
+      ['sum-2', 11],
+      ['sum-7', 16],
+      ['story', 12],
+    ],
+    [
+      ['next', 14],
+      ['need-one', 1],
+      ['split', 4],
+      ['zero', 9],
+      ['ten', 19],
+      ['sum-5', 14],
+      ['sum-6', 15],
+      ['sum-8', 17],
+      ['story', 14],
+    ],
+  ];
+  for (const [variant, questions] of [
+    lesson.questions,
+    lesson.reviewQuestions!,
+  ].entries()) {
+    const prefix = `${lesson.id}-${variant === 0 ? 'q' : 'r'}-`;
+    const objective = questions.filter((q) => q.rule.kind === 'number');
+    expect(objective.map((q) => q.id).toSorted()).toEqual(
+      expected[variant]!.map(([key]) => `${prefix}${key}`).toSorted(),
+    );
+    for (const [key, value] of expected[variant]!) {
+      const q = objective.find((q) => q.id === `${prefix}${key}`)!;
+      for (let candidate = 0; candidate <= 19; candidate++)
+        expect(evaluate(q.rule, candidate)).toBe(candidate === value);
+      expect(() => evaluate(q.rule, null)).toThrow(
+        'educationLearning.answerRequired',
+      );
+    }
+  }
+});
 
 describe('bounded Sujiao source drafts', () => {
   it('keeps draft editions out of live PEP books and changes review diagrams within the observed range', () => {
