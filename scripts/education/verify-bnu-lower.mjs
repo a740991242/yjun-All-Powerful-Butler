@@ -499,6 +499,11 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (
+          q.id === 'bnu-lower-building-blocks-actual-counter' &&
+          (!q.prompt.includes('拨入个位5颗') || q.prompt.includes('拨去'))
+        )
+          throw new Error('Actual counter task used wrong operation');
         if (q.rule.kind === 'manual') await click('暂时跳过');
         else if (q.rule.kind === 'reflection') {
           await p
@@ -598,6 +603,55 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (q.id === 'bnu-lower-building-blocks-counter-path') {
+              await p.getByRole('spinbutton').first().fill('3');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[3,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["3","","",""]')
+                throw new Error('Counter partial process draft lost');
+              await p
+                .getByRole('spinbutton')
+                .nth(1)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const geometry = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const r = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: r.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        r.left >= 0 &&
+                        r.right <= innerWidth &&
+                        r.top >= 0 &&
+                        r.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (geometry.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error('Counter fields outside viewport');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-counter-fields-${width}.png`,
+              });
+              for (const [i, v] of [3, 5, 8, 9].entries())
+                await p.getByRole('spinbutton').nth(i).fill(String(v));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (q.id === 'bnu-lower-rabbit-homes-source-first-0') {
               await p.getByRole('spinbutton').first().fill('2');
               await wait(
@@ -961,6 +1015,19 @@ const server = http.createServer(async (req, res) => {
         )
           throw new Error('Position order retry history lost');
       }
+      if (flow.key === 'blocks') {
+        if (session.lessonVersion !== 2)
+          throw new Error('Counter course version did not advance');
+        const process = session.responses.find(
+          (r) => r.questionId === 'bnu-lower-building-blocks-counter-path',
+        );
+        if (
+          JSON.stringify(
+            process.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[3,5,8,9],false],[[3,5,8,18],true]]'
+        )
+          throw new Error('Counter material/value retry history changed');
+      }
       if (flow.key === 'rabbits') {
         if (session.lessonVersion !== 2)
           throw new Error('Rabbit course version did not advance');
@@ -1024,7 +1091,10 @@ const server = http.createServer(async (req, res) => {
       await wait((d) => d.sessions.length === 3);
       const reviewing = await read();
       const review = reviewing.sessions.find((s) => s.mode === 'review');
-      if (review.questions.length !== 4 || review.originalSessionId !== sid)
+      if (
+        review.questions.length !== (flow.key === 'blocks' ? 6 : 4) ||
+        review.originalSessionId !== sid
+      )
         throw new Error('Review identity');
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
@@ -1065,7 +1135,7 @@ const server = http.createServer(async (req, res) => {
         }
         await click('提交答案');
         await p.getByText('答对了', { exact: true }).waitFor();
-        if (index < 3) {
+        if (index < review.questions.length - 1) {
           await click('下一题');
           await wait(
             (d) =>
@@ -1099,7 +1169,7 @@ const server = http.createServer(async (req, res) => {
         JSON.stringify({
           width,
           mainTasks: session.questions.length,
-          reviewTasks: 4,
+          reviewTasks: review.questions.length,
           skipped: flow.manual,
           zeroReload: true,
           retryHistory: true,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T16:09:05.789Z",
+  "generatedAt": "2026-10-04T16:24:22.984Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30723,7 +30723,7 @@
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 292,
+          "objective": 298,
           "manual": 81,
           "reflection": 20
         }
@@ -30811,29 +30811,29 @@
               "title": "十几加减几与跳数、配对计算",
               "textbookTitle": "搭积木",
               "page": 6,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "在20以内不进位加、不退位减的情境中分清原有、添上和拿走，结合十和一或跳数计算，完整找出指定卡片配对的结果。",
               "prerequisite": "认识十位个位，能按数序读写11～20，掌握10以内加减。",
               "referenceQuery": null,
               "steps": 7,
               "tasks": {
-                "objective": 28,
+                "objective": 34,
                 "manual": 9,
                 "reflection": 2
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 6,
                 "manual": 0,
                 "reflection": 0
               },
               "knowledge": ["bnu-lower-building-blocks"],
-              "questionKinds": ["number", "manual", "reflection"],
+              "questionKinds": ["number", "steps", "manual", "reflection"],
               "visualKinds": ["place-value"],
               "audit": {
-                "date": "2026-10-04",
+                "date": "2026-10-05",
                 "reviewer": "公开扫描第6～7页逐项阅读与原创任务独立计算",
-                "notes": "核对13添2/18拿2、先算个位与顺逆点数、两数序跳图、花与笔两加减、计数器填整式、19减6六跳、四车加法与四车非负减法全部两卡配对。计数器原图具体拨去数须实际读图，不猜作0；原图操作与计算表达独立人工，反思计划null。"
+                "notes": "核对13添2/18拿2、先算个位与顺逆点数、两数序跳图、花与笔两加减、计数器填整式、19减6六跳、四车加法与四车非负减法全部两卡配对。第7页计数器放大核清十位1珠、个位原3珠，上方5珠沿向下箭头拨入，13加5等于18；原数表示区/待拨入区分清，表示区珠数4/9与表示数13/18分开；原图操作与计算表达独立人工，反思计划null。"
               }
             },
             {
