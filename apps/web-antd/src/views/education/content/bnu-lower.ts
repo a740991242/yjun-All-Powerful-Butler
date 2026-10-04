@@ -1,6 +1,8 @@
 import type { Book, Lesson, Question } from '../learning/types';
 import type { Textbook } from './textbooks';
 
+import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
+
 /** Public scanned pages were read; approval year is not a printing date. */
 export const bnuLowerSource = {
   preview: 'https://keben.szxuexiao.com/html/10757.html',
@@ -11,7 +13,7 @@ export const bnuLowerSource = {
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4],
+  readPrintedPages: [2, 3, 4, 5],
   contents: [
     ['u1', '20以内数与加法', 2],
     ['u2', '图形大变身（一）', 18],
@@ -331,7 +333,11 @@ export const bnuLowerBook: Book = {
     page,
     lessons:
       key === 'u1'
-        ? [bnuLowerAncientCountLesson, pending(key, title, 4)]
+        ? [
+            bnuLowerAncientCountLesson,
+            bnuLowerPlaceValueLesson,
+            pending(key, title, 6),
+          ]
         : [pending(key, title, page)],
   })),
 };

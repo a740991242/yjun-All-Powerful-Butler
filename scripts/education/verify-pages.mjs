@@ -3395,10 +3395,10 @@ const widths = process.argv.includes('--mobile-only')
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 1
+          .count()) !== 2
       )
         throw new Error(
-          'BNU lower must expose only its authored independent first course',
+          'BNU lower must expose its two authored independent courses',
         );
       await p.getByText('第一单元其余课程', { exact: true }).waitFor();
       await chooseArea('grade-one-math-edition', '苏教版');

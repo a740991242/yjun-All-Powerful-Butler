@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T12:43:00.696Z",
+  "generatedAt": "2026-10-04T12:59:26.359Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 1,
+        "availablePacks": 2,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 11,
-          "manual": 11,
-          "reflection": 2
+          "objective": 33,
+          "manual": 20,
+          "reflection": 4
         }
       },
       "units": [
@@ -30777,10 +30777,40 @@
               }
             },
             {
+              "id": "bnu-lower-ancient-count-two",
+              "title": "十位、个位与二十以内数序比较",
+              "textbookTitle": "古人计数（二）",
+              "page": 4,
+              "version": 1,
+              "status": "available",
+              "goal": "分清十位与个位的计数意义，表示10～20，读写十加几并按明确顺序比较数量。",
+              "prerequisite": "认识10个一是1个十，能表示11～20的十和一。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 22,
+                "manual": 9,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-ancient-count-two"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["place-value"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第4～5页逐项阅读与原创任务核对",
+                "notes": "核对两石标10/1、两数位、0/9到10换位、10+1/9/10、9～20数序、12与9/14、12/15作图填数、18组成、两条六件衣服规律及四组比较。原图和本站自设数分开，整项实际操作人工确认，反思与计划不判正确。"
+              }
+            },
+            {
               "id": "bnu-lower-u1-pending",
               "title": "第一单元其余课程",
               "textbookTitle": "20以内数与加法",
-              "page": 4,
+              "page": 6,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",

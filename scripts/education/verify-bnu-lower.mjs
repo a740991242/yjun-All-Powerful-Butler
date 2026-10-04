@@ -13,6 +13,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   /\/$/,
   '',
 );
+const secondCourse = process.argv.includes('--place-value');
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const server = http.createServer(async (req, res) => {
@@ -146,14 +147,21 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 1
+          .count()) !== 2
       )
         throw new Error('Unexpected lower availability');
-      await click('进入课程');
+      await p
+        .getByRole('button', { name: '进入课程', exact: true })
+        .nth(secondCourse ? 1 : 0)
+        .click();
       await wait((d) => d.sessions.length === 2);
       const started = await read();
       let session = started.sessions.find(
-        (s) => s.bookId === 'bnu-math-p1-lower-2024',
+        (s) =>
+          s.lessonId ===
+          (secondCourse
+            ? 'bnu-lower-ancient-count-two'
+            : 'bnu-lower-ancient-count-one'),
       );
       const sid = session.id;
       const current = async () => {
@@ -166,7 +174,9 @@ const server = http.createServer(async (req, res) => {
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
       }
-      await p.screenshot({ path: `/tmp/butler-bnu-lower-step-${width}.png` });
+      await p.screenshot({
+        path: `/tmp/butler-bnu-lower-${secondCourse ? 'place' : 'count'}-step-${width}.png`,
+      });
       await click('开始练习');
       await wait(
         (d) => d.sessions.find((s) => s.id === sid).phase === 'practice',
@@ -184,7 +194,7 @@ const server = http.createServer(async (req, res) => {
           await click('保存反思');
         } else {
           if (q.rule.kind === 'number') {
-            if (q.id.endsWith('-zero-ones')) {
+            if (q.id.endsWith(secondCourse ? '-ten-zero' : '-zero-ones')) {
               await p.getByRole('spinbutton').fill('0');
               await wait(
                 (d) =>
@@ -195,7 +205,7 @@ const server = http.createServer(async (req, res) => {
               if ((await p.getByRole('spinbutton').inputValue()) !== '0')
                 throw new Error('Zero draft lost');
             }
-            if (q.id.endsWith('-symbol-twelve')) {
+            if (q.id.endsWith(secondCourse ? '-draw-2' : '-symbol-twelve')) {
               await p.getByRole('spinbutton').fill('3');
               await click('提交答案');
               await p
@@ -221,10 +231,13 @@ const server = http.createServer(async (req, res) => {
       await click('完成并保存记录');
       await p.getByText('本次学习已完成', { exact: true }).waitFor();
       session = await current();
-      if (session.responses.filter((r) => r.skipped).length !== 11)
+      if (
+        session.responses.filter((r) => r.skipped).length !==
+        (secondCourse ? 9 : 11)
+      )
         throw new Error('Physical activity must remain skipped');
       const retry = session.responses.find((r) =>
-        r.questionId.endsWith('-symbol-twelve'),
+        r.questionId.endsWith(secondCourse ? '-draw-2' : '-symbol-twelve'),
       );
       if (
         JSON.stringify(retry.submissions.map((s) => s.correct)) !==
@@ -282,7 +295,7 @@ const server = http.createServer(async (req, res) => {
       )
         throw new Error('Backup changed records');
       await p.screenshot({
-        path: `/tmp/butler-bnu-lower-complete-${width}.png`,
+        path: `/tmp/butler-bnu-lower-${secondCourse ? 'place' : 'count'}-complete-${width}.png`,
       });
       if (errors.length > 0 || bad.length > 0 || api.length > 0)
         throw new Error(JSON.stringify({ errors, bad, api }));
@@ -291,7 +304,7 @@ const server = http.createServer(async (req, res) => {
           width,
           mainTasks: session.questions.length,
           reviewTasks: 4,
-          skipped: 11,
+          skipped: secondCourse ? 9 : 11,
           zeroReload: true,
           retryHistory: true,
           oldSessionUnchanged: true,

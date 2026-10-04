@@ -9,6 +9,7 @@ import {
   bnuLowerSource,
   bnuLowerAncientCountLesson as lesson,
 } from './bnu-lower';
+import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { editionTarget } from './edition-targets';
 import { findTextbook } from './textbooks';
 
@@ -35,7 +36,10 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
   expect(bnuLowerSource.printing).toBeNull();
   expect(lesson.page).toBe(2);
   const all = bnuLowerBook.units.flatMap(({ lessons }) => lessons);
-  expect(all.filter(({ status }) => status === 'available')).toEqual([lesson]);
+  expect(all.filter(({ status }) => status === 'available')).toEqual([
+    lesson,
+    bnuLowerPlaceValueLesson,
+  ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(10);
   expect(
     all
