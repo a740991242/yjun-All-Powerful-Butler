@@ -19,6 +19,131 @@ const find = (index: number, suffix: string) =>
     ),
   );
 describe('pep carry process, quantity relations and table scope', () => {
+  it('independently checks all thirty-six basic carry main and review answers', () => {
+    const unit = required(
+      required(mathBooks.find((book) => book.volume === 'upper')).units.find(
+        (u) => u.id === 'u5',
+      ),
+    );
+    const expected: Record<string, number[]> = {
+      'mu-carry-nine': [
+        9 + 2,
+        9 + 3,
+        9 + 4,
+        9 + 5,
+        9 + 7,
+        9 + 9,
+        9 + 6,
+        9 + 8,
+        2 + 9,
+        4 + 9,
+        6 + 9,
+        8 + 9,
+      ],
+      'mu-carry-eight': [
+        8 + 3,
+        8 + 6,
+        7 + 4,
+        7 + 7,
+        6 + 5,
+        6 + 8,
+        8 + 4,
+        8 + 5,
+        7 + 5,
+        7 + 6,
+        6 + 6,
+        6 + 7,
+      ],
+      'mu-carry-small': [
+        5 + 6,
+        4 + 8,
+        3 + 9,
+        2 + 9,
+        5 + 8,
+        4 + 7,
+        5 + 7,
+        5 + 9,
+        4 + 9,
+        3 + 8,
+        12 - 3,
+        11 - 2,
+      ],
+    };
+    let checked = 0;
+    for (const [id, answers] of Object.entries(expected)) {
+      const lesson = required(unit.lessons.find((course) => course.id === id));
+      const questions = [
+        ...lesson.questions,
+        ...(lesson.reviewQuestions ?? []),
+      ];
+      expect(questions.map((q) => q.id)).toEqual([
+        ...Array.from({ length: 6 }, (_, i) => `${id}-q${i + 1}`),
+        ...Array.from({ length: 6 }, (_, i) => `${id}-r${i + 1}`),
+      ]);
+      for (const [i, question] of questions.entries()) {
+        const answer = required(answers[i]);
+        for (let n = 0; n <= 20; n++)
+          expect(evaluate(question.rule, n)).toBe(n === answer);
+        checked++;
+      }
+    }
+    expect(checked).toBe(36);
+  });
+  it('checks every relation main and review independently, including changed whole and change amount', () => {
+    const lesson = required(carryPracticeLessons[1]);
+    const expected: Record<string, number | number[] | string> = {
+      q1: [6 + 8, 9 + 5],
+      q2: 7 + 8,
+      q3: 4 + 9,
+      q4: 6 + 8,
+      q5: 6 + 8 + 1,
+      q6: [9 + 4, 7 + 6],
+      q7: 8 + 6 - (8 + 4),
+      q8: 14 - 9,
+      q9: '加',
+      q10: 7 + 5,
+      r1: 5 + 9,
+      r2: 4 + 7 + 1,
+      r3: [5 + 8, 6 + 7],
+      r4: 7 + 7 - (7 + 4),
+    };
+    const questions = [
+      ...lesson.questions,
+      ...(lesson.reviewQuestions ?? []),
+    ].filter((q) => !['manual', 'reflection'].includes(q.rule.kind));
+    expect(questions.map((q) => q.id).toSorted()).toEqual(
+      Object.keys(expected)
+        .map((suffix) => `${lesson.id}-${suffix}`)
+        .toSorted(),
+    );
+    expect(questions).toHaveLength(14);
+    for (const question of questions) {
+      const answer = required(
+        expected[question.id.slice(lesson.id.length + 1)],
+      );
+      expect(evaluate(question.rule, answer)).toBe(true);
+      if (typeof answer === 'number') {
+        for (let n = 0; n <= 20; n++)
+          expect(evaluate(question.rule, n)).toBe(n === answer);
+      } else if (typeof answer === 'string') {
+        for (const choice of required(question.choices))
+          expect(evaluate(question.rule, choice.id)).toBe(choice.id === answer);
+      } else {
+        expect(
+          evaluate(question.rule, [
+            required(answer[0]) + 1,
+            required(answer[1]),
+          ]),
+        ).toBe(false);
+        expect(
+          evaluate(question.rule, [
+            required(answer[0]),
+            required(answer[1]) + 1,
+          ]),
+        ).toBe(false);
+      }
+    }
+  });
   it('checks each decomposition field and both specified methods without treating zero as empty', () => {
     const answers = [
       [1, 5, 10, 15],
