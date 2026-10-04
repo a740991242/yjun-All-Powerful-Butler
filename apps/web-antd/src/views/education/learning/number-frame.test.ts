@@ -2,7 +2,7 @@ import { expect, it } from 'vitest';
 
 import { sujiaoNumberFramesDraft as lesson } from '../content/sujiao-number-frames';
 import { exportBackup, parseBackup } from './backup';
-import { createSession, evaluate, submitResponse } from './engine';
+import { createSession, evaluate, submitResponse, validAnswer } from './engine';
 import { isNumberFrameVisual, numberFrameCells } from './number-frame';
 import { initialLibrary } from './storage';
 it('rejects wrapping/out-of-chart frames and preserves one known cell with ordered blank letters', () => {
@@ -80,8 +80,39 @@ it('checks all four square and five cross given positions and changed review val
     )!;
     expect(q.rule).toEqual({ kind: 'steps', values: main[index] });
     expect(r.rule).toEqual({ kind: 'steps', values: review[index] });
-    expect(evaluate(q.rule, main[index]!)).toBe(true);
+    for (const [question, expected] of [
+      [q, main[index]!],
+      [r, review[index]!],
+    ] as const) {
+      expect(evaluate(question.rule, expected)).toBe(true);
+      expect(validAnswer(question.rule, null)).toBe(false);
+      for (let field = 0; field < expected.length; field++) {
+        const partial: (null | number)[] = [...expected];
+        partial[field] = null;
+        expect(validAnswer(question.rule, partial)).toBe(false);
+        // Literal chart answers above are independent of the frame renderer.
+        // Check every supported value in each blank, including a real zero.
+        for (let value = 0; value <= 99; value++) {
+          const candidate = [...expected];
+          candidate[field] = value;
+          expect(evaluate(question.rule, candidate)).toBe(
+            value === expected[field],
+          );
+        }
+      }
+    }
   }
+  for (const [questions, marker] of [
+    [lesson.questions, 'q'],
+    [lesson.reviewQuestions!, 'r'],
+  ] as const)
+    expect(
+      questions
+        .filter((q) => q.rule.kind === 'steps')
+        .map((q) => q.id.slice(q.id.lastIndexOf(`-${marker}-`))),
+    ).toEqual(
+      Array.from({ length: 9 }, (_, index) => `-${marker}-fill-${index}`),
+    );
   for (const q of lesson.reviewQuestions!) {
     const old = lesson.questions.find((o) => o.knowledge === q.knowledge)!;
     expect(JSON.stringify([q.prompt, q.visual, q.choices])).not.toBe(
