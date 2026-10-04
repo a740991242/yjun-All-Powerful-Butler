@@ -14,6 +14,15 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--rabbits'))
+    return {
+      index: 5,
+      lessonId: 'bnu-lower-rabbit-homes',
+      zero: '-zero-ones',
+      retry: '-total',
+      manual: 10,
+      key: 'rabbits',
+    };
   if (process.argv.includes('--chores'))
     return {
       index: 4,
@@ -193,7 +202,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 5
+          .count()) !== 6
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -253,7 +262,71 @@ const server = http.createServer(async (req, res) => {
                 .waitFor();
             }
             await p.getByRole('spinbutton').fill(String(q.rule.value));
+          } else if (q.rule.kind === 'arithmetic-pair') {
+            await p.getByRole('spinbutton').nth(0).fill('0');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((s) => s.id === sid).responses[index].draft,
+                ) === '[0,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const inputs = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(inputs) !== '["0",""]')
+              throw new Error('Empty-house partial draft lost');
+            await p.getByRole('spinbutton').nth(0).fill('5');
+            await p.getByRole('spinbutton').nth(1).fill('6');
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (q.id.endsWith('-eleven-partners')) {
+              await p.getByRole('spinbutton').first().fill('10');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[10,null,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["10","","","",""]')
+                throw new Error('Five partner blanks changed');
+              await p
+                .getByRole('spinbutton')
+                .nth(2)
+                .evaluate((n) => n.scrollIntoView({ block: 'center' }));
+              await p.waitForTimeout(200);
+              const fields = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) =>
+                  nodes.map((n) => {
+                    const rect = n
+                      .closest('.ant-input-number')
+                      .getBoundingClientRect();
+                    return {
+                      height: rect.height,
+                      font: Number.parseFloat(getComputedStyle(n).fontSize),
+                      fits:
+                        rect.left >= 0 &&
+                        rect.right <= innerWidth &&
+                        rect.top >= 0 &&
+                        rect.bottom <= innerHeight,
+                    };
+                  }),
+                );
+              if (fields.some((f) => f.height < 44 || f.font < 20 || !f.fits))
+                throw new Error('Partner fields size or viewport');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-rabbits-partners-${width}.png`,
+              });
+            }
             if (q.id.endsWith('-nine-first')) {
               await p.getByRole('spinbutton').nth(0).fill('1');
               await wait(
@@ -362,11 +435,12 @@ const server = http.createServer(async (req, res) => {
                 .getByRole('checkbox', { name: option.label, exact: true })
                 .check();
             }
-          } else if (q.rule.kind === 'choice')
-            await p
-              .getByRole('radio', { name: q.rule.value, exact: true })
-              .check();
-          else throw new Error(`Unhandled ${q.rule.kind}`);
+          } else if (q.rule.kind === 'choice') {
+            const label =
+              q.choices?.find((o) => o.id === q.rule.value)?.label ||
+              q.rule.value;
+            await p.getByRole('radio', { name: label, exact: true }).check();
+          } else throw new Error(`Unhandled ${q.rule.kind}`);
           await click('提交答案');
           await p.getByText('答对了', { exact: true }).waitFor();
         }
@@ -390,6 +464,17 @@ const server = http.createServer(async (req, res) => {
         '[false,true]'
       )
         throw new Error('Retry history changed');
+      if (flow.key === 'rabbits') {
+        const homes = session.responses.find((r) =>
+          r.questionId.endsWith('-two-homes'),
+        );
+        if (
+          JSON.stringify(
+            homes.submissions.map((s) => [s.answer, s.correct]),
+          ) !== '[[[5,6],false],[[5,7],true]]'
+        )
+          throw new Error('House allocation retry history lost');
+      }
       if (flow.key === 'chores') {
         const category = session.responses.find((r) =>
           r.questionId.endsWith('-result-twelve'),
@@ -443,6 +528,9 @@ const server = http.createServer(async (req, res) => {
               .getByRole('checkbox', { name: option.label, exact: true })
               .check();
           }
+        } else if (q.rule.kind === 'arithmetic-pair') {
+          await p.getByRole('spinbutton').nth(0).fill('0');
+          await p.getByRole('spinbutton').nth(1).fill(String(q.rule.result));
         } else if (q.rule.kind === 'steps') {
           for (let field = 0; field < q.rule.values.length; field++)
             await p

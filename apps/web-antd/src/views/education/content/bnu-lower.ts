@@ -5,6 +5,7 @@ import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
+import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
 
 /** Public scanned pages were read; approval year is not a printing date. */
 export const bnuLowerSource = {
@@ -16,7 +17,7 @@ export const bnuLowerSource = {
   coverApprovalYear: 2024,
   isbn: null,
   printing: null,
-  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  readPrintedPages: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
   contents: [
     ['u1', '20以内数与加法', 2],
     ['u2', '图形大变身（一）', 18],
@@ -342,7 +343,8 @@ export const bnuLowerBook: Book = {
             bnuLowerBlocksLesson,
             bnuLowerFarmLesson,
             bnuLowerChoresLesson,
-            pending(key, title, 12),
+            bnuLowerRabbitsLesson,
+            pending(key, title, 14),
           ]
         : [pending(key, title, page)],
   })),

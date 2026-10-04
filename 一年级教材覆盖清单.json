@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T13:54:18.696Z",
+  "generatedAt": "2026-10-04T14:14:43.159Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 5,
+        "availablePacks": 6,
         "pendingEntries": 10,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 128,
-          "manual": 47,
-          "reflection": 10
+          "objective": 173,
+          "manual": 57,
+          "reflection": 12
         }
       },
       "units": [
@@ -30903,10 +30903,48 @@
               }
             },
             {
+              "id": "bnu-lower-rabbit-homes",
+              "title": "凑十、两屋分配与凑数配对",
+              "textbookTitle": "小兔子安家",
+              "page": 12,
+              "version": 1,
+              "status": "available",
+              "goal": "完整说明7+5与两跳凑十；有序找两屋分配并解释一个增一个减，区分正好与够用，使用不同数卡完整配对。",
+              "prerequisite": "认识20以内的数、十与一，能说明凑十和两个部分合计。",
+              "referenceQuery": null,
+              "steps": 7,
+              "tasks": {
+                "objective": 45,
+                "manual": 10,
+                "reflection": 2
+              },
+              "reviewTasks": {
+                "objective": 4,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-rabbit-homes"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "arithmetic-pair",
+                "choice",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["ten-frame"],
+              "audit": {
+                "date": "2026-10-04",
+                "reviewer": "公开扫描第12～13页及饼干图放大逐项核对",
+                "notes": "7+5、两跳+3/+2、房屋编号、原六行1+11到6+6、四组凑十、三列九式含重复7+5、三盒6/8/9与15人每人1块、1～10各一张凑11全部五配对核对。0空屋和正好约束明确为本站条件，原书实际写画游戏manual，记录null。"
+              }
+            },
+            {
               "id": "bnu-lower-u1-pending",
               "title": "第一单元其余课程",
               "textbookTitle": "20以内数与加法",
-              "page": 12,
+              "page": 14,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
