@@ -280,6 +280,55 @@ const server = http.createServer(async (req, res) => {
         if (!(await apply.isDisabled()))
           throw new Error('Fujian five-four applied');
         await choose('education-region-system', '六三学制（小学六年）');
+        await choose('education-region-province', '湖南', true);
+        await choose('education-region-volume', '上册');
+        await region
+          .getByText('参考2025年省级目录中的可选版本', { exact: false })
+          .waitFor();
+        await region
+          .locator(
+            'a[href="https://fgw.yzcity.gov.cn/fgw/031005/202509/820220824b5e42d2bd0511558b8de68b.shtml"]',
+          )
+          .waitFor();
+        await apply.click();
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 上册`,
+              exact: true,
+            })
+            .waitFor();
+        if (
+          (await p.evaluate(() =>
+            localStorage.getItem('butler-grade-one-math-edition-v1'),
+          )) !== 'pep-2024'
+        )
+          throw new Error('Hunan upper math not applied');
+        await region
+          .getByText('参考2025年省级目录中的可选版本', { exact: false })
+          .evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(300);
+        await p.screenshot({ path: `/tmp/butler-hunan-default-${width}.png` });
+        await choose('education-region-system', '五四学制（小学五年）');
+        if (!(await apply.isDisabled()))
+          throw new Error('Hunan five-four applied');
+        await choose('education-region-system', '六三学制（小学六年）');
+        await choose('education-region-volume', '下册');
+        await apply.click();
+        if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
+          throw new Error('Hunan upper math leaked into lower volume');
+        if (
+          await region
+            .getByText('参考2025年省级目录中的可选版本', { exact: false })
+            .count()
+        )
+          throw new Error('upper catalog displayed for lower volume');
+        if (
+          (await p.evaluate(() =>
+            localStorage.getItem('butler-grade-one-math-edition-v1'),
+          )) !== 'pep-2024'
+        )
+          throw new Error('Hunan unknown lower math erased manual preference');
         await choose('education-region-province', '江苏', true);
         await choose('education-region-volume', '上册');
         await apply.click();
@@ -349,6 +398,26 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-province-defaults-${width}-en-dark.png`,
           fullPage: true,
         });
+        await choose('education-region-province', 'Hunan', true);
+        await choose('education-region-volume', 'Upper volume');
+        const hunanEnglishCatalog = p.getByText(
+          'The 2025 provincial catalog lists alternatives.',
+          { exact: false },
+        );
+        await hunanEnglishCatalog.waitFor();
+        await hunanEnglishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Hunan English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-hunan-default-${width}-en-dark.png`,
+        });
         if (
           (await p.evaluate(async () =>
             JSON.stringify(await window.qaLoad()),
@@ -363,6 +432,9 @@ const server = http.createServer(async (req, res) => {
             provinceDefaults: true,
             JiangsuUpperLowerThreeSubjects: true,
             FujianUpperLowerThreeSubjects: true,
+            HunanUpperThreeSubjectsLowerTwoSubjects: true,
+            HunanUpperCatalogNotInheritedByLower: true,
+            HunanEnglishDarkCatalog: true,
             provincialCatalogAlternativesShown: true,
             FujianEnglishDarkCatalog: true,
             schoolOptionalCollapsed: true,

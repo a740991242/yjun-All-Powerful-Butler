@@ -52,3 +52,39 @@ it('rejects unsupported subjects, grades, years and specific reference scopes', 
     { edition: 'sujiao', evidence: [] },
   );
 });
+
+it('uses Hunan upper-volume alternatives without extrapolating a lower-volume catalog', () => {
+  const hunan = { ...query, province: 'hunan' };
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const result = regionalMathematicsDefault({ ...hunan, academicYear })!;
+    expect(result.edition).toBe('pep-2024');
+    expect(result.catalogYear).toBe('2025');
+    expect(result.alternatives).toEqual(['pep-2024', 'sujiao']);
+    expect(result.evidence).toEqual([
+      {
+        id: 'hunan-grade-one-math-upper-catalog-2025',
+        sourceUrl:
+          'https://fgw.yzcity.gov.cn/fgw/031005/202509/820220824b5e42d2bd0511558b8de68b.shtml',
+        sourceTitle:
+          '湖南省关于核定2025年秋季中小学教科书价格的通知（湘发改价费〔2025〕558号，永州市发改委转载，附件1一年级第3、4项）',
+        publishedAt: '2025-09-09',
+        checkedAt: '2026-10-04',
+      },
+    ]);
+  }
+  for (const change of [
+    { volume: 'lower' },
+    { city: 'changsha' },
+    { school: 'any-school' },
+    { subject: 'english' },
+    { academicYear: '2027-2028' },
+  ])
+    expect(regionalMathematicsDefault({ ...hunan, ...change })).toBeUndefined();
+  const result = regionalMathematicsDefault(hunan)!;
+  result.alternatives!.pop();
+  result.evidence[0]!.publishedAt = 'unknown';
+  expect(regionalMathematicsDefault(hunan)!.alternatives).toHaveLength(2);
+  expect(regionalMathematicsDefault(hunan)!.evidence[0]!.publishedAt).toBe(
+    '2025-09-09',
+  );
+});

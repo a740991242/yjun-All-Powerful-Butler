@@ -221,3 +221,42 @@ it('applies Fujian default volumes without asserting a sole provincial edition o
       ).toBe(true);
   }
 });
+
+it('applies Hunan upper-volume combination and preserves an unknown lower-volume math choice', () => {
+  const local = {
+    ...query,
+    province: 'hunan',
+    city: '',
+    school: '',
+    academicYear: '2026-2027',
+  };
+  const upper = regionalApplicationPlan(local);
+  expect(
+    upper.flatMap((row) =>
+      row.action ? [regionalActionPath(row.action)] : [],
+    ),
+  ).toEqual([
+    '/education/primary/p1/chinese/pep-2024/upper',
+    '/education/primary/p1/math/pep-2024/upper',
+    '/education/primary/p1/ethics/pep-2024/upper',
+  ]);
+  expect(upper[1]!.resolution).toMatchObject({
+    status: 'recommended',
+    edition: 'pep-2024',
+    catalogYear: '2025',
+    alternatives: ['pep-2024', 'sujiao'],
+  });
+  expect(upper[3]!.action).toBeUndefined();
+  const lower = regionalApplicationPlan({ ...local, volume: 'lower' });
+  expect(lower[1]!.resolution.status).toBe('unknown');
+  expect(lower[1]!.action).toBeUndefined();
+  expect(
+    lower.flatMap((row) => (row.action ? [row.action.subject] : [])),
+  ).toEqual(['chinese', 'ethics']);
+  for (const schoolSystem of ['unknown', 'five-four'] as const)
+    expect(
+      regionalApplicationPlan({ ...local, schoolSystem }).every(
+        (row) => !row.action,
+      ),
+    ).toBe(true);
+});

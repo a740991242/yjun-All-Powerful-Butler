@@ -18,6 +18,8 @@ export interface RegionalMathDefault {
  * The Fujian 2024 catalog permits three ordinary Grade 1 math editions.
  * PEP is our initial combination because both course volumes are available;
  * the catalog does not establish a single provincial edition for 2026.
+ * Hunan's 2025 autumn price catalog covers the upper volume only; its
+ * alternatives must not be inherited by an unverified lower volume.
  */
 export function regionalMathematicsDefault(
   query: Omit<RegionalEditionQuery, 'subject' | 'volume'> & {
@@ -36,6 +38,23 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'hunan' && query.volume === 'upper')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'hunan-grade-one-math-upper-catalog-2025',
+          sourceUrl:
+            'https://fgw.yzcity.gov.cn/fgw/031005/202509/820220824b5e42d2bd0511558b8de68b.shtml',
+          sourceTitle:
+            '湖南省关于核定2025年秋季中小学教科书价格的通知（湘发改价费〔2025〕558号，永州市发改委转载，附件1一年级第3、4项）',
+          publishedAt: '2025-09-09',
+          checkedAt: '2026-10-04',
+        },
+      ],
+    };
   if (query.province === 'fujian')
     return {
       edition: 'pep-2024',
