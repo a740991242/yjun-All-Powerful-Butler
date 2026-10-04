@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T00:59:34.941Z",
+  "generatedAt": "2026-10-04T01:15:43.062Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上册部分课程；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -10248,8 +10248,8 @@
         "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 639,
-          "manual": 200,
+          "objective": 647,
+          "manual": 217,
           "reflection": 44
         }
       },
@@ -12074,19 +12074,19 @@
               "title": "完整数表、加法表与分步计算",
               "textbookTitle": "复习与关联",
               "page": 106,
-              "version": 1,
+              "version": 2,
               "status": "available",
               "goal": "联系行列、数位、相邻数和计算结果，明确含0与10的完整加法范围。",
               "prerequisite": "按学校实际进度回顾20以内的数、加减法和四种立体图形，不要求先完成所有课包。",
               "referenceQuery": null,
-              "steps": 5,
+              "steps": 7,
               "tasks": {
-                "objective": 17,
-                "manual": 4,
+                "objective": 23,
+                "manual": 11,
                 "reflection": 1
               },
               "reviewTasks": {
-                "objective": 4,
+                "objective": 10,
                 "manual": 0,
                 "reflection": 0
               },
@@ -12095,7 +12095,14 @@
                 "mu-final-grids-addition-grid",
                 "mu-final-grids-calculation",
                 "mu-final-grids-chain",
-                "mu-final-grids"
+                "mu-final-grids",
+                "mu-final-grids-actual-source-page-106-table",
+                "mu-final-grids-actual-source-page-107-addition",
+                "mu-final-grids-actual-source-page-108-pictures",
+                "mu-final-grids-actual-source-page-108-composition",
+                "mu-final-grids-actual-source-page-108-oral",
+                "mu-final-grids-actual-source-page-109-compare",
+                "mu-final-grids-actual-source-page-109-chains"
               ],
               "questionKinds": [
                 "steps",
@@ -12106,9 +12113,9 @@
               ],
               "visualKinds": ["semester-grid", "place-value"],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材103～109页实际核读与原创任务程序核对",
-                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。"
+                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。 按103～109页完整原要求补独立原书活动记录与原创比较/含0分合练习，保留旧题目、步骤、复习前缀及学习快照；原图和本站模型分开，未实际完成不自动确认。"
               }
             },
             {
@@ -12116,19 +12123,19 @@
               "title": "知识关联、生活提问与图形回顾",
               "textbookTitle": "复习与关联",
               "page": 103,
-              "version": 2,
+              "version": 3,
               "status": "available",
               "goal": "用自己的例子联系数、计算、数量关系与图形，分别记录实际应用与观察。",
               "prerequisite": "按学校实际进度回顾20以内的数、加减法和四种立体图形，不要求先完成所有课包。",
               "referenceQuery": null,
-              "steps": 6,
+              "steps": 8,
               "tasks": {
-                "objective": 12,
-                "manual": 6,
+                "objective": 14,
+                "manual": 16,
                 "reflection": 3
               },
               "reviewTasks": {
-                "objective": 10,
+                "objective": 12,
                 "manual": 0,
                 "reflection": 0
               },
@@ -12137,7 +12144,17 @@
                 "mu-final-links-calculation",
                 "mu-final-links-relations",
                 "mu-final-links-shapes",
-                "mu-final-links"
+                "mu-final-links",
+                "mu-final-links-actual-source-page-103-map",
+                "mu-final-links-actual-source-page-104-meanings",
+                "mu-final-links-actual-source-page-105-problems",
+                "mu-final-links-actual-source-page-105-shapes",
+                "mu-final-links-actual-source-page-107-swans",
+                "mu-final-links-actual-source-page-108-build",
+                "mu-final-links-actual-source-page-108-robot",
+                "mu-final-links-actual-source-page-109-fish",
+                "mu-final-links-actual-source-page-109-families",
+                "mu-final-links-actual-source-page-109-staircase"
               ],
               "questionKinds": [
                 "choice",
@@ -12159,9 +12176,9 @@
                 "solid-recompose"
               ],
               "audit": {
-                "date": "2026-10-03",
+                "date": "2026-10-04",
                 "reviewer": "官方教材103～109页实际核读与原创任务程序核对",
-                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。"
+                "notes": "资源1221001101241图片109～115逐页实际查看。保留原mu-review-story/review v1，追加数表计算与知识关联两课。表格按数学规律原创绘制，未发布原书扫描、插画或全文；真实活动与未来计划分开。 按103～109页完整原要求补独立原书活动记录与原创比较/含0分合练习，保留旧题目、步骤、复习前缀及学习快照；原图和本站模型分开，未实际完成不自动确认。"
               }
             }
           ]
@@ -12173,19 +12190,19 @@
           "title": "数数与数序",
           "textbookTitle": "平台专项练习",
           "page": 1,
-          "version": 6,
+          "version": 7,
           "status": "available",
           "goal": "点数、接着数、前后顺序与第几。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 92,
-            "manual": 38,
+            "objective": 98,
+            "manual": 45,
             "reflection": 3
           },
           "reviewTasks": {
-            "objective": 68,
+            "objective": 74,
             "manual": 0,
             "reflection": 0
           },
@@ -12241,7 +12258,14 @@
             "mu-final-grids-addition-grid",
             "mu-final-grids-calculation",
             "mu-final-grids-chain",
-            "mu-final-grids"
+            "mu-final-grids",
+            "mu-final-grids-actual-source-page-106-table",
+            "mu-final-grids-actual-source-page-107-addition",
+            "mu-final-grids-actual-source-page-108-pictures",
+            "mu-final-grids-actual-source-page-108-composition",
+            "mu-final-grids-actual-source-page-108-oral",
+            "mu-final-grids-actual-source-page-109-compare",
+            "mu-final-grids-actual-source-page-109-chains"
           ],
           "questionKinds": [
             "number",
@@ -12306,19 +12330,19 @@
           "title": "20以内数与计算",
           "textbookTitle": "平台专项练习",
           "page": 12,
-          "version": 8,
+          "version": 9,
           "status": "available",
           "goal": "数位、0、基础加减、连加连减及凑十进位。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 204,
-            "manual": 72,
+            "objective": 212,
+            "manual": 89,
             "reflection": 12
           },
           "reviewTasks": {
-            "objective": 165,
+            "objective": 173,
             "manual": 0,
             "reflection": 0
           },
@@ -12456,11 +12480,28 @@
             "mu-final-grids-calculation",
             "mu-final-grids-chain",
             "mu-final-grids",
+            "mu-final-grids-actual-source-page-106-table",
+            "mu-final-grids-actual-source-page-107-addition",
+            "mu-final-grids-actual-source-page-108-pictures",
+            "mu-final-grids-actual-source-page-108-composition",
+            "mu-final-grids-actual-source-page-108-oral",
+            "mu-final-grids-actual-source-page-109-compare",
+            "mu-final-grids-actual-source-page-109-chains",
             "mu-final-links-numbers",
             "mu-final-links-calculation",
             "mu-final-links-relations",
             "mu-final-links-shapes",
-            "mu-final-links"
+            "mu-final-links",
+            "mu-final-links-actual-source-page-103-map",
+            "mu-final-links-actual-source-page-104-meanings",
+            "mu-final-links-actual-source-page-105-problems",
+            "mu-final-links-actual-source-page-105-shapes",
+            "mu-final-links-actual-source-page-107-swans",
+            "mu-final-links-actual-source-page-108-build",
+            "mu-final-links-actual-source-page-108-robot",
+            "mu-final-links-actual-source-page-109-fish",
+            "mu-final-links-actual-source-page-109-families",
+            "mu-final-links-actual-source-page-109-staircase"
           ],
           "questionKinds": [
             "number",
@@ -12493,19 +12534,19 @@
           "title": "立体图形辨认与操作",
           "textbookTitle": "平台专项练习",
           "page": 67,
-          "version": 3,
+          "version": 4,
           "status": "available",
           "goal": "从外形与特征辨认立体图形，记录实际操作和自己的观察。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 30,
-            "manual": 19,
+            "objective": 32,
+            "manual": 29,
             "reflection": 7
           },
           "reviewTasks": {
-            "objective": 20,
+            "objective": 22,
             "manual": 0,
             "reflection": 2
           },
@@ -12517,7 +12558,17 @@
             "mu-final-links-calculation",
             "mu-final-links-relations",
             "mu-final-links-shapes",
-            "mu-final-links"
+            "mu-final-links",
+            "mu-final-links-actual-source-page-103-map",
+            "mu-final-links-actual-source-page-104-meanings",
+            "mu-final-links-actual-source-page-105-problems",
+            "mu-final-links-actual-source-page-105-shapes",
+            "mu-final-links-actual-source-page-107-swans",
+            "mu-final-links-actual-source-page-108-build",
+            "mu-final-links-actual-source-page-108-robot",
+            "mu-final-links-actual-source-page-109-fish",
+            "mu-final-links-actual-source-page-109-families",
+            "mu-final-links-actual-source-page-109-staircase"
           ],
           "questionKinds": [
             "choice",
@@ -12549,19 +12600,19 @@
           "title": "图示与数量关系",
           "textbookTitle": "平台专项练习",
           "page": 34,
-          "version": 9,
+          "version": 10,
           "status": "available",
           "goal": "联系整体和部分，理解图示与生活问题。",
           "prerequisite": "可以按学校当前进度自由选择，不要求完成全部原课包。",
           "referenceQuery": null,
           "steps": 1,
           "tasks": {
-            "objective": 130,
-            "manual": 72,
+            "objective": 132,
+            "manual": 82,
             "reflection": 11
           },
           "reviewTasks": {
-            "objective": 102,
+            "objective": 104,
             "manual": 0,
             "reflection": 0
           },
@@ -12685,7 +12736,17 @@
             "mu-final-links-calculation",
             "mu-final-links-relations",
             "mu-final-links-shapes",
-            "mu-final-links"
+            "mu-final-links",
+            "mu-final-links-actual-source-page-103-map",
+            "mu-final-links-actual-source-page-104-meanings",
+            "mu-final-links-actual-source-page-105-problems",
+            "mu-final-links-actual-source-page-105-shapes",
+            "mu-final-links-actual-source-page-107-swans",
+            "mu-final-links-actual-source-page-108-build",
+            "mu-final-links-actual-source-page-108-robot",
+            "mu-final-links-actual-source-page-109-fish",
+            "mu-final-links-actual-source-page-109-families",
+            "mu-final-links-actual-source-page-109-staircase"
           ],
           "questionKinds": [
             "number",

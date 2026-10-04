@@ -96,7 +96,7 @@ describe('sujiao edition-specific practice and bridges', () => {
     const upper = required(mathBooks.find((b) => b.volume === 'upper'));
     const lower = required(mathBooks.find((b) => b.volume === 'lower'));
     for (const [book, id, sourceId, originalId, version] of [
-      [upper, 'ms-upper-shapes', 'mu-solid-observe', 'mu-solid', 3],
+      [upper, 'ms-upper-shapes', 'mu-solid-observe', 'mu-solid', 4],
       [lower, 'ms-lower-shapes', 'ml-plane-build', 'ml-flat', 3],
       [lower, 'ms-lower-money', 'ml-shopping-practice', 'ml-money', 2],
     ] as const) {

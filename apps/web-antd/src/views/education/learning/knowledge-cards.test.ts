@@ -54,9 +54,12 @@ describe('bounded knowledge cards and saved learning snapshots', () => {
     const lesson = required(
       finalPracticeLessons.find((l) => l.id === 'mu-final-links'),
     );
-    expect(lesson.version).toBe(2);
+    expect(lesson.version).toBe(3);
     const oldLesson = structuredClone(lesson);
     oldLesson.version = 1;
+    oldLesson.questions = oldLesson.questions.slice(0, 21);
+    oldLesson.steps = oldLesson.steps.slice(0, 6);
+    oldLesson.reviewQuestions = oldLesson.reviewQuestions?.slice(0, 10);
     required(oldLesson.steps[0]).visual = { kind: 'place-value', value: 17 };
     const now = '2026-10-03T00:00:00.000Z';
     const old = createSession(oldLesson, 'pep-math-p1-upper-2024', 'child', {

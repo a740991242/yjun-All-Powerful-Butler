@@ -131,7 +131,7 @@ describe('pep 11–20 physical units and interval meaning', () => {
     const pool = required(
       book.specialties?.find((l) => l.id === 'ms-upper-relations'),
     );
-    expect(pool.version).toBe(9);
+    expect(pool.version).toBe(10);
     expect(pool.questions).toContainEqual(find(1, 'q6'));
     expect(pool.questions).toContainEqual(find(2, 'q8'));
   });

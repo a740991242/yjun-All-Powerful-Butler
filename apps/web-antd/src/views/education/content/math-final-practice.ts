@@ -1,5 +1,12 @@
 import type { Lesson, Question, Visual } from '../learning/types';
 
+import {
+  finalCompleteComparisons,
+  finalCompletePartitions,
+  finalGridSourceTasks,
+  finalLinkSourceTasks,
+} from './math-final-complete-practice';
+
 const base = {
   textbookTitle: '复习与关联',
   version: 1,
@@ -123,6 +130,7 @@ export const finalPracticeLessons: Lesson[] = [
   {
     ...base,
     id: grid,
+    version: 2,
     page: 106,
     title: '完整数表、加法表与分步计算',
     goal: '联系行列、数位、相邻数和计算结果，明确含0与10的完整加法范围。',
@@ -160,6 +168,14 @@ export const finalPracticeLessons: Lesson[] = [
       {
         title: '沿箭头保存每个中间结果',
         text: '从左向右按箭头逐次计算，后一步以前一步结果为起点。每一步都独立填，最终正确不能掩盖中间错误。结果0要写出，没算的留空；用材料实际添取或纸面检查另记录，不由网页填写证明已经实做。',
+      },
+      {
+        title: '原两张表的完整要求分别做',
+        text: '原数表全部空格和五个要求分别核对；原加法表补完整、任指口算、标全部和10、另说规律逐项做。本站规律表与原给定格、红线不同，不用网页三个空证明整表已经实际填写。',
+      },
+      {
+        title: '完整四图、十六式、六比较和两链',
+        text: '原四图、三个组成小题的全部空分别填写，材料颗数和表示值分开。原十六式逐条算，六比较先算两边；两链各五空，中间值都保留，第二链恢复起点。本站新增六道比较更换条件，不代替原书整组实做。',
       },
     ],
     questions: [
@@ -325,7 +341,17 @@ export const finalPracticeLessons: Lesson[] = [
         'reflection',
         '我实际整理到哪里，哪些中间步骤仍有困难？分开记已做、只在网页做和计划做的部分，不凭一次成绩宣告全册熟练。',
       ),
+      ...finalCompleteComparisons(false),
+      ...finalGridSourceTasks.map(([key, prompt]) => ({
+        ...manual(grid, `actual-source-${key}`, prompt),
+        knowledge: `${grid}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes: `${base.review.notes} 按103～109页完整原要求补独立原书活动记录与原创比较/含0分合练习，保留旧题目、步骤、复习前缀及学习快照；原图和本站模型分开，未实际完成不自动确认。`,
+    },
     reviewQuestions: [
       fields(
         grid,
@@ -364,12 +390,13 @@ export const finalPracticeLessons: Lesson[] = [
         [17, 0, 8, 10],
         '新式依次17、0、8、10。',
       ),
+      ...finalCompleteComparisons(true),
     ],
   },
   {
     ...base,
     id: map,
-    version: 2,
+    version: 3,
     page: 103,
     title: '知识关联、生活提问与图形回顾',
     goal: '用自己的例子联系数、计算、数量关系与图形，分别记录实际应用与观察。',
@@ -404,6 +431,14 @@ export const finalPracticeLessons: Lesson[] = [
       {
         title: '三方面分别回看',
         text: '数与计算、实际问题、图形观察分别记自己确实做过什么、怎么验证和仍不确定什么。会说方法不一定算熟练，网页练习不代表实物搭建或交流已做；未做与计划分开，不自动评星或断定全册已掌握。',
+      },
+      {
+        title: '原知识图与两个动物情境完整回看',
+        text: '原三块知识图逐块说明并补充；数的表示、添1、十和一、分合加减与两种算法联系逐项解释。两动物、天鹅的三个要求与鱼题各有自己的已知所求和单位，不能把鸭混为天鹅，回看后再提出条件完整的新问题。',
+      },
+      {
+        title: '分合的范围与原图搭摆分开',
+        text: '本站新增分合允许0，网页两空只核对两部分；实际纸面再写同一整体的两加两减，每次恢复。原三列各自全部完成，不因“可以不同答案”漏掉减法。四块自主拼组、机器人四类与原阶梯全部合法配对分别核对；未知部件待核对，不从本站形状卡或一层矩形猜原答案。',
       },
     ],
     questions: [
@@ -546,7 +581,17 @@ export const finalPracticeLessons: Lesson[] = [
         'shape-reflection',
         '我实际摸、分或搭了哪些形体，缺哪些材料？屏幕观察与实物经验分开，不把缺材料当能力差。',
       ),
+      ...finalCompletePartitions(false),
+      ...finalLinkSourceTasks.map(([key, prompt]) => ({
+        ...manual(map, `actual-source-${key}`, prompt),
+        knowledge: `${map}-actual-source-${key}`,
+      })),
     ],
+    review: {
+      ...base.review,
+      date: '2026-10-04',
+      notes: `${base.review.notes} 按103～109页完整原要求补独立原书活动记录与原创比较/含0分合练习，保留旧题目、步骤、复习前缀及学习快照；原图和本站模型分开，未实际完成不自动确认。`,
+    },
     reviewQuestions: [
       number(
         map,
@@ -627,6 +672,7 @@ export const finalPracticeLessons: Lesson[] = [
         { kind: 'cube-pair', variant: 'review', display: 'candidates' },
         ['A+E', 'B+F', 'C+D'],
       ),
+      ...finalCompletePartitions(true),
     ],
   },
 ];

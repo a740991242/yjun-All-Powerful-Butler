@@ -172,7 +172,7 @@ describe('pep final review meanings, intermediate results and actual activities'
     expect(original.lessonVersion).toBe(1);
     expect(original.questions).toHaveLength(6);
     for (const [index, lesson] of finalPracticeLessons.entries()) {
-      expect(lesson.questions).toHaveLength(index === 0 ? 22 : 21);
+      expect(lesson.questions).toHaveLength(index === 0 ? 35 : 33);
       const session = createSession(lesson, book.id, 'child', {
         seed: 17,
         now,
@@ -222,10 +222,10 @@ describe('pep final review meanings, intermediate results and actual activities'
     }
     const book = required(mathBooks.find((b) => b.volume === 'upper'));
     for (const [id, version, source] of [
-      ['ms-upper-count', 6, find(0, 'q3')],
-      ['ms-upper-calculation', 8, find(0, 'q17')],
-      ['ms-upper-relations', 9, find(1, 'q5')],
-      ['ms-upper-shapes', 3, find(1, 'q11')],
+      ['ms-upper-count', 7, find(0, 'q3')],
+      ['ms-upper-calculation', 9, find(0, 'q17')],
+      ['ms-upper-relations', 10, find(1, 'q5')],
+      ['ms-upper-shapes', 4, find(1, 'q11')],
     ] as const) {
       const pool = required(book.specialties?.find((l) => l.id === id));
       expect(pool.version).toBe(version);
