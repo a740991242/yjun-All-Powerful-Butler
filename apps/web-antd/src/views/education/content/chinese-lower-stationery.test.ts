@@ -160,3 +160,46 @@ for (const [id, key, oldAnswer, newAnswer] of [
     ).toEqual(s);
   });
 }
+
+it('explains both meaning contexts while keeping a version-two session snapshot intact', () => {
+  const lesson = lessons['u7-1']!;
+  expect(lesson.version).toBe(3);
+  const main = lesson.questions.find((q) => q.id === 'cl-u7-1-q-meaning')!;
+  const review = lesson.reviewQuestions!.find(
+    (q) => q.id === 'cl-u7-1-r-meaning',
+  )!;
+  expect(main.rule).toEqual({ kind: 'choice', value: '认真看一遍' });
+  expect(review.rule).toEqual({ kind: 'choice', value: '铅笔橡皮等文具' });
+  expect(main.explanation).toContain('认真看一遍，逐样确认文具是否收齐');
+  expect(review.explanation).toContain('铅笔、橡皮等文具，是拟人说法');
+  const now = '2026-10-04T00:00:00.000Z';
+  const old = createSession(
+    {
+      ...lesson,
+      version: 2,
+      questions: lesson.questions.map((q) =>
+        q.id === main.id
+          ? {
+              ...q,
+              explanation: '拟人表达帮助理解爱惜文具，不当真实身份记录。',
+            }
+          : q,
+      ),
+    },
+    chineseBooks[1]!.id,
+    'child',
+    { seed: 8, now },
+  );
+  const restored = parseBackup(
+    exportBackup({
+      schemaVersion: 1,
+      activeProfileId: 'child',
+      profiles: [{ id: 'child', nickname: '核对', createdAt: now }],
+      sessions: [old],
+    }),
+  ).data.sessions[0]!;
+  expect(restored).toEqual(old);
+  expect(restored.questions.find((q) => q.id === main.id)!.explanation).toBe(
+    '拟人表达帮助理解爱惜文具，不当真实身份记录。',
+  );
+});

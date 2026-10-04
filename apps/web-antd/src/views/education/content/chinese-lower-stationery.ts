@@ -116,7 +116,8 @@ const entries: Entry[] = [
         ],
         values: ['认真看一遍', '铅笔橡皮等文具'],
         labels: ['认真看一遍', '铅笔橡皮等文具', '真实的人类家人'],
-        explanation: '拟人表达帮助理解爱惜文具，不当真实身份记录。',
+        explanation:
+          '仔细检查指认真看一遍，逐样确认文具是否收齐。伙伴在这里指铅笔、橡皮等文具，是拟人说法，不是真实的人类家人。',
         material:
           '先共读指定原书页，再观察本站原创信息卡与问题；不打包现代课文全文。',
       },
@@ -460,7 +461,7 @@ function makeLesson(e: Entry): Lesson {
     textbookTitle: e.title,
     page: required(e.pages[0]),
     status: 'available',
-    version: 2,
+    version: 3,
     goal: e.goal,
     prerequisite: `准备第${e.pages.join('—')}页原书与田字格纸，可由家长陪读。`,
     parentTip: `${e.sourceCredit}。请先准备原书、纸笔，陪孩子听示范、读一读、说一说。诗文可分段练，实际读写完成后再确认；没有材料可暂时跳过，下一次想做的事另记为计划。`,
