@@ -21,7 +21,19 @@ it('records two independent six-three source identities without replacing the or
     expect(book.provider).toBe('third-party-public-preview');
     expect(book.pdfUrl).toContain(book.sha256);
     expect(book.sha256).toMatch(/^[a-f\d]{64}$/);
-    expect(book.isbn).toBeNull();
+    expect(book.isbn).toBe(
+      book.volume === 'upper' ? '978-7-107-38236-9' : '978-7-107-38237-6',
+    );
+    expect(book.isbnEvidence.pdfPage).toBe(70);
+    expect(book.isbnEvidence.provider).toBe('third-party-public-preview');
+    const digits = [...book.isbn.replaceAll('-', '')].map(Number);
+    expect(
+      digits.reduce(
+        (sum, digit, index) => sum + digit * (index % 2 === 0 ? 1 : 3),
+        0,
+      ) % 10,
+    ).toBe(0);
+    expect(book.publisherCrossCheck.status).toBe('entry-only-body-unverified');
     expect(book.editionDate).toBeNull();
     expect(book.printingDate).toBeNull();
     expect(book.approvalMark).toBe(2024);
@@ -59,107 +71,25 @@ it('keeps complete ordered contents and separates read pages from available auth
       book.volume === 'upper' ? 55 : 57,
       book.volume === 'upper' ? 58 : 60,
     ]);
-    expect(book.readPrintedPages).toEqual([
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      18,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27,
-      28,
-      29,
-      30,
-      31,
-      32,
-      34,
-      35,
-      36,
-      37,
-      38,
-      39,
-      40,
-      41,
-      42,
-      43,
-      44,
-      45,
-      46,
-      ...(book.volume === 'lower'
-        ? [47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62]
-        : [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]),
-    ]);
-    expect(book.readPdfPages).toEqual([
-      1,
-      3,
-      4,
-      5,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21,
-      23,
-      24,
-      25,
-      26,
-      27,
-      28,
-      29,
-      30,
-      31,
-      32,
-      33,
-      34,
-      35,
-      36,
-      37,
-      39,
-      40,
-      41,
-      42,
-      43,
-      44,
-      45,
-      46,
-      47,
-      48,
-      49,
-      50,
-      51,
-      ...(book.volume === 'lower'
-        ? [52, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67]
-        : [53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]),
-    ]);
-    expect(book.readPdfPages.length).toBeLessThan(book.pdfPages);
+    expect(book.readPrintedPages).toEqual(
+      Array.from(
+        { length: book.volume === 'upper' ? 60 : 62 },
+        (_, i) => i + 1,
+      ),
+    );
+    expect(book.readPdfPages).toEqual(
+      Array.from({ length: 70 }, (_, i) => i + 1),
+    );
+    for (const unit of book.units) {
+      expect(unit.introAudit.printedPage).toBe(unit.page);
+      expect(unit.introAudit.pdfPage).toBe(unit.page + 5);
+      expect(unit.introAudit.lessonIds).toEqual(
+        unit.items.map((item) => item.id),
+      );
+      expect(unit.introAudit.newRequiredExercise).toBe(false);
+      expect(unit.introAudit.summary.length).toBeGreaterThan(20);
+    }
+    expect(book.readPdfPages.length).toBe(book.pdfPages);
   }
   expect(ethicsSources[0]?.units[0]?.items[0]?.title).toBe('开开心心上学去');
   expect(ethicsSources[1]?.units[0]?.items[0]?.title).toBe('有个新目标');
