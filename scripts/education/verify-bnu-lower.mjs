@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--pencils'))
+    return {
+      index: 13,
+      lessonId: 'bnu-lower-buy-pencils',
+      zero: null,
+      retry: '-pine-eaten',
+      manual: 11,
+      steps: 9,
+      review: 5,
+      key: 'pencils',
+    };
   if (process.argv.includes('--classroom'))
     return {
       index: 12,
@@ -276,7 +287,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 13
+          .count()) !== 14
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -912,6 +923,52 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'pencils' && q.id.endsWith('-one-by-one')) {
+              await p.getByRole('spinbutton').first().fill('11');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[11,null,null,null,null,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const draft = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(draft) !== '["11","","","","","",""]')
+                throw new Error('Seven subtraction drafts lost');
+              for (let i = 0; i < 7; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Subtraction input size or clipping');
+                if (i === 0 || i === 6)
+                  await p.screenshot({
+                    path: `/tmp/butler-bnu-pencils-input-${i}-${width}.png`,
+                  });
+                await input.fill(String(12 - i));
+              }
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (q.id === 'bnu-lower-ancient-count-one-source-parts-blocks') {
               await p.getByRole('spinbutton').first().fill('10');
               await wait(

@@ -6,6 +6,7 @@ import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
+import { bnuLowerPencilsLesson } from './bnu-lower-pencils';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
 import {
@@ -22,6 +23,7 @@ export const bnuLowerSource = {
   contentsPreview: 'https://keben.szxuexiao.com/html/10758.html',
   firstUnitPreview: 'https://keben.szxuexiao.com/html/10759.html',
   secondUnitPreview: 'https://keben.szxuexiao.com/html/10760.html',
+  thirdUnitPreview: 'https://keben.szxuexiao.com/html/10761.html',
   publisherPortal: 'https://jiaoshi.bnupg.com/',
   checkedAt: '2026-10-04',
   coverApprovalYear: 2024,
@@ -29,7 +31,7 @@ export const bnuLowerSource = {
   printing: null,
   readPrintedPages: [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-    23, 24, 25, 26,
+    23, 24, 25, 26, 27, 28, 29, 30,
   ],
   contents: [
     ['u1', '20以内数与加法', 2],
@@ -360,6 +362,10 @@ function pending(key: string, title: string, page: number): Lesson {
 }
 
 const authoredLessons: Record<string, Lesson[]> = {
+  u3: [
+    bnuLowerPencilsLesson,
+    pending('u3', '20以内数与减法（第29页起后续课程）', 29),
+  ],
   classroom: [bnuLowerClassroomLesson],
   u1: [
     bnuLowerAncientCountLesson,
