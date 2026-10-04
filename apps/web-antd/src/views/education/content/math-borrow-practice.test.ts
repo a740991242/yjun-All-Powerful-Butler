@@ -21,6 +21,77 @@ const find = (index: number, suffix: string) =>
     ),
   );
 describe('pep lower borrowing method, relations and complete table', () => {
+  it('independently checks all thirty-six basic subtraction and missing-subtrahend answers', () => {
+    const unit = required(
+      required(mathBooks.find((b) => b.volume === 'lower')).units.find(
+        (u) => u.id === 'u2',
+      ),
+    );
+    const expected: Record<string, number[]> = {
+      'ml-borrow-nine': [
+        11 - 9,
+        12 - 9,
+        14 - 9,
+        16 - 9,
+        17 - 9,
+        18 - 9,
+        13 - 9,
+        15 - 9,
+        19 - 9,
+        11 - 2,
+        14 - 5,
+        17 - 8,
+      ],
+      'ml-borrow-eight': [
+        12 - 8,
+        13 - 7,
+        11 - 6,
+        15 - 8,
+        14 - 6,
+        13 - 8,
+        11 - 8,
+        14 - 8,
+        12 - 7,
+        11 - 7,
+        12 - 6,
+        15 - 7,
+      ],
+      'ml-borrow-small': [
+        12 - 5,
+        11 - 4,
+        12 - 3,
+        11 - 2,
+        13 - 5,
+        12 - 4,
+        11 - 5,
+        13 - 4,
+        11 - 3,
+        14 - 5,
+        12 - 7,
+        11 - 7,
+      ],
+    };
+    let checked = 0;
+    for (const [id, answers] of Object.entries(expected)) {
+      const lesson = required(unit.lessons.find((l) => l.id === id));
+      const questions = [
+        ...lesson.questions,
+        ...required(lesson.reviewQuestions),
+      ];
+      expect(questions.map((q) => q.id)).toEqual([
+        ...Array.from({ length: 6 }, (_, i) => `${id}-q${i + 1}`),
+        ...Array.from({ length: 6 }, (_, i) => `${id}-r${i + 1}`),
+      ]);
+      expect(answers).toHaveLength(questions.length);
+      for (const [i, question] of questions.entries()) {
+        const answer = required(answers[i]);
+        for (let n = 0; n <= 20; n++)
+          expect(evaluate(question.rule, n)).toBe(n === answer);
+        checked++;
+      }
+    }
+    expect(checked).toBe(36);
+  });
   it('checks independently derived intermediate values and all three valid methods', () => {
     const answers: Answer[] = [
       [6, 3, 10, 7],
