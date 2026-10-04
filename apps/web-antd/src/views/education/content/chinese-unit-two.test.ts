@@ -7,6 +7,7 @@ import {
   statistics,
   submitResponse,
 } from '../learning/engine';
+import { pinyinTone } from '../learning/pinyin-tone';
 import { newReviewQuestions } from '../learning/review';
 import { upperCharacters } from './characters';
 import { chineseBooks } from './chinese';
@@ -429,4 +430,89 @@ it('restores pre-change recognition and vowel-review snapshots with their versio
     for (const r of session.responses) {
       expect(r.submissions.map((x) => x.correct)).toEqual([false, true]);
     }
+});
+
+it('independently checks all twenty-four single-vowel tone forms and both directions of tone questions', () => {
+  const rows = [
+    ['u2-1', ['ā', 'á', 'ǎ', 'à', 'ō', 'ó', 'ǒ', 'ò', 'ē', 'é', 'ě', 'è']],
+    ['u2-2', ['ī', 'í', 'ǐ', 'ì', 'ū', 'ú', 'ǔ', 'ù', 'ǖ', 'ǘ', 'ǚ', 'ǜ']],
+  ] as const;
+  const ordinal = ['第一声', '第二声', '第三声', '第四声'];
+  let inspected = 0;
+  for (const [id, expected] of rows) {
+    const lesson = unitTwoChineseLessons[id]!;
+    const table = lesson.steps.find(
+      (step) => step.title === '逐组观察四声',
+    )!.visual!;
+    if (table.kind !== 'characters') throw new Error('tone table expected');
+    expect(table.characters).toEqual(expected);
+    expected.forEach((form, i) => {
+      expect(pinyinTone(form)?.number).toBe((i % 4) + 1);
+      expect(pinyinTone(form.normalize('NFD'))).toEqual(pinyinTone(form));
+    });
+    const questions = [...lesson.questions, ...lesson.reviewQuestions!].filter(
+      (q) => /-[qr]-tone-/.test(q.id),
+    );
+    expect(questions).toHaveLength(24);
+    for (const q of questions) {
+      if (q.rule.kind !== 'choice') throw new Error('tone choice expected');
+      if (q.id.includes('-q-')) {
+        const match = /第([1-4])声/.exec(q.prompt)!;
+        const tone = Number(match[1]);
+        const rowIndex = Number(/-tone-(\d)-/.exec(q.id)![1]);
+        const answer = expected[rowIndex * 4 + tone - 1]!;
+        expect(q.rule.value).toBe(answer);
+        expect(q.choices!.map((c) => c.id)).toEqual(
+          expected.slice(rowIndex * 4, rowIndex * 4 + 4),
+        );
+        for (const choice of q.choices!)
+          expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+        expect(q.explanation).toContain(answer);
+      } else {
+        const card = q.visual!;
+        if (card.kind !== 'characters')
+          throw new Error('review tone card expected');
+        expect(card.characters).toHaveLength(1);
+        const form = card.characters[0]!;
+        expect(expected).toContain(form);
+        const forms: readonly string[] = expected;
+        const tone = (forms.indexOf(form) % 4) + 1;
+        const answer = ordinal[tone - 1]!;
+        expect(q.rule.value).toBe(answer);
+        for (const choice of q.choices!)
+          expect(evaluate(q.rule, choice.id)).toBe(choice.id === answer);
+        expect(q.explanation).toContain(form);
+      }
+      inspected++;
+    }
+  }
+  expect(inspected).toBe(48);
+});
+
+it('checks every garden tone choice against its requested ordinal and keeps dots distinct from tones', () => {
+  const garden = unitTwoChineseLessons['u2-5']!;
+  const questions = [...garden.questions, ...garden.reviewQuestions!].filter(
+    (q) => /-[qr]-tone-/.test(q.id),
+  );
+  expect(questions).toHaveLength(8);
+  for (const q of questions) {
+    const tone = Number(/第([1-4])声/.exec(q.prompt)![1]);
+    if (q.rule.kind !== 'choice')
+      throw new Error('garden tone choice expected');
+    const matching = q.choices!.filter(
+      (c) => pinyinTone(c.id)?.number === tone,
+    );
+    expect(matching).toHaveLength(1);
+    expect(q.rule.value).toBe(matching[0]!.id);
+    for (const c of q.choices!)
+      expect(evaluate(q.rule, c.id)).toBe(pinyinTone(c.id)?.number === tone);
+  }
+  const iuu = unitTwoChineseLessons['u2-2']!;
+  const iQuestion = iuu.questions.find((q) => q.id.endsWith('-q-marks'))!;
+  const uQuestion = iuu.reviewQuestions!.find((q) =>
+    q.id.endsWith('-r-marks'),
+  )!;
+  expect(evaluate(iQuestion.rule, '小点和调号都保留')).toBe(false);
+  expect(evaluate(uQuestion.rule, '省去两点变成ù')).toBe(false);
+  expect(evaluate(uQuestion.rule, '两点和调号都保留')).toBe(true);
 });
