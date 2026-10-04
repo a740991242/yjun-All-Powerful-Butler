@@ -29,8 +29,8 @@ export interface RegionalSubjectPlan {
   resolution:
     | RegionalEditionResolution
     | {
-        status: 'guidance';
-        edition: 'pep-2024';
+        status: 'guidance' | 'recommended';
+        edition: 'pep-2024' | 'sujiao';
         evidence: PolicySource[];
       };
   reason: 'available' | 'conflict' | 'system' | 'unavailable' | 'unknown';
@@ -104,6 +104,21 @@ export function regionalApplicationPlan(
         edition: 'pep-2024',
         evidence: [structuredClone(policy)],
       };
+    }
+    // The user requested Jiangsu/Suzhou as the product's default combination.
+    // This recommendation does not assert province-wide or school adoption.
+    if (
+      resolution.status === 'unknown' &&
+      subject === 'math' &&
+      query.province === 'jiangsu' &&
+      !query.city &&
+      !query.school &&
+      query.stage === 'primary' &&
+      query.grade === 'p1' &&
+      ['2025-2026', '2026-2027'].includes(query.academicYear) &&
+      (query.volume === 'upper' || query.volume === 'lower')
+    ) {
+      resolution = { status: 'recommended', edition: 'sujiao', evidence: [] };
     }
     if (resolution.status === 'conflict')
       return { subject, resolution, reason: 'conflict' };

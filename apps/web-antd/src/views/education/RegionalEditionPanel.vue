@@ -7,7 +7,14 @@ import type {
 
 import { computed, ref, watch } from 'vue';
 
-import { Alert, Button, Select, Tag } from 'ant-design-vue';
+import {
+  Alert,
+  Button,
+  Collapse,
+  CollapsePanel,
+  Select,
+  Tag,
+} from 'ant-design-vue';
 
 import { $t } from '#/locales';
 
@@ -24,7 +31,7 @@ const emit = defineEmits<{
   clear: [];
 }>();
 const province = ref('jiangsu');
-const city = ref('suzhou');
+const city = ref('none');
 const school = ref('none');
 const academicYear = ref('2026-2027');
 const schoolSystem = ref<SchoolSystem>('unknown');
@@ -123,32 +130,8 @@ function apply() {
           :aria-label="$t('educationLearning.regionalProvince')"
         />
       </div>
-      <div class="flex min-w-0 flex-col gap-2">
-        <label for="education-region-city">
-          {{ $t('educationLearning.regionalCity') }}
-        </label>
-        <Select
-          id="education-region-city"
-          v-model:value="city"
-          size="large"
-          :options="cities"
-          :aria-label="$t('educationLearning.regionalCity')"
-        />
-      </div>
     </div>
-    <div class="grid gap-4 md:grid-cols-3">
-      <div class="flex min-w-0 flex-col gap-2">
-        <label for="education-region-school">
-          {{ $t('educationLearning.regionalSchool') }}
-        </label>
-        <Select
-          id="education-region-school"
-          v-model:value="school"
-          size="large"
-          :options="schools"
-          :aria-label="$t('educationLearning.regionalSchool')"
-        />
-      </div>
+    <div class="grid gap-4 md:grid-cols-2">
       <div class="flex min-w-0 flex-col gap-2">
         <label for="education-region-year">
           {{ $t('educationLearning.regionalYear') }}
@@ -202,6 +185,42 @@ function apply() {
         ]"
       />
     </div>
+    <Collapse>
+      <CollapsePanel
+        key="sources"
+        :header="$t('educationLearning.regionalOptionalSources')"
+      >
+        <p class="mb-4 leading-7 text-muted-foreground">
+          {{ $t('educationLearning.regionalOptionalSourcesScope') }}
+        </p>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="flex min-w-0 flex-col gap-2">
+            <label for="education-region-city">
+              {{ $t('educationLearning.regionalCity') }}
+            </label>
+            <Select
+              id="education-region-city"
+              v-model:value="city"
+              size="large"
+              :options="cities"
+              :aria-label="$t('educationLearning.regionalCity')"
+            />
+          </div>
+          <div class="flex min-w-0 flex-col gap-2">
+            <label for="education-region-school">
+              {{ $t('educationLearning.regionalSchool') }}
+            </label>
+            <Select
+              id="education-region-school"
+              v-model:value="school"
+              size="large"
+              :options="schools"
+              :aria-label="$t('educationLearning.regionalSchool')"
+            />
+          </div>
+        </div>
+      </CollapsePanel>
+    </Collapse>
     <RegionalCustomPreset
       :query="query"
       @apply="emit('apply', $event)"
@@ -230,7 +249,8 @@ function apply() {
         <span
           v-if="
             item.resolution.status === 'verified' ||
-            item.resolution.status === 'guidance'
+            item.resolution.status === 'guidance' ||
+            item.resolution.status === 'recommended'
           "
         >
           {{

@@ -631,7 +631,7 @@ const widths = process.argv.includes('--mobile-only')
         continue;
       }
       const region = p.getByRole('region', {
-        name: '按地区与学校资料选教材',
+        name: '按地区切换教材组合',
         exact: true,
       });
       const applyArea = region.getByRole('button', {
@@ -639,6 +639,10 @@ const widths = process.argv.includes('--mobile-only')
         exact: true,
       });
       await chooseArea('education-region-system', '六三学制（小学六年）');
+      await region
+        .getByText('教材选用资料参考（可选）', { exact: true })
+        .click();
+      await chooseArea('education-region-city', '苏州');
       await chooseArea('education-region-school', '苏州市吴江区绸都小学');
       await chooseArea('education-region-year', '2025—2026');
       if (await applyArea.isDisabled())

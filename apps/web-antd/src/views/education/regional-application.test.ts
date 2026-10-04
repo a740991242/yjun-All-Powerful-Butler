@@ -57,10 +57,16 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     expect(
       rows.filter((row) => row.resolution.status === 'guidance'),
     ).toHaveLength(excluded ? 0 : 2);
+    let expectedSubjects: string[] = ['chinese', 'ethics'];
+    if (province === 'jiangsu')
+      expectedSubjects = ['chinese', 'math', 'ethics'];
+    if (excluded) expectedSubjects = [];
     expect(
       rows.flatMap((row) => (row.action ? [row.action.subject] : [])),
-    ).toEqual(excluded ? [] : ['chinese', 'ethics']);
-    expect(required(rows[1]).resolution.status).toBe('unknown');
+    ).toEqual(expectedSubjects);
+    expect(required(rows[1]).resolution.status).toBe(
+      province === 'jiangsu' ? 'recommended' : 'unknown',
+    );
     expect(required(rows[3]).resolution.status).toBe('unknown');
   }
 });
@@ -132,5 +138,43 @@ it('retains a sourced unbuilt Qingdao edition instead of silently applying a PEP
   for (const schoolSystem of ['unknown', 'five-four'] as const) {
     const guarded = regionalApplicationPlan({ ...local, schoolSystem });
     expect(guarded.every((row) => row.action === undefined)).toBe(true);
+  }
+});
+
+it('applies the Jiangsu default without requiring a city or school, for both volumes', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      city: '',
+      school: '',
+      volume,
+      academicYear: '2026-2027',
+    };
+    const plan = regionalApplicationPlan(local);
+    expect(plan[1]!.resolution).toEqual({
+      status: 'recommended',
+      edition: 'sujiao',
+      evidence: [],
+    });
+    expect(
+      plan.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/sujiao/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(plan[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
+    expect(
+      regionalApplicationPlan({ ...local, academicYear: '2027-2028' })[1]!
+        .action,
+    ).toBeUndefined();
   }
 });

@@ -1,7 +1,9 @@
 /* Verify personal regional presets in the actual Pages build with isolated Chrome profiles.
  * Creates one native unfinished learning record and checks it remains unchanged.
  * Personal choices never certify school adoption or curriculum completeness.
- * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only]
+ * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults]
+ * --all-areas checks personal upper/lower sets for every navigation area; it
+ * does not infer local textbook adoption or create unsupported course packs.
  */
 import * as fs from 'node:fs/promises';
 import http from 'node:http';
@@ -14,6 +16,8 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   /\/$/,
   '',
 );
+const allAreas = process.argv.includes('--all-areas');
+const provinceDefaults = process.argv.includes('--province-defaults');
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const server = http.createServer(async (req, res) => {
@@ -133,6 +137,13 @@ const server = http.createServer(async (req, res) => {
         waitUntil: 'networkidle',
       });
       const choose = async (id, label, search = false) => {
+        if (
+          ['education-region-city', 'education-region-school'].includes(id) &&
+          !(await p.locator(`#${id}`).isVisible())
+        )
+          await p
+            .getByText('教材选用资料参考（可选）', { exact: true })
+            .click();
         const input = p.locator(`#${id}`);
         await input.focus();
         if (search) await input.fill(label);
@@ -187,6 +198,307 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
+      if (provinceDefaults) {
+        const region = p.getByRole('region', {
+          name: '按地区切换教材组合',
+          exact: true,
+        });
+        if (await p.locator('#education-region-school').isVisible())
+          throw new Error('school required on initial view');
+        const apply = region.getByRole('button', {
+          name: '一键应用可用学科版本',
+          exact: true,
+        });
+        if (!(await apply.isDisabled()))
+          throw new Error('unknown system applied');
+        await choose('education-region-system', '六三学制（小学六年）');
+        for (const volume of ['上册', '下册']) {
+          await choose('education-region-volume', volume);
+          await apply.click();
+          for (const label of [
+            '语文 · 人教版（2024审定）',
+            '数学 · 苏教版',
+            '道德与法治 · 人教版（2024审定）',
+          ])
+            await p
+              .getByRole('button', {
+                name: `${label} · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          if (
+            (await p.evaluate(() =>
+              localStorage.getItem('butler-grade-one-math-edition-v1'),
+            )) !== 'sujiao'
+          )
+            throw new Error('Jiangsu math not applied');
+        }
+        await choose('education-region-province', '广东', true);
+        await apply.click();
+        if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
+          throw new Error('Jiangsu edition leaked into other province');
+        if (
+          (await p.evaluate(() =>
+            localStorage.getItem('butler-grade-one-math-edition-v1'),
+          )) !== 'sujiao'
+        )
+          throw new Error('unconfigured math lost preference');
+        await choose('education-region-province', '江苏', true);
+        await choose('education-region-volume', '上册');
+        await apply.click();
+        if (await p.locator('#education-region-school').isVisible())
+          throw new Error('school reference opened automatically');
+        await region.evaluate((e) => e.scrollIntoView({ block: 'start' }));
+        await p.waitForTimeout(300);
+        await p.screenshot({
+          path: `/tmp/butler-province-defaults-${width}.png`,
+          fullPage: true,
+        });
+        if (
+          (await p.evaluate(async () =>
+            JSON.stringify(await window.qaLoad()),
+          )) !== library
+        )
+          throw new Error('native history changed');
+        if ((await raw()) !== null)
+          throw new Error('default overwrote personal presets');
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('default page overflow');
+        await p
+          .locator('button')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).last().click();
+        await p
+          .getByRole('region', {
+            name: 'Switch textbook combinations by area',
+            exact: true,
+          })
+          .waitFor();
+        await p
+          .getByText('Textbook adoption references (optional)', { exact: true })
+          .waitFor();
+        if (await p.locator('#education-region-school').isVisible())
+          throw new Error('English requires school');
+        const htmlClass = await p.locator('html').getAttribute('class');
+        if (!htmlClass.includes('dark'))
+          await p.locator('.theme-toggle svg').click();
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-province-defaults-${width}-en-dark.png`,
+          fullPage: true,
+        });
+        if (
+          (await p.evaluate(async () =>
+            JSON.stringify(await window.qaLoad()),
+          )) !== library
+        )
+          throw new Error('language changed native history');
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            provinceDefaults: true,
+            JiangsuUpperLowerThreeSubjects: true,
+            schoolOptionalCollapsed: true,
+            otherProvinceDoesNotInheritMath: true,
+            nativeHistoryUnchanged: true,
+            personalPresetsUnchanged: true,
+            EnglishDark: true,
+          }),
+        );
+        await c.close();
+        continue;
+      }
+      if (allAreas) {
+        const zh = JSON.parse(
+          await fs.readFile(
+            `${repo}/apps/web-antd/src/locales/langs/zh-CN/educationLearning.json`,
+            'utf8',
+          ),
+        );
+        const areas = [
+          'beijing',
+          'tianjin',
+          'hebei',
+          'shanxi',
+          'inner-mongolia',
+          'liaoning',
+          'jilin',
+          'heilongjiang',
+          'shanghai',
+          'jiangsu',
+          'zhejiang',
+          'anhui',
+          'fujian',
+          'jiangxi',
+          'shandong',
+          'henan',
+          'hubei',
+          'hunan',
+          'guangdong',
+          'guangxi',
+          'hainan',
+          'chongqing',
+          'sichuan',
+          'guizhou',
+          'yunnan',
+          'tibet',
+          'shaanxi',
+          'gansu',
+          'qinghai',
+          'ningxia',
+          'xinjiang',
+          'hong-kong',
+          'macau',
+          'taiwan',
+        ];
+        const expected = [];
+        await choose('education-region-system', zh['regionalSystem_six-three']);
+        const plan = (i, volume) =>
+          volume === 'upper'
+            ? ['pep-2024', 'sujiao', 'bnu-2024'][i % 3]
+            : ['sujiao', 'pep-2024'][i % 2];
+        const editionLabel = (edition) => {
+          if (edition === 'sujiao') return zh.sujiaoEdition;
+          if (edition === 'bnu-2024') return zh.bnuEdition;
+          return zh.pepEdition;
+        };
+        const assertApplied = async (edition, volume) => {
+          await p
+            .getByRole('button', {
+              name: `数学 · ${editionLabel(edition)} · ${zh[volume]}`,
+              exact: true,
+            })
+            .waitFor();
+          for (const subject of ['语文', '道德与法治']) {
+            await p
+              .getByRole('button', {
+                name: `${subject} · ${zh.pepEdition} · ${zh[volume]}`,
+                exact: true,
+              })
+              .waitFor();
+          }
+          await p.waitForFunction(
+            (edition) =>
+              localStorage.getItem('butler-grade-one-math-edition-v1') ===
+              edition,
+            edition,
+          );
+          if (
+            (await p.evaluate(async () =>
+              JSON.stringify(await window.qaLoad()),
+            )) !== library
+          )
+            throw new Error(
+              'all-area application mutated the native learning record',
+            );
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('all-area page overflow');
+        };
+        for (const [i, province] of areas.entries()) {
+          await choose(
+            'education-region-province',
+            zh[`regionalProvince_${province}`],
+            true,
+          );
+          for (const volume of ['upper', 'lower']) {
+            await choose('education-region-volume', zh[volume]);
+            await assertKeep();
+            const edition = plan(i, volume);
+            await choose('education-custom-chinese', zh.pepEdition);
+            await choose('education-custom-math', editionLabel(edition));
+            await choose('education-custom-ethics', zh.pepEdition);
+            await click('保存当前地区组合');
+            await custom()
+              .getByText(zh.regionalPresetSaved, { exact: true })
+              .waitFor();
+            expected.push({
+              scope: {
+                province,
+                city: '',
+                school: '',
+                academicYear: '2026-2027',
+                volume,
+                schoolSystem: 'six-three',
+              },
+              editions: {
+                chinese: 'pep-2024',
+                math: edition,
+                ethics: 'pep-2024',
+              },
+            });
+            const actual = JSON.parse(await raw());
+            if (JSON.stringify(actual.entries) !== JSON.stringify(expected))
+              throw new Error(`all-area scope mismatch: ${province}/${volume}`);
+            await click('一键应用我的组合');
+            await assertApplied(edition, volume);
+          }
+          console.log(
+            JSON.stringify({
+              width,
+              checkedAreas: i + 1,
+              savedScopes: expected.length,
+            }),
+          );
+        }
+        const beforeReload = await raw();
+        await p.reload({ waitUntil: 'networkidle' });
+        await choose('education-region-system', zh['regionalSystem_six-three']);
+        if ((await raw()) !== beforeReload)
+          throw new Error('all-area sets lost on reload');
+        for (const province of ['beijing', 'shandong', 'taiwan']) {
+          await choose(
+            'education-region-province',
+            zh[`regionalProvince_${province}`],
+            true,
+          );
+          for (const volume of ['upper', 'lower']) {
+            await choose('education-region-volume', zh[volume]);
+            const edition = plan(areas.indexOf(province), volume);
+            if ((await mathLabel()) !== editionLabel(edition))
+              throw new Error(
+                `all-area restored wrong edition: ${province}/${volume}`,
+              );
+            await click('一键应用我的组合');
+            await assertApplied(edition, volume);
+          }
+        }
+        if ((await raw()) !== beforeReload)
+          throw new Error('all-area application rewrote saved sets');
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            allAreas: 34,
+            savedUpperLowerScopes: 68,
+            nativeSessionUnchanged: true,
+            reloadAllScopesUnchanged: true,
+            restoredUiScopes: 6,
+            threeSubjectApplication: true,
+            actualSchoolAdoptionClaimed: false,
+          }),
+        );
+        await c.close();
+        continue;
+      }
+      await choose('education-region-city', '苏州');
       await choose('education-region-system', '六三学制（小学六年）');
       await choose('education-custom-chinese', '人教版（2024审定）');
       await choose('education-custom-math', '北师大版（2024审核，部分课程）');
@@ -269,6 +581,7 @@ const server = http.createServer(async (req, res) => {
       const savedBeforeReload = await raw();
       await p.reload({ waitUntil: 'networkidle' });
       await choose('education-region-system', '六三学制（小学六年）');
+      await choose('education-region-city', '苏州');
       if (
         (await mathLabel()) !== '北师大版（2024审核，部分课程）' ||
         (await raw()) !== savedBeforeReload
