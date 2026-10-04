@@ -7,6 +7,121 @@ import { mathBooks } from './math';
 import { textbooks } from './textbooks';
 
 describe('reviewed PEP mathematics lesson packs', () => {
+  it('independently checks all forty-eight basic upper unit-four main and review answers', () => {
+    const unit = required(
+      required(mathBooks.find((book) => book.volume === 'upper')).units.find(
+        (u) => u.id === 'u4',
+      ),
+    );
+    // These expectations are calculated from the stated quantities and order,
+    // independently of the authored grading rules.
+    const expected: Record<string, (number | number[] | string | string[])[]> =
+      {
+        'mu-twenty-sequence': [
+          12,
+          14,
+          17,
+          20,
+          14,
+          19,
+          ['11', '12', '13'],
+          ['12', '13', '14'],
+          ['13', '14', '15'],
+          ['11', '12', '14'],
+          ['11', '13', '15'],
+          ['12', '13', '14'],
+        ],
+        'mu-twenty-place': [
+          [1, 1],
+          [1, 2],
+          [1, 5],
+          [1, 7],
+          [1, 9],
+          [2, 0],
+          13,
+          14,
+          16,
+          18,
+          10,
+          20,
+        ],
+        'mu-twenty-compare': [
+          '<',
+          '>',
+          '=',
+          '<',
+          '>',
+          '>',
+          '第二组',
+          '第二组',
+          '同样多',
+          '第一组',
+          '第一组',
+          '第二组',
+        ],
+        'mu-twenty-addsub': [
+          12 + 3,
+          14 + 5,
+          16 - 4,
+          19 - 7,
+          10 + 8,
+          18 - 8,
+          11 + 5,
+          13 + 4,
+          15 + 2,
+          17 - 5,
+          18 - 6,
+          19 - 4,
+        ],
+      };
+    let checked = 0;
+    for (const [id, answers] of Object.entries(expected)) {
+      const course = required(unit.lessons.find((l) => l.id === id));
+      const questions = [
+        ...course.questions,
+        ...(course.reviewQuestions ?? []),
+      ];
+      expect(questions.map((q) => q.id)).toEqual([
+        ...Array.from({ length: 6 }, (_, i) => `${id}-q${i + 1}`),
+        ...Array.from({ length: 6 }, (_, i) => `${id}-r${i + 1}`),
+      ]);
+      expect(questions).toHaveLength(answers.length);
+      for (const [index, question] of questions.entries()) {
+        const answer = required(answers[index]);
+        expect(evaluate(question.rule, answer)).toBe(true);
+        if (typeof answer === 'number') {
+          for (let n = 0; n <= 20; n++)
+            expect(evaluate(question.rule, n)).toBe(n === answer);
+        } else if (typeof answer === 'string') {
+          for (const choice of required(question.choices))
+            expect(evaluate(question.rule, choice.id)).toBe(
+              choice.id === answer,
+            );
+        } else if (answer.every((value) => typeof value === 'string')) {
+          expect(evaluate(question.rule, answer.toReversed())).toBe(false);
+          expect(
+            evaluate(
+              question.rule,
+              answer.map(() => required(answer[0])),
+            ),
+          ).toBe(false);
+        } else if (answer.every((value) => typeof value === 'number')) {
+          expect(evaluate(question.rule, [0, required(answer[1])])).toBe(false);
+          expect(() =>
+            evaluate(question.rule, [required(answer[0]), null]),
+          ).toThrow('educationLearning.answerRequired');
+          expect(question.visual).toEqual({
+            kind: 'place-value',
+            value: Number(answer[0]) * 10 + Number(answer[1]),
+          });
+        } else {
+          throw new Error('Unexpected mixed answer fixture');
+        }
+        checked++;
+      }
+    }
+    expect(checked).toBe(48);
+  });
   it('records written methods separately, rejects blank exchange fields and keeps paper work manual', () => {
     const lower = required(mathBooks.find((book) => book.volume === 'lower'));
     for (const [id, expected] of [
