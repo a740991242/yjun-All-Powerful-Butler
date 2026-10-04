@@ -20,6 +20,7 @@ import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
+import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
@@ -461,6 +462,10 @@ const shapeDescription = computed(() =>
       :visual="visual"
     />
     <TeenLayout v-else-if="visual.kind === 'teen-layout'" :visual="visual" />
+    <BnuHundredWeather
+      v-else-if="visual.kind === 'bnu-hundred-weather'"
+      :visual="visual"
+    />
     <BnuAroundNumbers
       v-else-if="visual.kind === 'bnu-around-numbers'"
       :visual="visual"

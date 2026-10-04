@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--count-hundred'))
+    return {
+      index: 23,
+      lessonId: 'bnu-lower-count-hundred',
+      zero: '-zero-ones',
+      retry: '-eggs-right',
+      manual: 14,
+      steps: 9,
+      review: 5,
+      key: 'count-hundred',
+    };
   if (process.argv.includes('--around-numbers'))
     return {
       index: 22,
@@ -428,6 +439,105 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectHundredWeather = async (variant, label) => {
+        const figure = p.locator(
+          `[data-hundred-weather][data-variant="${variant}"]`,
+        );
+        await figure.waitFor();
+        const expected =
+          variant === 'main'
+            ? { S: 35, C: 35, rows: 7, columns: 10 }
+            : { S: 12, C: 8, rows: 4, columns: 5 };
+        for (const type of ['S', 'C'])
+          if (
+            (await figure.locator(`[data-weather-cell="${type}"]`).count()) !==
+            expected[type]
+          )
+            throw new Error('Weather category count changed');
+        const exactRows =
+          variant === 'main'
+            ? [
+                'SSSSSSSSSS',
+                'CCCCCCCCCC',
+                'SSSCCCCCCC',
+                'CCCSSSSSSS',
+                'CCCCCCSSSS',
+                'SSSSSSCCCC',
+                'CCCCCSSSSS',
+              ]
+            : ['SSCCC', 'SSSSC', 'CSSCC', 'SSSCS'];
+        const cells = await figure
+          .locator('[data-weather-cell]')
+          .evaluateAll((nodes) =>
+            nodes.map((n) => n.dataset.weatherCell).join(''),
+          );
+        if (cells !== exactRows.join(''))
+          throw new Error('Weather positions changed');
+        const bounds = await figure.locator('svg').evaluate((svg) => {
+          const r = svg.getBoundingClientRect();
+          return [...svg.querySelectorAll('[data-weather-cell]')].every((n) => {
+            const b = n.getBoundingClientRect();
+            return (
+              b.left >= r.left &&
+              b.right <= r.right &&
+              b.top >= r.top &&
+              b.bottom <= r.bottom
+            );
+          });
+        });
+        if (!bounds) throw new Error('Weather cell outside SVG');
+        const fonts = await figure
+          .locator('figcaption,p')
+          .evaluateAll((nodes) =>
+            nodes
+              .slice(0, 3)
+              .map((n) => Number.parseFloat(getComputedStyle(n).fontSize)),
+          );
+        if (fonts.some((n) => n < 20))
+          throw new Error('Weather heading, legend or scroll hint too small');
+        const cloudFill = await figure
+          .locator('[data-weather-cell="C"] path')
+          .last()
+          .evaluate((n) => getComputedStyle(n).fill);
+        if (['none', 'rgba(0, 0, 0, 0)', 'transparent'].includes(cloudFill))
+          throw new Error('Cloud fails to cover its sun');
+        const scroll = figure.locator('[data-weather-scroll]');
+        await scroll.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await scroll.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(200);
+        if (
+          !(await scroll.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Weather keyboard scroll failed');
+        for (const edge of ['first', 'last']) {
+          await scroll.evaluate((n, e) => {
+            n.scrollLeft = e === 'first' ? 0 : n.scrollWidth;
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(150);
+          if (
+            !(await scroll.evaluate((n) => {
+              const r = n.getBoundingClientRect();
+              return (
+                r.left >= 0 &&
+                r.right <= innerWidth &&
+                r.top >= 0 &&
+                r.bottom <= innerHeight &&
+                document.documentElement.scrollWidth <= innerWidth
+              );
+            }))
+          )
+            throw new Error('Weather scroll viewport overflow');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-hundred-weather-${variant}-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -466,7 +576,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 23
+          .count()) !== 24
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -890,6 +1000,93 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
         }
+        if (flow.key === 'count-hundred' && step === 0) {
+          for (const [label, hundreds, tens] of [
+            ['1个百拆成10个十', 0, 10],
+            ['1个十拆成10个一', 0, 9],
+          ]) {
+            await click(label);
+            await wait((d) => {
+              const tool = d.sessions.find((s) => s.id === sid).tools?.[
+                'step-1'
+              ]?.placeValue;
+              return (
+                tool?.value === 100 &&
+                tool.hundreds === hundreds &&
+                tool.tens === tens
+              );
+            });
+          }
+          await p.reload({ waitUntil: 'networkidle' });
+          const afterSplitReload = await read();
+          if (
+            JSON.stringify(
+              afterSplitReload.sessions.find((s) => s.id === sid).tools[
+                'step-1'
+              ].placeValue,
+            ) !== JSON.stringify({ value: 100, hundreds: 0, tens: 9 })
+          )
+            throw new Error('Source hundred split lost on reload');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-hundred-source-split-${width}.png`,
+          });
+          for (const [label, hundreds, tens] of [
+            ['10个一换1个十', 0, 10],
+            ['10个十换1个百', 1, 0],
+          ]) {
+            await click(label);
+            await wait((d) => {
+              const tool = d.sessions.find((s) => s.id === sid).tools?.[
+                'step-1'
+              ]?.placeValue;
+              return (
+                tool?.value === 100 &&
+                tool.hundreds === hundreds &&
+                tool.tens === tens
+              );
+            });
+          }
+        }
+        if (flow.key === 'count-hundred' && step === 5) {
+          await inspectHundredWeather('main', 'learn');
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .getByText(
+              'Classify each whole icon as sun alone or sun with cloud. The sun within a cloud icon is not another cell.',
+              { exact: true },
+            )
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectHundredWeather('main', 'english-theme');
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Weather language/theme changed records');
+        }
         if (flow.key === 'around-numbers' && (step === 2 || step === 3)) {
           const scene = step === 2 ? 'circles' : 'triangles';
           await inspectAroundNumbers(scene, 'main', 'learn');
@@ -990,6 +1187,8 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'bnu-hundred-weather')
+          await inspectHundredWeather(q.visual.variant, 'question');
         if (
           flow.key === 'around-numbers' &&
           q.visual?.kind === 'bnu-around-numbers'
@@ -1367,6 +1566,59 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'count-hundred' &&
+            q.id.endsWith('-count-first')
+          ) {
+            await p.getByRole('spinbutton').first().fill('75');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((s) => s.id === sid).responses[index].draft,
+                ) === '[75,null,null,null,null,null,null,null,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const values = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(values) !== '["75","","","","","","","","",""]')
+              throw new Error('Ten-field partial draft lost');
+            for (let i = 0; i < 10; i++) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n.scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const fits = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return (
+                  Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                  r.height >= 44 &&
+                  r.left >= 0 &&
+                  r.right <= innerWidth &&
+                  r.top >= 0 &&
+                  r.bottom <= innerHeight
+                );
+              });
+              if (!fits)
+                throw new Error(
+                  'Ten-field counting input clipped or too small',
+                );
+              await input.fill(String(74 + i));
+              if (i === 0 || i === 9)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-hundred-fields-${width}-${i}.png`,
+                });
+            }
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            for (const [i, value] of q.rule.values.entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (
             q.rule.kind === 'steps' &&
             flow.key === 'around-numbers' &&
@@ -2395,6 +2647,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'bnu-hundred-weather')
+          await inspectHundredWeather(q.visual.variant, 'question');
         if (
           flow.key === 'around-numbers' &&
           q.visual?.kind === 'bnu-around-numbers'

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T22:13:56.287Z",
+  "generatedAt": "2026-10-04T22:47:00.784Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 23,
+        "availablePacks": 24,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 680,
-          "manual": 225,
-          "reflection": 78
+          "objective": 712,
+          "manual": 239,
+          "reflection": 85
         }
       },
       "units": [
@@ -34047,10 +34047,46 @@
               }
             },
             {
+              "id": "bnu-lower-count-hundred",
+              "title": "数一数：十个十是一百与完整数到100",
+              "textbookTitle": "数一数",
+              "page": 46,
+              "version": 1,
+              "status": "available",
+              "goal": "逐物代表、捆十捆百并解释数量不变；从74、67和88完整数到100，续说两条十十数列，逐格分类天气并解释数法。",
+              "prerequisite": "会逐一数、用十和一表示数量，知道分组不漏余数。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 32,
+                "manual": 14,
+                "reflection": 7
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-count-hundred"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-value", "bnu-hundred-weather"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "46～47全页与蛋、小棒、练习材料和70天气格放大核对",
+                "notes": "七原活动分别对应，先后示意、根/捆、开放方法和本站指定数法分明；原图实际解释另做。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 46,
+              "page": 48,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34084,7 +34120,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～45页身边的数七项原活动及明示迁移，46页起仍制作；不证明整个第四单元、全册、全年或最终教师审校。",
+            "scope": "仅44～47页身边的数与数一数十四项原活动；48页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -34190,6 +34226,124 @@
                   "next-plan"
                 ],
                 "boundary": "原自主问题开放，新增回顾迁移明示；自己的已做/未做/未来计划分记，没查不0，不采学校个人信息。"
+              },
+              {
+                "page": 46,
+                "sourceActivity": "count-eggs",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [1],
+                "objective": ["eggs-parts", "eggs-right", "empty-tray"],
+                "manual": ["actual-eggs", "actual-egg-sticks"],
+                "records": [],
+                "boundary": "九完整盒、九桌上蛋与一手持蛋，共100；右十盒仍100，空盒不计蛋，先后图不相加。"
+              },
+              {
+                "page": 46,
+                "sourceActivity": "make-ten",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [2],
+                "objective": [
+                  "sticks-parts",
+                  "make-ten",
+                  "bundle-keeps",
+                  "source-total"
+                ],
+                "manual": ["actual-ten"],
+                "records": [],
+                "boundary": "原9捆10根为100而非99；拆百与拆十只改分组，网页操作不自动确认实物。"
+              },
+              {
+                "page": 46,
+                "sourceActivity": "make-hundred",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [3],
+                "objective": [
+                  "hundred-parts",
+                  "after-ninety-nine",
+                  "zero-ones",
+                  "bundle-unit"
+                ],
+                "manual": ["actual-hundred"],
+                "records": [],
+                "boundary": "十个十为百，根与捆不同；99添1是另一相邻数说明，确认0不当未填。"
+              },
+              {
+                "page": 47,
+                "sourceActivity": "from-seventy-four",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [4],
+                "objective": [
+                  "seventy-four-parts",
+                  "count-first",
+                  "count-middle",
+                  "count-last",
+                  "tens-path",
+                  "no-overshoot"
+                ],
+                "manual": [
+                  "actual-seventy-four-one",
+                  "actual-seventy-four-ten"
+                ],
+                "records": ["own-count-method"],
+                "boundary": "三段75～100全部覆盖，原方法开放，本站先十后逐一不能跳104。"
+              },
+              {
+                "page": 47,
+                "sourceActivity": "continue-speaking",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [5],
+                "objective": ["down-sequence", "up-sequence", "directions"],
+                "manual": ["actual-down", "actual-up"],
+                "records": ["own-sequence"],
+                "boundary": "原续说无指定终点，本站0～100明示，其他合理续说另记。"
+              },
+              {
+                "page": 47,
+                "sourceActivity": "practice-count-hundred",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [6],
+                "objective": [
+                  "practice-sticks",
+                  "practice-blocks",
+                  "from-sixty-seven",
+                  "from-eighty-eight"
+                ],
+                "manual": [
+                  "actual-sixty-seven",
+                  "actual-eighty-eight",
+                  "actual-material-exchange"
+                ],
+                "records": [],
+                "boundary": "67与88分别完整到100并交流，不合并155，不把起数当完成。"
+              },
+              {
+                "page": 47,
+                "sourceActivity": "weather-days",
+                "lesson": "bnu-lower-count-hundred",
+                "steps": [7, 8, 9],
+                "objective": [
+                  "weather-sunny-rows",
+                  "weather-cloudy-rows",
+                  "weather-total",
+                  "whole-icon",
+                  "month",
+                  "unknown-weather",
+                  "zero-no-cloud",
+                  "keeps-quantity"
+                ],
+                "manual": [
+                  "actual-weather",
+                  "actual-weather-recheck",
+                  "actual-explain"
+                ],
+                "records": [
+                  "own-weather-method",
+                  "actual-work-record",
+                  "discovery",
+                  "difficulty",
+                  "plan"
+                ],
+                "boundary": "七行十格两类各35，按整格分、不重复太阳，不当自然月或未来天气；总结换捆数量不变、已做与未来计划分开。"
               }
             ]
           }

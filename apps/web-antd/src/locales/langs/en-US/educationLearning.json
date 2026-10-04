@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-three original lesson packs cover printed pages 2–45: nine in unit one, three shape lessons, classroom decoration, nine subtraction lessons and Numbers Around Us. Pages 46 onward are still being prepared. The public scan is hosted by a third party; ISBN and edition/printing details remain unverified. Reading source pages does not mean all courses are complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-four original courses cover pages 2–47, including counting to 100. Teaching from page 48 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",
@@ -1210,5 +1210,12 @@
   "aroundNumbersNotice_review": "A new site review diagram with changed quantities. Count it again instead of copying the main answers.",
   "aroundNumbersMarker_circle": "Circle at position {position}",
   "aroundNumbersMarker_large": "Large triangle at position {position}",
-  "aroundNumbersMarker_small": "Small triangle at position {position}"
+  "aroundNumbersMarker_small": "Small triangle at position {position}",
+  "hundredWeatherTitle": "Weather counting: one record per cell",
+  "hundredWeatherLegend": "Classify each whole icon as sun alone or sun with cloud. The sun within a cloud icon is not another cell.",
+  "hundredWeatherScroll": "Scroll across all columns and check every row. Keyboard scrolling is supported.",
+  "hundredWeatherSunny": "Row {row}, column {column}: sun alone",
+  "hundredWeatherCloudy": "Row {row}, column {column}: sun with cloud",
+  "hundredWeatherNotice_main": "Original site drawing of the source seven-by-ten category relations. It is not one calendar month or a forecast. Counting and explaining the source picture remain separate actual activities.",
+  "hundredWeatherNotice_review": "A new site review layout with different quantities. Classify every cell again instead of reusing source totals."
 }

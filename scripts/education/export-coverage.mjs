@@ -41,6 +41,7 @@ async function main() {
         bnuSubtractionHarvestAudit,
         bnuSubtractionPracticeAudit,
         bnuAroundNumbersAudit,
+        bnuCountHundredAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -65,6 +66,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-subtraction-harvest-audit.ts'),
         import('/src/views/education/content/bnu-lower-subtraction-practice-audit.ts'),
         import('/src/views/education/content/bnu-lower-around-numbers-audit.ts'),
+        import('/src/views/education/content/bnu-lower-count-hundred-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -222,8 +224,17 @@ async function main() {
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u4'
                   ? {
-                      sourceAudit:
-                        bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit,
+                      sourceAudit: {
+                        ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit,
+                        scope:
+                          '仅44～47页身边的数与数一数十四项原活动；48页起仍制作，不证明整个第四单元或全年完成。',
+                        activities: [
+                          ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit
+                            .activities,
+                          ...bnuCountHundredAudit.bnuLowerCountHundredAudit
+                            .activities,
+                        ],
+                      },
                     }
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u1'
