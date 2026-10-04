@@ -5,6 +5,88 @@ import { isClockVisual } from '../learning/clock';
 import { createSession, evaluate, submitResponse } from '../learning/engine';
 import { initialLibrary } from '../learning/storage';
 import { sujiaoEverydayTimeLesson as lesson } from './sujiao-time';
+it('independently checks all clock answers and all activity permutations', () => {
+  const facts = {
+    whole: [8, 6],
+    half: ['correct', 'correct'],
+    'long-whole': [12, 12],
+    'long-half': [6, 6],
+    'short-half': ['between', 'between'],
+    order: [
+      ['a', 'b', 'c'],
+      ['a', 'b', 'c'],
+    ],
+    meaning: ['code', 'code'],
+    twelve: ['twelve', 'twelve'],
+    context: ['no', 'no'],
+    'activity-0': ['8时', '6时'],
+    'activity-1': ['8时半', '6时半'],
+    'activity-2': ['9时', '7时'],
+    'activity-3': ['12时', '12时半'],
+    'activity-order': [
+      ['0', '1', '2', '3'],
+      ['0', '1', '2', '3'],
+    ],
+  } as const;
+  function permutations(values: string[]): string[][] {
+    if (values.length === 0) return [[]];
+    return values.flatMap((value, index) =>
+      permutations(values.filter((_, other) => other !== index)).map((rest) => [
+        value,
+        ...rest,
+      ]),
+    );
+  }
+  for (const [variant, questions] of [
+    lesson.questions,
+    lesson.reviewQuestions!,
+  ].entries()) {
+    const prefix = `${lesson.id}-${variant === 0 ? 'q' : 'r'}-`;
+    const objective = questions.filter((q) => q.rule.kind !== 'manual');
+    expect(objective.map((q) => q.id).toSorted()).toEqual(
+      Object.keys(facts)
+        .map((key) => `${prefix}${key}`)
+        .toSorted(),
+    );
+    for (const [key, pair] of Object.entries(facts)) {
+      const question = objective.find((q) => q.id === `${prefix}${key}`)!;
+      const expected = pair[variant]!;
+      expect(
+        evaluate(
+          question.rule,
+          typeof expected === 'object' ? [...expected] : expected,
+        ),
+      ).toBe(true);
+      expect(() => evaluate(question.rule, null)).toThrow(
+        'educationLearning.answerRequired',
+      );
+      if (typeof expected === 'number') {
+        for (let candidate = 0; candidate <= 12; candidate++)
+          expect(evaluate(question.rule, candidate)).toBe(
+            candidate === expected,
+          );
+      } else if (typeof expected === 'string') {
+        expect(question.choices?.some((choice) => choice.id === expected)).toBe(
+          true,
+        );
+        for (const choice of question.choices!)
+          expect(evaluate(question.rule, choice.id)).toBe(
+            choice.id === expected,
+          );
+      } else {
+        const sequence = [...expected];
+        for (const candidate of permutations(sequence))
+          expect(evaluate(question.rule, candidate)).toBe(
+            candidate.every((value, index) => value === sequence[index]),
+          );
+        expect(evaluate(question.rule, sequence.slice(0, -1))).toBe(false);
+        expect(evaluate(question.rule, [...sequence, sequence[0]!])).toBe(
+          false,
+        );
+      }
+    }
+  }
+});
 it('connects whole/half hours to verified activities without elapsed-time claims', () => {
   expect(lesson.page).toBe(85);
   expect(lesson.review.notes).toContain('2025年7月第2次印刷');
