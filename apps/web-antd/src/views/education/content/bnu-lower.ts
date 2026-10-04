@@ -6,6 +6,7 @@ import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
+import { bnuLowerHideLesson } from './bnu-lower-hide';
 import { bnuLowerPencilsLesson } from './bnu-lower-pencils';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
@@ -364,7 +365,8 @@ function pending(key: string, title: string, page: number): Lesson {
 const authoredLessons: Record<string, Lesson[]> = {
   u3: [
     bnuLowerPencilsLesson,
-    pending('u3', '20以内数与减法（第29页起后续课程）', 29),
+    bnuLowerHideLesson,
+    pending('u3', '20以内数与减法（第31页起后续课程）', 31),
   ],
   classroom: [bnuLowerClassroomLesson],
   u1: [

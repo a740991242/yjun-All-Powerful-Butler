@@ -32,6 +32,7 @@ async function main() {
         bnuLowerTwoAudit,
         bnuClassroomAudit,
         bnuPencilsAudit,
+        bnuHideAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -47,6 +48,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-unit-two-audit.ts'),
         import('/src/views/education/content/bnu-lower-classroom-audit.ts'),
         import('/src/views/education/content/bnu-lower-pencils-audit.ts'),
+        import('/src/views/education/content/bnu-lower-hide-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -177,7 +179,17 @@ async function main() {
                   ? { sourceAudit: bnuAudit.bnuFinalAudit }
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u3'
-                  ? { sourceAudit: bnuPencilsAudit.bnuLowerPencilsAudit }
+                  ? {
+                      sourceAudit: {
+                        ...bnuPencilsAudit.bnuLowerPencilsAudit,
+                        scope:
+                          '印刷27～30页买铅笔与捉迷藏所列活动及明示迁移；31页起仍制作中，不代表整单元完成。',
+                        activities: [
+                          ...bnuPencilsAudit.bnuLowerPencilsAudit.activities,
+                          ...bnuHideAudit.bnuLowerHideAudit.activities,
+                        ],
+                      },
+                    }
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u1'
                   ? { sourceAudit: bnuLowerAudit.bnuLowerUnitOneAudit }

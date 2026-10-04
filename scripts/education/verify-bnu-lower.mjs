@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--hide'))
+    return {
+      index: 14,
+      lessonId: 'bnu-lower-hide-and-seek',
+      zero: null,
+      retry: '-hidden',
+      manual: 10,
+      steps: 9,
+      review: 5,
+      key: 'hide',
+    };
   if (process.argv.includes('--pencils'))
     return {
       index: 13,
@@ -287,7 +298,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 14
+          .count()) !== 15
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -923,6 +934,51 @@ const server = http.createServer(async (req, res) => {
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (q.rule.kind === 'steps') {
+            if (flow.key === 'hide' && q.id.endsWith('-exchange')) {
+              await p.getByRole('spinbutton').first().fill('0');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((s) => s.id === sid).responses[index].draft,
+                  ) === '[0,null,null]',
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const values = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(values) !== '["0","",""]')
+                throw new Error('Exchange zero/empty draft lost');
+              for (let i = 0; i < 3; i++) {
+                const input = p.getByRole('spinbutton').nth(i);
+                await input.evaluate((n) =>
+                  n.scrollIntoView({ block: 'center' }),
+                );
+                const size = await input.evaluate((n) => {
+                  const r = n
+                    .closest('.ant-input-number')
+                    .getBoundingClientRect();
+                  return {
+                    font: Number.parseFloat(getComputedStyle(n).fontSize),
+                    height: r.height,
+                    fits:
+                      r.left >= 0 &&
+                      r.right <= innerWidth &&
+                      r.top >= 0 &&
+                      r.bottom <= innerHeight,
+                  };
+                });
+                if (size.font < 20 || size.height < 44 || !size.fits)
+                  throw new Error('Exchange input size or clipping');
+                await input.fill(String([1, 13, 23][i]));
+              }
+              await p.screenshot({
+                path: `/tmp/butler-bnu-hide-exchange-${width}.png`,
+              });
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
             if (flow.key === 'pencils' && q.id.endsWith('-one-by-one')) {
               await p.getByRole('spinbutton').first().fill('11');
               await wait(

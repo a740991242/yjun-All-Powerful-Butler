@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T18:35:18.481Z",
+  "generatedAt": "2026-10-04T18:49:10.691Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 14,
+        "availablePacks": 15,
         "pendingEntries": 7,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 393,
-          "manual": 126,
-          "reflection": 37
+          "objective": 426,
+          "manual": 136,
+          "reflection": 40
         }
       },
       "units": [
@@ -32607,10 +32607,46 @@
               }
             },
             {
-              "id": "bnu-lower-u3-pending",
-              "title": "20以内数与减法（第29页起后续课程）",
-              "textbookTitle": "20以内数与减法（第29页起后续课程）",
+              "id": "bnu-lower-hide-and-seek",
+              "title": "明确人数范围、计数器退位与想加算减",
+              "textbookTitle": "捉迷藏",
               "page": 29,
+              "version": 1,
+              "status": "available",
+              "goal": "分清14个总人数与13个躲藏者，用退位和先减到10解释13−8，完成原两式、两组数量关系与八张苹果卡。",
+              "prerequisite": "能解释十几减几，理解整体和部分，知道十位1个计数单位表示10。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 33,
+                "manual": 10,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-hide-and-seek"],
+              "questionKinds": [
+                "number",
+                "choice",
+                "steps",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-value"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开扫描29～30页及小鸡局部放大逐项核对",
+                "notes": "29总14、躲藏13、未藏8，两种计数器方法；30的17−9/11−6、17先减7再减2数线、12−6/16−9、瓢虫7/4和小鸡6/7、八卡13−9/17−8/15−9/17−9/15−8/13−8/11−9/11−8逐一对应。本站增加分解与珠数过程明确指定，不把示意代替实物。"
+              }
+            },
+            {
+              "id": "bnu-lower-u3-pending",
+              "title": "20以内数与减法（第31页起后续课程）",
+              "textbookTitle": "20以内数与减法（第31页起后续课程）",
+              "page": 31,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -32644,7 +32680,7 @@
             "unit": "u3",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅印刷27～28页买铅笔与练习的活动及明示附加过程对应；第29页起第三单元后续仍制作中，不证明整单元、全册或全年完成。",
+            "scope": "印刷27～30页买铅笔与捉迷藏所列活动及明示迁移；31页起仍制作中，不代表整单元完成。",
             "activities": [
               {
                 "page": 27,
@@ -32785,6 +32821,133 @@
                 "manual": ["actual-explain"],
                 "records": ["my-method", "plan"],
                 "boundary": "口述实际确认、反思和未来计划独立，correct:null，不自动确认实做。"
+              },
+              {
+                "page": 29,
+                "sourceActivity": "ranges",
+                "scope": "总人数与参与范围",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [1],
+                "objective": [
+                  "total",
+                  "hiders",
+                  "unhidden",
+                  "hidden",
+                  "seeker",
+                  "scope"
+                ],
+                "manual": ["actual-info"],
+                "records": [],
+                "boundary": "总14与躲藏13不同，寻找者不算已藏。"
+              },
+              {
+                "page": 29,
+                "sourceActivity": "exchange",
+                "scope": "计数器表示13并退位",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [2],
+                "objective": ["initial-counter", "exchange"],
+                "manual": ["actual-exchange"],
+                "records": [],
+                "boundary": "表示区颗数4与总值13分清，换十总值不变，未整理13个一不是规范个位数字。"
+              },
+              {
+                "page": 29,
+                "sourceActivity": "break-ten",
+                "scope": "破十减过程",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [3],
+                "objective": ["break-ten", "final-counter"],
+                "manual": ["actual-break"],
+                "records": [],
+                "boundary": "原数13拆10与3，已拨去标记不计剩余。"
+              },
+              {
+                "page": 29,
+                "sourceActivity": "subtract-parts",
+                "scope": "先减到10后继续减",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [4],
+                "objective": ["parts", "ten-marks", "ten-value"],
+                "manual": ["actual-parts"],
+                "records": [],
+                "boundary": "减数8拆3与5，到10只有1个十标记，再换一继续减。"
+              },
+              {
+                "page": 30,
+                "sourceActivity": "methods",
+                "scope": "17减9与11减6多方法和原数线",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [5],
+                "objective": [
+                  "method-17-9",
+                  "method-11-6",
+                  "line-parts",
+                  "think-add"
+                ],
+                "manual": ["actual-methods", "actual-line"],
+                "records": [],
+                "boundary": "先17到10减7再减2，图中左侧减2不是第一步。"
+              },
+              {
+                "page": 30,
+                "sourceActivity": "practice-one",
+                "scope": "原练一计数器两式",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [6],
+                "objective": ["practice-12-6", "practice-16-9"],
+                "manual": ["actual-practice"],
+                "records": [],
+                "boundary": "全部两式真实拨画独立，网页不自动确认。"
+              },
+              {
+                "page": 30,
+                "sourceActivity": "practice-two",
+                "scope": "原两图加减关系",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [7],
+                "objective": [
+                  "bugs-total",
+                  "bugs-remove-left",
+                  "bugs-remove-right",
+                  "chicks-total",
+                  "chicks-remove-left",
+                  "chicks-remove-right"
+                ],
+                "manual": ["actual-pictures"],
+                "records": [],
+                "boundary": "虫7/4鸡6/7逐项核对；本站指定去哪部分，原开放减法允许另一合理式。"
+              },
+              {
+                "page": 30,
+                "sourceActivity": "practice-three",
+                "scope": "八卡摘苹果",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [8],
+                "objective": [
+                  "apple-0",
+                  "apple-1",
+                  "apple-2",
+                  "apple-3",
+                  "apple-4",
+                  "apple-5",
+                  "apple-6",
+                  "apple-7"
+                ],
+                "manual": ["actual-apples"],
+                "records": [],
+                "boundary": "八张全部计算，不遗漏或把卡数当结果。"
+              },
+              {
+                "page": 30,
+                "sourceActivity": "explain",
+                "scope": "说方法与本站反思计划",
+                "lesson": "bnu-lower-hide-and-seek",
+                "steps": [9],
+                "objective": [],
+                "manual": ["actual-explain"],
+                "records": ["discovery", "difficulty", "plan"],
+                "boundary": "实际说明、两份反思与计划独立，correct:null。"
               }
             ]
           }

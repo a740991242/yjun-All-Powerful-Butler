@@ -14,6 +14,7 @@ import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
+import { bnuLowerHideLesson } from './bnu-lower-hide';
 import { bnuLowerPencilsLesson } from './bnu-lower-pencils';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
@@ -65,6 +66,7 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerShadowTheatreLesson,
     bnuLowerClassroomLesson,
     bnuLowerPencilsLesson,
+    bnuLowerHideLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(7);
   expect(
