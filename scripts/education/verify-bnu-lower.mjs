@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--patterns-three'))
+    return {
+      index: 44,
+      lessonId: 'bnu-lower-patterns',
+      zero: '-site-zero',
+      retry: '-source-total',
+      manual: 9,
+      steps: 9,
+      review: 6,
+      key: 'patterns-three',
+    };
   if (process.argv.includes('--tangram-recognize'))
     return {
       index: 41,
@@ -3292,6 +3303,63 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-bnu-recognize-${label}-${width}.png`,
         });
       };
+      const inspectPatternTeaching = async (step) => {
+        if (![1, 2, 3].includes(step)) return;
+        const visual =
+          step === 3
+            ? {
+                kind: 'plane-cards',
+                cards: [{ shape: 'circle', size: 2, turn: 0 }],
+              }
+            : {
+                kind: 'plane-cards',
+                cards: [
+                  ...Array.from({ length: 4 }, (_, i) => ({
+                    shape: 'triangle',
+                    size: 2,
+                    turn: i % 2 === 0 ? 0 : 90,
+                  })),
+                  ...Array.from({ length: 4 }, (_, i) => ({
+                    shape: 'triangle',
+                    size: 1,
+                    turn: i % 2 === 0 ? 45 : 135,
+                  })),
+                ],
+              };
+        await inspectRecognizeCards(visual, `patterns-learn-${step}`);
+        const state = JSON.stringify(await read());
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        await p.waitForTimeout(600);
+        await inspectRecognizeCards(visual, `patterns-learn-${step}-en`);
+        const wasDark = await p.evaluate(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') !== was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await inspectRecognizeCards(visual, `patterns-learn-${step}-en-theme`);
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') === was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await p.waitForTimeout(600);
+        if (JSON.stringify(await read()) !== state)
+          throw new Error('Pattern language/theme changed records');
+      };
       const inspectCalculationReview = async (visual, label) => {
         const root = p.locator('[data-bnu-calculation-review]');
         await root.waitFor();
@@ -3469,7 +3537,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 44
+          .count()) !== 45
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -3884,6 +3952,8 @@ const server = http.createServer(async (req, res) => {
         );
         if (flow.key.startsWith('tangram-'))
           await inspectTangramTeaching(step + 1);
+        if (flow.key === 'patterns-three')
+          await inspectPatternTeaching(step + 1);
         if (flow.key === 'fold-one') await inspectFoldTeaching(step + 1);
         if (flow.key === 'recognize-shapes' && [1, 2, 3, 7, 8].includes(step)) {
           const layouts = {
@@ -4822,7 +4892,10 @@ const server = http.createServer(async (req, res) => {
           await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
-        if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
+        if (
+          ['patterns-three', 'recognize-shapes'].includes(flow.key) &&
+          q.visual?.kind === 'plane-cards'
+        )
           await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')
           await inspectCalculationReview(q.visual, q.id);
@@ -6790,7 +6863,10 @@ const server = http.createServer(async (req, res) => {
           await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
-        if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
+        if (
+          ['patterns-three', 'recognize-shapes'].includes(flow.key) &&
+          q.visual?.kind === 'plane-cards'
+        )
           await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')
           await inspectCalculationReview(q.visual, q.id);

@@ -24,6 +24,7 @@ import { bnuLowerInterestingLesson } from './bnu-lower-interesting';
 import { bnuLowerMeetingLesson } from './bnu-lower-meeting';
 import { bnuLowerNumberPracticeLesson } from './bnu-lower-number-practice';
 import { bnuLowerParachuteLesson } from './bnu-lower-parachute';
+import { bnuLowerPatternsLesson } from './bnu-lower-patterns';
 import { bnuLowerPencilsLesson } from './bnu-lower-pencils';
 import { bnuLowerPineconesLesson } from './bnu-lower-pinecones';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
@@ -401,7 +402,8 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerTangramRecognizeLesson,
     bnuLowerTangramPatternsLesson,
     bnuLowerTangramPracticeLesson,
-    pending('u6', '有趣的平面图形（一）：第83页起继续制作', 83),
+    bnuLowerPatternsLesson,
+    pending('u6', '有趣的平面图形（一）：第84页起继续制作', 84),
   ],
   u4: [
     bnuLowerAroundNumbersLesson,

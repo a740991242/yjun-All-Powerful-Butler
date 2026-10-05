@@ -6,7 +6,7 @@ export const bnuLowerUnitSixAudit = {
   status: 'partial-original-teaching',
   finalTeacherReview: 'not-verified',
   scope:
-    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83～86后续仍制作，保留单元待制作入口。',
+    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；84～86后续仍制作，保留单元待制作入口。',
   activities: [
     {
       page: 76,
@@ -332,6 +332,49 @@ export const bnuLowerUnitSixAudit = {
       manual: ['actual-create', 'actual-show'],
       records: ['creation-record', 'reflection', 'plan'],
     },
+    {
+      page: 83,
+      sourceActivity: 'appreciate-all-four-patterns-and-identify-known-shapes',
+      lesson: 'bnu-lower-patterns',
+      steps: [1, 2, 3, 4, 5, 6],
+      objective: [
+        'source-big',
+        'source-small',
+        'source-total',
+        'site-big',
+        'site-small',
+        'site-total',
+        'site-zero',
+        'size-category',
+        'head-scope',
+        'unknown-total',
+        'card-not-original',
+      ],
+      manual: [
+        'actual-pattern-1',
+        'actual-pattern-2',
+        'actual-pattern-3',
+        'actual-pattern-4',
+      ],
+      records: [],
+    },
+    {
+      page: 83,
+      sourceActivity:
+        'choose-part-trace-and-draw-straight-and-curved-boundaries',
+      lesson: 'bnu-lower-patterns',
+      steps: [7, 8, 9],
+      objective: [
+        'straight-edge',
+        'circle-edge',
+        'part-not-all',
+        'click-not-draw',
+      ],
+      manual: ['actual-select', 'actual-trace', 'actual-draw'],
+      records: ['selection-record', 'drawing-record', 'reflection', 'plan'],
+    },
   ],
-  pendingPrintedPages: [83, 84, 85, 86],
+  patternThreeScope:
+    '83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。84～86仍待制作，不据本课认整单元或全年完成。',
+  pendingPrintedPages: [84, 85, 86],
 } as const;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T17:48:16.344Z",
+  "generatedAt": "2026-10-05T18:17:20.758Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 44,
+        "availablePacks": 45,
         "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1201,
-          "manual": 477,
-          "reflection": 179
+          "objective": 1216,
+          "manual": 486,
+          "reflection": 183
         }
       },
       "units": [
@@ -36464,10 +36464,40 @@
               }
             },
             {
-              "id": "bnu-lower-u6-pending",
-              "title": "有趣的平面图形（一）：第83页起继续制作",
-              "textbookTitle": "有趣的平面图形（一）：第83页起继续制作",
+              "id": "bnu-lower-patterns",
+              "title": "欣赏四图、选部分描与画",
+              "textbookTitle": "动手做（三）",
               "page": 83,
+              "version": 1,
+              "status": "available",
+              "goal": "分别欣赏风车、小兔、鱼和万花筒，指认认识的形状，选择其中一部分真实描画并区分直边和曲线。",
+              "prerequisite": "认识三角形、圆、正方形，知道大小与朝向不直接改变类别；能说明实际做过与尚未做。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 15,
+                "manual": 9,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-patterns"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["plane-cards"],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描83页与来源记录",
+                "notes": "两原活动完整展开，四图分别观察与选部分描画分开；原图观察、本站示意与实际描画分开，不冒整册全年完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-u6-pending",
+              "title": "有趣的平面图形（一）：第84页起继续制作",
+              "textbookTitle": "有趣的平面图形（一）：第84页起继续制作",
+              "page": 84,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -36501,7 +36531,7 @@
             "unit": "u6",
             "status": "partial-original-teaching",
             "finalTeacherReview": "not-verified",
-            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83～86后续仍制作，保留单元待制作入口。",
+            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；84～86后续仍制作，保留单元待制作入口。",
             "activities": [
               {
                 "page": 76,
@@ -36846,9 +36876,55 @@
                 "objective": ["creation-choice", "show-separate"],
                 "manual": ["actual-create", "actual-show"],
                 "records": ["creation-record", "reflection", "plan"]
+              },
+              {
+                "page": 83,
+                "sourceActivity": "appreciate-all-four-patterns-and-identify-known-shapes",
+                "lesson": "bnu-lower-patterns",
+                "steps": [1, 2, 3, 4, 5, 6],
+                "objective": [
+                  "source-big",
+                  "source-small",
+                  "source-total",
+                  "site-big",
+                  "site-small",
+                  "site-total",
+                  "site-zero",
+                  "size-category",
+                  "head-scope",
+                  "unknown-total",
+                  "card-not-original"
+                ],
+                "manual": [
+                  "actual-pattern-1",
+                  "actual-pattern-2",
+                  "actual-pattern-3",
+                  "actual-pattern-4"
+                ],
+                "records": []
+              },
+              {
+                "page": 83,
+                "sourceActivity": "choose-part-trace-and-draw-straight-and-curved-boundaries",
+                "lesson": "bnu-lower-patterns",
+                "steps": [7, 8, 9],
+                "objective": [
+                  "straight-edge",
+                  "circle-edge",
+                  "part-not-all",
+                  "click-not-draw"
+                ],
+                "manual": ["actual-select", "actual-trace", "actual-draw"],
+                "records": [
+                  "selection-record",
+                  "drawing-record",
+                  "reflection",
+                  "plan"
+                ]
               }
             ],
-            "pendingPrintedPages": [83, 84, 85, 86]
+            "patternThreeScope": "83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。84～86仍待制作，不据本课认整单元或全年完成。",
+            "pendingPrintedPages": [84, 85, 86]
           }
         },
         {
