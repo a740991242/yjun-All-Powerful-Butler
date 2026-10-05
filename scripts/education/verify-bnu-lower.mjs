@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--written'))
+    return {
+      index: 35,
+      lessonId: 'bnu-lower-written',
+      zero: '-site-zero',
+      retry: '-add-missing-tens',
+      manual: 12,
+      steps: 10,
+      review: 8,
+      key: 'written',
+    };
+
   if (process.argv.includes('--frogs'))
     return {
       index: 34,
@@ -1775,6 +1787,327 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectWritten = async (visual, label) => {
+        const v = visual.variant;
+        const add =
+          v === 'main'
+            ? [
+                [1, 2],
+                [3, 1],
+                [4, 3],
+              ]
+            : [
+                [2, 1],
+                [1, 3],
+                [3, 4],
+              ];
+        const sub =
+          v === 'main'
+            ? [
+                [3, 4],
+                [2, 2],
+                [1, 2],
+              ]
+            : [
+                [3, 4],
+                [1, 3],
+                [2, 1],
+              ];
+        const one = (kind, rows, operator = '') => ({
+          id: '1',
+          kind,
+          rows,
+          operator,
+        });
+        let expected;
+        switch (visual.scene) {
+          case 'rods-add': {
+            expected = [one('rods', add)];
+            break;
+          }
+          case 'add-stage': {
+            expected = [
+              one(
+                'written',
+                [add[0], add[1], [null, v === 'main' ? 3 : 4]],
+                '+',
+              ),
+            ];
+            break;
+          }
+          case 'add-final': {
+            expected = [one('written', add, '+')];
+            break;
+          }
+          case 'rods-sub': {
+            expected = [one('rods', sub)];
+            break;
+          }
+          case 'sub-blank': {
+            expected = [one('written', [sub[0], sub[1], [null, null]], '−')];
+            break;
+          }
+          case 'sub-final': {
+            expected = [one('written', sub, '−')];
+            break;
+          }
+          case 'matching': {
+            expected =
+              v === 'main'
+                ? [
+                    {
+                      id: 'A',
+                      kind: 'rods',
+                      rows: [
+                        [2, 3],
+                        [2, 1],
+                        [4, 4],
+                      ],
+                      operator: '',
+                    },
+                    {
+                      id: 'C',
+                      kind: 'written',
+                      rows: [
+                        [3, 3],
+                        [2, 1],
+                        [1, 2],
+                      ],
+                      operator: '−',
+                    },
+                    {
+                      id: 'B',
+                      kind: 'rods',
+                      rows: [
+                        [3, 3],
+                        [2, 1],
+                        [1, 2],
+                      ],
+                      operator: '',
+                    },
+                    {
+                      id: 'D',
+                      kind: 'written',
+                      rows: [
+                        [2, 3],
+                        [2, 1],
+                        [4, 4],
+                      ],
+                      operator: '+',
+                    },
+                  ]
+                : [
+                    {
+                      id: 'A',
+                      kind: 'rods',
+                      rows: [
+                        [1, 2],
+                        [2, 1],
+                        [3, 3],
+                      ],
+                      operator: '',
+                    },
+                    {
+                      id: 'C',
+                      kind: 'written',
+                      rows: [
+                        [1, 2],
+                        [2, 1],
+                        [3, 3],
+                      ],
+                      operator: '+',
+                    },
+                    {
+                      id: 'B',
+                      kind: 'rods',
+                      rows: [
+                        [3, 4],
+                        [1, 3],
+                        [2, 1],
+                      ],
+                      operator: '',
+                    },
+                    {
+                      id: 'D',
+                      kind: 'written',
+                      rows: [
+                        [3, 4],
+                        [1, 3],
+                        [2, 1],
+                      ],
+                      operator: '−',
+                    },
+                  ];
+            break;
+          }
+          case 'practice': {
+            const operands =
+              v === 'main'
+                ? [
+                    [
+                      [4, 4],
+                      [3, 2],
+                    ],
+                    [
+                      [5, 4],
+                      [2, 3],
+                    ],
+                    [
+                      [7, 6],
+                      [2, 3],
+                    ],
+                    [
+                      [6, 8],
+                      [1, 1],
+                    ],
+                  ]
+                : [
+                    [
+                      [2, 3],
+                      [4, 2],
+                    ],
+                    [
+                      [6, 7],
+                      [2, 4],
+                    ],
+                    [
+                      [5, 2],
+                      [3, 6],
+                    ],
+                    [
+                      [8, 9],
+                      [3, 5],
+                    ],
+                  ];
+            expected = operands.map((r, i) => ({
+              id: String(i + 1),
+              kind: 'written',
+              operator: i % 2 === 0 ? '+' : '−',
+              rows: [...r, [null, null]],
+            }));
+            break;
+          }
+          default: {
+            throw new Error('Unknown written scene');
+          }
+        }
+        await p.locator('[data-bnu-written]').waitFor();
+        await p.waitForTimeout(120);
+        let blank = 0;
+        const actual = await p
+          .locator('[data-bnu-written-panel]')
+          .evaluateAll((nodes) =>
+            nodes.map((n) => ({
+              id: n.dataset.panel,
+              kind: n.dataset.kind,
+              rows: [...n.querySelectorAll('tbody tr')].map((row) => {
+                const cells = [...row.querySelectorAll('td')];
+                return cells.slice(1).map((cell) => {
+                  const rod = cell.querySelector('[data-bnu-written-rods]');
+                  if (rod) {
+                    const lines = [
+                      ...rod.querySelectorAll('[data-bnu-written-rod]'),
+                    ];
+                    if (lines.length !== Number(rod.dataset.count))
+                      throw new Error('Rod count mismatch');
+                    for (const line of lines) {
+                      const horizontal = rod.dataset.place === 'tens';
+                      if (
+                        horizontal
+                          ? line.getAttribute('y1') !== line.getAttribute('y2')
+                          : line.getAttribute('x1') !== line.getAttribute('x2')
+                      )
+                        throw new Error('Rod orientation mismatch');
+                    }
+                    if (!rod.getAttribute('aria-label'))
+                      throw new Error('Missing rod equivalent');
+                    return Number(rod.dataset.count);
+                  }
+                  const digit = cell.querySelector('[data-bnu-written-digit]');
+                  return digit.dataset.blank === 'true'
+                    ? digit.textContent.trim()
+                    : Number(digit.textContent.trim());
+                });
+              }),
+              signs: [...n.querySelectorAll('tbody tr')].map(
+                (r) =>
+                  r
+                    .querySelector('td')
+                    .textContent.trim()
+                    .match(/^[+−]/)?.[0] || '',
+              ),
+            })),
+          );
+        const fixture = expected.map((x) => ({
+          id: x.id,
+          kind: x.kind,
+          rows: x.rows.map((r) =>
+            r.map((n) => (n === null ? String.fromCodePoint(65 + blank++) : n)),
+          ),
+          signs: ['', x.operator, ''],
+        }));
+        if (JSON.stringify(actual) !== JSON.stringify(fixture))
+          throw new Error(
+            `Written fixture ${label}: ${JSON.stringify(actual)}`,
+          );
+        const region = p.locator('[data-bnu-written-scroll]');
+        const before = await region.evaluate((n) => ({
+          client: n.clientWidth,
+          scroll: n.scrollWidth,
+        }));
+        for (const edge of ['left', 'right']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = e === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          await region.scrollIntoViewIfNeeded();
+          await p.screenshot({
+            path: `/tmp/butler-bnu-written-${label}-${width}-${edge}.png`,
+          });
+        }
+        if (before.scroll > before.client) {
+          await region.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          await region.focus();
+          await p.keyboard.press('ArrowRight');
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Written keyboard scrolling failed');
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        const geometry = await p
+          .locator('[data-bnu-written]')
+          .evaluate((root) => {
+            const small = [
+              ...root.querySelectorAll(
+                '[data-bnu-written-digit],thead span,tbody td:first-child span',
+              ),
+            ].filter(
+              (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+            );
+            const panels = [
+              ...root.querySelectorAll('[data-bnu-written-panel]'),
+            ].map((n) => n.getBoundingClientRect());
+            const overlap = panels.some((a, i) =>
+              panels.some(
+                (b, j) =>
+                  i !== j &&
+                  Math.min(a.right, b.right) > Math.max(a.left, b.left) + 1 &&
+                  Math.min(a.bottom, b.bottom) > Math.max(a.top, b.top) + 1,
+              ),
+            );
+            return {
+              small: small.length,
+              overlap,
+              page: document.documentElement.scrollWidth > innerWidth + 1,
+            };
+          });
+        if (geometry.small || geometry.overlap || geometry.page)
+          throw new Error(
+            `Written geometry ${label}: ${JSON.stringify(geometry)}`,
+          );
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -1813,7 +2146,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 35
+          .count()) !== 36
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -2189,6 +2522,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'written')
+        await inspectWritten(
+          { scene: 'rods-add', variant: 'main' },
+          'learn-initial',
+        );
       if (flow.key === 'frogs')
         await inspectPlaceCounters([65, 32], 'frogs-learn-initial');
       if (flow.key === 'pinecones')
@@ -2219,6 +2557,57 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'written' && step < 7) {
+          const scene = [
+            'add-stage',
+            'add-final',
+            'rods-sub',
+            'sub-blank',
+            'sub-final',
+            'matching',
+            'practice',
+          ][step];
+          await inspectWritten({ scene, variant: 'main' }, `learn-${step + 1}`);
+          if (['add-stage', 'matching', 'practice'].includes(scene)) {
+            const state = JSON.stringify(await read());
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('English', { exact: true }).click();
+            await p
+              .locator('[data-bnu-written] figcaption')
+              .filter({ hasText: /[A-Za-z]/ })
+              .waitFor();
+            await inspectWritten(
+              { scene, variant: 'main' },
+              `learn-${step + 1}-en`,
+            );
+            await p.evaluate(() =>
+              document.documentElement.classList.add('dark'),
+            );
+            await p.waitForTimeout(600);
+            await inspectWritten(
+              { scene, variant: 'main' },
+              `learn-${step + 1}-en-dark`,
+            );
+            await p.evaluate(() =>
+              document.documentElement.classList.remove('dark'),
+            );
+            await p.waitForTimeout(600);
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('简体中文', { exact: true }).click();
+            await p
+              .locator('[data-bnu-written] figcaption')
+              .filter({ hasText: /[\u4E00-\u9FFF]/ })
+              .waitFor();
+            if (JSON.stringify(await read()) !== state)
+              throw new Error('Written language/theme changed records');
+          }
+        }
         if (
           (flow.key === 'rabbit-guests' && [5, 6].includes(step)) ||
           (flow.key === 'frogs' && [5, 6].includes(step)) ||
@@ -2807,6 +3196,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-written')
+          await inspectWritten(q.visual, q.id);
         if (q.visual?.kind === 'bnu-two-jump-line')
           await inspectTwoLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
@@ -3247,6 +3638,7 @@ const server = http.createServer(async (req, res) => {
             ((flow.key === 'rabbit-guests' && q.id.endsWith('-sub-backward')) ||
               (flow.key === 'pinecones' && q.id.endsWith('-eight-bottom')) ||
               (flow.key === 'frogs' && q.id.endsWith('-add-counter-digits')) ||
+              (flow.key === 'written' && q.id.endsWith('-practice-digits')) ||
               (flow.key === 'fill-game' &&
                 (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
               (flow.key === 'number-practice' &&
@@ -3260,6 +3652,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              written: [7, null, null, null, null, null, null, null],
               frogs: [6, null, null, null, null, null],
               pinecones: [65, null, null, null],
               'rabbit-guests': [40, null, null, null],
@@ -3275,6 +3668,7 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              written: [7, 6, 3, 1, 9, 9, 5, 0],
               frogs: [6, 5, 3, 2, 9, 0],
               pinecones: [65, 86, 40, 72],
               'rabbit-guests': [40, 30, 20, 0],
@@ -4622,6 +5016,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-written')
+          await inspectWritten(q.visual, q.id);
         if (q.visual?.kind === 'bnu-two-jump-line')
           await inspectTwoLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')

@@ -45,6 +45,7 @@ import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-pract
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
+import { bnuLowerWrittenLesson } from './bnu-lower-written';
 import { editionTarget } from './edition-targets';
 import { findTextbook } from './textbooks';
 
@@ -107,6 +108,7 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerRabbitGuestsLesson,
     bnuLowerPineconesLesson,
     bnuLowerFrogsLesson,
+    bnuLowerWrittenLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(4);
   expect(

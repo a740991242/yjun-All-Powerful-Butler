@@ -27,6 +27,7 @@ import BnuNumberReview from './BnuNumberReview.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BnuTwoJumpLine from './BnuTwoJumpLine.vue';
 import BnuWholeTenLine from './BnuWholeTenLine.vue';
+import BnuWritten from './BnuWritten.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
 import CardEquation from './CardEquation.vue';
@@ -846,6 +847,7 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'bnu-two-jump-line'"
       :visual="visual"
     />
+    <BnuWritten v-else-if="visual.kind === 'bnu-written'" :visual="visual" />
     <BnuWholeTenLine
       v-else-if="
         visual.kind === 'bnu-whole-ten-line' ||

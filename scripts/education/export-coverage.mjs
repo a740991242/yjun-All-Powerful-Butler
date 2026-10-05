@@ -53,6 +53,7 @@ async function main() {
         bnuRabbitGuestsAudit,
         bnuPineconesAudit,
         bnuFrogsAudit,
+        bnuWrittenAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -89,6 +90,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-rabbit-guests-audit.ts'),
         import('/src/views/education/content/bnu-lower-pinecones-audit.ts'),
         import('/src/views/education/content/bnu-lower-frogs-audit.ts'),
+        import('/src/views/education/content/bnu-lower-written-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -275,13 +277,14 @@ async function main() {
                       sourceAudit: {
                         ...bnuRabbitGuestsAudit.bnuLowerRabbitGuestsAudit,
                         scope:
-                          '印刷62～67全部原活动对应；68页起后续、整册与全年仍未完成。',
+                          '印刷62～69全部原活动对应；70页起后续、整册与全年仍未完成。',
                         activities: [
                           ...bnuRabbitGuestsAudit.bnuLowerRabbitGuestsAudit
                             .activities,
                           ...bnuPineconesAudit.bnuLowerPineconesAudit
                             .activities,
                           ...bnuFrogsAudit.bnuLowerFrogsAudit.activities,
+                          ...bnuWrittenAudit.bnuLowerWrittenAudit.activities,
                         ],
                       },
                     }

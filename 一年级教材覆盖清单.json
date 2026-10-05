@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T04:21:21.325Z",
+  "generatedAt": "2026-10-05T04:53:11.193Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 35,
+        "availablePacks": 36,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1026,
-          "manual": 375,
-          "reflection": 134
+          "objective": 1050,
+          "manual": 387,
+          "reflection": 137
         }
       },
       "units": [
@@ -35507,10 +35507,46 @@
               }
             },
             {
+              "id": "bnu-lower-written",
+              "title": "算筹、同数位竖式与完整练习",
+              "textbookTitle": "算一算",
+              "page": 68,
+              "version": 1,
+              "status": "available",
+              "goal": "完整对应68～69算筹、两阶段加法、减法计数器与竖式、两组连线、四道计算和每人一瓶水应用。",
+              "prerequisite": "认识百以内十与个位，会同数位不进位加法和不退位减法。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 24,
+                "manual": 12,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-written"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-written"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "两整页及连线/计数器放大核对",
+                "notes": "全部六原活动对应，最终教师试用未核验。"
+              }
+            },
+            {
               "id": "bnu-lower-u5-pending",
               "title": "100以内数加与减（一）后续内容",
               "textbookTitle": "100以内数加与减（一）后续内容",
-              "page": 68,
+              "page": 70,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35544,7 +35580,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～67全部原活动对应；68页起后续、整册与全年仍未完成。",
+            "scope": "印刷62～69全部原活动对应；70页起后续、整册与全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -35851,6 +35887,91 @@
                 "steps": [9],
                 "objective": ["bus-values", "bus-meaning"],
                 "manual": ["actual-bus"],
+                "records": []
+              },
+              {
+                "page": 68,
+                "sourceActivity": "rods-read-addition-and-places",
+                "lesson": "bnu-lower-written",
+                "steps": [1],
+                "objective": [
+                  "rod-add-values",
+                  "rod-add-digits",
+                  "rod-orientation"
+                ],
+                "manual": ["actual-rods-add"],
+                "records": []
+              },
+              {
+                "page": 68,
+                "sourceActivity": "written-addition-stages-and-alignment",
+                "lesson": "bnu-lower-written",
+                "steps": [2, 3],
+                "objective": [
+                  "add-ones",
+                  "add-missing-tens",
+                  "add-stage-meaning",
+                  "add-tens",
+                  "add-complete",
+                  "alignment"
+                ],
+                "manual": ["actual-add-stage", "actual-add-final"],
+                "records": ["method-record"]
+              },
+              {
+                "page": 69,
+                "sourceActivity": "subtraction-rods-counter-written",
+                "lesson": "bnu-lower-written",
+                "steps": [4, 5, 6],
+                "objective": [
+                  "rod-sub-values",
+                  "sub-counter-digits",
+                  "sub-beads",
+                  "sub-ones",
+                  "sub-tens",
+                  "sub-blanks"
+                ],
+                "manual": [
+                  "actual-rods-sub",
+                  "actual-counter-sub",
+                  "actual-sub-written"
+                ],
+                "records": []
+              },
+              {
+                "page": 69,
+                "sourceActivity": "both-cross-matches",
+                "lesson": "bnu-lower-written",
+                "steps": [7],
+                "objective": ["matching-a", "matching-b", "matching-values"],
+                "manual": ["actual-matches"],
+                "records": []
+              },
+              {
+                "page": 69,
+                "sourceActivity": "all-four-written-calculations",
+                "lesson": "bnu-lower-written",
+                "steps": [8, 10],
+                "objective": [
+                  "practice-digits",
+                  "practice-results",
+                  "site-zero"
+                ],
+                "manual": [
+                  "actual-practice-1",
+                  "actual-practice-2",
+                  "actual-practice-3",
+                  "actual-practice-4"
+                ],
+                "records": ["own-record", "plan"]
+              },
+              {
+                "page": 69,
+                "sourceActivity": "one-bottle-per-person-remaining",
+                "lesson": "bnu-lower-written",
+                "steps": [9],
+                "objective": ["water-conditions", "water-result", "water-unit"],
+                "manual": ["actual-water"],
                 "records": []
               }
             ]

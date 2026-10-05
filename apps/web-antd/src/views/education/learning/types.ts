@@ -14,6 +14,7 @@ import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { BnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
+import type { BnuWrittenVisual } from './bnu-written';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
 import type { ClassCapacityVisual } from './class-capacity';
@@ -469,6 +470,7 @@ export type Visual =
   | BnuSixCardGameVisual
   | BnuTwoJumpLineVisual
   | BnuWholeTenLineVisual
+  | BnuWrittenVisual
   | BookGroupsVisual
   | CardEquationRule
   | CardGameVisual
