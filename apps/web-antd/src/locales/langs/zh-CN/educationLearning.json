@@ -1317,5 +1317,17 @@
   "bnuInterestingSecond": "第二数",
   "bnuInterestingResult": "结果",
   "bnuInterestingScroll": "窄屏可横向滚动；聚焦表格区域后用左右箭头查看全部列。",
-  "bnuInterestingNotice": "字母只表示待填位置，不是0。真实纸笔填写、讨论与发现另记录，不由屏幕答案自动确认。"
+  "bnuInterestingNotice": "字母只表示待填位置，不是0。真实纸笔填写、讨论与发现另记录，不由屏幕答案自动确认。",
+  "bnuRecycling_circles": "两行一一对应的圆图",
+  "bnuRecycling_rods": "一根小棒对应一个塑料瓶",
+  "bnuRecycling_main": "原条件：小林13个，小佳比小林多3个。本站原创示意，不是教材插图。",
+  "bnuRecycling_review": "本站新条件：小林17个，小佳比小林多2个。重新观察，不沿用原答案。",
+  "bnuRecyclingLin": "小林",
+  "bnuRecyclingJia": "小佳",
+  "bnuRecyclingBundle": "一捆约定为10根",
+  "bnuRecyclingRodKey": "虚线框内是另外多出的单根小棒。",
+  "bnuRecyclingScroll": "左右滑动或聚焦后按方向键，查看整张图。",
+  "bnuRecyclingNotice": "图示不自动确认真实摆棒、画图或回收活动；可用干净纸片，不必接触废品。",
+  "bnuRecyclingCircleDescription": "上行小林有{matched}个圆，下行小佳有逐一对齐的同样数量，右边另有{extra}个圆。每个圆对应一个塑料瓶。",
+  "bnuRecyclingRodDescription": "左边一捆按10根表示，旁边{loose}根单棒；右侧虚线框另有{extra}根单棒，一根对应一个塑料瓶。"
 }

@@ -12,6 +12,7 @@ import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
 import type { BnuInterestingVisual } from './bnu-interesting';
 import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
+import type { BnuRecyclingVisual } from './bnu-recycling';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { BnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
@@ -471,6 +472,7 @@ export type Visual =
   | BnuInterestingVisual
   | BnuNumberReviewVisual
   | BnuPineconeLineVisual
+  | BnuRecyclingVisual
   | BnuSixCardGameVisual
   | BnuTwoJumpLineVisual
   | BnuWholeTenLineVisual

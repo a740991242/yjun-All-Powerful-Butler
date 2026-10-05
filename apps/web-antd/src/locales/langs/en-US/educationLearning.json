@@ -1317,5 +1317,17 @@
   "bnuInterestingSecond": "Second number",
   "bnuInterestingResult": "Result",
   "bnuInterestingScroll": "Scroll horizontally on a narrow screen. Focus this region and use the left and right arrow keys to view every column.",
-  "bnuInterestingNotice": "Letters mark missing values, not zero. Record real writing and discussion separately; screen answers cannot confirm them."
+  "bnuInterestingNotice": "Letters mark missing values, not zero. Record real writing and discussion separately; screen answers cannot confirm them.",
+  "bnuRecycling_circles": "Circles matched one to one",
+  "bnuRecycling_rods": "One stick represents one plastic bottle",
+  "bnuRecycling_main": "Source conditions: Lin has 13; Jia has 3 more than Lin. This original diagram is not a textbook illustration.",
+  "bnuRecycling_review": "New site conditions: Lin has 17; Jia has 2 more than Lin. Observe again instead of copying the original answer.",
+  "bnuRecyclingLin": "Lin",
+  "bnuRecyclingJia": "Jia",
+  "bnuRecyclingBundle": "One bundle represents 10 sticks",
+  "bnuRecyclingRodKey": "The dashed box contains the extra individual sticks.",
+  "bnuRecyclingScroll": "Scroll sideways, or focus here and use the arrow keys, to see the whole diagram.",
+  "bnuRecyclingNotice": "A diagram does not confirm real stick placement, drawing or recycling. Clean paper pieces are sufficient; handling waste is unnecessary.",
+  "bnuRecyclingCircleDescription": "Lin’s upper row has {matched} circles. Jia’s lower row has the same number aligned one to one, plus {extra} circles to the right. Each circle represents one plastic bottle.",
+  "bnuRecyclingRodDescription": "The bundle on the left represents 10 sticks, followed by {loose} individual sticks. The dashed box on the right has {extra} extra sticks. Each stick represents one plastic bottle."
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T05:32:57.216Z",
+  "generatedAt": "2026-10-05T14:09:43.110Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 37,
+        "availablePacks": 38,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1068,
-          "manual": 397,
-          "reflection": 142
+          "objective": 1086,
+          "manual": 405,
+          "reflection": 146
         }
       },
       "units": [
@@ -35580,10 +35580,46 @@
               }
             },
             {
+              "id": "bnu-lower-recycling",
+              "title": "按问题找信息、摆棒画图与检查",
+              "textbookTitle": "回收废品",
+              "page": 72,
+              "version": 1,
+              "status": "available",
+              "goal": "完整对应72～73七原活动，筛选小佳所需条件，用全部配对圆和小棒表示13多3，列式检查并实际交流自己的方法。",
+              "prerequisite": "认识百以内数，能做不进位加法和不退位减法，知道一捆小棒表示10根。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 18,
+                "manual": 8,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-recycling"],
+              "questionKinds": [
+                "choice",
+                "steps",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-recycling"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "72～73完整条件与棒图圆图核对",
+                "notes": "原七活动对应；页面三宽已验，最终教师试用未核验。"
+              }
+            },
+            {
               "id": "bnu-lower-u5-pending",
               "title": "100以内数加与减（一）后续内容",
               "textbookTitle": "100以内数加与减（一）后续内容",
-              "page": 72,
+              "page": 74,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35617,7 +35653,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～71全部原活动对应；72页起后续、整册与全年仍未完成。",
+            "scope": "印刷62～73全部原活动对应；74页起后续、整册与全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -36081,6 +36117,69 @@
                 "objective": ["eleven-all", "eleven-places"],
                 "manual": ["actual-eleven", "actual-eleven-discussion"],
                 "records": ["eleven-discovery"]
+              },
+              {
+                "page": 72,
+                "sourceActivity": "read-all-conditions-and-asked-person",
+                "lesson": "bnu-lower-recycling",
+                "steps": [1],
+                "objective": ["asked", "conditions"],
+                "manual": ["actual-read"],
+                "records": []
+              },
+              {
+                "page": 72,
+                "sourceActivity": "choose-relevant-information-for-jia",
+                "lesson": "bnu-lower-recycling",
+                "steps": [2, 7],
+                "objective": ["relevant", "unused", "direction", "changed-ask"],
+                "manual": ["actual-info"],
+                "records": ["information-record"]
+              },
+              {
+                "page": 73,
+                "sourceActivity": "sticks-one-to-one-thirteen-plus-three",
+                "lesson": "bnu-lower-recycling",
+                "steps": [3],
+                "objective": ["baseline", "one-to-one", "rod-groups"],
+                "manual": ["actual-rods"],
+                "records": []
+              },
+              {
+                "page": 73,
+                "sourceActivity": "all-thirteen-matched-and-three-extra-circles",
+                "lesson": "bnu-lower-recycling",
+                "steps": [4],
+                "objective": ["circle-groups", "matched", "extra", "total"],
+                "manual": ["actual-circles"],
+                "records": []
+              },
+              {
+                "page": 73,
+                "sourceActivity": "equation-and-complete-answer",
+                "lesson": "bnu-lower-recycling",
+                "steps": [5],
+                "objective": ["equation", "unit"],
+                "manual": ["actual-equation"],
+                "records": []
+              },
+              {
+                "page": 73,
+                "sourceActivity": "check-jia-lin-difference",
+                "lesson": "bnu-lower-recycling",
+                "steps": [6],
+                "objective": ["check", "check-method"],
+                "manual": ["actual-check"],
+                "records": []
+              },
+              {
+                "page": 73,
+                "sourceActivity": "methods-and-information-reflection",
+                "lesson": "bnu-lower-recycling",
+                "steps": [8, 9, 10],
+                "objective": ["site-zero"],
+                "manual": ["actual-discuss", "actual-own"],
+                "records": ["method-record", "difficulty-record", "plan"]
               }
             ]
           }

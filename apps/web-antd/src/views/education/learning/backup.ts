@@ -18,6 +18,7 @@ import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
 import { isBnuInterestingVisual } from './bnu-interesting';
 import { isBnuNumberReviewVisual } from './bnu-number-review';
 import { isBnuPineconeLineVisual } from './bnu-pinecone-line';
+import { isBnuRecyclingVisual } from './bnu-recycling';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isBnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import { isBnuWholeTenLineVisual } from './bnu-whole-ten-line';
@@ -578,6 +579,9 @@ function visual(value: unknown) {
     }
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
+    }
+    case 'bnu-recycling': {
+      return isBnuRecyclingVisual(value);
     }
     case 'bnu-interesting': {
       return isBnuInterestingVisual(value);

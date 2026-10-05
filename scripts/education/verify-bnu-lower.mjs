@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--recycling'))
+    return {
+      index: 37,
+      lessonId: 'bnu-lower-recycling',
+      zero: '-site-zero',
+      retry: '-total',
+      manual: 8,
+      steps: 10,
+      review: 8,
+      key: 'recycling',
+    };
+
   if (process.argv.includes('--interesting'))
     return {
       index: 36,
@@ -2304,6 +2316,113 @@ const server = http.createServer(async (req, res) => {
             `Interesting geometry ${label}: ${JSON.stringify(geometry)}`,
           );
       };
+      const inspectRecycling = async (visual, label) => {
+        const matched = visual.variant === 'main' ? 13 : 17;
+        const extra = visual.variant === 'main' ? 3 : 2;
+        const root = p.locator('[data-bnu-recycling]');
+        await root.waitFor();
+        if (visual.scene === 'circles') {
+          for (const [key, count] of [
+            ['lin', matched],
+            ['matched', matched],
+            ['extra', extra],
+          ]) {
+            if (
+              (await root
+                .locator(`[data-recycling-circle="${key}"]`)
+                .count()) !== count
+            )
+              throw new Error(`Recycling circle count ${key}`);
+          }
+          const pairs = await root
+            .locator('[data-recycling-circle="lin"]')
+            .evaluateAll((nodes) => nodes.map((n) => n.getAttribute('cx')));
+          const aligned = await root
+            .locator('[data-recycling-circle="matched"]')
+            .evaluateAll((nodes) => nodes.map((n) => n.getAttribute('cx')));
+          if (JSON.stringify(pairs) !== JSON.stringify(aligned))
+            throw new Error('Recycling one-to-one alignment');
+          const last = Number(pairs.at(-1));
+          const firstExtra = Number(
+            await root
+              .locator('[data-recycling-circle="extra"]')
+              .first()
+              .getAttribute('cx'),
+          );
+          if (firstExtra - last < 40)
+            throw new Error('Recycling extra circles not separated');
+        } else {
+          if (
+            (await root.locator('[data-recycling-bundle] rect').count()) !==
+              10 ||
+            (await root.locator('[data-recycling-rod="before"]').count()) !==
+              (visual.variant === 'main' ? 3 : 7) ||
+            (await root.locator('[data-recycling-rod="extra"]').count()) !==
+              extra
+          )
+            throw new Error('Recycling stick diagram counts');
+        }
+        const geometry = await root.locator('svg').evaluate((svg) => ({
+          clipped: [...svg.querySelectorAll('circle,rect,text')].some((n) => {
+            const b = n.getBBox();
+            return (
+              b.x < 0 ||
+              b.y < 0 ||
+              b.x + b.width > 720 ||
+              b.y + b.height > svg.viewBox.baseVal.height
+            );
+          }),
+          small: [...svg.querySelectorAll('text')].some(
+            (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+          ),
+          page: document.documentElement.scrollWidth > innerWidth + 1,
+        }));
+        if (geometry.clipped || geometry.small || geometry.page)
+          throw new Error(
+            `Recycling geometry ${label}: ${JSON.stringify(geometry)}`,
+          );
+        const contrast = await root.evaluate((node) => {
+          const luminance = (color) =>
+            color
+              .match(/[\d.]+/g)
+              .slice(0, 3)
+              .map(Number)
+              .map((v) => v / 255)
+              .map((v) =>
+                v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4,
+              )
+              .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+          const bg = luminance(getComputedStyle(node).backgroundColor);
+          const fg = luminance(
+            getComputedStyle(node.querySelector('svg')).color,
+          );
+          return (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05);
+        });
+        if (contrast < 4.5)
+          throw new Error(`Recycling figure contrast ${label}: ${contrast}`);
+        const region = root.locator('[data-bnu-recycling-scroll]');
+        for (const edge of ['left', 'right']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = e === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          await region.scrollIntoViewIfNeeded();
+          await p.screenshot({
+            path: `/tmp/butler-bnu-recycling-${label}-${width}-${edge}.png`,
+          });
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        if (await region.evaluate((n) => n.scrollWidth > n.clientWidth)) {
+          await region.focus();
+          await p.keyboard.press('ArrowRight');
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Recycling keyboard scroll');
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -2342,7 +2461,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 37
+          .count()) !== 38
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -2753,6 +2872,59 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'recycling' && [1, 2].includes(step)) {
+          const scene = { 1: 'rods', 2: 'circles' }[step];
+          await inspectRecycling(
+            { scene, variant: 'main' },
+            `learn-${step + 1}`,
+          );
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-bnu-recycling] figcaption')
+            .filter({ hasText: /[A-Za-z]/ })
+            .waitFor();
+          await inspectRecycling(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en`,
+          );
+          const wasDark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await inspectRecycling(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en-theme`,
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('[data-bnu-recycling] figcaption')
+            .filter({ hasText: /[\u4E00-\u9FFF]/ })
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Recycling language/theme changed records');
+        }
         if (flow.key === 'interesting' && [2, 4, 6].includes(step)) {
           const scene = { 2: 'addition', 4: 'subtraction', 6: 'eleven' }[step];
           await inspectInteresting(
@@ -3454,6 +3626,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-recycling')
+          await inspectRecycling(q.visual, q.id);
         if (q.visual?.kind === 'bnu-interesting')
           await inspectInteresting(q.visual, q.id);
         if (q.visual?.kind === 'bnu-written')
@@ -3922,7 +4096,9 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'rabbit-guests' && q.id.endsWith('-sub-backward')) ||
+            ((flow.key === 'recycling' && q.id.endsWith('-circle-groups')) ||
+              (flow.key === 'rabbit-guests' &&
+                q.id.endsWith('-sub-backward')) ||
               (flow.key === 'pinecones' && q.id.endsWith('-eight-bottom')) ||
               (flow.key === 'frogs' && q.id.endsWith('-add-counter-digits')) ||
               (flow.key === 'written' && q.id.endsWith('-practice-digits')) ||
@@ -3940,6 +4116,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              recycling: [13, null, null],
               interesting: [22, ...Array.from({ length: 16 }, () => null)],
               written: [7, null, null, null, null, null, null, null],
               frogs: [6, null, null, null, null, null],
@@ -3957,6 +4134,7 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              recycling: [13, 13, 0],
               interesting: [
                 22, 33, 44, 41, 55, 15, 51, 66, 16, 61, 77, 17, 71, 88, 18, 81,
                 0,
@@ -5309,6 +5487,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-recycling')
+          await inspectRecycling(q.visual, q.id);
         if (q.visual?.kind === 'bnu-interesting')
           await inspectInteresting(q.visual, q.id);
         if (q.visual?.kind === 'bnu-written')
