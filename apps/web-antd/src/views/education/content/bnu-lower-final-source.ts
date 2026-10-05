@@ -1,5 +1,5 @@
 /** Actual view of six complete printed pages, the following blank, and appendix97.
- * The first three pages are mapped to two courses; later pages and full-book approval remain pending.
+ * All six pages are mapped to teaching; full-book approval remains pending.
  */
 export const bnuLowerFinalSource = {
   resourceId: 'bnu-lower-public-scan-2024',
@@ -96,6 +96,18 @@ export const bnuLowerFinalSource = {
     sourcePatterns: ['溜冰', '踢球', '跳舞'],
     collageTargets: ['机器人', '火车'],
     collageCounts: null,
+    trainConfirmedCounts: {
+      rectangle: 5,
+      square: 1,
+      triangle: 1,
+      circle: 4,
+    },
+    trainParts: {
+      rectangle: ['后车身', '车窗', '前车身', '前蓝块', '烟囱'],
+      square: ['驾驶室'],
+      triangle: ['前导向'],
+      circle: ['后轮左', '后轮右', '前轮左', '前轮右'],
+    },
     planeShapes: ['rectangle', 'circle', 'square', 'triangle'],
     solidSources: ['cube', 'triangular-prism', 'cuboid', 'cylinder'],
     folding: ['两个三角形', '两个长方形', '一个正方形和一个长方形'],
@@ -103,7 +115,7 @@ export const bnuLowerFinalSource = {
     drawingOnDots: ['长方形', '正方形', '三角形'],
     dotGrid: { rows: 6, columns: 11, printedPhysicalSpacing: null },
     drawingParts:
-      '图中几何材料与整体外轮廓分清，不自动把所有组合轮廓当材料片；机器人/火车原图唯一总数未定，不凭颜色、缩略图或假定边界补答案。',
+      '图中几何材料与整体外轮廓分清，不自动把所有组合轮廓当材料片；原93页火车放大逐部件核对为5/1/1/4，轮廓边框不另增材料；机器人细小天线分界仍未定，不凭颜色、缩略图或假定边界补答案。',
     boundary:
       '回忆/描述/画学过的图形，三个人物拼图材料与原创设计、两幅找图形、四形从四体取面连线、附页3三种折分、点子图三形与仿图创作全部保留。长方体可能有正方形面，但不能一概而论；三角形来自三棱柱端面，圆是圆柱平面端面，不拿曲面或投影混代。附页实物尺寸未标，本站模型尺寸须另注明，不冒原厘米数。',
   },
@@ -151,5 +163,5 @@ export const bnuLowerFinalSource = {
     { page: 95, key: 'actual-cooperative-math-story-and-comic' },
   ],
   boundary:
-    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课、93～94图形课已接目录并完成三宽程序验收，95综合实践已接目录并完成三宽程序验收；课程映射不代程序或全年验收，旧学习记录保持。未确定的原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
+    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课、93～94图形课已接目录并完成三宽程序验收，95综合实践已接目录并完成三宽程序验收；课程映射不代程序或全年验收，旧学习记录保持。未确定的机器人原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
 } as const;

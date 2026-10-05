@@ -104,3 +104,25 @@ it('keeps all given drawings and three blanks in each independent row, and the c
     ).toEqual(next);
   }
 });
+
+it('checks the enlarged original train component by component while leaving robot boundaries unresolved', () => {
+  const geometry = source.geometry;
+  expect(geometry.trainConfirmedCounts).toEqual({
+    rectangle: 5,
+    square: 1,
+    triangle: 1,
+    circle: 4,
+  });
+  expect(geometry.trainParts.rectangle).toEqual([
+    '后车身',
+    '车窗',
+    '前车身',
+    '前蓝块',
+    '烟囱',
+  ]);
+  expect(geometry.trainParts.square).toEqual(['驾驶室']);
+  expect(geometry.trainParts.triangle).toEqual(['前导向']);
+  expect(geometry.trainParts.circle).toHaveLength(4);
+  expect(geometry.collageCounts).toBeNull();
+  expect(geometry.drawingParts).toContain('机器人细小天线分界仍未定');
+});
