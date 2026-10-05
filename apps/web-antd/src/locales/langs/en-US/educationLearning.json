@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-eight original courses cover pages 2–54, including place-value reading, comparison, clue-based guessing and sorting. Teaching from page 55 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Twenty-nine original courses cover pages 2–56, including place-value reading, comparison, clue-based guessing and sorting. Teaching from page 57 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",
@@ -1233,5 +1233,13 @@
   "placeCountersBead_hundreds": "One bead on the hundreds rod",
   "placeCountersBead_tens": "One bead on the tens rod",
   "placeCountersBead_ones": "One bead on the ones rod",
-  "placeCountersNotice": "Original site diagrams without written totals. Actual counter manipulation, drawing, reading, writing and explaining remain separate activities."
+  "placeCountersNotice": "Original site diagrams without written totals. Actual counter manipulation, drawing, reading, writing and explaining remain separate activities.",
+  "bnuTableTitle": "Hundred chart and fragments: observe rows and columns",
+  "bnuTablePosition": "Position",
+  "bnuTableRow": "Row {row}",
+  "bnuTableBlank": "Blank",
+  "bnuTableLegend": "Row and column headers identify positions, not answers. Keep the givens; blanks are not zero. A, B and later letters match input 1, 2 and later inputs, read left to right and top to bottom.",
+  "bnuTableTarget": "Fill all eight lettered blanks in row {row}. Other rows have separate questions.",
+  "bnuTableScroll": "Scroll horizontally and vertically inside the table to inspect every row and column. Keyboard scrolling is supported.",
+  "bnuTableNotice": "Original site table, without textbook illustrations. Row questions cover every blank; real full-chart writing, colouring and discussion require separate confirmation."
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T00:37:28.810Z",
+  "generatedAt": "2026-10-05T01:15:53.630Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 28,
+        "availablePacks": 29,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 831,
-          "manual": 281,
-          "reflection": 105
+          "objective": 866,
+          "manual": 296,
+          "reflection": 111
         }
       },
       "units": [
@@ -34229,10 +34229,46 @@
               }
             },
             {
+              "id": "bnu-lower-hundred-chart",
+              "title": "做个百数表：完整填表、行列规律与全部局部练习",
+              "textbookTitle": "做个百数表",
+              "page": 55,
+              "version": 1,
+              "status": "available",
+              "goal": "完整补1～100十行80空，解释行列与具体斜向，按四规则完整寻找并分清重叠，填写所有局部表和两条刻度。",
+              "prerequisite": "能读写比较100以内的数，理解100百十个位，不把未填当0。",
+              "referenceQuery": null,
+              "steps": 8,
+              "tasks": {
+                "objective": 35,
+                "manual": 15,
+                "reflection": 6
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-hundred-chart"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "manual",
+                "choice",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-hundred-table"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "55～56完整表/全部原给定、空格、刻度和规则来源核对",
+                "notes": "来源核对与最终教师试用分开，原未给唯一涂法和本站明示范围独立。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 55,
+              "page": 57,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34266,7 +34302,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～54页身边的数、数一数、数豆子、红果比较、小小养殖场与比较排序练习三十八项原活动；55页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "仅44～56页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序与完整百数表四十五项原活动；57页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -34888,6 +34924,116 @@
                 "manual": ["actual-score-cards", "actual-score-explain"],
                 "records": ["own-method", "discovery", "difficulty", "plan"],
                 "boundary": "全部四卡保留组名分数对应，高到低与前页升序分清；实做/开放记录/未来计划独立。"
+              },
+              {
+                "page": 55,
+                "sourceActivity": "fill-full-chart",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [1],
+                "objective": [
+                  "row-1",
+                  "row-2",
+                  "row-3",
+                  "row-4",
+                  "row-5",
+                  "row-6",
+                  "row-7",
+                  "row-8",
+                  "row-9",
+                  "row-10",
+                  "minimum",
+                  "maximum",
+                  "given-count",
+                  "blank-count",
+                  "hundred-tens-zero"
+                ],
+                "manual": ["actual-full-chart"],
+                "records": [],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 55,
+                "sourceActivity": "chart-discoveries",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [2],
+                "objective": [
+                  "third-column",
+                  "right-neighbour",
+                  "below-neighbour",
+                  "row-boundary",
+                  "two-diagonals"
+                ],
+                "manual": ["actual-discovery"],
+                "records": ["own-horizontal", "own-vertical", "own-diagonal"],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 55,
+                "sourceActivity": "fragment-fifty-eight",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [3],
+                "objective": ["fragment-58", "fragment-58-centre"],
+                "manual": ["actual-fragment-58"],
+                "records": [],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 56,
+                "sourceActivity": "fragment-sixty-seven",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [4],
+                "objective": ["fragment-67", "fragment-67-neighbours"],
+                "manual": ["actual-fragment-67"],
+                "records": [],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 56,
+                "sourceActivity": "four-colour-rules",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [5],
+                "objective": [
+                  "ones-zero",
+                  "ones-seven",
+                  "equal-digits-full",
+                  "equal-digits-two",
+                  "ones-one-less",
+                  "colour-overlap"
+                ],
+                "manual": [
+                  "actual-green",
+                  "actual-blue",
+                  "actual-yellow",
+                  "actual-red",
+                  "actual-colour-explain"
+                ],
+                "records": ["own-colour"],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 56,
+                "sourceActivity": "two-number-lines",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [6],
+                "objective": ["line-two", "line-ten"],
+                "manual": ["actual-line-two", "actual-line-ten"],
+                "records": [],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 56,
+                "sourceActivity": "three-chart-fragments",
+                "lesson": "bnu-lower-hundred-chart",
+                "steps": [7, 8],
+                "objective": ["practice-one", "practice-two", "practice-three"],
+                "manual": [
+                  "actual-practice-one",
+                  "actual-practice-two",
+                  "actual-practice-three",
+                  "actual-fragment-explain"
+                ],
+                "records": ["difficulty", "plan"],
+                "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
               }
             ]
           }

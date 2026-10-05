@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--hundred-chart'))
+    return {
+      index: 28,
+      lessonId: 'bnu-lower-hundred-chart',
+      zero: '-hundred-tens-zero',
+      retry: '-fragment-58-centre',
+      manual: 15,
+      steps: 8,
+      review: 5,
+      key: 'hundred-chart',
+    };
   if (process.argv.includes('--comparison-practice'))
     return {
       index: 27,
@@ -785,6 +796,196 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectBnuTable = async (visual, label) => {
+        const figure = p.locator('[data-bnu-hundred-table]');
+        await figure.waitFor();
+        const mainGivens = [
+          1, 10, 12, 19, 23, 28, 34, 37, 45, 46, 55, 56, 64, 67, 73, 78, 82, 89,
+          91, 100,
+        ];
+        const reviewGivens = [
+          2, 9, 13, 18, 24, 27, 35, 36, 44, 47, 54, 57, 65, 66, 74, 77, 83, 88,
+          92, 99,
+        ];
+        const isFull = ['complete', 'full'].includes(visual.scene);
+        let expected;
+        if (isFull) {
+          const givens = visual.variant === 'main' ? mainGivens : reviewGivens;
+          expected = Array.from({ length: 10 }, (_, r) =>
+            Array.from({ length: 10 }, (_, c) => {
+              const n = r * 10 + c + 1;
+              return visual.scene === 'complete' || givens.includes(n)
+                ? n
+                : null;
+            }),
+          );
+        } else {
+          const main = {
+            'fifty-eight': [
+              [58, null, 60],
+              [null, null, null],
+              [78, null, 80],
+            ],
+            'sixty-seven': [
+              [null, null, null],
+              [null, 67, null],
+              [null, null, null],
+            ],
+            'practice-one': [
+              [27, 28, null],
+              [null, 38, null],
+              [null, null, 49],
+            ],
+            'practice-two': [
+              [null, 31, null],
+              [40, null, 42],
+              [null, 51, null],
+            ],
+            'practice-three': [
+              [null, null, null],
+              [null, 85, null],
+              [null, null, null],
+            ],
+          };
+          const review = {
+            'fifty-eight': [
+              [48, null, 50],
+              [null, null, null],
+              [68, null, 70],
+            ],
+            'sixty-seven': [
+              [null, null, null],
+              [null, 76, null],
+              [null, null, null],
+            ],
+            'practice-one': [
+              [37, 38, null],
+              [null, 48, null],
+              [null, null, 59],
+            ],
+            'practice-two': [
+              [null, 51, null],
+              [60, null, 62],
+              [null, 71, null],
+            ],
+            'practice-three': [
+              [null, null, null],
+              [null, 64, null],
+              [null, null, null],
+            ],
+          };
+          expected = (visual.variant === 'main' ? main : review)[visual.scene];
+        }
+        if (!expected) throw new Error('Unknown hundred-table fixture');
+        const cells = figure.locator('[data-bnu-table-cell]');
+        if ((await cells.count()) !== expected.flat().length)
+          throw new Error('Hundred table lost cells');
+        let blank = 0;
+        for (const [r, row] of expected.entries()) {
+          for (const [c, value] of row.entries()) {
+            const cell = figure.locator(
+              `[data-bnu-table-cell="${r + 1}-${c}"]`,
+            );
+            const content = await cell.textContent();
+            const actual = content.trim();
+            const letter = value === null && (!isFull || visual.row === r + 1);
+            if (value !== null) {
+              if (actual !== String(value))
+                throw new Error('Hundred table given changed');
+            } else if (letter) {
+              if (actual !== String.fromCodePoint(65 + blank++))
+                throw new Error('Hundred table letter order changed');
+            } else if (!['Blank', '空'].includes(actual))
+              throw new Error('Hundred table blank exposed an answer');
+          }
+        }
+        const readable = await cells.evaluateAll((nodes) =>
+          nodes.every((n) => {
+            const cell = n.closest('td');
+            const a = n.getBoundingClientRect();
+            const b = cell.getBoundingClientRect();
+            return (
+              Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+              b.height >= 44 &&
+              a.left >= b.left &&
+              a.right <= b.right &&
+              a.top >= b.top &&
+              a.bottom <= b.bottom
+            );
+          }),
+        );
+        if (!readable)
+          throw new Error('Hundred table text clipped or too small');
+        const legends = await figure
+          .locator('figcaption,p')
+          .evaluateAll((nodes) =>
+            nodes
+              .slice(0, -1)
+              .every(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+              ),
+          );
+        if (!legends) throw new Error('Hundred table legend below 20px');
+        const scroller = figure.locator('[data-bnu-table-scroll]');
+        await scroller.evaluate((n) => {
+          n.scrollLeft = 0;
+          n.scrollTop = 0;
+          n.scrollIntoView({ block: 'center' });
+        });
+        await scroller.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(150);
+        if (
+          !(await scroller.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Hundred table keyboard horizontal scroll failed');
+        const beforeDown = await scroller.evaluate((n) => ({
+          height: n.scrollHeight,
+          client: n.clientHeight,
+          top: n.scrollTop,
+          focused: document.activeElement === n,
+        }));
+        await scroller.press('ArrowDown');
+        await p.waitForTimeout(300);
+        if (
+          !(await scroller.evaluate(
+            (n) => n.scrollHeight <= n.clientHeight || n.scrollTop > 0,
+          ))
+        )
+          throw new Error(
+            `Hundred table keyboard vertical scroll failed: ${label} ${JSON.stringify(beforeDown)} ${JSON.stringify(await scroller.evaluate((n) => ({ height: n.scrollHeight, client: n.clientHeight, top: n.scrollTop, focused: document.activeElement === n })))}`,
+          );
+        for (const edge of ['first', 'last']) {
+          await scroller.evaluate((n, e) => {
+            n.scrollLeft = e === 'first' ? 0 : n.scrollWidth;
+            n.scrollTop = e === 'first' ? 0 : n.scrollHeight;
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(100);
+          const fits = await scroller.evaluate((n) => {
+            const r = n.getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              document.documentElement.scrollWidth <= innerWidth
+            );
+          });
+          if (!fits) throw new Error('Hundred table scroll viewport clipped');
+          if (
+            !isFull ||
+            label.startsWith('learn') ||
+            visual.row === 1 ||
+            visual.row === 10
+          )
+            await p.screenshot({
+              path: `/tmp/butler-bnu-hundred-table-${label}-${width}-${edge}.png`,
+            });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -823,7 +1024,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 28
+          .count()) !== 29
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1199,6 +1400,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'hundred-chart')
+        await inspectBnuTable(
+          { scene: 'full', variant: 'main' },
+          'learn-initial',
+        );
       for (
         let step = 0;
         step < (flow.steps || (flow.key === 'practice' ? 8 : 7)) - 1;
@@ -1246,6 +1452,63 @@ const server = http.createServer(async (req, res) => {
           await p.screenshot({
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
+        }
+        if (flow.key === 'hundred-chart' && [0, 1, 2, 3, 5].includes(step)) {
+          const scenes = {
+            0: 'complete',
+            1: 'fifty-eight',
+            2: 'sixty-seven',
+            3: 'complete',
+            5: 'practice-one',
+          };
+          await inspectBnuTable(
+            { scene: scenes[step], variant: 'main' },
+            `learn-${step + 1}`,
+          );
+          if (step === 0) {
+            const state = JSON.stringify(await read());
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('English', { exact: true }).click();
+            await p
+              .getByText(
+                'Hundred chart and fragments: observe rows and columns',
+                { exact: true },
+              )
+              .waitFor();
+            const dark = await p.evaluate(() =>
+              document.documentElement.classList.contains('dark'),
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') !== was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await inspectBnuTable(
+              { scene: 'complete', variant: 'main' },
+              'learn-english-theme',
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') === was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('简体中文', { exact: true }).click();
+            if (JSON.stringify(await read()) !== state)
+              throw new Error(
+                'Hundred table language/theme mutated learning records',
+              );
+          }
         }
         if (flow.key === 'breeding' && [0, 5].includes(step)) {
           const values = step === 0 ? [22, 92, 100] : [10, 38, 50, 51, 98];
@@ -1525,6 +1788,8 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'bnu-hundred-table')
+          await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
         if (q.visual?.kind === 'place-counters')
@@ -1958,16 +2223,23 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'breeding' && q.id.endsWith('-sorted-cards')) ||
+            ((flow.key === 'hundred-chart' && q.id.endsWith('-row-1')) ||
+              (flow.key === 'breeding' && q.id.endsWith('-sorted-cards')) ||
               (flow.key === 'comparison-practice' &&
                 q.id.endsWith('-sorted-scores')))
           ) {
-            const partial =
-              flow.key === 'breeding'
-                ? [10, null, null, null, null]
-                : [95, null, null, null];
-            const wrong =
-              flow.key === 'breeding' ? [10, 38, 50, 98, 51] : [95, 88, 91, 79];
+            const partials = {
+              breeding: [10, null, null, null, null],
+              'comparison-practice': [95, null, null, null],
+              'hundred-chart': [2, null, null, null, null, null, null, null],
+            };
+            const wrongs = {
+              breeding: [10, 38, 50, 98, 51],
+              'comparison-practice': [95, 88, 91, 79],
+              'hundred-chart': [1, 2, 3, 4, 5, 6, 7, 8],
+            };
+            const partial = partials[flow.key];
+            const wrong = wrongs[flow.key];
             await p.getByRole('spinbutton').first().fill(String(partial[0]));
             await wait(
               (d) =>
@@ -3030,7 +3302,7 @@ const server = http.createServer(async (req, res) => {
               }
             }
             if (q.id.endsWith('-result-twelve')) {
-              if ((await p.getByRole('checkbox').count()) !== 28)
+              if ((await p.getByRole('checkbox').count()) !== 29)
                 throw new Error('Incomplete expression card set');
               const first = q.choices.find((o) => o.id === 'result-twelve-4');
               await p
@@ -3290,6 +3562,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'bnu-hundred-table')
+          await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
         if (q.visual?.kind === 'place-counters')

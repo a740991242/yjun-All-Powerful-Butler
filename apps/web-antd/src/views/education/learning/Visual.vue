@@ -20,6 +20,7 @@ import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
+import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
@@ -837,6 +838,10 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <BnuHundredTable
+      v-else-if="visual.kind === 'bnu-hundred-table'"
+      :visual="visual"
+    />
     <HundredFragments
       v-else-if="visual.kind === 'hundred-fragments'"
       :visual="visual"

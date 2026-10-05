@@ -6,6 +6,7 @@ import type { BnuFinalClassificationVisual } from './bnu-final-classification';
 import type { BnuFinalColorVisual } from './bnu-final-color';
 import type { BnuFinalPositionVisual } from './bnu-final-position';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
+import type { BnuHundredTableVisual } from './bnu-hundred-table';
 import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
@@ -455,6 +456,7 @@ export type Visual =
   | BnuFinalColorVisual
   | BnuFinalPositionVisual
   | BnuFinalSolidsVisual
+  | BnuHundredTableVisual
   | BnuHundredWeatherVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual

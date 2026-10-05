@@ -12,6 +12,7 @@ import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
+import { isBnuHundredTableVisual } from './bnu-hundred-table';
 import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
 import { isCardEquationRule } from './card-equation';
@@ -560,6 +561,9 @@ function visual(value: unknown) {
     }
     case 'column-digits': {
       return isColumnDigitsRule(value);
+    }
+    case 'bnu-hundred-table': {
+      return isBnuHundredTableVisual(value);
     }
     case 'hundred-fragments': {
       return isHundredFragmentsVisual(value);

@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "无需选择城市或学校即可使用地区组合。这里保留已有资料，仅供参考，不要求逐校核验。选择具体资料范围后，仅按该范围匹配，不将学校资料推广为全省默认。",
   "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
   "regionalCatalogAlternatives": "该参考目录可选数学版本：",
-  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～54页已接入28份原创课包（第一单元9课、图形3课、教室装饰实践、减法9课、身边的数、数到100、数豆子、红果比较、小小养殖场与比较排序练习），第55页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
+  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～56页已接入29份原创课包（第一单元9课、图形3课、教室装饰实践、减法9课、身边的数、数到100、数豆子、红果比较、小小养殖场、比较排序练习与百数表），第57页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
   "teenAdditionTotal": "得数",
   "teenAdditionPosition": "位置{position}",
   "teenAdditionNotice": "本站按位置展示加法表：每个加数2～9，得数11～18。A～Z为26处待填算式，每处依次填两个加数。“—”不属于该行，不表示0。给定算式不自动确认纸面任务。",
@@ -1233,5 +1233,13 @@
   "placeCountersBead_hundreds": "百位上一颗珠",
   "placeCountersBead_tens": "十位上一颗珠",
   "placeCountersBead_ones": "个位上一颗珠",
-  "placeCountersNotice": "本站原创数位示意，不显示合计答案；真实拨珠、画珠、读写和说明另做。"
+  "placeCountersNotice": "本站原创数位示意，不显示合计答案；真实拨珠、画珠、读写和说明另做。",
+  "bnuTableTitle": "百数表与局部表：按行列观察",
+  "bnuTablePosition": "位置",
+  "bnuTableRow": "第{row}行",
+  "bnuTableBlank": "空",
+  "bnuTableLegend": "行号与表头列号表示位置，不是待填数。已给数保留，空不是0；字母A、B等对应下方第1、第2项，按从左到右、从上到下读取。",
+  "bnuTableTarget": "本题填写第{row}行的全部八个字母空格，其它行的空另题填写。",
+  "bnuTableScroll": "在表内横向和纵向滚动查看全部行列，支持键盘滚动。",
+  "bnuTableNotice": "本站原创表格，不复制教材插图。逐行题覆盖全部空格，实际完整填表、涂标与交流另行确认。"
 }
