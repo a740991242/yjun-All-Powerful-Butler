@@ -225,3 +225,40 @@ it('keeps Henan upper/lower digital catalog identities, dates and fresh referenc
     }
   }
 });
+
+it('keeps Anhui autumn references limited to the verified upper volume', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const local = { ...query, province: 'anhui', academicYear };
+    const result = regionalMathematicsDefault(local)!;
+    expect(result).toMatchObject({
+      edition: 'pep-2024',
+      catalogYear: '2025',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+    });
+    expect(result.catalogKind).toBeUndefined();
+    expect(result.evidence[0]).toMatchObject({
+      id: 'anhui-grade-one-math-upper-catalog-2025',
+      issuedAt: '2025-08-15',
+      publishedAt: '2025-08-20',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[0]!.sourceTitle).toContain('第68、74、80项');
+    result.alternatives!.pop();
+    result.evidence[0]!.publishedAt = 'unknown';
+    expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(3);
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.publishedAt).toBe(
+      '2025-08-20',
+    );
+    for (const change of [
+      { volume: 'lower' },
+      { city: 'hefei' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { academicYear: '2027-2028' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});

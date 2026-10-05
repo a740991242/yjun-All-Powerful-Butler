@@ -442,6 +442,65 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-henan-${volume === '上册' ? 'upper' : 'lower'}-default-${width}.png`,
           });
         }
+        await choose('education-region-province', '安徽', true);
+        await choose('education-region-volume', '上册');
+        const anhuiCatalog = region.getByText(
+          '参考2025年省级目录中的可选版本',
+          { exact: false },
+        );
+        await anhuiCatalog.waitFor();
+        await region
+          .locator(
+            'a[href="https://www.jiuhuashan.gov.cn/OpennessContent/show/1675041.html"]',
+          )
+          .waitFor();
+        await region
+          .getByText('文件日期：2025-08-15', { exact: false })
+          .waitFor();
+        await region
+          .getByText('资料发布：2025-08-20', { exact: false })
+          .waitFor();
+        const anhuiAlternatives = await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .textContent();
+        for (const publisher of ['人教版', '苏教版', '北师大版'])
+          if (!anhuiAlternatives.includes(publisher))
+            throw new Error('Anhui upper alternative missing');
+        await apply.click();
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 上册`,
+              exact: true,
+            })
+            .waitFor();
+        await anhuiCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        await p.screenshot({
+          path: `/tmp/butler-anhui-upper-default-${width}.png`,
+        });
+        await choose('education-region-volume', '下册');
+        if (await anhuiCatalog.count())
+          throw new Error('Anhui autumn catalog leaked into lower');
+        await apply.click();
+        for (const subject of ['语文', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 下册`,
+              exact: true,
+            })
+            .waitFor();
+        if (
+          await p
+            .getByRole('button', {
+              name: '数学 · 人教版（2024审定） · 下册',
+              exact: true,
+            })
+            .count()
+        )
+          throw new Error('Anhui lower gained unverified math');
         await choose('education-region-province', '湖南', true);
         await choose('education-region-volume', '上册');
         await region
@@ -638,6 +697,37 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-henan-${volume === 'Upper volume' ? 'upper' : 'lower'}-default-${width}-en-dark.png`,
           });
         }
+        await choose('education-region-province', 'Anhui', true);
+        await choose('education-region-volume', 'Upper volume');
+        const anhuiEnglishCatalog = p.getByText(
+          'The 2025 provincial catalog lists alternatives.',
+          { exact: false },
+        );
+        await anhuiEnglishCatalog.waitFor();
+        await p
+          .getByText('Document date: 2025-08-15', { exact: false })
+          .waitFor();
+        await p
+          .getByText('Published: 2025-08-20; checked: 2026-10-06', {
+            exact: false,
+          })
+          .waitFor();
+        await anhuiEnglishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Anhui English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-anhui-upper-default-${width}-en-dark.png`,
+        });
+        await choose('education-region-volume', 'Lower volume');
+        if (await anhuiEnglishCatalog.count())
+          throw new Error('Anhui English autumn catalog leaked into lower');
         if (
           (await p.evaluate(async () =>
             JSON.stringify(await window.qaLoad()),
@@ -658,6 +748,9 @@ const server = http.createServer(async (req, res) => {
             HunanEnglishDarkCatalog: true,
             HubeiUpperLowerThreeSubjects: true,
             HenanUpperLowerThreeSubjects: true,
+            AnhuiUpperThreeSubjectsLowerTwoSubjects: true,
+            AnhuiUpperDatesAndScopeBilingual: true,
+            AnhuiLowerDoesNotInheritAutumnMath: true,
             HenanDigitalCatalogScopeBilingual: true,
             HenanVolumeSourcesAndDatesSeparate: true,
             HubeiUpperUnknownPublicationDateBilingual: true,

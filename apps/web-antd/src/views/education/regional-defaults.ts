@@ -40,6 +40,24 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'anhui' && query.volume === 'upper')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'anhui-grade-one-math-upper-catalog-2025',
+          sourceUrl:
+            'https://www.jiuhuashan.gov.cn/OpennessContent/show/1675041.html',
+          sourceTitle:
+            '安徽省2025年秋季中小学教材零售价格通知（皖发改价费〔2025〕433号，附件第68、74、80项，一年级数学上册）',
+          issuedAt: '2025-08-15',
+          publishedAt: '2025-08-20',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'henan') {
     const upper = query.volume === 'upper';
     return {

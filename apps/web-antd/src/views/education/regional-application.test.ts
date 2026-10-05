@@ -361,3 +361,34 @@ it('applies Henan digital catalog references for both volumes without claiming p
       ).toBe(true);
   }
 });
+
+it('applies Anhui upper combinations without inheriting the price catalog into lower or English', () => {
+  const local = {
+    ...query,
+    province: 'anhui',
+    city: '',
+    school: '',
+    volume: 'upper' as const,
+  };
+  const upper = regionalApplicationPlan(local);
+  expect(upper[1]!.resolution).toMatchObject({
+    status: 'recommended',
+    edition: 'pep-2024',
+    catalogYear: '2025',
+    alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+  });
+  expect(
+    upper.flatMap((row) =>
+      row.action ? [regionalActionPath(row.action)] : [],
+    ),
+  ).toEqual([
+    '/education/primary/p1/chinese/pep-2024/upper',
+    '/education/primary/p1/math/pep-2024/upper',
+    '/education/primary/p1/ethics/pep-2024/upper',
+  ]);
+  expect(upper[3]!.action).toBeUndefined();
+  const lower = regionalApplicationPlan({ ...local, volume: 'lower' });
+  expect(lower[1]!.action).toBeUndefined();
+  expect(lower[3]!.action).toBeUndefined();
+  expect(lower.filter((row) => row.action)).toHaveLength(2);
+});
