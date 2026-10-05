@@ -1,8 +1,9 @@
 /* Production-only smoke check: run after pnpm build:pages.
  * Uses a temporary static server and fresh Chrome profiles; never reads user data.
- * Tests eight catalog routes and one representative complete learning/backup flow.
+ * Tests ten catalog routes and one representative complete learning/backup flow.
  * This does not certify curriculum coverage or regional textbook assignments.
  * Usage: rtk proxy node scripts/education/verify-pages.mjs
+ * Use --catalog-only for all ten catalogs, invalid routes and unchanged records at three widths.
  * Use --generic-only to check only the Suzhou generic course entry in three widths.
  * Use --bnu-lessons=id,id for named BNU activity flows plus the shared baseline; default checks all.
  * Use --bnu-demo-only for a focused three-width caterpillar interaction/reading check, without the shared baseline.
@@ -25,7 +26,10 @@ const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const deployed = process.argv.includes('--deployed');
 const genericOnly = process.argv.includes('--generic-only');
+const catalogOnly = process.argv.includes('--catalog-only');
 const demoOnly = process.argv.includes('--bnu-demo-only');
+if (catalogOnly && (genericOnly || demoOnly))
+  throw new Error('Do not combine catalog-only with other focused modes.');
 const requestedArgument = process.argv.find((value) =>
   value.startsWith('--bnu-lessons='),
 );
@@ -36,7 +40,8 @@ if (
   requestedBnu &&
   (requestedBnu.some((id) => !/^bnu-upper-[a-z-]+$/.test(id)) ||
     new Set(requestedBnu).size !== requestedBnu.length ||
-    genericOnly)
+    genericOnly ||
+    catalogOnly)
 )
   throw new Error(
     'Provide distinct BNU lesson IDs and do not combine with generic-only.',
@@ -654,7 +659,7 @@ const widths = process.argv.includes('--mobile-only')
           { exact: true },
         )
         .waitFor();
-      await chooseArea('education-region-province', '浙江', true);
+      await chooseArea('education-region-province', '广东', true);
       if (
         (await applyArea.isDisabled()) ||
         (await region.getByText('待核验', { exact: true }).count()) !== 2 ||
@@ -676,6 +681,37 @@ const widths = process.argv.includes('--mobile-only')
       await chooseArea('education-region-system', '尚未确认学制');
       if (!(await applyArea.isDisabled()))
         throw new Error('unknown system incorrectly applied');
+      if (catalogOnly) {
+        await p.goto(`${url}#/education/primary/p1/math/sujiao/upper`, {
+          waitUntil: 'domcontentloaded',
+        });
+        await p.waitForFunction(
+          () =>
+            [...document.querySelectorAll('button')].filter(
+              (button) => button.textContent.trim() === '导出备份',
+            ).length === 1,
+        );
+        await p
+          .getByRole('button', { name: '进入课程', exact: true })
+          .first()
+          .click();
+        await p
+          .getByRole('button', { name: '返回课程目录', exact: true })
+          .filter({ visible: true })
+          .last()
+          .click();
+        await p.waitForFunction(
+          () =>
+            [...document.querySelectorAll('button')].filter(
+              (button) => button.textContent.trim() === '导出备份',
+            ).length === 1,
+        );
+      }
+      const beforeCatalogs = await read();
+      if (catalogOnly && beforeCatalogs.sessions.length !== 1)
+        throw new Error(
+          'Catalog preservation must use an actual UI-created session',
+        );
       const volumes = [
         ['chinese', 'pep-2024', 'upper', 72],
         ['chinese', 'pep-2024', 'lower', 46],
@@ -685,6 +721,8 @@ const widths = process.argv.includes('--mobile-only')
         ['math', 'sujiao', 'lower', 87],
         ['ethics', 'pep-2024', 'upper', 16],
         ['ethics', 'pep-2024', 'lower', 16],
+        ['math', 'bnu-2024', 'upper', 32],
+        ['math', 'bnu-2024', 'lower', 52],
       ];
       for (const [subject, edition, volume, count] of volumes) {
         await p.goto(
@@ -712,6 +750,56 @@ const widths = process.argv.includes('--mobile-only')
           )
         )
           throw new Error('catalog overflow');
+      }
+      if (JSON.stringify(await read()) !== JSON.stringify(beforeCatalogs))
+        throw new Error('Catalog navigation changed existing learning records');
+      if (catalogOnly) {
+        for (const invalid of [
+          'math/not-a-textbook/upper',
+          'english/pep-2024/upper',
+          'chinese/pep-2024/not-a-volume',
+        ]) {
+          await p.goto(`${url}#/education/primary/p1/${invalid}`, {
+            waitUntil: 'domcontentloaded',
+          });
+          await p
+            .getByText('没有这个教材版本，请选择上方的已核验教材。', {
+              exact: true,
+            })
+            .filter({ visible: true })
+            .last()
+            .waitFor();
+          const invalidCourses = p
+            .getByRole('button', { name: '进入课程', exact: true })
+            .filter({ visible: true });
+          // The outgoing cached workspace remains during the route transition.
+          await invalidCourses.first().waitFor({ state: 'hidden' });
+          if (await invalidCourses.count())
+            throw new Error(`Invalid route borrowed a catalog: ${invalid}`);
+        }
+        if (JSON.stringify(await read()) !== JSON.stringify(beforeCatalogs))
+          throw new Error('Invalid route changed existing learning records');
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            catalogs: volumes.length,
+            availableCourseEntries: volumes.reduce(
+              (total, row) => total + row[3],
+              0,
+            ),
+            invalidRoutes: 3,
+            unchangedRecords: true,
+            preservedSessions: beforeCatalogs.sessions.length,
+            hashBase: true,
+            errors,
+            bad,
+            api,
+          }),
+        );
+        await ctx.close();
+        continue;
       }
       await p.goto(`${url}#/education/primary/p1/math/sujiao/upper`, {
         waitUntil: 'domcontentloaded',
@@ -3391,16 +3479,24 @@ const widths = process.argv.includes('--mobile-only')
       await p
         .getByText('逐一对应、十根成捆与十一到二十', { exact: true })
         .waitFor();
+      await p.waitForFunction(
+        () =>
+          [...document.querySelectorAll('button')].filter(
+            (button) => button.textContent.trim() === '导出备份',
+          ).length === 1,
+      );
       await p.getByRole('button', { name: '导出备份', exact: true }).waitFor();
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 9
+          .count()) !== 52
       )
         throw new Error(
-          'BNU lower must expose its nine authored independent courses',
+          'BNU lower must expose its 52 authored independent courses',
         );
-      await p.getByText('第一单元覆盖复核', { exact: true }).waitFor();
+      await p
+        .getByText('接着画、表达规律与合作数学故事', { exact: true })
+        .waitFor();
       await chooseArea('grade-one-math-edition', '苏教版');
       await p.waitForURL('**/math/sujiao/lower');
       await p.waitForFunction(
@@ -3420,11 +3516,11 @@ const widths = process.argv.includes('--mobile-only')
           width,
           login: true,
           provinceGuard: true,
-          catalogs: 8,
+          catalogs: volumes.length,
           bnuCourse: 32,
           bnuSelection: requestedBnu || 'all',
           activityFlows,
-          bnuUnavailableLower: true,
+          bnuLowerCourses: 52,
           taskFlow: 15,
           draftReload: true,
           backupExport: true,
