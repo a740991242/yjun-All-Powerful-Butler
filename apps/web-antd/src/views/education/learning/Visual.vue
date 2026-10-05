@@ -15,6 +15,7 @@ import BeadChain from './BeadChain.vue';
 import BlockCards from './BlockCards.vue';
 import BnuAroundNumbers from './BnuAroundNumbers.vue';
 import BnuBuilding from './BnuBuilding.vue';
+import BnuCalculationReview from './BnuCalculationReview.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
 import BnuFillGrid from './BnuFillGrid.vue';
 import BnuFinalClassification from './BnuFinalClassification.vue';
@@ -847,6 +848,10 @@ const shapeDescription = computed(() =>
     </div>
     <BnuTwoJumpLine
       v-else-if="visual.kind === 'bnu-two-jump-line'"
+      :visual="visual"
+    />
+    <BnuCalculationReview
+      v-else-if="visual.kind === 'bnu-calculation-review'"
       :visual="visual"
     />
     <BnuRecycling

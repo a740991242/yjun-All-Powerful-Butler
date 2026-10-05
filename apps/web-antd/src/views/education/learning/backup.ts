@@ -7,6 +7,7 @@ import { isBeadChainVisual } from './bead-chain';
 import { isBlockCardsVisual } from './block-cards';
 import { isBnuAroundNumbersVisual } from './bnu-around-numbers';
 import { isBnuBuildingVisual } from './bnu-building';
+import { isBnuCalculationReviewVisual } from './bnu-calculation-review';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
 import { isBnuFillGridVisual } from './bnu-fill-grid';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
@@ -78,6 +79,7 @@ import {
   towerBlankCount,
 } from './number-tower';
 import { isOcclusionViewsVisual } from './occlusion-views';
+import { isOutfitRule } from './outfit';
 import { isPaperFoldVisual } from './paper-fold';
 import { isParadeFramesVisual } from './parade-frames';
 import { isPartitionedSquareVisual } from './partitioned-square';
@@ -210,6 +212,9 @@ function rule(value: unknown) {
     }
     case 'number-picks': {
       return isNumberPicksRule(value);
+    }
+    case 'outfit': {
+      return isOutfitRule(value);
     }
     case 'reversed-addends': {
       return isReversedAddendsRule(value);
@@ -580,6 +585,9 @@ function visual(value: unknown) {
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
     }
+    case 'bnu-calculation-review': {
+      return isBnuCalculationReviewVisual(value);
+    }
     case 'bnu-recycling': {
       return isBnuRecyclingVisual(value);
     }
@@ -749,6 +757,13 @@ function question(value: unknown): value is Question {
     return false;
   if (value.material !== undefined && !text(value.material)) return false;
   if (value.visual !== undefined && !visual(value.visual)) return false;
+  if (
+    isOutfitRule(value.rule) &&
+    (!isBnuCalculationReviewVisual(value.visual) ||
+      value.visual.scene !== 'clothes' ||
+      value.visual.variant !== value.rule.variant)
+  )
+    return false;
   if (value.choices !== undefined) {
     if (
       !list(value.choices, 30) ||
@@ -1213,6 +1228,7 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
       return false;
     if (
       (current.rule.kind === 'number-picks' ||
+        current.rule.kind === 'outfit' ||
         current.rule.kind === 'arithmetic-pair' ||
         current.rule.kind === 'reversed-addends' ||
         current.rule.kind === 'cross-balance') &&
@@ -1220,7 +1236,11 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
       (!Array.isArray(response.draft) ||
         response.draft.length !==
           (() => {
-            if (current.rule.kind === 'arithmetic-pair') return 2;
+            if (
+              current.rule.kind === 'arithmetic-pair' ||
+              current.rule.kind === 'outfit'
+            )
+              return 2;
             if (current.rule.kind === 'reversed-addends')
               return current.rule.count * 2;
             if (current.rule.kind === 'number-picks')

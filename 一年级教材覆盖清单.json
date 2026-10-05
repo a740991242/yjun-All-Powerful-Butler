@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T14:09:43.110Z",
+  "generatedAt": "2026-10-05T14:56:43.744Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 38,
-        "pendingEntries": 4,
+        "availablePacks": 39,
+        "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1086,
-          "manual": 405,
-          "reflection": 146
+          "objective": 1114,
+          "manual": 415,
+          "reflection": 151
         }
       },
       "units": [
@@ -35616,33 +35616,46 @@
               }
             },
             {
-              "id": "bnu-lower-u5-pending",
-              "title": "100以内数加与减（一）后续内容",
-              "textbookTitle": "100以内数加与减（一）后续内容",
+              "id": "bnu-lower-calculation-review",
+              "title": "完整计算、八篮连线与开放预算搭配",
+              "textbookTitle": "整理与复习",
               "page": 74,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "完整对应74～75八原活动，整理计算方法、保留问题、全算全比较与连线、读价应用、自主问题及接受所有合法预算搭配。",
+              "prerequisite": "会做百以内不进位加法和不退位减法，知道十位与个位，能比较两个数。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 10,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 28,
+                "manual": 10,
+                "reflection": 5
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 8,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-calculation-review"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "column-digits",
+                "set",
+                "outfit",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "bnu-calculation-review",
+                "place-counters",
+                "column-digits"
+              ],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-05",
+                "reviewer": "74～75全部活动、八篮与六比较核对",
+                "notes": "课程程序与三宽页面已验，最终教师试用未核验。"
               }
             }
           ],
@@ -35653,7 +35666,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～73全部原活动对应；74页起后续、整册与全年仍未完成。",
+            "scope": "印刷62～75全部原活动对应；第六单元、连环画、总复习及整册全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -36180,6 +36193,105 @@
                 "objective": ["site-zero"],
                 "manual": ["actual-discuss", "actual-own"],
                 "records": ["method-record", "difficulty-record", "plan"]
+              },
+              {
+                "page": 74,
+                "sourceActivity": "harvest-four-equations-and-own-method-map",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [1, 2],
+                "objective": [
+                  "harvest-all",
+                  "place-alignment",
+                  "add-parts",
+                  "sub-parts"
+                ],
+                "manual": ["actual-harvest", "actual-map"],
+                "records": ["method-record"]
+              },
+              {
+                "page": 74,
+                "sourceActivity": "open-problem-bank-thirty-minus-four",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [3],
+                "objective": ["problem-exploration"],
+                "manual": ["actual-problem"],
+                "records": ["problem-record"]
+              },
+              {
+                "page": 74,
+                "sourceActivity": "four-counter-practice-equations",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [4],
+                "objective": [
+                  "counter-1",
+                  "counter-2",
+                  "counter-3",
+                  "counter-4"
+                ],
+                "manual": ["actual-counters"],
+                "records": []
+              },
+              {
+                "page": 74,
+                "sourceActivity": "all-four-written-equations",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [5],
+                "objective": [
+                  "written-1",
+                  "written-2",
+                  "written-3",
+                  "written-4"
+                ],
+                "manual": ["actual-written"],
+                "records": []
+              },
+              {
+                "page": 75,
+                "sourceActivity": "all-eight-baskets-and-six-matches",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [6],
+                "objective": ["baskets-all", "baskets-results"],
+                "manual": ["actual-baskets"],
+                "records": []
+              },
+              {
+                "page": 75,
+                "sourceActivity": "all-six-comparisons",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [7],
+                "objective": [
+                  "compare-1",
+                  "compare-2",
+                  "compare-3",
+                  "compare-4",
+                  "compare-5",
+                  "compare-6"
+                ],
+                "manual": ["actual-comparisons"],
+                "records": []
+              },
+              {
+                "page": 75,
+                "sourceActivity": "four-prices-buy-two-and-shortfall-and-own-question",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [8],
+                "objective": ["ball-prices", "buy-two", "shortfall"],
+                "manual": ["actual-shopping", "actual-own-question"],
+                "records": ["own-question-record"]
+              },
+              {
+                "page": 75,
+                "sourceActivity": "one-outfit-within-hundred-budget",
+                "lesson": "bnu-lower-calculation-review",
+                "steps": [9, 10],
+                "objective": [
+                  "outfit",
+                  "outfit-example-total",
+                  "outfit-example-change",
+                  "site-zero"
+                ],
+                "manual": ["actual-outfit"],
+                "records": ["reflection", "plan"]
               }
             ]
           }

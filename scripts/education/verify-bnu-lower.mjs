@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--calculation-review'))
+    return {
+      index: 38,
+      lessonId: 'bnu-lower-calculation-review',
+      zero: '-site-zero',
+      retry: '-shortfall',
+      manual: 10,
+      steps: 10,
+      review: 8,
+      key: 'calculation-review',
+    };
+
   if (process.argv.includes('--recycling'))
     return {
       index: 37,
@@ -2423,6 +2435,145 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectCalculationReview = async (visual, label) => {
+        const root = p.locator('[data-bnu-calculation-review]');
+        await root.waitFor();
+        const review = visual.variant === 'review';
+        const fixtures = {
+          baskets: review
+            ? [
+                '76−10',
+                '52+14',
+                '44+23',
+                '32+34',
+                '57+11',
+                '89−23',
+                '99−33',
+                '98−31',
+              ]
+            : [
+                '78−10',
+                '52+12',
+                '44+24',
+                '32+36',
+                '57+21',
+                '89−21',
+                '99−31',
+                '98−30',
+              ],
+          balls: review ? [41, 32, 24, 8] : [42, 30, 23, 6],
+          clothes: review ? [31, 42, 24, 45, 33] : [46, 52, 34, 53, 41],
+        };
+        const rows = await root
+          .locator('tbody tr')
+          .evaluateAll((nodes) =>
+            nodes.map((row) =>
+              [...row.querySelectorAll('[data-calculation-cell]')].map((n) =>
+                n.textContent.trim(),
+              ),
+            ),
+          );
+        const expected = fixtures[visual.scene];
+        if (
+          rows.length !== expected.length ||
+          rows.some(
+            (row, i) =>
+              row[0] !== String(i + 1) ||
+              row[visual.scene === 'baskets' ? 1 : 2] !== String(expected[i]),
+          )
+        )
+          throw new Error(
+            `Calculation table fixture ${label}: ${JSON.stringify(rows)}`,
+          );
+        if (visual.scene === 'clothes') {
+          const labels = await root
+            .locator('tbody tr td:nth-child(2)')
+            .allTextContents();
+          if (
+            !labels.slice(0, 3).every((x) => /上衣|Top/.test(x)) ||
+            !labels.slice(3).every((x) => /裤子|Trousers/.test(x))
+          )
+            throw new Error('Outfit categories');
+          const content = await root.innerText();
+          if (!content.includes(String(review ? 70 : 100)))
+            throw new Error('Outfit budget');
+        }
+        const region = root.locator('[data-bnu-calculation-scroll]');
+        for (const edge of ['left', 'right']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = e === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          await region.scrollIntoViewIfNeeded();
+          await p.screenshot({
+            path: `/tmp/butler-bnu-calculation-review-${label}-${width}-${edge}.png`,
+          });
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        if (await region.evaluate((n) => n.scrollWidth > n.clientWidth)) {
+          await region.focus();
+          await p.keyboard.press('ArrowRight');
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Calculation keyboard scroll');
+        }
+        const geometry = await root.evaluate((node) => ({
+          small: [...node.querySelectorAll('thead span,tbody td span')].some(
+            (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+          ),
+          clipped: [...node.querySelectorAll('[data-calculation-cell]')].some(
+            (n) => n.scrollWidth > n.clientWidth + 1,
+          ),
+          page: document.documentElement.scrollWidth > innerWidth + 1,
+        }));
+        if (geometry.small || geometry.clipped || geometry.page)
+          throw new Error(
+            `Calculation geometry ${label}: ${JSON.stringify(geometry)}`,
+          );
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+      };
+      const inspectColumnDigits = async (model, label) => {
+        const table = p
+          .locator('.ant-table')
+          .filter({ has: p.locator('thead') });
+        const cells = await table
+          .locator('tbody tr[data-row-key]')
+          .evaluateAll((nodes) =>
+            nodes.map((row) =>
+              [...row.querySelectorAll('td')]
+                .slice(1)
+                .map((n) => n.textContent.trim()),
+            ),
+          );
+        const expected = [
+          model.left.map(String),
+          model.right.map(String),
+          ['A', 'B'],
+        ];
+        if (JSON.stringify(cells) !== JSON.stringify(expected))
+          throw new Error(
+            `Column digits fixture ${label}: ${JSON.stringify(cells)}`,
+          );
+        const geometry = await table.evaluate((root) => ({
+          small: [...root.querySelectorAll('thead span,tbody td span')].some(
+            (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+          ),
+          clipped: [...root.querySelectorAll('thead span,tbody td span')].some(
+            (n) => n.scrollWidth > n.clientWidth + 1,
+          ),
+          page: document.documentElement.scrollWidth > innerWidth + 1,
+        }));
+        if (geometry.small || geometry.clipped || geometry.page)
+          throw new Error(
+            `Column digits geometry ${label}: ${JSON.stringify(geometry)}`,
+          );
+        await table.scrollIntoViewIfNeeded();
+        await p.screenshot({
+          path: `/tmp/butler-bnu-column-${label}-${width}.png`,
+        });
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -2461,7 +2612,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 38
+          .count()) !== 39
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -2872,6 +3023,61 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'calculation-review' && [4, 6, 7].includes(step)) {
+          const scene = { 4: 'baskets', 6: 'balls', 7: 'clothes' }[step];
+          await inspectCalculationReview(
+            { scene, variant: 'main' },
+            `learn-${step + 1}`,
+          );
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-bnu-calculation-review] figcaption')
+            .filter({ hasText: /[A-Za-z]/ })
+            .waitFor();
+          await inspectCalculationReview(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en`,
+          );
+          const wasDark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await inspectCalculationReview(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en-theme`,
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('[data-bnu-calculation-review] figcaption')
+            .filter({ hasText: /[\u4E00-\u9FFF]/ })
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error(
+              'Calculation review language/theme changed records',
+            );
+        }
         if (flow.key === 'recycling' && [1, 2].includes(step)) {
           const scene = { 1: 'rods', 2: 'circles' }[step];
           await inspectRecycling(
@@ -3626,6 +3832,56 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (
+          flow.key === 'calculation-review' &&
+          q.visual?.kind === 'column-digits'
+        )
+          await inspectColumnDigits(q.visual, q.id);
+        if (flow.key === 'calculation-review' && q.id.endsWith('-written-1')) {
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('.ant-table thead')
+            .filter({ hasText: 'Tens' })
+            .waitFor();
+          await inspectColumnDigits(q.visual, `${q.id}-en`);
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(600);
+          await inspectColumnDigits(q.visual, `${q.id}-en-theme`);
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(600);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('.ant-table thead')
+            .filter({ hasText: '十位' })
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Vertical table language/theme changed records');
+        }
+
+        if (q.visual?.kind === 'bnu-calculation-review')
+          await inspectCalculationReview(q.visual, q.id);
         if (q.visual?.kind === 'bnu-recycling')
           await inspectRecycling(q.visual, q.id);
         if (q.visual?.kind === 'bnu-interesting')
@@ -3824,7 +4080,10 @@ const server = http.createServer(async (req, res) => {
             if (q.id.endsWith(flow.retry)) {
               await p
                 .getByRole('spinbutton')
-                .fill(flow.key === 'complement' ? '19' : '3');
+                .fill(
+                  { complement: '19', 'calculation-review': '4' }[flow.key] ??
+                    '3',
+                );
               await click('提交答案');
               await p
                 .getByText('再想一想，可以修改后重试', { exact: true })
@@ -4046,6 +4305,97 @@ const server = http.createServer(async (req, res) => {
                 : [0, q.rule.result];
             for (const [i, value] of pair.entries())
               await p.getByRole('spinbutton').nth(i).fill(String(value));
+          } else if (q.rule.kind === 'outfit') {
+            await p.getByRole('spinbutton').nth(0).fill('3');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((s) => s.id === sid).responses[index].draft,
+                ) === '[3,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            await p.getByRole('spinbutton').nth(1).waitFor();
+            if (
+              (await p.getByRole('spinbutton').nth(0).inputValue()) !== '3' ||
+              (await p.getByRole('spinbutton').nth(1).inputValue()) !== ''
+            )
+              throw new Error('Outfit partial lost');
+            for (const input of await p.getByRole('spinbutton').all()) {
+              await input.evaluate((n) =>
+                n
+                  .closest('.ant-input-number')
+                  .scrollIntoView({ block: 'center', behavior: 'instant' }),
+              );
+              await p.waitForTimeout(200);
+              const fit = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return {
+                  font: Number.parseFloat(getComputedStyle(n).fontSize),
+                  height: r.height,
+                  left: r.left,
+                  right: r.right,
+                  top: r.top,
+                  bottom: r.bottom,
+                  width: innerWidth,
+                  viewportHeight: innerHeight,
+                };
+              });
+              if (
+                fit.font < 20 ||
+                fit.height < 44 ||
+                fit.left < 0 ||
+                fit.right > fit.width ||
+                fit.top < 0 ||
+                fit.bottom > fit.viewportHeight
+              )
+                throw new Error(
+                  `Outfit input geometry: ${JSON.stringify(fit)}`,
+                );
+            }
+            await p.screenshot({
+              path: `/tmp/butler-bnu-outfit-partial-${width}.png`,
+            });
+
+            for (const values of [
+              [2, 4],
+              [3, 5],
+            ]) {
+              for (const [field, value] of values.entries())
+                await p.getByRole('spinbutton').nth(field).fill(String(value));
+              await click('提交答案');
+              await wait(
+                (d) =>
+                  d.sessions.find((s) => s.id === sid).responses[index]
+                    .submissions.length === (values[0] === 2 ? 1 : 2),
+              );
+            }
+            const saved = await read();
+            const response = saved.sessions.find((s) => s.id === sid).responses[
+              index
+            ];
+            if (
+              JSON.stringify(response.submissions.map((x) => x.correct)) !==
+              '[false,true]'
+            )
+              throw new Error('Outfit budget history');
+            if (index === session.questions.length - 1) break;
+            await click('下一题');
+            await wait(
+              (d) =>
+                d.sessions.find((s) => s.id === sid).questionIndex ===
+                index + 1,
+            );
+            continue;
+          } else if (q.rule.kind === 'column-digits') {
+            const left = q.rule.left[0] * 10 + q.rule.left[1];
+            const right = q.rule.right[0] * 10 + q.rule.right[1];
+            const result =
+              q.rule.operator === '+' ? left + right : left - right;
+            const digits = [Math.floor(result / 10), result % 10];
+            for (const [field, value] of digits.entries())
+              await p.getByRole('spinbutton').nth(field).fill(String(value));
           } else if (q.rule.kind === 'reversed-addends') {
             const values =
               q.rule.count === 1 ? [22, 22] : [81, 18, 72, 27, 63, 36];
@@ -5487,6 +5837,13 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (
+          flow.key === 'calculation-review' &&
+          q.visual?.kind === 'column-digits'
+        )
+          await inspectColumnDigits(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-calculation-review')
+          await inspectCalculationReview(q.visual, q.id);
         if (q.visual?.kind === 'bnu-recycling')
           await inspectRecycling(q.visual, q.id);
         if (q.visual?.kind === 'bnu-interesting')
@@ -5530,6 +5887,18 @@ const server = http.createServer(async (req, res) => {
         } else if (q.rule.kind === 'number-picks') {
           for (const [field, values] of q.rule.fields.entries())
             await p.getByRole('spinbutton').nth(field).fill(String(values[0]));
+        } else if (q.rule.kind === 'outfit') {
+          for (const [field, value] of [1, 5].entries())
+            await p.getByRole('spinbutton').nth(field).fill(String(value));
+        } else if (q.rule.kind === 'column-digits') {
+          const left = q.rule.left[0] * 10 + q.rule.left[1];
+          const right = q.rule.right[0] * 10 + q.rule.right[1];
+          const result = q.rule.operator === '+' ? left + right : left - right;
+          for (const [field, value] of [
+            Math.floor(result / 10),
+            result % 10,
+          ].entries())
+            await p.getByRole('spinbutton').nth(field).fill(String(value));
         } else if (q.rule.kind === 'reversed-addends') {
           const values =
             q.rule.count === 1 ? [33, 33] : [61, 16, 52, 25, 43, 34];

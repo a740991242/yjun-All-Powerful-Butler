@@ -35,7 +35,7 @@ const columns = computed(() => [
 
 <template>
   <div class="space-y-3">
-    <p class="text-xl leading-8">
+    <p class="block break-words text-xl leading-8">
       {{ $t('educationLearning.columnDigitNotice') }}
     </p>
     <Table
@@ -46,8 +46,16 @@ const columns = computed(() => [
       bordered
       size="small"
     >
+      <template #headerCell="{ column }">
+        <span class="block break-words text-center text-xl leading-8">
+          {{ column.title }}
+        </span>
+      </template>
       <template #bodyCell="{ column, record }">
-        <span v-if="column.key === 'row'" class="text-xl leading-8">
+        <span
+          v-if="column.key === 'row'"
+          class="block break-words text-xl leading-8"
+        >
           {{ record.sign }} {{ record.label }}
         </span>
         <span v-else class="block text-center font-mono text-2xl leading-8">

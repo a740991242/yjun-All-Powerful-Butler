@@ -5,6 +5,7 @@ import { bnuLowerAdditionTableLesson } from './bnu-lower-addition-table';
 import { bnuLowerAroundNumbersLesson } from './bnu-lower-around-numbers';
 import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerBreedingLesson } from './bnu-lower-breeding';
+import { bnuLowerCalculationReviewLesson } from './bnu-lower-calculation-review';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
 import { bnuLowerComparisonPracticeLesson } from './bnu-lower-comparison-practice';
@@ -418,7 +419,7 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerWrittenLesson,
     bnuLowerInterestingLesson,
     bnuLowerRecyclingLesson,
-    pending('u5', '100以内数加与减（一）后续内容', 74),
+    bnuLowerCalculationReviewLesson,
   ],
   games: [bnuLowerFillGameLesson],
   classroom: [bnuLowerClassroomLesson],

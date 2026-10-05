@@ -1,6 +1,7 @@
 import type { ArithmeticPairRule } from './arithmetic-pair';
 import type { BnuAroundNumbersVisual } from './bnu-around-numbers';
 import type { BnuBuildingVisual } from './bnu-building';
+import type { BnuCalculationReviewVisual } from './bnu-calculation-review';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
 import type { BnuFillGridVisual } from './bnu-fill-grid';
 import type { BnuFinalClassificationVisual } from './bnu-final-classification';
@@ -48,6 +49,7 @@ import type { NumberIntervalRule } from './number-interval';
 import type { NumberPicksRule } from './number-picks';
 import type { NumberStripVisual } from './number-strip';
 import type { OcclusionViewsVisual } from './occlusion-views';
+import type { OutfitRule } from './outfit';
 import type { ParadeFramesVisual } from './parade-frames';
 import type { PartitionedSquareVisual } from './partitioned-square';
 import type { PlaceCountersVisual } from './place-counters';
@@ -440,6 +442,7 @@ export type AnswerRule =
   | NumberChainRule
   | NumberIntervalRule
   | NumberPicksRule
+  | OutfitRule
   | ReversedAddendsRule
   | { kind: 'choice'; value: string }
   | { kind: 'magic-grid'; cells: MagicCells }
@@ -460,6 +463,7 @@ export type Visual =
   | BlockCardsVisual
   | BnuAroundNumbersVisual
   | BnuBuildingVisual
+  | BnuCalculationReviewVisual
   | BnuCaterpillarVisual
   | BnuDayClockVisual
   | BnuFillGridVisual
