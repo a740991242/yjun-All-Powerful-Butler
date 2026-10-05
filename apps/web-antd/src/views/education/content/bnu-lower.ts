@@ -22,6 +22,7 @@ import { bnuLowerNumberPracticeLesson } from './bnu-lower-number-practice';
 import { bnuLowerParachuteLesson } from './bnu-lower-parachute';
 import { bnuLowerPencilsLesson } from './bnu-lower-pencils';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
+import { bnuLowerRabbitGuestsLesson } from './bnu-lower-rabbit-guests';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
 import { bnuLowerRedFruitLesson } from './bnu-lower-red-fruit';
 import {
@@ -404,6 +405,10 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerSubtractionTableLesson,
     bnuLowerSubtractionHarvestLesson,
     bnuLowerSubtractionPracticeLesson,
+  ],
+  u5: [
+    bnuLowerRabbitGuestsLesson,
+    pending('u5', '100以内数加与减（一）后续内容', 64),
   ],
   games: [bnuLowerFillGameLesson],
   classroom: [bnuLowerClassroomLesson],

@@ -25,6 +25,7 @@ import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuNumberReview from './BnuNumberReview.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
+import BnuWholeTenLine from './BnuWholeTenLine.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
 import CardEquation from './CardEquation.vue';
@@ -840,6 +841,10 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <BnuWholeTenLine
+      v-else-if="visual.kind === 'bnu-whole-ten-line'"
+      :visual="visual"
+    />
     <BnuFillGrid v-else-if="visual.kind === 'bnu-fill-grid'" :visual="visual" />
     <BnuNumberReview
       v-else-if="visual.kind === 'bnu-number-review'"

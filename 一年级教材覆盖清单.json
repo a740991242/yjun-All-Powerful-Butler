@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T02:52:14.909Z",
+  "generatedAt": "2026-10-05T03:32:06.025Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 32,
+        "availablePacks": 33,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 935,
-          "manual": 327,
-          "reflection": 125
+          "objective": 966,
+          "manual": 340,
+          "reflection": 128
         }
       },
       "units": [
@@ -35399,10 +35399,46 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-u5-pending",
-              "title": "100以内数加与减（一）",
-              "textbookTitle": "100以内数加与减（一）",
+              "id": "bnu-lower-rabbit-guests",
+              "title": "整十数加减：三种方法、完整数线与自主提问",
+              "textbookTitle": "小兔请客",
               "page": 62,
+              "version": 1,
+              "status": "available",
+              "goal": "完成原整十加减的三种方法、全部术语位置、明确时刻的两小棒图、两条完整数线，并真实提出完整数学问题和解答。",
+              "prerequisite": "认识100以内的整十数，理解一个十为10，能分清整体/部分和动作前后。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 31,
+                "manual": 13,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-rabbit-guests"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-counters", "bnu-whole-ten-line"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "62～63整页、小棒局部放大、全部数量/方法/名称/箭头及开放条件核对",
+                "notes": "六来源活动完整对应，本站明示时刻与换条件题不冒原唯一图义，教师最终试用未核验。"
+              }
+            },
+            {
+              "id": "bnu-lower-u5-pending",
+              "title": "100以内数加与减（一）后续内容",
+              "textbookTitle": "100以内数加与减（一）后续内容",
+              "page": 64,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35428,7 +35464,113 @@
                 "notes": "目录和页码事实不表示正文课程完成。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "resourceId": "bnu-lower-public-scan-2024",
+            "source": "https://keben.szxuexiao.com/html/10763.html",
+            "checkedAt": "2026-10-05",
+            "unit": "u5",
+            "status": "original-teaching-implemented",
+            "finalTeacherReview": "not-verified",
+            "scope": "印刷62～63六项原活动、三种加减方法与全部术语/两小棒/两数线/开放提问完整对应；本站小棒时刻明确与原示意分清，不证明其后64页起、整册或全年完成。",
+            "activities": [
+              {
+                "page": 62,
+                "sourceActivity": "fruit-addition-three-methods",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [1, 2],
+                "objective": [
+                  "plate-groups",
+                  "add-values",
+                  "add-forward",
+                  "add-tens",
+                  "add-related",
+                  "add-beads"
+                ],
+                "manual": [
+                  "actual-add-count",
+                  "actual-add-tens",
+                  "actual-add-related"
+                ],
+                "records": []
+              },
+              {
+                "page": 62,
+                "sourceActivity": "taken-not-left",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [3, 4],
+                "objective": [
+                  "sub-values",
+                  "sub-backward",
+                  "sub-tens",
+                  "sub-related",
+                  "sub-target"
+                ],
+                "manual": [
+                  "actual-sub-count",
+                  "actual-sub-tens",
+                  "actual-sub-related"
+                ],
+                "records": []
+              },
+              {
+                "page": 63,
+                "sourceActivity": "name-each-operation-position",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [5],
+                "objective": [
+                  "add-name-20",
+                  "add-name-30",
+                  "sum-name",
+                  "minuend-name",
+                  "subtrahend-name",
+                  "difference-name"
+                ],
+                "manual": ["actual-names"],
+                "records": []
+              },
+              {
+                "page": 63,
+                "sourceActivity": "two-stick-actions-and-units",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [6, 10],
+                "objective": [
+                  "stick-add-bundles",
+                  "stick-add",
+                  "stick-sub-bundles",
+                  "stick-sub",
+                  "stick-after",
+                  "stick-unit",
+                  "site-zero"
+                ],
+                "manual": ["actual-stick-add", "actual-stick-sub"],
+                "records": []
+              },
+              {
+                "page": 63,
+                "sourceActivity": "both-arrow-lines",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [7, 8],
+                "objective": ["line-add", "line-sub", "line-directions"],
+                "manual": ["actual-line-add", "actual-line-sub"],
+                "records": []
+              },
+              {
+                "page": 63,
+                "sourceActivity": "own-peach-question-and-answer",
+                "lesson": "bnu-lower-rabbit-guests",
+                "steps": [9, 10],
+                "objective": [
+                  "peach-values",
+                  "peach-pair-totals",
+                  "peach-pair-differences",
+                  "peach-most"
+                ],
+                "manual": ["actual-own-question", "actual-explain-question"],
+                "records": ["own-question-record", "method-record", "plan"]
+              }
+            ]
+          }
         },
         {
           "id": "u6",

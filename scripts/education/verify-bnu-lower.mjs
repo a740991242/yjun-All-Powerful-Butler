@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--rabbit-guests'))
+    return {
+      index: 32,
+      lessonId: 'bnu-lower-rabbit-guests',
+      zero: '-site-zero',
+      retry: '-add-beads',
+      manual: 13,
+      steps: 10,
+      review: 9,
+      key: 'rabbit-guests',
+    };
   if (process.argv.includes('--fill-game'))
     return {
       index: 31,
@@ -1343,6 +1354,179 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectTenLine = async (visual, label) => {
+        const figure = p.locator('[data-bnu-ten-line]');
+        await figure.waitFor();
+        const fixtures = {
+          main: {
+            add: {
+              ticks: [20, 30, 40, 50, 60, 70, 80, 90],
+              start: 30,
+              end: 80,
+              jump: '+50',
+            },
+            subtract: {
+              ticks: [50, 60, 70, 80, 90, 100],
+              start: 90,
+              end: 60,
+              jump: '−30',
+            },
+          },
+          review: {
+            add: {
+              ticks: [20, 30, 40, 50, 60, 70, 80, 90],
+              start: 20,
+              end: 70,
+              jump: '+50',
+            },
+            subtract: {
+              ticks: [50, 60, 70, 80, 90, 100],
+              start: 100,
+              end: 60,
+              jump: '−40',
+            },
+          },
+        };
+        const expected = fixtures[visual.variant][visual.scene];
+        const svg = figure.locator('svg');
+        if (
+          JSON.stringify(
+            await svg.locator('[data-bnu-ten-tick] text').allTextContents(),
+          ) !== JSON.stringify(expected.ticks.map(String))
+        )
+          throw new Error('Whole-ten tick scale changed');
+        const arrow = svg.locator('[data-bnu-ten-arrow]');
+        const distance = Math.abs(expected.end - expected.start);
+        let description;
+        if (label.startsWith('english-')) {
+          const direction = visual.scene === 'add' ? 'right' : 'left';
+          description = `The arrow starts at ${expected.start}, moves ${direction} by ${distance}, and points to ${expected.end}.`;
+        } else {
+          const direction = visual.scene === 'add' ? '右，增加' : '左，减少';
+          description = `箭头从刻度${expected.start}向${direction}${distance}，指向刻度${expected.end}。`;
+        }
+        if (
+          (await arrow.getAttribute('role')) !== 'img' ||
+          (await arrow.getAttribute('aria-label')) !== description
+        )
+          throw new Error('Whole-ten arrow accessibility conditions changed');
+        if (
+          Number(await arrow.getAttribute('data-start')) !== expected.start ||
+          Number(await arrow.getAttribute('data-end')) !== expected.end ||
+          (await svg.locator('[data-bnu-ten-jump]').textContent()) !==
+            expected.jump
+        )
+          throw new Error('Whole-ten arrow conditions changed');
+        const x = (n) =>
+          48 +
+          (864 * (n - expected.ticks[0])) /
+            (expected.ticks.at(-1) - expected.ticks[0]);
+        if (
+          (await arrow.getAttribute('d')) !==
+          `M${x(expected.start)} 100 Q${(x(expected.start) + x(expected.end)) / 2} 24 ${x(expected.end)} 100`
+        )
+          throw new Error(
+            'Whole-ten arrow drawn on wrong positions or direction',
+          );
+        for (const [i, n] of expected.ticks.entries())
+          if (
+            Number(
+              await svg
+                .locator('[data-bnu-ten-tick] text')
+                .nth(i)
+                .getAttribute('x'),
+            ) !== x(n)
+          )
+            throw new Error('Whole-ten tick coordinate changed');
+        const marker = await arrow.getAttribute('marker-end');
+        if (
+          !marker?.startsWith('url(#') ||
+          (await svg.locator('marker').count()) !== 1
+        )
+          throw new Error('Whole-ten arrowhead missing');
+        const geometry = await svg.evaluate((n) => {
+          const r = n.getBoundingClientRect();
+          return [...n.querySelectorAll('path,text')]
+            .filter((x) => !x.closest('defs'))
+            .every((x) => {
+              const b = x.getBoundingClientRect();
+              return (
+                b.left >= r.left &&
+                b.right <= r.right &&
+                b.top >= r.top &&
+                b.bottom <= r.bottom &&
+                (x.tagName !== 'text' ||
+                  Number.parseFloat(getComputedStyle(x).fontSize) >= 20)
+              );
+            });
+        });
+        if (!geometry)
+          throw new Error('Whole-ten text or path clipped or too small');
+        if (
+          !(await figure
+            .locator('figcaption,p')
+            .evaluateAll((ns) =>
+              ns
+                .slice(0, 3)
+                .every(
+                  (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+                ),
+            ))
+        )
+          throw new Error('Whole-ten legend too small');
+        const region = figure.locator('[data-bnu-ten-scroll]');
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await region.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(150);
+        if (
+          !(await region.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Whole-ten keyboard scroll failed');
+        for (const edge of ['first', 'last', 'start', 'end']) {
+          const value = edge === 'start' ? expected.start : expected.end;
+          await region.evaluate(
+            (n, { edge, x }) => {
+              if (edge === 'first') n.scrollLeft = 0;
+              else if (edge === 'last') n.scrollLeft = n.scrollWidth;
+              else n.scrollLeft = x - n.clientWidth / 2;
+              n.scrollIntoView({ block: 'center' });
+            },
+            { edge, x: x(value) },
+          );
+          await p.waitForTimeout(150);
+          const fits = await region.evaluate(
+            (n, { edge, value }) => {
+              const r = n.getBoundingClientRect();
+              const ticks = [...n.querySelectorAll('[data-bnu-ten-tick] text')];
+              let target;
+              if (edge === 'first') target = ticks[0];
+              else if (edge === 'last') target = ticks.at(-1);
+              else target = ticks.find((t) => t.textContent === String(value));
+              const b = target.getBoundingClientRect();
+              return (
+                r.left >= 0 &&
+                r.right <= innerWidth &&
+                r.top >= 0 &&
+                r.bottom <= innerHeight &&
+                document.documentElement.scrollWidth <= innerWidth &&
+                b.left >= r.left &&
+                b.right <= r.right
+              );
+            },
+            { edge, value },
+          );
+          if (!fits)
+            throw new Error('Whole-ten full endpoint or viewport clipped');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-rabbit-guests-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -1381,7 +1565,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 32
+          .count()) !== 33
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1757,6 +1941,8 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'rabbit-guests')
+        await inspectPlaceCounters([20, 30, 50], 'rabbit-guests-learn-initial');
       if (flow.key === 'fill-game')
         await inspectFillGrid(
           { scene: 'three', variant: 'main' },
@@ -1781,6 +1967,55 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'rabbit-guests' && [5, 6].includes(step)) {
+          const scene = step === 5 ? 'add' : 'subtract';
+          await inspectTenLine({ scene, variant: 'main' }, `learn-${step + 1}`);
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-bnu-ten-line] figcaption')
+            .filter({
+              hasText:
+                scene === 'add'
+                  ? 'Whole-ten line: increase to the right'
+                  : 'Whole-ten line: decrease to the left',
+            })
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectTenLine(
+            { scene, variant: 'main' },
+            `english-theme-${step + 1}`,
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error(
+              'Whole-ten language/theme changed learning records',
+            );
+        }
         if (flow.key === 'fill-game') {
           const scene = {
             0: 'three',
@@ -2039,12 +2274,20 @@ const server = http.createServer(async (req, res) => {
           (flow.key === 'count-beans' && (step === 0 || step === 1)) ||
           (flow.key === 'hundred-harvest' && [0, 2].includes(step)) ||
           (flow.key === 'number-practice' && [9, 10].includes(step)) ||
+          (flow.key === 'rabbit-guests' && [0, 1, 2, 4, 8].includes(step)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
         ) {
           const diagramValues = {
             'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
             'hundred-harvest': { 0: [95, 92, 85, 79], 2: [85] },
             'number-practice': { 9: [13], 10: [4, 22, 31, 40] },
+            'rabbit-guests': {
+              0: [20, 30, 50],
+              1: [50, 40, 10],
+              2: [50, 40, 10],
+              4: [40, 20, 60],
+              8: [20, 0],
+            },
             'red-fruit': { 0: [21, 18], 1: [32, 34, 100, 99], 3: [45, 54] },
           };
           const values = diagramValues[flow.key][step];
@@ -2278,6 +2521,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-whole-ten-line')
+          await inspectTenLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')
@@ -2713,8 +2958,9 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'fill-game' &&
-              (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
+            ((flow.key === 'rabbit-guests' && q.id.endsWith('-sub-backward')) ||
+              (flow.key === 'fill-game' &&
+                (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
               (flow.key === 'number-practice' &&
                 (q.id.endsWith('-cards-six') ||
                   q.id.endsWith('-beads-digits'))) ||
@@ -2726,6 +2972,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              'rabbit-guests': [40, null, null, null],
               'fill-game': q.id.endsWith('-three-all')
                 ? [3, null, null, null, null]
                 : [0, null, null, null, null, null, null],
@@ -2738,6 +2985,7 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              'rabbit-guests': [40, 30, 20, 0],
               'fill-game': q.id.endsWith('-three-all')
                 ? [2, 3, 2, 3, 3]
                 : [4, 2, 5, 2, 3, 5, 5],
@@ -4077,6 +4325,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-whole-ten-line')
+          await inspectTenLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')

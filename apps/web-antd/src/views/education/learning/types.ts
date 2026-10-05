@@ -11,6 +11,7 @@ import type { BnuHundredTableVisual } from './bnu-hundred-table';
 import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
 import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
+import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
 import type { ClassCapacityVisual } from './class-capacity';
@@ -463,6 +464,7 @@ export type Visual =
   | BnuHundredWeatherVisual
   | BnuNumberReviewVisual
   | BnuSixCardGameVisual
+  | BnuWholeTenLineVisual
   | BookGroupsVisual
   | CardEquationRule
   | CardGameVisual
