@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T15:30:35.042Z",
+  "generatedAt": "2026-10-05T16:30:56.911Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 40,
+        "availablePacks": 41,
         "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1144,
-          "manual": 425,
-          "reflection": 154
+          "objective": 1162,
+          "manual": 443,
+          "reflection": 157
         }
       },
       "units": [
@@ -36344,10 +36344,40 @@
               }
             },
             {
-              "id": "bnu-lower-u6-pending",
-              "title": "有趣的平面图形（一）：第78页起继续制作",
-              "textbookTitle": "有趣的平面图形（一）：第78页起继续制作",
+              "id": "bnu-lower-fold-one",
+              "title": "折、剪、比与四片拼组",
+              "textbookTitle": "动手做（一）",
               "page": 78,
+              "version": 1,
+              "status": "available",
+              "goal": "分别尝试对折和剪后比同形，完整照样拼四图，合作创作，并沿箭头折飞机、折出方形、用四片探索新的外轮廓。",
+              "prerequisite": "认识正方形、长方形、三角形和圆，能逐片计数并观察完整边界。",
+              "referenceQuery": null,
+              "steps": 16,
+              "tasks": {
+                "objective": 18,
+                "manual": 18,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-fold-one"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["bnu-fold-one", "paper-fold"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "公开第三方扫描78～79页与附页97页逐项来源核对，原创教学与程序验收",
+                "notes": "七原活动逐项对应，三宽完整39主任务与6新复习、中英主题、图示几何、零值刷新、重试历史与旧记录备份已验；第三长方形照片折痕仍需实物核对，不补造；不冒人工最终审校或全册完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-u6-pending",
+              "title": "有趣的平面图形（一）：第80页起继续制作",
+              "textbookTitle": "有趣的平面图形（一）：第80页起继续制作",
+              "page": 80,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -36381,7 +36411,7 @@
             "unit": "u6",
             "status": "partial-original-teaching",
             "finalTeacherReview": "not-verified",
-            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～86后续仍制作，保留单元待制作入口。",
+            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～86后续仍制作，保留单元待制作入口。",
             "activities": [
               {
                 "page": 76,
@@ -36467,9 +36497,110 @@
                 ],
                 "manual": ["actual-train", "actual-share"],
                 "records": ["reflection", "plan"]
+              },
+              {
+                "page": 78,
+                "sourceActivity": "square-two-equal-halves-cut-and-compare",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [1, 2],
+                "objective": ["halves-0", "halves-1"],
+                "manual": [
+                  "actual-halves-square-mid",
+                  "actual-halves-square-diagonal"
+                ],
+                "records": []
+              },
+              {
+                "page": 78,
+                "sourceActivity": "rectangle-triangle-circle-halves-cut-and-compare",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [3, 4, 5],
+                "objective": [
+                  "halves-2",
+                  "halves-3",
+                  "circle-half",
+                  "diagonal-compare"
+                ],
+                "manual": [
+                  "actual-halves-rectangle",
+                  "actual-halves-triangle",
+                  "actual-halves-circle"
+                ],
+                "records": ["reflection"]
+              },
+              {
+                "page": 78,
+                "sourceActivity": "copy-all-four-cut-piece-patterns",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [6, 7, 8, 9],
+                "objective": [
+                  "copy-count-0",
+                  "copy-count-1",
+                  "copy-count-2",
+                  "copy-count-3"
+                ],
+                "manual": [
+                  "actual-copy-1",
+                  "actual-copy-2",
+                  "actual-copy-3",
+                  "actual-copy-4"
+                ],
+                "records": []
+              },
+              {
+                "page": 79,
+                "sourceActivity": "cooperate-create-color-and-describe",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [10, 11],
+                "objective": [],
+                "manual": [
+                  "actual-cooperate",
+                  "actual-color",
+                  "actual-describe"
+                ],
+                "records": ["cooperation-record"]
+              },
+              {
+                "page": 79,
+                "sourceActivity": "fold-airplane-seven-panel-arrow-order",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [12],
+                "objective": ["airplane-order"],
+                "manual": ["actual-airplane"],
+                "records": []
+              },
+              {
+                "page": 79,
+                "sourceActivity": "fold-rectangle-into-square-without-mandatory-cut",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [13],
+                "objective": ["fold-not-cut"],
+                "manual": ["actual-square-fold"],
+                "records": []
+              },
+              {
+                "page": 79,
+                "sourceActivity": "square-four-equal-triangles-open-recomposition",
+                "lesson": "bnu-lower-fold-one",
+                "steps": [14, 15, 16],
+                "objective": [
+                  "four-count",
+                  "zero-square",
+                  "whole-triangle",
+                  "whole-trapezoid",
+                  "open",
+                  "cutlines"
+                ],
+                "manual": [
+                  "actual-four-cut",
+                  "actual-four-triangle",
+                  "actual-four-trapezoid",
+                  "actual-four-new"
+                ],
+                "records": ["plan"]
               }
             ],
-            "pendingPrintedPages": [78, 79, 80, 81, 82, 83, 84, 85, 86]
+            "pendingPrintedPages": [80, 81, 82, 83, 84, 85, 86]
           }
         },
         {

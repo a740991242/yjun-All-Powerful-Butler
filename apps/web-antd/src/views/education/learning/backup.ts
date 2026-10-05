@@ -14,6 +14,7 @@ import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
+import { isBnuFoldOneVisual } from './bnu-fold-one';
 import { isBnuHundredTableVisual } from './bnu-hundred-table';
 import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
 import { isBnuInterestingVisual } from './bnu-interesting';
@@ -584,6 +585,9 @@ function visual(value: unknown) {
     }
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
+    }
+    case 'bnu-fold-one': {
+      return isBnuFoldOneVisual(value);
     }
     case 'bnu-calculation-review': {
       return isBnuCalculationReviewVisual(value);

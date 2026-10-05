@@ -15,6 +15,7 @@ import { bnuLowerCountHundredLesson } from './bnu-lower-count-hundred';
 import { bnuLowerCountrysideLesson } from './bnu-lower-countryside';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerFillGameLesson } from './bnu-lower-fill-game';
+import { bnuLowerFoldOneLesson } from './bnu-lower-fold-one';
 import { bnuLowerFrogsLesson } from './bnu-lower-frogs';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
 import { bnuLowerHideLesson } from './bnu-lower-hide';
@@ -393,7 +394,8 @@ function pending(key: string, title: string, page: number): Lesson {
 const authoredLessons: Record<string, Lesson[]> = {
   u6: [
     bnuLowerRecognizeShapesLesson,
-    pending('u6', '有趣的平面图形（一）：第78页起继续制作', 78),
+    bnuLowerFoldOneLesson,
+    pending('u6', '有趣的平面图形（一）：第80页起继续制作', 80),
   ],
   u4: [
     bnuLowerAroundNumbersLesson,

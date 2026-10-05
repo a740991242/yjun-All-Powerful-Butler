@@ -21,8 +21,8 @@ const frames = computed(() =>
 );
 </script>
 <template>
-  <div class="flex min-w-0 flex-col gap-3">
-    <p class="text-sm text-muted-foreground">
+  <div data-paper-fold class="flex min-w-0 flex-col gap-3">
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.foldNotice') }}
     </p>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -31,7 +31,7 @@ const frames = computed(() =>
         :key="frame.stage"
         class="flex min-w-0 flex-col gap-2"
       >
-        <p class="font-medium">
+        <p class="text-xl font-medium leading-8">
           {{ $t('educationLearning.foldStage', { stage: frame.stage }) }}
         </p>
         <svg
@@ -63,7 +63,7 @@ const frames = computed(() =>
             stroke-dasharray="6 4"
           />
         </svg>
-        <p class="text-sm text-muted-foreground">
+        <p class="text-xl leading-8 text-muted-foreground">
           {{
             $t(
               `educationLearning.fold_${visual.paper}_${visual.method}_${frame.stage}`,

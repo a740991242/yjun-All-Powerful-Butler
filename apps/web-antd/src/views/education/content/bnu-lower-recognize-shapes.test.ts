@@ -217,16 +217,20 @@ it('offers all eight changed-condition reviews after a real mistake and does not
 it('maps every read-page activity to actual steps and task kinds while keeping all remaining unit pages pending', () => {
   expect(audit.status).toBe('partial-original-teaching');
   expect(audit.finalTeacherReview).toBe('not-verified');
-  expect(audit.activities.map((x) => [x.page, x.sourceActivity])).toEqual(
-    source.activities.map((x) => [x.page, x.key]),
-  );
+  expect(
+    audit.activities
+      .filter((x) => x.lesson === lesson.id)
+      .map((x) => [x.page, x.sourceActivity]),
+  ).toEqual(source.activities.map((x) => [x.page, x.key]));
   const kinds = new Map(
     lesson.questions.map((x) => [
       x.id.slice(lesson.id.length + 1),
       x.rule.kind,
     ]),
   );
-  for (const activity of audit.activities) {
+  for (const activity of audit.activities.filter(
+    (x) => x.lesson === lesson.id,
+  )) {
     expect(activity.lesson).toBe(lesson.id);
     for (const step of activity.steps)
       expect(lesson.steps[step - 1]).toBeDefined();
@@ -237,15 +241,14 @@ it('maps every read-page activity to actual steps and task kinds while keeping a
     for (const suffix of activity.records)
       expect(kinds.get(suffix)).toBe('reflection');
   }
-  expect(audit.pendingPrintedPages).toEqual([
-    78, 79, 80, 81, 82, 83, 84, 85, 86,
-  ]);
+  expect(audit.pendingPrintedPages).toEqual([80, 81, 82, 83, 84, 85, 86]);
   expect(
     bnuLowerBook.units
       .find((x) => x.id === 'u6')
       ?.lessons.map((x) => [x.id, x.status, x.page]),
   ).toEqual([
     [lesson.id, 'available', 76],
-    ['bnu-lower-u6-pending', 'preparing', 78],
+    ['bnu-lower-fold-one', 'available', 78],
+    ['bnu-lower-u6-pending', 'preparing', 80],
   ]);
 });

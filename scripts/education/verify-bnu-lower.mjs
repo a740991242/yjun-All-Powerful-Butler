@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--fold-one'))
+    return {
+      index: 40,
+      lessonId: 'bnu-lower-fold-one',
+      zero: '-zero-square',
+      retry: '-four-count',
+      manual: 18,
+      steps: 16,
+      review: 6,
+      key: 'fold-one',
+    };
+
   if (process.argv.includes('--recognize-shapes'))
     return {
       index: 39,
@@ -2447,6 +2459,444 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectFoldOne = async (visual, label) => {
+        const r = 60 * Math.SQRT2;
+        const rect = (x, y, w, h) => [
+          [x, y],
+          [x + w, y],
+          [x + w, y + h],
+          [x, y + h],
+        ];
+        const arc = (a, b, sweep) => ({
+          a,
+          b,
+          sweep,
+          radius: Math.hypot(b[0] - a[0], b[1] - a[1]) / 2,
+        });
+        const semicircle = (x, y, r, lower = false) =>
+          arc([x - r, y], [x + r, y], lower ? 0 : 1);
+        const fixtures = {
+          'square-mid': [rect(100, 60, 160, 80), rect(100, 140, 160, 80)],
+          'square-diagonal': [
+            [
+              [100, 60],
+              [260, 60],
+              [260, 220],
+            ],
+            [
+              [100, 60],
+              [260, 220],
+              [100, 220],
+            ],
+          ],
+          'rectangle-mid': [rect(60, 60, 240, 80), rect(60, 140, 240, 80)],
+          'triangle-mid': [
+            [
+              [60, 220],
+              [180, 60],
+              [180, 220],
+            ],
+            [
+              [180, 60],
+              [300, 220],
+              [180, 220],
+            ],
+          ],
+          'circle-mid': [
+            semicircle(180, 140, 80),
+            semicircle(180, 140, 80, true),
+          ],
+          'four-triangles': [
+            [
+              [120, 80],
+              [240, 80],
+              [180, 140],
+            ],
+            [
+              [240, 80],
+              [240, 200],
+              [180, 140],
+            ],
+            [
+              [240, 200],
+              [120, 200],
+              [180, 140],
+            ],
+            [
+              [120, 200],
+              [120, 80],
+              [180, 140],
+            ],
+          ],
+          'joined-triangle': [
+            [
+              [60, 220],
+              [120, 160],
+              [180, 220],
+            ],
+            [
+              [120, 160],
+              [180, 100],
+              [180, 220],
+            ],
+            [
+              [180, 100],
+              [240, 160],
+              [180, 220],
+            ],
+            [
+              [180, 220],
+              [240, 160],
+              [300, 220],
+            ],
+          ],
+          'joined-trapezoid': [
+            [
+              [40, 200],
+              [40 + r, 200 - r],
+              [40 + r, 200],
+            ],
+            [
+              [40 + r, 200 - r],
+              [40 + 2 * r, 200 - r],
+              [40 + r, 200],
+            ],
+            [
+              [40 + 2 * r, 200 - r],
+              [40 + 2 * r, 200],
+              [40 + r, 200],
+            ],
+            [
+              [40 + 2 * r, 200 - r],
+              [40 + 3 * r, 200],
+              [40 + 2 * r, 200],
+            ],
+          ],
+          'copy-triangle': [
+            [
+              [100, 220],
+              [180, 140],
+              [180, 220],
+            ],
+            [
+              [180, 140],
+              [260, 220],
+              [180, 220],
+            ],
+          ],
+          'copy-slant': [
+            [
+              [100, 180],
+              [180, 100],
+              [180, 180],
+            ],
+            [
+              [180, 100],
+              [260, 100],
+              [180, 180],
+            ],
+          ],
+          'copy-mushroom': [semicircle(180, 110, 80), rect(160, 110, 40, 120)],
+          'copy-flag': [
+            rect(130, 50, 40, 80),
+            rect(130, 130, 40, 80),
+            [
+              [170, 50],
+              [250, 130],
+              [170, 130],
+            ],
+          ],
+          flower: [
+            arc([180, 30], [180, 110], 1),
+            arc([180, 110], [180, 30], 1),
+            arc([170, 120], [100, 80], 1),
+            arc([190, 120], [260, 80], 0),
+            rect(170, 110, 20, 130),
+            [
+              [170, 190],
+              [120, 150],
+              [120, 190],
+            ],
+            [
+              [190, 190],
+              [240, 150],
+              [240, 190],
+            ],
+          ],
+          fish: [
+            [
+              [150, 140],
+              [90, 80],
+              [100, 130],
+            ],
+            [
+              [150, 140],
+              [90, 200],
+              [100, 150],
+            ],
+            rect(150, 100, 80, 40),
+            rect(150, 140, 80, 40),
+            semicircle(270, 100, 40),
+            semicircle(270, 100, 40, true),
+            semicircle(270, 180, 40),
+            semicircle(270, 180, 40, true),
+          ],
+        };
+        const expected = fixtures[visual.scene];
+        if (!expected) throw new Error('Unknown fold fixture');
+        const root = p.locator('[data-bnu-fold-one]');
+        await root.waitFor();
+        const region = root.locator('[data-bnu-fold-scroll]');
+        await region.scrollIntoViewIfNeeded();
+        await p.waitForTimeout(150);
+        const checks = await root.evaluate(
+          (node, { expected, review }) => {
+            const svg = node.querySelector('svg');
+            const group = svg.firstElementChild;
+            const pieces = [...svg.querySelectorAll('[data-fold-piece]')];
+            const convert = ([x, y]) => (review ? [360 - x, 280 - y] : [x, y]);
+            return {
+              transform: group.getAttribute('transform'),
+              viewBox: svg.getAttribute('viewBox'),
+              caption: node.querySelector('figcaption').textContent.trim(),
+              missingAria: !svg.getAttribute('aria-label'),
+              rawKeys: node.textContent.includes('educationLearning.'),
+              small: [...node.querySelectorAll('p,figcaption')].some(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+              ),
+              overflow: document.documentElement.scrollWidth > innerWidth + 1,
+              pieces: pieces.map((g, i) => {
+                const shape = g.querySelector('path');
+                const text = g.querySelector('text');
+                const title = g.querySelector('title');
+                const bbox = shape.getBBox();
+                const tb = text.getBBox();
+                const exp = expected[i];
+                const numbers = shape
+                  .getAttribute('d')
+                  .match(/-?\d+(?:\.\d+)?(?:e[+-]?\d+)?/g)
+                  .map(Number);
+                const values = Array.isArray(exp)
+                  ? exp.flat()
+                  : [
+                      ...exp.a,
+                      exp.radius,
+                      exp.radius,
+                      0,
+                      0,
+                      exp.sweep,
+                      ...exp.b,
+                    ];
+                const match =
+                  numbers.length === values.length &&
+                  numbers.every((n, j) => Math.abs(n - values[j]) < 1e-7);
+                const first = convert(Array.isArray(exp) ? exp[0] : exp.a);
+                return {
+                  match,
+                  letter: g.dataset.foldPiece,
+                  text: text.textContent.trim(),
+                  font: Number.parseFloat(getComputedStyle(text).fontSize),
+                  clipped:
+                    bbox.x < 2 ||
+                    bbox.y < 2 ||
+                    bbox.x + bbox.width > 358 ||
+                    bbox.y + bbox.height > 278 ||
+                    tb.x < 2 ||
+                    tb.y < 2 ||
+                    tb.x + tb.width > 358 ||
+                    tb.y + tb.height > 278,
+                  title: title.textContent,
+                  coordinates: title.textContent.includes(
+                    `(${first[0]}, ${first[1]})`,
+                  ),
+                  labelTransform: text.getAttribute('transform'),
+                  x: Number(text.getAttribute('x')),
+                  y: Number(text.getAttribute('y')),
+                };
+              }),
+            };
+          },
+          { expected, review: visual.variant === 'review' },
+        );
+        if (
+          checks.transform !==
+            (visual.variant === 'review' ? 'rotate(180 180 140)' : null) ||
+          checks.viewBox !== '0 0 360 280' ||
+          checks.pieces.length !== expected.length ||
+          checks.small ||
+          checks.missingAria ||
+          checks.rawKeys ||
+          checks.overflow
+        )
+          throw new Error(`Fold root ${label}: ${JSON.stringify(checks)}`);
+        for (const [i, c] of checks.pieces.entries())
+          if (
+            !c.match ||
+            c.letter !== String.fromCodePoint(65 + i) ||
+            c.text !== c.letter ||
+            c.font < 20 ||
+            c.clipped ||
+            !c.coordinates ||
+            !c.title.includes(c.letter) ||
+            c.labelTransform !==
+              (visual.variant === 'review' ? `rotate(180 ${c.x} ${c.y})` : null)
+          )
+            throw new Error(
+              `Fold geometry ${label} ${i}: ${JSON.stringify(c)}`,
+            );
+        if (
+          !/^折剪拼观察图 \d+$|^Folding and composition diagram \d+$/.test(
+            checks.caption,
+          )
+        )
+          throw new Error(
+            'Fold caption reveals answers or missing translation',
+          );
+        for (const edge of ['left', 'right']) {
+          await region.evaluate((n, edge) => {
+            n.scrollLeft = edge === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          const visible = await region.evaluate((n) => {
+            const box = n.getBoundingClientRect();
+            return box.left >= -1 && box.right <= innerWidth + 1;
+          });
+          if (!visible) throw new Error('Fold scrolling viewport outside page');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-fold-${label}-${width}-${edge}.png`,
+          });
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        if (await region.evaluate((n) => n.scrollWidth > n.clientWidth)) {
+          await region.focus();
+          await p.keyboard.press('ArrowRight');
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Fold keyboard right scrolling failed');
+          await p.keyboard.press('ArrowLeft');
+          if ((await region.evaluate((n) => n.scrollLeft)) !== 0)
+            throw new Error('Fold keyboard left scrolling failed');
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+      };
+      const inspectFoldPaper = async (label) => {
+        const root = p.locator('[data-paper-fold]');
+        await root.waitFor();
+        const shapes = root.locator('svg polygon');
+        if ((await shapes.count()) !== 2)
+          throw new Error('Fold-to-square must stop at one fold');
+        const expected = [
+          '48,48 208,48 208,128 48,128',
+          '48,48 128,48 128,128 48,128',
+        ];
+        for (let i = 0; i < 2; i++) {
+          const shape = shapes.nth(i);
+          await shape.scrollIntoViewIfNeeded();
+          const geometry = await shape.evaluate((node) => {
+            const b = node.getBBox();
+            const svg = node.closest('svg');
+            const box = svg.getBoundingClientRect();
+            return {
+              points: node.getAttribute('points'),
+              box: svg.getAttribute('viewBox'),
+              aria: svg.getAttribute('aria-label'),
+              clipped:
+                b.x < 2 ||
+                b.y < 2 ||
+                b.x + b.width > 254 ||
+                b.y + b.height > 254,
+              viewport: box.left >= -1 && box.right <= innerWidth + 1,
+            };
+          });
+          if (
+            geometry.points !== expected[i] ||
+            geometry.box !== '0 0 256 256' ||
+            !geometry.aria ||
+            geometry.aria.includes('educationLearning.') ||
+            geometry.clipped ||
+            !geometry.viewport
+          )
+            throw new Error(
+              `Fold-to-square geometry ${label}: ${JSON.stringify(geometry)}`,
+            );
+        }
+        if (
+          await root.evaluate(
+            (node) =>
+              [...node.querySelectorAll('p')].some(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+              ) || document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error('Paper-fold small text or page overflow');
+        await p.screenshot({
+          path: `/tmp/butler-bnu-fold-paper-${label}-${width}.png`,
+        });
+      };
+      const inspectFoldTeaching = async (step) => {
+        const scenes = [
+          'square-mid',
+          'square-diagonal',
+          'rectangle-mid',
+          'triangle-mid',
+          'circle-mid',
+          'copy-triangle',
+          'copy-slant',
+          'copy-mushroom',
+          'copy-flag',
+          'flower',
+          'fish',
+          null,
+          null,
+          'four-triangles',
+          'joined-triangle',
+          'joined-trapezoid',
+        ];
+        const scene = scenes[step];
+        if (!scene && step !== 12) return;
+        const visual = { kind: 'bnu-fold-one', scene, variant: 'main' };
+        await (step === 12
+          ? inspectFoldPaper(`learn-${step}`)
+          : inspectFoldOne(visual, `learn-${step}`));
+        const state = JSON.stringify(await read());
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        await p.waitForTimeout(600);
+        await (step === 12
+          ? inspectFoldPaper(`learn-${step}-en`)
+          : inspectFoldOne(visual, `learn-${step}-en`));
+        const wasDark = await p.evaluate(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') !== was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await (step === 12
+          ? inspectFoldPaper(`learn-${step}-en-theme`)
+          : inspectFoldOne(visual, `learn-${step}-en-theme`));
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') === was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await p.waitForTimeout(600);
+        if (JSON.stringify(await read()) !== state)
+          throw new Error('Fold language/theme changed learning records');
+      };
       const inspectRecognizeCards = async (visual, label) => {
         const cards = p.locator('svg[viewBox="0 0 144 144"]');
         await cards.first().waitFor();
@@ -2681,7 +3131,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 40
+          .count()) !== 41
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -3057,6 +3507,7 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'fold-one') await inspectFoldTeaching(0);
       if (flow.key === 'written')
         await inspectWritten(
           { scene: 'rods-add', variant: 'main' },
@@ -3092,6 +3543,7 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'fold-one') await inspectFoldTeaching(step + 1);
         if (flow.key === 'recognize-shapes' && [1, 2, 3, 7, 8].includes(step)) {
           const layouts = {
             1: [
@@ -4025,6 +4477,8 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (q.visual?.kind === 'bnu-fold-one')
+          await inspectFoldOne(q.visual, q.id);
         if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
           await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')
@@ -5989,6 +6443,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-fold-one')
+          await inspectFoldOne(q.visual, q.id);
         if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
           await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')

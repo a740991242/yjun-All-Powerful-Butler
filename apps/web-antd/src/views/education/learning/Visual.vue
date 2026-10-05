@@ -22,6 +22,7 @@ import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
+import BnuFoldOne from './BnuFoldOne.vue';
 import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuInteresting from './BnuInteresting.vue';
@@ -850,6 +851,7 @@ const shapeDescription = computed(() =>
       v-else-if="visual.kind === 'bnu-two-jump-line'"
       :visual="visual"
     />
+    <BnuFoldOne v-else-if="visual.kind === 'bnu-fold-one'" :visual="visual" />
     <BnuCalculationReview
       v-else-if="visual.kind === 'bnu-calculation-review'"
       :visual="visual"
