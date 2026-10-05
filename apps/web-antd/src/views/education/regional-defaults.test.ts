@@ -116,7 +116,7 @@ it('keeps Shanxi city-scoped catalog alternatives distinct from a province-wide 
   }
 });
 
-it('keeps Hubei spring alternatives specific to the verified lower volume', () => {
+it('keeps Hubei spring and autumn catalogs specific to their verified volumes', () => {
   const hubei = { ...query, province: 'hubei', volume: 'lower' };
   const result = regionalMathematicsDefault(hubei)!;
   expect(result.edition).toBe('pep-2024');
@@ -131,7 +131,6 @@ it('keeps Hubei spring alternatives specific to the verified lower volume', () =
   });
   expect(result.evidence[0]!.sourceTitle).toContain('第13、339项');
   for (const change of [
-    { volume: 'upper' },
     { city: 'wuhan' },
     { school: 'any-school' },
     { subject: 'english' },
@@ -145,4 +144,37 @@ it('keeps Hubei spring alternatives specific to the verified lower volume', () =
   expect(regionalMathematicsDefault(hubei)!.evidence[0]!.publishedAt).toBe(
     '2026-02-12',
   );
+});
+
+it('adds Hubei upper references without turning an attachment path date into a publication date or school-wide adoption', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const result = regionalMathematicsDefault({
+      ...query,
+      province: 'hubei',
+      academicYear,
+    })!;
+    expect(result.edition).toBe('pep-2024');
+    expect(result.catalogYear).toBe('2025');
+    expect(result.alternatives).toEqual(['pep-2024', 'bnu-2024']);
+    expect(result.evidence).toEqual([
+      {
+        id: 'hubei-grade-one-math-upper-catalog-2025',
+        sourceUrl:
+          'https://fgw.hubei.gov.cn/fbjd/zc/zcwj/gg/202508/P020250829700876060881.pdf',
+        sourceTitle:
+          '湖北省2025年秋季中小学教科书零售价格表（附件1印刷第2、22页，第14、372项，一年级数学上册）',
+        publishedAt: '',
+        checkedAt: '2026-10-06',
+      },
+    ]);
+    result.alternatives!.pop();
+    result.evidence[0]!.sourceUrl = 'https://example.invalid';
+    const fresh = regionalMathematicsDefault({
+      ...query,
+      province: 'hubei',
+      academicYear,
+    })!;
+    expect(fresh.alternatives).toHaveLength(2);
+    expect(fresh.evidence[0]!.sourceUrl).toContain('fgw.hubei.gov.cn');
+  }
 });

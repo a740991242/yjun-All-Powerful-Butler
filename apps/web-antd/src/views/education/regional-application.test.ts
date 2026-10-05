@@ -297,31 +297,37 @@ it('applies Shanxi reference combinations for both volumes while retaining syste
   }
 });
 
-it('applies Hubei lower math without inventing upper math or English', () => {
+it('applies Hubei volume-specific catalog combinations without inventing English', () => {
   for (const volume of ['upper', 'lower'] as const) {
-    const rows = regionalApplicationPlan({
+    const local = {
       ...query,
       province: 'hubei',
       city: '',
       school: '',
       volume,
-    });
+    };
+    const rows = regionalApplicationPlan(local);
     expect(
       rows.flatMap((row) =>
         row.action ? [regionalActionPath(row.action)] : [],
       ),
-    ).toEqual(
-      volume === 'lower'
-        ? [
-            '/education/primary/p1/chinese/pep-2024/lower',
-            '/education/primary/p1/math/pep-2024/lower',
-            '/education/primary/p1/ethics/pep-2024/lower',
-          ]
-        : [
-            '/education/primary/p1/chinese/pep-2024/upper',
-            '/education/primary/p1/ethics/pep-2024/upper',
-          ],
-    );
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(required(rows[1]).resolution).toMatchObject({
+      status: 'recommended',
+      edition: 'pep-2024',
+      catalogYear: volume === 'upper' ? '2025' : '2026',
+      alternatives: ['pep-2024', 'bnu-2024'],
+    });
     expect(required(rows[3]).action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
   }
 });

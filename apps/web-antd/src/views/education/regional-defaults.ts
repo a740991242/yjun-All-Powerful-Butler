@@ -38,6 +38,24 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'hubei' && query.volume === 'upper')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'hubei-grade-one-math-upper-catalog-2025',
+          sourceUrl:
+            'https://fgw.hubei.gov.cn/fbjd/zc/zcwj/gg/202508/P020250829700876060881.pdf',
+          sourceTitle:
+            '湖北省2025年秋季中小学教科书零售价格表（附件1印刷第2、22页，第14、372项，一年级数学上册）',
+          // The attachment establishes the catalog year, not its publication date.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'hubei' && query.volume === 'lower')
     return {
       edition: 'pep-2024',

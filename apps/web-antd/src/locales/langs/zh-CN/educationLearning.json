@@ -1461,5 +1461,6 @@
   "finalPracticeMark_left": "已给第{position}图：杯子把手朝左",
   "finalPracticeMark_right": "已给第{position}图：杯子把手朝右",
   "finalPracticeMark_horizontal": "已给第{position}图：外框内横分线",
-  "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线"
+  "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线",
+  "regionalPublishedUnknown": "未标注"
 }

@@ -346,8 +346,43 @@ const server = http.createServer(async (req, res) => {
         await p.screenshot({ path: `/tmp/butler-hubei-default-${width}.png` });
         await choose('education-region-volume', '上册');
         await apply.click();
-        if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
-          throw new Error('Hubei spring math leaked into upper volume');
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 上册`,
+              exact: true,
+            })
+            .waitFor();
+        await region
+          .locator(
+            'a[href="https://fgw.hubei.gov.cn/fbjd/zc/zcwj/gg/202508/P020250829700876060881.pdf"]',
+          )
+          .waitFor();
+        const hubeiUpperCatalog = region.getByText(
+          '参考2025年省级目录中的可选版本',
+          { exact: false },
+        );
+        await hubeiUpperCatalog.waitFor();
+        await region
+          .getByText('资料发布：未标注；核验日期：2026-10-06', { exact: false })
+          .waitFor();
+        const hubeiUpperAlternatives = await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .textContent();
+        if (
+          !hubeiUpperAlternatives.includes('北师大版') ||
+          hubeiUpperAlternatives.includes('苏教版')
+        )
+          throw new Error(
+            'Hubei autumn alternatives differ from verified publishers',
+          );
+        await hubeiUpperCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        await p.screenshot({
+          path: `/tmp/butler-hubei-upper-default-${width}.png`,
+        });
         if (await hubeiCatalog.count())
           throw new Error('Hubei spring source leaked into upper volume');
         await choose('education-region-province', '湖南', true);
@@ -488,6 +523,31 @@ const server = http.createServer(async (req, res) => {
         await p.screenshot({
           path: `/tmp/butler-hunan-default-${width}-en-dark.png`,
         });
+        await choose('education-region-province', 'Hubei', true);
+        await choose('education-region-volume', 'Upper volume');
+        const hubeiEnglishCatalog = p.getByText(
+          'The 2025 provincial catalog lists alternatives.',
+          { exact: false },
+        );
+        await hubeiEnglishCatalog.waitFor();
+        await p
+          .getByText('Published: Not stated; checked: 2026-10-06', {
+            exact: false,
+          })
+          .waitFor();
+        await hubeiEnglishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Hubei English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-hubei-upper-default-${width}-en-dark.png`,
+        });
         if (
           (await p.evaluate(async () =>
             JSON.stringify(await window.qaLoad()),
@@ -506,6 +566,9 @@ const server = http.createServer(async (req, res) => {
             HunanUpperThreeSubjectsLowerTwoSubjects: true,
             HunanUpperCatalogNotInheritedByLower: true,
             HunanEnglishDarkCatalog: true,
+            HubeiUpperLowerThreeSubjects: true,
+            HubeiUpperUnknownPublicationDateBilingual: true,
+            HubeiUpperEnglishDarkCatalog: true,
             provincialCatalogAlternativesShown: true,
             FujianEnglishDarkCatalog: true,
             schoolOptionalCollapsed: true,

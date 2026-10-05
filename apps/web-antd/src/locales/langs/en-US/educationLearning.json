@@ -1461,5 +1461,6 @@
   "finalPracticeMark_left": "Given position {position}: cup handle faces left",
   "finalPracticeMark_right": "Given position {position}: cup handle faces right",
   "finalPracticeMark_horizontal": "Given position {position}: horizontal dividing line inside the frame",
-  "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame"
+  "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame",
+  "regionalPublishedUnknown": "Not stated"
 }

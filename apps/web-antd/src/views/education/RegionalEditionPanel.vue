@@ -324,7 +324,9 @@ function apply() {
         <p>
           {{
             $t('educationLearning.regionalSourceDates', {
-              published: evidence.publishedAt,
+              published:
+                evidence.publishedAt ||
+                $t('educationLearning.regionalPublishedUnknown'),
               checked: evidence.checkedAt,
             })
           }}
