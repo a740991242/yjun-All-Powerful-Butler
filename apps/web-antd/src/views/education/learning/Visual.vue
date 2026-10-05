@@ -22,6 +22,7 @@ import BnuFillGrid from './BnuFillGrid.vue';
 import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalData from './BnuFinalData.vue';
+import BnuFinalGeometry from './BnuFinalGeometry.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
 import BnuFoldOne from './BnuFoldOne.vue';
@@ -1194,6 +1195,10 @@ const shapeDescription = computed(() =>
         }}
       </div>
     </div>
+    <BnuFinalGeometry
+      v-else-if="visual.kind === 'bnu-final-geometry'"
+      :visual="visual"
+    />
     <BnuFinalData
       v-else-if="visual.kind === 'bnu-final-data'"
       :visual="visual"

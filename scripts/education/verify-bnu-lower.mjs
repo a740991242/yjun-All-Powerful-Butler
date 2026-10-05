@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--final-geometry'))
+    return {
+      index: 50,
+      lessonId: 'bnu-lower-final-geometry',
+      zero: '-site-zero',
+      retry: '-diagonal-count',
+      manual: 17,
+      steps: 15,
+      review: 8,
+      key: 'final-geometry',
+    };
+
   if (process.argv.includes('--final-number-review'))
     return {
       index: 48,
@@ -4324,6 +4336,307 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectFinalGeometry = async (visual, label, bilingual = false) => {
+        const root = p.locator('[data-bnu-final-geometry]');
+        const check = async () => {
+          await root.waitFor();
+          if (
+            (await root.getAttribute('data-scene')) !== visual.scene ||
+            (await root.getAttribute('data-variant')) !== visual.variant
+          )
+            throw new Error(`Final geometry identity ${label}`);
+          const en = /^(Rectangle|Blank|Site)/.test(
+            await root.locator('figcaption').innerText(),
+          );
+          const fold = ['diagonal', 'parallel', 'square-part'].includes(
+            visual.scene,
+          );
+          const expected = {
+            diagonal: [0, 0, 2, 0],
+            parallel: [2, 0, 0, 0],
+            'square-part': [1, 1, 0, 0],
+            dots: [0, 0, 0, 0],
+            robot: visual.variant === 'main' ? [15, 2, 2, 6] : [13, 2, 2, 4],
+            train: visual.variant === 'main' ? [5, 1, 1, 4] : [5, 1, 0, 4],
+          }[visual.scene];
+          const parts = root.locator('[data-final-geometry-part]');
+          const actual = await parts.evaluateAll((nodes) =>
+            nodes.map((n) => {
+              const polygon = n.querySelector('polygon');
+              const circle = n.querySelector('circle');
+              const points = polygon
+                ? polygon
+                    .getAttribute('points')
+                    .split(' ')
+                    .map((s) => s.split(',').map(Number))
+                : [];
+              const lengths = points.map(([x, y], i) =>
+                Math.hypot(
+                  points[(i + 1) % points.length][0] - x,
+                  points[(i + 1) % points.length][1] - y,
+                ),
+              );
+              let shape = 'rectangle';
+              if (circle) shape = 'circle';
+              else if (points.length === 3) shape = 'triangle';
+              else if (lengths.every((x) => Math.abs(x - lengths[0]) < 1e-8))
+                shape = 'square';
+              const v = n.closest('svg').viewBox.baseVal;
+              return {
+                id: n.dataset.finalGeometryPart,
+                declared: n.dataset.partShape,
+                shape,
+                points,
+                circle: circle
+                  ? {
+                      x: Number(circle.getAttribute('cx')),
+                      y: Number(circle.getAttribute('cy')),
+                      r: Number(circle.getAttribute('r')),
+                    }
+                  : null,
+                aria: n.getAttribute('aria-label'),
+                text: n.textContent.trim(),
+                primitives: n.querySelectorAll('circle,polygon').length,
+                out: points.some(
+                  ([x, y]) =>
+                    x < v.x ||
+                    y < v.y ||
+                    x > v.x + v.width ||
+                    y > v.y + v.height,
+                ),
+              };
+            }),
+          );
+          if (
+            JSON.stringify(
+              ['rectangle', 'square', 'triangle', 'circle'].map(
+                (kind) => actual.filter((p) => p.shape === kind).length,
+              ),
+            ) !== JSON.stringify(expected)
+          )
+            throw new Error(
+              `Final geometry categories ${label}: ${JSON.stringify(actual)}`,
+            );
+          for (let i = 0; i < actual.length; i++) {
+            const part = actual[i];
+            const letter = String.fromCodePoint(65 + i);
+            let aria;
+            if (part.circle) {
+              const { x, y, r } = part.circle;
+              aria = en
+                ? `Part ${letter}: complete circular outline, centre (${x},${y}), radius ${r} drawing units.`
+                : `图形${letter}，圆心(${x},${y})、半径${r}绘图单位的完整圆轮廓。`;
+              if (x - r < 0 || y - r < 0 || x + r > 344 || y + r > 392)
+                throw new Error(`Final geometry circle bounds ${label}`);
+            } else {
+              const points = part.points.map((p) => p.join(',')).join(' ');
+              aria = en
+                ? `Part ${letter}: join vertices ${points} in order and close the outline. Coordinates are drawing units only.`
+                : `图形${letter}，依次连接顶点${points}并闭合；坐标只是绘图单位。`;
+            }
+            if (
+              part.id !== letter ||
+              part.declared !== part.shape ||
+              part.aria !== aria ||
+              part.out ||
+              part.primitives !== 1 ||
+              part.text !== (fold ? letter : '')
+            )
+              throw new Error(
+                `Final geometry part ${label} ${JSON.stringify(part)}`,
+              );
+          }
+          const dots = await root
+            .locator('[data-final-geometry-dot]')
+            .evaluateAll((nodes) =>
+              nodes.map((n) => [
+                Number(n.getAttribute('cx')),
+                Number(n.getAttribute('cy')),
+              ]),
+            );
+          if (visual.scene === 'dots') {
+            const columns = visual.variant === 'main' ? 11 : 9;
+            const rows = visual.variant === 'main' ? 6 : 5;
+            const target = Array.from({ length: columns * rows }, (_, i) => [
+              32 + (i % columns) * 24,
+              40 + Math.floor(i / columns) * 24,
+            ]);
+            if (JSON.stringify(dots) !== JSON.stringify(target))
+              throw new Error(`Final dot positions ${label}`);
+          } else if (dots.length > 0)
+            throw new Error(`Unexpected dots ${label}`);
+          const region = root.getByRole('region');
+          await region.scrollIntoViewIfNeeded();
+          const initial = await region.evaluate((n) => {
+            const box = n.getBoundingClientRect();
+            return [...n.querySelectorAll('polygon,circle,text')].every((p) => {
+              const b = p.getBoundingClientRect();
+              return (
+                b.left >= box.left &&
+                b.right <= box.right &&
+                b.left >= 0 &&
+                b.right <= innerWidth
+              );
+            });
+          });
+          if (!initial)
+            throw new Error(
+              `Final geometry initial content visibility ${label}`,
+            );
+          const readable = await root.evaluate((node) => ({
+            small: [...node.querySelectorAll('p,figcaption')].some(
+              (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+            ),
+            tinyLabels: [...node.querySelectorAll('text')].some(
+              (n) =>
+                (Number.parseFloat(getComputedStyle(n).fontSize) *
+                  n.closest('svg').getBoundingClientRect().width) /
+                  n.closest('svg').viewBox.baseVal.width <
+                20,
+            ),
+            clipped: [...node.querySelectorAll('text')].some((n) => {
+              const b = n.getBBox();
+              const v = n.closest('svg').viewBox.baseVal;
+              return (
+                b.x < v.x ||
+                b.y < v.y ||
+                b.x + b.width > v.x + v.width ||
+                b.y + b.height > v.y + v.height
+              );
+            }),
+            page: document.documentElement.scrollWidth > innerWidth + 1,
+          }));
+          if (
+            readable.small ||
+            readable.tinyLabels ||
+            readable.clipped ||
+            readable.page
+          )
+            throw new Error(
+              `Final geometry readability ${label}: ${JSON.stringify(readable)}`,
+            );
+          await region.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          const max = await region.evaluate(
+            (n) => n.scrollWidth - n.clientWidth,
+          );
+          await region.focus();
+          await region.press('ArrowRight');
+          await p.waitForTimeout(350);
+          if (max > 1 && (await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error(`Final geometry keyboard right ${label}`);
+          await region.press('ArrowLeft');
+          await p.waitForTimeout(350);
+          if ((await region.evaluate((n) => n.scrollLeft)) > 1)
+            throw new Error(`Final geometry keyboard left ${label}`);
+          for (const edge of [0, max]) {
+            await region.evaluate((n, x) => {
+              n.scrollLeft = x;
+            }, edge);
+            const state = await region.evaluate((n) => ({
+              left: n.scrollLeft,
+              width: n.clientWidth,
+              scroll: n.scrollWidth,
+              screen:
+                n.getBoundingClientRect().right <= innerWidth &&
+                n.getBoundingClientRect().left >= 0,
+            }));
+            if (Math.abs(state.left - edge) > 1 || !state.screen)
+              throw new Error(`Final geometry scroll edges ${label}`);
+          }
+          if (bilingual) {
+            await p.waitForTimeout(700);
+            await region.scrollIntoViewIfNeeded();
+            await region.evaluate((n) => {
+              n.scrollLeft = 0;
+            });
+            await p.screenshot({
+              path: `/tmp/butler-bnu-final-geometry-${label}-${en ? 'en' : 'zh'}-${width}.png`,
+            });
+          }
+        };
+        await check();
+        if (bilingual) {
+          const saved = JSON.stringify(await read());
+          const language = p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') });
+          await language.click();
+          await p.getByText('English', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /Rectangle|Blank|Site/ })
+            .waitFor();
+          await check();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await check();
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await language.click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /长方形|空白|本站/ })
+            .waitFor();
+          await check();
+          if (JSON.stringify(await read()) !== saved)
+            throw new Error('Final geometry language/theme changed records');
+        }
+      };
+      const inspectFinalFaces = async (solid, label) => {
+        const upper = p.locator('svg[viewBox="0 0 240 210"]');
+        await upper.waitFor();
+        const root = upper.locator('..');
+        const count = solid === 'triangular-prism' ? 2 : 3;
+        if (
+          (await upper.locator('polygon').count()) !== count ||
+          (await root.locator('svg[viewBox="0 0 160 160"]').count()) !== count
+        )
+          throw new Error(`Final face inventory ${label}`);
+        const geometry = await root.evaluate((node) => ({
+          small: [...node.querySelectorAll('p')].some(
+            (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+          ),
+          tiny: [...node.querySelectorAll('text')].some(
+            (n) =>
+              (Number.parseFloat(getComputedStyle(n).fontSize) *
+                n.closest('svg').getBoundingClientRect().width) /
+                240 <
+              20,
+          ),
+          page: document.documentElement.scrollWidth > innerWidth + 1,
+          blank: [...node.querySelectorAll('svg')].some(
+            (n) => !n.getAttribute('aria-label'),
+          ),
+        }));
+        if (geometry.small || geometry.tiny || geometry.page || geometry.blank)
+          throw new Error(
+            `Final faces presentation ${label}: ${JSON.stringify(geometry)}`,
+          );
+        for (const svg of await root.locator('svg').all()) {
+          await svg.scrollIntoViewIfNeeded();
+          if (
+            !(await svg.evaluate((n) => {
+              const b = n.getBoundingClientRect();
+              return b.left >= 0 && b.right <= innerWidth;
+            }))
+          )
+            throw new Error(`Final face viewport ${label}`);
+        }
+      };
       const inspectFinalStrip = async (values, label) => {
         const root = p.locator('[data-number-strip]');
         await root.waitFor();
@@ -4656,7 +4969,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 50
+          .count()) !== 51
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -5032,6 +5345,19 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'final-geometry')
+        await inspectRecognizeCards(
+          {
+            kind: 'plane-cards',
+            cards: [
+              { shape: 'rectangle', size: 2, turn: 0 },
+              { shape: 'circle', size: 1, turn: 0 },
+              { shape: 'square', size: 1, turn: 45 },
+              { shape: 'triangle', size: 2, turn: 90 },
+            ],
+          },
+          'learn-0',
+        );
       if (flow.key === 'final-number-applications')
         await inspectFinalStrip(
           [25, null, 27, null, 29, null, 31, null],
@@ -5076,6 +5402,34 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'final-geometry') {
+          const scenes = {
+            3: 'robot',
+            4: 'train',
+            9: 'diagonal',
+            10: 'parallel',
+            11: 'square-part',
+            12: 'dots',
+          };
+          if (scenes[step + 1])
+            await inspectFinalGeometry(
+              { scene: scenes[step + 1], variant: 'main' },
+              `learn-${step + 1}`,
+              true,
+            );
+          if (step + 1 === 2)
+            await inspectTangram(
+              { scene: 'spread', variant: 'main' },
+              'learn-seven-pieces',
+            );
+          const solids = {
+            5: 'cube',
+            6: 'triangular-prism',
+            7: 'cuboid-distinct',
+          };
+          if (solids[step + 1])
+            await inspectFinalFaces(solids[step + 1], `learn-face-${step + 1}`);
+        }
         if (flow.key === 'final-number-applications' && step + 1 === 1)
           await inspectFinalStrip(
             [61, 60, null, null, 57, 56, null, null, 53, 52],
@@ -6067,6 +6421,13 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'number-strip'
         )
           await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-geometry')
+          await inspectFinalGeometry(q.visual, q.id);
+        if (
+          flow.key === 'final-geometry' &&
+          q.visual?.kind === 'solid-face-traces'
+        )
+          await inspectFinalFaces(q.visual.solid, q.id);
         if (q.visual?.kind === 'bnu-final-data')
           await inspectFinalData(q.visual, q.id);
         if (q.visual?.kind === 'bnu-comic')
@@ -6085,7 +6446,9 @@ const server = http.createServer(async (req, res) => {
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
         if (
-          ['patterns-three', 'recognize-shapes'].includes(flow.key) &&
+          ['final-geometry', 'patterns-three', 'recognize-shapes'].includes(
+            flow.key,
+          ) &&
           q.visual?.kind === 'plane-cards'
         )
           await inspectRecognizeCards(q.visual, q.id);
@@ -8056,6 +8419,13 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'number-strip'
         )
           await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-geometry')
+          await inspectFinalGeometry(q.visual, q.id);
+        if (
+          flow.key === 'final-geometry' &&
+          q.visual?.kind === 'solid-face-traces'
+        )
+          await inspectFinalFaces(q.visual.solid, q.id);
         if (q.visual?.kind === 'bnu-final-data')
           await inspectFinalData(q.visual, q.id);
         if (q.visual?.kind === 'bnu-comic')
@@ -8074,7 +8444,9 @@ const server = http.createServer(async (req, res) => {
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
         if (
-          ['patterns-three', 'recognize-shapes'].includes(flow.key) &&
+          ['final-geometry', 'patterns-three', 'recognize-shapes'].includes(
+            flow.key,
+          ) &&
           q.visual?.kind === 'plane-cards'
         )
           await inspectRecognizeCards(q.visual, q.id);

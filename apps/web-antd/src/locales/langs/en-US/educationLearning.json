@@ -1431,5 +1431,21 @@
   "finalDataName_qiangqiang": "Qiangqiang",
   "finalDataName_lele": "Lele",
   "finalDataName_xiaohong": "Xiaohong",
-  "finalDataName_huanhuan": "Huanhuan"
+  "finalDataName_huanhuan": "Huanhuan",
+  "finalGeometryTitle_diagonal": "Rectangle partition A",
+  "finalGeometryTitle_parallel": "Rectangle partition B",
+  "finalGeometryTitle_square-part": "Rectangle partition C",
+  "finalGeometryTitle_dots": "Blank dot grid",
+  "finalGeometryTitle_robot": "Site shape robot",
+  "finalGeometryTitle_train": "Site shape train",
+  "finalGeometrySite": "Original site construction. Use the drawn part boundaries; this is not the original textbook artwork or size.",
+  "finalGeometryDotsMain": "Blank dots follow the row and column arrangement on page 94. Positions do not specify spacing in centimetres.",
+  "finalGeometryDotsReview": "A new site dot grid with changed conditions; do not reuse the earlier position answers.",
+  "finalGeometryScroll": "Diagram region. Scroll horizontally on narrow screens, or focus and use Left/Right keys.",
+  "finalGeometryDiagram": "Geometry diagram. Parts are described individually; classifications, part counts and drawing answers are not filled in.",
+  "finalGeometryCircle": "Part {letter}: complete circular outline, centre ({x},{y}), radius {r} drawing units.",
+  "finalGeometryPolygon": "Part {letter}: join vertices {points} in order and close the outline. Coordinates are drawing units only.",
+  "finalGeometryFoldNotice": "A/B label regions, not answers. Start each diagram from a fresh complete rectangle. Lines show boundaries after unfolding; they do not confirm actual folding or cutting.",
+  "finalGeometryDotNotice": "Dots mark positions, not shape pieces. Complete each of the three drawing tasks separately; this blank diagram does not replace drawing on paper.",
+  "finalGeometryCollageNotice": "Count each complete drawn part once. Do not subdivide a part again or add the overall outline. Site counts do not fill answers for the textbook artwork."
 }

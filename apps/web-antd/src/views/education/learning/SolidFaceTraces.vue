@@ -16,7 +16,7 @@ const traces = computed(() => faceTraces(props.visual));
 </script>
 <template>
   <div class="flex min-w-0 flex-col gap-4">
-    <p class="text-sm text-muted-foreground">
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.faceTraceNotice') }}
     </p>
     <svg
@@ -45,7 +45,7 @@ const traces = computed(() => faceTraces(props.visual));
             5
           "
           text-anchor="middle"
-          font-size="16"
+          font-size="24"
           fill="hsl(var(--foreground))"
         >
           {{ face.letter }}
@@ -58,7 +58,7 @@ const traces = computed(() => faceTraces(props.visual));
         :key="trace.letter"
         class="flex min-w-0 flex-col items-center gap-2 rounded border border-border p-3"
       >
-        <p class="font-medium">
+        <p class="text-xl font-medium leading-8">
           {{ $t('educationLearning.faceTraceLabel', { letter: trace.letter }) }}
         </p>
         <svg

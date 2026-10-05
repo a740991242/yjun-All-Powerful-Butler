@@ -25,6 +25,7 @@ import { bnuLowerCountrysideLesson } from './bnu-lower-countryside';
 import { bnuLowerDesignLesson } from './bnu-lower-design';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerFillGameLesson } from './bnu-lower-fill-game';
+import { bnuLowerFinalGeometryLesson } from './bnu-lower-final-geometry';
 import {
   bnuLowerFinalNumberApplicationsLesson,
   bnuLowerFinalNumberReviewLesson,
@@ -139,6 +140,7 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerComicLesson,
     bnuLowerFinalNumberReviewLesson,
     bnuLowerFinalNumberApplicationsLesson,
+    bnuLowerFinalGeometryLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(1);
   expect(

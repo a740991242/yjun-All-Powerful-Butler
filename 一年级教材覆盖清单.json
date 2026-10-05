@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T20:29:29.049Z",
+  "generatedAt": "2026-10-05T21:07:14.967Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 50,
+        "availablePacks": 51,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1298,
-          "manual": 536,
-          "reflection": 211
+          "objective": 1316,
+          "manual": 553,
+          "reflection": 216
         }
       },
       "units": [
@@ -37350,10 +37350,52 @@
               }
             },
             {
-              "id": "bnu-lower-final-pending",
-              "title": "总复习：图形与综合实践（93～95页继续制作）",
-              "textbookTitle": "总复习：图形与综合实践（93～95页继续制作）",
+              "id": "bnu-lower-final-geometry",
+              "title": "图形取面、三种折分与自己的拼图",
+              "textbookTitle": "总复习：图形与几何",
               "page": 93,
+              "version": 1,
+              "status": "available",
+              "goal": "回忆描述并画学过的图形，逐幅观察三个人物拼图，核对机器人与火车的四类图形，联系立体物体和平面面形，分别折分一张长方形，并完成三种点子图作画和自主创作。",
+              "prerequisite": "认识长方形、正方形、三角形、圆，以及正方体、长方体、圆柱；准备纸笔、七巧板或纸卡，折纸不要求剪刀。",
+              "referenceQuery": null,
+              "steps": 15,
+              "tasks": {
+                "objective": 18,
+                "manual": 17,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-final-geometry"],
+              "questionKinds": [
+                "choice",
+                "steps",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "plane-cards",
+                "bnu-tangram",
+                "bnu-final-geometry",
+                "solid-face-traces",
+                "shape"
+              ],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描印刷93、94页及附页97图3",
+                "notes": "七原活动逐项映射；原拼图计数分界未核清项保留，不冒全册/全年或人工最终审校。"
+              }
+            },
+            {
+              "id": "bnu-lower-final-pending",
+              "title": "总复习：综合与实践（95页继续制作）",
+              "textbookTitle": "总复习：综合与实践（95页继续制作）",
+              "page": 95,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -37384,11 +37426,11 @@
             "resourceId": "bnu-lower-public-scan-2024",
             "checkedAt": "2026-10-06",
             "readPrintedPages": [90, 91, 92, 93, 94, 95],
-            "taughtPrintedPages": [90, 91, 92],
-            "pendingTeachingPages": [93, 94, 95],
+            "taughtPrintedPages": [90, 91, 92, 93, 94],
+            "pendingTeachingPages": [95],
             "status": "partial-original-teaching",
             "finalTeacherReview": "not-verified",
-            "scope": "90～92页十三原活动对应两课26讲解、69主任务（37客观/22真实人工/10开放记录）和15换条件复习。两数列全部空位、三组成、四比较、下半年范围、两种数线、两群熊猫、同量白菜、套圈两问、四人排名与自主问题分别覆盖；32多种表示、四竖式及两个生活问题保留实作。375/768/1200完整流程、已知条件表/数字条/竖式字号和空位、表格中英主题与键盘滚动、0刷新/重试/旧人教会话/schema1备份已检查。93～95仍待教学，原机器人/火车计数未核清保留null；映射与程序核验不代全册全年或人工最终审校。",
+            "scope": "90～92页十三原活动对应两课26讲解、69主任务（37客观/22真实人工/10开放记录）和15换条件复习。两数列全部空位、三组成、四比较、下半年范围、两种数线、两群熊猫、同量白菜、套圈两问、四人排名与自主问题分别覆盖；32多种表示、四竖式及两个生活问题保留实作。375/768/1200完整流程、已知条件表/数字条/竖式字号和空位、表格中英主题与键盘滚动、0刷新/重试/旧人教会话/schema1备份已检查。93～94七项活动已接入图形教学；40主任务（18客观/17真实人工/5开放记录）及8换条件复习在375/768/1200完整流程通过，图形实际边界、字号、中英主题、0刷新/重试/旧记录/schema1备份已检查，95仍待教学，原机器人/火车计数未核清保留null；映射与程序核验不代全册全年或人工最终审校。",
             "activities": [
               {
                 "page": 90,
@@ -37550,37 +37592,101 @@
                   "learning-record",
                   "future-plan"
                 ]
+              },
+              {
+                "page": 93,
+                "sourceActivity": "recall-describe-and-draw-plane-shapes",
+                "steps": [1, 2],
+                "objective": [
+                  "plane-circle",
+                  "plane-square",
+                  "plane-triangle",
+                  "plane-rectangle"
+                ],
+                "manual": ["actual-say", "actual-draw-four"],
+                "records": ["shape-record"],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 93,
+                "sourceActivity": "three-tangram-patterns-and-own-design",
+                "steps": [3],
+                "objective": ["tangram-types"],
+                "manual": [
+                  "actual-sport-1",
+                  "actual-sport-2",
+                  "actual-sport-3",
+                  "actual-tangram-design"
+                ],
+                "records": [],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 93,
+                "sourceActivity": "robot-and-train-find-four-shape-types",
+                "steps": [4, 5],
+                "objective": [
+                  "robot-counts",
+                  "train-counts",
+                  "boundaries",
+                  "site-zero"
+                ],
+                "manual": ["actual-original-robot", "actual-original-train"],
+                "records": ["collage-record"],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 94,
+                "sourceActivity": "four-plane-to-solid-face-connections",
+                "steps": [6, 7, 8, 9],
+                "objective": [
+                  "cube-face",
+                  "prism-face",
+                  "cuboid-face",
+                  "cylinder-face",
+                  "not-all-squares"
+                ],
+                "manual": ["actual-face-matching"],
+                "records": [],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 94,
+                "sourceActivity": "appendix-three-rectangle-fold-three-ways",
+                "steps": [10, 11, 12],
+                "objective": [
+                  "diagonal-count",
+                  "parallel-count",
+                  "square-part"
+                ],
+                "manual": ["actual-fold-1", "actual-fold-2", "actual-fold-3"],
+                "records": ["fold-record"],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 94,
+                "sourceActivity": "draw-three-shapes-on-dots",
+                "steps": [13],
+                "objective": ["dot-arrangement"],
+                "manual": [
+                  "actual-dot-rectangle",
+                  "actual-dot-square",
+                  "actual-dot-triangle"
+                ],
+                "records": [],
+                "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 94,
+                "sourceActivity": "create-own-plane-shape-collage",
+                "steps": [14, 15],
+                "objective": [],
+                "manual": ["actual-collage-create", "actual-collage-show"],
+                "records": ["learning-record", "future-plan"],
+                "lesson": "bnu-lower-final-geometry"
               }
             ],
             "pendingActivities": [
-              {
-                "page": 93,
-                "key": "recall-describe-and-draw-plane-shapes"
-              },
-              {
-                "page": 93,
-                "key": "three-tangram-patterns-and-own-design"
-              },
-              {
-                "page": 93,
-                "key": "robot-and-train-find-four-shape-types"
-              },
-              {
-                "page": 94,
-                "key": "four-plane-to-solid-face-connections"
-              },
-              {
-                "page": 94,
-                "key": "appendix-three-rectangle-fold-three-ways"
-              },
-              {
-                "page": 94,
-                "key": "draw-three-shapes-on-dots"
-              },
-              {
-                "page": 94,
-                "key": "create-own-plane-shape-collage"
-              },
               {
                 "page": 95,
                 "key": "recall-comic-patterns-and-design"

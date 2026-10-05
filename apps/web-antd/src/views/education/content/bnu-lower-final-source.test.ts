@@ -47,3 +47,60 @@ it('distinguishes number-line positions, sequential quantity scopes, ranks and t
   ]);
   expect(source.practice.boundary).toContain('真实与同伴/家人合作');
 });
+
+it('keeps all given drawings and three blanks in each independent row, and the complete dot-grid dimensions without invented centimetres', () => {
+  expect(source.geometry.dotGrid).toEqual({
+    rows: 6,
+    columns: 11,
+    printedPhysicalSpacing: null,
+  });
+  expect(source.practice.givenDrawings.faces).toEqual([
+    'happy',
+    'happy',
+    'sad',
+    'happy',
+    'happy',
+    'sad',
+  ]);
+  expect(source.practice.givenDrawings.cupHandles).toEqual([
+    'right',
+    'left',
+    'right',
+    'left',
+  ]);
+  expect(source.practice.givenDrawings.rectangleDivisions).toEqual([
+    'horizontal',
+    'vertical',
+    'horizontal',
+    'vertical',
+  ]);
+  expect(source.practice.continuationSlotsPerRow).toBe(3);
+  const patterns = [
+    {
+      given: source.practice.givenDrawings.faces,
+      cycle: ['happy', 'happy', 'sad'],
+      next: source.practice.nextDrawings.faces,
+    },
+    {
+      given: source.practice.givenDrawings.cupHandles,
+      cycle: ['right', 'left'],
+      next: source.practice.nextDrawings.cupHandles,
+    },
+    {
+      given: source.practice.givenDrawings.rectangleDivisions,
+      cycle: ['horizontal', 'vertical'],
+      next: source.practice.nextDrawings.rectangleDivisions,
+    },
+  ];
+  for (const { given, cycle, next } of patterns) {
+    expect(
+      given.every((value, index) => value === cycle[index % cycle.length]),
+    ).toBe(true);
+    expect(
+      Array.from(
+        { length: 3 },
+        (_, i) => cycle[(given.length + i) % cycle.length],
+      ),
+    ).toEqual(next);
+  }
+});

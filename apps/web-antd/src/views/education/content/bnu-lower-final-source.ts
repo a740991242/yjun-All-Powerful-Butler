@@ -101,6 +101,7 @@ export const bnuLowerFinalSource = {
     folding: ['两个三角形', '两个长方形', '一个正方形和一个长方形'],
     appendixFigure: 3,
     drawingOnDots: ['长方形', '正方形', '三角形'],
+    dotGrid: { rows: 6, columns: 11, printedPhysicalSpacing: null },
     drawingParts:
       '图中几何材料与整体外轮廓分清，不自动把所有组合轮廓当材料片；机器人/火车原图唯一总数未定，不凭颜色、缩略图或假定边界补答案。',
     boundary:
@@ -108,6 +109,12 @@ export const bnuLowerFinalSource = {
   },
   practice: {
     page: 95,
+    givenDrawings: {
+      faces: ['happy', 'happy', 'sad', 'happy', 'happy', 'sad'],
+      cupHandles: ['right', 'left', 'right', 'left'],
+      rectangleDivisions: ['horizontal', 'vertical', 'horizontal', 'vertical'],
+    },
+    continuationSlotsPerRow: 3,
     nextDrawings: {
       faces: ['happy', 'happy', 'sad'],
       cupHandles: ['right', 'left', 'right'],
@@ -144,5 +151,5 @@ export const bnuLowerFinalSource = {
     { page: 95, key: 'actual-cooperative-math-story-and-comic' },
   ],
   boundary:
-    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课并接目录，93～95图形与综合实践仍待制作；课程映射不代程序或全年验收，旧学习记录保持。未确定的原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
+    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课、93～94图形课已接目录并完成三宽程序验收，95综合实践仍待制作；课程映射不代程序或全年验收，旧学习记录保持。未确定的原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
 } as const;

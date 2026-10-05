@@ -1431,5 +1431,21 @@
   "finalDataName_qiangqiang": "强强",
   "finalDataName_lele": "乐乐",
   "finalDataName_xiaohong": "小红",
-  "finalDataName_huanhuan": "欢欢"
+  "finalDataName_huanhuan": "欢欢",
+  "finalGeometryTitle_diagonal": "长方形分区图A",
+  "finalGeometryTitle_parallel": "长方形分区图B",
+  "finalGeometryTitle_square-part": "长方形分区图C",
+  "finalGeometryTitle_dots": "空白点子图",
+  "finalGeometryTitle_robot": "本站图形机器人",
+  "finalGeometryTitle_train": "本站图形火车",
+  "finalGeometrySite": "本站原创几何示例，边界以所画轮廓为准，不是教材原图或原尺寸。",
+  "finalGeometryDotsMain": "空白点阵按第94页行列排列重画；只作画图位置，不标厘米间距。",
+  "finalGeometryDotsReview": "本站新的空白点阵，条件已改变，不沿用上一图的位置答案。",
+  "finalGeometryScroll": "图形示例，窄屏可横滑，聚焦后用左右方向键。",
+  "finalGeometryDiagram": "几何示例，各分区描述见子图；没有自动填入分类、片数或作画答案。",
+  "finalGeometryCircle": "图形{letter}，圆心({x},{y})、半径{r}绘图单位的完整圆轮廓。",
+  "finalGeometryPolygon": "图形{letter}，依次连接顶点{points}并闭合；坐标只是绘图单位。",
+  "finalGeometryFoldNotice": "A/B为分区字母，不是答案。每图从一张完整长方形重新开始；线表示展开后的分界，不表示已实际折好或剪下。",
+  "finalGeometryDotNotice": "点只是定位参照，不算图形材料。三个作画任务分别完成；网页空白图不自动代替纸上作图。",
+  "finalGeometryCollageNotice": "每个完整所画轮廓只数一次，内部线不再拆成材料，整体外轮廓不额外加一；本站数量不能代填教材原图。"
 }

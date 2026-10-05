@@ -26,7 +26,8 @@ it('maps all thirteen90–92 original activities to both complete packs while ke
   expect(source.activities.filter((a) => a.page > 92)).toHaveLength(11);
   const final = required(bnuLowerBook.units.find((u) => u.id === 'final'));
   expect(final.lessons.slice(0, 2)).toEqual([review, app]);
-  expect(final.lessons[2]?.status).toBe('preparing');
+  expect(final.lessons[2]?.id).toBe('bnu-lower-final-geometry');
+  expect(final.lessons[3]?.status).toBe('preparing');
   for (const [lesson, steps, objective, manual, reflection] of [
     [review, 12, 17, 13, 5],
     [app, 14, 20, 9, 5],

@@ -8,6 +8,7 @@ import type { BnuFillGridVisual } from './bnu-fill-grid';
 import type { BnuFinalClassificationVisual } from './bnu-final-classification';
 import type { BnuFinalColorVisual } from './bnu-final-color';
 import type { BnuFinalDataVisual } from './bnu-final-data';
+import type { BnuFinalGeometryVisual } from './bnu-final-geometry';
 import type { BnuFinalPositionVisual } from './bnu-final-position';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuFoldOneVisual } from './bnu-fold-one';
@@ -476,6 +477,7 @@ export type Visual =
   | BnuFinalClassificationVisual
   | BnuFinalColorVisual
   | BnuFinalDataVisual
+  | BnuFinalGeometryVisual
   | BnuFinalPositionVisual
   | BnuFinalSolidsVisual
   | BnuFoldOneVisual

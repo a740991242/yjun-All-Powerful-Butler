@@ -14,6 +14,7 @@ import { isBnuFillGridVisual } from './bnu-fill-grid';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalDataVisual } from './bnu-final-data';
+import { isBnuFinalGeometryVisual } from './bnu-final-geometry';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuFoldOneVisual } from './bnu-fold-one';
@@ -526,6 +527,9 @@ function visual(value: unknown) {
     }
     case 'bnu-final-data': {
       return isBnuFinalDataVisual(value);
+    }
+    case 'bnu-final-geometry': {
+      return isBnuFinalGeometryVisual(value);
     }
     case 'bnu-comic': {
       return isBnuComicVisual(value);
