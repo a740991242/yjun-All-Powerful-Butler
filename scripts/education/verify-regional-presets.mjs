@@ -481,6 +481,69 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-zhejiang-${volume === '上册' ? 'upper' : 'lower'}-default-${width}.png`,
           });
         }
+        for (const [province, volume, year, file, publishers] of [
+          [
+            '贵州',
+            '上册',
+            '2025',
+            'P020260205655763222699.pdf',
+            ['人教版', '苏教版'],
+          ],
+          [
+            '贵州',
+            '下册',
+            '2026',
+            'P020251121626568924282.pdf',
+            ['人教版', '苏教版'],
+          ],
+          ['重庆', '上册', '2025', 't20250710_14802548_wap.html', ['人教版']],
+        ]) {
+          await choose('education-region-province', province, true);
+          await choose('education-region-volume', volume);
+          const catalog = region.getByText(
+            `参考${year}年省级目录中的可选版本`,
+            { exact: false },
+          );
+          await catalog.waitFor();
+          await region.locator(`a[href$="/${file}"]`).waitFor();
+          const alternatives = await region
+            .getByText('该参考目录可选数学版本：', { exact: false })
+            .textContent();
+          for (const publisher of ['人教版', '苏教版', '北师大版'])
+            if (
+              alternatives.includes(publisher) !==
+              publishers.includes(publisher)
+            )
+              throw new Error(`${province} ${volume} alternatives mismatch`);
+          await region
+            .getByText(
+              province === '重庆'
+                ? '资料发布：2025-07-10；核验日期：2026-10-06'
+                : '资料发布：未标注；核验日期：2026-10-06',
+              { exact: false },
+            )
+            .waitFor();
+          await apply.click();
+          for (const subject of ['语文', '数学', '道德与法治'])
+            await p
+              .getByRole('button', {
+                name: `${subject} · 人教版（2024审定） · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          await catalog.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+          await p.waitForTimeout(500);
+          await p.screenshot({
+            path: `/tmp/butler-new-province-${province}-${volume}-${width}.png`,
+          });
+        }
+        await choose('education-region-volume', '下册');
+        if (
+          await region
+            .getByText('参考2025年省级目录中的可选版本', { exact: false })
+            .count()
+        )
+          throw new Error('Chongqing upper reference leaked into lower volume');
         await choose('education-region-province', '辽宁', true);
         for (const [volume, year, issued, published, url] of [
           [
@@ -814,6 +877,49 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-zhejiang-${volume === 'Upper volume' ? 'upper' : 'lower'}-default-${width}-en-dark.png`,
           });
         }
+        for (const [province, volume, year] of [
+          ['Guizhou', 'Upper volume', '2025'],
+          ['Guizhou', 'Lower volume', '2026'],
+          ['Chongqing', 'Upper volume', '2025'],
+        ]) {
+          await choose('education-region-province', province, true);
+          await choose('education-region-volume', volume);
+          const catalog = p.getByText(
+            `The ${year} provincial catalog lists alternatives.`,
+            { exact: false },
+          );
+          await catalog.waitFor();
+          await p
+            .getByText(
+              province === 'Chongqing'
+                ? 'Published: 2025-07-10; checked: 2026-10-06'
+                : 'Published: Not stated; checked: 2026-10-06',
+              { exact: false },
+            )
+            .waitFor();
+          await catalog.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+          await p.waitForTimeout(500);
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error(`${province} English dark overflow`);
+          await p.screenshot({
+            path: `/tmp/butler-new-province-${province}-${volume}-${width}-en-dark.png`,
+          });
+        }
+        await choose('education-region-volume', 'Lower volume');
+        if (
+          await p
+            .getByText('The 2025 provincial catalog lists alternatives.', {
+              exact: false,
+            })
+            .count()
+        )
+          throw new Error(
+            'Chongqing English upper reference leaked into lower volume',
+          );
         await choose('education-region-province', 'Liaoning', true);
         for (const [volume, year, issued, published] of [
           ['Upper volume', '2025', '2025-07-21', '2025-07-23'],

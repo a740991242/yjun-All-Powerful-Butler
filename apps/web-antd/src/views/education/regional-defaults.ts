@@ -40,6 +40,46 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'guizhou') {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao'],
+      catalogYear: upper ? '2025' : '2026',
+      evidence: [
+        {
+          id: `guizhou-grade-one-math-${query.volume}-catalog-${upper ? '2025' : '2026'}`,
+          sourceUrl: upper
+            ? 'https://fgw.guizhou.gov.cn/fggz/tzgg/202506/P020260205655763222699.pdf'
+            : 'https://fgw.guizhou.gov.cn/zwgk/zcwj/zcwj/202511/P020251121626568924282.pdf',
+          sourceTitle: upper
+            ? '贵州省2025年秋季学期中小学教科书零售价格（第一批，PDF第7、10页，第19、28项，一年级数学上册）'
+            : '贵州省2026年春季学期中小学教科书零售价格（第一批，PDF第3、4页，第14、18项，一年级数学下册）',
+          // Attachment paths and replacement filenames do not prove publication dates.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
+  if (query.province === 'chongqing' && query.volume === 'upper')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'chongqing-grade-one-math-upper-catalog-2025',
+          sourceUrl:
+            'https://fzggw.cq.gov.cn/zwgk/zfxxgkml/jgxx/jgzc/202507/t20250710_14802548_wap.html',
+          sourceTitle:
+            '重庆市2025年秋季第一批中小学教材零售价格通知（渝发改价格〔2025〕858号，附件第504项，一年级数学上册明确标注人教版）',
+          issuedAt: '2025-07-09',
+          publishedAt: '2025-07-10',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'anhui' && query.volume === 'upper')
     return {
       edition: 'pep-2024',

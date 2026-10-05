@@ -351,3 +351,73 @@ it('keeps Zhejiang upper/lower attachment references separate without inventing 
     }
   }
 });
+
+it('keeps Guizhou first-batch upper and lower references separate and excludes unlisted Grade 1 math editions', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = { ...query, province: 'guizhou', volume };
+    for (const academicYear of ['2025-2026', '2026-2027']) {
+      const result = regionalMathematicsDefault({ ...local, academicYear })!;
+      expect(result.edition).toBe('pep-2024');
+      expect(result.alternatives).toEqual(['pep-2024', 'sujiao']);
+      expect(result.catalogYear).toBe(volume === 'upper' ? '2025' : '2026');
+      expect(result.evidence[0]).toMatchObject({
+        publishedAt: '',
+        checkedAt: '2026-10-06',
+        id: `guizhou-grade-one-math-${volume}-catalog-${volume === 'upper' ? '2025' : '2026'}`,
+      });
+      expect(result.evidence[0]!.sourceTitle).toContain(
+        volume === 'upper' ? '第7、10页' : '第3、4页',
+      );
+      expect(result.evidence[0]!.sourceUrl).toContain(
+        volume === 'upper'
+          ? 'P020260205655763222699.pdf'
+          : 'P020251121626568924282.pdf',
+      );
+      result.alternatives!.pop();
+      result.evidence[0]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(2);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
+      ).toContain('fgw.guizhou.gov.cn');
+    }
+    for (const change of [
+      { city: 'guiyang' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { academicYear: '2027-2028' },
+      { volume: 'all' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});
+
+it('uses the explicit Chongqing 2025 upper PEP label without guessing from the distributor in other volumes', () => {
+  const local = { ...query, province: 'chongqing' };
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const result = regionalMathematicsDefault({ ...local, academicYear })!;
+    expect(result.edition).toBe('pep-2024');
+    expect(result.alternatives).toEqual(['pep-2024']);
+    expect(result.catalogYear).toBe('2025');
+    expect(result.evidence[0]).toMatchObject({
+      issuedAt: '2025-07-09',
+      publishedAt: '2025-07-10',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[0]!.sourceTitle).toContain('明确标注人教版');
+    result.evidence[0]!.publishedAt = 'unknown';
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.publishedAt).toBe(
+      '2025-07-10',
+    );
+  }
+  for (const change of [
+    { volume: 'lower' },
+    { city: 'chongqing' },
+    { school: 'school' },
+    { subject: 'english' },
+    { academicYear: '2027-2028' },
+  ])
+    expect(regionalMathematicsDefault({ ...local, ...change })).toBeUndefined();
+});

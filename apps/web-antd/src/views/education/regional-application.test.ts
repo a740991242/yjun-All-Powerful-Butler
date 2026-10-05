@@ -61,6 +61,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     if (
       [
         'fujian',
+        'guizhou',
         'henan',
         'hubei',
         'jiangsu',
@@ -77,6 +78,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     expect(required(rows[1]).resolution.status).toBe(
       [
         'fujian',
+        'guizhou',
         'henan',
         'hubei',
         'jiangsu',
@@ -478,5 +480,33 @@ it('applies Zhejiang both-volume combinations without inferring an English cours
           (row) => !row.action,
         ),
       ).toBe(true);
+  }
+});
+
+it('applies Guizhou both volumes and Chongqing upper only without changing unsupported subject actions', () => {
+  for (const province of ['guizhou', 'chongqing']) {
+    for (const volume of ['upper', 'lower'] as const) {
+      const rows = regionalApplicationPlan({
+        ...query,
+        province,
+        city: '',
+        school: '',
+        volume,
+      });
+      const supported = province === 'guizhou' || volume === 'upper';
+      expect(rows[1]!.resolution.status).toBe(
+        supported ? 'recommended' : 'unknown',
+      );
+      expect(
+        rows.flatMap((row) =>
+          row.action ? [regionalActionPath(row.action)] : [],
+        ),
+      ).toEqual([
+        `/education/primary/p1/chinese/pep-2024/${volume}`,
+        ...(supported ? [`/education/primary/p1/math/pep-2024/${volume}`] : []),
+        `/education/primary/p1/ethics/pep-2024/${volume}`,
+      ]);
+      expect(rows[3]!.action).toBeUndefined();
+    }
   }
 });
