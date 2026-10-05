@@ -27,6 +27,7 @@ import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuInteresting from './BnuInteresting.vue';
 import BnuNumberReview from './BnuNumberReview.vue';
+import BnuPatternDesign from './BnuPatternDesign.vue';
 import BnuRecycling from './BnuRecycling.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BnuTangram from './BnuTangram.vue';
@@ -850,6 +851,10 @@ const shapeDescription = computed(() =>
     </div>
     <BnuTwoJumpLine
       v-else-if="visual.kind === 'bnu-two-jump-line'"
+      :visual="visual"
+    />
+    <BnuPatternDesign
+      v-else-if="visual.kind === 'bnu-pattern-design'"
       :visual="visual"
     />
     <BnuTangram v-else-if="visual.kind === 'bnu-tangram'" :visual="visual" />

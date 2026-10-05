@@ -13,6 +13,7 @@ import { bnuLowerComplementLesson } from './bnu-lower-complement';
 import { bnuLowerCountBeansLesson } from './bnu-lower-count-beans';
 import { bnuLowerCountHundredLesson } from './bnu-lower-count-hundred';
 import { bnuLowerCountrysideLesson } from './bnu-lower-countryside';
+import { bnuLowerDesignLesson } from './bnu-lower-design';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerFillGameLesson } from './bnu-lower-fill-game';
 import { bnuLowerFoldOneLesson } from './bnu-lower-fold-one';
@@ -403,7 +404,8 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerTangramPatternsLesson,
     bnuLowerTangramPracticeLesson,
     bnuLowerPatternsLesson,
-    pending('u6', '有趣的平面图形（一）：第84页起继续制作', 84),
+    bnuLowerDesignLesson,
+    pending('u6', '有趣的平面图形（一）：第85页起继续制作', 85),
   ],
   u4: [
     bnuLowerAroundNumbersLesson,

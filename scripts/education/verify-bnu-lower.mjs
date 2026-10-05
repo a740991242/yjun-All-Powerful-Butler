@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--design'))
+    return {
+      index: 45,
+      lessonId: 'bnu-lower-design',
+      zero: '-site-zero',
+      retry: '-windmill-four',
+      manual: 8,
+      steps: 9,
+      review: 6,
+      key: 'design',
+    };
   if (process.argv.includes('--patterns-three'))
     return {
       index: 44,
@@ -3303,6 +3314,212 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-bnu-recognize-${label}-${width}.png`,
         });
       };
+      const inspectDesign = async (visual, label) => {
+        const root = p.locator('[data-bnu-pattern-design]');
+        await root.waitFor();
+        const svgCount = visual.scene === 'dot-grid' ? 1 : 4;
+        if ((await root.locator('svg').count()) !== svgCount)
+          throw new Error(`Design SVG inventory ${label}`);
+        const outline = {
+          triangle: [
+            [-1, 0.6],
+            [1, 0.6],
+            [0, -Math.sqrt(3) + 0.6],
+          ],
+          hexagon: Array.from({ length: 6 }, (_, i) => [
+            Math.cos((i * Math.PI) / 3),
+            Math.sin((i * Math.PI) / 3),
+          ]),
+          trapezoid: [
+            [-1.3, 0.65],
+            [1.3, 0.65],
+            [0.65, -0.65],
+            [-0.65, -0.65],
+          ],
+          parallelogram: [
+            [-1, -0.65],
+            [0.5, -0.65],
+            [1, 0.65],
+            [-0.5, 0.65],
+          ],
+        };
+        const wrong = visual.scene === 'triangle' ? 'hexagon' : 'triangle';
+        const kinds =
+          visual.variant === 'main'
+            ? [visual.scene, visual.scene, wrong, visual.scene]
+            : [visual.scene, wrong, visual.scene, visual.scene];
+        for (let index = 0; index < svgCount; index++) {
+          const svg = root.locator('svg').nth(index);
+          await svg.evaluate((node) =>
+            node.scrollIntoView({
+              block: 'center',
+              inline: 'nearest',
+              behavior: 'instant',
+            }),
+          );
+          await p.waitForTimeout(250);
+          if (index === 0)
+            await p.screenshot({
+              path: `/tmp/butler-bnu-design-${label}-${width}-card-${index}.png`,
+            });
+          const result = await svg.evaluate((node) => ({
+            rect: node.getBoundingClientRect().toJSON(),
+            width: node.getBoundingClientRect().width,
+            height: node.getBoundingClientRect().height,
+            box: node.getAttribute('viewBox'),
+            aria: node.getAttribute('aria-label'),
+            points: node.querySelector('polygon')?.getAttribute('points'),
+            seam: node.querySelector('polyline')?.getAttribute('points'),
+            dots: [...node.querySelectorAll('circle')].map((c) => [
+              Number(c.getAttribute('cx')),
+              Number(c.getAttribute('cy')),
+            ]),
+            label: node.parentElement.querySelector('p')?.textContent?.trim(),
+            font: node.parentElement.querySelector('p')
+              ? Number.parseFloat(
+                  getComputedStyle(node.parentElement.querySelector('p'))
+                    .fontSize,
+                )
+              : 20,
+            viewport:
+              node.getBoundingClientRect().left >= 0 &&
+              node.getBoundingClientRect().right <= innerWidth &&
+              node.getBoundingClientRect().top >= 0 &&
+              node.getBoundingClientRect().bottom <= innerHeight,
+            overflow: document.documentElement.scrollWidth > innerWidth + 1,
+          }));
+          if (
+            !result.aria ||
+            result.font < 20 ||
+            !result.viewport ||
+            result.overflow
+          )
+            throw new Error(
+              `Design readability ${label} ${JSON.stringify(result)}`,
+            );
+          if (visual.scene === 'dot-grid') {
+            const count = visual.variant === 'main' ? 49 : 35;
+            const dots = Array.from({ length: count }, (_, i) => [
+              24 + (i % 7) * 24,
+              24 + Math.floor(i / 7) * 24,
+            ]);
+            if (
+              result.width !== 192 ||
+              result.height !== 192 ||
+              result.box !== '0 0 192 192' ||
+              JSON.stringify(result.dots) !== JSON.stringify(dots)
+            )
+              throw new Error(`Design dots ${label}`);
+          } else {
+            const source = outline[kinds[index]];
+            const scale = (
+              visual.variant === 'main' ? [34, 29, 34, 36] : [29, 36, 34, 31]
+            )[index];
+            const angle =
+              ((visual.variant === 'main'
+                ? [0, 90, 0, 180]
+                : [30, 0, 150, 270])[index] *
+                Math.PI) /
+              180;
+            const transform = ([x, y]) => [
+              72 + scale * (x * Math.cos(angle) - y * Math.sin(angle)),
+              72 + scale * (x * Math.sin(angle) + y * Math.cos(angle)),
+            ];
+            const expected = source.map((point) => transform(point));
+            const actual = result.points
+              ?.split(' ')
+              .map((p) => p.split(',').map(Number));
+            const third =
+              kinds[index] === 'triangle'
+                ? [
+                    (source[1][0] + source[2][0]) / 2,
+                    (source[1][1] + source[2][1]) / 2,
+                  ]
+                : source[2];
+            const expectedSeam =
+              index === 3
+                ? [
+                    transform(third),
+                    transform(source[0]),
+                    ...(visual.variant === 'review' &&
+                    kinds[index] === 'hexagon'
+                      ? [transform(source[4])]
+                      : []),
+                  ]
+                : [];
+            const seam =
+              result.seam?.split(' ').map((p) => p.split(',').map(Number)) ??
+              [];
+            const equals = (a, b) =>
+              a?.length === b.length &&
+              a.every((p, i) =>
+                p.every((n, j) => Math.abs(n - b[i][j]) < 1e-7),
+              );
+            if (
+              result.width !== 144 ||
+              result.height !== 144 ||
+              result.box !== '0 0 144 144' ||
+              result.label !== String.fromCodePoint(65 + index) ||
+              !equals(actual, expected) ||
+              !equals(seam, expectedSeam) ||
+              actual.some((p) => p.some((n) => n <= 8 || n >= 136))
+            )
+              throw new Error(
+                `Design geometry ${label} ${index}: ${JSON.stringify(result)}`,
+              );
+          }
+        }
+        await p.screenshot({
+          path: `/tmp/butler-bnu-design-${label}-${width}.png`,
+        });
+      };
+      const inspectDesignTeaching = async (step) => {
+        if (step < 3 || step > 7) return;
+        const visual = {
+          kind: 'bnu-pattern-design',
+          scene: [
+            'triangle',
+            'hexagon',
+            'trapezoid',
+            'parallelogram',
+            'dot-grid',
+          ][step - 3],
+          variant: 'main',
+        };
+        await inspectDesign(visual, `learn-${step}`);
+        const state = JSON.stringify(await read());
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        await p.waitForTimeout(600);
+        await inspectDesign(visual, `learn-${step}-en`);
+        const dark = await p.evaluate(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') !== was,
+          dark,
+        );
+        await p.waitForTimeout(600);
+        await inspectDesign(visual, `learn-${step}-en-theme`);
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') === was,
+          dark,
+        );
+        await p.waitForTimeout(600);
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await p.waitForTimeout(600);
+        if (JSON.stringify(await read()) !== state)
+          throw new Error('Design language/theme changed records');
+      };
       const inspectPatternTeaching = async (step) => {
         if (![1, 2, 3].includes(step)) return;
         const visual =
@@ -3537,7 +3754,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 45
+          .count()) !== 46
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -3952,6 +4169,7 @@ const server = http.createServer(async (req, res) => {
         );
         if (flow.key.startsWith('tangram-'))
           await inspectTangramTeaching(step + 1);
+        if (flow.key === 'design') await inspectDesignTeaching(step + 1);
         if (flow.key === 'patterns-three')
           await inspectPatternTeaching(step + 1);
         if (flow.key === 'fold-one') await inspectFoldTeaching(step + 1);
@@ -4888,6 +5106,8 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (q.visual?.kind === 'bnu-pattern-design')
+          await inspectDesign(q.visual, q.id);
         if (q.visual?.kind === 'bnu-tangram')
           await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')
@@ -6859,6 +7079,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-pattern-design')
+          await inspectDesign(q.visual, q.id);
         if (q.visual?.kind === 'bnu-tangram')
           await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')

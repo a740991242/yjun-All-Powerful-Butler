@@ -6,7 +6,7 @@ export const bnuLowerUnitSixAudit = {
   status: 'partial-original-teaching',
   finalTeacherReview: 'not-verified',
   scope:
-    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；84～86后续仍制作，保留单元待制作入口。',
+    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83页28主/6复习与84页25主/6复习生产三宽均终态通过；85～86后续仍制作，保留单元待制作入口。',
   activities: [
     {
       page: 76,
@@ -373,8 +373,51 @@ export const bnuLowerUnitSixAudit = {
       manual: ['actual-select', 'actual-trace', 'actual-draw'],
       records: ['selection-record', 'drawing-record', 'reflection', 'plan'],
     },
+    {
+      page: 84,
+      sourceActivity: 'cooperate-design-and-describe-shapes',
+      lesson: 'bnu-lower-design',
+      steps: [1, 2, 9],
+      objective: ['windmill-four', 'same-pieces', 'cooperation'],
+      manual: ['actual-cooperate', 'actual-describe'],
+      records: ['cooperation-record', 'plan'],
+    },
+    {
+      page: 84,
+      sourceActivity: 'match-and-color-four-target-outlines',
+      lesson: 'bnu-lower-design',
+      steps: [3, 4, 5, 6, 7, 9],
+      objective: [
+        'match-triangle',
+        'match-hexagon',
+        'match-trapezoid',
+        'match-parallelogram',
+        'whole-boundary',
+        'name-not-gate',
+        'site-zero',
+        'click-not-color',
+      ],
+      manual: [
+        'actual-color-1',
+        'actual-color-2',
+        'actual-color-3',
+        'actual-color-4',
+      ],
+      records: ['color-record'],
+    },
+    {
+      page: 84,
+      sourceActivity: 'create-and-describe-dot-grid-pattern',
+      lesson: 'bnu-lower-design',
+      steps: [8, 9],
+      objective: ['grid-rows', 'closed'],
+      manual: ['actual-grid', 'actual-grid-describe'],
+      records: ['grid-record'],
+    },
   ],
   patternThreeScope:
-    '83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。84～86仍待制作，不据本课认整单元或全年完成。',
-  pendingPrintedPages: [84, 85, 86],
+    '83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。本项只验83页，84页另项验收；85～86仍待制作，不据本课认整单元或全年完成。',
+  designScope:
+    '84页三原活动已接25主任务/6新复习，生产375/768/1200全流程、四种轮廓与点阵实际几何/中英主题/0刷新/重试/旧记录/schema1备份均终态通过；8实际活动明确跳过，不冒合作涂色创作完成。85～86挑战仍待制作，不据本课认全年完成。',
+  pendingPrintedPages: [85, 86],
 } as const;

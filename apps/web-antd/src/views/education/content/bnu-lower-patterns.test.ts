@@ -55,7 +55,7 @@ it('maps both original activities to all objective tasks, seven required real ac
       .flatMap((activity) => activity.manual)
       .some((suffix) => suffix.startsWith('optional-')),
   ).toBe(false);
-  expect(audit.pendingPrintedPages).toEqual([84, 85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([85, 86]);
   expect(audit.status).toBe('partial-original-teaching');
 });
 it('covers all four source patterns and independent selected-part tracing and drawing without inventing whole-artwork requirements', () => {

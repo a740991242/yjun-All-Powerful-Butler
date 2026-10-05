@@ -19,6 +19,7 @@ import { isBnuHundredTableVisual } from './bnu-hundred-table';
 import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
 import { isBnuInterestingVisual } from './bnu-interesting';
 import { isBnuNumberReviewVisual } from './bnu-number-review';
+import { isBnuPatternDesignVisual } from './bnu-pattern-design';
 import { isBnuPineconeLineVisual } from './bnu-pinecone-line';
 import { isBnuRecyclingVisual } from './bnu-recycling';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
@@ -586,6 +587,9 @@ function visual(value: unknown) {
     }
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
+    }
+    case 'bnu-pattern-design': {
+      return isBnuPatternDesignVisual(value);
     }
     case 'bnu-tangram': {
       return isBnuTangramVisual(value);

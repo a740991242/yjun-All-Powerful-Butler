@@ -1378,5 +1378,11 @@
   "tangramScroll": "Scroll within the diagram. Focus its frame to use the left and right arrow keys.",
   "tangramAria": "Numbered polygon pieces. Coordinates start at the top left and increase to the right and downward.",
   "tangramPiece": "Piece {id}: connect these vertices in order and close the outline: {points}. Coordinates describe the diagram, not actual centimetres.",
-  "tangramNotice": "Original site geometry retaining textbook identifiers and relative sizes, not textbook artwork, colours or physical measurements. Diagrams use a common scale. Internal seams differ from the whole outer outline. Actual tracing, assembly, cooperation and presentation are separate activities."
+  "tangramNotice": "Original site geometry retaining textbook identifiers and relative sizes, not textbook artwork, colours or physical measurements. Diagrams use a common scale. Internal seams differ from the whole outer outline. Actual tracing, assembly, cooperation and presentation are separate activities.",
+  "patternDesignTitle": "Outline comparison and dot grid",
+  "patternDesignCompare": "A is the reference. Compare the complete outlines of B, C and D. Letters only identify diagrams; inspect size, orientation and internal lines separately.",
+  "patternDesignDots": "Blank site dot grid: copy the dots onto paper and connect them to design a pattern. There are no hidden lines.",
+  "patternDesignCard": "Diagram {label}: join vertices {points} in order and close the outline. Internal dashed lines do not change that outline.",
+  "patternDesignGridAria": "Blank site grid with points 24 diagram units apart; no outline has been drawn.",
+  "patternDesignNotice": "Original site aids, not the textbook coloring grid or original artwork. Record actual coloring, cooperation and drawing separately."
 }

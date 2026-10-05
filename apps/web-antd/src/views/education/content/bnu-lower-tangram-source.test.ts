@@ -68,6 +68,6 @@ it('maps all nine read-page activities to actual registered steps and separate t
     for (const key of activity.records)
       expect(kinds.get(key)).toBe('reflection');
   }
-  expect(audit.pendingPrintedPages).toEqual([84, 85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([85, 86]);
   expect(audit.status).toBe('partial-original-teaching');
 });
