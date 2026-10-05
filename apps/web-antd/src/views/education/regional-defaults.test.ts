@@ -178,3 +178,50 @@ it('adds Hubei upper references without turning an attachment path date into a p
     expect(fresh.evidence[0]!.sourceUrl).toContain('fgw.hubei.gov.cn');
   }
 });
+
+it('keeps Henan upper/lower digital catalog identities, dates and fresh references separate', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    for (const academicYear of ['2025-2026', '2026-2027']) {
+      const local = { ...query, province: 'henan', volume, academicYear };
+      const result = regionalMathematicsDefault(local)!;
+      expect(result).toMatchObject({
+        edition: 'pep-2024',
+        catalogYear: '2025',
+        catalogKind: 'digital',
+        alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+      });
+      expect(result.evidence[0]).toMatchObject({
+        id: `henan-grade-one-math-${volume}-digital-catalog-2025`,
+        publishedAt: '',
+        issuedAt: volume === 'upper' ? '2025-04-25' : '2024-11-05',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[0]!.sourceTitle).toContain('数字教材学生用');
+      expect(result.evidence[0]!.sourceTitle).toContain(
+        volume === 'upper' ? '一年级上册' : '一年级下册',
+      );
+      expect(result.evidence[0]!.sourceUrl).toContain(
+        volume === 'upper'
+          ? '8993a114d7d74ce2bc515b627698f204.pdf'
+          : '46ca9c21f429404a90a55568df927080.pdf',
+      );
+      result.alternatives!.pop();
+      result.evidence[0]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(3);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
+      ).toContain('.zfcg.henan.gov.cn/');
+      for (const change of [
+        { volume: 'all' },
+        { city: 'zhengzhou' },
+        { school: 'school' },
+        { grade: 'p2' },
+        { subject: 'english' },
+        { academicYear: '2027-2028' },
+      ])
+        expect(
+          regionalMathematicsDefault({ ...local, ...change }),
+        ).toBeUndefined();
+    }
+  }
+});

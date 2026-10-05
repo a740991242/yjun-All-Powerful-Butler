@@ -23,6 +23,7 @@ interface PolicySource {
   sourceUrl: string;
   sourceTitle: string;
   publishedAt: string;
+  issuedAt?: string;
   checkedAt: string;
 }
 export interface RegionalSubjectPlan {
@@ -35,6 +36,7 @@ export interface RegionalSubjectPlan {
         evidence: PolicySource[];
         alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
         catalogYear?: string;
+        catalogKind?: 'digital';
       };
   reason: 'available' | 'conflict' | 'system' | 'unavailable' | 'unknown';
   action?: RegionalEditionAction;

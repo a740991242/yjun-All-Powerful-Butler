@@ -16,6 +16,7 @@ export interface RegionalEditionEvidence extends RegionalEditionQuery {
   sourceUrl: string;
   sourceTitle: string;
   publishedAt: string;
+  issuedAt?: string;
   checkedAt: string;
 }
 export type RegionalEditionResolution =

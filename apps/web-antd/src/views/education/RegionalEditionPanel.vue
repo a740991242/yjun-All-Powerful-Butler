@@ -279,9 +279,12 @@ function apply() {
           class="w-full text-sm leading-6 text-muted-foreground"
         >
           {{
-            $t('educationLearning.regionalCatalogDefaultScope', {
-              year: item.resolution.catalogYear,
-            })
+            $t(
+              item.resolution.catalogKind === 'digital'
+                ? 'educationLearning.regionalDigitalCatalogDefaultScope'
+                : 'educationLearning.regionalCatalogDefaultScope',
+              { year: item.resolution.catalogYear },
+            )
           }}
         </p>
         <p
@@ -321,6 +324,13 @@ function apply() {
           {{ $t('educationLearning.regionalSource') }} ·
           {{ evidence.sourceTitle }}
         </a>
+        <p v-if="evidence.issuedAt">
+          {{
+            $t('educationLearning.regionalSourceIssuedDate', {
+              date: evidence.issuedAt,
+            })
+          }}
+        </p>
         <p>
           {{
             $t('educationLearning.regionalSourceDates', {

@@ -5,6 +5,7 @@ export interface RegionalDefaultSource {
   sourceUrl: string;
   sourceTitle: string;
   publishedAt: string;
+  issuedAt?: string;
   checkedAt: string;
 }
 export interface RegionalMathDefault {
@@ -12,6 +13,7 @@ export interface RegionalMathDefault {
   evidence: RegionalDefaultSource[];
   alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
   catalogYear?: string;
+  catalogKind?: 'digital';
 }
 
 /** Product combinations are distinct from verified adoption at any school.
@@ -38,6 +40,29 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'henan') {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+      catalogYear: '2025',
+      catalogKind: 'digital',
+      evidence: [
+        {
+          id: `henan-grade-one-math-${query.volume}-digital-catalog-2025`,
+          sourceUrl: upper
+            ? 'https://pdsyx.zfcg.henan.gov.cn/cmsweb81e27e/nas/webfile2024/henan/rootfiles/2025/05/09/8993a114d7d74ce2bc515b627698f204.pdf'
+            : 'https://sanmenxia.zfcg.henan.gov.cn/cmsweb81e27e/henan/rootfiles/2024/11/18/46ca9c21f429404a90a55568df927080.pdf',
+          sourceTitle: upper
+            ? '河南省中小学2025年秋季电教教材推荐目录（教资保〔2025〕100号，印刷第4页数字教材学生用，一年级上册17100003～17100005）'
+            : '河南省中小学2025年春季电教教材推荐目录（教资保〔2024〕347号，印刷第4页数字教材学生用，一年级下册17100003～17100005）',
+          publishedAt: '',
+          issuedAt: upper ? '2025-04-25' : '2024-11-05',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
   if (query.province === 'hubei' && query.volume === 'upper')
     return {
       edition: 'pep-2024',

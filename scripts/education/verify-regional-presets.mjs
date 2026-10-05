@@ -145,6 +145,8 @@ const server = http.createServer(async (req, res) => {
             .getByText('教材选用资料参考（可选）', { exact: true })
             .click();
         const input = p.locator(`#${id}`);
+        await input.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(300);
         await input.focus();
         if (search) await input.fill(label);
         await input.press('ArrowDown');
@@ -385,6 +387,61 @@ const server = http.createServer(async (req, res) => {
         });
         if (await hubeiCatalog.count())
           throw new Error('Hubei spring source leaked into upper volume');
+        await choose('education-region-province', '河南', true);
+        for (const [volume, date, url] of [
+          [
+            '上册',
+            '2025-04-25',
+            'https://pdsyx.zfcg.henan.gov.cn/cmsweb81e27e/nas/webfile2024/henan/rootfiles/2025/05/09/8993a114d7d74ce2bc515b627698f204.pdf',
+          ],
+          [
+            '下册',
+            '2024-11-05',
+            'https://sanmenxia.zfcg.henan.gov.cn/cmsweb81e27e/henan/rootfiles/2024/11/18/46ca9c21f429404a90a55568df927080.pdf',
+          ],
+        ]) {
+          await choose('education-region-volume', volume);
+          await region.locator(`a[href="${url}"]`).waitFor();
+          const digitalCatalog = region.getByText(
+            '参考2025年省级数字教材推荐目录中的可选版本',
+            { exact: false },
+          );
+          await digitalCatalog.waitFor();
+          if (
+            await region
+              .getByText('参考2025年省级目录中的可选版本', { exact: false })
+              .count()
+          )
+            throw new Error(
+              'Henan digital source presented as printed catalog',
+            );
+          await region
+            .getByText(`文件日期：${date}`, {
+              exact: false,
+            })
+            .waitFor();
+          const alternatives = await region
+            .getByText('该参考目录可选数学版本：', { exact: false })
+            .textContent();
+          for (const publisher of ['人教版', '苏教版', '北师大版'])
+            if (!alternatives.includes(publisher))
+              throw new Error('Henan verified alternative missing');
+          await apply.click();
+          for (const subject of ['语文', '数学', '道德与法治'])
+            await p
+              .getByRole('button', {
+                name: `${subject} · 人教版（2024审定） · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          await digitalCatalog.evaluate((e) =>
+            e.scrollIntoView({ block: 'center' }),
+          );
+          await p.waitForTimeout(500);
+          await p.screenshot({
+            path: `/tmp/butler-henan-${volume === '上册' ? 'upper' : 'lower'}-default-${width}.png`,
+          });
+        }
         await choose('education-region-province', '湖南', true);
         await choose('education-region-volume', '上册');
         await region
@@ -548,6 +605,39 @@ const server = http.createServer(async (req, res) => {
         await p.screenshot({
           path: `/tmp/butler-hubei-upper-default-${width}-en-dark.png`,
         });
+        await choose('education-region-province', 'Henan', true);
+        for (const volume of ['Upper volume', 'Lower volume']) {
+          await choose('education-region-volume', volume);
+          const digitalCatalog = p.getByText(
+            'The 2025 provincial digital textbook catalog lists alternatives.',
+            { exact: false },
+          );
+          await digitalCatalog.waitFor();
+          await p
+            .getByText(
+              `Document date: ${volume === 'Upper volume' ? '2025-04-25' : '2024-11-05'}`,
+              { exact: false },
+            )
+            .waitFor();
+          await p
+            .getByText('Published: Not stated; checked: 2026-10-06', {
+              exact: false,
+            })
+            .waitFor();
+          await digitalCatalog.evaluate((e) =>
+            e.scrollIntoView({ block: 'center' }),
+          );
+          await p.waitForTimeout(500);
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('Henan English dark overflow');
+          await p.screenshot({
+            path: `/tmp/butler-henan-${volume === 'Upper volume' ? 'upper' : 'lower'}-default-${width}-en-dark.png`,
+          });
+        }
         if (
           (await p.evaluate(async () =>
             JSON.stringify(await window.qaLoad()),
@@ -567,6 +657,9 @@ const server = http.createServer(async (req, res) => {
             HunanUpperCatalogNotInheritedByLower: true,
             HunanEnglishDarkCatalog: true,
             HubeiUpperLowerThreeSubjects: true,
+            HenanUpperLowerThreeSubjects: true,
+            HenanDigitalCatalogScopeBilingual: true,
+            HenanVolumeSourcesAndDatesSeparate: true,
             HubeiUpperUnknownPublicationDateBilingual: true,
             HubeiUpperEnglishDarkCatalog: true,
             provincialCatalogAlternativesShown: true,
