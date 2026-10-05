@@ -10,6 +10,7 @@ import type { BnuFinalColorVisual } from './bnu-final-color';
 import type { BnuFinalDataVisual } from './bnu-final-data';
 import type { BnuFinalGeometryVisual } from './bnu-final-geometry';
 import type { BnuFinalPositionVisual } from './bnu-final-position';
+import type { BnuFinalPracticeVisual } from './bnu-final-practice';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuFoldOneVisual } from './bnu-fold-one';
 import type { BnuHundredTableVisual } from './bnu-hundred-table';
@@ -479,6 +480,7 @@ export type Visual =
   | BnuFinalDataVisual
   | BnuFinalGeometryVisual
   | BnuFinalPositionVisual
+  | BnuFinalPracticeVisual
   | BnuFinalSolidsVisual
   | BnuFoldOneVisual
   | BnuHundredTableVisual

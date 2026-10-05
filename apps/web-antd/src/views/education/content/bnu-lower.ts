@@ -22,6 +22,7 @@ import {
   bnuLowerFinalNumberApplicationsLesson,
   bnuLowerFinalNumberReviewLesson,
 } from './bnu-lower-final-numbers';
+import { bnuLowerFinalPracticeLesson } from './bnu-lower-final-practice';
 import { bnuLowerFoldOneLesson } from './bnu-lower-fold-one';
 import { bnuLowerFrogsLesson } from './bnu-lower-frogs';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
@@ -409,7 +410,7 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerFinalNumberReviewLesson,
     bnuLowerFinalNumberApplicationsLesson,
     bnuLowerFinalGeometryLesson,
-    pending('final', '总复习：综合与实践（95页继续制作）', 95),
+    bnuLowerFinalPracticeLesson,
   ],
   u6: [
     bnuLowerRecognizeShapesLesson,

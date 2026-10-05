@@ -1447,5 +1447,19 @@
   "finalGeometryPolygon": "Part {letter}: join vertices {points} in order and close the outline. Coordinates are drawing units only.",
   "finalGeometryFoldNotice": "A/B label regions, not answers. Start each diagram from a fresh complete rectangle. Lines show boundaries after unfolding; they do not confirm actual folding or cutting.",
   "finalGeometryDotNotice": "Dots mark positions, not shape pieces. Complete each of the three drawing tasks separately; this blank diagram does not replace drawing on paper.",
-  "finalGeometryCollageNotice": "Count each complete drawn part once. Do not subdivide a part again or add the overall outline. Site counts do not fill answers for the textbook artwork."
+  "finalGeometryCollageNotice": "Count each complete drawn part once. Do not subdivide a part again or add the overall outline. Site counts do not fill answers for the textbook artwork.",
+  "finalPracticeTitle_faces": "Continue the faces",
+  "finalPracticeTitle_cups": "Continue the cup handles",
+  "finalPracticeTitle_divisions": "Continue the dividing lines",
+  "finalPracticeMain": "Redrawn given categories, directions and order from the source task. A, B and C remain unfilled.",
+  "finalPracticeReview": "A new site review changes the starting unit. Observe again instead of copying the source sequence.",
+  "finalPracticeScroll": "Continuation sequence; scroll horizontally to inspect all givens and unfilled positions",
+  "finalPracticeNotice": "Numbers below mark positions. A, B and C are unfilled continuation slots. Site drawings do not represent the original artwork size. Web choices do not complete actual drawing.",
+  "finalPracticeBlank": "Unfilled continuation slot {letter}; no drawing yet",
+  "finalPracticeMark_happy": "Given position {position}: happy face",
+  "finalPracticeMark_sad": "Given position {position}: sad face",
+  "finalPracticeMark_left": "Given position {position}: cup handle faces left",
+  "finalPracticeMark_right": "Given position {position}: cup handle faces right",
+  "finalPracticeMark_horizontal": "Given position {position}: horizontal dividing line inside the frame",
+  "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame"
 }

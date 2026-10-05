@@ -1447,5 +1447,19 @@
   "finalGeometryPolygon": "图形{letter}，依次连接顶点{points}并闭合；坐标只是绘图单位。",
   "finalGeometryFoldNotice": "A/B为分区字母，不是答案。每图从一张完整长方形重新开始；线表示展开后的分界，不表示已实际折好或剪下。",
   "finalGeometryDotNotice": "点只是定位参照，不算图形材料。三个作画任务分别完成；网页空白图不自动代替纸上作图。",
-  "finalGeometryCollageNotice": "每个完整所画轮廓只数一次，内部线不再拆成材料，整体外轮廓不额外加一；本站数量不能代填教材原图。"
+  "finalGeometryCollageNotice": "每个完整所画轮廓只数一次，内部线不再拆成材料，整体外轮廓不额外加一；本站数量不能代填教材原图。",
+  "finalPracticeTitle_faces": "表情续画",
+  "finalPracticeTitle_cups": "杯子把手续画",
+  "finalPracticeTitle_divisions": "分线图续画",
+  "finalPracticeMain": "按原题已给图的类别、方向和顺序重画；A、B、C保持未画。",
+  "finalPracticeReview": "本站新复习改变重复组的起点；重新观察，不能直接抄原题顺序。",
+  "finalPracticeScroll": "续画图序列，可左右滚动查看全部已给图和空位",
+  "finalPracticeNotice": "下方数字标位置；A、B、C是续画空位，不预填答案。画法为本站重绘，不冒原图大小；网页选择不会自动完成真实续画。",
+  "finalPracticeBlank": "续画空位{letter}，尚未画图",
+  "finalPracticeMark_happy": "已给第{position}图：笑脸",
+  "finalPracticeMark_sad": "已给第{position}图：伤心脸",
+  "finalPracticeMark_left": "已给第{position}图：杯子把手朝左",
+  "finalPracticeMark_right": "已给第{position}图：杯子把手朝右",
+  "finalPracticeMark_horizontal": "已给第{position}图：外框内横分线",
+  "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线"
 }

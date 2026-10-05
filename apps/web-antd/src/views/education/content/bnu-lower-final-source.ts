@@ -4,7 +4,7 @@
 export const bnuLowerFinalSource = {
   resourceId: 'bnu-lower-public-scan-2024',
   checkedAt: '2026-10-06',
-  status: 'source-checked-teaching-partial',
+  status: 'source-checked-teaching-mapped',
   readPrintedPages: [90, 91, 92, 93, 94, 95],
   pageImages: [
     { printedPage: 90, suffix: '094.jpg' },
@@ -151,5 +151,5 @@ export const bnuLowerFinalSource = {
     { page: 95, key: 'actual-cooperative-math-story-and-comic' },
   ],
   boundary:
-    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课、93～94图形课已接目录并完成三宽程序验收，95综合实践仍待制作；课程映射不代程序或全年验收，旧学习记录保持。未确定的原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
+    '仅总复习90～95来源准备及附页97图3实际查看，90～92已制作两课、93～94图形课已接目录并完成三宽程序验收，95综合实践已接目录并完成三宽程序验收；课程映射不代程序或全年验收，旧学习记录保持。未确定的原拼图数、附页尺寸和之后未查看页保留状态，不将来源清单当教学完成或全年验收；不以学校或指定审校人为前置。',
 } as const;

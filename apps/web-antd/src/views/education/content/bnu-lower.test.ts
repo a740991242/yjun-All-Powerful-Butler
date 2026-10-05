@@ -30,6 +30,7 @@ import {
   bnuLowerFinalNumberApplicationsLesson,
   bnuLowerFinalNumberReviewLesson,
 } from './bnu-lower-final-numbers';
+import { bnuLowerFinalPracticeLesson } from './bnu-lower-final-practice';
 import { bnuLowerFoldOneLesson } from './bnu-lower-fold-one';
 import { bnuLowerFrogsLesson } from './bnu-lower-frogs';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
@@ -141,8 +142,9 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerFinalNumberReviewLesson,
     bnuLowerFinalNumberApplicationsLesson,
     bnuLowerFinalGeometryLesson,
+    bnuLowerFinalPracticeLesson,
   ]);
-  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(1);
+  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(0);
   expect(
     bnuLowerBook.units[4]?.lessons.map(({ id, status, page }) => [
       id,

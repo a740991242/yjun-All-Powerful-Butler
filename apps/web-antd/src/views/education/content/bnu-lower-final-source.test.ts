@@ -17,7 +17,7 @@ it('keeps the complete six-page original activity range, following blank and act
   expect(source.followingImages[1].observed).toContain('印刷97页');
   expect(source.geometry.appendixFigure).toBe(3);
   expect(source.geometry.collageCounts).toBeNull();
-  expect(source.status).toBe('source-checked-teaching-partial');
+  expect(source.status).toBe('source-checked-teaching-mapped');
 });
 it('distinguishes number-line positions, sequential quantity scopes, ranks and three independent continuation patterns', () => {
   const applications = source.numberApplications;

@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--final-practice'))
+    return {
+      index: 51,
+      lessonId: 'bnu-lower-final-practice',
+      zero: '-site-zero',
+      retry: '-cups-unit',
+      manual: 13,
+      steps: 11,
+      review: 10,
+      key: 'final-practice',
+    };
+
   if (process.argv.includes('--final-geometry'))
     return {
       index: 50,
@@ -4336,6 +4348,194 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectFinalPractice = async (visual, label, bilingual = false) => {
+        const root = p.locator('[data-bnu-final-practice]');
+        const region = root.getByRole('region');
+        const given = {
+          main: {
+            faces: ['happy', 'happy', 'sad', 'happy', 'happy', 'sad'],
+            cups: ['right', 'left', 'right', 'left'],
+            divisions: ['horizontal', 'vertical', 'horizontal', 'vertical'],
+          },
+          review: {
+            faces: ['sad', 'happy', 'happy', 'sad', 'happy', 'happy'],
+            cups: ['left', 'right', 'left', 'right'],
+            divisions: ['vertical', 'horizontal', 'vertical', 'horizontal'],
+          },
+        }[visual.variant][visual.scene];
+        const check = async () => {
+          await root.waitFor();
+          if (
+            (await root.getAttribute('data-scene')) !== visual.scene ||
+            (await root.getAttribute('data-variant')) !== visual.variant
+          )
+            throw new Error(`Practice scene ${label}`);
+          const cells = root.locator('[data-final-practice-cell]');
+          if ((await cells.count()) !== given.length + 3)
+            throw new Error(`Practice positions ${label}`);
+          for (let i = 0; i < given.length + 3; i++) {
+            const cell = cells.nth(i);
+            const mark = given[i] ?? 'blank';
+            if (
+              (await cell.getAttribute('data-mark')) !== mark ||
+              (await cell.locator('span').innerText()) !== String(i + 1)
+            )
+              throw new Error(`Practice ordered mark ${label}/${i}`);
+            if (mark === 'blank') {
+              if (
+                (await cell.locator('svg').count()) !== 0 ||
+                (await cell.locator('[role="img"]').innerText()) !==
+                  String.fromCodePoint(65 + i - given.length)
+              )
+                throw new Error(`Practice blank answer leak ${label}/${i}`);
+              const aria = await cell
+                .locator('[role="img"]')
+                .getAttribute('aria-label');
+              if (!/尚未画图|no drawing yet/.test(aria))
+                throw new Error(`Practice empty ARIA ${label}/${i}`);
+            } else {
+              const svg = cell.locator('svg');
+              const aria = await svg.getAttribute('aria-label');
+              if (!aria || !aria.includes(String(i + 1)))
+                throw new Error(`Practice given ARIA ${label}/${i}`);
+              const width = await svg.evaluate(
+                (n) => n.getBoundingClientRect().width,
+              );
+              if (width !== 80)
+                throw new Error(`Practice shape scale ${label}/${i}`);
+              if (['happy', 'sad'].includes(mark)) {
+                if (
+                  (await svg.locator('circle').count()) !== 3 ||
+                  (await svg.locator('path').getAttribute('d')) !==
+                    (mark === 'happy'
+                      ? 'M28 47 Q40 62 52 47'
+                      : 'M28 55 Q40 40 52 55')
+                )
+                  throw new Error(`Practice expression ${label}/${i}`);
+              } else if (['left', 'right'].includes(mark)) {
+                if (
+                  (await svg.locator('rect').getAttribute('x')) !== '24' ||
+                  (await svg.locator('path').getAttribute('d')) !==
+                    (mark === 'right'
+                      ? 'M56 27 Q78 38 56 50'
+                      : 'M24 27 Q2 38 24 50')
+                )
+                  throw new Error(`Practice handle ${label}/${i}`);
+              } else {
+                const line = svg.locator('line');
+                const coordinates = await line.evaluate((n) =>
+                  ['x1', 'y1', 'x2', 'y2'].map((k) =>
+                    Number(n.getAttribute(k)),
+                  ),
+                );
+                const expected =
+                  mark === 'horizontal' ? [18, 40, 62, 40] : [40, 18, 40, 62];
+                if (JSON.stringify(coordinates) !== JSON.stringify(expected))
+                  throw new Error(`Practice dividing line ${label}/${i}`);
+              }
+            }
+          }
+          const readable = await root.evaluate((n) =>
+            [
+              ...n.querySelectorAll('p,figcaption,span,[role="img"]:not(svg)'),
+            ].every(
+              (t) => Number.parseFloat(getComputedStyle(t).fontSize) >= 20,
+            ),
+          );
+          if (
+            !readable ||
+            (await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth + 1,
+            ))
+          )
+            throw new Error(`Practice readable ${label}`);
+          await region.scrollIntoViewIfNeeded();
+          await region.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          const max = await region.evaluate(
+            (n) => n.scrollWidth - n.clientWidth,
+          );
+          await region.focus();
+          await region.press('ArrowRight');
+          await p.waitForTimeout(350);
+          if (max > 1 && (await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error(`Practice keyboard right ${label}`);
+          await region.press('ArrowLeft');
+          await p.waitForTimeout(350);
+          if ((await region.evaluate((n) => n.scrollLeft)) > 1)
+            throw new Error(`Practice keyboard left ${label}`);
+          for (const edge of [0, max]) {
+            await region.evaluate((n, x) => {
+              n.scrollLeft = x;
+            }, edge);
+            const target = edge === 0 ? cells.first() : cells.last();
+            const visible = await target.evaluate((n) => {
+              const b = n.getBoundingClientRect();
+              const r = n.closest('[role="region"]').getBoundingClientRect();
+              return (
+                b.left >= r.left &&
+                b.right <= r.right &&
+                r.left >= 0 &&
+                r.right <= innerWidth
+              );
+            });
+            if (
+              !visible ||
+              Math.abs((await region.evaluate((n) => n.scrollLeft)) - edge) > 1
+            )
+              throw new Error(`Practice visible edges ${label}`);
+            if (bilingual) {
+              await p.waitForTimeout(700);
+              const title = await root.locator('figcaption').innerText();
+              const en = title.startsWith('Continue');
+              await p.screenshot({
+                path: `/tmp/butler-bnu-final-practice-${label}-${en ? 'en' : 'zh'}-${edge === 0 ? 'first' : 'last'}-${width}.png`,
+              });
+            }
+          }
+        };
+        await check();
+        if (bilingual) {
+          const saved = JSON.stringify(await read());
+          const language = p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') });
+          await language.click();
+          await p.getByText('English', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /^Continue/ })
+            .waitFor();
+          await check();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await check();
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await language.click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /续画/ })
+            .waitFor();
+          if (JSON.stringify(await read()) !== saved)
+            throw new Error(
+              'Practice language or theme changed learning records',
+            );
+        }
+      };
       const inspectFinalGeometry = async (visual, label, bilingual = false) => {
         const root = p.locator('[data-bnu-final-geometry]');
         const check = async () => {
@@ -4969,7 +5169,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 51
+          .count()) !== 52
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -5402,6 +5602,12 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'final-practice' && [1, 2, 3].includes(step + 1))
+          await inspectFinalPractice(
+            { scene: ['faces', 'cups', 'divisions'][step], variant: 'main' },
+            `learn-${step + 1}`,
+            true,
+          );
         if (flow.key === 'final-geometry') {
           const scenes = {
             3: 'robot',
@@ -6421,6 +6627,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'number-strip'
         )
           await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-practice')
+          await inspectFinalPractice(q.visual, q.id);
         if (q.visual?.kind === 'bnu-final-geometry')
           await inspectFinalGeometry(q.visual, q.id);
         if (
@@ -8419,6 +8627,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'number-strip'
         )
           await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-practice')
+          await inspectFinalPractice(q.visual, q.id);
         if (q.visual?.kind === 'bnu-final-geometry')
           await inspectFinalGeometry(q.visual, q.id);
         if (

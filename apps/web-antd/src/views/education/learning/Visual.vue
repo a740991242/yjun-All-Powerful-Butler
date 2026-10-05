@@ -24,6 +24,7 @@ import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalData from './BnuFinalData.vue';
 import BnuFinalGeometry from './BnuFinalGeometry.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
+import BnuFinalPractice from './BnuFinalPractice.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
 import BnuFoldOne from './BnuFoldOne.vue';
 import BnuHundredTable from './BnuHundredTable.vue';
@@ -1195,6 +1196,10 @@ const shapeDescription = computed(() =>
         }}
       </div>
     </div>
+    <BnuFinalPractice
+      v-else-if="visual.kind === 'bnu-final-practice'"
+      :visual="visual"
+    />
     <BnuFinalGeometry
       v-else-if="visual.kind === 'bnu-final-geometry'"
       :visual="visual"

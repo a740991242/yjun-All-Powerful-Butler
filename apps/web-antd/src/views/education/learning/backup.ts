@@ -16,6 +16,7 @@ import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalDataVisual } from './bnu-final-data';
 import { isBnuFinalGeometryVisual } from './bnu-final-geometry';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
+import { isBnuFinalPracticeVisual } from './bnu-final-practice';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuFoldOneVisual } from './bnu-fold-one';
 import { isBnuHundredTableVisual } from './bnu-hundred-table';
@@ -527,6 +528,9 @@ function visual(value: unknown) {
     }
     case 'bnu-final-data': {
       return isBnuFinalDataVisual(value);
+    }
+    case 'bnu-final-practice': {
+      return isBnuFinalPracticeVisual(value);
     }
     case 'bnu-final-geometry': {
       return isBnuFinalGeometryVisual(value);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T21:07:14.967Z",
+  "generatedAt": "2026-10-05T21:21:46.707Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 51,
-        "pendingEntries": 1,
+        "availablePacks": 52,
+        "pendingEntries": 0,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1316,
-          "manual": 553,
-          "reflection": 216
+          "objective": 1332,
+          "manual": 566,
+          "reflection": 222
         }
       },
       "units": [
@@ -37392,33 +37392,33 @@
               }
             },
             {
-              "id": "bnu-lower-final-pending",
-              "title": "总复习：综合与实践（95页继续制作）",
-              "textbookTitle": "总复习：综合与实践（95页继续制作）",
+              "id": "bnu-lower-final-practice",
+              "title": "接着画、表达规律与合作数学故事",
+              "textbookTitle": "总复习：综合与实践",
               "page": 95,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "回顾数学连环画、重复规律和图案设计，逐一续画三组图，用自己的方式表达三处生活规律，并实际合作讲故事、画连环画和交流。",
+              "prerequisite": "已学习重复图案与数学故事，准备纸笔；合作可找同伴或家人，暂无合作条件如实待做。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 11,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 16,
+                "manual": 13,
+                "reflection": 6
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 10,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-final-practice"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["bnu-final-practice"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描印刷95页",
+                "notes": "四项原活动逐项映射，本站重画给定结构、不复制照片和完整现代插画；不冒人工最终审校或全年完成。"
               }
             }
           ],
@@ -37426,11 +37426,11 @@
             "resourceId": "bnu-lower-public-scan-2024",
             "checkedAt": "2026-10-06",
             "readPrintedPages": [90, 91, 92, 93, 94, 95],
-            "taughtPrintedPages": [90, 91, 92, 93, 94],
-            "pendingTeachingPages": [95],
-            "status": "partial-original-teaching",
+            "taughtPrintedPages": [90, 91, 92, 93, 94, 95],
+            "pendingTeachingPages": [],
+            "status": "original-teaching-mapped",
             "finalTeacherReview": "not-verified",
-            "scope": "90～92页十三原活动对应两课26讲解、69主任务（37客观/22真实人工/10开放记录）和15换条件复习。两数列全部空位、三组成、四比较、下半年范围、两种数线、两群熊猫、同量白菜、套圈两问、四人排名与自主问题分别覆盖；32多种表示、四竖式及两个生活问题保留实作。375/768/1200完整流程、已知条件表/数字条/竖式字号和空位、表格中英主题与键盘滚动、0刷新/重试/旧人教会话/schema1备份已检查。93～94七项活动已接入图形教学；40主任务（18客观/17真实人工/5开放记录）及8换条件复习在375/768/1200完整流程通过，图形实际边界、字号、中英主题、0刷新/重试/旧记录/schema1备份已检查，95仍待教学，原机器人/火车计数未核清保留null；映射与程序核验不代全册全年或人工最终审校。",
+            "scope": "90～92页十三原活动对应两课26讲解、69主任务（37客观/22真实人工/10开放记录）和15换条件复习。两数列全部空位、三组成、四比较、下半年范围、两种数线、两群熊猫、同量白菜、套圈两问、四人排名与自主问题分别覆盖；32多种表示、四竖式及两个生活问题保留实作。375/768/1200完整流程、已知条件表/数字条/竖式字号和空位、表格中英主题与键盘滚动、0刷新/重试/旧人教会话/schema1备份已检查。93～94七项活动已接入图形教学；40主任务（18客观/17真实人工/5开放记录）及8换条件复习在375/768/1200完整流程通过，图形实际边界、字号、中英主题、0刷新/重试/旧记录/schema1备份已检查，95四项原活动对应11讲解、35主任务（16客观/13真实人工/6开放记录）与10换条件复习，三宽完整流程/三序列实际图形方向/三空不预填/内部键盘两端/20px/中英主题/0刷新/重试/旧记录/schema1备份通过，原机器人/火车计数未核清保留null；映射与程序核验不代全册全年或人工最终审校。",
             "activities": [
               {
                 "page": 90,
@@ -37684,26 +37684,72 @@
                 "manual": ["actual-collage-create", "actual-collage-show"],
                 "records": ["learning-record", "future-plan"],
                 "lesson": "bnu-lower-final-geometry"
+              },
+              {
+                "page": 95,
+                "sourceActivity": "recall-comic-patterns-and-design",
+                "steps": [1, 5],
+                "objective": [],
+                "manual": [
+                  "actual-recall-comic",
+                  "actual-recall-repeat",
+                  "actual-recall-design"
+                ],
+                "records": ["recall-record"],
+                "lesson": "bnu-lower-final-practice"
+              },
+              {
+                "page": 95,
+                "sourceActivity": "continue-three-drawing-patterns",
+                "steps": [2, 3, 4],
+                "objective": [
+                  "faces-1",
+                  "faces-2",
+                  "faces-3",
+                  "cups-1",
+                  "cups-2",
+                  "cups-3",
+                  "divisions-1",
+                  "divisions-2",
+                  "divisions-3",
+                  "faces-unit",
+                  "cups-unit",
+                  "divisions-unit",
+                  "site-zero"
+                ],
+                "manual": [
+                  "actual-draw-faces",
+                  "actual-draw-cups",
+                  "actual-draw-divisions"
+                ],
+                "records": [],
+                "lesson": "bnu-lower-final-practice"
+              },
+              {
+                "page": 95,
+                "sourceActivity": "express-three-life-patterns-in-own-way",
+                "steps": [6, 7, 8],
+                "objective": ["expression"],
+                "manual": ["actual-wall", "actual-stairs", "actual-fabric"],
+                "records": ["wall-record", "stairs-record", "fabric-record"],
+                "lesson": "bnu-lower-final-practice"
+              },
+              {
+                "page": 95,
+                "sourceActivity": "actual-cooperative-math-story-and-comic",
+                "steps": [9, 10, 11],
+                "objective": ["cooperation", "story-order"],
+                "manual": [
+                  "actual-cooperate-plan",
+                  "actual-cooperate-tell",
+                  "actual-cooperate-draw",
+                  "actual-cooperate-show"
+                ],
+                "records": ["story-record", "future-plan"],
+                "lesson": "bnu-lower-final-practice"
               }
             ],
-            "pendingActivities": [
-              {
-                "page": 95,
-                "key": "recall-comic-patterns-and-design"
-              },
-              {
-                "page": 95,
-                "key": "continue-three-drawing-patterns"
-              },
-              {
-                "page": 95,
-                "key": "express-three-life-patterns-in-own-way"
-              },
-              {
-                "page": 95,
-                "key": "actual-cooperative-math-story-and-comic"
-              }
-            ]
+            "pendingActivities": []
           }
         }
       ],
