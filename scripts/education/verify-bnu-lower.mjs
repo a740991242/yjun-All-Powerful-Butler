@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--square-challenge'))
+    return {
+      index: 46,
+      lessonId: 'bnu-lower-square-challenge',
+      zero: '-site-zero',
+      retry: '-seven-count',
+      manual: 10,
+      steps: 12,
+      review: 7,
+      key: 'tangram-square',
+    };
   if (process.argv.includes('--design'))
     return {
       index: 45,
@@ -2697,6 +2708,143 @@ const server = http.createServer(async (req, res) => {
             semicircle(270, 180, 40, true),
           ],
         };
+        const squares = {
+          'square-two-large': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              2,
+              [
+                [0, 2],
+                [4, 2],
+                [2, 4],
+              ],
+            ],
+          ],
+          'square-two-small': [
+            [
+              4,
+              [
+                [0, 1],
+                [1, 0],
+                [2, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [0, 1],
+                [2, 1],
+                [1, 2],
+              ],
+            ],
+          ],
+          'square-three': [
+            [
+              7,
+              [
+                [0, 0],
+                [0, 2],
+                [2, 2],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 0],
+                [2, 0],
+                [1, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 0],
+                [2, 2],
+                [1, 1],
+              ],
+            ],
+          ],
+          'square-four-square': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              5,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+                [1, 3],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 2],
+                [2, 2],
+                [1, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+          ],
+          'square-four-triangle': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              7,
+              [
+                [0, 2],
+                [2, 2],
+                [2, 4],
+              ],
+            ],
+            [
+              4,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+              ],
+            ],
+          ],
+        };
+        for (const [scene, recipe] of Object.entries(squares))
+          fixtures[scene] = recipe.map(([id, points]) =>
+            place(id, 80, 60, points),
+          );
         const expected = fixtures[visual.scene];
         if (!expected) throw new Error('Unknown fold fixture');
         const root = p.locator('[data-bnu-fold-one]');
@@ -2979,6 +3127,143 @@ const server = http.createServer(async (req, res) => {
           'goose-head': [3, 4].map((id) => place(id)),
           'fish-head': [1, 2].map((id) => place(id)),
         };
+        const squares = {
+          'square-two-large': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              2,
+              [
+                [0, 2],
+                [4, 2],
+                [2, 4],
+              ],
+            ],
+          ],
+          'square-two-small': [
+            [
+              4,
+              [
+                [0, 1],
+                [1, 0],
+                [2, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [0, 1],
+                [2, 1],
+                [1, 2],
+              ],
+            ],
+          ],
+          'square-three': [
+            [
+              7,
+              [
+                [0, 0],
+                [0, 2],
+                [2, 2],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 0],
+                [2, 0],
+                [1, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 0],
+                [2, 2],
+                [1, 1],
+              ],
+            ],
+          ],
+          'square-four-square': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              5,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+                [1, 3],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 2],
+                [2, 2],
+                [1, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+          ],
+          'square-four-triangle': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              7,
+              [
+                [0, 2],
+                [2, 2],
+                [2, 4],
+              ],
+            ],
+            [
+              4,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+              ],
+            ],
+          ],
+        };
+        for (const [scene, recipe] of Object.entries(squares))
+          fixtures[scene] = recipe.map(([id, points]) =>
+            place(id, 80, 60, points),
+          );
         const expected = fixtures[visual.scene];
         if (!expected) throw new Error('Unknown tangram fixture');
         const height = { spread: 610, trace: 430 }[visual.scene] ?? 360;
@@ -3156,6 +3441,20 @@ const server = http.createServer(async (req, res) => {
           ],
           'tangram-patterns': [null, 'goose-head', 'fish-head'],
           'tangram-practice': ['spread', 'large-triangle', 'small-triangle'],
+          'tangram-square': [
+            'square',
+            null,
+            'square-two-large',
+            'square-two-small',
+            'square-three',
+            'square-four-square',
+            'square-four-square',
+            'square-four-square',
+            'square-four-triangle',
+            'square-four-triangle',
+            null,
+            null,
+          ],
         };
         const scene = scenes[flow.key]?.[step];
         if (!scene) return;
@@ -3615,6 +3914,143 @@ const server = http.createServer(async (req, res) => {
               ),
             ),
           );
+        const squares = {
+          'square-two-large': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              2,
+              [
+                [0, 2],
+                [4, 2],
+                [2, 4],
+              ],
+            ],
+          ],
+          'square-two-small': [
+            [
+              4,
+              [
+                [0, 1],
+                [1, 0],
+                [2, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [0, 1],
+                [2, 1],
+                [1, 2],
+              ],
+            ],
+          ],
+          'square-three': [
+            [
+              7,
+              [
+                [0, 0],
+                [0, 2],
+                [2, 2],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 0],
+                [2, 0],
+                [1, 1],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 0],
+                [2, 2],
+                [1, 1],
+              ],
+            ],
+          ],
+          'square-four-square': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              5,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+                [1, 3],
+              ],
+            ],
+            [
+              4,
+              [
+                [0, 2],
+                [2, 2],
+                [1, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+          ],
+          'square-four-triangle': [
+            [
+              1,
+              [
+                [0, 2],
+                [2, 0],
+                [4, 2],
+              ],
+            ],
+            [
+              7,
+              [
+                [0, 2],
+                [2, 2],
+                [2, 4],
+              ],
+            ],
+            [
+              4,
+              [
+                [2, 2],
+                [4, 2],
+                [3, 3],
+              ],
+            ],
+            [
+              6,
+              [
+                [2, 2],
+                [3, 3],
+                [2, 4],
+              ],
+            ],
+          ],
+        };
+        for (const [scene, recipe] of Object.entries(squares))
+          fixtures[scene] = recipe.map(([id, points]) =>
+            place(id, 80, 60, points),
+          );
         const expected = fixtures[visual.scene];
         if (
           rows.length !== expected.length ||
@@ -3754,7 +4190,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 46
+          .count()) !== 47
       )
         throw new Error('Unexpected lower availability');
       await p

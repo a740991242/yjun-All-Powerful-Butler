@@ -139,7 +139,7 @@ it('maps the three original page84 activities to every main task and leaves only
         lesson.questions.find((q) => q.id.endsWith(`-${suffix}`))?.rule.kind,
       ).toBe('reflection');
   }
-  expect(audit.pendingPrintedPages).toEqual([85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([]);
   expect(
     bnuLowerBook.units.flatMap((u) => u.lessons).find((l) => l.id === lesson.id)
       ?.status,

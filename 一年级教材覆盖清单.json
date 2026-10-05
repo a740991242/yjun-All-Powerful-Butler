@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T18:45:10.881Z",
+  "generatedAt": "2026-10-05T19:15:15.603Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 46,
-        "pendingEntries": 3,
+        "availablePacks": 47,
+        "pendingEntries": 2,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1229,
-          "manual": 494,
-          "reflection": 187
+          "objective": 1244,
+          "manual": 504,
+          "reflection": 193
         }
       },
       "units": [
@@ -36524,33 +36524,33 @@
               }
             },
             {
-              "id": "bnu-lower-u6-pending",
-              "title": "有趣的平面图形（一）：第85页起继续制作",
-              "textbookTitle": "有趣的平面图形（一）：第85页起继续制作",
+              "id": "bnu-lower-square-challenge",
+              "title": "两片、三片与两种四片拼正方形",
+              "textbookTitle": "拼图大挑战",
               "page": 85,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "从已有七片正方形提出问题，真实试两片两种大小、三片和两种四片办法，叠比另一半、换片重摆，并交流单元发现与待研究问题。",
+              "prerequisite": "认识七巧板原七片及三类，知道大小与类别不同，拼摆保持纸片形状，沿整体外边核对正方形。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 12,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 15,
+                "manual": 10,
+                "reflection": 6
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 7,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-square-challenge"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["bnu-tangram"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描85～86页与来源记录",
+                "notes": "两片先试、三片、四片找另一半/叠比/换片与单元交流依序；五示例存在性不等于任意选片结论，程序验收另核。"
               }
             }
           ],
@@ -36559,9 +36559,9 @@
             "source": "https://keben.szxuexiao.com/html/10764.html",
             "checkedAt": "2026-10-06",
             "unit": "u6",
-            "status": "partial-original-teaching",
+            "status": "original-teaching-mapped",
             "finalTeacherReview": "not-verified",
-            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83页28主/6复习与84页25主/6复习生产三宽均终态通过；85～86后续仍制作，保留单元待制作入口。",
+            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83页28主/6复习与84页25主/6复习生产三宽均终态通过；85～86七活动接31主/7复习，生产375/768/1200程序验收终态通过；本单元完整映射不代全年完成。",
             "activities": [
               {
                 "page": 76,
@@ -36992,11 +36992,89 @@
                 "objective": ["grid-rows", "closed"],
                 "manual": ["actual-grid", "actual-grid-describe"],
                 "records": ["grid-record"]
+              },
+              {
+                "page": 85,
+                "sourceActivity": "observe-seven-piece-square-and-ask-alternatives",
+                "steps": [1, 2],
+                "objective": ["seven-count"],
+                "manual": ["actual-observe"],
+                "records": ["first-idea"],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 85,
+                "sourceActivity": "try-two-piece-square-in-two-sizes",
+                "steps": [3, 4],
+                "objective": [
+                  "two-large-count",
+                  "two-small-count",
+                  "two-sizes"
+                ],
+                "manual": ["actual-two-large", "actual-two-small"],
+                "records": ["two-compare"],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 85,
+                "sourceActivity": "try-three-piece-square",
+                "steps": [5],
+                "objective": ["three-count", "three-whole"],
+                "manual": ["actual-three"],
+                "records": [],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 86,
+                "sourceActivity": "choose-large-triangle-and-match-other-half",
+                "steps": [6, 7],
+                "objective": [
+                  "four-count",
+                  "first-square-count",
+                  "first-triangle-count",
+                  "half-not-one-piece"
+                ],
+                "manual": ["actual-select-large", "actual-other-half"],
+                "records": [],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 86,
+                "sourceActivity": "overlay-and-compare-selected-half",
+                "steps": [8],
+                "objective": ["overlay"],
+                "manual": ["actual-overlay"],
+                "records": ["overlay-record"],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 86,
+                "sourceActivity": "replace-piece-and-try-second-four-piece-square",
+                "steps": [9, 10],
+                "objective": [
+                  "second-triangle-count",
+                  "site-zero",
+                  "replace-rearrange",
+                  "any-four"
+                ],
+                "manual": ["actual-replace", "actual-second-four"],
+                "records": ["replacement-record"],
+                "lesson": "bnu-lower-square-challenge"
+              },
+              {
+                "page": 86,
+                "sourceActivity": "describe-method-and-reflect-on-unit",
+                "steps": [11, 12],
+                "objective": [],
+                "manual": ["actual-exchange"],
+                "records": ["reflection", "plan"],
+                "lesson": "bnu-lower-square-challenge"
               }
             ],
-            "patternThreeScope": "83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。本项只验83页，84页另项验收；85～86仍待制作，不据本课认整单元或全年完成。",
-            "designScope": "84页三原活动已接25主任务/6新复习，生产375/768/1200全流程、四种轮廓与点阵实际几何/中英主题/0刷新/重试/旧记录/schema1备份均终态通过；8实际活动明确跳过，不冒合作涂色创作完成。85～86挑战仍待制作，不据本课认全年完成。",
-            "pendingPrintedPages": [85, 86]
+            "patternThreeScope": "83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。本项只验83页，84页另项验收；85～86已映射，实际程序验收另项，不据本课认整单元或全年完成。",
+            "designScope": "84页三原活动已接25主任务/6新复习，生产375/768/1200全流程、四种轮廓与点阵实际几何/中英主题/0刷新/重试/旧记录/schema1备份均终态通过；8实际活动明确跳过，不冒合作涂色创作完成。85～86挑战另项验收，不据本课认全年完成。",
+            "squareChallengeScope": "85～86七原活动映射31主任务/7新复习，生产三宽五新模型、全部讲解与题图几何/编号20px/旋转ARIA/内部键盘与初始视口/实际中英主题、0刷新/重试/旧记录/schema1备份均终态通过；10实际活动明确跳过，不冒拼摆叠比交流完成。不据本单元认全年完成。",
+            "pendingPrintedPages": []
           }
         },
         {

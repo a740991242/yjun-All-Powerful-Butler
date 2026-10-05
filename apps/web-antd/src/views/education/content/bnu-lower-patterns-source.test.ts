@@ -37,9 +37,9 @@ it('keeps selecting a part distinct from redrawing every full artwork and the ra
 });
 it('registers only the read page while keeping later unread pages pending', () => {
   expect(source.status).toBe('source-checked-teaching-mapped');
-  expect(audit.pendingPrintedPages).toEqual([85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([]);
   const all = bnuLowerBook.units.flatMap((u) => u.lessons);
-  expect(all.filter((l) => l.status === 'available')).toHaveLength(46);
-  expect(all.find((l) => l.id === 'bnu-lower-u6-pending')?.page).toBe(85);
+  expect(all.filter((l) => l.status === 'available')).toHaveLength(47);
+  expect(all.some((l) => l.id === 'bnu-lower-u6-pending')).toBe(false);
   expect(all.some((l) => l.id === 'bnu-lower-patterns')).toBe(true);
 });

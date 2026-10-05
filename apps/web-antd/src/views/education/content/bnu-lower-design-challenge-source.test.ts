@@ -39,5 +39,5 @@ it('keeps both two-piece sizes and both four-piece alternatives distinct from an
   expect(source.squareChallenge.boundary).toContain('不要求同面积');
   expect(source.squareChallenge.boundary).toContain('任意选四片');
   expect(source.squareChallenge.boundary).toContain('5/6片未由本页结论证明');
-  expect(source.status).toBe('source-checked-partial-teaching');
+  expect(source.status).toBe('source-checked-teaching-mapped');
 });

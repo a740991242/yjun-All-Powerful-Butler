@@ -1,3 +1,8 @@
+import {
+  bnuSquareChallengePieces,
+  bnuSquareChallengeScenes,
+  isBnuSquareChallengeScene,
+} from './bnu-square-challenge';
 import { fold } from './fold';
 
 export type TangramPoint = [number, number];
@@ -9,6 +14,7 @@ export const bnuTangramScenes = [
   'small-triangle',
   'goose-head',
   'fish-head',
+  ...bnuSquareChallengeScenes,
 ] as const;
 export interface BnuTangramVisual {
   kind: 'bnu-tangram';
@@ -106,6 +112,8 @@ export function bnuTangramHeight(visual: BnuTangramVisual) {
 export function bnuTangramPieces(visual: BnuTangramVisual): TangramPiece[] {
   if (!isBnuTangramVisual(visual))
     throw new Error('educationLearning.invalidRecord');
+  if (isBnuSquareChallengeScene(visual.scene))
+    return bnuSquareChallengePieces(visual.scene);
   switch (visual.scene) {
     case 'square': {
       return [1, 2, 3, 4, 5, 6, 7].map((id) => placed(id));

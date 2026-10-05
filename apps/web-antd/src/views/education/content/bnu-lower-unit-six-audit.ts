@@ -1,12 +1,14 @@
+import { bnuLowerSquareChallengeMapping } from './bnu-lower-square-challenge';
+
 export const bnuLowerUnitSixAudit = {
   resourceId: 'bnu-lower-public-scan-2024',
   source: 'https://keben.szxuexiao.com/html/10764.html',
   checkedAt: '2026-10-06',
   unit: 'u6',
-  status: 'partial-original-teaching',
+  status: 'original-teaching-mapped',
   finalTeacherReview: 'not-verified',
   scope:
-    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83页28主/6复习与84页25主/6复习生产三宽均终态通过；85～86后续仍制作，保留单元待制作入口。',
+    '76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83页28主/6复习与84页25主/6复习生产三宽均终态通过；85～86七活动接31主/7复习，生产375/768/1200程序验收终态通过；本单元完整映射不代全年完成。',
   activities: [
     {
       page: 76,
@@ -414,10 +416,16 @@ export const bnuLowerUnitSixAudit = {
       manual: ['actual-grid', 'actual-grid-describe'],
       records: ['grid-record'],
     },
+    ...bnuLowerSquareChallengeMapping.map((a) => ({
+      ...a,
+      lesson: 'bnu-lower-square-challenge',
+    })),
   ],
   patternThreeScope:
-    '83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。本项只验83页，84页另项验收；85～86仍待制作，不据本课认整单元或全年完成。',
+    '83页两原活动已接28主任务/6新复习，生产375/768/1200全流程、图卡实际几何与中英主题、0刷新/重试/旧记录/schema1备份均终态通过；9实做明确跳过，不冒描画完成。本项只验83页，84页另项验收；85～86已映射，实际程序验收另项，不据本课认整单元或全年完成。',
   designScope:
-    '84页三原活动已接25主任务/6新复习，生产375/768/1200全流程、四种轮廓与点阵实际几何/中英主题/0刷新/重试/旧记录/schema1备份均终态通过；8实际活动明确跳过，不冒合作涂色创作完成。85～86挑战仍待制作，不据本课认全年完成。',
-  pendingPrintedPages: [85, 86],
+    '84页三原活动已接25主任务/6新复习，生产375/768/1200全流程、四种轮廓与点阵实际几何/中英主题/0刷新/重试/旧记录/schema1备份均终态通过；8实际活动明确跳过，不冒合作涂色创作完成。85～86挑战另项验收，不据本课认全年完成。',
+  squareChallengeScope:
+    '85～86七原活动映射31主任务/7新复习，生产三宽五新模型、全部讲解与题图几何/编号20px/旋转ARIA/内部键盘与初始视口/实际中英主题、0刷新/重试/旧记录/schema1备份均终态通过；10实际活动明确跳过，不冒拼摆叠比交流完成。不据本单元认全年完成。',
+  pendingPrintedPages: [],
 } as const;

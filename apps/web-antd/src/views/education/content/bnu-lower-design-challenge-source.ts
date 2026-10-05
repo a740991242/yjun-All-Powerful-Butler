@@ -3,7 +3,7 @@ export const bnuLowerDesignChallengeSource = {
   resourceId: 'bnu-lower-public-scan-2024',
   source: 'https://keben.szxuexiao.com/html/10764.html',
   checkedAt: '2026-10-06',
-  status: 'source-checked-partial-teaching',
+  status: 'source-checked-teaching-mapped',
   readPrintedPages: [84, 85, 86],
   pageImages: [
     { printedPage: 84, suffix: '088.jpg' },
@@ -63,5 +63,5 @@ export const bnuLowerDesignChallengeSource = {
     { page: 86, key: 'describe-method-and-reflect-on-unit' },
   ],
   boundary:
-    '本记录证明84～86来源已读，84教学已映射，85～86仍待制作，程序验收另核。原扫描不打包，重画几何不能冒原比例或姿势；后续连环画/总复习另核，全国组合与全年交付仍未完成，不以学校或指定审校人作前置。',
+    '本记录证明84～86来源已读，84与85～86教学已逐项映射，程序验收另核。原扫描不打包，重画几何不能冒原比例或姿势；后续连环画/总复习另核，全国组合与全年交付仍未完成，不以学校或指定审校人作前置。',
 } as const;

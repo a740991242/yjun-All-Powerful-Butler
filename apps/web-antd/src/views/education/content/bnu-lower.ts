@@ -39,6 +39,7 @@ import {
   bnuLowerShadowTheatreLesson,
   bnuLowerTracePrintLesson,
 } from './bnu-lower-shapes';
+import { bnuLowerSquareChallengeLesson } from './bnu-lower-square-challenge';
 import { bnuLowerSubtractionHarvestLesson } from './bnu-lower-subtraction-harvest';
 import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-practice';
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
@@ -405,7 +406,7 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerTangramPracticeLesson,
     bnuLowerPatternsLesson,
     bnuLowerDesignLesson,
-    pending('u6', '有趣的平面图形（一）：第85页起继续制作', 85),
+    bnuLowerSquareChallengeLesson,
   ],
   u4: [
     bnuLowerAroundNumbersLesson,

@@ -47,6 +47,7 @@ import {
   bnuLowerShadowTheatreLesson,
   bnuLowerTracePrintLesson,
 } from './bnu-lower-shapes';
+import { bnuLowerSquareChallengeLesson } from './bnu-lower-square-challenge';
 import { bnuLowerSubtractionHarvestLesson } from './bnu-lower-subtraction-harvest';
 import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-practice';
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
@@ -129,8 +130,9 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerTangramPracticeLesson,
     bnuLowerPatternsLesson,
     bnuLowerDesignLesson,
+    bnuLowerSquareChallengeLesson,
   ]);
-  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(3);
+  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(2);
   expect(
     bnuLowerBook.units[4]?.lessons.map(({ id, status, page }) => [
       id,

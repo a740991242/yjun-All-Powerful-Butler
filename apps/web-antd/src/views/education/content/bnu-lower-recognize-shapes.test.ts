@@ -215,7 +215,7 @@ it('offers all eight changed-condition reviews after a real mistake and does not
 });
 
 it('maps every read-page activity to actual steps and task kinds while keeping all remaining unit pages pending', () => {
-  expect(audit.status).toBe('partial-original-teaching');
+  expect(audit.status).toBe('original-teaching-mapped');
   expect(audit.finalTeacherReview).toBe('not-verified');
   expect(
     audit.activities
@@ -241,7 +241,7 @@ it('maps every read-page activity to actual steps and task kinds while keeping a
     for (const suffix of activity.records)
       expect(kinds.get(suffix)).toBe('reflection');
   }
-  expect(audit.pendingPrintedPages).toEqual([85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([]);
   expect(
     bnuLowerBook.units
       .find((x) => x.id === 'u6')
@@ -254,6 +254,6 @@ it('maps every read-page activity to actual steps and task kinds while keeping a
     ['bnu-lower-tangram-practice', 'available', 82],
     ['bnu-lower-patterns', 'available', 83],
     ['bnu-lower-design', 'available', 84],
-    ['bnu-lower-u6-pending', 'preparing', 85],
+    ['bnu-lower-square-challenge', 'available', 85],
   ]);
 });
