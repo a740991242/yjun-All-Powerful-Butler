@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--hundred-harvest'))
+    return {
+      index: 29,
+      lessonId: 'bnu-lower-harvest',
+      zero: '-site-zero',
+      retry: '-beads95',
+      manual: 9,
+      steps: 6,
+      review: 5,
+      key: 'hundred-harvest',
+    };
   if (process.argv.includes('--hundred-chart'))
     return {
       index: 28,
@@ -1024,7 +1035,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 29
+          .count()) !== 30
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1555,10 +1566,12 @@ const server = http.createServer(async (req, res) => {
         }
         if (
           (flow.key === 'count-beans' && (step === 0 || step === 1)) ||
+          (flow.key === 'hundred-harvest' && [0, 2].includes(step)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
         ) {
           const diagramValues = {
             'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
+            'hundred-harvest': { 0: [95, 92, 85, 79], 2: [85] },
             'red-fruit': { 0: [21, 18], 1: [32, 34, 100, 99], 3: [45, 54] },
           };
           const values = diagramValues[flow.key][step];
@@ -2223,17 +2236,21 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'hundred-chart' && q.id.endsWith('-row-1')) ||
+            ((flow.key === 'hundred-harvest' &&
+              q.id.endsWith('-counter-digits')) ||
+              (flow.key === 'hundred-chart' && q.id.endsWith('-row-1')) ||
               (flow.key === 'breeding' && q.id.endsWith('-sorted-cards')) ||
               (flow.key === 'comparison-practice' &&
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              'hundred-harvest': [9, null, null, null, null, null, null, null],
               breeding: [10, null, null, null, null],
               'comparison-practice': [95, null, null, null],
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              'hundred-harvest': [9, 5, 9, 2, 8, 5, 9, 7],
               breeding: [10, 38, 50, 98, 51],
               'comparison-practice': [95, 88, 91, 79],
               'hundred-chart': [1, 2, 3, 4, 5, 6, 7, 8],

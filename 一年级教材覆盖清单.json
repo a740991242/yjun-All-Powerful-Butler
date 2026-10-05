@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T01:15:53.630Z",
+  "generatedAt": "2026-10-05T01:40:47.469Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 29,
+        "availablePacks": 30,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 866,
-          "manual": 296,
-          "reflection": 111
+          "objective": 886,
+          "manual": 305,
+          "reflection": 118
         }
       },
       "units": [
@@ -34265,10 +34265,46 @@
               }
             },
             {
+              "id": "bnu-lower-harvest",
+              "title": "百以内数的收获：四计数器、完整比较与自己的表示",
+              "textbookTitle": "整理与复习：我的收获与问题银行",
+              "page": 57,
+              "version": 1,
+              "status": "available",
+              "goal": "按四条给定记录完整画写和比较，区别数位值与材料件数，为85做两个自主表示并交流自己的数学问题。",
+              "prerequisite": "能读写100以内的数，理解十和一的数位并比较两位数。",
+              "referenceQuery": null,
+              "steps": 6,
+              "tasks": {
+                "objective": 20,
+                "manual": 9,
+                "reflection": 7
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-harvest"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-counters"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "第57页完整情境、四计数器与85图及问题银行来源核对",
+                "notes": "范围仅第57页；58～59巩固应用继续独立制作，来源读取不冒教师试用。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 57,
+              "page": 58,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34302,7 +34338,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～56页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序与完整百数表四十五项原活动；57页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "仅44～57页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序、完整百数表与我的收获四十八项原活动；58页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -35034,6 +35070,73 @@
                 ],
                 "records": ["difficulty", "plan"],
                 "boundary": "保留全部给定与全部空、具体方向/范围；真实活动、开放说明和未来计划分开，不以网站评分确认实际操作。"
+              },
+              {
+                "page": 57,
+                "sourceActivity": "heartbeat-counters-comparison",
+                "lesson": "bnu-lower-harvest",
+                "steps": [1, 2, 3],
+                "objective": [
+                  "counts",
+                  "counter-digits",
+                  "descending",
+                  "most",
+                  "unit",
+                  "age-not-counts",
+                  "tens95",
+                  "ones95",
+                  "beads95",
+                  "compare-method",
+                  "not-health-rule",
+                  "site-zero"
+                ],
+                "manual": [
+                  "actual-four-counters",
+                  "actual-four-records",
+                  "actual-comparisons"
+                ],
+                "records": [],
+                "boundary": "年龄/共同一分钟/次数与数位/材料件数分清，本站90的0另明示，不推健康结论。"
+              },
+              {
+                "page": 57,
+                "sourceActivity": "eighty-five-representations",
+                "lesson": "bnu-lower-harvest",
+                "steps": [4, 5],
+                "objective": [
+                  "eighty-five",
+                  "tens85",
+                  "ones85",
+                  "beads85",
+                  "decomposition",
+                  "symbols",
+                  "symbol-count",
+                  "symbol-convention"
+                ],
+                "manual": [
+                  "actual-original85",
+                  "actual-own85-a",
+                  "actual-own85-b",
+                  "actual-explain85"
+                ],
+                "records": ["own85-a", "own85-b"],
+                "boundary": "85表示值与13材料分清；图例原未知与本站明确约定分开，两个自主表示开放。"
+              },
+              {
+                "page": 57,
+                "sourceActivity": "open-question-bank",
+                "lesson": "bnu-lower-harvest",
+                "steps": [6],
+                "objective": [],
+                "manual": ["actual-question-talk", "actual-revisit"],
+                "records": [
+                  "own-question",
+                  "own-idea",
+                  "discovery",
+                  "difficulty",
+                  "plan"
+                ],
+                "boundary": "自主提问/理由/发现困难开放null，实际交流与未来计划分开，不统一是非评分。"
               }
             ]
           }
