@@ -5602,12 +5602,19 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
-        if (flow.key === 'final-practice' && [1, 2, 3].includes(step + 1))
+        if (flow.key === 'final-practice' && [1, 2, 3].includes(step + 1)) {
+          if (step + 1 === 1)
+            await p
+              .getByText('每个重复组有三个表情，已给部分共两组。', {
+                exact: false,
+              })
+              .waitFor({ state: 'visible' });
           await inspectFinalPractice(
             { scene: ['faces', 'cups', 'divisions'][step], variant: 'main' },
             `learn-${step + 1}`,
             true,
           );
+        }
         if (flow.key === 'final-geometry') {
           const scenes = {
             3: 'robot',
