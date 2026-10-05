@@ -12,6 +12,7 @@ import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
 import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
+import type { BnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
@@ -466,6 +467,7 @@ export type Visual =
   | BnuNumberReviewVisual
   | BnuPineconeLineVisual
   | BnuSixCardGameVisual
+  | BnuTwoJumpLineVisual
   | BnuWholeTenLineVisual
   | BookGroupsVisual
   | CardEquationRule

@@ -18,6 +18,7 @@ import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
 import { isBnuNumberReviewVisual } from './bnu-number-review';
 import { isBnuPineconeLineVisual } from './bnu-pinecone-line';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
+import { isBnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import { isBnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import { isCardEquationRule } from './card-equation';
 import { isCardGameState, isCardGameVisual, replayCardGame } from './card-game';
@@ -568,6 +569,9 @@ function visual(value: unknown) {
     }
     case 'bnu-pinecone-line': {
       return isBnuPineconeLineVisual(value);
+    }
+    case 'bnu-two-jump-line': {
+      return isBnuTwoJumpLineVisual(value);
     }
     case 'bnu-whole-ten-line': {
       return isBnuWholeTenLineVisual(value);

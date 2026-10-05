@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T03:54:00.677Z",
+  "generatedAt": "2026-10-05T04:21:21.325Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 34,
+        "availablePacks": 35,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 994,
-          "manual": 358,
-          "reflection": 131
+          "objective": 1026,
+          "manual": 375,
+          "reflection": 134
         }
       },
       "units": [
@@ -35471,10 +35471,46 @@
               }
             },
             {
+              "id": "bnu-lower-frogs",
+              "title": "两位数加减两位数：三种方法与两段数线",
+              "textbookTitle": "青蛙吃虫子",
+              "page": 66,
+              "version": 1,
+              "status": "available",
+              "goal": "完整完成65与32的三种加减方法、全部八练习式、两段数线与两应用，实际拨珠说明并自己编问题。",
+              "prerequisite": "认识百以内十与个位，理解不进位不退位的同数位计算、合量与比较差。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 32,
+                "manual": 17,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-frogs"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-counters", "bnu-two-jump-line"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "66～67两整页和数线放大、全部方法/练习/条件核对",
+                "notes": "七原活动完整对应，原创图与真实操作分清；最终教师试用未核验。"
+              }
+            },
+            {
               "id": "bnu-lower-u5-pending",
               "title": "100以内数加与减（一）后续内容",
               "textbookTitle": "100以内数加与减（一）后续内容",
-              "page": 66,
+              "page": 68,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35508,7 +35544,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～65全部原活动对应；66页起后续、整册与全年仍未完成。",
+            "scope": "印刷62～67全部原活动对应；68页起后续、整册与全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -35706,6 +35742,115 @@
                 "steps": [9],
                 "objective": ["dinosaurs", "dinosaurs-unit"],
                 "manual": ["actual-dinosaurs"],
+                "records": []
+              },
+              {
+                "page": 66,
+                "sourceActivity": "addition-three-methods",
+                "lesson": "bnu-lower-frogs",
+                "steps": [1, 2, 3],
+                "objective": [
+                  "frog-values",
+                  "add-values",
+                  "add-sequential",
+                  "add-tens",
+                  "add-ones",
+                  "add-combine",
+                  "add-counter-digits",
+                  "add-beads"
+                ],
+                "manual": [
+                  "actual-add-sequential",
+                  "actual-add-counter",
+                  "actual-add-place"
+                ],
+                "records": []
+              },
+              {
+                "page": 66,
+                "sourceActivity": "comparison-three-methods",
+                "lesson": "bnu-lower-frogs",
+                "steps": [4, 5],
+                "objective": [
+                  "sub-values",
+                  "sub-sequential",
+                  "sub-tens",
+                  "sub-ones",
+                  "sub-combine",
+                  "sub-counter-digits",
+                  "sub-beads",
+                  "comparison-meaning"
+                ],
+                "manual": [
+                  "actual-sub-sequential",
+                  "actual-sub-counter",
+                  "actual-sub-place"
+                ],
+                "records": []
+              },
+              {
+                "page": 67,
+                "sourceActivity": "four-calculations-and-place-discussion",
+                "lesson": "bnu-lower-frogs",
+                "steps": [6, 10],
+                "objective": ["discussion-four", "same-place", "site-zero"],
+                "manual": [
+                  "actual-discussion-four",
+                  "actual-place-explain",
+                  "actual-own"
+                ],
+                "records": ["method-record", "own-record", "plan"]
+              },
+              {
+                "page": 67,
+                "sourceActivity": "four-counter-calculations",
+                "lesson": "bnu-lower-frogs",
+                "steps": [6],
+                "objective": [
+                  "counter-46",
+                  "counter-37",
+                  "counter-45",
+                  "counter-56"
+                ],
+                "manual": [
+                  "actual-counter-46",
+                  "actual-counter-37",
+                  "actual-counter-45",
+                  "actual-counter-56"
+                ],
+                "records": []
+              },
+              {
+                "page": 67,
+                "sourceActivity": "both-two-jump-lines",
+                "lesson": "bnu-lower-frogs",
+                "steps": [7, 8],
+                "objective": [
+                  "line-add-points",
+                  "line-add-combined",
+                  "line-sub-points",
+                  "line-sub-combined",
+                  "line-final"
+                ],
+                "manual": ["actual-line-add", "actual-line-sub"],
+                "records": []
+              },
+              {
+                "page": 67,
+                "sourceActivity": "piano-key-parts-total",
+                "lesson": "bnu-lower-frogs",
+                "steps": [9],
+                "objective": ["piano-values", "piano-unit"],
+                "manual": ["actual-piano"],
+                "records": []
+              },
+              {
+                "page": 67,
+                "sourceActivity": "bus-departure-remaining",
+                "lesson": "bnu-lower-frogs",
+                "steps": [9],
+                "objective": ["bus-values", "bus-meaning"],
+                "manual": ["actual-bus"],
                 "records": []
               }
             ]

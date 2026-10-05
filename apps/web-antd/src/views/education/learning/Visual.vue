@@ -25,6 +25,7 @@ import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
 import BnuNumberReview from './BnuNumberReview.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
+import BnuTwoJumpLine from './BnuTwoJumpLine.vue';
 import BnuWholeTenLine from './BnuWholeTenLine.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
@@ -841,6 +842,10 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <BnuTwoJumpLine
+      v-else-if="visual.kind === 'bnu-two-jump-line'"
+      :visual="visual"
+    />
     <BnuWholeTenLine
       v-else-if="
         visual.kind === 'bnu-whole-ten-line' ||

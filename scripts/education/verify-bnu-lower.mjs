@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--frogs'))
+    return {
+      index: 34,
+      lessonId: 'bnu-lower-frogs',
+      zero: '-site-zero',
+      retry: '-add-beads',
+      manual: 17,
+      steps: 10,
+      review: 9,
+      key: 'frogs',
+    };
+
   if (process.argv.includes('--pinecones'))
     return {
       index: 33,
@@ -1366,6 +1378,199 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectTwoLine = async (visual, label) => {
+        const figure = p.locator('[data-bnu-two-line]');
+        await figure.waitFor();
+        const fixtures = {
+          main: {
+            add: {
+              ticks: [37, 47, 57, 67, 77, 87],
+              points: [37, 67, 69],
+              jumps: [30, 2],
+              range: [67, 77],
+              op: '+',
+            },
+            subtract: {
+              ticks: [26, 36, 46, 56, 66, 76],
+              points: [76, 36, 33],
+              jumps: [40, 3],
+              range: [26, 36],
+              op: '−',
+            },
+          },
+          review: {
+            add: {
+              ticks: [37, 47, 57, 67, 77, 87],
+              points: [47, 67, 71],
+              jumps: [20, 4],
+              range: [67, 77],
+              op: '+',
+            },
+            subtract: {
+              ticks: [26, 36, 46, 56, 66, 76],
+              points: [76, 46, 44],
+              jumps: [30, 2],
+              range: [36, 46],
+              op: '−',
+            },
+          },
+        };
+        const expected = fixtures[visual.variant][visual.scene];
+        const svg = figure.locator('svg');
+        const texts = await svg.locator('text').allTextContents();
+        if (
+          JSON.stringify(
+            await svg.locator('[data-bnu-two-tick] text').allTextContents(),
+          ) !== JSON.stringify(expected.ticks.map(String))
+        )
+          throw new Error('Two-jump tick scale changed');
+        if (texts.includes(String(expected.points[2])))
+          throw new Error('Two-jump view prints an extra final answer label');
+        const arrows = svg.locator('[data-bnu-two-arrow]');
+        if ((await arrows.count()) !== 2)
+          throw new Error('Two-jump view needs both arrows');
+        const x = (n) =>
+          48 +
+          (864 * (n - expected.ticks[0])) /
+            (expected.ticks.at(-1) - expected.ticks[0]);
+        for (let i = 0; i < 2; i++) {
+          const arrow = arrows.nth(i);
+          const from = expected.points[i];
+          const to = expected.points[i + 1];
+          const jump = expected.jumps[i];
+          let aria;
+          if (label.startsWith('english-')) {
+            const direction = visual.scene === 'add' ? 'right' : 'left';
+            aria =
+              i === 0
+                ? `The first arrow starts at ${from}, moves ${direction} by ${jump}, and reaches the labelled tick ${to}.`
+                : `The second arrow starts at ${from}, moves ${direction} by ${jump}, and ends between ticks ${expected.range[0]} and ${expected.range[1]}, without an extra number label.`;
+          } else {
+            const direction = visual.scene === 'add' ? '右增加' : '左减少';
+            aria =
+              i === 0
+                ? `第一段从刻度${from}向${direction}${jump}，到刻度${to}。`
+                : `第二段从刻度${from}向${direction}${jump}，最后一点在刻度${expected.range[0]}和${expected.range[1]}之间，没有额外标出数字。`;
+          }
+          if (
+            (await arrow.getAttribute('role')) !== 'img' ||
+            (await arrow.getAttribute('aria-label')) !== aria
+          )
+            throw new Error(
+              'Two-jump accessible givens changed or final answer leaked',
+            );
+          if (
+            Number(await arrow.getAttribute('data-start')) !== from ||
+            Number(await arrow.getAttribute('data-end')) !== to ||
+            Number(await arrow.getAttribute('data-jump')) !== jump
+          )
+            throw new Error('Two-jump arrow order or conditions changed');
+          if (
+            (await arrow.getAttribute('d')) !==
+            `M${x(from)} 100 Q${(x(from) + x(to)) / 2} ${i === 0 ? 24 : 64} ${x(to)} 100`
+          )
+            throw new Error('Two-jump drawn coordinates changed');
+          const markerEnd = await arrow.getAttribute('marker-end');
+          if (!markerEnd?.startsWith('url(#'))
+            throw new Error('Two-jump arrowhead missing');
+          if (
+            (await svg.locator('[data-bnu-two-jump]').nth(i).textContent()) !==
+            `${expected.op}${jump}`
+          )
+            throw new Error('Two-jump sign or change changed');
+        }
+        for (const [i, n] of expected.ticks.entries())
+          if (
+            (await svg
+              .locator('[data-bnu-two-tick] path')
+              .nth(i)
+              .getAttribute('d')) !== `M${x(n)} 110V126`
+          )
+            throw new Error('Two-jump ticks drawn on wrong positions');
+        if (
+          !(await svg.locator('text,path').evaluateAll((nodes) =>
+            nodes
+              .filter((n) => !n.closest('defs'))
+              .every((n) => {
+                const b = n.getBBox();
+                return (
+                  b.x >= 0 &&
+                  b.y >= 0 &&
+                  b.x + b.width <= 960 &&
+                  b.y + b.height <= 210 &&
+                  (n.tagName !== 'text' ||
+                    Number.parseFloat(getComputedStyle(n).fontSize) >= 20)
+                );
+              }),
+          ))
+        )
+          throw new Error('Two-jump SVG labels or curves clipped or too small');
+        if (
+          !(await figure
+            .locator('figcaption,p')
+            .evaluateAll((nodes) =>
+              nodes
+                .slice(0, 3)
+                .every(
+                  (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+                ),
+            ))
+        )
+          throw new Error('Two-jump teaching text too small');
+        const scroll = figure.locator('[data-bnu-two-scroll]');
+        await scroll.evaluate((n) => (n.scrollLeft = 0));
+        await scroll.focus();
+        await p.keyboard.press('ArrowRight');
+        if (
+          !(await scroll.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Two-jump keyboard scrolling failed');
+        for (const [edge, value] of [
+          ['first', expected.ticks[0]],
+          ['last', expected.ticks.at(-1)],
+          ['start', expected.points[0]],
+          ['middle', expected.points[1]],
+          ['end', expected.points[2]],
+        ]) {
+          const coordinate = x(value);
+          await scroll.evaluate(
+            (n, args) => {
+              n.scrollLeft =
+                args.edge === 'last'
+                  ? n.scrollWidth
+                  : Math.max(
+                      0,
+                      Math.min(
+                        n.scrollWidth - n.clientWidth,
+                        args.coordinate - n.clientWidth / 2,
+                      ),
+                    );
+              n.scrollIntoView({ block: 'center' });
+            },
+            { edge, coordinate },
+          );
+          await p.waitForTimeout(150);
+          const fits = await scroll.evaluate((n, coordinate) => {
+            const r = n.getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              coordinate - n.scrollLeft >= 20 &&
+              coordinate - n.scrollLeft + 20 <= n.clientWidth &&
+              document.documentElement.scrollWidth <= innerWidth + 1
+            );
+          }, coordinate);
+          if (!fits)
+            throw new Error('Two-jump viewport clips a tick or arrow endpoint');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-frogs-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const inspectTenLine = async (visual, label) => {
         const figure = p.locator('[data-bnu-ten-line]');
         await figure.waitFor();
@@ -1608,7 +1813,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 34
+          .count()) !== 35
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1984,6 +2189,8 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'frogs')
+        await inspectPlaceCounters([65, 32], 'frogs-learn-initial');
       if (flow.key === 'pinecones')
         await inspectPlaceCounters([45, 3, 30], 'pinecones-learn-initial');
       if (flow.key === 'rabbit-guests')
@@ -2014,11 +2221,14 @@ const server = http.createServer(async (req, res) => {
         );
         if (
           (flow.key === 'rabbit-guests' && [5, 6].includes(step)) ||
+          (flow.key === 'frogs' && [5, 6].includes(step)) ||
           (flow.key === 'pinecones' && [4, 5].includes(step))
         ) {
+          const inspectLine =
+            flow.key === 'frogs' ? inspectTwoLine : inspectTenLine;
           const first = flow.key === 'pinecones' ? 4 : 5;
           const scene = step === first ? 'add' : 'subtract';
-          await inspectTenLine({ scene, variant: 'main' }, `learn-${step + 1}`);
+          await inspectLine({ scene, variant: 'main' }, `learn-${step + 1}`);
           const state = JSON.stringify(await read());
           await p
             .locator('button[aria-haspopup="menu"]')
@@ -2026,9 +2236,15 @@ const server = http.createServer(async (req, res) => {
             .click();
           await p.getByText('English', { exact: true }).click();
           await p
-            .locator('[data-bnu-ten-line] figcaption')
+            .locator(
+              '[data-bnu-ten-line] figcaption, [data-bnu-two-line] figcaption',
+            )
             .filter({
               hasText: {
+                frogs: {
+                  add: 'Two jumps: add tens, then ones',
+                  subtract: 'Two jumps: subtract tens, then ones',
+                },
                 pinecones: {
                   add: 'Number line: increase to the right in ones',
                   subtract: 'Number line: decrease to the left in tens',
@@ -2050,7 +2266,7 @@ const server = http.createServer(async (req, res) => {
             dark,
           );
           await p.waitForTimeout(500);
-          await inspectTenLine(
+          await inspectLine(
             { scene, variant: 'main' },
             `english-theme-${step + 1}`,
           );
@@ -2331,12 +2547,20 @@ const server = http.createServer(async (req, res) => {
           (flow.key === 'number-practice' && [9, 10].includes(step)) ||
           (flow.key === 'rabbit-guests' && [0, 1, 2, 4, 8].includes(step)) ||
           (flow.key === 'pinecones' && [0, 1, 8].includes(step)) ||
+          (flow.key === 'frogs' && [0, 1, 2, 3, 8].includes(step)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
         ) {
           const diagramValues = {
             'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
             'hundred-harvest': { 0: [95, 92, 85, 79], 2: [85] },
             'number-practice': { 9: [13], 10: [4, 22, 31, 40] },
+            frogs: {
+              0: [65, 95, 97],
+              1: [65, 32, 97],
+              2: [65, 35, 33],
+              3: [65, 32, 33],
+              8: [30, 0],
+            },
             pinecones: { 0: [45, 3, 48], 1: [45, 30, 15], 8: [30, 0] },
             'rabbit-guests': {
               0: [20, 30, 50],
@@ -2583,6 +2807,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-two-jump-line')
+          await inspectTwoLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')
@@ -3020,6 +3246,7 @@ const server = http.createServer(async (req, res) => {
             q.rule.kind === 'steps' &&
             ((flow.key === 'rabbit-guests' && q.id.endsWith('-sub-backward')) ||
               (flow.key === 'pinecones' && q.id.endsWith('-eight-bottom')) ||
+              (flow.key === 'frogs' && q.id.endsWith('-add-counter-digits')) ||
               (flow.key === 'fill-game' &&
                 (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
               (flow.key === 'number-practice' &&
@@ -3033,6 +3260,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              frogs: [6, null, null, null, null, null],
               pinecones: [65, null, null, null],
               'rabbit-guests': [40, null, null, null],
               'fill-game': q.id.endsWith('-three-all')
@@ -3047,6 +3275,7 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              frogs: [6, 5, 3, 2, 9, 0],
               pinecones: [65, 86, 40, 72],
               'rabbit-guests': [40, 30, 20, 0],
               'fill-game': q.id.endsWith('-three-all')
@@ -4393,6 +4622,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-two-jump-line')
+          await inspectTwoLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')
