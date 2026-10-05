@@ -15,6 +15,7 @@ import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuHundredTableVisual } from './bnu-hundred-table';
 import { isBnuHundredWeatherVisual } from './bnu-hundred-weather';
+import { isBnuInterestingVisual } from './bnu-interesting';
 import { isBnuNumberReviewVisual } from './bnu-number-review';
 import { isBnuPineconeLineVisual } from './bnu-pinecone-line';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
@@ -93,6 +94,7 @@ import { isRectangleCutVisual } from './rectangle-cut';
 import { isRegionPairVisual } from './region-pair';
 import { isRegroupSticksVisual } from './regroup-sticks';
 import { required } from './required';
+import { isReversedAddendsRule } from './reversed-addends';
 import { isRotatingPatchVisual } from './rotating-patch';
 import { isSeatGridVisual } from './seat-grid';
 import { isSemesterGridVisual } from './semester-grid';
@@ -207,6 +209,9 @@ function rule(value: unknown) {
     }
     case 'number-picks': {
       return isNumberPicksRule(value);
+    }
+    case 'reversed-addends': {
+      return isReversedAddendsRule(value);
     }
     case 'arithmetic-pair': {
       return isArithmeticPairRule(value);
@@ -573,6 +578,9 @@ function visual(value: unknown) {
     }
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
+    }
+    case 'bnu-interesting': {
+      return isBnuInterestingVisual(value);
     }
     case 'bnu-written': {
       return isBnuWrittenVisual(value);
@@ -1202,12 +1210,15 @@ function session(value: unknown, profileIds: Set<string>): value is Session {
     if (
       (current.rule.kind === 'number-picks' ||
         current.rule.kind === 'arithmetic-pair' ||
+        current.rule.kind === 'reversed-addends' ||
         current.rule.kind === 'cross-balance') &&
       response.draft !== null &&
       (!Array.isArray(response.draft) ||
         response.draft.length !==
           (() => {
             if (current.rule.kind === 'arithmetic-pair') return 2;
+            if (current.rule.kind === 'reversed-addends')
+              return current.rule.count * 2;
             if (current.rule.kind === 'number-picks')
               return current.rule.fields.length;
             return current.rule.values.length;

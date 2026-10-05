@@ -1306,5 +1306,16 @@
   "bnuTenLine_subtract": "Whole-ten line: decrease to the left",
   "bnuTenLineLegend": "All ticks are retained. The curve tail marks the start and the arrowhead marks the end; the sign above gives the change. The leftmost tick need not be the start. Read the arrow rather than guessing from the page edge.",
   "bnuTenLineScroll": "Scroll horizontally inside the line to inspect all ticks and the arrow; left and right arrow keys are supported.",
-  "bnuTenLineNotice": "Original site drawing of the given line or explicitly changed review conditions, without textbook illustrations. Read the relationship between arrow and ticks; paper work and explanation require separate confirmation."
+  "bnuTenLineNotice": "Original site drawing of the given line or explicitly changed review conditions, without textbook illustrations. Read the relationship between arrow and ticks; paper work and explanation require separate confirmation.",
+  "bnuInteresting_addition": "Eight addition rows: extend the stated pattern",
+  "bnuInteresting_subtraction": "Eight subtraction rows: extend the stated pattern",
+  "bnuInteresting_eleven": "Eight missing addends",
+  "bnuInteresting_main": "Fill lettered blanks row by row, from left to right. The last four source rows are empty. This site explicitly asks you to extend the same pattern; it does not claim a unique original answer.",
+  "bnuInteresting_review": "New conditions: calculate from the current numbers instead of copying original answers.",
+  "bnuInterestingRow": "Row",
+  "bnuInterestingFirst": "First number",
+  "bnuInterestingSecond": "Second number",
+  "bnuInterestingResult": "Result",
+  "bnuInterestingScroll": "Scroll horizontally on a narrow screen. Focus this region and use the left and right arrow keys to view every column.",
+  "bnuInterestingNotice": "Letters mark missing values, not zero. Record real writing and discussion separately; screen answers cannot confirm them."
 }

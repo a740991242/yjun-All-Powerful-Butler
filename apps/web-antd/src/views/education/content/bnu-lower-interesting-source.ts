@@ -1,0 +1,66 @@
+/** Full printed pages70–71 read; original open discovery remains distinct from a fixed worksheet continuation. */
+export const bnuLowerInterestingSource = {
+  resourceId: 'bnu-lower-public-scan-2024',
+  source: 'https://keben.szxuexiao.com/html/10763.html',
+  checkedAt: '2026-10-05',
+  status: 'source-checked',
+  readPrintedPages: [70, 71],
+  pageImages: [
+    { printedPage: 70, suffix: '074.jpg' },
+    { printedPage: 71, suffix: '075.jpg' },
+  ],
+  title: '有趣的算式',
+  examples: [
+    [12, 21, 33],
+    [23, 32, 55],
+  ],
+  sum44Examples: [
+    [13, 31, 44],
+    [22, 22, 44],
+  ],
+  sum99Examples: [
+    [18, 81, 99],
+    [45, 54, 99],
+    [36, 63, 99],
+  ],
+  additionGivenRows: [
+    [11, 11, null],
+    [12, 21, null],
+    [13, 31, null],
+    [14, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ],
+  subtractionGivenRows: [
+    [22, 11, null],
+    [33, 21, null],
+    [44, 31, null],
+    [55, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ],
+  addElevenEquations: [
+    [1, null, 12],
+    [12, null, 23],
+    [23, null, 34],
+    [34, null, 45],
+    [45, null, 56],
+    [56, null, 67],
+    [67, null, 78],
+    [78, null, 89],
+  ],
+  boundary:
+    '两位加数十位与个位互换，11/22等反过来不变，同一个数可作两个加数；不可把04当两位数。44三组有序加数13/31、22/22、31/13；99八组有序加数18/81到81/18。原题找算式与发现开放，接受完整合法答案，不将示例当唯一。练1每边八行，第四行仍给定14或55，后四行原空白；本站若按前四行延续须明确给出规律，不能声称原书空白有唯一答案。练2全部八空均11。真实讨论、纸面填写与个人发现人工或开放记录，计划另记。',
+  activities: [
+    { page: 70, key: 'reversed-addends-and-repeated-result-digits' },
+    { page: 70, key: 'find-reversed-addends-sum44' },
+    { page: 71, key: 'three-reversed-addend-equations-sum99' },
+    { page: 71, key: 'all-eight-addition-rows-and-discovery' },
+    { page: 71, key: 'all-eight-subtraction-rows-and-discovery' },
+    { page: 71, key: 'all-eight-add-eleven-blanks-and-discovery' },
+  ],
+} as const;

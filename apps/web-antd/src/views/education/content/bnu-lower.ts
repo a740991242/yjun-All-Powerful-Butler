@@ -18,6 +18,7 @@ import { bnuLowerFrogsLesson } from './bnu-lower-frogs';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
 import { bnuLowerHideLesson } from './bnu-lower-hide';
 import { bnuLowerHundredChartLesson } from './bnu-lower-hundred-chart';
+import { bnuLowerInterestingLesson } from './bnu-lower-interesting';
 import { bnuLowerMeetingLesson } from './bnu-lower-meeting';
 import { bnuLowerNumberPracticeLesson } from './bnu-lower-number-practice';
 import { bnuLowerParachuteLesson } from './bnu-lower-parachute';
@@ -56,7 +57,7 @@ export const bnuLowerSource = {
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
     23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
     42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-    61, 62, 63, 64, 65, 66, 67, 68, 69,
+    61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
   ],
   contents: [
     ['u1', '20以内数与加法', 2],
@@ -414,7 +415,8 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerPineconesLesson,
     bnuLowerFrogsLesson,
     bnuLowerWrittenLesson,
-    pending('u5', '100以内数加与减（一）后续内容', 70),
+    bnuLowerInterestingLesson,
+    pending('u5', '100以内数加与减（一）后续内容', 72),
   ],
   games: [bnuLowerFillGameLesson],
   classroom: [bnuLowerClassroomLesson],

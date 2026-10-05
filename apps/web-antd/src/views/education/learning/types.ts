@@ -9,6 +9,7 @@ import type { BnuFinalPositionVisual } from './bnu-final-position';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuHundredTableVisual } from './bnu-hundred-table';
 import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
+import type { BnuInterestingVisual } from './bnu-interesting';
 import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
@@ -51,6 +52,7 @@ import type { PartitionedSquareVisual } from './partitioned-square';
 import type { PlaceCountersVisual } from './place-counters';
 import type { QuarterCircleVisual } from './quarter-circle';
 import type { RegroupSticksVisual } from './regroup-sticks';
+import type { ReversedAddendsRule } from './reversed-addends';
 import type { SemesterGridVisual } from './semester-grid';
 import type { ShadowSizeVisual } from './shadow-size';
 import type { SmallArithmeticVisual } from './small-arithmetic';
@@ -437,6 +439,7 @@ export type AnswerRule =
   | NumberChainRule
   | NumberIntervalRule
   | NumberPicksRule
+  | ReversedAddendsRule
   | { kind: 'choice'; value: string }
   | { kind: 'magic-grid'; cells: MagicCells }
   | { kind: 'manual' }
@@ -465,6 +468,7 @@ export type Visual =
   | BnuFinalSolidsVisual
   | BnuHundredTableVisual
   | BnuHundredWeatherVisual
+  | BnuInterestingVisual
   | BnuNumberReviewVisual
   | BnuPineconeLineVisual
   | BnuSixCardGameVisual

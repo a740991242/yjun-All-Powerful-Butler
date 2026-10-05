@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T04:53:11.193Z",
+  "generatedAt": "2026-10-05T05:32:57.216Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 36,
+        "availablePacks": 37,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1050,
-          "manual": 387,
-          "reflection": 137
+          "objective": 1068,
+          "manual": 397,
+          "reflection": 142
         }
       },
       "units": [
@@ -35543,10 +35543,47 @@
               }
             },
             {
+              "id": "bnu-lower-interesting",
+              "title": "逆序加数、两组八行规律与全部缺数",
+              "textbookTitle": "有趣的算式",
+              "page": 70,
+              "version": 1,
+              "status": "available",
+              "goal": "完整对应70～71六原活动，探索和44/99逆序两位加数、两组八行及八道缺数，实际填写交流并记录自己的发现。",
+              "prerequisite": "能按十与个位计算百以内不进位加法、不退位减法。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 18,
+                "manual": 10,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-interesting"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "reversed-addends",
+                "number",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-interesting"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "70～71两整页、全部行与缺数核对",
+                "notes": "六原活动对应，最终教师试用未核验。"
+              }
+            },
+            {
               "id": "bnu-lower-u5-pending",
               "title": "100以内数加与减（一）后续内容",
               "textbookTitle": "100以内数加与减（一）后续内容",
-              "page": 70,
+              "page": 72,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35580,7 +35617,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～69全部原活动对应；70页起后续、整册与全年仍未完成。",
+            "scope": "印刷62～71全部原活动对应；72页起后续、整册与全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -35973,6 +36010,77 @@
                 "objective": ["water-conditions", "water-result", "water-unit"],
                 "manual": ["actual-water"],
                 "records": []
+              },
+              {
+                "page": 70,
+                "sourceActivity": "reversed-addends-and-repeated-result-digits",
+                "lesson": "bnu-lower-interesting",
+                "steps": [1, 9, 10],
+                "objective": [
+                  "examples",
+                  "example-digits",
+                  "reverse-meaning",
+                  "leading-zero",
+                  "site-zero"
+                ],
+                "manual": ["actual-examples", "actual-own"],
+                "records": ["method-record", "plan"]
+              },
+              {
+                "page": 70,
+                "sourceActivity": "find-reversed-addends-sum44",
+                "lesson": "bnu-lower-interesting",
+                "steps": [2],
+                "objective": ["find44", "source44-examples", "repeated-addend"],
+                "manual": ["actual-find44"],
+                "records": []
+              },
+              {
+                "page": 71,
+                "sourceActivity": "three-reversed-addend-equations-sum99",
+                "lesson": "bnu-lower-interesting",
+                "steps": [3],
+                "objective": ["find99", "source99-examples"],
+                "manual": ["actual-find99"],
+                "records": []
+              },
+              {
+                "page": 71,
+                "sourceActivity": "all-eight-addition-rows-and-discovery",
+                "lesson": "bnu-lower-interesting",
+                "steps": [4, 5],
+                "objective": [
+                  "addition-all",
+                  "addition-increase",
+                  "addition-place-increase"
+                ],
+                "manual": ["actual-addition", "actual-addition-discussion"],
+                "records": ["addition-discovery"]
+              },
+              {
+                "page": 71,
+                "sourceActivity": "all-eight-subtraction-rows-and-discovery",
+                "lesson": "bnu-lower-interesting",
+                "steps": [6, 7],
+                "objective": [
+                  "subtraction-all",
+                  "subtraction-increase",
+                  "subtraction-place-increase"
+                ],
+                "manual": [
+                  "actual-subtraction",
+                  "actual-subtraction-discussion"
+                ],
+                "records": ["subtraction-discovery"]
+              },
+              {
+                "page": 71,
+                "sourceActivity": "all-eight-add-eleven-blanks-and-discovery",
+                "lesson": "bnu-lower-interesting",
+                "steps": [8],
+                "objective": ["eleven-all", "eleven-places"],
+                "manual": ["actual-eleven", "actual-eleven-discussion"],
+                "records": ["eleven-discovery"]
               }
             ]
           }

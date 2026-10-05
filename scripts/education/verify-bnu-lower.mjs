@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--interesting'))
+    return {
+      index: 36,
+      lessonId: 'bnu-lower-interesting',
+      zero: '-site-zero',
+      retry: '-addition-increase',
+      manual: 10,
+      steps: 10,
+      review: 8,
+      key: 'interesting',
+    };
+
   if (process.argv.includes('--written'))
     return {
       index: 35,
@@ -2108,6 +2120,190 @@ const server = http.createServer(async (req, res) => {
             `Written geometry ${label}: ${JSON.stringify(geometry)}`,
           );
       };
+      const inspectInteresting = async (visual, label) => {
+        const fixtures = {
+          main: {
+            addition: [
+              [11, 11, null],
+              [12, 21, null],
+              [13, 31, null],
+              [14, null, null],
+              [null, null, null],
+              [null, null, null],
+              [null, null, null],
+              [null, null, null],
+            ],
+            subtraction: [
+              [22, 11, null],
+              [33, 21, null],
+              [44, 31, null],
+              [55, null, null],
+              [null, null, null],
+              [null, null, null],
+              [null, null, null],
+              [null, null, null],
+            ],
+            eleven: [
+              [1, null, 12],
+              [12, null, 23],
+              [23, null, 34],
+              [34, null, 45],
+              [45, null, 56],
+              [56, null, 67],
+              [67, null, 78],
+              [78, null, 89],
+            ],
+          },
+          review: {
+            addition: [
+              [18, 81, null],
+              [17, 71, null],
+              [16, 61, null],
+              [15, 51, null],
+              [14, 41, null],
+              [13, 31, null],
+              [12, 21, null],
+              [11, 11, null],
+            ],
+            subtraction: [
+              [99, 81, null],
+              [88, 71, null],
+              [77, 61, null],
+              [66, 51, null],
+              [55, 41, null],
+              [44, 31, null],
+              [33, 21, null],
+              [22, 11, null],
+            ],
+            eleven: [
+              [2, null, 24],
+              [12, null, 34],
+              [22, null, 44],
+              [32, null, 54],
+              [42, null, 64],
+              [52, null, 74],
+              [62, null, 84],
+              [72, null, 94],
+            ],
+          },
+        };
+        let blank = 0;
+        const expected = fixtures[visual.variant][visual.scene].map((r) =>
+          r.map((n) =>
+            n === null ? String.fromCodePoint(65 + blank++) : String(n),
+          ),
+        );
+        await p.locator('[data-bnu-interesting]').waitFor();
+        await p.waitForTimeout(120);
+        const actual = await p
+          .locator('[data-bnu-interesting] tbody tr')
+          .evaluateAll((nodes) =>
+            nodes.map((row) =>
+              [...row.querySelectorAll('[data-bnu-interesting-cell]')].map(
+                (cell) =>
+                  [...cell.childNodes]
+                    .filter((n) => n.nodeType === Node.TEXT_NODE)
+                    .map((n) => n.textContent)
+                    .join('')
+                    .trim(),
+              ),
+            ),
+          );
+        if (JSON.stringify(actual) !== JSON.stringify(expected))
+          throw new Error(
+            `Interesting fixture ${label}: ${JSON.stringify(actual)}`,
+          );
+        if ((await p.locator('[data-bnu-interesting-empty]').count()) !== blank)
+          throw new Error('Missing visible empty-cell markers');
+        const operations = await p
+          .locator('[data-bnu-interesting-operator]')
+          .allTextContents();
+        if (
+          JSON.stringify(operations) !==
+          JSON.stringify(
+            Array.from({ length: 8 }, () => [
+              '',
+              visual.scene === 'subtraction' ? '−' : '+',
+              '=',
+            ]).flat(),
+          )
+        )
+          throw new Error('Interesting operations changed');
+        const region = p.locator('[data-bnu-interesting-scroll]');
+        const before = await region.evaluate((n) => ({
+          client: n.clientWidth,
+          scroll: n.scrollWidth,
+        }));
+        for (const edge of ['left', 'right']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = e === 'left' ? 0 : n.scrollWidth;
+          }, edge);
+          await region.scrollIntoViewIfNeeded();
+          await p.screenshot({
+            path: `/tmp/butler-bnu-interesting-${label}-${width}-${edge}.png`,
+          });
+        }
+        if (before.scroll > before.client) {
+          await region.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          await region.focus();
+          await p.keyboard.press('ArrowRight');
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Interesting keyboard scrolling failed');
+        }
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        const geometry = await p
+          .locator('[data-bnu-interesting]')
+          .evaluate((root) => {
+            const bad = [
+              ...root.querySelectorAll('thead span,tbody td span'),
+            ].some((n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20);
+            const luminance = (color) => {
+              const rgb = color
+                .match(/[\d.]+/g)
+                ?.slice(0, 3)
+                .map(Number);
+              if (!rgb || rgb.length !== 3)
+                throw new Error('Unrecognized rendered color');
+              return rgb
+                .map((n) => n / 255)
+                .map((n) =>
+                  n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4,
+                )
+                .reduce(
+                  (sum, n, i) => sum + n * [0.2126, 0.7152, 0.0722][i],
+                  0,
+                );
+            };
+            const bg = luminance(getComputedStyle(root).backgroundColor);
+            const fg = luminance(
+              getComputedStyle(root.querySelector('figcaption')).color,
+            );
+            const contrast =
+              (Math.max(bg, fg) + 0.05) / (Math.min(bg, fg) + 0.05);
+            const clipped = [
+              ...root.querySelectorAll('[data-bnu-interesting-cell]'),
+            ].some((n) => n.scrollWidth > n.clientWidth + 1);
+            return {
+              bad,
+              clipped,
+              contrast,
+              page: document.documentElement.scrollWidth > innerWidth + 1,
+            };
+          });
+        if (
+          geometry.bad ||
+          geometry.clipped ||
+          geometry.page ||
+          geometry.contrast < 4.5
+        )
+          throw new Error(
+            `Interesting geometry ${label}: ${JSON.stringify(geometry)}`,
+          );
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -2146,7 +2342,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 36
+          .count()) !== 37
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -2557,6 +2753,59 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'interesting' && [2, 4, 6].includes(step)) {
+          const scene = { 2: 'addition', 4: 'subtraction', 6: 'eleven' }[step];
+          await inspectInteresting(
+            { scene, variant: 'main' },
+            `learn-${step + 1}`,
+          );
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .locator('[data-bnu-interesting] figcaption')
+            .filter({ hasText: /[A-Za-z]/ })
+            .waitFor();
+          await inspectInteresting(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en`,
+          );
+          const wasDark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await inspectInteresting(
+            { scene, variant: 'main' },
+            `learn-${step + 1}-en-theme`,
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p
+            .locator('[data-bnu-interesting] figcaption')
+            .filter({ hasText: /[\u4E00-\u9FFF]/ })
+            .waitFor();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Interesting language/theme changed records');
+        }
         if (flow.key === 'written' && step < 7) {
           const scene = [
             'add-stage',
@@ -2583,16 +2832,25 @@ const server = http.createServer(async (req, res) => {
               { scene, variant: 'main' },
               `learn-${step + 1}-en`,
             );
-            await p.evaluate(() =>
-              document.documentElement.classList.add('dark'),
+            const wasDark = await p.evaluate(() =>
+              document.documentElement.classList.contains('dark'),
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') !== was,
+              wasDark,
             );
             await p.waitForTimeout(600);
             await inspectWritten(
               { scene, variant: 'main' },
-              `learn-${step + 1}-en-dark`,
+              `learn-${step + 1}-en-theme`,
             );
-            await p.evaluate(() =>
-              document.documentElement.classList.remove('dark'),
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') === was,
+              wasDark,
             );
             await p.waitForTimeout(600);
             await p
@@ -3196,6 +3454,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-interesting')
+          await inspectInteresting(q.visual, q.id);
         if (q.visual?.kind === 'bnu-written')
           await inspectWritten(q.visual, q.id);
         if (q.visual?.kind === 'bnu-two-jump-line')
@@ -3612,6 +3872,33 @@ const server = http.createServer(async (req, res) => {
                 : [0, q.rule.result];
             for (const [i, value] of pair.entries())
               await p.getByRole('spinbutton').nth(i).fill(String(value));
+          } else if (q.rule.kind === 'reversed-addends') {
+            const values =
+              q.rule.count === 1 ? [22, 22] : [81, 18, 72, 27, 63, 36];
+            if (q.rule.count === 3) {
+              const partial = [81, null, null, null, null, null];
+              await p.getByRole('spinbutton').first().fill('81');
+              await wait(
+                (d) =>
+                  JSON.stringify(
+                    d.sessions.find((x) => x.id === sid).responses[index].draft,
+                  ) === JSON.stringify(partial),
+              );
+              await p.reload({ waitUntil: 'networkidle' });
+              const fields = await p
+                .getByRole('spinbutton')
+                .evaluateAll((nodes) => nodes.map((n) => n.value));
+              if (JSON.stringify(fields) !== '["81","","","","",""]')
+                throw new Error('Reversed six-field partial lost');
+              for (const [i, value] of [18, 81, 18, 81, 18, 81].entries())
+                await p.getByRole('spinbutton').nth(i).fill(String(value));
+              await click('提交答案');
+              await p
+                .getByText('再想一想，可以修改后重试', { exact: true })
+                .waitFor();
+            }
+            for (const [i, value] of values.entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (q.rule.kind === 'arithmetic-pair') {
             await p.getByRole('spinbutton').nth(0).fill('0');
             await wait(
@@ -3639,6 +3926,7 @@ const server = http.createServer(async (req, res) => {
               (flow.key === 'pinecones' && q.id.endsWith('-eight-bottom')) ||
               (flow.key === 'frogs' && q.id.endsWith('-add-counter-digits')) ||
               (flow.key === 'written' && q.id.endsWith('-practice-digits')) ||
+              (flow.key === 'interesting' && q.id.endsWith('-addition-all')) ||
               (flow.key === 'fill-game' &&
                 (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
               (flow.key === 'number-practice' &&
@@ -3652,6 +3940,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              interesting: [22, ...Array.from({ length: 16 }, () => null)],
               written: [7, null, null, null, null, null, null, null],
               frogs: [6, null, null, null, null, null],
               pinecones: [65, null, null, null],
@@ -3668,6 +3957,10 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              interesting: [
+                22, 33, 44, 41, 55, 15, 51, 66, 16, 61, 77, 17, 71, 88, 18, 81,
+                0,
+              ],
               written: [7, 6, 3, 1, 9, 9, 5, 0],
               frogs: [6, 5, 3, 2, 9, 0],
               pinecones: [65, 86, 40, 72],
@@ -5016,6 +5309,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'bnu-pinecone-line'
         )
           await inspectTenLine(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-interesting')
+          await inspectInteresting(q.visual, q.id);
         if (q.visual?.kind === 'bnu-written')
           await inspectWritten(q.visual, q.id);
         if (q.visual?.kind === 'bnu-two-jump-line')
@@ -5055,6 +5350,11 @@ const server = http.createServer(async (req, res) => {
         } else if (q.rule.kind === 'number-picks') {
           for (const [field, values] of q.rule.fields.entries())
             await p.getByRole('spinbutton').nth(field).fill(String(values[0]));
+        } else if (q.rule.kind === 'reversed-addends') {
+          const values =
+            q.rule.count === 1 ? [33, 33] : [61, 16, 52, 25, 43, 34];
+          for (const [i, value] of values.entries())
+            await p.getByRole('spinbutton').nth(i).fill(String(value));
         } else if (q.rule.kind === 'arithmetic-pair') {
           let left = Math.max(q.rule.minimum, q.rule.result - q.rule.maximum);
           let right = q.rule.result - left;

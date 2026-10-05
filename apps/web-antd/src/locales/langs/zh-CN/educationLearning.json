@@ -1306,5 +1306,16 @@
   "bnuTenLine_subtract": "整十数线：向左减少",
   "bnuTenLineLegend": "完整刻度保留。弧线的尾是起点，箭头尖是终点；上方符号表示增加或减少的量。最左刻度不一定是起点，按箭头读，不按页面边缘猜。",
   "bnuTenLineScroll": "在数线图内横向滚动查看全部刻度与箭头，支持左右方向键。",
-  "bnuTenLineNotice": "本站原创重画原给定数线或明确的新复习条件，不复制教材插画。这里读出箭头与刻度的关系，不自动确认纸面填写和口述。"
+  "bnuTenLineNotice": "本站原创重画原给定数线或明确的新复习条件，不复制教材插画。这里读出箭头与刻度的关系，不自动确认纸面填写和口述。",
+  "bnuInteresting_addition": "八行加法：按条件延续",
+  "bnuInteresting_subtraction": "八行减法：按条件延续",
+  "bnuInteresting_eleven": "八道缺数：找出增加量",
+  "bnuInteresting_main": "按行从左到右填写字母空格。加减规律表后四行原书空白；本站明确按前四行同一规律延续，不说原书只有一种填法。",
+  "bnuInteresting_review": "本站换条件复习，按当前数字重新计算，不能复制原题答案。",
+  "bnuInterestingRow": "行",
+  "bnuInterestingFirst": "第一数",
+  "bnuInterestingSecond": "第二数",
+  "bnuInterestingResult": "结果",
+  "bnuInterestingScroll": "窄屏可横向滚动；聚焦表格区域后用左右箭头查看全部列。",
+  "bnuInterestingNotice": "字母只表示待填位置，不是0。真实纸笔填写、讨论与发现另记录，不由屏幕答案自动确认。"
 }

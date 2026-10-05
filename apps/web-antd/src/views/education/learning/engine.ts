@@ -18,6 +18,7 @@ import { matchesNumberChain, numberChainBlankCount } from './number-chain';
 import { matchesNumberInterval } from './number-interval';
 import { matchesNumberPicks } from './number-picks';
 import { matchesTower, towerBlankCount } from './number-tower';
+import { matchesReversedAddends } from './reversed-addends';
 
 export const GENERATOR_VERSION = 1;
 export const MAX_REFLECTION_LENGTH = 1000;
@@ -61,6 +62,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
     case 'column-digits':
     case 'number-picks':
     case 'arithmetic-pair':
+    case 'reversed-addends':
     case 'number-chain':
     case 'magic-grid':
     case 'tower':
@@ -72,6 +74,7 @@ export function validAnswer(rule: AnswerRule, answer: Answer | null): boolean {
           (() => {
             if (rule.kind === 'card-equation') return 4;
             if (rule.kind === 'arithmetic-pair') return 2;
+            if (rule.kind === 'reversed-addends') return rule.count * 2;
             if (rule.kind === 'equal-pairs') return 8;
             if (rule.kind === 'column-digits')
               return columnDigitBlankCount(rule);
@@ -172,6 +175,9 @@ export function evaluate(
     }
     case 'number-picks': {
       return matchesNumberPicks(rule, answer);
+    }
+    case 'reversed-addends': {
+      return matchesReversedAddends(rule, answer);
     }
     case 'arithmetic-pair': {
       return matchesArithmeticPair(rule, answer);
