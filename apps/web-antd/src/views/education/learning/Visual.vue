@@ -842,7 +842,10 @@ const shapeDescription = computed(() =>
       </div>
     </div>
     <BnuWholeTenLine
-      v-else-if="visual.kind === 'bnu-whole-ten-line'"
+      v-else-if="
+        visual.kind === 'bnu-whole-ten-line' ||
+        visual.kind === 'bnu-pinecone-line'
+      "
       :visual="visual"
     />
     <BnuFillGrid v-else-if="visual.kind === 'bnu-fill-grid'" :visual="visual" />

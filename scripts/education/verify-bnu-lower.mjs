@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--pinecones'))
+    return {
+      index: 33,
+      lessonId: 'bnu-lower-pinecones',
+      zero: '-site-zero',
+      retry: '-sub-ones',
+      manual: 18,
+      steps: 10,
+      review: 9,
+      key: 'pinecones',
+    };
+
   if (process.argv.includes('--rabbit-guests'))
     return {
       index: 32,
@@ -1387,7 +1399,38 @@ const server = http.createServer(async (req, res) => {
             },
           },
         };
-        const expected = fixtures[visual.variant][visual.scene];
+        const pineconeFixtures = {
+          main: {
+            add: {
+              ticks: [21, 22, 23, 24, 25, 26],
+              start: 22,
+              end: 25,
+              jump: '+3',
+            },
+            subtract: {
+              ticks: [49, 59, 69, 79, 89, 99],
+              start: 89,
+              end: 59,
+              jump: '−30',
+            },
+          },
+          review: {
+            add: {
+              ticks: [21, 22, 23, 24, 25, 26],
+              start: 23,
+              end: 25,
+              jump: '+2',
+            },
+            subtract: {
+              ticks: [49, 59, 69, 79, 89, 99],
+              start: 99,
+              end: 79,
+              jump: '−20',
+            },
+          },
+        };
+        const selected = flow.key === 'pinecones' ? pineconeFixtures : fixtures;
+        const expected = selected[visual.variant][visual.scene];
         const svg = figure.locator('svg');
         if (
           JSON.stringify(
@@ -1523,7 +1566,7 @@ const server = http.createServer(async (req, res) => {
           if (!fits)
             throw new Error('Whole-ten full endpoint or viewport clipped');
           await p.screenshot({
-            path: `/tmp/butler-bnu-rabbit-guests-${label}-${width}-${edge}.png`,
+            path: `/tmp/butler-bnu-${flow.key}-${label}-${width}-${edge}.png`,
           });
         }
       };
@@ -1565,7 +1608,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 33
+          .count()) !== 34
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1941,6 +1984,8 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'pinecones')
+        await inspectPlaceCounters([45, 3, 30], 'pinecones-learn-initial');
       if (flow.key === 'rabbit-guests')
         await inspectPlaceCounters([20, 30, 50], 'rabbit-guests-learn-initial');
       if (flow.key === 'fill-game')
@@ -1967,8 +2012,12 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
-        if (flow.key === 'rabbit-guests' && [5, 6].includes(step)) {
-          const scene = step === 5 ? 'add' : 'subtract';
+        if (
+          (flow.key === 'rabbit-guests' && [5, 6].includes(step)) ||
+          (flow.key === 'pinecones' && [4, 5].includes(step))
+        ) {
+          const first = flow.key === 'pinecones' ? 4 : 5;
+          const scene = step === first ? 'add' : 'subtract';
           await inspectTenLine({ scene, variant: 'main' }, `learn-${step + 1}`);
           const state = JSON.stringify(await read());
           await p
@@ -1979,10 +2028,16 @@ const server = http.createServer(async (req, res) => {
           await p
             .locator('[data-bnu-ten-line] figcaption')
             .filter({
-              hasText:
-                scene === 'add'
-                  ? 'Whole-ten line: increase to the right'
-                  : 'Whole-ten line: decrease to the left',
+              hasText: {
+                pinecones: {
+                  add: 'Number line: increase to the right in ones',
+                  subtract: 'Number line: decrease to the left in tens',
+                },
+                'rabbit-guests': {
+                  add: 'Whole-ten line: increase to the right',
+                  subtract: 'Whole-ten line: decrease to the left',
+                },
+              }[flow.key][scene],
             })
             .waitFor();
           const dark = await p.evaluate(() =>
@@ -2275,12 +2330,14 @@ const server = http.createServer(async (req, res) => {
           (flow.key === 'hundred-harvest' && [0, 2].includes(step)) ||
           (flow.key === 'number-practice' && [9, 10].includes(step)) ||
           (flow.key === 'rabbit-guests' && [0, 1, 2, 4, 8].includes(step)) ||
+          (flow.key === 'pinecones' && [0, 1, 8].includes(step)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
         ) {
           const diagramValues = {
             'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
             'hundred-harvest': { 0: [95, 92, 85, 79], 2: [85] },
             'number-practice': { 9: [13], 10: [4, 22, 31, 40] },
+            pinecones: { 0: [45, 3, 48], 1: [45, 30, 15], 8: [30, 0] },
             'rabbit-guests': {
               0: [20, 30, 50],
               1: [50, 40, 10],
@@ -2521,7 +2578,10 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
-        if (q.visual?.kind === 'bnu-whole-ten-line')
+        if (
+          q.visual?.kind === 'bnu-whole-ten-line' ||
+          q.visual?.kind === 'bnu-pinecone-line'
+        )
           await inspectTenLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);
@@ -2959,6 +3019,7 @@ const server = http.createServer(async (req, res) => {
           } else if (
             q.rule.kind === 'steps' &&
             ((flow.key === 'rabbit-guests' && q.id.endsWith('-sub-backward')) ||
+              (flow.key === 'pinecones' && q.id.endsWith('-eight-bottom')) ||
               (flow.key === 'fill-game' &&
                 (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
               (flow.key === 'number-practice' &&
@@ -2972,6 +3033,7 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              pinecones: [65, null, null, null],
               'rabbit-guests': [40, null, null, null],
               'fill-game': q.id.endsWith('-three-all')
                 ? [3, null, null, null, null]
@@ -2985,6 +3047,7 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              pinecones: [65, 86, 40, 72],
               'rabbit-guests': [40, 30, 20, 0],
               'fill-game': q.id.endsWith('-three-all')
                 ? [2, 3, 2, 3, 3]
@@ -4325,7 +4388,10 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
-        if (q.visual?.kind === 'bnu-whole-ten-line')
+        if (
+          q.visual?.kind === 'bnu-whole-ten-line' ||
+          q.visual?.kind === 'bnu-pinecone-line'
+        )
           await inspectTenLine(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fill-grid')
           await inspectFillGrid(q.visual, q.id);

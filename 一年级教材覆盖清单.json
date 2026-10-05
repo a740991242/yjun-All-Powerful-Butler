@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T03:32:06.025Z",
+  "generatedAt": "2026-10-05T03:54:00.677Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 33,
+        "availablePacks": 34,
         "pendingEntries": 4,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 966,
-          "manual": 340,
-          "reflection": 128
+          "objective": 994,
+          "manual": 358,
+          "reflection": 131
         }
       },
       "units": [
@@ -35435,10 +35435,46 @@
               }
             },
             {
+              "id": "bnu-lower-pinecones",
+              "title": "两位数加减一位数与整十数：完整方法和全部练习",
+              "textbookTitle": "采松果",
+              "page": 64,
+              "version": 1,
+              "status": "available",
+              "goal": "完整完成45+3与45−30三种方法、两算式解释、四实物计算、两条数线、全部八式及两生活问题，并如实记录自主问题和实际活动。",
+              "prerequisite": "认识100以内数位，能把十与一分开，理解合量与比较差。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 28,
+                "manual": 18,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 9,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-pinecones"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["place-counters", "bnu-pinecone-line"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "64～65两整页、三条条件、全部方法和练习及两箭头核对",
+                "notes": "八项原活动对应；最终教师试用未核验，不由网站正确率推实物和纸面已完成。"
+              }
+            },
+            {
               "id": "bnu-lower-u5-pending",
               "title": "100以内数加与减（一）后续内容",
               "textbookTitle": "100以内数加与减（一）后续内容",
-              "page": 64,
+              "page": 66,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -35472,7 +35508,7 @@
             "unit": "u5",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "印刷62～63六项原活动、三种加减方法与全部术语/两小棒/两数线/开放提问完整对应；本站小棒时刻明确与原示意分清，不证明其后64页起、整册或全年完成。",
+            "scope": "印刷62～65全部原活动对应；66页起后续、整册与全年仍未完成。",
             "activities": [
               {
                 "page": 62,
@@ -35568,6 +35604,109 @@
                 ],
                 "manual": ["actual-own-question", "actual-explain-question"],
                 "records": ["own-question-record", "method-record", "plan"]
+              },
+              {
+                "page": 64,
+                "sourceActivity": "mother-child-addition-three-methods",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [1, 2],
+                "objective": [
+                  "picked",
+                  "add-values",
+                  "add-count",
+                  "add-ones",
+                  "add-tens",
+                  "add-related"
+                ],
+                "manual": [
+                  "actual-add-count",
+                  "actual-add-sticks",
+                  "actual-add-related"
+                ],
+                "records": []
+              },
+              {
+                "page": 64,
+                "sourceActivity": "mother-father-comparison-three-methods",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [3],
+                "objective": [
+                  "sub-values",
+                  "sub-count",
+                  "sub-tens",
+                  "sub-ones",
+                  "sub-related",
+                  "compare-meaning"
+                ],
+                "manual": [
+                  "actual-sub-count",
+                  "actual-sub-sticks",
+                  "actual-sub-related"
+                ],
+                "records": []
+              },
+              {
+                "page": 65,
+                "sourceActivity": "interpret-two-equations",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [4, 10],
+                "objective": ["interpret-sub", "interpret-add", "site-zero"],
+                "manual": [
+                  "actual-interpret-sub",
+                  "actual-interpret-add",
+                  "actual-own"
+                ],
+                "records": ["method-record", "own-record", "plan"]
+              },
+              {
+                "page": 65,
+                "sourceActivity": "four-stick-calculations",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [5],
+                "objective": ["stick-32", "stick-75", "stick-78", "stick-68"],
+                "manual": [
+                  "actual-stick-32",
+                  "actual-stick-75",
+                  "actual-stick-78",
+                  "actual-stick-68"
+                ],
+                "records": []
+              },
+              {
+                "page": 65,
+                "sourceActivity": "both-arrow-lines",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [6, 7],
+                "objective": ["line-add", "line-sub", "line-directions"],
+                "manual": ["actual-line-add", "actual-line-sub"],
+                "records": []
+              },
+              {
+                "page": 65,
+                "sourceActivity": "all-eight-calculations",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [8],
+                "objective": ["eight-top", "eight-bottom"],
+                "manual": ["actual-eight"],
+                "records": []
+              },
+              {
+                "page": 65,
+                "sourceActivity": "swans-arrival-total",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [9],
+                "objective": ["swans", "swans-meaning"],
+                "manual": ["actual-swans"],
+                "records": []
+              },
+              {
+                "page": 65,
+                "sourceActivity": "dinosaurs-length-difference",
+                "lesson": "bnu-lower-pinecones",
+                "steps": [9],
+                "objective": ["dinosaurs", "dinosaurs-unit"],
+                "manual": ["actual-dinosaurs"],
+                "records": []
               }
             ]
           }

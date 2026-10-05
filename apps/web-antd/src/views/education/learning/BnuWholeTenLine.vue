@@ -1,14 +1,26 @@
 <script setup lang="ts">
+import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
 
 import { computed, useId } from 'vue';
 
 import { $t } from '#/locales';
 
+import { bnuPineconeLine } from './bnu-pinecone-line';
 import { bnuWholeTenLine } from './bnu-whole-ten-line';
 import { required } from './required';
-const props = defineProps<{ visual: BnuWholeTenLineVisual }>();
-const line = computed(() => bnuWholeTenLine(props.visual));
+const props = defineProps<{
+  visual: BnuPineconeLineVisual | BnuWholeTenLineVisual;
+}>();
+const line = computed(() =>
+  props.visual.kind === 'bnu-pinecone-line'
+    ? bnuPineconeLine(props.visual)
+    : bnuWholeTenLine(props.visual),
+);
+const titleKey = computed(
+  () =>
+    `educationLearning.${props.visual.kind === 'bnu-pinecone-line' ? 'bnuPineLine' : 'bnuTenLine'}_${props.visual.scene}`,
+);
 const markerId = `bnu-ten-arrow-${useId()}`;
 function x(n: number) {
   const ticks = line.value.ticks;
@@ -51,7 +63,7 @@ function scrollWithKeyboard(event: KeyboardEvent) {
     class="m-0 min-w-0 rounded-xl border border-border bg-card p-4"
   >
     <figcaption class="mb-3 text-xl font-semibold leading-8">
-      {{ $t(`educationLearning.bnuTenLine_${visual.scene}`) }}
+      {{ $t(titleKey) }}
     </figcaption>
     <p class="mb-3 text-xl leading-8">
       {{ $t('educationLearning.bnuTenLineLegend') }}
@@ -68,7 +80,7 @@ function scrollWithKeyboard(event: KeyboardEvent) {
         viewBox="0 0 960 210"
         class="h-[210px] w-[960px] shrink-0"
         role="group"
-        :aria-label="$t(`educationLearning.bnuTenLine_${visual.scene}`)"
+        :aria-label="$t(titleKey)"
       >
         <defs>
           <marker

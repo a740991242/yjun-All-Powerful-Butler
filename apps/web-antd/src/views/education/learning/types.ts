@@ -10,6 +10,7 @@ import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuHundredTableVisual } from './bnu-hundred-table';
 import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
 import type { BnuNumberReviewVisual } from './bnu-number-review';
+import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import type { CardEquationRule } from './card-equation';
@@ -463,6 +464,7 @@ export type Visual =
   | BnuHundredTableVisual
   | BnuHundredWeatherVisual
   | BnuNumberReviewVisual
+  | BnuPineconeLineVisual
   | BnuSixCardGameVisual
   | BnuWholeTenLineVisual
   | BookGroupsVisual
