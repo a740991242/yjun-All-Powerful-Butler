@@ -58,6 +58,28 @@ export function regionalMathematicsDefault(
         },
       ],
     };
+  if (query.province === 'liaoning') {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: upper ? '2025' : '2026',
+      evidence: [
+        {
+          id: `liaoning-grade-one-math-${query.volume}-catalog-${upper ? '2025' : '2026'}`,
+          sourceUrl: upper
+            ? 'https://fgw.ln.gov.cn/fgw/index/tzgg/2025072310032719554/index.shtml'
+            : 'https://fgw.ln.gov.cn/fgw/index/tzgg/2026010816275051643/index.shtml',
+          sourceTitle: upper
+            ? '辽宁省2025年秋季学期中小学教材零售价格（第一批，2025年第2号公告，附件第11页人教第3项、第20页北师大第1项，一年级数学上册）'
+            : '辽宁省2026年春季学期中小学教材零售价格（第一批，2026年第1号公告，附件第3页北师大第1项、第11页人教第4项，一年级数学下册）',
+          issuedAt: upper ? '2025-07-21' : '2026-01-05',
+          publishedAt: upper ? '2025-07-23' : '2026-01-08',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
   if (query.province === 'henan') {
     const upper = query.volume === 'upper';
     return {

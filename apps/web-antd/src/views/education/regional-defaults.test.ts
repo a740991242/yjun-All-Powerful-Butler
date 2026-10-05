@@ -262,3 +262,47 @@ it('keeps Anhui autumn references limited to the verified upper volume', () => {
       ).toBeUndefined();
   }
 });
+
+it('separates Liaoning volume sources, years and document/publication dates', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    for (const academicYear of ['2025-2026', '2026-2027']) {
+      const local = { ...query, province: 'liaoning', volume, academicYear };
+      const result = regionalMathematicsDefault(local)!;
+      const upper = volume === 'upper';
+      expect(result).toMatchObject({
+        edition: 'pep-2024',
+        catalogYear: upper ? '2025' : '2026',
+        alternatives: ['pep-2024', 'bnu-2024'],
+      });
+      expect(result.evidence[0]).toMatchObject({
+        id: `liaoning-grade-one-math-${volume}-catalog-${upper ? '2025' : '2026'}`,
+        issuedAt: upper ? '2025-07-21' : '2026-01-05',
+        publishedAt: upper ? '2025-07-23' : '2026-01-08',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[0]!.sourceTitle).toContain(
+        upper ? '一年级数学上册' : '一年级数学下册',
+      );
+      expect(result.evidence[0]!.sourceUrl).toContain(
+        upper ? '2025072310032719554' : '2026010816275051643',
+      );
+      result.alternatives!.pop();
+      result.evidence[0]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(2);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
+      ).toContain('fgw.ln.gov.cn');
+      for (const change of [
+        { city: 'shenyang' },
+        { school: 'school' },
+        { grade: 'p2' },
+        { subject: 'english' },
+        { academicYear: '2027-2028' },
+        { volume: 'all' },
+      ])
+        expect(
+          regionalMathematicsDefault({ ...local, ...change }),
+        ).toBeUndefined();
+    }
+  }
+});

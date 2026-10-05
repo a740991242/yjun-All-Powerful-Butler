@@ -58,14 +58,20 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       rows.filter((row) => row.resolution.status === 'guidance'),
     ).toHaveLength(excluded ? 0 : 2);
     let expectedSubjects: string[] = ['chinese', 'ethics'];
-    if (['fujian', 'henan', 'hubei', 'jiangsu', 'shanxi'].includes(province))
+    if (
+      ['fujian', 'henan', 'hubei', 'jiangsu', 'liaoning', 'shanxi'].includes(
+        province,
+      )
+    )
       expectedSubjects = ['chinese', 'math', 'ethics'];
     if (excluded) expectedSubjects = [];
     expect(
       rows.flatMap((row) => (row.action ? [row.action.subject] : [])),
     ).toEqual(expectedSubjects);
     expect(required(rows[1]).resolution.status).toBe(
-      ['fujian', 'henan', 'hubei', 'jiangsu', 'shanxi'].includes(province)
+      ['fujian', 'henan', 'hubei', 'jiangsu', 'liaoning', 'shanxi'].includes(
+        province,
+      )
         ? 'recommended'
         : 'unknown',
     );
@@ -391,4 +397,39 @@ it('applies Anhui upper combinations without inheriting the price catalog into l
   expect(lower[1]!.action).toBeUndefined();
   expect(lower[3]!.action).toBeUndefined();
   expect(lower.filter((row) => row.action)).toHaveLength(2);
+});
+
+it('applies Liaoning both-volume combinations using the matching reference year and preserving unknown English', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      province: 'liaoning',
+      city: '',
+      school: '',
+      volume,
+    };
+    const rows = regionalApplicationPlan(local);
+    expect(rows[1]!.resolution).toMatchObject({
+      status: 'recommended',
+      edition: 'pep-2024',
+      catalogYear: volume === 'upper' ? '2025' : '2026',
+      alternatives: ['pep-2024', 'bnu-2024'],
+    });
+    expect(
+      rows.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(rows[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
+  }
 });
