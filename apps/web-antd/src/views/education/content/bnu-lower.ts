@@ -40,6 +40,9 @@ import {
 import { bnuLowerSubtractionHarvestLesson } from './bnu-lower-subtraction-harvest';
 import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-practice';
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
+import { bnuLowerTangramPatternsLesson } from './bnu-lower-tangram-patterns';
+import { bnuLowerTangramPracticeLesson } from './bnu-lower-tangram-practice';
+import { bnuLowerTangramRecognizeLesson } from './bnu-lower-tangram-recognize';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
 import { bnuLowerWrittenLesson } from './bnu-lower-written';
@@ -395,7 +398,10 @@ const authoredLessons: Record<string, Lesson[]> = {
   u6: [
     bnuLowerRecognizeShapesLesson,
     bnuLowerFoldOneLesson,
-    pending('u6', '有趣的平面图形（一）：第80页起继续制作', 80),
+    bnuLowerTangramRecognizeLesson,
+    bnuLowerTangramPatternsLesson,
+    bnuLowerTangramPracticeLesson,
+    pending('u6', '有趣的平面图形（一）：第83页起继续制作', 83),
   ],
   u4: [
     bnuLowerAroundNumbersLesson,

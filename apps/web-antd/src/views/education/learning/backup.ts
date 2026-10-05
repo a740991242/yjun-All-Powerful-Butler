@@ -22,6 +22,7 @@ import { isBnuNumberReviewVisual } from './bnu-number-review';
 import { isBnuPineconeLineVisual } from './bnu-pinecone-line';
 import { isBnuRecyclingVisual } from './bnu-recycling';
 import { isBnuSixCardGameVisual } from './bnu-six-card-game';
+import { isBnuTangramVisual } from './bnu-tangram';
 import { isBnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import { isBnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import { isBnuWrittenVisual } from './bnu-written';
@@ -585,6 +586,9 @@ function visual(value: unknown) {
     }
     case 'bnu-two-jump-line': {
       return isBnuTwoJumpLineVisual(value);
+    }
+    case 'bnu-tangram': {
+      return isBnuTangramVisual(value);
     }
     case 'bnu-fold-one': {
       return isBnuFoldOneVisual(value);

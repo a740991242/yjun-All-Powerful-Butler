@@ -14,6 +14,39 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--tangram-recognize'))
+    return {
+      index: 41,
+      lessonId: 'bnu-lower-tangram-recognize',
+      zero: '-site-zero',
+      retry: '-blank-triangles',
+      manual: 9,
+      steps: 9,
+      review: 7,
+      key: 'tangram-recognize',
+    };
+  if (process.argv.includes('--tangram-patterns'))
+    return {
+      index: 42,
+      lessonId: 'bnu-lower-tangram-patterns',
+      zero: '-site-zero',
+      retry: '-fish-pieces',
+      manual: 11,
+      steps: 12,
+      review: 6,
+      key: 'tangram-patterns',
+    };
+  if (process.argv.includes('--tangram-practice'))
+    return {
+      index: 43,
+      lessonId: 'bnu-lower-tangram-practice',
+      zero: '-site-zero',
+      retry: '-first-pieces',
+      manual: 14,
+      steps: 9,
+      review: 6,
+      key: 'tangram-practice',
+    };
   if (process.argv.includes('--fold-one'))
     return {
       index: 40,
@@ -2835,6 +2868,311 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-bnu-fold-paper-${label}-${width}.png`,
         });
       };
+      const inspectTangram = async (visual, label) => {
+        const units = {
+          1: [
+            [0, 0],
+            [4, 0],
+            [2, 2],
+          ],
+          2: [
+            [0, 0],
+            [2, 2],
+            [0, 4],
+          ],
+          3: [
+            [4, 0],
+            [4, 2],
+            [3, 3],
+            [3, 1],
+          ],
+          4: [
+            [2, 2],
+            [3, 1],
+            [3, 3],
+          ],
+          5: [
+            [2, 2],
+            [3, 3],
+            [2, 4],
+            [1, 3],
+          ],
+          6: [
+            [0, 4],
+            [1, 3],
+            [2, 4],
+          ],
+          7: [
+            [4, 2],
+            [4, 4],
+            [2, 4],
+          ],
+        };
+        const place = (
+          id,
+          x = 80,
+          y = 60,
+          points = units[id],
+          normalize = false,
+        ) => {
+          const left = normalize ? Math.min(...points.map((p) => p[0])) : 0;
+          const top = normalize ? Math.min(...points.map((p) => p[1])) : 0;
+          return {
+            id,
+            points: points.map(([a, b]) => [
+              x + (a - left) * 50,
+              y + (b - top) * 50,
+            ]),
+          };
+        };
+        const fixtures = {
+          square: [1, 2, 3, 4, 5, 6, 7].map((id) => place(id)),
+          spread: [
+            [1, 24, 24],
+            [2, 240, 24],
+            [3, 24, 274],
+            [4, 124, 274],
+            [5, 240, 274],
+            [6, 24, 474],
+            [7, 174, 474],
+          ].map(([id, x, y]) => place(id, x, y, undefined, true)),
+          trace: [
+            place(3, 40, 40, undefined, true),
+            place(5, 150, 40, undefined, true),
+            place(7, 150, 240, undefined, true),
+          ],
+          'large-triangle': [1, 2].map((id) => place(id)),
+          'small-triangle': [
+            place(4, 80, 60, [
+              [0, 0],
+              [2, 0],
+              [1, 1],
+            ]),
+            place(6, 80, 60, [
+              [0, 0],
+              [1, 1],
+              [0, 2],
+            ]),
+          ],
+          'goose-head': [3, 4].map((id) => place(id)),
+          'fish-head': [1, 2].map((id) => place(id)),
+        };
+        const expected = fixtures[visual.scene];
+        if (!expected) throw new Error('Unknown tangram fixture');
+        const height = { spread: 610, trace: 430 }[visual.scene] ?? 360;
+        const root = p.locator('[data-bnu-tangram]');
+        await root.waitFor();
+        const region = root.locator('[data-tangram-scroll]');
+        await region.scrollIntoViewIfNeeded();
+        await p.waitForTimeout(150);
+        const result = await root.evaluate(
+          (node, { expected, height, review }) => {
+            const svg = node.querySelector('svg');
+            const caption = node.querySelector('figcaption').textContent.trim();
+            const pieces = [...svg.querySelectorAll('[data-tangram-piece]')];
+            return {
+              box: svg.getAttribute('viewBox'),
+              width: svg.getBoundingClientRect().width,
+              height: svg.getBoundingClientRect().height,
+              transform: svg.firstElementChild.getAttribute('transform'),
+              caption,
+              aria: svg.getAttribute('aria-label'),
+              raw: node.textContent.includes('educationLearning.'),
+              small: [...node.querySelectorAll('p,figcaption')].some(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20,
+              ),
+              overflow: document.documentElement.scrollWidth > innerWidth + 1,
+              pieces: pieces.map((g, i) => {
+                const exp = expected[i];
+                const poly = g.querySelector('polygon');
+                const text = g.querySelector('text');
+                const title = g.querySelector('title').textContent;
+                const actual = poly
+                  .getAttribute('points')
+                  .trim()
+                  .split(/\s+/)
+                  .map((pair) => pair.split(',').map(Number));
+                const box = poly.getBBox();
+                const tb = text.getBBox();
+                const label = [0, 1].map(
+                  (axis) =>
+                    exp.points.reduce((sum, point) => sum + point[axis], 0) /
+                    exp.points.length,
+                );
+                const ariaCoordinates = exp.points.every(([x, y]) =>
+                  title.includes(
+                    `(${review ? 360 - x : x}, ${review ? height - y : y})`,
+                  ),
+                );
+                return {
+                  id: Number(g.dataset.tangramPiece),
+                  text: text.textContent.trim(),
+                  points: JSON.stringify(actual) === JSON.stringify(exp.points),
+                  label: label.every(
+                    (n, axis) =>
+                      Math.abs(
+                        n - Number(text.getAttribute(axis ? 'y' : 'x')),
+                      ) < 1e-7,
+                  ),
+                  font: Number.parseFloat(getComputedStyle(text).fontSize),
+                  coordinates: ariaCoordinates,
+                  labelTransform: text.getAttribute('transform'),
+                  expectedTransform: review
+                    ? `rotate(180 ${label[0]} ${label[1]})`
+                    : null,
+                  clipped:
+                    box.x < 2 ||
+                    box.y < 2 ||
+                    box.x + box.width > 358 ||
+                    box.y + box.height > height - 2 ||
+                    tb.x < 2 ||
+                    tb.y < 2 ||
+                    tb.x + tb.width > 358 ||
+                    tb.y + tb.height > height - 2,
+                };
+              }),
+            };
+          },
+          { expected, height, review: visual.variant === 'review' },
+        );
+        if (
+          result.box !== `0 0 360 ${height}` ||
+          Math.abs(result.width - 360) > 1 ||
+          Math.abs(result.height - height) > 1 ||
+          result.transform !==
+            (visual.variant === 'review'
+              ? `rotate(180 180 ${height / 2})`
+              : null) ||
+          !result.aria ||
+          result.raw ||
+          result.small ||
+          result.overflow ||
+          result.pieces.length !== expected.length ||
+          /三角形|正方形|平行四边形|triangle|square|parallelogram/i.test(
+            result.caption,
+          )
+        )
+          throw new Error(`Tangram root ${label}: ${JSON.stringify(result)}`);
+        result.pieces.forEach((piece, i) => {
+          if (
+            piece.id !== expected[i].id ||
+            piece.text !== String(piece.id) ||
+            !piece.points ||
+            !piece.label ||
+            piece.font < 20 ||
+            !piece.coordinates ||
+            piece.clipped ||
+            piece.labelTransform !== piece.expectedTransform
+          )
+            throw new Error(`Tangram piece ${label}: ${JSON.stringify(piece)}`);
+        });
+        const scrolling = await region.evaluate((n) => ({
+          width: n.clientWidth,
+          scroll: n.scrollWidth,
+        }));
+        const initialScroll = await region.evaluate((n) => n.scrollLeft);
+        const artwork = await region.evaluate((n) => {
+          const frame = n.getBoundingClientRect();
+          const boxes = [...n.querySelectorAll('polygon')].map((p) =>
+            p.getBoundingClientRect(),
+          );
+          return {
+            left: Math.min(...boxes.map((b) => b.left)) - frame.left,
+            right: Math.max(...boxes.map((b) => b.right)) - frame.left,
+            width:
+              Math.max(...boxes.map((b) => b.right)) -
+              Math.min(...boxes.map((b) => b.left)),
+          };
+        });
+        if (
+          scrolling.scroll > scrolling.width + 1 &&
+          (artwork.left < 0 ||
+            artwork.left > 24 ||
+            (artwork.width <= scrolling.width - 40 &&
+              artwork.right > scrolling.width - 8))
+        )
+          throw new Error(
+            `Tangram initial artwork viewport ${label}: ${JSON.stringify(artwork)}`,
+          );
+
+        if (scrolling.scroll > scrolling.width + 1) {
+          await region.evaluate((n) => (n.scrollLeft = 0));
+          await region.focus();
+          await region.press('ArrowRight');
+          await p.waitForTimeout(100);
+          if ((await region.evaluate((n) => n.scrollLeft)) <= 0)
+            throw new Error('Tangram keyboard right unavailable');
+          await region.evaluate((n) => (n.scrollLeft = n.scrollWidth));
+          await region.press('ArrowLeft');
+          await p.waitForTimeout(100);
+          if (
+            (await region.evaluate((n) => n.scrollLeft)) >=
+            scrolling.scroll - scrolling.width
+          )
+            throw new Error('Tangram keyboard left unavailable');
+        }
+        await region.evaluate(
+          (n, left) => (n.scrollLeft = left),
+          initialScroll,
+        );
+        await p.screenshot({
+          path: `/tmp/butler-bnu-${flow.key}-${label}-${width}.png`,
+        });
+      };
+      const inspectTangramTeaching = async (step) => {
+        const scenes = {
+          'tangram-recognize': [
+            'square',
+            'spread',
+            'spread',
+            'square',
+            'square',
+            'spread',
+            'square',
+            'trace',
+            null,
+          ],
+          'tangram-patterns': [null, 'goose-head', 'fish-head'],
+          'tangram-practice': ['spread', 'large-triangle', 'small-triangle'],
+        };
+        const scene = scenes[flow.key]?.[step];
+        if (!scene) return;
+        const visual = { kind: 'bnu-tangram', scene, variant: 'main' };
+        await inspectTangram(visual, `learn-${step}`);
+        const state = JSON.stringify(await read());
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        await p.waitForTimeout(600);
+        await inspectTangram(visual, `learn-${step}-en`);
+        const wasDark = await p.evaluate(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') !== was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await inspectTangram(visual, `learn-${step}-en-theme`);
+        await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(
+          (was) => document.documentElement.classList.contains('dark') === was,
+          wasDark,
+        );
+        await p.waitForTimeout(600);
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('简体中文', { exact: true }).click();
+        await p.waitForTimeout(600);
+        if (JSON.stringify(await read()) !== state)
+          throw new Error('Tangram language/theme changed records');
+        await inspectTangram(visual, `learn-${step}-restored`);
+      };
       const inspectFoldTeaching = async (step) => {
         const scenes = [
           'square-mid',
@@ -3131,7 +3469,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 41
+          .count()) !== 44
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -3507,6 +3845,7 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key.startsWith('tangram-')) await inspectTangramTeaching(0);
       if (flow.key === 'fold-one') await inspectFoldTeaching(0);
       if (flow.key === 'written')
         await inspectWritten(
@@ -3543,6 +3882,8 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key.startsWith('tangram-'))
+          await inspectTangramTeaching(step + 1);
         if (flow.key === 'fold-one') await inspectFoldTeaching(step + 1);
         if (flow.key === 'recognize-shapes' && [1, 2, 3, 7, 8].includes(step)) {
           const layouts = {
@@ -4477,6 +4818,8 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (q.visual?.kind === 'bnu-tangram')
+          await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
         if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
@@ -6443,6 +6786,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-tangram')
+          await inspectTangram(q.visual, q.id);
         if (q.visual?.kind === 'bnu-fold-one')
           await inspectFoldOne(q.visual, q.id);
         if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T16:30:56.911Z",
+  "generatedAt": "2026-10-05T17:48:16.344Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 41,
+        "availablePacks": 44,
         "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1162,
-          "manual": 443,
-          "reflection": 157
+          "objective": 1201,
+          "manual": 477,
+          "reflection": 179
         }
       },
       "units": [
@@ -36374,10 +36374,100 @@
               }
             },
             {
-              "id": "bnu-lower-u6-pending",
-              "title": "有趣的平面图形（一）：第80页起继续制作",
-              "textbookTitle": "有趣的平面图形（一）：第80页起继续制作",
+              "id": "bnu-lower-tangram-recognize",
+              "title": "认识七巧板、比同形与描三类",
+              "textbookTitle": "动手做（二）",
               "page": 80,
+              "version": 1,
+              "status": "available",
+              "goal": "按原编号逐片认形，完整填写四空，区分形状与大小并比较两对同形等大片，实际描说三种不同轮廓。",
+              "prerequisite": "认识三角形和正方形，能逐个点数并理解同一张纸转向不增加数量。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 16,
+                "manual": 9,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 7,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-tangram-recognize"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["bnu-tangram"],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看第三方公开扫描80页与80～82来源记录；原页内容核对与原创教学制作",
+                "notes": "原编号和四空3/5/2/6核对；本页两原活动展开，本页两活动与后续81～82独立课分开，不由本页认全年完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-tangram-patterns",
+              "title": "六幅试拼、开放命名与合作故事",
+              "textbookTitle": "动手做（二）",
+              "page": 81,
+              "version": 1,
+              "status": "available",
+              "goal": "从咏鹅选图实际拼说，按原序逐幅完成六种试拼与开放命名，再真实想故事、合作、拼摆和讲述。",
+              "prerequisite": "认识原编号七片和三类形状，能保持单片形状大小并区分拼成整体与材料。",
+              "referenceQuery": null,
+              "steps": 12,
+              "tasks": {
+                "objective": 10,
+                "manual": 11,
+                "reflection": 10
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-tangram-patterns"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["bnu-tangram"],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描80～82页；原页内容核对与原创教学制作",
+                "notes": "原81三活动、六框逐一接入；本页六框逐项对应，与82练习独立；不由本课认整册或全年完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-tangram-practice",
+              "title": "拼大三角形、讲故事与自由创作",
+              "textbookTitle": "动手做（二）",
+              "page": 82,
+              "version": 1,
+              "status": "available",
+              "goal": "实际拼两个更大的三角形，逐幅讲三个人物与三幅守株待兔图，区分材料与道具，再自由创作并展示。",
+              "prerequisite": "已认识七巧板三类与原编号，知道同类三角形可以大小不同，实际拼摆时保持每片形状。",
+              "referenceQuery": null,
+              "steps": 9,
+              "tasks": {
+                "objective": 13,
+                "manual": 14,
+                "reflection": 8
+              },
+              "reviewTasks": {
+                "objective": 6,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-tangram-practice"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["bnu-tangram"],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描82页；原页内容核对与原创教学制作",
+                "notes": "四项练习及三人、三故事图逐项接入；本页四练习与80～81独立；不由本课表示整册或全年已完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-u6-pending",
+              "title": "有趣的平面图形（一）：第83页起继续制作",
+              "textbookTitle": "有趣的平面图形（一）：第83页起继续制作",
+              "page": 83,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -36407,11 +36497,11 @@
           "sourceAudit": {
             "resourceId": "bnu-lower-public-scan-2024",
             "source": "https://keben.szxuexiao.com/html/10764.html",
-            "checkedAt": "2026-10-05",
+            "checkedAt": "2026-10-06",
             "unit": "u6",
             "status": "partial-original-teaching",
             "finalTeacherReview": "not-verified",
-            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～86后续仍制作，保留单元待制作入口。",
+            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～79七原活动、39主任务和6换条件复习三宽已验；80～82九原活动已接三课95主任务/19复习，最终生产三宽程序验收通过；83～86后续仍制作，保留单元待制作入口。",
             "activities": [
               {
                 "page": 76,
@@ -36598,9 +36688,167 @@
                   "actual-four-new"
                 ],
                 "records": ["plan"]
+              },
+              {
+                "page": 80,
+                "sourceActivity": "recognize-scene-and-fill-four-numbered-tangram-blanks",
+                "lesson": "bnu-lower-tangram-recognize",
+                "steps": [1, 2, 3, 4, 5, 6, 7],
+                "objective": [
+                  "piece-1",
+                  "piece-2",
+                  "piece-3",
+                  "piece-4",
+                  "piece-5",
+                  "piece-6",
+                  "piece-7",
+                  "blank-kinds",
+                  "blank-triangles",
+                  "blank-large-pair",
+                  "blank-small-pair"
+                ],
+                "manual": [
+                  "actual-source-scene",
+                  "actual-large-pair",
+                  "actual-small-pair",
+                  "actual-four-blanks"
+                ],
+                "records": ["compare-record"]
+              },
+              {
+                "page": 80,
+                "sourceActivity": "trace-and-describe-three-different-piece-shapes",
+                "lesson": "bnu-lower-tangram-recognize",
+                "steps": [8, 9],
+                "objective": [
+                  "different-shapes",
+                  "turn-square",
+                  "same-category"
+                ],
+                "manual": [
+                  "actual-trace-square",
+                  "actual-trace-parallelogram",
+                  "actual-trace-triangle",
+                  "actual-say-three"
+                ],
+                "records": ["trace-record", "reflection", "plan"]
+              },
+              {
+                "page": 81,
+                "sourceActivity": "choose-and-assemble-a-favourite-poetry-scene-pattern",
+                "lesson": "bnu-lower-tangram-patterns",
+                "steps": [1, 2, 3],
+                "objective": ["head-range", "goose-categories", "fish-pieces"],
+                "manual": ["actual-favourite"],
+                "records": ["favourite-record"]
+              },
+              {
+                "page": 81,
+                "sourceActivity": "assemble-all-six-open-naming-examples",
+                "lesson": "bnu-lower-tangram-patterns",
+                "steps": [4, 5, 6, 7, 8, 9],
+                "objective": [
+                  "open-name",
+                  "all-seven",
+                  "six-independent",
+                  "shape-preserved"
+                ],
+                "manual": [
+                  "actual-frame-1",
+                  "actual-frame-2",
+                  "actual-frame-3",
+                  "actual-frame-4",
+                  "actual-frame-5",
+                  "actual-frame-6"
+                ],
+                "records": [
+                  "frame-record-1",
+                  "frame-record-2",
+                  "frame-record-3",
+                  "frame-record-4",
+                  "frame-record-5",
+                  "frame-record-6"
+                ]
+              },
+              {
+                "page": 81,
+                "sourceActivity": "cooperate-invent-story-and-compose-pattern",
+                "lesson": "bnu-lower-tangram-patterns",
+                "steps": [10, 11, 12],
+                "objective": ["story-choice", "cooperation-proof"],
+                "manual": [
+                  "actual-story-invent",
+                  "actual-story-cooperate",
+                  "actual-story-assemble",
+                  "actual-story-tell"
+                ],
+                "records": ["story-record", "reflection", "plan"]
+              },
+              {
+                "page": 82,
+                "sourceActivity": "compose-two-larger-triangles",
+                "lesson": "bnu-lower-tangram-practice",
+                "steps": [1, 2, 3],
+                "objective": [
+                  "first-pieces",
+                  "first-outline",
+                  "second-pieces",
+                  "second-outline",
+                  "relative-larger",
+                  "all-five",
+                  "internal-seam"
+                ],
+                "manual": [
+                  "actual-material",
+                  "actual-first-triangle",
+                  "actual-second-triangle",
+                  "actual-check-two"
+                ],
+                "records": ["triangles-record"]
+              },
+              {
+                "page": 82,
+                "sourceActivity": "describe-three-people-stories-and-piece-shapes",
+                "lesson": "bnu-lower-tangram-practice",
+                "steps": [4, 5],
+                "objective": ["football", "story-open", "single-cooperation"],
+                "manual": [
+                  "actual-person-1",
+                  "actual-person-2",
+                  "actual-person-3",
+                  "actual-people-exchange"
+                ],
+                "records": [
+                  "person-record-1",
+                  "person-record-2",
+                  "person-record-3"
+                ]
+              },
+              {
+                "page": 82,
+                "sourceActivity": "compose-and-tell-three-waiting-for-hare-patterns",
+                "lesson": "bnu-lower-tangram-practice",
+                "steps": [6, 7],
+                "objective": [],
+                "manual": [
+                  "actual-hare-1",
+                  "actual-hare-2",
+                  "actual-hare-3",
+                  "actual-hare-tell"
+                ],
+                "records": ["hare-record"]
+              },
+              {
+                "page": 82,
+                "sourceActivity": "create-a-favourite-pattern-and-show-classmates",
+                "lesson": "bnu-lower-tangram-practice",
+                "steps": [8, 9],
+                "objective": ["creation-choice", "show-separate"],
+                "manual": ["actual-create", "actual-show"],
+                "records": ["creation-record", "reflection", "plan"]
               }
             ],
-            "pendingPrintedPages": [80, 81, 82, 83, 84, 85, 86]
+            "pendingPrintedPages": [83, 84, 85, 86]
           }
         },
         {

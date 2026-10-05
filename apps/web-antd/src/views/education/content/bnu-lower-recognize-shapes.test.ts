@@ -241,7 +241,7 @@ it('maps every read-page activity to actual steps and task kinds while keeping a
     for (const suffix of activity.records)
       expect(kinds.get(suffix)).toBe('reflection');
   }
-  expect(audit.pendingPrintedPages).toEqual([80, 81, 82, 83, 84, 85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([83, 84, 85, 86]);
   expect(
     bnuLowerBook.units
       .find((x) => x.id === 'u6')
@@ -249,6 +249,9 @@ it('maps every read-page activity to actual steps and task kinds while keeping a
   ).toEqual([
     [lesson.id, 'available', 76],
     ['bnu-lower-fold-one', 'available', 78],
-    ['bnu-lower-u6-pending', 'preparing', 80],
+    ['bnu-lower-tangram-recognize', 'available', 80],
+    ['bnu-lower-tangram-patterns', 'available', 81],
+    ['bnu-lower-tangram-practice', 'available', 82],
+    ['bnu-lower-u6-pending', 'preparing', 83],
   ]);
 });

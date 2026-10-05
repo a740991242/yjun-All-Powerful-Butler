@@ -16,6 +16,7 @@ import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuPineconeLineVisual } from './bnu-pinecone-line';
 import type { BnuRecyclingVisual } from './bnu-recycling';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
+import type { BnuTangramVisual } from './bnu-tangram';
 import type { BnuTwoJumpLineVisual } from './bnu-two-jump-line';
 import type { BnuWholeTenLineVisual } from './bnu-whole-ten-line';
 import type { BnuWrittenVisual } from './bnu-written';
@@ -480,6 +481,7 @@ export type Visual =
   | BnuPineconeLineVisual
   | BnuRecyclingVisual
   | BnuSixCardGameVisual
+  | BnuTangramVisual
   | BnuTwoJumpLineVisual
   | BnuWholeTenLineVisual
   | BnuWrittenVisual

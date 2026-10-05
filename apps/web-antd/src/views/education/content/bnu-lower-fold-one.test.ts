@@ -79,7 +79,7 @@ it('maps all seven read-page activities to the correct steps and task kinds with
     for (const key of a.records) expect(kinds.get(key)).toBe('reflection');
   }
   expect(new Set(activities.flatMap((a) => a.manual)).size).toBe(18);
-  expect(audit.pendingPrintedPages).toEqual([80, 81, 82, 83, 84, 85, 86]);
+  expect(audit.pendingPrintedPages).toEqual([83, 84, 85, 86]);
   expect(audit.status).toBe('partial-original-teaching');
   for (const q of lesson.questions.filter(
     (q) => q.rule.kind === 'manual' || q.rule.kind === 'reflection',

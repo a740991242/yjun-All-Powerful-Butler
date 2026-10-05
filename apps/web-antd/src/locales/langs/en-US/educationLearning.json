@@ -1371,5 +1371,12 @@
   "bnuFoldCurvedPiece": "Piece {letter}: straight-edge endpoints {points}, circular-arc radius {radius}, and arc on {side}. Coordinates describe this diagram, not actual centimetres.",
   "bnuFoldAbove": "the left of the directed diameter",
   "bnuFoldBelow": "the right of the directed diameter",
-  "bnuFoldNotice": "This is an original single-colour site diagram, not a textbook image. Internal seams are not the outer outline, and diagram dimensions are not physical measurements. Actual folding, cutting, assembly, colouring and cooperation are separate activities."
+  "bnuFoldNotice": "This is an original single-colour site diagram, not a textbook image. Internal seams are not the outer outline, and diagram dimensions are not physical measurements. Actual folding, cutting, assembly, colouring and cooperation are separate activities.",
+  "tangramDiagram": "Numbered-piece observation diagram",
+  "tangram_main": "Identifiers match printed page 80. Follow each complete outline instead of guessing from colour.",
+  "tangram_review": "The whole diagram is turned halfway around. Piece identifiers, shapes and sizes stay the same; identifiers remain upright.",
+  "tangramScroll": "Scroll within the diagram. Focus its frame to use the left and right arrow keys.",
+  "tangramAria": "Numbered polygon pieces. Coordinates start at the top left and increase to the right and downward.",
+  "tangramPiece": "Piece {id}: connect these vertices in order and close the outline: {points}. Coordinates describe the diagram, not actual centimetres.",
+  "tangramNotice": "Original site geometry retaining textbook identifiers and relative sizes, not textbook artwork, colours or physical measurements. Diagrams use a common scale. Internal seams differ from the whole outer outline. Actual tracing, assembly, cooperation and presentation are separate activities."
 }

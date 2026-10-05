@@ -48,6 +48,9 @@ import {
 import { bnuLowerSubtractionHarvestLesson } from './bnu-lower-subtraction-harvest';
 import { bnuLowerSubtractionPracticeLesson } from './bnu-lower-subtraction-practice';
 import { bnuLowerSubtractionTableLesson } from './bnu-lower-subtraction-table';
+import { bnuLowerTangramPatternsLesson } from './bnu-lower-tangram-patterns';
+import { bnuLowerTangramPracticeLesson } from './bnu-lower-tangram-practice';
+import { bnuLowerTangramRecognizeLesson } from './bnu-lower-tangram-recognize';
 import { bnuLowerUnitOneHarvestLesson } from './bnu-lower-unit-one-harvest';
 import { bnuLowerUnitOnePracticeLesson } from './bnu-lower-unit-one-practice';
 import { bnuLowerWrittenLesson } from './bnu-lower-written';
@@ -119,6 +122,9 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerCalculationReviewLesson,
     bnuLowerRecognizeShapesLesson,
     bnuLowerFoldOneLesson,
+    bnuLowerTangramRecognizeLesson,
+    bnuLowerTangramPatternsLesson,
+    bnuLowerTangramPracticeLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(3);
   expect(
