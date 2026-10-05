@@ -51,6 +51,7 @@ import {
   isMagicGridVisual,
   magicBlankCount,
 } from './magic-grid';
+import { isMarkedNumberLineVisual } from './marked-number-line';
 import { isMathStoryVisual } from './math-story';
 import { isMonthCalendarVisual } from './month-calendar';
 import { isMonthWeatherVisual } from './month-weather';
@@ -571,6 +572,9 @@ function visual(value: unknown) {
     }
     case 'hundred-chart': {
       return integer(value.value, 100) && value.value >= 1;
+    }
+    case 'marked-number-line': {
+      return isMarkedNumberLineVisual(value);
     }
     case 'number-line': {
       return (

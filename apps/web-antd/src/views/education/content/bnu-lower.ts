@@ -4,6 +4,7 @@ import type { Textbook } from './textbooks';
 import { bnuLowerAdditionTableLesson } from './bnu-lower-addition-table';
 import { bnuLowerAroundNumbersLesson } from './bnu-lower-around-numbers';
 import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
+import { bnuLowerBreedingLesson } from './bnu-lower-breeding';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
 import { bnuLowerComplementLesson } from './bnu-lower-complement';
@@ -45,7 +46,7 @@ export const bnuLowerSource = {
   readPrintedPages: [
     2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
     23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
-    42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
+    42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
   ],
   contents: [
     ['u1', '20以内数与加法', 2],
@@ -381,7 +382,8 @@ const authoredLessons: Record<string, Lesson[]> = {
     bnuLowerCountHundredLesson,
     bnuLowerCountBeansLesson,
     bnuLowerRedFruitLesson,
-    pending('u4', '100以内数的认识：后续课程', 52),
+    bnuLowerBreedingLesson,
+    pending('u4', '100以内数的认识：后续课程', 54),
   ],
   u3: [
     bnuLowerPencilsLesson,

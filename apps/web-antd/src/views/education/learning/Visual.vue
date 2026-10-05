@@ -53,6 +53,7 @@ import { hundredPosition } from './hundred-chart';
 import HundredFragments from './HundredFragments.vue';
 import { knowledgeCards, selectedKnowledgeCard } from './knowledge-cards';
 import MagicGrid from './MagicGrid.vue';
+import MarkedNumberLine from './MarkedNumberLine.vue';
 import MathStory from './MathStory.vue';
 import MonthCalendar from './MonthCalendar.vue';
 import MonthWeather from './MonthWeather.vue';
@@ -1201,6 +1202,10 @@ const shapeDescription = computed(() =>
         }}
       </div>
     </div>
+    <MarkedNumberLine
+      v-else-if="visual.kind === 'marked-number-line'"
+      :visual="visual"
+    />
     <div v-else-if="visual.kind === 'number-line'" class="flex flex-col gap-4">
       <p v-if="interactive" class="text-xl font-medium" aria-live="polite">
         {{ $t('educationLearning.currentNumber', { number: position }) }}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T23:47:20.857Z",
+  "generatedAt": "2026-10-05T00:17:24.194Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 26,
+        "availablePacks": 27,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 781,
-          "manual": 267,
-          "reflection": 96
+          "objective": 813,
+          "manual": 276,
+          "reflection": 101
         }
       },
       "units": [
@@ -34157,10 +34157,46 @@
               }
             },
             {
+              "id": "bnu-lower-breeding",
+              "title": "小小养殖场：数量比较、线索猜数与完整排序",
+              "textbookTitle": "小小养殖场",
+              "page": 52,
+              "version": 1,
+              "status": "available",
+              "goal": "按给定数量和方向说比较关系；依据完整候选与回应逐步猜数；用两种方法完整排序五卡，借数线左右位置解释大小。",
+              "prerequisite": "能读写100以内的数并比较大小，知道缩略画和标签数量可能不同。",
+              "referenceQuery": null,
+              "steps": 8,
+              "tasks": {
+                "objective": 32,
+                "manual": 9,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-breeding"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "manual",
+                "number",
+                "reflection"
+              ],
+              "visualKinds": ["marked-number-line"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "52～53完整页与全部数量、对话及五卡来源核对",
+                "notes": "来源核对与最终教师试用分开；三种已知量、定性方向、候选完整线索、两种排序和原数线逐项对应。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 52,
+              "page": 54,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34194,7 +34230,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～51页身边的数、数一数、数豆子与红果比较二十八项原活动；52页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "仅44～53页身边的数、数一数、数豆子、红果比较与小小养殖场三十五项原活动；54页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -34653,6 +34689,118 @@
                 "manual": ["actual-connect", "actual-explain"],
                 "records": ["own-method", "discovery", "difficulty", "plan"],
                 "boundary": "全部九卡严格分类，换60不得入两边；真实连线交流与开放反思、未来计划分别记。"
+              },
+              {
+                "page": 52,
+                "sourceActivity": "observe-three",
+                "lesson": "bnu-lower-breeding",
+                "steps": [1],
+                "objective": [
+                  "given-counts",
+                  "most-three",
+                  "least-three",
+                  "rabbit-unknown",
+                  "picture-count"
+                ],
+                "manual": ["actual-observe"],
+                "records": [],
+                "boundary": "标签与画中件数分清，兔尚未知不入三种已知最多最少，不补0。"
+              },
+              {
+                "page": 52,
+                "sourceActivity": "line-and-language",
+                "lesson": "bnu-lower-breeding",
+                "steps": [2],
+                "objective": [
+                  "hen-goose",
+                  "hen-duck",
+                  "duck-hen",
+                  "goose-hen",
+                  "close-hen-duck",
+                  "line-right",
+                  "threshold"
+                ],
+                "manual": ["actual-language"],
+                "records": [],
+                "boundary": "四方向与接近表达完整，网站补0刻度明示，标签错行不改变横线点位置。"
+              },
+              {
+                "page": 52,
+                "sourceActivity": "sheep-candidates",
+                "lesson": "bnu-lower-breeding",
+                "steps": [3],
+                "objective": ["sheep-choice", "sheep-actual"],
+                "manual": ["actual-sheep"],
+                "records": [],
+                "boundary": "候选与22作情境比较，不冒真实点数或新通用阈值。"
+              },
+              {
+                "page": 53,
+                "sourceActivity": "rabbit-clues",
+                "lesson": "bnu-lower-breeding",
+                "steps": [4],
+                "objective": [
+                  "rabbit-candidates",
+                  "rabbit-two-left",
+                  "rabbit-before-no",
+                  "rabbit-final",
+                  "rabbit-order"
+                ],
+                "manual": ["actual-rabbit"],
+                "records": [],
+                "boundary": "暂余两个与最终97分别处理，候选及完整回应共同决定，不从原兔图点数猜97。"
+              },
+              {
+                "page": 53,
+                "sourceActivity": "sort-five",
+                "lesson": "bnu-lower-breeding",
+                "steps": [5],
+                "objective": [
+                  "original-cards",
+                  "sorted-cards",
+                  "card-count",
+                  "fifty-fifty-one"
+                ],
+                "manual": ["actual-sort"],
+                "records": [],
+                "boundary": "原五卡乱序与排序后各完整表示，5张与各卡数值分清，不合并50与51。"
+              },
+              {
+                "page": 53,
+                "sourceActivity": "two-methods",
+                "lesson": "bnu-lower-breeding",
+                "steps": [6],
+                "objective": [
+                  "select-minimum",
+                  "insert-first-three",
+                  "insert-all",
+                  "partial-method"
+                ],
+                "manual": ["actual-minimum-method", "actual-insert-method"],
+                "records": [],
+                "boundary": "两种方法各完整实做五卡，三张中间状态与最终五张分开。"
+              },
+              {
+                "page": 53,
+                "sourceActivity": "mark-line",
+                "lesson": "bnu-lower-breeding",
+                "steps": [7, 8],
+                "objective": [
+                  "marked-direction",
+                  "near-pair",
+                  "ninety-eight-between",
+                  "label-height",
+                  "site-zero"
+                ],
+                "manual": ["actual-mark", "actual-explain"],
+                "records": [
+                  "own-comparison",
+                  "own-sort",
+                  "discovery",
+                  "difficulty",
+                  "plan"
+                ],
+                "boundary": "原五点与本站补0刻度分清，标签分行仅防重叠；真实标点解释与反思及计划独立。"
               }
             ]
           }

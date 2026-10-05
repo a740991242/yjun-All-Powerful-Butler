@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--breeding'))
+    return {
+      index: 26,
+      lessonId: 'bnu-lower-breeding',
+      zero: '-site-zero',
+      retry: '-sheep-choice',
+      manual: 9,
+      steps: 8,
+      review: 5,
+      key: 'breeding',
+    };
   if (process.argv.includes('--red-fruit'))
     return {
       index: 25,
@@ -653,6 +664,116 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectMarkedLine = async (values, label) => {
+        const figure = p.locator('[data-marked-number-line]');
+        await figure.waitFor();
+        const svg = figure.locator('svg');
+        if ((await svg.locator('[data-line-tick]').count()) !== 11)
+          throw new Error('Incomplete fixed number line ticks');
+        if ((await svg.locator('[data-line-mark]').count()) !== values.length)
+          throw new Error('Marked number line count changed');
+        const ticks = await svg
+          .locator('[data-line-tick] text')
+          .allTextContents();
+        if (
+          JSON.stringify(ticks) !==
+          JSON.stringify(Array.from({ length: 11 }, (_, i) => String(i * 10)))
+        )
+          throw new Error('Number line tick values changed');
+        for (const [i, value] of values.entries()) {
+          const mark = svg.locator(`[data-line-mark="${value}"]`);
+          const dot = mark.locator('circle');
+          if (
+            Math.abs(
+              Number(await dot.getAttribute('cx')) - (44 + (value * 912) / 100),
+            ) > 0.001
+          )
+            throw new Error('Number line point placed on wrong scale');
+          const text = svg.locator(`[data-line-label="${value}"] text`);
+          if (
+            (await text.textContent()) !== String(value) ||
+            Number(await text.getAttribute('y')) !== 44 + i * 32
+          )
+            throw new Error('Number line label or separate row changed');
+        }
+        const geometry = await svg.evaluate((n) => {
+          const box = n.getBoundingClientRect();
+          const labels = [...n.querySelectorAll('[data-line-label] text')].map(
+            (x) => x.getBoundingClientRect(),
+          );
+          const inside = [...n.querySelectorAll('text,line,circle,rect')].every(
+            (x) => {
+              const r = x.getBoundingClientRect();
+              return (
+                r.left >= box.left &&
+                r.right <= box.right &&
+                r.top >= box.top &&
+                r.bottom <= box.bottom
+              );
+            },
+          );
+          const noOverlap = labels.every((a, i) =>
+            labels.every(
+              (b, j) =>
+                i === j ||
+                a.right <= b.left ||
+                b.right <= a.left ||
+                a.bottom <= b.top ||
+                b.bottom <= a.top,
+            ),
+          );
+          const large = [...n.querySelectorAll('text')].every(
+            (x) => Number.parseFloat(getComputedStyle(x).fontSize) >= 20,
+          );
+          return inside && noOverlap && large;
+        });
+        if (!geometry)
+          throw new Error(
+            'Number line labels overlap, clip or become too small',
+          );
+        const fonts = await figure
+          .locator('figcaption,p')
+          .evaluateAll((nodes) =>
+            nodes
+              .slice(0, 3)
+              .every(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+              ),
+          );
+        if (!fonts) throw new Error('Number line legend below 20px');
+        const scroller = figure.locator('[data-marked-line-scroll]');
+        await scroller.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await scroller.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(200);
+        const keyboard = await scroller.evaluate(
+          (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+        );
+        if (!keyboard) throw new Error('Number line keyboard scrolling failed');
+        for (const edge of ['first', 'last']) {
+          await scroller.evaluate((n, e) => {
+            n.scrollLeft = e === 'first' ? 0 : n.scrollWidth;
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(150);
+          const fits = await scroller.evaluate((n) => {
+            const r = n.getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              document.documentElement.scrollWidth <= innerWidth
+            );
+          });
+          if (!fits) throw new Error('Number line scroll viewport clipped');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-breeding-line-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -691,7 +812,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 26
+          .count()) !== 27
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1115,6 +1236,49 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-bnu-meeting-row-right-${width}.png`,
           });
         }
+        if (flow.key === 'breeding' && [0, 5].includes(step)) {
+          const values = step === 0 ? [22, 92, 100] : [10, 38, 50, 51, 98];
+          await inspectMarkedLine(values, `learn-${step + 1}`);
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p
+            .getByText(
+              'The site uses a fixed 0–100 scale. Labels have separate rows to avoid overlap; compare the horizontal positions of the points.',
+              { exact: true },
+            )
+            .waitFor();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await inspectMarkedLine(values, `english-theme-${step + 1}`);
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p.waitForTimeout(500);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          if (JSON.stringify(await read()) !== state)
+            throw new Error(
+              'Number line language or theme mutated learning records',
+            );
+        }
         if (
           (flow.key === 'count-beans' && (step === 0 || step === 1)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
@@ -1350,6 +1514,8 @@ const server = http.createServer(async (req, res) => {
         const index = session.questionIndex;
         const q = session.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'marked-number-line')
+          await inspectMarkedLine(q.visual.values, q.id);
         if (q.visual?.kind === 'place-counters')
           await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')
@@ -1779,6 +1945,60 @@ const server = http.createServer(async (req, res) => {
               .getByText('再想一想，可以修改后重试', { exact: true })
               .waitFor();
             await p.getByRole('spinbutton').nth(1).fill('7');
+          } else if (
+            q.rule.kind === 'steps' &&
+            flow.key === 'breeding' &&
+            q.id.endsWith('-sorted-cards')
+          ) {
+            await p.getByRole('spinbutton').first().fill('10');
+            await wait(
+              (d) =>
+                JSON.stringify(
+                  d.sessions.find((item) => item.id === sid).responses[index]
+                    .draft,
+                ) === '[10,null,null,null,null]',
+            );
+            await p.reload({ waitUntil: 'networkidle' });
+            const fields = await p
+              .getByRole('spinbutton')
+              .evaluateAll((nodes) => nodes.map((n) => n.value));
+            if (JSON.stringify(fields) !== '["10","","","",""]')
+              throw new Error('Five-card sort partial draft lost');
+            for (const [i, value] of [10, 38, 50, 98, 51].entries()) {
+              const input = p.getByRole('spinbutton').nth(i);
+              await input.evaluate((n) =>
+                n
+                  .closest('.ant-input-number')
+                  .scrollIntoView({ block: 'center' }),
+              );
+              await p.waitForTimeout(150);
+              const fits = await input.evaluate((n) => {
+                const r = n
+                  .closest('.ant-input-number')
+                  .getBoundingClientRect();
+                return (
+                  Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                  r.height >= 44 &&
+                  r.left >= 0 &&
+                  r.right <= innerWidth &&
+                  r.top >= 0 &&
+                  r.bottom <= innerHeight
+                );
+              });
+              if (!fits)
+                throw new Error('Five-card sort field clipped or too small');
+              await input.fill(String(value));
+              if (i === 0 || i === 4)
+                await p.screenshot({
+                  path: `/tmp/butler-bnu-breeding-sort-${width}-${i}.png`,
+                });
+            }
+            await click('提交答案');
+            await p
+              .getByText('再想一想，可以修改后重试', { exact: true })
+              .waitFor();
+            for (const [i, value] of q.rule.values.entries())
+              await p.getByRole('spinbutton').nth(i).fill(String(value));
           } else if (
             q.rule.kind === 'steps' &&
             flow.key === 'red-fruit' &&
@@ -3045,6 +3265,8 @@ const server = http.createServer(async (req, res) => {
       for (let index = 0; index < review.questions.length; index++) {
         const q = review.questions[index];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (q.visual?.kind === 'marked-number-line')
+          await inspectMarkedLine(q.visual.values, q.id);
         if (q.visual?.kind === 'place-counters')
           await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')

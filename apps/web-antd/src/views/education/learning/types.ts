@@ -27,6 +27,7 @@ import type { FinalPlaneCardsVisual } from './final-plane-cards';
 import type { FinalStoriesVisual } from './final-stories';
 import type { FruitMazeVisual } from './fruit-maze';
 import type { HundredFragmentsVisual } from './hundred-fragments';
+import type { MarkedNumberLineVisual } from './marked-number-line';
 import type { MathStoryVisual } from './math-story';
 import type { MonthCalendarVisual } from './month-calendar';
 import type { MonthWeatherVisual } from './month-weather';
@@ -485,6 +486,7 @@ export type Visual =
   | GridPathsVisual
   | HundredFragmentsVisual
   | MagicGridVisual
+  | MarkedNumberLineVisual
   | MathStoryVisual
   | MonthCalendarVisual
   | MonthWeatherVisual
