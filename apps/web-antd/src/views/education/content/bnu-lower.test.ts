@@ -21,6 +21,7 @@ import { bnuLowerCountBeansLesson } from './bnu-lower-count-beans';
 import { bnuLowerCountHundredLesson } from './bnu-lower-count-hundred';
 import { bnuLowerCountrysideLesson } from './bnu-lower-countryside';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
+import { bnuLowerFillGameLesson } from './bnu-lower-fill-game';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
 import { bnuLowerHideLesson } from './bnu-lower-hide';
 import { bnuLowerHundredChartLesson } from './bnu-lower-hundred-chart';
@@ -99,8 +100,9 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerHundredChartLesson,
     bnuLowerHarvestLesson,
     bnuLowerNumberPracticeLesson,
+    bnuLowerFillGameLesson,
   ]);
-  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(5);
+  expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(4);
   expect(
     bnuLowerBook.units[4]?.lessons.map(({ id, status, page }) => [
       id,

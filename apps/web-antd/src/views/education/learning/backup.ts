@@ -8,6 +8,7 @@ import { isBlockCardsVisual } from './block-cards';
 import { isBnuAroundNumbersVisual } from './bnu-around-numbers';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
+import { isBnuFillGridVisual } from './bnu-fill-grid';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
@@ -562,6 +563,9 @@ function visual(value: unknown) {
     }
     case 'column-digits': {
       return isColumnDigitsRule(value);
+    }
+    case 'bnu-fill-grid': {
+      return isBnuFillGridVisual(value);
     }
     case 'bnu-number-review': {
       return isBnuNumberReviewVisual(value);

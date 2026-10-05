@@ -16,6 +16,7 @@ import BlockCards from './BlockCards.vue';
 import BnuAroundNumbers from './BnuAroundNumbers.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
+import BnuFillGrid from './BnuFillGrid.vue';
 import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
 import BnuFinalPosition from './BnuFinalPosition.vue';
@@ -839,6 +840,7 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <BnuFillGrid v-else-if="visual.kind === 'bnu-fill-grid'" :visual="visual" />
     <BnuNumberReview
       v-else-if="visual.kind === 'bnu-number-review'"
       :visual="visual"

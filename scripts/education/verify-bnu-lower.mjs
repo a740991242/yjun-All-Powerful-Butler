@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--fill-game'))
+    return {
+      index: 31,
+      lessonId: 'bnu-lower-fill-game',
+      zero: null,
+      retry: '-intersection',
+      manual: 6,
+      steps: 8,
+      review: 8,
+      key: 'fill-game',
+    };
   if (process.argv.includes('--number-practice'))
     return {
       index: 30,
@@ -1185,6 +1196,153 @@ const server = http.createServer(async (req, res) => {
           });
         }
       };
+      const inspectFillGrid = async (visual, label) => {
+        const figure = p.locator('[data-bnu-fill-grid]');
+        await figure.waitFor();
+        const fixtures = {
+          main: {
+            three: [
+              [1, 'A', 'B'],
+              ['C', 1, 'D'],
+              ['E', 2, 1],
+            ],
+            five: [
+              [5, 1, 'A', 'B', 3],
+              [1, 3, 'C', 'D', 4],
+              [4, 2, 'E', 1, 5],
+              [2, 'F', 4, 3, 1],
+              [3, 4, 1, 'G', 2],
+            ],
+            'five-stage': [
+              [5, 1, 'A', 'B', 3],
+              [1, 3, 'C', 'D', 4],
+              [4, 2, 3, 1, 5],
+              [2, 5, 4, 3, 1],
+              [3, 4, 1, 5, 2],
+            ],
+            'five-next': [
+              [5, 1, 2, 'A', 3],
+              [1, 3, 'B', 'C', 4],
+              [4, 2, 3, 1, 5],
+              [2, 5, 4, 3, 1],
+              [3, 4, 1, 5, 2],
+            ],
+          },
+          review: {
+            three: [
+              [2, 'A', 'B'],
+              ['C', 2, 'D'],
+              ['E', 3, 2],
+            ],
+            five: [
+              [1, 2, 'A', 'B', 4],
+              [2, 4, 'C', 'D', 5],
+              [5, 3, 'E', 2, 1],
+              [3, 'F', 5, 4, 2],
+              [4, 5, 2, 'G', 3],
+            ],
+            'five-stage': [
+              [1, 2, 'A', 'B', 4],
+              [2, 4, 'C', 'D', 5],
+              [5, 3, 4, 2, 1],
+              [3, 1, 5, 4, 2],
+              [4, 5, 2, 1, 3],
+            ],
+            'five-next': [
+              [1, 2, 3, 'A', 4],
+              [2, 4, 'B', 'C', 5],
+              [5, 3, 4, 2, 1],
+              [3, 1, 5, 4, 2],
+              [4, 5, 2, 1, 3],
+            ],
+          },
+        };
+        const expected = fixtures[visual.variant][visual.scene];
+        if (
+          (await figure.locator('[data-bnu-fill-cell]').count()) !==
+          expected.length ** 2
+        )
+          throw new Error('Fill game grid incomplete');
+        for (const [r, row] of expected.entries())
+          for (const [c, n] of row.entries())
+            if (
+              (await figure
+                .locator(`[data-bnu-fill-cell="${r}-${c}"]`)
+                .textContent()) !== String(n)
+            )
+              throw new Error('Fill game given or blank letter changed');
+        const geometry = await figure.locator('th,td').evaluateAll((ns) =>
+          ns.every((n) => {
+            const r = n.getBoundingClientRect();
+            const range = document.createRange();
+            range.selectNodeContents(n);
+            const b = range.getBoundingClientRect();
+            return (
+              Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+              r.height >= 56 &&
+              b.left >= r.left &&
+              b.right <= r.right &&
+              b.top >= r.top &&
+              b.bottom <= r.bottom
+            );
+          }),
+        );
+        if (!geometry)
+          throw new Error('Fill grid cell text clipped or too small');
+        const fonts = await figure
+          .locator('figcaption,p')
+          .evaluateAll((ns) =>
+            ns
+              .slice(0, 3)
+              .every(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+              ),
+          );
+        if (!fonts) throw new Error('Fill grid legend too small');
+        const region = figure.locator('[data-bnu-fill-scroll]');
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await region.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(150);
+        if (
+          !(await region.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Fill grid keyboard scroll failed');
+        for (const edge of ['first', 'last']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = e === 'first' ? 0 : n.scrollWidth;
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(150);
+          const fits = await region.evaluate((n, e) => {
+            const r = n.getBoundingClientRect();
+            const cells = [...n.querySelectorAll('th')];
+            const b = (
+              e === 'first' ? cells[0] : cells.at(-1)
+            ).getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              document.documentElement.scrollWidth <= innerWidth &&
+              b.left >= r.left &&
+              b.right <= r.right
+            );
+          }, edge);
+          if (!fits)
+            throw new Error(
+              'Fill grid viewport or full endpoint column clipped',
+            );
+          await p.screenshot({
+            path: `/tmp/butler-bnu-fill-game-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -1223,7 +1381,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 31
+          .count()) !== 32
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1599,6 +1757,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'fill-game')
+        await inspectFillGrid(
+          { scene: 'three', variant: 'main' },
+          'learn-initial',
+        );
       if (flow.key === 'number-practice')
         await inspectBnuNumberReview(
           { scene: 'objects', variant: 'main' },
@@ -1618,6 +1781,65 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'fill-game') {
+          const scene = {
+            0: 'three',
+            1: 'three',
+            2: 'five',
+            3: 'five-stage',
+            4: 'five-stage',
+            5: 'five-next',
+          }[step];
+          if (scene)
+            await inspectFillGrid(
+              { scene, variant: 'main' },
+              `learn-${step + 1}`,
+            );
+          if (step === 2) {
+            const state = JSON.stringify(await read());
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('English', { exact: true }).click();
+            await p
+              .locator('[data-bnu-fill-grid] figcaption')
+              .filter({
+                hasText: 'Five rows and columns: seven original blanks',
+              })
+              .waitFor();
+            const dark = await p.evaluate(() =>
+              document.documentElement.classList.contains('dark'),
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') !== was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await inspectFillGrid(
+              { scene: 'five', variant: 'main' },
+              'english-theme',
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') === was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('简体中文', { exact: true }).click();
+            if (JSON.stringify(await read()) !== state)
+              throw new Error(
+                'Fill grid language/theme changed learning records',
+              );
+          }
+        }
         if (flow.key === 'number-practice') {
           const scene = {
             0: 'sticks',
@@ -2056,6 +2278,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-fill-grid')
+          await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')
           await inspectBnuNumberReview(q.visual, q.id);
         if (q.visual?.kind === 'place-counters')
@@ -2489,9 +2713,11 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'number-practice' &&
-              (q.id.endsWith('-cards-six') ||
-                q.id.endsWith('-beads-digits'))) ||
+            ((flow.key === 'fill-game' &&
+              (q.id.endsWith('-three-all') || q.id.endsWith('-five-all'))) ||
+              (flow.key === 'number-practice' &&
+                (q.id.endsWith('-cards-six') ||
+                  q.id.endsWith('-beads-digits'))) ||
               (flow.key === 'hundred-harvest' &&
                 q.id.endsWith('-counter-digits')) ||
               (flow.key === 'hundred-chart' && q.id.endsWith('-row-1')) ||
@@ -2500,6 +2726,9 @@ const server = http.createServer(async (req, res) => {
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              'fill-game': q.id.endsWith('-three-all')
+                ? [3, null, null, null, null]
+                : [0, null, null, null, null, null, null],
               'number-practice': q.id.endsWith('-beads-digits')
                 ? [0, null, null, null, null, null, null, null]
                 : [25, null, null, null, null, null],
@@ -2509,6 +2738,9 @@ const server = http.createServer(async (req, res) => {
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              'fill-game': q.id.endsWith('-three-all')
+                ? [2, 3, 2, 3, 3]
+                : [4, 2, 5, 2, 3, 5, 5],
               'number-practice': q.id.endsWith('-beads-digits')
                 ? [0, 4, 2, 2, 3, 1, 0, 4]
                 : [25, 28, 52, 58, 85, 82],
@@ -2566,7 +2798,7 @@ const server = http.createServer(async (req, res) => {
               await input.fill(String(value));
               if (i === 0 || i === wrong.length - 1)
                 await p.screenshot({
-                  path: `/tmp/butler-bnu-${flow.key}${flow.key === 'number-practice' ? `-${q.id.slice(flow.lessonId.length + 1)}` : ''}-sort-${width}-${i}.png`,
+                  path: `/tmp/butler-bnu-${flow.key}${['fill-game', 'number-practice'].includes(flow.key) ? `-${q.id.slice(flow.lessonId.length + 1)}` : ''}-sort-${width}-${i}.png`,
                 });
             }
             await click('提交答案');
@@ -3845,6 +4077,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-fill-grid')
+          await inspectFillGrid(q.visual, q.id);
         if (q.visual?.kind === 'bnu-number-review')
           await inspectBnuNumberReview(q.visual, q.id);
         if (q.visual?.kind === 'place-counters')

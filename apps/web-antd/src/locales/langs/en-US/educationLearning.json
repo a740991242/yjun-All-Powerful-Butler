@@ -1180,7 +1180,7 @@
   "regionalOptionalSourcesScope": "Area combinations work without a city or school. Existing records are retained for reference; school-by-school verification is not required. Selecting a specific reference scope matches only that scope and does not establish a province-wide default.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Thirty-one original courses cover pages 2–59, including place-value reading, comparison, clue-based guessing, sorting and personal mathematical representations and complete consolidation. Teaching from page 60 onward is still in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Thirty-two original courses cover pages 2–61, including complete consolidation and three- and five-row filling games. Teaching from page 62 onward remains in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",
@@ -1262,5 +1262,13 @@
   "bnuReviewOneStick": "One stick",
   "bnuReviewOneUnit": "One unit cell",
   "bnuReviewBundle": "A bundle of ten sticks",
-  "bnuReviewTenRod": "A rod of ten unit cells"
+  "bnuReviewTenRod": "A rod of ten unit cells",
+  "bnuFill_three": "Three rows and columns: all five blanks",
+  "bnuFill_five": "Five rows and columns: seven original blanks",
+  "bnuFill_five-stage": "Intermediate stage after completing three rows",
+  "bnuFill_five-next": "Next stage after using both row and column",
+  "bnuFillColumn": "Column {n}",
+  "bnuFillLegend": "Use 1–{n}; no repeats in any row or column. Numbers are givens; letters mark blanks. Inputs follow A, B, … from top to bottom and left to right. No extra block or diagonal rule applies.",
+  "bnuFillScroll": "Scroll horizontally inside the grid to inspect every column; left and right arrow keys are supported. Rows remain in top-to-bottom order.",
+  "bnuFillNotice": "Original site grid without textbook illustrations. Initial givens and explicitly named intermediate stages are distinct; blank letters do not reveal answers. Paper work, explanation and discussion require separate confirmation."
 }

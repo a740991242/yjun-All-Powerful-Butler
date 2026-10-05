@@ -49,6 +49,7 @@ async function main() {
         bnuHundredChartAudit,
         bnuHarvestAudit,
         bnuNumberPracticeAudit,
+        bnuFillGameAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -81,6 +82,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-hundred-chart-audit.ts'),
         import('/src/views/education/content/bnu-lower-harvest-audit.ts'),
         import('/src/views/education/content/bnu-lower-number-practice-audit.ts'),
+        import('/src/views/education/content/bnu-lower-fill-game-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -261,6 +263,9 @@ async function main() {
                         ],
                       },
                     }
+                  : {}),
+                ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'games'
+                  ? { sourceAudit: bnuFillGameAudit.bnuLowerFillGameAudit }
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u1'
                   ? { sourceAudit: bnuLowerAudit.bnuLowerUnitOneAudit }
