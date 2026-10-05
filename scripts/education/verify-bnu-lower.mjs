@@ -14,6 +14,18 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--recognize-shapes'))
+    return {
+      index: 39,
+      lessonId: 'bnu-lower-recognize-shapes',
+      zero: '-site-zero',
+      retry: '-train-rectangle',
+      manual: 10,
+      steps: 10,
+      review: 8,
+      key: 'recognize-shapes',
+    };
+
   if (process.argv.includes('--calculation-review'))
     return {
       index: 38,
@@ -2435,6 +2447,63 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectRecognizeCards = async (visual, label) => {
+        const cards = p.locator('svg[viewBox="0 0 144 144"]');
+        await cards.first().waitFor();
+        if ((await cards.count()) !== visual.cards.length)
+          throw new Error(`Shape card count ${label}`);
+        for (let index = 0; index < visual.cards.length; index++) {
+          const card = cards.nth(index);
+          await card.scrollIntoViewIfNeeded();
+          const result = await card.evaluate((node, expected) => {
+            const box = node.getBoundingClientRect();
+            const group = node.querySelector('g');
+            const child = group.firstElementChild;
+            const geometry = group.getBoundingClientRect();
+            const letter = node.parentElement.querySelector('span');
+            const tag = child.tagName.toLowerCase();
+            let shape = tag;
+            if (tag === 'rect')
+              shape =
+                child.getAttribute('width') === child.getAttribute('height')
+                  ? 'square'
+                  : 'rectangle';
+            if (tag === 'path') shape = 'triangle';
+            return {
+              shape,
+              transform: group.getAttribute('transform'),
+              letter: letter.textContent,
+              font: Number.parseFloat(getComputedStyle(letter).fontSize),
+              aria: node.getAttribute('aria-label'),
+              clipped:
+                geometry.left < box.left - 1 ||
+                geometry.right > box.right + 1 ||
+                geometry.top < box.top - 1 ||
+                geometry.bottom > box.bottom + 1,
+              viewport: box.left >= -1 && box.right <= innerWidth + 1,
+              globalOverflow:
+                document.documentElement.scrollWidth > innerWidth + 1,
+              expectedTransform: `translate(72 72) rotate(${expected.turn}) scale(${expected.size === 1 ? 0.6 : 1})`,
+            };
+          }, visual.cards[index]);
+          if (
+            result.shape !== visual.cards[index].shape ||
+            result.transform !== result.expectedTransform ||
+            result.letter !== String.fromCodePoint(65 + index) ||
+            result.font < 20 ||
+            !result.aria ||
+            result.clipped ||
+            !result.viewport ||
+            result.globalOverflow
+          )
+            throw new Error(
+              `Shape geometry/readability ${label} ${index}: ${JSON.stringify(result)}`,
+            );
+        }
+        await p.screenshot({
+          path: `/tmp/butler-bnu-recognize-${label}-${width}.png`,
+        });
+      };
       const inspectCalculationReview = async (visual, label) => {
         const root = p.locator('[data-bnu-calculation-review]');
         await root.waitFor();
@@ -2612,7 +2681,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 39
+          .count()) !== 40
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -3023,6 +3092,82 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'recognize-shapes' && [1, 2, 3, 7, 8].includes(step)) {
+          const layouts = {
+            1: [
+              ['rectangle', 2, 0],
+              ['triangle', 2, 45],
+              ['circle', 1, 0],
+              ['square', 2, 0],
+              ['circle', 2, 0],
+              ['square', 1, 0],
+            ],
+            2: [
+              ['triangle', 1, 0],
+              ['rectangle', 1, 45],
+              ['rectangle', 2, 90],
+              ['triangle', 2, 90],
+              ['square', 2, 45],
+            ],
+            3: [
+              ['square', 2, 0],
+              ['square', 2, 45],
+            ],
+            7: [
+              ['rectangle', 2, 0],
+              ['rectangle', 2, 0],
+              ['rectangle', 2, 0],
+              ['rectangle', 2, 0],
+              ['rectangle', 1, 0],
+              ['square', 2, 0],
+              ['triangle', 1, 0],
+            ],
+            8: Array.from({ length: 8 }, () => ['circle', 1, 0]),
+          };
+          const visual = {
+            kind: 'plane-cards',
+            cards: layouts[step].map(([shape, size, turn]) => ({
+              shape,
+              size,
+              turn,
+            })),
+          };
+          await inspectRecognizeCards(visual, `learn-${step + 1}`);
+          const state = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await p.waitForTimeout(600);
+          await inspectRecognizeCards(visual, `learn-${step + 1}-en`);
+          const wasDark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await inspectRecognizeCards(visual, `learn-${step + 1}-en-theme`);
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            wasDark,
+          );
+          await p.waitForTimeout(600);
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p.waitForTimeout(600);
+          if (JSON.stringify(await read()) !== state)
+            throw new Error('Recognize-shape language/theme changed records');
+        }
         if (flow.key === 'calculation-review' && [4, 6, 7].includes(step)) {
           const scene = { 4: 'baskets', 6: 'balls', 7: 'clothes' }[step];
           await inspectCalculationReview(
@@ -3880,6 +4025,8 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
+          await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')
           await inspectCalculationReview(q.visual, q.id);
         if (q.visual?.kind === 'bnu-recycling')
@@ -5842,6 +5989,8 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (flow.key === 'recognize-shapes' && q.visual?.kind === 'plane-cards')
+          await inspectRecognizeCards(q.visual, q.id);
         if (q.visual?.kind === 'bnu-calculation-review')
           await inspectCalculationReview(q.visual, q.id);
         if (q.visual?.kind === 'bnu-recycling')

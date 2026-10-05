@@ -28,6 +28,7 @@ import { bnuLowerPineconesLesson } from './bnu-lower-pinecones';
 import { bnuLowerPlaceValueLesson } from './bnu-lower-place-value';
 import { bnuLowerRabbitGuestsLesson } from './bnu-lower-rabbit-guests';
 import { bnuLowerRabbitsLesson } from './bnu-lower-rabbits';
+import { bnuLowerRecognizeShapesLesson } from './bnu-lower-recognize-shapes';
 import { bnuLowerRecyclingLesson } from './bnu-lower-recycling';
 import { bnuLowerRedFruitLesson } from './bnu-lower-red-fruit';
 import {
@@ -390,6 +391,10 @@ function pending(key: string, title: string, page: number): Lesson {
 }
 
 const authoredLessons: Record<string, Lesson[]> = {
+  u6: [
+    bnuLowerRecognizeShapesLesson,
+    pending('u6', '有趣的平面图形（一）：第78页起继续制作', 78),
+  ],
   u4: [
     bnuLowerAroundNumbersLesson,
     bnuLowerCountHundredLesson,

@@ -8,7 +8,7 @@ defineProps<{ visual: PlaneCardsVisual }>();
 </script>
 <template>
   <div class="flex min-w-0 flex-col gap-3">
-    <p class="text-sm text-muted-foreground">
+    <p class="text-xl leading-relaxed text-muted-foreground">
       {{ $t('educationLearning.planeCardsNotice') }}
     </p>
     <div class="flex flex-wrap gap-3">
@@ -17,7 +17,9 @@ defineProps<{ visual: PlaneCardsVisual }>();
         :key="index"
         class="flex flex-col items-center rounded-lg border border-border bg-card p-2"
       >
-        <span class="font-medium">{{ String.fromCharCode(65 + index) }}</span>
+        <span class="text-xl font-medium">
+          {{ String.fromCharCode(65 + index) }}
+        </span>
         <svg
           viewBox="0 0 144 144"
           width="144"

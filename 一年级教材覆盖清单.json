@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T14:56:43.744Z",
+  "generatedAt": "2026-10-05T15:30:35.042Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 39,
+        "availablePacks": 40,
         "pendingEntries": 3,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1114,
-          "manual": 415,
-          "reflection": 151
+          "objective": 1144,
+          "manual": 425,
+          "reflection": 154
         }
       },
       "units": [
@@ -36314,10 +36314,40 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-u6-pending",
-              "title": "有趣的平面图形（一）",
-              "textbookTitle": "有趣的平面图形（一）",
+              "id": "bnu-lower-recognize-shapes",
+              "title": "描面、十一图识别与按形状涂数",
+              "textbookTitle": "认识图形",
               "page": 76,
+              "version": 1,
+              "status": "available",
+              "goal": "区分立体物与描出的平面轮廓，完整辨认十一图，说明转向不改类别，先预测再描边，按原图例涂两图并逐类数火车部件。",
+              "prerequisite": "能逐个点数到11，认识已学的基本立体并愿意观察接触面。",
+              "referenceQuery": null,
+              "steps": 10,
+              "tasks": {
+                "objective": 30,
+                "manual": 10,
+                "reflection": 3
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-recognize-shapes"],
+              "questionKinds": ["choice", "number", "manual", "reflection"],
+              "visualKinds": ["plane-cards"],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "第三方公开扫描76～77页整页与放大逐项核对",
+                "notes": "六原活动全部对应；最后斜图为正方形，旗杆烟雾非闭合面，船身剩余区域与斜烟囱不强归基本形状。来源核对不替代最终教师试用，未知ISBN版印保持。"
+              }
+            },
+            {
+              "id": "bnu-lower-u6-pending",
+              "title": "有趣的平面图形（一）：第78页起继续制作",
+              "textbookTitle": "有趣的平面图形（一）：第78页起继续制作",
+              "page": 78,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -36343,7 +36373,104 @@
                 "notes": "目录和页码事实不表示正文课程完成。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "resourceId": "bnu-lower-public-scan-2024",
+            "source": "https://keben.szxuexiao.com/html/10764.html",
+            "checkedAt": "2026-10-05",
+            "unit": "u6",
+            "status": "partial-original-teaching",
+            "finalTeacherReview": "not-verified",
+            "scope": "76～77六原活动、43主任务和8换条件复习三宽已验；78～86后续仍制作，保留单元待制作入口。",
+            "activities": [
+              {
+                "page": 76,
+                "sourceActivity": "predict-contact-footprints",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [1],
+                "objective": ["face", "unknown-footprint"],
+                "manual": ["actual-footprint"],
+                "records": []
+              },
+              {
+                "page": 76,
+                "sourceActivity": "trace-faces-and-name-four-shapes",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [2],
+                "objective": ["face"],
+                "manual": ["actual-four-traces"],
+                "records": []
+              },
+              {
+                "page": 77,
+                "sourceActivity": "match-all-eleven-and-rotate-square",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [3, 4, 5],
+                "objective": [
+                  "row-1",
+                  "row-2",
+                  "row-3",
+                  "row-4",
+                  "row-5",
+                  "row-6",
+                  "row-7",
+                  "row-8",
+                  "row-9",
+                  "row-10",
+                  "row-11",
+                  "row-count-rectangle",
+                  "row-count-square",
+                  "row-count-circle",
+                  "row-count-triangle",
+                  "rotation-category",
+                  "rotation-count"
+                ],
+                "manual": ["actual-eleven", "actual-turn"],
+                "records": []
+              },
+              {
+                "page": 77,
+                "sourceActivity": "nearby-object-predict-before-tracing",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [6],
+                "objective": ["prediction-order"],
+                "manual": ["actual-predict", "actual-trace-check"],
+                "records": ["prediction-record"]
+              },
+              {
+                "page": 77,
+                "sourceActivity": "color-boat-and-rocket-by-four-shape-legend",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [7, 8],
+                "objective": [
+                  "color-triangle",
+                  "color-circle",
+                  "color-rectangle",
+                  "color-square",
+                  "open-lines"
+                ],
+                "manual": ["actual-boat", "actual-rocket"],
+                "records": []
+              },
+              {
+                "page": 77,
+                "sourceActivity": "count-train-four-categories",
+                "lesson": "bnu-lower-recognize-shapes",
+                "steps": [9, 10],
+                "objective": [
+                  "train-square",
+                  "train-triangle",
+                  "train-rectangle",
+                  "train-circle",
+                  "open-lines",
+                  "site-zero"
+                ],
+                "manual": ["actual-train", "actual-share"],
+                "records": ["reflection", "plan"]
+              }
+            ],
+            "pendingPrintedPages": [78, 79, 80, 81, 82, 83, 84, 85, 86]
+          }
         },
         {
           "id": "comic",

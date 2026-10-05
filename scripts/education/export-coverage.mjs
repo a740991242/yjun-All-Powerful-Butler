@@ -57,6 +57,7 @@ async function main() {
         bnuInterestingAudit,
         bnuRecyclingAudit,
         bnuCalculationReviewAudit,
+        bnuLowerSixAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -97,6 +98,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-interesting-audit.ts'),
         import('/src/views/education/content/bnu-lower-recycling-audit.ts'),
         import('/src/views/education/content/bnu-lower-calculation-review-audit.ts'),
+        import('/src/views/education/content/bnu-lower-unit-six-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -306,6 +308,9 @@ async function main() {
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u1'
                   ? { sourceAudit: bnuLowerAudit.bnuLowerUnitOneAudit }
+                  : {}),
+                ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u6'
+                  ? { sourceAudit: bnuLowerSixAudit.bnuLowerUnitSixAudit }
                   : {}),
                 ...(book.id === bnuLower.bnuLowerBook.id && unit.id === 'u2'
                   ? { sourceAudit: bnuLowerTwoAudit.bnuLowerUnitTwoAudit }
