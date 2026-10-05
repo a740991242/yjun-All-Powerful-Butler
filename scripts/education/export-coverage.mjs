@@ -48,6 +48,7 @@ async function main() {
         bnuComparisonPracticeAudit,
         bnuHundredChartAudit,
         bnuHarvestAudit,
+        bnuNumberPracticeAudit,
       ] = await Promise.all([
         import('/src/views/education/content/chinese.ts'),
         import('/src/views/education/content/math.ts'),
@@ -79,6 +80,7 @@ async function main() {
         import('/src/views/education/content/bnu-lower-comparison-practice-audit.ts'),
         import('/src/views/education/content/bnu-lower-hundred-chart-audit.ts'),
         import('/src/views/education/content/bnu-lower-harvest-audit.ts'),
+        import('/src/views/education/content/bnu-lower-number-practice-audit.ts'),
       ]);
       const models = [
         ...textbooks.textbooks,
@@ -239,7 +241,7 @@ async function main() {
                       sourceAudit: {
                         ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit,
                         scope:
-                          '仅44～57页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序、完整百数表与我的收获四十八项原活动；58页起仍制作，不证明整个第四单元或全年完成。',
+                          '第44～59页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序、完整百数表、我的收获与巩固应用五十五项原活动逐项对应；最终教师审校未核验，不证明全册或全年完成。',
                         activities: [
                           ...bnuAroundNumbersAudit.bnuLowerAroundNumbersAudit
                             .activities,
@@ -254,6 +256,8 @@ async function main() {
                           ...bnuHundredChartAudit.bnuLowerHundredChartAudit
                             .activities,
                           ...bnuHarvestAudit.bnuLowerHarvestAudit.activities,
+                          ...bnuNumberPracticeAudit.bnuLowerNumberPracticeAudit
+                            .activities,
                         ],
                       },
                     }

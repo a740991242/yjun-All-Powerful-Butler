@@ -22,6 +22,7 @@ import BnuFinalPosition from './BnuFinalPosition.vue';
 import BnuFinalSolids from './BnuFinalSolids.vue';
 import BnuHundredTable from './BnuHundredTable.vue';
 import BnuHundredWeather from './BnuHundredWeather.vue';
+import BnuNumberReview from './BnuNumberReview.vue';
 import BnuSixCardGame from './BnuSixCardGame.vue';
 import BookGroups from './BookGroups.vue';
 import { breakTen } from './borrowing';
@@ -838,6 +839,10 @@ const shapeDescription = computed(() =>
         </Button>
       </div>
     </div>
+    <BnuNumberReview
+      v-else-if="visual.kind === 'bnu-number-review'"
+      :visual="visual"
+    />
     <BnuHundredTable
       v-else-if="visual.kind === 'bnu-hundred-table'"
       :visual="visual"

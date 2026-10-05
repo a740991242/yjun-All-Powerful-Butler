@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T01:40:47.469Z",
+  "generatedAt": "2026-10-05T02:25:21.080Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 30,
-        "pendingEntries": 6,
+        "availablePacks": 31,
+        "pendingEntries": 5,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 886,
-          "manual": 305,
-          "reflection": 118
+          "objective": 915,
+          "manual": 321,
+          "reflection": 122
         }
       },
       "units": [
@@ -34301,33 +34301,39 @@
               }
             },
             {
-              "id": "bnu-lower-u4-pending",
-              "title": "100以内数的认识：后续课程",
-              "textbookTitle": "100以内数的认识：后续课程",
+              "id": "bnu-lower-number-practice",
+              "title": "百以内数巩固：四材料、完整数列与全部组数",
+              "textbookTitle": "巩固与应用",
               "page": 58,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "完整表示四种原数量、合作拨写，结合全部候选与线索比较，填齐四条数列、四珠全部五种和三卡全部六种组数。",
+              "prerequisite": "理解十和一与数量守恒，能比较100以内的数，知道候选与条件须完整核对。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 14,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 29,
+                "manual": 16,
+                "reflection": 4
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 10,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-number-practice"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": ["bnu-number-review", "place-counters"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-05",
+                "reviewer": "58～59两整页、四材料与四列车放大、四珠及三卡穷举核对",
+                "notes": "七项活动全部对应；本站单位重画不冒原照片，最终教师试用未核验。"
               }
             }
           ],
@@ -34338,7 +34344,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～57页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序、完整百数表与我的收获四十八项原活动；58页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "第44～59页身边的数、数一数、数豆子、红果比较、小小养殖场、比较排序、完整百数表、我的收获与巩固应用五十五项原活动逐项对应；最终教师审校未核验，不证明全册或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -35137,6 +35143,108 @@
                   "plan"
                 ],
                 "boundary": "自主提问/理由/发现困难开放null，实际交流与未来计划分开，不统一是非评分。"
+              },
+              {
+                "page": 58,
+                "sourceActivity": "four-material-compositions",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [1, 2, 3, 4],
+                "objective": [
+                  "objects",
+                  "sticks",
+                  "counter",
+                  "cubes-raw",
+                  "cubes-regrouped",
+                  "cubes-loose"
+                ],
+                "manual": [
+                  "actual-objects",
+                  "actual-sticks",
+                  "actual-counter",
+                  "actual-cubes",
+                  "actual-regroup"
+                ],
+                "records": ["own-method"]
+              },
+              {
+                "page": 58,
+                "sourceActivity": "counter-write-game",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [3],
+                "objective": ["game-digits", "game-value", "game-beads"],
+                "manual": ["actual-game-first", "actual-game-switch"],
+                "records": []
+              },
+              {
+                "page": 58,
+                "sourceActivity": "peach-candidates",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [5],
+                "objective": [
+                  "peach-reference",
+                  "peach-selected",
+                  "peach-less"
+                ],
+                "manual": ["actual-peach"],
+                "records": []
+              },
+              {
+                "page": 59,
+                "sourceActivity": "book-two-clues",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [6],
+                "objective": [
+                  "book-selected",
+                  "book-only-greater",
+                  "book-only-less",
+                  "book-incomplete"
+                ],
+                "manual": ["actual-books"],
+                "records": []
+              },
+              {
+                "page": 59,
+                "sourceActivity": "four-complete-trains",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [7, 8, 9, 10],
+                "objective": [
+                  "five-up",
+                  "two-up",
+                  "ten-up",
+                  "five-down",
+                  "descending-step"
+                ],
+                "manual": [
+                  "actual-train-five",
+                  "actual-train-two",
+                  "actual-train-ten",
+                  "actual-train-down"
+                ],
+                "records": []
+              },
+              {
+                "page": 59,
+                "sourceActivity": "four-beads-all-five",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [11, 12],
+                "objective": [
+                  "beads-remaining",
+                  "beads-all",
+                  "beads-digits",
+                  "beads-zero",
+                  "beads-count"
+                ],
+                "manual": ["actual-four-beads"],
+                "records": ["discovery"]
+              },
+              {
+                "page": 59,
+                "sourceActivity": "three-cards-all-six",
+                "lesson": "bnu-lower-number-practice",
+                "steps": [13, 14],
+                "objective": ["cards-six", "cards-count", "cards-duplicate"],
+                "manual": ["actual-six-cards", "actual-explain"],
+                "records": ["difficulty", "plan"]
               }
             ]
           }

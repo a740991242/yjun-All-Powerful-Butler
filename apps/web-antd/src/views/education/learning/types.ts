@@ -8,6 +8,7 @@ import type { BnuFinalPositionVisual } from './bnu-final-position';
 import type { BnuFinalSolidsVisual } from './bnu-final-solids';
 import type { BnuHundredTableVisual } from './bnu-hundred-table';
 import type { BnuHundredWeatherVisual } from './bnu-hundred-weather';
+import type { BnuNumberReviewVisual } from './bnu-number-review';
 import type { BnuSixCardGameVisual } from './bnu-six-card-game';
 import type { CardEquationRule } from './card-equation';
 import type { CircularNumberArrayVisual } from './circular-number-array';
@@ -458,6 +459,7 @@ export type Visual =
   | BnuFinalSolidsVisual
   | BnuHundredTableVisual
   | BnuHundredWeatherVisual
+  | BnuNumberReviewVisual
   | BnuSixCardGameVisual
   | BookGroupsVisual
   | CardEquationRule

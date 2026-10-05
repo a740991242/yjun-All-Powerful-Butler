@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--number-practice'))
+    return {
+      index: 30,
+      lessonId: 'bnu-lower-number-practice',
+      zero: '-beads-zero',
+      retry: '-cubes-loose',
+      manual: 16,
+      steps: 14,
+      review: 10,
+      key: 'number-practice',
+    };
   if (process.argv.includes('--hundred-harvest'))
     return {
       index: 29,
@@ -997,6 +1008,183 @@ const server = http.createServer(async (req, res) => {
             });
         }
       };
+      const inspectBnuNumberReview = async (visual, label) => {
+        const figure = p.locator('[data-bnu-number-review]');
+        await figure.waitFor();
+        const main = visual.variant === 'main';
+        const trains = {
+          'five-up': main
+            ? [15, 20, 25, 'A', 35, 'B', 45, 'C', 'D']
+            : [12, 17, 22, 'A', 32, 'B', 42, 'C', 'D'],
+          'two-up': main
+            ? [22, 'A', 26, 28, 'B', 32, 'C', 'D']
+            : [41, 'A', 45, 47, 'B', 51, 'C', 'D'],
+          'ten-up': main
+            ? [10, 20, 30, 'A', 'B', 'C', 'D']
+            : [9, 19, 29, 'A', 'B', 'C', 'D'],
+          'five-down': main
+            ? [100, 95, 90, 85, 'A', 'B', 'C', 'D']
+            : [99, 94, 89, 84, 'A', 'B', 'C', 'D'],
+        };
+        if (trains[visual.scene]) {
+          const expected = trains[visual.scene].map(String);
+          const actual = await figure
+            .locator('[data-bnu-train-cell]')
+            .allTextContents();
+          if (JSON.stringify(actual) !== JSON.stringify(expected))
+            throw new Error(
+              'Number review train positions, givens or blank letters changed',
+            );
+          const cells = await figure.locator('th,td').evaluateAll((ns) =>
+            ns.every((n) => {
+              const r = n.getBoundingClientRect();
+              const range = document.createRange();
+              range.selectNodeContents(n);
+              const text = range.getBoundingClientRect();
+              return (
+                Number.parseFloat(getComputedStyle(n).fontSize) >= 20 &&
+                r.height >= 56 &&
+                text.left >= r.left &&
+                text.right <= r.right &&
+                text.top >= r.top &&
+                text.bottom <= r.bottom
+              );
+            }),
+          );
+          if (!cells)
+            throw new Error('Train teaching cells too small or text clipped');
+        } else {
+          const counts = {
+            objects: [['object', main ? 43 : 52]],
+            sticks: [
+              ['bundle', main ? 3 : 4],
+              ['stick', main ? 30 : 40],
+              ['single', main ? 8 : 6],
+            ],
+            cubes: [
+              ['rod', main ? 2 : 3],
+              ['unit', main ? 20 : 30],
+              ['single', main ? 15 : 12],
+            ],
+            counter: [
+              ['tens-bead', main ? 2 : 3],
+              ['ones-bead', main ? 5 : 2],
+            ],
+          }[visual.scene];
+          if (!counts) throw new Error('Unknown number review scene');
+          for (const [key, count] of counts)
+            if (
+              (await figure.locator(`[data-bnu-review-${key}]`).count()) !==
+              count
+            )
+              throw new Error(
+                `Original material count changed: ${visual.scene}/${key}`,
+              );
+          for (const [group, child] of [
+            ['bundle', 'stick'],
+            ['rod', 'unit'],
+          ])
+            for (const n of await figure
+              .locator(`[data-bnu-review-${group}]`)
+              .all())
+              if (
+                (await n.locator(`[data-bnu-review-${child}]`).count()) !== 10
+              )
+                throw new Error('Material group no longer contains ten units');
+          const geometry = await figure.locator('svg').evaluate((svg) => {
+            const r = svg.getBoundingClientRect();
+            return [
+              ...svg.querySelectorAll('circle,rect,ellipse,path,text'),
+            ].every((n) => {
+              const b = n.getBoundingClientRect();
+              return (
+                b.left >= r.left &&
+                b.right <= r.right &&
+                b.top >= r.top &&
+                b.bottom <= r.bottom &&
+                (n.tagName !== 'text' ||
+                  Number.parseFloat(getComputedStyle(n).fontSize) >= 20)
+              );
+            });
+          });
+          if (!geometry)
+            throw new Error(
+              'Number review material glyph outside SVG or label too small',
+            );
+        }
+        const fonts = await figure
+          .locator('figcaption,p')
+          .evaluateAll((ns) =>
+            ns
+              .slice(0, 3)
+              .every(
+                (n) => Number.parseFloat(getComputedStyle(n).fontSize) >= 20,
+              ),
+          );
+        if (!fonts) throw new Error('Number review teaching legend too small');
+        const region = figure.locator('[data-bnu-review-scroll]');
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        await region.focus();
+        await p.keyboard.press('ArrowRight');
+        await p.waitForTimeout(150);
+        if (
+          !(await region.evaluate(
+            (n) => n.scrollWidth <= n.clientWidth || n.scrollLeft > 0,
+          ))
+        )
+          throw new Error('Number review keyboard scroll failed');
+        for (const edge of ['first', 'last']) {
+          await region.evaluate((n, e) => {
+            n.scrollLeft = 0;
+            if (e === 'last' && n.querySelector('[data-bnu-train-cell]')) {
+              n.scrollLeft = n.scrollWidth;
+            } else if (e === 'last') {
+              const r = n.getBoundingClientRect();
+              const right = Math.max(
+                ...[
+                  ...n.querySelectorAll(
+                    'th,[data-bnu-train-cell],circle,rect,ellipse',
+                  ),
+                ].map((x) => x.getBoundingClientRect().right),
+              );
+              n.scrollLeft = Math.max(0, right - r.left - n.clientWidth + 2);
+            }
+            n.scrollIntoView({ block: 'center' });
+          }, edge);
+          await p.waitForTimeout(150);
+          const fits = await region.evaluate((n, e) => {
+            const r = n.getBoundingClientRect();
+            const nodes = [
+              ...n.querySelectorAll(
+                'th,[data-bnu-train-cell],circle,rect,ellipse',
+              ),
+            ];
+            const target = nodes.toSorted(
+              (a, b) =>
+                a.getBoundingClientRect()[e === 'first' ? 'left' : 'right'] -
+                b.getBoundingClientRect()[e === 'first' ? 'left' : 'right'],
+            )[e === 'first' ? 0 : nodes.length - 1];
+            const b = target?.getBoundingClientRect();
+            return (
+              r.left >= 0 &&
+              r.right <= innerWidth &&
+              r.top >= 0 &&
+              r.bottom <= innerHeight &&
+              document.documentElement.scrollWidth <= innerWidth &&
+              b &&
+              b.left >= r.left &&
+              b.right <= r.right
+            );
+          }, edge);
+          if (!fits)
+            throw new Error('Number review viewport or end material clipped');
+          await p.screenshot({
+            path: `/tmp/butler-bnu-number-practice-${label}-${width}-${edge}.png`,
+          });
+        }
+      };
       const read = () => p.evaluate(() => window.qaLoad());
       const wait = async (fn) => {
         for (let attempt = 0; attempt < 100; attempt++) {
@@ -1035,7 +1223,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 30
+          .count()) !== 31
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1411,6 +1599,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'number-practice')
+        await inspectBnuNumberReview(
+          { scene: 'objects', variant: 'main' },
+          'learn-initial',
+        );
       if (flow.key === 'hundred-chart')
         await inspectBnuTable(
           { scene: 'full', variant: 'main' },
@@ -1425,6 +1618,62 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'number-practice') {
+          const scene = {
+            0: 'sticks',
+            1: 'counter',
+            2: 'cubes',
+            5: 'five-up',
+            6: 'two-up',
+            7: 'ten-up',
+            8: 'five-down',
+          }[step];
+          if (scene)
+            await inspectBnuNumberReview(
+              { scene, variant: 'main' },
+              `learn-${step + 1}`,
+            );
+          if (step === 2) {
+            const state = JSON.stringify(await read());
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('English', { exact: true }).click();
+            await p
+              .locator('[data-bnu-number-review] figcaption')
+              .filter({ hasText: 'Ten-unit rods and loose units' })
+              .waitFor();
+            const dark = await p.evaluate(() =>
+              document.documentElement.classList.contains('dark'),
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') !== was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await inspectBnuNumberReview(
+              { scene: 'cubes', variant: 'main' },
+              'english-theme',
+            );
+            await p.locator('.theme-toggle svg').click();
+            await p.waitForFunction(
+              (was) =>
+                document.documentElement.classList.contains('dark') === was,
+              dark,
+            );
+            await p.waitForTimeout(500);
+            await p
+              .locator('button[aria-haspopup="menu"]')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('简体中文', { exact: true }).click();
+            if (JSON.stringify(await read()) !== state)
+              throw new Error('Number review language/theme changed records');
+          }
+        }
         if (flow.key === 'meeting' && step === 6) {
           const strip = p.locator('[data-number-strip]');
           const numbers = await strip.locator('li').allTextContents();
@@ -1567,11 +1816,13 @@ const server = http.createServer(async (req, res) => {
         if (
           (flow.key === 'count-beans' && (step === 0 || step === 1)) ||
           (flow.key === 'hundred-harvest' && [0, 2].includes(step)) ||
+          (flow.key === 'number-practice' && [9, 10].includes(step)) ||
           (flow.key === 'red-fruit' && [0, 1, 3].includes(step))
         ) {
           const diagramValues = {
             'count-beans': { 0: [28, 22], 1: [97, 98, 99, 100] },
             'hundred-harvest': { 0: [95, 92, 85, 79], 2: [85] },
+            'number-practice': { 9: [13], 10: [4, 22, 31, 40] },
             'red-fruit': { 0: [21, 18], 1: [32, 34, 100, 99], 3: [45, 54] },
           };
           const values = diagramValues[flow.key][step];
@@ -1805,6 +2056,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-number-review')
+          await inspectBnuNumberReview(q.visual, q.id);
         if (q.visual?.kind === 'place-counters')
           await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')
@@ -2236,20 +2489,29 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            ((flow.key === 'hundred-harvest' &&
-              q.id.endsWith('-counter-digits')) ||
+            ((flow.key === 'number-practice' &&
+              (q.id.endsWith('-cards-six') ||
+                q.id.endsWith('-beads-digits'))) ||
+              (flow.key === 'hundred-harvest' &&
+                q.id.endsWith('-counter-digits')) ||
               (flow.key === 'hundred-chart' && q.id.endsWith('-row-1')) ||
               (flow.key === 'breeding' && q.id.endsWith('-sorted-cards')) ||
               (flow.key === 'comparison-practice' &&
                 q.id.endsWith('-sorted-scores')))
           ) {
             const partials = {
+              'number-practice': q.id.endsWith('-beads-digits')
+                ? [0, null, null, null, null, null, null, null]
+                : [25, null, null, null, null, null],
               'hundred-harvest': [9, null, null, null, null, null, null, null],
               breeding: [10, null, null, null, null],
               'comparison-practice': [95, null, null, null],
               'hundred-chart': [2, null, null, null, null, null, null, null],
             };
             const wrongs = {
+              'number-practice': q.id.endsWith('-beads-digits')
+                ? [0, 4, 2, 2, 3, 1, 0, 4]
+                : [25, 28, 52, 58, 85, 82],
               'hundred-harvest': [9, 5, 9, 2, 8, 5, 9, 7],
               breeding: [10, 38, 50, 98, 51],
               'comparison-practice': [95, 88, 91, 79],
@@ -2304,7 +2566,7 @@ const server = http.createServer(async (req, res) => {
               await input.fill(String(value));
               if (i === 0 || i === wrong.length - 1)
                 await p.screenshot({
-                  path: `/tmp/butler-bnu-${flow.key}-sort-${width}-${i}.png`,
+                  path: `/tmp/butler-bnu-${flow.key}${flow.key === 'number-practice' ? `-${q.id.slice(flow.lessonId.length + 1)}` : ''}-sort-${width}-${i}.png`,
                 });
             }
             await click('提交答案');
@@ -3583,6 +3845,8 @@ const server = http.createServer(async (req, res) => {
           await inspectBnuTable(q.visual, q.id);
         if (q.visual?.kind === 'marked-number-line')
           await inspectMarkedLine(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-number-review')
+          await inspectBnuNumberReview(q.visual, q.id);
         if (q.visual?.kind === 'place-counters')
           await inspectPlaceCounters(q.visual.values, q.id);
         if (q.visual?.kind === 'bnu-hundred-weather')
