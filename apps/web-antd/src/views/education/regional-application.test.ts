@@ -59,9 +59,15 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     ).toHaveLength(excluded ? 0 : 2);
     let expectedSubjects: string[] = ['chinese', 'ethics'];
     if (
-      ['fujian', 'henan', 'hubei', 'jiangsu', 'liaoning', 'shanxi'].includes(
-        province,
-      )
+      [
+        'fujian',
+        'henan',
+        'hubei',
+        'jiangsu',
+        'liaoning',
+        'shanxi',
+        'zhejiang',
+      ].includes(province)
     )
       expectedSubjects = ['chinese', 'math', 'ethics'];
     if (excluded) expectedSubjects = [];
@@ -69,9 +75,15 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       rows.flatMap((row) => (row.action ? [row.action.subject] : [])),
     ).toEqual(expectedSubjects);
     expect(required(rows[1]).resolution.status).toBe(
-      ['fujian', 'henan', 'hubei', 'jiangsu', 'liaoning', 'shanxi'].includes(
-        province,
-      )
+      [
+        'fujian',
+        'henan',
+        'hubei',
+        'jiangsu',
+        'liaoning',
+        'shanxi',
+        'zhejiang',
+      ].includes(province)
         ? 'recommended'
         : 'unknown',
     );
@@ -413,6 +425,41 @@ it('applies Liaoning both-volume combinations using the matching reference year 
       status: 'recommended',
       edition: 'pep-2024',
       catalogYear: volume === 'upper' ? '2025' : '2026',
+      alternatives: ['pep-2024', 'bnu-2024'],
+    });
+    expect(
+      rows.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(rows[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
+  }
+});
+
+it('applies Zhejiang both-volume combinations without inferring an English course from math sources', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      province: 'zhejiang',
+      city: '',
+      school: '',
+      volume,
+    };
+    const rows = regionalApplicationPlan(local);
+    expect(rows[1]!.resolution).toMatchObject({
+      status: 'recommended',
+      edition: 'pep-2024',
+      catalogYear: '2025',
       alternatives: ['pep-2024', 'bnu-2024'],
     });
     expect(

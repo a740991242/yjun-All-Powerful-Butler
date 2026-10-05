@@ -442,6 +442,45 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-henan-${volume === '上册' ? 'upper' : 'lower'}-default-${width}.png`,
           });
         }
+        await choose('education-region-province', '浙江', true);
+        for (const [volume, filename] of [
+          ['上册', '1414745c337344dd9269d68078249459.pdf'],
+          ['下册', 'b92c77b7999b4d30ba3d7f95b6c7eb89.pdf'],
+        ]) {
+          await choose('education-region-volume', volume);
+          const catalog = region.getByText('参考2025年省级目录中的可选版本', {
+            exact: false,
+          });
+          await catalog.waitFor();
+          await region.locator(`a[href$="/${filename}"]`).waitFor();
+          await region
+            .getByText('资料发布：未标注；核验日期：2026-10-06', {
+              exact: false,
+            })
+            .waitFor();
+          const alternatives = await region
+            .getByText('该参考目录可选数学版本：', { exact: false })
+            .textContent();
+          if (
+            !alternatives.includes('人教版') ||
+            !alternatives.includes('北师大版') ||
+            alternatives.includes('苏教版')
+          )
+            throw new Error('Zhejiang verified alternatives mismatch');
+          await apply.click();
+          for (const subject of ['语文', '数学', '道德与法治'])
+            await p
+              .getByRole('button', {
+                name: `${subject} · 人教版（2024审定） · ${volume}`,
+                exact: true,
+              })
+              .waitFor();
+          await catalog.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+          await p.waitForTimeout(500);
+          await p.screenshot({
+            path: `/tmp/butler-zhejiang-${volume === '上册' ? 'upper' : 'lower'}-default-${width}.png`,
+          });
+        }
         await choose('education-region-province', '辽宁', true);
         for (const [volume, year, issued, published, url] of [
           [
@@ -750,6 +789,31 @@ const server = http.createServer(async (req, res) => {
             path: `/tmp/butler-henan-${volume === 'Upper volume' ? 'upper' : 'lower'}-default-${width}-en-dark.png`,
           });
         }
+        await choose('education-region-province', 'Zhejiang', true);
+        for (const volume of ['Upper volume', 'Lower volume']) {
+          await choose('education-region-volume', volume);
+          const catalog = p.getByText(
+            'The 2025 provincial catalog lists alternatives.',
+            { exact: false },
+          );
+          await catalog.waitFor();
+          await p
+            .getByText('Published: Not stated; checked: 2026-10-06', {
+              exact: false,
+            })
+            .waitFor();
+          await catalog.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+          await p.waitForTimeout(500);
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('Zhejiang English dark overflow');
+          await p.screenshot({
+            path: `/tmp/butler-zhejiang-${volume === 'Upper volume' ? 'upper' : 'lower'}-default-${width}-en-dark.png`,
+          });
+        }
         await choose('education-region-province', 'Liaoning', true);
         for (const [volume, year, issued, published] of [
           ['Upper volume', '2025', '2025-07-21', '2025-07-23'],
@@ -833,6 +897,8 @@ const server = http.createServer(async (req, res) => {
             HubeiUpperLowerThreeSubjects: true,
             HenanUpperLowerThreeSubjects: true,
             LiaoningUpperLowerThreeSubjects: true,
+            ZhejiangUpperLowerThreeSubjects: true,
+            ZhejiangVolumeSourcesAndUnknownDatesBilingual: true,
             LiaoningVolumeYearsSourcesDatesBilingual: true,
             AnhuiUpperThreeSubjectsLowerTwoSubjects: true,
             AnhuiUpperDatesAndScopeBilingual: true,

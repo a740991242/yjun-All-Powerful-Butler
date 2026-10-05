@@ -58,6 +58,28 @@ export function regionalMathematicsDefault(
         },
       ],
     };
+  if (query.province === 'zhejiang') {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: `zhejiang-grade-one-math-${query.volume}-catalog-2025`,
+          sourceUrl: upper
+            ? 'https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3185/site/attach/0/1414745c337344dd9269d68078249459.pdf'
+            : 'https://zjjcmspublic.oss-cn-hangzhou-zwynet-d01-a.internet.cloud.zj.gov.cn/jcms_files/jcms1/web3185/site/attach/0/b92c77b7999b4d30ba3d7f95b6c7eb89.pdf',
+          sourceTitle: upper
+            ? '浙江省2025年秋季中小学教科书零售价格表（附件一第35页，0339、0340项，一年级数学上册）'
+            : '浙江省2025年春季中小学教科书零售价格表（附件1第3、11页，0024、0108项，一年级数学下册）',
+          // The attachments identify the catalog year, not their publication date.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
   if (query.province === 'liaoning') {
     const upper = query.volume === 'upper';
     return {

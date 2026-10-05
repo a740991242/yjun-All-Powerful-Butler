@@ -306,3 +306,48 @@ it('separates Liaoning volume sources, years and document/publication dates', ()
     }
   }
 });
+
+it('keeps Zhejiang upper/lower attachment references separate without inventing dates', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    for (const academicYear of ['2025-2026', '2026-2027']) {
+      const local = { ...query, province: 'zhejiang', volume, academicYear };
+      const result = regionalMathematicsDefault(local)!;
+      expect(result).toMatchObject({
+        edition: 'pep-2024',
+        catalogYear: '2025',
+        alternatives: ['pep-2024', 'bnu-2024'],
+      });
+      expect(result.evidence[0]).toMatchObject({
+        id: `zhejiang-grade-one-math-${volume}-catalog-2025`,
+        publishedAt: '',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[0]!.issuedAt).toBeUndefined();
+      expect(result.evidence[0]!.sourceTitle).toContain(
+        volume === 'upper' ? '0339、0340' : '0024、0108',
+      );
+      expect(result.evidence[0]!.sourceUrl).toContain(
+        volume === 'upper'
+          ? '1414745c337344dd9269d68078249459.pdf'
+          : 'b92c77b7999b4d30ba3d7f95b6c7eb89.pdf',
+      );
+      result.alternatives!.pop();
+      result.evidence[0]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(2);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
+      ).toContain('cloud.zj.gov.cn');
+      for (const change of [
+        { city: 'hangzhou' },
+        { school: 'school' },
+        { grade: 'p2' },
+        { subject: 'english' },
+        { academicYear: '2027-2028' },
+        { volume: 'all' },
+      ])
+        expect(
+          regionalMathematicsDefault({ ...local, ...change }),
+        ).toBeUndefined();
+    }
+  }
+});
