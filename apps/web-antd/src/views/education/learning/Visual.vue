@@ -17,6 +17,7 @@ import BnuAroundNumbers from './BnuAroundNumbers.vue';
 import BnuBuilding from './BnuBuilding.vue';
 import BnuCalculationReview from './BnuCalculationReview.vue';
 import BnuCaterpillar from './BnuCaterpillar.vue';
+import BnuComic from './BnuComic.vue';
 import BnuFillGrid from './BnuFillGrid.vue';
 import BnuFinalClassification from './BnuFinalClassification.vue';
 import BnuFinalColor from './BnuFinalColor.vue';
@@ -1192,6 +1193,7 @@ const shapeDescription = computed(() =>
         }}
       </div>
     </div>
+    <BnuComic v-else-if="visual.kind === 'bnu-comic'" :visual="visual" />
     <MathStory v-else-if="visual.kind === 'math-story'" :visual="visual" />
     <ClassCapacity
       v-else-if="visual.kind === 'class-capacity'"

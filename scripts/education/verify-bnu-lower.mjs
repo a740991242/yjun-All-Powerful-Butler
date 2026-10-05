@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--comic'))
+    return {
+      index: 47,
+      lessonId: 'bnu-lower-comic',
+      zero: '-site-zero',
+      retry: '-milk-change',
+      manual: 10,
+      steps: 12,
+      review: 8,
+      key: 'comic',
+    };
   if (process.argv.includes('--square-challenge'))
     return {
       index: 46,
@@ -3613,6 +3624,184 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-bnu-recognize-${label}-${width}.png`,
         });
       };
+      const inspectComic = async (visual, label, languageCheck = false) => {
+        const root = p.locator('[data-bnu-comic]');
+        const facts =
+          visual.variant === 'main'
+            ? { price: 13, pay: 20, start: 6, arrive: 8, leave: 5 }
+            : { price: 16, pay: 20, start: 7, arrive: 6, leave: 4 };
+        const check = async () => {
+          await root.waitFor();
+          if (
+            (await root.getAttribute('data-comic-scene')) !== visual.scene ||
+            (await root.getAttribute('data-comic-variant')) !==
+              visual.variant ||
+            (await root.locator('section').count()) !== 4
+          )
+            throw new Error(`Comic inventory ${label}`);
+          const title = await root.locator('figcaption').innerText();
+          const en = title.includes(
+            visual.scene === 'milk' ? 'Buying' : 'Duck story',
+          );
+          const milkCaptions = {
+            en: [
+              'Everyday setting: one carton of milk is needed.',
+              `Buy one carton costing ${facts.price} yuan; pay ${facts.pay} yuan.`,
+              'After payment, how much change is due? The answer is left open.',
+              'Return to the everyday setting. This is not another purchase; do not count the price twice.',
+            ],
+            zh: [
+              '生活情境：需要一盒牛奶。',
+              `买1盒，价钱${facts.price}元，付出${facts.pay}元。`,
+              '付款后，要找回多少元？这里只留问题。',
+              '回到生活情境。不是又买了一盒，不再重复计算价钱。',
+            ],
+          };
+          const duckCaptions = {
+            en: [
+              `Initially there are ${facts.start} ducks.`,
+              `Another ${facts.arrive} ducks arrive. This frame shows only the arrivals, not the whole group.`,
+              `Then ${facts.leave} ducks leave the combined group. This frame shows only the departures.`,
+              'How many after arrivals? How many remain after departures? Ask in event order.',
+            ],
+            zh: [
+              `开始有${facts.start}只鸭子。`,
+              `又来了${facts.arrive}只。这幅只画新来的鸭子，不是此时全部鸭子。`,
+              `接着，从聚在一起的鸭子中离开${facts.leave}只。这幅只画离开的鸭子。`,
+              '又来后有多少只？离开后还剩多少只？按顺序分别提问。',
+            ],
+          };
+          const captions =
+            visual.scene === 'milk' ? milkCaptions : duckCaptions;
+          const expected = captions[en ? 'en' : 'zh'];
+          for (let i = 0; i < 4; i++) {
+            const panel = root.locator('section').nth(i);
+            const svg = panel.locator('svg');
+            await svg.evaluate((node) =>
+              node.scrollIntoView({
+                block: 'center',
+                inline: 'nearest',
+                behavior: 'instant',
+              }),
+            );
+            await p.waitForTimeout(150);
+            const result = await svg.evaluate((node) => ({
+              width: node.getBoundingClientRect().width,
+              height: node.getBoundingClientRect().height,
+              box: node.getAttribute('viewBox'),
+              aria: node.getAttribute('aria-label'),
+              caption: node.parentElement.querySelector('p').textContent.trim(),
+              font: Number.parseFloat(
+                getComputedStyle(node.parentElement.querySelector('p'))
+                  .fontSize,
+              ),
+              ducks: node.querySelectorAll('[data-comic-duck]').length,
+              cartons: node.querySelectorAll('[data-comic-carton]').length,
+              withinPanel:
+                node.getBoundingClientRect().left >=
+                  node.parentElement.getBoundingClientRect().left &&
+                node.getBoundingClientRect().right <=
+                  node.parentElement.getBoundingClientRect().right,
+              marks: node.querySelector('text')?.textContent?.trim() ?? '',
+              viewport:
+                node.getBoundingClientRect().left >= 0 &&
+                node.getBoundingClientRect().right <= innerWidth &&
+                node.getBoundingClientRect().top >= 0 &&
+                node.getBoundingClientRect().bottom <= innerHeight,
+              overflow: document.documentElement.scrollWidth > innerWidth + 1,
+            }));
+            const ducks =
+              visual.scene === 'ducks'
+                ? [facts.start, facts.arrive, facts.leave, 0][i]
+                : 0;
+            const cartons = visual.scene === 'milk' && i !== 2 ? 1 : 0;
+            if (
+              result.width !== 192 ||
+              result.height !== 144 ||
+              result.box !== '0 0 192 144' ||
+              result.aria !== expected[i] ||
+              result.caption !== expected[i] ||
+              result.font < 20 ||
+              result.ducks !== ducks ||
+              result.cartons !== cartons ||
+              !result.withinPanel ||
+              !result.viewport ||
+              result.overflow ||
+              result.marks !==
+                ((visual.scene === 'milk' && i === 2) ||
+                (visual.scene === 'ducks' && i === 3)
+                  ? '?'
+                  : '')
+            )
+              throw new Error(
+                `Comic presentation ${label} ${i} ${JSON.stringify(result)}`,
+              );
+            if (languageCheck && i === 0) {
+              await p.waitForTimeout(700);
+              await svg.evaluate((node) =>
+                node.scrollIntoView({
+                  block: 'center',
+                  inline: 'nearest',
+                  behavior: 'instant',
+                }),
+              );
+              await p.waitForTimeout(250);
+              await p.screenshot({
+                path: `/tmp/butler-bnu-comic-${label}-${en ? 'en' : 'zh'}-${width}.png`,
+              });
+              await svg.screenshot({
+                path: `/tmp/butler-bnu-comic-${label}-${en ? 'en' : 'zh'}-${width}-diagram.png`,
+              });
+            }
+          }
+        };
+        await check();
+        if (languageCheck) {
+          const saved = JSON.stringify(await read());
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({
+              hasText: visual.scene === 'milk' ? 'Buying' : 'Duck story',
+            })
+            .waitFor();
+          await check();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await check();
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({
+              hasText: visual.scene === 'milk' ? '买一盒' : '小鸭故事',
+            })
+            .waitFor();
+          await check();
+          if (JSON.stringify(await read()) !== saved)
+            throw new Error('Comic language/theme modified saved session');
+        }
+      };
       const inspectDesign = async (visual, label) => {
         const root = p.locator('[data-bnu-pattern-design]');
         await root.waitFor();
@@ -4190,7 +4379,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 47
+          .count()) !== 48
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -4566,6 +4755,8 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'comic')
+        await inspectComic({ scene: 'milk', variant: 'main' }, 'learn-0', true);
       if (flow.key.startsWith('tangram-')) await inspectTangramTeaching(0);
       if (flow.key === 'fold-one') await inspectFoldTeaching(0);
       if (flow.key === 'written')
@@ -4605,6 +4796,12 @@ const server = http.createServer(async (req, res) => {
         );
         if (flow.key.startsWith('tangram-'))
           await inspectTangramTeaching(step + 1);
+        if (flow.key === 'comic' && step + 1 === 9)
+          await inspectComic(
+            { scene: 'ducks', variant: 'main' },
+            'learn-9',
+            true,
+          );
         if (flow.key === 'design') await inspectDesignTeaching(step + 1);
         if (flow.key === 'patterns-three')
           await inspectPatternTeaching(step + 1);
@@ -5542,6 +5739,15 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (q.visual?.kind === 'bnu-comic')
+          await inspectComic(
+            q.visual,
+            q.id,
+            [
+              'bnu-lower-comic-review-after-arrive',
+              'bnu-lower-comic-review-change',
+            ].includes(q.id),
+          );
         if (q.visual?.kind === 'bnu-pattern-design')
           await inspectDesign(q.visual, q.id);
         if (q.visual?.kind === 'bnu-tangram')
@@ -7515,6 +7721,15 @@ const server = http.createServer(async (req, res) => {
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (q.visual?.kind === 'bnu-comic')
+          await inspectComic(
+            q.visual,
+            q.id,
+            [
+              'bnu-lower-comic-review-after-arrive',
+              'bnu-lower-comic-review-change',
+            ].includes(q.id),
+          );
         if (q.visual?.kind === 'bnu-pattern-design')
           await inspectDesign(q.visual, q.id);
         if (q.visual?.kind === 'bnu-tangram')

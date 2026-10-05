@@ -1384,5 +1384,21 @@
   "patternDesignDots": "本站空白点子图：可在纸上画同样的点阵，连点设计自己的图案。没有隐藏连线。",
   "patternDesignCard": "图{label}，外边按顶点{points}依次闭合；内部虚线不改变外边。",
   "patternDesignGridAria": "本站等间距空白点阵，点间距24图示单位，没有已画轮廓。",
-  "patternDesignNotice": "本站原创辅助图，不是原书涂色格或原作品。实际涂色、合作和创作须另外完成并如实记录。"
+  "patternDesignNotice": "本站原创辅助图，不是原书涂色格或原作品。实际涂色、合作和创作须另外完成并如实记录。",
+  "comicTitle_milk": "买一盒牛奶：读故事里的数学",
+  "comicTitle_ducks": "小鸭故事：先来，再离开",
+  "comicOrder": "按第1、2、3、4幅顺序读；窄屏从上往下，双列从左到右再到下一行。",
+  "comicFrame": "第{frame}幅",
+  "comic_need": "生活情境：需要一盒牛奶。",
+  "comic_pay": "买1盒，价钱{price}元，付出{tendered}元。",
+  "comic_change": "付款后，要找回多少元？这里只留问题。",
+  "comic_home": "回到生活情境。不是又买了一盒，不再重复计算价钱。",
+  "comic_start": "开始有{start}只鸭子。",
+  "comic_arrive": "又来了{arrive}只。这幅只画新来的鸭子，不是此时全部鸭子。",
+  "comic_leave": "接着，从聚在一起的鸭子中离开{leave}只。这幅只画离开的鸭子。",
+  "comic_question": "又来后有多少只？离开后还剩多少只？按顺序分别提问。",
+  "comicMilkNotice": "图为本站原创示意，数量以标出的条件为准；这不是商品现价，也不要求实际购买或制作食品。",
+  "comicDuckNotice": "每只小鸭对应一只鸭子，三幅分别画开始、新来、离开；同一段事件不能当三群独立鸭子再相加。问号不是鸭子。",
+  "comicMainNotice": "数量关系对应教材例子，配图不复制原插画；这里不显示计算结果。",
+  "comicReviewNotice": "这是改变条件的本站新故事，不沿用教材例子的答案。"
 }

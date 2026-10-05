@@ -9,6 +9,7 @@ import { isBnuAroundNumbersVisual } from './bnu-around-numbers';
 import { isBnuBuildingVisual } from './bnu-building';
 import { isBnuCalculationReviewVisual } from './bnu-calculation-review';
 import { isBnuCaterpillarVisual } from './bnu-caterpillar';
+import { isBnuComicVisual } from './bnu-comic';
 import { isBnuFillGridVisual } from './bnu-fill-grid';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
@@ -521,6 +522,9 @@ function visual(value: unknown) {
     }
     case 'occlusion-views': {
       return isOcclusionViewsVisual(value);
+    }
+    case 'bnu-comic': {
+      return isBnuComicVisual(value);
     }
     case 'math-story': {
       return isMathStoryVisual(value);

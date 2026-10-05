@@ -1384,5 +1384,21 @@
   "patternDesignDots": "Blank site dot grid: copy the dots onto paper and connect them to design a pattern. There are no hidden lines.",
   "patternDesignCard": "Diagram {label}: join vertices {points} in order and close the outline. Internal dashed lines do not change that outline.",
   "patternDesignGridAria": "Blank site grid with points 24 diagram units apart; no outline has been drawn.",
-  "patternDesignNotice": "Original site aids, not the textbook coloring grid or original artwork. Record actual coloring, cooperation and drawing separately."
+  "patternDesignNotice": "Original site aids, not the textbook coloring grid or original artwork. Record actual coloring, cooperation and drawing separately.",
+  "comicTitle_milk": "Buying one carton: read the mathematics",
+  "comicTitle_ducks": "Duck story: arrivals, then departures",
+  "comicOrder": "Read frames 1, 2, 3, 4. Read downwards on narrow screens; across each row in two columns.",
+  "comicFrame": "Frame {frame}",
+  "comic_need": "Everyday setting: one carton of milk is needed.",
+  "comic_pay": "Buy one carton costing {price} yuan; pay {tendered} yuan.",
+  "comic_change": "After payment, how much change is due? The answer is left open.",
+  "comic_home": "Return to the everyday setting. This is not another purchase; do not count the price twice.",
+  "comic_start": "Initially there are {start} ducks.",
+  "comic_arrive": "Another {arrive} ducks arrive. This frame shows only the arrivals, not the whole group.",
+  "comic_leave": "Then {leave} ducks leave the combined group. This frame shows only the departures.",
+  "comic_question": "How many after arrivals? How many remain after departures? Ask in event order.",
+  "comicMilkNotice": "Original site illustration. Use the stated conditions; these are not current prices and no purchase or food preparation is required.",
+  "comicDuckNotice": "Each symbol represents one duck. Frames show the initial group, arrivals, and departures; they are not independent groups to add. The question mark is not a duck.",
+  "comicMainNotice": "Conditions follow the textbook example; illustrations are original and calculated answers are hidden.",
+  "comicReviewNotice": "This is a new site story with changed conditions. Do not reuse the textbook answers."
 }

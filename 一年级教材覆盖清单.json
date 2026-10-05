@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T19:15:15.603Z",
+  "generatedAt": "2026-10-05T19:50:51.194Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 47,
-        "pendingEntries": 2,
+        "availablePacks": 48,
+        "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1244,
-          "manual": 504,
-          "reflection": 193
+          "objective": 1261,
+          "manual": 514,
+          "reflection": 201
         }
       },
       "units": [
@@ -37095,36 +37095,154 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-comic-pending",
-              "title": "画数学连环画",
+              "id": "bnu-lower-comic",
+              "title": "读数学故事、画连环画、交流修改与自评",
               "textbookTitle": "画数学连环画",
               "page": 87,
               "version": 1,
-              "status": "preparing",
-              "goal": "目录已核对，尚未发布的正文课程继续制作。",
-              "prerequisite": "",
+              "status": "available",
+              "goal": "读买牛奶和小鸭故事的数学信息，选自己的题材、分格按顺序画，讲述和阅读别人的作品，真实交流修改，再分别评价三项能力。",
+              "prerequisite": "能读20以内数和加减关系；准备纸与笔，困难时请成人帮读。没有作品或交流条件可如实待做，不要求学校资料。",
               "referenceQuery": null,
-              "steps": 0,
+              "steps": 12,
               "tasks": {
-                "objective": 0,
-                "manual": 0,
-                "reflection": 0
+                "objective": 17,
+                "manual": 10,
+                "reflection": 8
               },
               "reviewTasks": {
-                "objective": 0,
+                "objective": 8,
                 "manual": 0,
                 "reflection": 0
               },
-              "knowledge": [],
-              "questionKinds": [],
-              "visualKinds": [],
+              "knowledge": ["bnu-lower-comic"],
+              "questionKinds": ["number", "choice", "manual", "reflection"],
+              "visualKinds": ["bnu-comic"],
               "audit": {
-                "date": "2026-10-04",
-                "reviewer": "两页原书目录核对",
-                "notes": "目录和页码事实不表示正文课程完成。"
+                "date": "2026-10-06",
+                "reviewer": "公开扫描87～89页活动与数量关系核对",
+                "notes": "十一原活动逐项展开，两例条件重述、配图原创；创作、交流、欣赏、修改和三项自评保留真实记录，程序验收另核，不冒全书全年已完成。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "source": "https://keben.szxuexiao.com/html/10764.html",
+            "checkedAt": "2026-10-06",
+            "readPrintedPages": [87, 88, 89],
+            "status": "original-teaching-mapped",
+            "finalTeacherReview": "not-verified",
+            "scope": "十一原活动对应12讲解、17客观、10真实人工及8开放记录，三项自评分别保留原话、不自动赋星；8复习题改变条件与范围。两源例数量关系重述、图为本站原创。375/768/1200全流程、图形/字号/ARIA/中英主题、0刷新/重试/旧人教会话/schema1备份已检查；程序核验不代全书、全年完整审计，90页起总复习另核。",
+            "activities": [
+              {
+                "page": 87,
+                "sourceActivity": "read-milk-story-and-identify-math-information",
+                "steps": [1],
+                "objective": ["milk-cartons", "milk-change", "milk-units"],
+                "manual": ["actual-milk-read"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 87,
+                "sourceActivity": "tell-life-experience-and-discuss-comic-plan",
+                "steps": [2],
+                "objective": ["origin"],
+                "manual": ["actual-own-tell"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 88,
+                "sourceActivity": "identify-own-math-information-and-plan-panel-count",
+                "steps": [3, 4],
+                "objective": ["math-information", "panel-count"],
+                "manual": ["actual-plan"],
+                "records": ["own-information"],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 88,
+                "sourceActivity": "divide-and-draw-in-story-order",
+                "steps": [4, 5],
+                "objective": ["plan-order", "drawing-clear"],
+                "manual": ["actual-draw"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 88,
+                "sourceActivity": "discuss-actual-drawing-difficulties",
+                "steps": [6],
+                "objective": ["feedback-real"],
+                "manual": ["actual-difficulty"],
+                "records": ["difficulty-record"],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "read-peer-comics-and-present-own",
+                "steps": [7],
+                "objective": ["peer-reading"],
+                "manual": ["actual-present", "actual-peer-read"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "check-math-information-and-appreciate",
+                "steps": [8],
+                "objective": ["appreciate"],
+                "manual": ["actual-appreciate"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "revise-after-reading-peers",
+                "steps": [9],
+                "objective": ["revise"],
+                "manual": ["actual-revise"],
+                "records": ["revision-record"],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "read-duck-events-question-and-two-equations",
+                "steps": [10],
+                "objective": [
+                  "ducks-total",
+                  "ducks-remaining",
+                  "ducks-events",
+                  "site-zero"
+                ],
+                "manual": ["actual-duck-read"],
+                "records": [],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "share-learning-from-drawing",
+                "steps": [11],
+                "objective": [],
+                "manual": [],
+                "records": ["learning-record", "future-plan"],
+                "lesson": "bnu-lower-comic"
+              },
+              {
+                "page": 89,
+                "sourceActivity": "self-assess-three-separate-capabilities",
+                "steps": [12],
+                "objective": ["self-assessment"],
+                "manual": [],
+                "records": [
+                  "stars-create",
+                  "stars-express",
+                  "stars-understand"
+                ],
+                "lesson": "bnu-lower-comic"
+              }
+            ]
+          }
         },
         {
           "id": "final",

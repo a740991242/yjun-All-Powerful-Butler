@@ -3,6 +3,7 @@ import type { BnuAroundNumbersVisual } from './bnu-around-numbers';
 import type { BnuBuildingVisual } from './bnu-building';
 import type { BnuCalculationReviewVisual } from './bnu-calculation-review';
 import type { BnuCaterpillarVisual } from './bnu-caterpillar';
+import type { BnuComicVisual } from './bnu-comic';
 import type { BnuFillGridVisual } from './bnu-fill-grid';
 import type { BnuFinalClassificationVisual } from './bnu-final-classification';
 import type { BnuFinalColorVisual } from './bnu-final-color';
@@ -468,6 +469,7 @@ export type Visual =
   | BnuBuildingVisual
   | BnuCalculationReviewVisual
   | BnuCaterpillarVisual
+  | BnuComicVisual
   | BnuDayClockVisual
   | BnuFillGridVisual
   | BnuFinalClassificationVisual

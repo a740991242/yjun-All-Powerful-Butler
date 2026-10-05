@@ -8,6 +8,7 @@ import { bnuLowerBreedingLesson } from './bnu-lower-breeding';
 import { bnuLowerCalculationReviewLesson } from './bnu-lower-calculation-review';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
+import { bnuLowerComicLesson } from './bnu-lower-comic';
 import { bnuLowerComparisonPracticeLesson } from './bnu-lower-comparison-practice';
 import { bnuLowerComplementLesson } from './bnu-lower-complement';
 import { bnuLowerCountBeansLesson } from './bnu-lower-count-beans';
@@ -398,6 +399,7 @@ function pending(key: string, title: string, page: number): Lesson {
 }
 
 const authoredLessons: Record<string, Lesson[]> = {
+  comic: [bnuLowerComicLesson],
   u6: [
     bnuLowerRecognizeShapesLesson,
     bnuLowerFoldOneLesson,
