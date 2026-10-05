@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T00:17:24.194Z",
+  "generatedAt": "2026-10-05T00:37:28.810Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 27,
+        "availablePacks": 28,
         "pendingEntries": 6,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 813,
-          "manual": 276,
-          "reflection": 101
+          "objective": 831,
+          "manual": 281,
+          "reflection": 105
         }
       },
       "units": [
@@ -34193,10 +34193,46 @@
               }
             },
             {
+              "id": "bnu-lower-comparison-practice",
+              "title": "比较与排序练习：人数、年龄与四组得分",
+              "textbookTitle": "练一练：比较与排序",
+              "page": 54,
+              "version": 1,
+              "status": "available",
+              "goal": "根据参照对象和候选比较少一些、少得多、差不多；完整排序四组得分并保留组名对应，解释排序方向。",
+              "prerequisite": "能比较100以内的数，能说多/少的方向，理解差不多不是相等。",
+              "referenceQuery": null,
+              "steps": 5,
+              "tasks": {
+                "objective": 18,
+                "manual": 5,
+                "reflection": 4
+              },
+              "reviewTasks": {
+                "objective": 5,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-comparison-practice"],
+              "questionKinds": [
+                "number",
+                "steps",
+                "choice",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [],
+              "audit": {
+                "date": "2026-10-05",
+                "reviewer": "54页三项完整活动与全部候选及组名得分来源核对",
+                "notes": "来源核对不冒最终教师试用；原条件与换数换方向复习分开。"
+              }
+            },
+            {
               "id": "bnu-lower-u4-pending",
               "title": "100以内数的认识：后续课程",
               "textbookTitle": "100以内数的认识：后续课程",
-              "page": 54,
+              "page": 55,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -34230,7 +34266,7 @@
             "unit": "u4",
             "status": "original-teaching-implemented",
             "finalTeacherReview": "not-verified",
-            "scope": "仅44～53页身边的数、数一数、数豆子、红果比较与小小养殖场三十五项原活动；54页起仍制作，不证明整个第四单元或全年完成。",
+            "scope": "仅44～54页身边的数、数一数、数豆子、红果比较、小小养殖场与比较排序练习三十八项原活动；55页起仍制作，不证明整个第四单元或全年完成。",
             "activities": [
               {
                 "page": 44,
@@ -34801,6 +34837,57 @@
                   "plan"
                 ],
                 "boundary": "原五点与本站补0刻度分清，标签分行仅防重叠；真实标点解释与反思及计划独立。"
+              },
+              {
+                "page": 54,
+                "sourceActivity": "sports-candidates",
+                "lesson": "bnu-lower-comparison-practice",
+                "steps": [1, 2],
+                "objective": [
+                  "run-reference",
+                  "sports-candidates",
+                  "long-jump",
+                  "skipping",
+                  "not-less",
+                  "reverse",
+                  "zero-compatible",
+                  "threshold"
+                ],
+                "manual": ["actual-sports-mark", "actual-sports-language"],
+                "records": [],
+                "boundary": "两个条件和圈勾分别完成，参照反向改变多/少；88符合项数0不当未填，定性词限本情境。"
+              },
+              {
+                "page": 54,
+                "sourceActivity": "age-candidates",
+                "lesson": "bnu-lower-comparison-practice",
+                "steps": [3],
+                "objective": [
+                  "age-reference",
+                  "age-candidate",
+                  "close-not-equal",
+                  "age-real"
+                ],
+                "manual": ["actual-age"],
+                "records": [],
+                "boundary": "原37和39候选不冒家庭真实调查，差不多不相等，不补通用年龄阈值。"
+              },
+              {
+                "page": 54,
+                "sourceActivity": "sort-four-scores",
+                "lesson": "bnu-lower-comparison-practice",
+                "steps": [4, 5],
+                "objective": [
+                  "score-original",
+                  "sorted-scores",
+                  "top-group",
+                  "second-group",
+                  "last-group",
+                  "comparison-sign"
+                ],
+                "manual": ["actual-score-cards", "actual-score-explain"],
+                "records": ["own-method", "discovery", "difficulty", "plan"],
+                "boundary": "全部四卡保留组名分数对应，高到低与前页升序分清；实做/开放记录/未来计划独立。"
               }
             ]
           }

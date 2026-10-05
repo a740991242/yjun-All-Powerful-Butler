@@ -15,6 +15,7 @@ import { bnuLowerBlocksLesson } from './bnu-lower-blocks';
 import { bnuLowerBreedingLesson } from './bnu-lower-breeding';
 import { bnuLowerChoresLesson } from './bnu-lower-chores';
 import { bnuLowerClassroomLesson } from './bnu-lower-classroom';
+import { bnuLowerComparisonPracticeLesson } from './bnu-lower-comparison-practice';
 import { bnuLowerComplementLesson } from './bnu-lower-complement';
 import { bnuLowerCountBeansLesson } from './bnu-lower-count-beans';
 import { bnuLowerCountHundredLesson } from './bnu-lower-count-hundred';
@@ -91,6 +92,7 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     bnuLowerCountBeansLesson,
     bnuLowerRedFruitLesson,
     bnuLowerBreedingLesson,
+    bnuLowerComparisonPracticeLesson,
   ]);
   expect(all.filter(({ status }) => status === 'preparing')).toHaveLength(6);
   expect(
@@ -105,7 +107,8 @@ it('uses the actual 2024-approved lower contents with distinct book identity and
     ['bnu-lower-count-beans', 'available', 48],
     ['bnu-lower-red-fruit', 'available', 50],
     ['bnu-lower-breeding', 'available', 52],
-    ['bnu-lower-u4-pending', 'preparing', 54],
+    ['bnu-lower-comparison-practice', 'available', 54],
+    ['bnu-lower-u4-pending', 'preparing', 55],
   ]);
   expect(
     bnuLowerBook.units[0]?.lessons.every((l) => l.status === 'available'),

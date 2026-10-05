@@ -14,6 +14,17 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--comparison-practice'))
+    return {
+      index: 27,
+      lessonId: 'bnu-lower-comparison-practice',
+      zero: '-zero-compatible',
+      retry: '-long-jump',
+      manual: 5,
+      steps: 5,
+      review: 5,
+      key: 'comparison-practice',
+    };
   if (process.argv.includes('--breeding'))
     return {
       index: 26,
@@ -812,7 +823,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 27
+          .count()) !== 28
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -1947,24 +1958,36 @@ const server = http.createServer(async (req, res) => {
             await p.getByRole('spinbutton').nth(1).fill('7');
           } else if (
             q.rule.kind === 'steps' &&
-            flow.key === 'breeding' &&
-            q.id.endsWith('-sorted-cards')
+            ((flow.key === 'breeding' && q.id.endsWith('-sorted-cards')) ||
+              (flow.key === 'comparison-practice' &&
+                q.id.endsWith('-sorted-scores')))
           ) {
-            await p.getByRole('spinbutton').first().fill('10');
+            const partial =
+              flow.key === 'breeding'
+                ? [10, null, null, null, null]
+                : [95, null, null, null];
+            const wrong =
+              flow.key === 'breeding' ? [10, 38, 50, 98, 51] : [95, 88, 91, 79];
+            await p.getByRole('spinbutton').first().fill(String(partial[0]));
             await wait(
               (d) =>
                 JSON.stringify(
                   d.sessions.find((item) => item.id === sid).responses[index]
                     .draft,
-                ) === '[10,null,null,null,null]',
+                ) === JSON.stringify(partial),
             );
             await p.reload({ waitUntil: 'networkidle' });
             const fields = await p
               .getByRole('spinbutton')
               .evaluateAll((nodes) => nodes.map((n) => n.value));
-            if (JSON.stringify(fields) !== '["10","","","",""]')
-              throw new Error('Five-card sort partial draft lost');
-            for (const [i, value] of [10, 38, 50, 98, 51].entries()) {
+            if (
+              JSON.stringify(fields) !==
+              JSON.stringify(
+                partial.map((value) => (value === null ? '' : String(value))),
+              )
+            )
+              throw new Error('Complete-card sort partial draft lost');
+            for (const [i, value] of wrong.entries()) {
               const input = p.getByRole('spinbutton').nth(i);
               await input.evaluate((n) =>
                 n
@@ -1986,11 +2009,13 @@ const server = http.createServer(async (req, res) => {
                 );
               });
               if (!fits)
-                throw new Error('Five-card sort field clipped or too small');
+                throw new Error(
+                  'Complete-card sort field clipped or too small',
+                );
               await input.fill(String(value));
-              if (i === 0 || i === 4)
+              if (i === 0 || i === wrong.length - 1)
                 await p.screenshot({
-                  path: `/tmp/butler-bnu-breeding-sort-${width}-${i}.png`,
+                  path: `/tmp/butler-bnu-${flow.key}-sort-${width}-${i}.png`,
                 });
             }
             await click('提交答案');
