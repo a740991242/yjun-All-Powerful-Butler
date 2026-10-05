@@ -60,6 +60,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     let expectedSubjects: string[] = ['chinese', 'ethics'];
     if (
       [
+        'anhui',
         'fujian',
         'guizhou',
         'henan',
@@ -77,6 +78,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     ).toEqual(expectedSubjects);
     expect(required(rows[1]).resolution.status).toBe(
       [
+        'anhui',
         'fujian',
         'guizhou',
         'henan',
@@ -382,7 +384,7 @@ it('applies Henan digital catalog references for both volumes without claiming p
   }
 });
 
-it('applies Anhui upper combinations without inheriting the price catalog into lower or English', () => {
+it('applies Anhui upper and lower combinations using their own sources without creating English', () => {
   const local = {
     ...query,
     province: 'anhui',
@@ -408,9 +410,36 @@ it('applies Anhui upper combinations without inheriting the price catalog into l
   ]);
   expect(upper[3]!.action).toBeUndefined();
   const lower = regionalApplicationPlan({ ...local, volume: 'lower' });
-  expect(lower[1]!.action).toBeUndefined();
+  expect(lower[1]!.resolution).toMatchObject({
+    status: 'recommended',
+    edition: 'pep-2024',
+    catalogYear: '2025',
+    alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+    evidence: [
+      {
+        id: 'anhui-grade-one-math-lower-catalog-2025',
+        publishedAt: '',
+      },
+    ],
+  });
+  expect(
+    lower.flatMap((row) =>
+      row.action ? [regionalActionPath(row.action)] : [],
+    ),
+  ).toEqual([
+    '/education/primary/p1/chinese/pep-2024/lower',
+    '/education/primary/p1/math/pep-2024/lower',
+    '/education/primary/p1/ethics/pep-2024/lower',
+  ]);
   expect(lower[3]!.action).toBeUndefined();
-  expect(lower.filter((row) => row.action)).toHaveLength(2);
+  for (const schoolSystem of ['unknown', 'five-four'] as const)
+    expect(
+      regionalApplicationPlan({
+        ...local,
+        volume: 'lower',
+        schoolSystem,
+      }).every((row) => !row.action),
+    ).toBe(true);
 });
 
 it('applies Liaoning both-volume combinations using the matching reference year and preserving unknown English', () => {

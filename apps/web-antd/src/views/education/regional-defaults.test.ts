@@ -226,7 +226,7 @@ it('keeps Henan upper/lower digital catalog identities, dates and fresh referenc
   }
 });
 
-it('keeps Anhui autumn references limited to the verified upper volume', () => {
+it('keeps Anhui autumn references separate from the spring table', () => {
   for (const academicYear of ['2025-2026', '2026-2027']) {
     const local = { ...query, province: 'anhui', academicYear };
     const result = regionalMathematicsDefault(local)!;
@@ -250,12 +250,54 @@ it('keeps Anhui autumn references limited to the verified upper volume', () => {
       '2025-08-20',
     );
     for (const change of [
-      { volume: 'lower' },
       { city: 'hefei' },
       { school: 'school' },
       { subject: 'english' },
       { grade: 'p2' },
       { academicYear: '2027-2028' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});
+
+it('uses the independently read Anhui spring table without guessing its publication date', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const local = {
+      ...query,
+      province: 'anhui',
+      volume: 'lower',
+      academicYear,
+    };
+    const result = regionalMathematicsDefault(local)!;
+    expect(result).toMatchObject({
+      edition: 'pep-2024',
+      catalogYear: '2025',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+    });
+    expect(result.evidence[0]).toMatchObject({
+      id: 'anhui-grade-one-math-lower-catalog-2025',
+      sourceUrl:
+        'https://fzggw.ah.gov.cn/group6/M00/0C/9B/wKg8BmeQX3yADVmNAAr0AJTqIDc908.doc',
+      publishedAt: '',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[0]!.issuedAt).toBeUndefined();
+    expect(result.evidence[0]!.sourceTitle).toContain('第9、128、157项');
+    result.alternatives!.pop();
+    result.evidence[0]!.sourceUrl = 'https://example.invalid';
+    expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(3);
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl).toContain(
+      'fzggw.ah.gov.cn',
+    );
+    for (const change of [
+      { city: 'hefei' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { academicYear: '2027-2028' },
+      { volume: 'all' },
     ])
       expect(
         regionalMathematicsDefault({ ...local, ...change }),

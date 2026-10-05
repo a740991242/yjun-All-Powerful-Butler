@@ -98,6 +98,24 @@ export function regionalMathematicsDefault(
         },
       ],
     };
+  if (query.province === 'anhui' && query.volume === 'lower')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao', 'bnu-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'anhui-grade-one-math-lower-catalog-2025',
+          sourceUrl:
+            'https://fzggw.ah.gov.cn/group6/M00/0C/9B/wKg8BmeQX3yADVmNAAr0AJTqIDc908.doc',
+          sourceTitle:
+            '2025年春季安徽省中小学教材零售价格表（省发改委原附件，第9、128、157项，一年级数学下册，北师大、人教、苏教）',
+          // The table confirms its season; Word metadata is not a release date.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'zhejiang') {
     const upper = query.volume === 'upper';
     return {

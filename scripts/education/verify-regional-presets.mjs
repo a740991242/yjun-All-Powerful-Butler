@@ -637,25 +637,43 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-anhui-upper-default-${width}.png`,
         });
         await choose('education-region-volume', '下册');
-        if (await anhuiCatalog.count())
-          throw new Error('Anhui autumn catalog leaked into lower');
+        await anhuiCatalog.waitFor();
+        await region
+          .locator(
+            'a[href="https://fzggw.ah.gov.cn/group6/M00/0C/9B/wKg8BmeQX3yADVmNAAr0AJTqIDc908.doc"]',
+          )
+          .waitFor();
+        if (
+          await region
+            .locator(
+              'a[href="https://www.jiuhuashan.gov.cn/OpennessContent/show/1675041.html"]',
+            )
+            .count()
+        )
+          throw new Error('Anhui autumn source leaked into lower');
+        await region.getByText('第9、128、157项', { exact: false }).waitFor();
+        await region.getByText('资料发布：未标注', { exact: false }).waitFor();
+        const anhuiLowerAlternatives = await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .textContent();
+        for (const publisher of ['人教版', '苏教版', '北师大版'])
+          if (!anhuiLowerAlternatives.includes(publisher))
+            throw new Error('Anhui spring alternative missing');
         await apply.click();
-        for (const subject of ['语文', '道德与法治'])
+        for (const subject of ['语文', '数学', '道德与法治'])
           await p
             .getByRole('button', {
               name: `${subject} · 人教版（2024审定） · 下册`,
               exact: true,
             })
             .waitFor();
-        if (
-          await p
-            .getByRole('button', {
-              name: '数学 · 人教版（2024审定） · 下册',
-              exact: true,
-            })
-            .count()
-        )
-          throw new Error('Anhui lower gained unverified math');
+        await anhuiCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        await p.screenshot({
+          path: `/tmp/butler-anhui-lower-default-${width}.png`,
+        });
         await choose('education-region-province', '湖南', true);
         await choose('education-region-volume', '上册');
         await region
@@ -980,8 +998,52 @@ const server = http.createServer(async (req, res) => {
           path: `/tmp/butler-anhui-upper-default-${width}-en-dark.png`,
         });
         await choose('education-region-volume', 'Lower volume');
-        if (await anhuiEnglishCatalog.count())
-          throw new Error('Anhui English autumn catalog leaked into lower');
+        await anhuiEnglishCatalog.waitFor();
+        await p
+          .locator(
+            'a[href="https://fzggw.ah.gov.cn/group6/M00/0C/9B/wKg8BmeQX3yADVmNAAr0AJTqIDc908.doc"]',
+          )
+          .waitFor();
+        await p
+          .getByText('Published: Not stated; checked: 2026-10-06', {
+            exact: false,
+          })
+          .waitFor();
+        if (
+          (await p
+            .getByText('Document date: 2025-08-15', { exact: false })
+            .count()) ||
+          (await p
+            .getByText('Published: 2025-08-20;', { exact: false })
+            .count())
+        )
+          throw new Error('Anhui upper dates leaked into lower');
+        await p
+          .getByRole('button', {
+            name: 'Apply available subject editions together',
+            exact: true,
+          })
+          .click();
+        for (const subject of ['Chinese', 'Mathematics', 'Morality and Law'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · PEP (2024 approved) · Lower volume`,
+              exact: true,
+            })
+            .waitFor();
+        await anhuiEnglishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Anhui lower English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-anhui-lower-default-${width}-en-dark.png`,
+        });
         if (
           (await p.evaluate(async () =>
             JSON.stringify(await window.qaLoad()),
@@ -1006,9 +1068,9 @@ const server = http.createServer(async (req, res) => {
             ZhejiangUpperLowerThreeSubjects: true,
             ZhejiangVolumeSourcesAndUnknownDatesBilingual: true,
             LiaoningVolumeYearsSourcesDatesBilingual: true,
-            AnhuiUpperThreeSubjectsLowerTwoSubjects: true,
+            AnhuiUpperLowerThreeSubjects: true,
             AnhuiUpperDatesAndScopeBilingual: true,
-            AnhuiLowerDoesNotInheritAutumnMath: true,
+            AnhuiVolumeSourcesAndUnknownSpringDatesBilingual: true,
             HenanDigitalCatalogScopeBilingual: true,
             HenanVolumeSourcesAndDatesSeparate: true,
             HubeiUpperUnknownPublicationDateBilingual: true,
