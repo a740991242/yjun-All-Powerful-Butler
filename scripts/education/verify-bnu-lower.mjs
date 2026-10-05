@@ -14,6 +14,29 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   '',
 );
 function selectedFlow() {
+  if (process.argv.includes('--final-number-review'))
+    return {
+      index: 48,
+      lessonId: 'bnu-lower-final-number-review',
+      zero: '-site-zero',
+      retry: '-rabbit',
+      manual: 13,
+      steps: 12,
+      review: 7,
+      key: 'final-number-review',
+    };
+  if (process.argv.includes('--final-number-applications'))
+    return {
+      index: 49,
+      lessonId: 'bnu-lower-final-number-applications',
+      zero: '-site-zero',
+      retry: '-rescue',
+      manual: 9,
+      steps: 14,
+      review: 8,
+      key: 'final-number-applications',
+    };
+
   if (process.argv.includes('--comic'))
     return {
       index: 47,
@@ -4301,6 +4324,260 @@ const server = http.createServer(async (req, res) => {
           n.scrollLeft = 0;
         });
       };
+      const inspectFinalStrip = async (values, label) => {
+        const root = p.locator('[data-number-strip]');
+        await root.waitFor();
+        const slots = root.locator('[data-number-position]');
+        let blank = 0;
+        const expected = values.map((x) =>
+          x === null ? String.fromCodePoint(65 + blank++) : String(x),
+        );
+        if (
+          JSON.stringify(await slots.allTextContents()) !==
+          JSON.stringify(expected)
+        )
+          throw new Error(`Final number strip slots ${label}`);
+        const details = await slots.evaluateAll((nodes) =>
+          nodes.map((n) => ({
+            position: n.dataset.numberPosition,
+            aria: n.getAttribute('aria-label'),
+            size: Number.parseFloat(getComputedStyle(n).fontSize),
+            width: n.getBoundingClientRect().width,
+            height: n.getBoundingClientRect().height,
+          })),
+        );
+        for (let i = 0; i < values.length; i++) {
+          const d = details[i];
+          const aria =
+            values[i] === null
+              ? `第${i + 1}个位置，待填${expected[i]}`
+              : `第${i + 1}个位置，已知数${values[i]}`;
+          if (
+            d.position !== String(i + 1) ||
+            d.aria !== aria ||
+            d.size < 20 ||
+            d.width < 44 ||
+            d.height < 44
+          )
+            throw new Error(
+              `Final strip accessibility ${label} ${JSON.stringify(d)}`,
+            );
+        }
+        const region = root.getByRole('region');
+        await region.evaluate((n) => {
+          n.scrollLeft = 0;
+        });
+        const max = await region.evaluate((n) => n.scrollWidth - n.clientWidth);
+        await region.focus();
+        await region.press('ArrowRight');
+        await p.waitForTimeout(300);
+        if (max > 1 && (await region.evaluate((n) => n.scrollLeft)) <= 0)
+          throw new Error(`Final strip keyboard ${label}`);
+        for (const edge of [0, max]) {
+          await region.evaluate((n, x) => {
+            n.scrollLeft = x;
+          }, edge);
+          const slot = edge === 0 ? slots.first() : slots.last();
+          const visible = await slot.evaluate((n) => {
+            const r = n.getBoundingClientRect();
+            const b = n.closest('[role="region"]').getBoundingClientRect();
+            return (
+              r.left >= b.left &&
+              r.right <= b.right &&
+              r.left >= 0 &&
+              r.right <= innerWidth
+            );
+          });
+          if (!visible) throw new Error(`Final strip edge ${label}`);
+        }
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth + 1,
+          )
+        )
+          throw new Error(`Final strip page overflow ${label}`);
+      };
+      const inspectFinalData = async (visual, label, bilingual = false) => {
+        const root = p.locator('[data-bnu-final-data]');
+        const review = visual.variant === 'review';
+        const conditions = {
+          farm: review ? [28, 14, 5] : [35, 11, 4],
+          rescue: review ? [43, 12] : [32, 13],
+          rings: review ? [18, 14, 22, 26] : [24, 12, 30, 32],
+          rope: review ? [83, 87, 82, 86] : [92, 95, 94, 99],
+        }[visual.scene];
+        const names = {
+          farm: { zh: ['羊', '鹅', '兔'], en: ['Sheep', 'Geese', 'Rabbits'] },
+          rescue: {
+            zh: ['上半年', '下半年'],
+            en: ['First half-year', 'Second half-year'],
+          },
+          rings: {
+            zh: ['象', '鹿', '熊猫', '企鹅'],
+            en: ['Elephant', 'Deer', 'Panda', 'Penguin'],
+          },
+          rope: {
+            zh: ['强强', '乐乐', '小红', '欢欢'],
+            en: ['Qiangqiang', 'Lele', 'Xiaohong', 'Huanhuan'],
+          },
+        }[visual.scene];
+        const check = async () => {
+          await root.waitFor();
+          if (
+            (await root.getAttribute('data-scene')) !== visual.scene ||
+            (await root.getAttribute('data-variant')) !== visual.variant
+          )
+            throw new Error(`Final data identity ${label}`);
+          const en = /[A-Za-z]/.test(
+            await root.locator('figcaption').innerText(),
+          );
+          const rows = root.locator('tbody tr[data-row-key]');
+          if ((await rows.count()) !== conditions.length)
+            throw new Error(`Final data rows ${label}`);
+          for (let i = 0; i < conditions.length; i++) {
+            const letter = String.fromCodePoint(65 + i);
+            const cells = await rows.nth(i).locator('td').allTextContents();
+            const n = conditions[i];
+            let condition;
+            if (visual.scene === 'farm') {
+              if (i === 2)
+                condition = en ? `${n} more than the sheep` : `比羊多${n}只`;
+              else condition = en ? `${n} animals` : `${n}只`;
+            } else if (visual.scene === 'rescue') {
+              if (i === 1)
+                condition = en
+                  ? `${n} more than in the first half-year`
+                  : `比上半年多${n}只`;
+              else condition = en ? `${n} animals rescued` : `救助${n}只`;
+            } else if (visual.scene === 'rings') {
+              condition = en ? `${n} points` : `${n}分`;
+            } else {
+              condition = en ? `${n} jumps` : `${n}次`;
+            }
+            const expected = [
+              `${letter} · ${names[en ? 'en' : 'zh'][i]}`,
+              condition,
+              ...(visual.scene === 'rope' ? [letter] : []),
+            ];
+            if (
+              JSON.stringify(cells.map((x) => x.trim())) !==
+              JSON.stringify(expected)
+            )
+              throw new Error(
+                `Final conditions ${label}: ${JSON.stringify(cells)}`,
+              );
+            if (visual.scene === 'rope') {
+              const aria = await rows
+                .nth(i)
+                .locator('td')
+                .last()
+                .locator('span')
+                .getAttribute('aria-label');
+              if (
+                aria !==
+                (en
+                  ? `Rank for row ${letter} is blank; the letter is not its rank.`
+                  : `第${letter}行名次待填，不是字母顺序名次。`)
+              )
+                throw new Error(`Final rank ARIA ${label}`);
+            }
+          }
+          const geometry = await root.evaluate((node) => ({
+            small: [
+              ...node.querySelectorAll('p,figcaption,thead span,tbody span'),
+            ].some((n) => Number.parseFloat(getComputedStyle(n).fontSize) < 20),
+            clipped: [...node.querySelectorAll('thead span,tbody span')].some(
+              (n) => n.scrollWidth > n.clientWidth + 1,
+            ),
+            overflow: document.documentElement.scrollWidth > innerWidth + 1,
+          }));
+          if (geometry.small || geometry.clipped || geometry.overflow)
+            throw new Error(
+              `Final table geometry ${label}: ${JSON.stringify(geometry)}`,
+            );
+          const region = root.locator('[data-final-data-scroll]');
+          const content = region.locator('.ant-table-content');
+          await content.evaluate((n) => {
+            n.scrollLeft = 0;
+          });
+          const maximum = await content.evaluate(
+            (n) => n.scrollWidth - n.clientWidth,
+          );
+          await region.focus();
+          await region.press('ArrowRight');
+          await p.waitForTimeout(200);
+          const right = await content.evaluate((n) => n.scrollLeft);
+          if (maximum > 1 && right <= 0)
+            throw new Error(`Final table keyboard right ${label}`);
+          await region.press('ArrowLeft');
+          await p.waitForTimeout(200);
+          if ((await content.evaluate((n) => n.scrollLeft)) > 1)
+            throw new Error(`Final table keyboard left ${label}`);
+          for (const edge of [0, maximum]) {
+            await content.evaluate((n, x) => {
+              n.scrollLeft = x;
+            }, edge);
+            const lastColumn = visual.scene === 'rope' ? 2 : 1;
+            const cell = rows
+              .first()
+              .locator('td')
+              .nth(edge === 0 ? 0 : lastColumn);
+            const bounds = await cell.evaluate((n) => {
+              const r = n.getBoundingClientRect();
+              const c = n.closest('.ant-table-content').getBoundingClientRect();
+              return r.left >= c.left - 1 && r.right <= c.right + 1;
+            });
+            if (!bounds)
+              throw new Error(`Final table edge visibility ${label}`);
+          }
+          if (bilingual) {
+            await p.waitForTimeout(700);
+            await root.scrollIntoViewIfNeeded();
+            await p.screenshot({
+              path: `/tmp/butler-bnu-final-data-${label}-${en ? 'en' : 'zh'}-${width}.png`,
+            });
+          }
+        };
+        await check();
+        if (bilingual) {
+          const saved = JSON.stringify(await read());
+          const language = p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') });
+          await language.click();
+          await p.getByText('English', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /Animal|Rescue|Ring|Skipping/ })
+            .waitFor();
+          await check();
+          const dark = await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          );
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') !== was,
+            dark,
+          );
+          await check();
+          await p.locator('.theme-toggle svg').click();
+          await p.waitForFunction(
+            (was) =>
+              document.documentElement.classList.contains('dark') === was,
+            dark,
+          );
+          await language.click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await root
+            .locator('figcaption')
+            .filter({ hasText: /动物|救助|套圈|跳绳/ })
+            .waitFor();
+          await check();
+          if (JSON.stringify(await read()) !== saved)
+            throw new Error('Final data language/theme changed records');
+        }
+      };
       const inspectColumnDigits = async (model, label) => {
         const table = p
           .locator('.ant-table')
@@ -4379,7 +4656,7 @@ const server = http.createServer(async (req, res) => {
       if (
         (await p
           .getByRole('button', { name: '进入课程', exact: true })
-          .count()) !== 48
+          .count()) !== 50
       )
         throw new Error('Unexpected lower availability');
       await p
@@ -4755,6 +5032,11 @@ const server = http.createServer(async (req, res) => {
         if (JSON.stringify(await read()) !== state)
           throw new Error('Stairs language/theme changed learning records');
       }
+      if (flow.key === 'final-number-applications')
+        await inspectFinalStrip(
+          [25, null, 27, null, 29, null, 31, null],
+          'learn-forward',
+        );
       if (flow.key === 'comic')
         await inspectComic({ scene: 'milk', variant: 'main' }, 'learn-0', true);
       if (flow.key.startsWith('tangram-')) await inspectTangramTeaching(0);
@@ -4794,6 +5076,47 @@ const server = http.createServer(async (req, res) => {
         await wait(
           (d) => d.sessions.find((s) => s.id === sid).step === step + 1,
         );
+        if (flow.key === 'final-number-applications' && step + 1 === 1)
+          await inspectFinalStrip(
+            [61, 60, null, null, 57, 56, null, null, 53, 52],
+            'learn-backward',
+          );
+        if (flow.key === 'final-number-review' && step + 1 === 9)
+          await inspectFinalData(
+            { scene: 'farm', variant: 'main' },
+            'learn-farm',
+            true,
+          );
+        if (
+          flow.key === 'final-number-review' &&
+          [4, 5, 6, 7].includes(step + 1)
+        ) {
+          const operands = [
+            [45, 23, '+'],
+            [68, 15, '-'],
+            [73, 22, '+'],
+            [99, 19, '-'],
+          ][step - 3];
+          await inspectColumnDigits(
+            {
+              left: [Math.floor(operands[0] / 10), operands[0] % 10],
+              right: [Math.floor(operands[1] / 10), operands[1] % 10],
+            },
+            `learn-column-${step + 1}`,
+          );
+        }
+        if (
+          flow.key === 'final-number-applications' &&
+          [6, 11, 12].includes(step + 1)
+        )
+          await inspectFinalData(
+            {
+              scene: { 6: 'rescue', 11: 'rings', 12: 'rope' }[step + 1],
+              variant: 'main',
+            },
+            `learn-data-${step + 1}`,
+            true,
+          );
         if (flow.key.startsWith('tangram-'))
           await inspectTangramTeaching(step + 1);
         if (flow.key === 'comic' && step + 1 === 9)
@@ -5692,7 +6015,7 @@ const server = http.createServer(async (req, res) => {
         )
           await inspectTenLine(q.visual, q.id);
         if (
-          flow.key === 'calculation-review' &&
+          ['calculation-review', 'final-number-review'].includes(flow.key) &&
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
@@ -5739,6 +6062,13 @@ const server = http.createServer(async (req, res) => {
             throw new Error('Vertical table language/theme changed records');
         }
 
+        if (
+          flow.key === 'final-number-applications' &&
+          q.visual?.kind === 'number-strip'
+        )
+          await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-data')
+          await inspectFinalData(q.visual, q.id);
         if (q.visual?.kind === 'bnu-comic')
           await inspectComic(
             q.visual,
@@ -7717,10 +8047,17 @@ const server = http.createServer(async (req, res) => {
         )
           await inspectTenLine(q.visual, q.id);
         if (
-          flow.key === 'calculation-review' &&
+          ['calculation-review', 'final-number-review'].includes(flow.key) &&
           q.visual?.kind === 'column-digits'
         )
           await inspectColumnDigits(q.visual, q.id);
+        if (
+          flow.key === 'final-number-applications' &&
+          q.visual?.kind === 'number-strip'
+        )
+          await inspectFinalStrip(q.visual.values, q.id);
+        if (q.visual?.kind === 'bnu-final-data')
+          await inspectFinalData(q.visual, q.id);
         if (q.visual?.kind === 'bnu-comic')
           await inspectComic(
             q.visual,

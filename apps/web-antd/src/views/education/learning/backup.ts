@@ -13,6 +13,7 @@ import { isBnuComicVisual } from './bnu-comic';
 import { isBnuFillGridVisual } from './bnu-fill-grid';
 import { isBnuFinalClassificationVisual } from './bnu-final-classification';
 import { isBnuFinalColorVisual } from './bnu-final-color';
+import { isBnuFinalDataVisual } from './bnu-final-data';
 import { isBnuFinalPositionVisual } from './bnu-final-position';
 import { isBnuFinalSolidsVisual } from './bnu-final-solids';
 import { isBnuFoldOneVisual } from './bnu-fold-one';
@@ -522,6 +523,9 @@ function visual(value: unknown) {
     }
     case 'occlusion-views': {
       return isOcclusionViewsVisual(value);
+    }
+    case 'bnu-final-data': {
+      return isBnuFinalDataVisual(value);
     }
     case 'bnu-comic': {
       return isBnuComicVisual(value);

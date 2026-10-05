@@ -17,6 +17,10 @@ import { bnuLowerCountrysideLesson } from './bnu-lower-countryside';
 import { bnuLowerDesignLesson } from './bnu-lower-design';
 import { bnuLowerFarmLesson } from './bnu-lower-farm';
 import { bnuLowerFillGameLesson } from './bnu-lower-fill-game';
+import {
+  bnuLowerFinalNumberApplicationsLesson,
+  bnuLowerFinalNumberReviewLesson,
+} from './bnu-lower-final-numbers';
 import { bnuLowerFoldOneLesson } from './bnu-lower-fold-one';
 import { bnuLowerFrogsLesson } from './bnu-lower-frogs';
 import { bnuLowerHarvestLesson } from './bnu-lower-harvest';
@@ -400,6 +404,11 @@ function pending(key: string, title: string, page: number): Lesson {
 
 const authoredLessons: Record<string, Lesson[]> = {
   comic: [bnuLowerComicLesson],
+  final: [
+    bnuLowerFinalNumberReviewLesson,
+    bnuLowerFinalNumberApplicationsLesson,
+    pending('final', '总复习：图形与综合实践（93～95页继续制作）', 93),
+  ],
   u6: [
     bnuLowerRecognizeShapesLesson,
     bnuLowerFoldOneLesson,

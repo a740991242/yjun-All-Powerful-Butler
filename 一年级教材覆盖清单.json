@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-05T19:50:51.194Z",
+  "generatedAt": "2026-10-05T20:29:29.049Z",
   "scope": "一年级原有人教语文/数学四册、苏教数学上下册、人教道法上下册及北师大数学上下册已开放范围；教材课目和原创课包分别列示。",
   "limitation": "本清单导出代码中声明的身份、对应、目标、来源和开放状态，不替代正文逐页审校、教师验收、界面验收或地区学校选用证据。available只表示可进入本课包，不表示课目、单元、册次或全年完整。",
   "fullPlanCompletion": "not-verified",
@@ -30719,13 +30719,13 @@
       "resourceId": "bnu-lower-public-scan-2024",
       "verifiedAt": "2026-10-04",
       "summary": {
-        "availablePacks": 48,
+        "availablePacks": 50,
         "pendingEntries": 1,
         "referenceQueries": 0,
         "tasks": {
-          "objective": 1261,
-          "manual": 514,
-          "reflection": 201
+          "objective": 1298,
+          "manual": 536,
+          "reflection": 211
         }
       },
       "units": [
@@ -37262,10 +37262,98 @@
           ],
           "lessons": [
             {
-              "id": "bnu-lower-final-pending",
-              "title": "总复习",
-              "textbookTitle": "总复习",
+              "id": "bnu-lower-final-number-review",
+              "title": "32的多种表示、竖式与生活问题",
+              "textbookTitle": "总复习：数与代数（回顾与交流）",
               "page": 90,
+              "version": 1,
+              "status": "available",
+              "goal": "回顾认识的数与顺序数数，用多种方式表示32，四道竖式分别计算并借助实物解释，举18−9两件生活例子，按动物条件提问、交流并解决。",
+              "prerequisite": "认识百以内数与十/一，会同数位不进位加法、不退位减法以及20以内减法；纸笔与安全纸卡可替代实物。",
+              "referenceQuery": null,
+              "steps": 12,
+              "tasks": {
+                "objective": 17,
+                "manual": 13,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 7,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-final-number-review"],
+              "questionKinds": [
+                "steps",
+                "number",
+                "choice",
+                "column-digits",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "place-value",
+                "place-counters",
+                "column-digits",
+                "bnu-final-data",
+                "break-ten"
+              ],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描印刷90页",
+                "notes": "逐项保留四种回顾；教学映射与程序检查不代表93～95或全年完成。"
+              }
+            },
+            {
+              "id": "bnu-lower-final-number-applications",
+              "title": "数线、组成、比较与生活数据",
+              "textbookTitle": "总复习：数与代数（巩固与应用）",
+              "page": 91,
+              "version": 1,
+              "status": "available",
+              "goal": "完成两条数线空位、三种十与一、四个比较、救助下半年、加减数线、两群熊猫、同量白菜、套圈两问和跳绳三问，分清顺序、范围、对象与单位。",
+              "prerequisite": "百以内读数与比较，十与一，同数位不进位加法/不退位减法，20以内加减；可请成人帮读条件。",
+              "referenceQuery": null,
+              "steps": 14,
+              "tasks": {
+                "objective": 20,
+                "manual": 9,
+                "reflection": 5
+              },
+              "reviewTasks": {
+                "objective": 8,
+                "manual": 0,
+                "reflection": 0
+              },
+              "knowledge": ["bnu-lower-final-number-applications"],
+              "questionKinds": [
+                "steps",
+                "choice",
+                "number",
+                "set",
+                "manual",
+                "reflection"
+              ],
+              "visualKinds": [
+                "number-strip",
+                "place-value",
+                "place-counters",
+                "bnu-final-data",
+                "number-line",
+                "count"
+              ],
+              "audit": {
+                "date": "2026-10-06",
+                "reviewer": "实际查看公开扫描印刷91～92页",
+                "notes": "全部九项应用与子问分别映射；93～95继续制作，最终全书审校另核。"
+              }
+            },
+            {
+              "id": "bnu-lower-final-pending",
+              "title": "总复习：图形与综合实践（93～95页继续制作）",
+              "textbookTitle": "总复习：图形与综合实践（93～95页继续制作）",
+              "page": 93,
               "version": 1,
               "status": "preparing",
               "goal": "目录已核对，尚未发布的正文课程继续制作。",
@@ -37291,7 +37379,226 @@
                 "notes": "目录和页码事实不表示正文课程完成。"
               }
             }
-          ]
+          ],
+          "sourceAudit": {
+            "resourceId": "bnu-lower-public-scan-2024",
+            "checkedAt": "2026-10-06",
+            "readPrintedPages": [90, 91, 92, 93, 94, 95],
+            "taughtPrintedPages": [90, 91, 92],
+            "pendingTeachingPages": [93, 94, 95],
+            "status": "partial-original-teaching",
+            "finalTeacherReview": "not-verified",
+            "scope": "90～92页十三原活动对应两课26讲解、69主任务（37客观/22真实人工/10开放记录）和15换条件复习。两数列全部空位、三组成、四比较、下半年范围、两种数线、两群熊猫、同量白菜、套圈两问、四人排名与自主问题分别覆盖；32多种表示、四竖式及两个生活问题保留实作。375/768/1200完整流程、已知条件表/数字条/竖式字号和空位、表格中英主题与键盘滚动、0刷新/重试/旧人教会话/schema1备份已检查。93～95仍待教学，原机器人/火车计数未核清保留null；映射与程序核验不代全册全年或人工最终审校。",
+            "activities": [
+              {
+                "page": 90,
+                "sourceActivity": "recall-count-and-represent-32",
+                "lesson": "bnu-lower-final-number-review",
+                "steps": [1, 2, 3, 4],
+                "objective": ["composition", "neighbors", "beads", "exchange"],
+                "manual": [
+                  "actual-count",
+                  "actual-sticks",
+                  "actual-counter",
+                  "actual-symbols"
+                ],
+                "records": ["represent-record"]
+              },
+              {
+                "page": 90,
+                "sourceActivity": "four-columns-and-manipulative-explanation",
+                "lesson": "bnu-lower-final-number-review",
+                "steps": [5, 6, 7, 8],
+                "objective": [
+                  "add-one",
+                  "subtract-one",
+                  "add-two",
+                  "subtract-two",
+                  "alignment",
+                  "subtract-order"
+                ],
+                "manual": [
+                  "actual-column-1",
+                  "actual-column-2",
+                  "actual-column-3",
+                  "actual-column-4"
+                ],
+                "records": []
+              },
+              {
+                "page": 90,
+                "sourceActivity": "two-life-examples-for-eighteen-minus-nine",
+                "lesson": "bnu-lower-final-number-review",
+                "steps": [9],
+                "objective": ["eighteen-nine", "life-condition"],
+                "manual": ["actual-life-one", "actual-life-two"],
+                "records": ["life-record"]
+              },
+              {
+                "page": 90,
+                "sourceActivity": "farm-questions-discussion-and-solutions",
+                "lesson": "bnu-lower-final-number-review",
+                "steps": [10, 11, 12],
+                "objective": [
+                  "rabbit",
+                  "sheep-geese",
+                  "farm-total",
+                  "rabbit-relevant",
+                  "site-zero"
+                ],
+                "manual": [
+                  "actual-farm-question",
+                  "actual-farm-talk",
+                  "actual-farm-solve"
+                ],
+                "records": ["farm-record", "learning-record", "future-plan"]
+              },
+              {
+                "page": 91,
+                "sourceActivity": "forward-and-backward-number-line-blanks",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [1, 2],
+                "objective": ["forward", "backward"],
+                "manual": [],
+                "records": []
+              },
+              {
+                "page": 91,
+                "sourceActivity": "three-tens-ones-compositions",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [3, 4, 5],
+                "objective": [
+                  "composition-37",
+                  "composition-24",
+                  "composition-51"
+                ],
+                "manual": ["actual-compositions"],
+                "records": ["composition-record"]
+              },
+              {
+                "page": 91,
+                "sourceActivity": "four-expression-comparisons",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [6],
+                "objective": [
+                  "compare-1",
+                  "compare-2",
+                  "compare-3",
+                  "compare-4"
+                ],
+                "manual": [],
+                "records": []
+              },
+              {
+                "page": 91,
+                "sourceActivity": "rescue-second-half-more",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [7],
+                "objective": ["rescue"],
+                "manual": [],
+                "records": []
+              },
+              {
+                "page": 91,
+                "sourceActivity": "draw-add-and-subtract-number-lines",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [8, 9],
+                "objective": ["line-add", "line-subtract"],
+                "manual": ["actual-line-add", "actual-line-subtract"],
+                "records": []
+              },
+              {
+                "page": 92,
+                "sourceActivity": "two-panda-groups-and-equation",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [10],
+                "objective": ["pandas"],
+                "manual": ["actual-pandas"],
+                "records": []
+              },
+              {
+                "page": 92,
+                "sourceActivity": "same-cabbage-count-and-total",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [11],
+                "objective": ["cabbages"],
+                "manual": ["actual-cabbages"],
+                "records": []
+              },
+              {
+                "page": 92,
+                "sourceActivity": "two-ring-target-questions",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [12],
+                "objective": ["rings-first", "rings-second", "rings-third"],
+                "manual": ["actual-rings"],
+                "records": ["rings-record"]
+              },
+              {
+                "page": 92,
+                "sourceActivity": "rope-ranks-difference-and-own-question",
+                "lesson": "bnu-lower-final-number-applications",
+                "steps": [13, 14],
+                "objective": ["ranks", "rank-difference", "site-zero"],
+                "manual": [
+                  "actual-ranks",
+                  "actual-own-question",
+                  "actual-own-solve"
+                ],
+                "records": [
+                  "own-question-record",
+                  "learning-record",
+                  "future-plan"
+                ]
+              }
+            ],
+            "pendingActivities": [
+              {
+                "page": 93,
+                "key": "recall-describe-and-draw-plane-shapes"
+              },
+              {
+                "page": 93,
+                "key": "three-tangram-patterns-and-own-design"
+              },
+              {
+                "page": 93,
+                "key": "robot-and-train-find-four-shape-types"
+              },
+              {
+                "page": 94,
+                "key": "four-plane-to-solid-face-connections"
+              },
+              {
+                "page": 94,
+                "key": "appendix-three-rectangle-fold-three-ways"
+              },
+              {
+                "page": 94,
+                "key": "draw-three-shapes-on-dots"
+              },
+              {
+                "page": 94,
+                "key": "create-own-plane-shape-collage"
+              },
+              {
+                "page": 95,
+                "key": "recall-comic-patterns-and-design"
+              },
+              {
+                "page": 95,
+                "key": "continue-three-drawing-patterns"
+              },
+              {
+                "page": 95,
+                "key": "express-three-life-patterns-in-own-way"
+              },
+              {
+                "page": 95,
+                "key": "actual-cooperative-math-story-and-comic"
+              }
+            ]
+          }
         }
       ],
       "specialties": [],
