@@ -4,7 +4,7 @@ import { required } from '../learning/required';
 import { englishQihangSource } from './english-qihang-source';
 
 /** Original preparatory content. Not registered as an available textbook.
- * page refers to the checked teacher chapter, not a verified student-book page.
+ * page is a teacher chapter start or a cited student page; source scope is explicit.
  */
 function task(
   lesson: string,
@@ -62,6 +62,7 @@ function draft(
   steps: Lesson['steps'],
   questions: Question[],
   reviewQuestions: Question[],
+  sourceScope?: string,
 ): Lesson {
   return {
     id,
@@ -72,11 +73,12 @@ function draft(
     status: 'preparing',
     goal,
     prerequisite,
-    parentTip:
-      '依据官方教师资源上册前两单元的已读范围制作。page为教师分章印刷页起点，学生教材身份尚待核齐。情境、练习和圆点图均为原创，不复制原故事、插画、韵文或录音。可用中文帮读任务；不要求写单词、取英文名、上传实名或个人照片。读音请用合法规范示范，本稿无音频，不以选择题评口语。不是苏州译林一年级正式教材，也不证明任何地区统一选用。',
+    parentTip: `${sourceScope ?? '依据官方教师资源上册前两单元的已读范围制作。page为教师分章印刷页起点，学生教材身份尚待核齐。'}情境、练习和圆点图均为原创，不复制原故事、插画、韵文或录音。可用中文帮读任务；不要求写单词、取英文名、上传实名或个人照片。读音请用合法规范示范，本稿无音频，不以选择题评口语。不是苏州译林一年级正式教材，也不证明任何地区统一选用。`,
     review: {
       date: englishQihangSource.checkedAt,
-      reviewer: '官方教师资源上册前两单元逐页核对范围',
+      reviewer: sourceScope
+        ? '官方教师教学设计完整文本核对范围，未渲染'
+        : '官方教师资源上册前两单元逐页核对范围',
       notes:
         '原创基础草稿；整单元故事与所有活动未完整映射，学生用书身份和最终教学验收继续。',
     },
@@ -90,6 +92,9 @@ const greeting = 'english-qihang-upper-greetings-draft';
 const name = 'english-qihang-upper-name-draft';
 const numbers = 'english-qihang-upper-number-words-draft';
 const counting = 'english-qihang-upper-counting-draft';
+const colours = 'english-qihang-upper-colours-draft';
+const schoolThings = 'english-qihang-upper-school-things-draft';
+const classroom = 'english-qihang-upper-classroom-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -535,5 +540,497 @@ export const englishQihangDraftLessons: Lesson[] = [
         '换一组卡片，实际与陪学者交流数量；未做可跳过。',
       ),
     ],
+  ),
+  draft(
+    colours,
+    '认识颜色、询问与表达喜好',
+    23,
+    '理解五个核心颜色词，区分物品颜色与自己的喜好，尝试问答、混色观察和按图例涂色。',
+    '认识1～5的数字；颜色辨认或阅读需要帮助时可由陪学者说明。',
+    [
+      {
+        title: '颜色词表示颜色',
+        text: 'red是红色，blue是蓝色，yellow是黄色，green是绿色，orange在本课颜色情境中是橙色。物品的形状、大小或名字不决定它是什么颜色；同一种物品可以有不同颜色。文字词义题不是看真实色块辨色，实际认色另练。',
+        activity:
+          '任选手边已有色卡或物品，陪学者说明颜色，孩子尝试指认；不要求凑齐五种或购买材料。',
+      },
+      {
+        title: '问颜色与介绍颜色',
+        text: 'What’s the colour?是在问颜色；It’s blue.是在说明它是蓝色。本站原创样例明确给一张蓝色卡，就可以用blue描述；若物品颜色没有给定，也没有实际看到，不能猜成blue。',
+        activity:
+          '陪学者和孩子轮流出示已有色卡，用颜色问句和回答交流；未实际进行可跳过。',
+      },
+      {
+        title: '喜欢什么不等于物品是什么颜色',
+        text: 'I like green.表达我喜欢绿色。你可以喜欢一种、多种或暂时没有偏好，不照抄样例作为自己的喜好。图里的物品是什么颜色是观察信息，自己喜欢什么是个人表达，不给不同喜好判错。',
+      },
+      {
+        title: '混色先观察再记录',
+        text: '教案探索蓝与黄、红与黄、红与蓝的颜料混合。可由陪学者用适合儿童的现有颜料尝试，观察绿色、橙色或紫色等变化；实际色调受颜料和比例影响，未实验不能把预期填作观察结果。purple为这次探索的补充，不把核心五词改成六词必考；屏幕颜色相叠也不是颜料实做。',
+        activity:
+          '如果具备材料与陪学条件，可实际混一种组合并记录看到的结果；没有条件如实跳过，不强制购买。',
+      },
+      {
+        title: '读自己的颜色图例',
+        text: '本站原创图例：1=blue、2=orange、3=red、4=green、5=yellow。数字只是本次图例编号，不是颜色的永久编号。纸上画五个小区域并写编号，按这份图例涂色，再介绍作品；换图例时要重新看对应关系。',
+        activity:
+          '实际画编号区域、按图例涂色并介绍；颜色工具没有备齐可只做能完成的部分，记录实际范围。',
+      },
+    ],
+    [
+      ...[
+        ['red', '红色'],
+        ['blue', '蓝色'],
+        ['yellow', '黄色'],
+        ['green', '绿色'],
+        ['orange', '橙色'],
+      ].map(([word, meaning]) =>
+        choose(
+          colours,
+          `word-${word}`,
+          `在颜色情境中，${word}表示什么颜色？`,
+          required(meaning),
+          ['绿色', '红色', '黄色', '橙色', '蓝色'],
+          `${word}在这个颜色情境中对应${meaning}。`,
+        ),
+      ),
+      choose(
+        colours,
+        'ask',
+        '哪句是在询问颜色？',
+        'What’s the colour?',
+        ['I’m An.', 'What’s the colour?', 'Let’s play!'],
+        'colour是颜色，整句用于询问颜色。',
+      ),
+      choose(
+        colours,
+        'given-blue',
+        '题干明确卡片是蓝色，应怎样介绍？',
+        'It’s blue.',
+        ['It’s green.', 'It’s orange.', 'It’s blue.'],
+        '按本题给定的蓝色判断，不按个人喜好。',
+      ),
+      choose(
+        colours,
+        'like',
+        'I like green.在这里表达什么？',
+        '我喜欢绿色',
+        ['物品一定是绿色', '我喜欢绿色', '每个人都必须喜欢绿色'],
+        'I like表达个人喜好，不是所有人的标准答案。',
+      ),
+      choose(
+        colours,
+        'key-one',
+        '本次图例1=blue、2=orange、3=red、4=green、5=yellow，编号1用什么词？',
+        'blue',
+        ['red', 'yellow', 'blue'],
+        '按本次图例，1对应blue，不沿用其它图例。',
+      ),
+      choose(
+        colours,
+        'key-two',
+        '同一份本次图例中，编号2应涂哪种颜色？',
+        '橙色',
+        ['橙色', '绿色', '红色'],
+        '2=orange，对应橙色。',
+      ),
+      choose(
+        colours,
+        'key-five',
+        '同一份本次图例中，yellow对应哪个编号？',
+        '5',
+        ['1', '3', '5'],
+        'yellow在本次图例里对应5。',
+      ),
+      actual(
+        colours,
+        'point',
+        '任选已有色卡或物品，实际指认并尝试说一个颜色词；确认只记录实际尝试，不表示五词全会。',
+      ),
+      actual(
+        colours,
+        'talk',
+        '实际与陪学者轮流询问颜色、描述色卡，并表达自己的喜好；需要帮助可以记录。',
+      ),
+      actual(
+        colours,
+        'mix',
+        '具备材料和陪学条件时实际混一种颜料组合、观察结果；未做不能确认，可跳过。',
+      ),
+      actual(
+        colours,
+        'paint',
+        '在纸上按本次编号图例实际画涂作品，并介绍已完成的区域；没有做可跳过。',
+      ),
+      record(
+        colours,
+        'today',
+        '记录实际用了哪些颜色、混色看到什么或尚未实验、问答需要什么帮助；个人喜好不评分。',
+      ),
+      record(
+        colours,
+        'plan',
+        '另记下一次想观察或练习的颜色；未来计划不当作本次已做。',
+      ),
+    ],
+    [
+      choose(
+        colours,
+        'review-yellow',
+        '新样例明确物品是黄色，哪句符合给定信息？',
+        'It’s yellow.',
+        ['It’s blue.', 'It’s yellow.', 'It’s red.'],
+        '按新给定的黄色判断。',
+      ),
+      choose(
+        colours,
+        'review-key',
+        '换图例：1=red、2=green。编号1这次对应哪个词？',
+        'red',
+        ['blue', 'green', 'red'],
+        '编号意义来自本次图例；不能背旧图例的blue。',
+      ),
+      choose(
+        colours,
+        'review-preference',
+        '小伙伴喜欢blue，你喜欢red，必须改成和小伙伴相同吗？',
+        '不必，可以分别表达喜好',
+        ['必须都喜欢blue', '不必，可以分别表达喜好', '不同喜好就是答错'],
+        '喜好可以不同，仍能友好交流。',
+      ),
+      actual(
+        colours,
+        'review-talk',
+        '换一张已有色卡，实际询问和回答颜色，再说自己的喜好；未做可跳过。',
+      ),
+    ],
+    '依据官方上册第三单元教学设计完整文本制作，未渲染Word或读取学生原图。page=23只是教案引用的学生单元起点，不是本轮实际查看过的学生正文页。学生用书身份继续核验。',
+  ),
+  draft(
+    schoolThings,
+    '介绍文具与友好互助',
+    34,
+    '理解六种学习用品名称，在安慰、提供帮助、分享和感谢的情境中交流，并观察自己的实际物品。',
+    '知道问好和简单邀请；可由陪学者帮读中文情境。',
+    [
+      {
+        title: '看整词认用品',
+        text: 'pencil铅笔、ruler尺子、schoolbag书包、eraser橡皮、book书、pencil case笔盒或笔袋。pencil和pencil case不是同一物品；看完整词，不把含pencil的短语都当一支铅笔。本稿词义题不代实际看物品辨认。',
+        activity:
+          '用已有物品或自己画的卡片实际指认；没有某种物品可用图卡，不要求购买或数量齐全。',
+      },
+      {
+        title: '先理解发生了什么',
+        text: '原创情境：小林画卡片时暂时找不到尺子，小安愿意提供一把尺子。Don’t worry.用于安慰，Here’s a ruler.表示这里有一把尺子。尺子确实拿到或愿意共同使用，才说相应的话；不假装已经借到。',
+      },
+      {
+        title: '分享之后礼貌感谢',
+        text: 'Let’s share.表达一起分享的提议，Thank you!用于感谢。对方愿意才借用或共享，自己的用品妥善保管，用后按双方约定归还；不把同意分享设为每个孩子必须完成的固定答案。可以用纸卡进行角色模拟。',
+        activity:
+          '两人用纸卡实际轮换需要帮助者和帮助者，尝试安慰、提供或分享、感谢三个环节。',
+      },
+      {
+        title: '样例不是自己的书包',
+        text: '给定样例书包里有一本书和一把尺子，没有橡皮。自己的书包里有什么需要实际观察；未看过不能自动照填样例，也不能把未知当没有。可以只介绍一件自己确认的物品，不上传书包照片。',
+        activity:
+          '实际观察自己的用品或自选纸卡，分清已看到、已检查没有和未检查，再介绍已确认的一件。',
+      },
+      {
+        title: '比较后记录真实情况',
+        text: '本站原创文字卡A列book、ruler，卡B列book、eraser。两张都有book，A独有ruler，B独有eraser。这是给定信息比较，不能说已经在教材两幅原图里找到了全部差异；真实找图差异需要另看对应材料。',
+      },
+    ],
+    [
+      ...[
+        ['pencil', '铅笔'],
+        ['ruler', '尺子'],
+        ['schoolbag', '书包'],
+        ['eraser', '橡皮'],
+        ['book', '书'],
+        ['pencil case', '笔盒或笔袋'],
+      ].map(([word, meaning]) =>
+        choose(
+          schoolThings,
+          `word-${word?.replaceAll(' ', '-')}`,
+          `${word}在学习用品情境中表示什么？`,
+          required(meaning),
+          ['书', '笔盒或笔袋', '尺子', '书包', '铅笔', '橡皮'],
+          `${word}对应${meaning}，完整短语与单个词分清。`,
+        ),
+      ),
+      choose(
+        schoolThings,
+        'comfort',
+        '同伴暂时找不到尺子，哪句可以先表达安慰？',
+        'Don’t worry.',
+        ['Thank you!', 'Don’t worry.', 'My name is An.'],
+        'Don’t worry在这里表达安慰。',
+      ),
+      choose(
+        schoolThings,
+        'offer',
+        '你愿意提供一把尺子，哪句符合情境？',
+        'Here’s a ruler.',
+        ['Here’s a ruler.', 'Here’s a book.', 'It’s orange.'],
+        '按本次给定物品选择ruler。',
+      ),
+      choose(
+        schoolThings,
+        'share',
+        'Let’s share.表达哪种意思？',
+        '一起分享吧',
+        ['我叫小林', '一起分享吧', '我喜欢绿色'],
+        '这是分享的提议。',
+      ),
+      choose(
+        schoolThings,
+        'thanks',
+        '同伴提供了帮助，表达感谢可以说什么？',
+        'Thank you!',
+        ['Thank you!', 'pencil case', 'I’m An.'],
+        'Thank you用于感谢。',
+      ),
+      choose(
+        schoolThings,
+        'unknown',
+        '尚未看过自己书包，能把样例的book直接记为自己有吗？',
+        '不能，先实际观察',
+        ['能，样例就是我的书包', '不能，先实际观察', '没看过就是没有'],
+        '未知不等于拥有，也不等于没有。',
+      ),
+      choose(
+        schoolThings,
+        'difference',
+        '文字卡A是book、ruler；卡B是book、eraser。A独有哪一种？',
+        'ruler',
+        ['eraser', 'book', 'ruler'],
+        '给定两卡都有book，A独有ruler。',
+      ),
+      actual(
+        schoolThings,
+        'point',
+        '用已有物品或自画卡片实际指认并尝试说一种用品名称；确认不代表六词全会。',
+      ),
+      actual(
+        schoolThings,
+        'talk',
+        '实际用纸卡角色模拟安慰、提供或分享、感谢，并交换两个角色；未做可跳过。',
+      ),
+      actual(
+        schoolThings,
+        'own',
+        '实际观察自己的用品或所选卡片，尝试介绍一件已确认的物品；不要上传个人照片。',
+      ),
+      record(
+        schoolThings,
+        'today',
+        '记录实际看过的用品、已经进行的交流与需要帮助之处；没检查的保持未知。',
+      ),
+      record(
+        schoolThings,
+        'plan',
+        '另记下次想整理或练习的项目，不把未来安排算作已经完成。',
+      ),
+    ],
+    [
+      choose(
+        schoolThings,
+        'review-offer',
+        '新情境要提供一本书，哪句符合？',
+        'Here’s a book.',
+        ['Here’s a ruler.', 'Here’s a book.', 'Here’s an eraser.'],
+        '换物品后按book判断，不重复旧尺子答案。',
+      ),
+      choose(
+        schoolThings,
+        'review-case',
+        'pencil case和pencil相同吗？',
+        '不同，前者是笔盒或笔袋，后者是铅笔',
+        [
+          '相同，都只有一支铅笔',
+          '不同，前者是笔盒或笔袋，后者是铅笔',
+          '前者是书包',
+        ],
+        '完整短语的意义不同。',
+      ),
+      choose(
+        schoolThings,
+        'review-common',
+        '新文字卡A列eraser、book，B列ruler、book，两卡共有哪种？',
+        'book',
+        ['book', 'ruler', 'eraser'],
+        '本次两卡都列有book。',
+      ),
+      actual(
+        schoolThings,
+        'review-talk',
+        '换成书或自选纸卡，实际轮换提供帮助与表达感谢；未做可跳过。',
+      ),
+    ],
+    '依据官方上册第四单元教学设计完整文本制作，未渲染Word或读取学生原图。page=34只是教案引用的学生单元起点，文本抽取中的图形坐标不当作数量或题目。学生用书身份继续核验。',
+  ),
+  draft(
+    classroom,
+    '介绍教室与提出整理建议',
+    45,
+    '理解教室、人物与设施名称，区分我的和我们的，尝试晨间问候、介绍与整理提议。',
+    '知道Hello、OK和简单物品介绍；可用中文帮助理解。',
+    [
+      {
+        title: '认识场所与设施',
+        text: 'classroom教室、teacher教师、blackboard黑板、desk课桌、chair椅子。teacher是人，不是桌椅等设施；classroom是场所。用词要看指向的对象，不把一个词用到所有东西。',
+        activity:
+          '用自己画的卡片或身边合适对象尝试指认，无需进入学校或上传室内照片。',
+      },
+      {
+        title: '问好与介绍分开',
+        text: '早晨可以说Good morning.；This is our classroom.用于介绍我们的教室，This is my desk.可以在自己使用的课桌情境中介绍我的桌子。our表示我们的，my表示我的；语言练习不证明物品的法律所有权。',
+        activity:
+          '用虚构教室图尝试早晨问候，再介绍一个场所或对象，陪学者观察需要的帮助。',
+      },
+      {
+        title: '整理还有哪些对象',
+        text: 'floor地面、window窗户、door门，也是教案清洁情境中的词。Let’s clean the desk.是在提出清洁课桌的建议，OK!可以在愿意参与时回应。clean在这句里表示清洁动作；答对文字题不证明已经擦干净。',
+      },
+      {
+        title: '提议、实际活动与结果分开',
+        text: '先与陪学者商量一个适合自己的整理任务，再实际做，最后观察结果。本站建议桌面整理或擦拭可触及的小区域；窗户可用图卡模拟，不要求爬高、操作清洁剂或完成所有设施的清洁。未做可跳过，计划不能自动变成完成记录。',
+        activity:
+          '在陪学者指导下任选一项适合的桌面整理实做；如果只进行了纸卡模拟，就只记录模拟。',
+      },
+      {
+        title: '画自己的教室或想象空间',
+        text: '可以观察后画真实教室，也可以画一个想象学习空间，两者标清。给自己的桌椅画记号，再介绍已经画出的对象。给定文字卡A列desk、chair，B列desk、window，共有desk；这种文字比较不能代替在学生原图里找出全部不同。',
+        activity:
+          '实际画图、标记并介绍；没有现成教室资料可画想象空间，不要求透露学校信息。',
+      },
+    ],
+    [
+      ...[
+        ['classroom', '教室'],
+        ['teacher', '教师'],
+        ['blackboard', '黑板'],
+        ['desk', '课桌'],
+        ['chair', '椅子'],
+        ['floor', '地面'],
+        ['window', '窗户'],
+        ['door', '门'],
+      ].map(([word, meaning]) =>
+        choose(
+          classroom,
+          `word-${word}`,
+          `${word}在本课情境中表示什么？`,
+          required(meaning),
+          ['黑板', '窗户', '课桌', '教师', '椅子', '教室', '地面', '门'],
+          `${word}对应${meaning}。人物、场所与设施不同。`,
+        ),
+      ),
+      choose(
+        classroom,
+        'morning',
+        'Good morning.用于哪种情境？',
+        '早晨问好',
+        ['介绍名字', '早晨问好', '清点纸片'],
+        'morning是早晨，这句用于晨间问候。',
+      ),
+      choose(
+        classroom,
+        'our',
+        'This is our classroom.里的our表示什么？',
+        '我们的',
+        ['我的', '我们的', '红色的'],
+        'our表达我们的，my表达我的。',
+      ),
+      choose(
+        classroom,
+        'suggest',
+        '哪句是在建议一起清洁桌子？',
+        'Let’s clean the desk.',
+        ['I like blue.', 'My name is An.', 'Let’s clean the desk.'],
+        'Let’s clean在这个情境里提出清洁建议。',
+      ),
+      choose(
+        classroom,
+        'done',
+        '只选对Let’s clean的意思，桌子就实际擦干净了吗？',
+        '不能证明，须实际做并观察',
+        ['已经自动擦干净', '不能证明，须实际做并观察', '所有整理都算完成'],
+        '文字理解、行动和实际结果分别记录。',
+      ),
+      choose(
+        classroom,
+        'difference',
+        '文字卡A列desk、chair，B列desk、window，A独有哪种？',
+        'chair',
+        ['window', 'desk', 'chair'],
+        'chair只在A里，desk是共有。',
+      ),
+      actual(
+        classroom,
+        'point',
+        '用卡片或身边合适对象实际指认一个词，再尝试晨间问好与介绍；不表示八词全会。',
+      ),
+      actual(
+        classroom,
+        'talk',
+        '与陪学者实际轮流提出整理桌面的建议并回应；确认仅表示进行过交流。',
+      ),
+      actual(
+        classroom,
+        'tidy',
+        '在陪学者指导下实际完成一项适合的桌面整理，再观察结果；只模拟或没做时可跳过实做确认。',
+      ),
+      actual(
+        classroom,
+        'draw',
+        '实际画真实教室或标为想象的学习空间，圈出自己的桌椅或位置，并介绍作品；未画可跳过。',
+      ),
+      record(
+        classroom,
+        'today',
+        '分别记录实际问答、绘画、整理和结果；模拟不能写成真的清洁完成。',
+      ),
+      record(
+        classroom,
+        'plan',
+        '另记以后想改进或练习的内容；计划不代实际完成。',
+      ),
+    ],
+    [
+      choose(
+        classroom,
+        'review-my',
+        'This is my desk.里的my表示什么？',
+        '我的',
+        ['我们的', '我的', '蓝色的'],
+        '换成my后是我的，不沿用our答案。',
+      ),
+      choose(
+        classroom,
+        'review-door',
+        '新情境是提议清洁门，哪句符合？',
+        'Let’s clean the door.',
+        [
+          'Let’s clean the desk.',
+          'Let’s clean the door.',
+          'Let’s clean the blackboard.',
+        ],
+        '按新对象door选择。',
+      ),
+      choose(
+        classroom,
+        'review-common',
+        '新文字卡A列door、chair，B列window、chair，共有哪一种？',
+        'chair',
+        ['door', 'window', 'chair'],
+        'chair在两份给定列表里都有。',
+      ),
+      actual(
+        classroom,
+        'review-talk',
+        '换一张对象卡，实际交流一个整理提议；只做模拟不确认实际清洁完成。',
+      ),
+    ],
+    '依据官方上册第五单元教学设计完整文本制作，未渲染Word或读取学生原图。page=45只是教案引用的学生单元起点，不是本轮实际查看过的学生正文页。学生用书身份继续核验。',
   ),
 ];

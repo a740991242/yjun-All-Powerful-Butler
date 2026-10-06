@@ -42,9 +42,61 @@ export const englishQihangSource = {
           '285174a2297dd0908d4a57648d5d9078144a03e9bace40f47db58a8965b2991f',
         concepts: ['one-to-six', 'counting', 'number-word-matching'],
       },
-      { number: 3, title: 'Colours', readScope: 'listing-only' },
-      { number: 4, title: 'School things', readScope: 'listing-only' },
-      { number: 5, title: 'My classroom', readScope: 'listing-only' },
+      {
+        number: 3,
+        title: 'Colours',
+        readScope: 'all-teaching-design-text-not-rendered',
+        url: 'https://www.unischool.cn/xzfw/xqhyy/ynjsc/unit-3/',
+        downloadUrl:
+          'https://www.unischool.cn/unischool/file/download?ID=234408',
+        bytes: 46_201,
+        sha256:
+          '1b0682160cd1bbbcdd07c02392f23fa54d42e44f759f0ac874f8c329fd8f04d4',
+        concepts: [
+          'five-colours',
+          'preferences',
+          'colour-questions',
+          'mixing',
+          'number-colour-key',
+        ],
+      },
+      {
+        number: 4,
+        title: 'School things',
+        readScope: 'all-teaching-design-text-not-rendered',
+        url: 'https://www.unischool.cn/xzfw/xqhyy/ynjsc/unit-4/',
+        downloadUrl:
+          'https://www.unischool.cn/unischool/file/download?ID=234421',
+        bytes: 308_447,
+        sha256:
+          '245f372200208fc925fa43947332419a1ffbb14006e8052bf81d64db40a5e90e',
+        concepts: [
+          'school-things',
+          'sharing',
+          'comfort',
+          'thanks',
+          'own-bag',
+          'differences',
+        ],
+      },
+      {
+        number: 5,
+        title: 'My classroom',
+        readScope: 'all-teaching-design-text-not-rendered',
+        url: 'https://www.unischool.cn/xzfw/xqhyy/ynjsc/unit-5/',
+        downloadUrl:
+          'https://www.unischool.cn/unischool/file/download?ID=234533',
+        bytes: 53_970,
+        sha256:
+          'a6038ac2561c7671895577673b27fb3fe65a1f64331637cc2883ffa46be3c82a',
+        concepts: [
+          'morning-greeting',
+          'classroom-facilities',
+          'suggestions',
+          'tidying',
+          'drawing',
+        ],
+      },
     ],
   },
   lower: {
@@ -120,7 +172,7 @@ export const englishQihangSource = {
   ],
   pending: [
     '学生用书封面、版权页、ISBN与审核及印次',
-    '上册后三单元正文与完整活动',
+    '上册后三单元学生正文与原图；教师设计文本已读，完整课程活动继续制作',
     '下册学生正文、插图与录音，教案的页码引用不是实际看过正文',
     '两册全部课程制作、版本导航与学习存储完整验收',
   ],

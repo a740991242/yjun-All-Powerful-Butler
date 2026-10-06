@@ -133,4 +133,112 @@ describe('原创英语准备课的交际与数量', () => {
       }
     }
   });
+
+  it('颜色题按情境和本次图例判定，不把个人喜好当固定答案', () => {
+    const lesson = required(englishQihangDraftLessons[4]);
+    const expected = [
+      '红色',
+      '蓝色',
+      '黄色',
+      '绿色',
+      '橙色',
+      'What’s the colour?',
+      'It’s blue.',
+      '我喜欢绿色',
+      'blue',
+      '橙色',
+      '5',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(11);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'It’s yellow.');
+    checkOptions(required(lesson.reviewQuestions?.[1]), 'red');
+    checkOptions(
+      required(lesson.reviewQuestions?.[2]),
+      '不必，可以分别表达喜好',
+    );
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-mix'))?.rule,
+    ).toEqual({ kind: 'manual' });
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-today'))?.rule,
+    ).toEqual({ kind: 'reflection' });
+    expect(lesson.steps[3]?.text).toContain('实际色调受颜料和比例影响');
+    expect(lesson.steps[3]?.text).toContain('purple为这次探索的补充');
+  });
+
+  it('六种用品包括pencil case，换物品复习、未知物品与真实拥有分开', () => {
+    const lesson = required(englishQihangDraftLessons[5]);
+    const expected = [
+      '铅笔',
+      '尺子',
+      '书包',
+      '橡皮',
+      '书',
+      '笔盒或笔袋',
+      'Don’t worry.',
+      'Here’s a ruler.',
+      '一起分享吧',
+      'Thank you!',
+      '不能，先实际观察',
+      'ruler',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(12);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'Here’s a book.');
+    checkOptions(
+      required(lesson.reviewQuestions?.[1]),
+      '不同，前者是笔盒或笔袋，后者是铅笔',
+    );
+    checkOptions(required(lesson.reviewQuestions?.[2]), 'book');
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-own'))?.rule,
+    ).toEqual({ kind: 'manual' });
+  });
+
+  it('八个人物场所设施词齐全，提议、模拟、实做与my/our区别保留', () => {
+    const lesson = required(englishQihangDraftLessons[6]);
+    const expected = [
+      '教室',
+      '教师',
+      '黑板',
+      '课桌',
+      '椅子',
+      '地面',
+      '窗户',
+      '门',
+      '早晨问好',
+      '我们的',
+      'Let’s clean the desk.',
+      '不能证明，须实际做并观察',
+      'chair',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(13);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), '我的');
+    checkOptions(
+      required(lesson.reviewQuestions?.[1]),
+      'Let’s clean the door.',
+    );
+    checkOptions(required(lesson.reviewQuestions?.[2]), 'chair');
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-tidy'))?.rule,
+    ).toEqual({ kind: 'manual' });
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-plan'))?.rule,
+    ).toEqual({ kind: 'reflection' });
+    expect(lesson.parentTip).toContain('只是教案引用的学生单元起点');
+  });
 });
