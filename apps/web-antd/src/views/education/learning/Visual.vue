@@ -294,13 +294,36 @@ const shapeDescription = computed(() =>
     ? $t(`educationLearning.shape_${props.visual.shape}`)
     : '',
 );
+function scrollDiagram(event: KeyboardEvent) {
+  const target = event.target;
+  if (
+    event.defaultPrevented ||
+    !['ArrowLeft', 'ArrowRight'].includes(event.key) ||
+    !(target instanceof HTMLElement) ||
+    target.tagName !== 'DIV' ||
+    target.tabIndex !== 0 ||
+    target.scrollWidth <= target.clientWidth ||
+    !['auto', 'scroll'].includes(getComputedStyle(target).overflowX)
+  ) {
+    return;
+  }
+  event.preventDefault();
+  target.scrollBy({
+    left: event.key === 'ArrowRight' ? 120 : -120,
+    behavior: 'instant',
+  });
+}
 </script>
 
 <template>
   <figure
     class="learning-visual my-4 rounded-xl border border-border bg-muted/30 p-4 text-xl leading-8"
     :aria-label="$t('educationLearning.diagram')"
+    @keydown="scrollDiagram"
   >
+    <p class="mb-3 text-xl text-muted-foreground">
+      {{ $t('educationLearning.diagramScrollHint') }}
+    </p>
     <section v-if="visual.kind === 'knowledge-map'" data-knowledge-map>
       <p class="mb-3 text-muted-foreground">
         {{ $t('educationLearning.knowledgeCardsNotice') }}
@@ -1030,104 +1053,119 @@ const shapeDescription = computed(() =>
         {{ $t('educationLearning.queueInstruction') }}
       </span>
     </div>
-    <svg
+    <div
       v-else-if="visual.kind === 'nature-scene'"
-      viewBox="0 0 420 250"
-      class="mx-auto block w-full max-w-lg"
-      role="img"
-      :aria-label="$t(`educationLearning.scene_${visual.variant}`)"
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <rect
-        x="1"
-        y="1"
-        width="418"
-        height="248"
-        rx="16"
-        fill="hsl(var(--primary) / 0.08)"
-        stroke="hsl(var(--border))"
-      />
-      <path
-        d="M2 190 Q110 125 220 178 Q320 130 418 185 V232 Q418 248 402 248 H18 Q2 248 2 232 Z"
-        fill="hsl(var(--primary) / 0.16)"
-      />
-      <g
-        :transform="
-          visual.variant === 'hill' ? 'translate(0 0)' : 'translate(210 8)'
-        "
-        fill="hsl(var(--muted-foreground) / 0.3)"
-        stroke="hsl(var(--muted-foreground))"
+      <svg
+        viewBox="0 0 420 250"
+        class="mx-auto block w-full max-w-lg h-auto min-w-[420px]"
+        role="img"
+        :aria-label="$t(`educationLearning.scene_${visual.variant}`)"
       >
+        <rect
+          x="1"
+          y="1"
+          width="418"
+          height="248"
+          rx="16"
+          fill="hsl(var(--primary) / 0.08)"
+          stroke="hsl(var(--border))"
+        />
         <path
-          d="M45 65 C24 64 24 42 46 43 C43 17 81 19 82 39 C99 25 120 43 108 60 C130 65 121 78 105 78 H49 C40 78 33 71 45 65Z"
+          d="M2 190 Q110 125 220 178 Q320 130 418 185 V232 Q418 248 402 248 H18 Q2 248 2 232 Z"
+          fill="hsl(var(--primary) / 0.16)"
         />
-      </g>
-      <path
-        v-if="visual.variant === 'hill'"
-        d="M270 157 L326 89 L380 170"
-        fill="hsl(var(--primary) / 0.12)"
-        stroke="hsl(var(--border))"
-      />
-      <g v-else stroke="hsl(var(--primary) / 0.6)" stroke-width="4" fill="none">
+        <g
+          :transform="
+            visual.variant === 'hill' ? 'translate(0 0)' : 'translate(210 8)'
+          "
+          fill="hsl(var(--muted-foreground) / 0.3)"
+          stroke="hsl(var(--muted-foreground))"
+        >
+          <path
+            d="M45 65 C24 64 24 42 46 43 C43 17 81 19 82 39 C99 25 120 43 108 60 C130 65 121 78 105 78 H49 C40 78 33 71 45 65Z"
+          />
+        </g>
         <path
-          d="M310 199 V143 M310 164 Q283 134 281 153 Q283 174 310 171 M310 175 Q340 140 341 163 Q340 180 310 182"
+          v-if="visual.variant === 'hill'"
+          d="M270 157 L326 89 L380 170"
+          fill="hsl(var(--primary) / 0.12)"
+          stroke="hsl(var(--border))"
         />
-      </g>
-      <g
-        v-for="x in visual.variant === 'hill' ? [167, 212] : [84, 145]"
-        :key="x"
-        :transform="`translate(${x} 134)`"
-        fill="none"
-        stroke="hsl(var(--foreground))"
-        stroke-width="4"
-        stroke-linecap="round"
-      >
-        <circle cx="0" cy="0" r="9" />
-        <path d="M0 10 V40 M-16 24 L0 15 L16 24 M0 40 L-13 61 M0 40 L13 61" />
-      </g>
-      <g fill="hsl(var(--card))" stroke="hsl(var(--primary))" stroke-width="2">
-        <circle
-          :cx="visual.variant === 'hill' ? 138 : 54"
-          :cy="visual.variant === 'hill' ? 58 : 158"
-          r="15"
-        />
-        <circle
-          :cx="visual.variant === 'hill' ? 95 : 350"
-          :cy="visual.variant === 'hill' ? 210 : 69"
-          r="15"
-        />
-        <circle
-          :cx="visual.variant === 'hill' ? 245 : 232"
-          :cy="visual.variant === 'hill' ? 156 : 214"
-          r="15"
-        />
-      </g>
-      <g
-        fill="hsl(var(--foreground))"
-        font-size="18"
-        font-weight="600"
-        text-anchor="middle"
-        dominant-baseline="central"
-      >
-        <text
-          :x="visual.variant === 'hill' ? 138 : 54"
-          :y="visual.variant === 'hill' ? 58 : 158"
+        <g
+          v-else
+          stroke="hsl(var(--primary) / 0.6)"
+          stroke-width="4"
+          fill="none"
         >
-          1
-        </text>
-        <text
-          :x="visual.variant === 'hill' ? 95 : 350"
-          :y="visual.variant === 'hill' ? 210 : 69"
+          <path
+            d="M310 199 V143 M310 164 Q283 134 281 153 Q283 174 310 171 M310 175 Q340 140 341 163 Q340 180 310 182"
+          />
+        </g>
+        <g
+          v-for="x in visual.variant === 'hill' ? [167, 212] : [84, 145]"
+          :key="x"
+          :transform="`translate(${x} 134)`"
+          fill="none"
+          stroke="hsl(var(--foreground))"
+          stroke-width="4"
+          stroke-linecap="round"
         >
-          2
-        </text>
-        <text
-          :x="visual.variant === 'hill' ? 245 : 232"
-          :y="visual.variant === 'hill' ? 156 : 214"
+          <circle cx="0" cy="0" r="9" />
+          <path d="M0 10 V40 M-16 24 L0 15 L16 24 M0 40 L-13 61 M0 40 L13 61" />
+        </g>
+        <g
+          fill="hsl(var(--card))"
+          stroke="hsl(var(--primary))"
+          stroke-width="2"
         >
-          3
-        </text>
-      </g>
-    </svg>
+          <circle
+            :cx="visual.variant === 'hill' ? 138 : 54"
+            :cy="visual.variant === 'hill' ? 58 : 158"
+            r="15"
+          />
+          <circle
+            :cx="visual.variant === 'hill' ? 95 : 350"
+            :cy="visual.variant === 'hill' ? 210 : 69"
+            r="15"
+          />
+          <circle
+            :cx="visual.variant === 'hill' ? 245 : 232"
+            :cy="visual.variant === 'hill' ? 156 : 214"
+            r="15"
+          />
+        </g>
+        <g
+          fill="hsl(var(--foreground))"
+          font-size="22"
+          font-weight="600"
+          text-anchor="middle"
+          dominant-baseline="central"
+        >
+          <text
+            :x="visual.variant === 'hill' ? 138 : 54"
+            :y="visual.variant === 'hill' ? 58 : 158"
+          >
+            1
+          </text>
+          <text
+            :x="visual.variant === 'hill' ? 95 : 350"
+            :y="visual.variant === 'hill' ? 210 : 69"
+          >
+            2
+          </text>
+          <text
+            :x="visual.variant === 'hill' ? 245 : 232"
+            :y="visual.variant === 'hill' ? 156 : 214"
+          >
+            3
+          </text>
+        </g>
+      </svg>
+    </div>
     <div v-else-if="visual.kind === 'characters'" class="flex flex-wrap gap-3">
       <div
         v-for="(character, index) in visual.characters"
@@ -1459,45 +1497,52 @@ const shapeDescription = computed(() =>
             : $t('educationLearning.notJoinedShape')
         }}
       </p>
-      <svg
-        viewBox="-0.25 -0.25 6.5 4.5"
-        class="mx-auto w-full max-w-xl rounded border border-border"
-        role="img"
-        :aria-label="$t('educationLearning.joinBoard')"
+      <div
+        class="min-w-0 max-w-full overflow-x-auto"
+        tabindex="0"
+        :aria-label="$t('educationLearning.diagramScroll')"
       >
-        <g stroke="hsl(var(--border))" stroke-width="0.02">
-          <path v-for="x in 5" :key="`x-${x}`" :d="`M${x} 0 V4`" />
-          <path v-for="y in 3" :key="`y-${y}`" :d="`M0 ${y} H6`" />
-        </g>
-        <g v-for="(piece, index) in join.pieces" :key="index">
-          <polygon
-            :points="
-              trianglePoints(piece)
-                .map((point) => `${point.x},${point.y}`)
-                .join(' ')
-            "
-            fill="hsl(var(--primary))"
-            :fill-opacity="index === 0 ? 0.2 : 0.45"
-            stroke="hsl(var(--primary))"
-            :stroke-width="join.selected === index ? 0.08 : 0.04"
-          />
-          <text
-            :x="
-              trianglePoints(piece).reduce((sum, point) => sum + point.x, 0) / 3
-            "
-            :y="
-              trianglePoints(piece).reduce((sum, point) => sum + point.y, 0) /
-                3 +
-              0.12
-            "
-            text-anchor="middle"
-            font-size="0.4"
-            fill="hsl(var(--foreground))"
-          >
-            {{ index + 1 }}
-          </text>
-        </g>
-      </svg>
+        <svg
+          viewBox="-0.25 -0.25 6.5 4.5"
+          class="mx-auto w-full max-w-xl rounded border border-border h-auto min-w-[220px]"
+          role="img"
+          :aria-label="$t('educationLearning.joinBoard')"
+        >
+          <g stroke="hsl(var(--border))" stroke-width="0.02">
+            <path v-for="x in 5" :key="`x-${x}`" :d="`M${x} 0 V4`" />
+            <path v-for="y in 3" :key="`y-${y}`" :d="`M0 ${y} H6`" />
+          </g>
+          <g v-for="(piece, index) in join.pieces" :key="index">
+            <polygon
+              :points="
+                trianglePoints(piece)
+                  .map((point) => `${point.x},${point.y}`)
+                  .join(' ')
+              "
+              fill="hsl(var(--primary))"
+              :fill-opacity="index === 0 ? 0.2 : 0.45"
+              stroke="hsl(var(--primary))"
+              :stroke-width="join.selected === index ? 0.08 : 0.04"
+            />
+            <text
+              :x="
+                trianglePoints(piece).reduce((sum, point) => sum + point.x, 0) /
+                3
+              "
+              :y="
+                trianglePoints(piece).reduce((sum, point) => sum + point.y, 0) /
+                  3 +
+                0.12
+              "
+              text-anchor="middle"
+              font-size="0.6"
+              fill="hsl(var(--foreground))"
+            >
+              {{ index + 1 }}
+            </text>
+          </g>
+        </svg>
+      </div>
       <p class="text-muted-foreground">
         {{ $t('educationLearning.joinInstruction') }}
       </p>

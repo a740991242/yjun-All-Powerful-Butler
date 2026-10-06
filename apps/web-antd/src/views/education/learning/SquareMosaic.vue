@@ -58,99 +58,103 @@ function reset() {
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.squareMosaicNotice') }}
     </p>
-    <svg
-      viewBox="0 0 256 256"
-      width="256"
-      height="256"
-      class="mx-auto block h-auto w-full max-w-sm text-foreground"
-      role="img"
-      :aria-label="diagramLabel"
+    <p class="text-xl">{{ $t('educationLearning.squareMosaicUnit') }}</p>
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <rect
-        x="32"
-        y="20"
-        width="32"
-        height="32"
-        fill="hsl(var(--primary) / 0.12)"
-        stroke="currentColor"
-        stroke-width="1.5"
-      />
-      <text x="76" y="42" font-size="13" fill="currentColor">
-        {{ $t('educationLearning.squareMosaicUnit') }}
-      </text>
-      <g
-        v-if="interactive"
-        fill="currentColor"
-        font-size="12"
-        aria-hidden="true"
-      >
-        <text
-          v-for="column in columns"
-          :key="`col-${column}`"
-          :x="48 + (column - 1) * 32"
-          y="65"
-          text-anchor="middle"
-        >
-          {{ String.fromCharCode(64 + column) }}
-        </text>
-        <text
-          v-for="row in current.cells.length"
-          :key="`row-${row}`"
-          x="20"
-          :y="92 + (row - 1) * 32"
-          text-anchor="middle"
-        >
-          {{ row }}
-        </text>
-      </g>
-      <g
-        v-if="interactive"
-        stroke="hsl(var(--border))"
-        stroke-width="1"
-        aria-hidden="true"
+      <svg
+        viewBox="0 0 256 256"
+        width="256"
+        height="256"
+        class="mx-auto block h-auto w-full max-w-sm text-foreground min-w-[256px]"
+        role="img"
+        :aria-label="diagramLabel"
       >
         <rect
-          v-for="cell in cells"
-          :key="`${cell.x}-${cell.y}`"
-          :x="32 + cell.x * 32"
-          :y="72 + cell.y * 32"
+          x="32"
+          y="20"
           width="32"
           height="32"
-          fill="none"
-        />
-      </g>
-      <g
-        fill="hsl(var(--primary) / 0.16)"
-        shape-rendering="crispEdges"
-        aria-hidden="true"
-      >
-        <rect
-          v-for="cell in cells.filter((c) => c.active)"
-          :key="`${cell.x}-${cell.y}`"
-          :x="32 + cell.x * 32"
-          :y="72 + cell.y * 32"
-          width="32"
-          height="32"
-          :stroke="visual.seams ? 'hsl(var(--primary))' : 'none'"
+          fill="hsl(var(--primary) / 0.12)"
+          stroke="currentColor"
           stroke-width="1.5"
         />
-      </g>
-      <g
-        stroke="hsl(var(--primary))"
-        stroke-width="2"
-        fill="none"
-        aria-hidden="true"
-      >
-        <line
-          v-for="(edge, index) in edges"
-          :key="index"
-          :x1="32 + edge[0] * 32"
-          :y1="72 + edge[1] * 32"
-          :x2="32 + edge[2] * 32"
-          :y2="72 + edge[3] * 32"
-        />
-      </g>
-    </svg>
+        <g
+          v-if="interactive"
+          fill="currentColor"
+          font-size="22"
+          aria-hidden="true"
+        >
+          <text
+            v-for="column in columns"
+            :key="`col-${column}`"
+            :x="48 + (column - 1) * 32"
+            y="65"
+            text-anchor="middle"
+          >
+            {{ String.fromCharCode(64 + column) }}
+          </text>
+          <text
+            v-for="row in current.cells.length"
+            :key="`row-${row}`"
+            x="20"
+            :y="92 + (row - 1) * 32"
+            text-anchor="middle"
+          >
+            {{ row }}
+          </text>
+        </g>
+        <g
+          v-if="interactive"
+          stroke="hsl(var(--border))"
+          stroke-width="1"
+          aria-hidden="true"
+        >
+          <rect
+            v-for="cell in cells"
+            :key="`${cell.x}-${cell.y}`"
+            :x="32 + cell.x * 32"
+            :y="72 + cell.y * 32"
+            width="32"
+            height="32"
+            fill="none"
+          />
+        </g>
+        <g
+          fill="hsl(var(--primary) / 0.16)"
+          shape-rendering="crispEdges"
+          aria-hidden="true"
+        >
+          <rect
+            v-for="cell in cells.filter((c) => c.active)"
+            :key="`${cell.x}-${cell.y}`"
+            :x="32 + cell.x * 32"
+            :y="72 + cell.y * 32"
+            width="32"
+            height="32"
+            :stroke="visual.seams ? 'hsl(var(--primary))' : 'none'"
+            stroke-width="1.5"
+          />
+        </g>
+        <g
+          stroke="hsl(var(--primary))"
+          stroke-width="2"
+          fill="none"
+          aria-hidden="true"
+        >
+          <line
+            v-for="(edge, index) in edges"
+            :key="index"
+            :x1="32 + edge[0] * 32"
+            :y1="72 + edge[1] * 32"
+            :x2="32 + edge[2] * 32"
+            :y2="72 + edge[3] * 32"
+          />
+        </g>
+      </svg>
+    </div>
     <template v-if="interactive">
       <p class="font-medium" aria-live="polite">
         {{

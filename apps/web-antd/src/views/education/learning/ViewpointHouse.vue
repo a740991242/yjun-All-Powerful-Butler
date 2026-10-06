@@ -26,51 +26,48 @@ const positions = [
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.houseViewNotice') }}
     </p>
-    <svg
-      viewBox="0 0 300 300"
-      class="mx-auto block w-full max-w-xs"
-      role="img"
-      :aria-label="$t('educationLearning.houseViewPlan')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <rect
-        x="102"
-        y="102"
-        width="96"
-        height="96"
-        fill="hsl(var(--card))"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <text
-        x="150"
-        y="157"
-        text-anchor="middle"
-        fill="currentColor"
-        font-size="18"
+      <svg
+        viewBox="0 0 300 300"
+        class="mx-auto block w-full max-w-xs h-auto min-w-[300px]"
+        role="img"
+        :aria-label="$t('educationLearning.houseViewPlan')"
       >
-        {{ $t('educationLearning.houseViewRoof') }}
-      </text>
-      <g v-for="position in positions" :key="position.letter">
+        <rect
+          x="102"
+          y="102"
+          width="96"
+          height="96"
+          fill="hsl(var(--card))"
+          stroke="currentColor"
+          stroke-width="2"
+        />
         <text
-          :x="position.x"
-          :y="position.y"
-          text-anchor="middle"
-          fill="currentColor"
-          font-size="19"
-        >
-          {{ position.letter }}
-        </text>
-        <text
-          :x="position.x"
-          :y="position.y + 20"
+          x="150"
+          y="157"
           text-anchor="middle"
           fill="currentColor"
           font-size="22"
         >
-          {{ position.arrow }}
+          {{ $t('educationLearning.houseViewRoof') }}
         </text>
-      </g>
-    </svg>
+        <g v-for="position in positions" :key="position.letter">
+          <text
+            :x="position.x"
+            :y="position.y"
+            text-anchor="middle"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ position.letter }} {{ position.arrow }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <p v-for="(face, i) in scene.faces" :key="i" class="text-sm">
       {{
         $t('educationLearning.houseViewKnownSide', {

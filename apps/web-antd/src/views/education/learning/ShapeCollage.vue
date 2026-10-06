@@ -25,31 +25,37 @@ const label = computed(() =>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.collageNotice') }}
     </p>
-    <svg
-      viewBox="0 0 256 176"
-      width="256"
-      height="176"
-      class="mx-auto block h-auto w-full max-w-sm text-primary"
-      role="img"
-      :aria-label="label"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <g
-        v-for="(piece, index) in pieces"
-        :key="index"
-        :transform="`translate(${16 + piece.x * 16 - 48} ${8 + piece.y * 16 - 48}) scale(0.6666666667)`"
+      <svg
+        viewBox="0 0 256 176"
+        width="256"
+        height="176"
+        class="mx-auto block h-auto w-full max-w-sm text-primary min-w-[256px]"
+        role="img"
+        :aria-label="label"
       >
-        <ShapePatchGlyph :patch="piece.patch" />
-        <text
-          x="72"
-          y="77"
-          font-size="15"
-          text-anchor="middle"
-          fill="hsl(var(--foreground))"
-          aria-hidden="true"
+        <g
+          v-for="(piece, index) in pieces"
+          :key="index"
+          :transform="`translate(${16 + piece.x * 16 - 48} ${8 + piece.y * 16 - 48}) scale(0.6666666667)`"
         >
-          {{ String.fromCharCode(65 + index) }}
-        </text>
-      </g>
-    </svg>
+          <ShapePatchGlyph :patch="piece.patch" />
+          <text
+            x="72"
+            y="77"
+            font-size="34"
+            text-anchor="middle"
+            fill="hsl(var(--foreground))"
+            aria-hidden="true"
+          >
+            {{ String.fromCharCode(65 + index) }}
+          </text>
+        </g>
+      </svg>
+    </div>
   </div>
 </template>

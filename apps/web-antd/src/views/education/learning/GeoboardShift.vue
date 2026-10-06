@@ -41,59 +41,65 @@ function canMove(direction: 'left' | 'right') {
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.geoboardShiftNotice') }}
     </p>
-    <svg
-      viewBox="0 0 280 200"
-      width="280"
-      height="200"
-      class="mx-auto block h-auto w-full max-w-lg text-foreground"
-      role="img"
-      :aria-label="
-        $t('educationLearning.geoboardShiftBoard', {
-          points: corners
-            .map(([x, y], i) => `${['A', 'B', 'C', 'D'][i]} (${x},${y})`)
-            .join('; '),
-        })
-      "
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <g fill="currentColor" aria-hidden="true">
-        <g v-for="row in 5" :key="row">
-          <circle
-            v-for="column in 7"
-            :key="column"
-            :cx="20 + (column - 1) * 40"
-            :cy="20 + (row - 1) * 40"
-            r="2"
-          />
-        </g>
-      </g>
-      <polygon
-        :points="
-          corners.map(([x, y]) => `${20 + x * 40},${20 + y * 40}`).join(' ')
+      <svg
+        viewBox="0 0 280 200"
+        width="280"
+        height="200"
+        class="mx-auto block h-auto w-full max-w-lg text-foreground min-w-[280px]"
+        role="img"
+        :aria-label="
+          $t('educationLearning.geoboardShiftBoard', {
+            points: corners
+              .map(([x, y], i) => `${['A', 'B', 'C', 'D'][i]} (${x},${y})`)
+              .join('; '),
+          })
         "
-        fill="hsl(var(--primary) / 0.12)"
-        stroke="hsl(var(--primary))"
-        stroke-width="3"
-      />
-      <g v-for="(point, index) in corners" :key="index" aria-hidden="true">
-        <circle
-          :cx="20 + point[0] * 40"
-          :cy="20 + point[1] * 40"
-          r="4"
-          fill="hsl(var(--background))"
-          stroke="currentColor"
-          stroke-width="2"
+      >
+        <g fill="currentColor" aria-hidden="true">
+          <g v-for="row in 5" :key="row">
+            <circle
+              v-for="column in 7"
+              :key="column"
+              :cx="20 + (column - 1) * 40"
+              :cy="20 + (row - 1) * 40"
+              r="2"
+            />
+          </g>
+        </g>
+        <polygon
+          :points="
+            corners.map(([x, y]) => `${20 + x * 40},${20 + y * 40}`).join(' ')
+          "
+          fill="hsl(var(--primary) / 0.12)"
+          stroke="hsl(var(--primary))"
+          stroke-width="3"
         />
-        <text
-          :x="20 + point[0] * 40"
-          :y="20 + point[1] * 40 + (index < 2 ? -10 : 20)"
-          text-anchor="middle"
-          font-size="14"
-          fill="hsl(var(--foreground))"
-        >
-          {{ ['A', 'B', 'C', 'D'][index] }}
-        </text>
-      </g>
-    </svg>
+        <g v-for="(point, index) in corners" :key="index" aria-hidden="true">
+          <circle
+            :cx="20 + point[0] * 40"
+            :cy="20 + point[1] * 40"
+            r="4"
+            fill="hsl(var(--background))"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <text
+            :x="20 + point[0] * 40"
+            :y="20 + point[1] * 40 + (index < 2 ? -10 : 20)"
+            text-anchor="middle"
+            font-size="22"
+            fill="hsl(var(--foreground))"
+          >
+            {{ ['A', 'B', 'C', 'D'][index] }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <template v-if="interactive">
       <p class="font-medium" aria-live="polite">
         {{

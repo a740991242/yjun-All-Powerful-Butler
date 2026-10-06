@@ -31,66 +31,63 @@ const observers = [
         })
       }}
     </p>
-    <svg
-      viewBox="0 0 260 280"
-      class="mx-auto block w-full max-w-xs"
-      role="img"
-      :aria-label="
-        $t('educationLearning.occlusionPlan', {
-          side: $t(`educationLearning.housePosition_${scene.cupSide}`),
-        })
-      "
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <rect
-        x="90"
-        y="90"
-        width="80"
-        height="80"
-        fill="hsl(var(--card))"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <text
-        x="130"
-        y="138"
-        text-anchor="middle"
-        fill="currentColor"
-        font-size="18"
+      <svg
+        viewBox="-16 -8 292 296"
+        class="mx-auto block w-full max-w-xs h-auto min-w-[280px]"
+        role="img"
+        :aria-label="
+          $t('educationLearning.occlusionPlan', {
+            side: $t(`educationLearning.housePosition_${scene.cupSide}`),
+          })
+        "
       >
-        {{ $t('educationLearning.occlusionBox') }}
-      </text>
-      <circle
-        cx="130"
-        :cy="cupY"
-        r="12"
-        fill="hsl(var(--card))"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <text x="168" :y="cupY + 5" fill="currentColor" font-size="16">
-        {{ $t('educationLearning.occlusionCup') }}
-      </text>
-      <g v-for="observer in observers" :key="observer.letter">
+        <rect
+          x="90"
+          y="90"
+          width="80"
+          height="80"
+          fill="hsl(var(--card))"
+          stroke="currentColor"
+          stroke-width="2"
+        />
         <text
-          :x="observer.x"
-          :y="observer.y"
+          x="130"
+          y="138"
           text-anchor="middle"
           fill="currentColor"
-          font-size="19"
+          font-size="22"
         >
-          {{ observer.letter }}
+          {{ $t('educationLearning.occlusionBox') }}
         </text>
-        <text
-          :x="observer.x"
-          :y="observer.y + 18"
-          text-anchor="middle"
-          fill="currentColor"
-          font-size="21"
-        >
-          {{ observer.arrow }}
+        <circle
+          cx="130"
+          :cy="cupY"
+          r="12"
+          fill="hsl(var(--card))"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <text x="168" :y="cupY + 5" fill="currentColor" font-size="22">
+          {{ $t('educationLearning.occlusionCup') }}
         </text>
-      </g>
-    </svg>
+        <g v-for="observer in observers" :key="observer.letter">
+          <text
+            :x="observer.x"
+            :y="observer.y"
+            text-anchor="middle"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ observer.letter }} {{ observer.arrow }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
       <div
         v-for="(view, i) in scene.candidates"

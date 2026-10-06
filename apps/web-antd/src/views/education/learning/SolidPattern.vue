@@ -30,7 +30,7 @@ const entries = computed(() =>
           v-for="(item, index) in entries"
           :key="index"
           viewBox="0 0 240 220"
-          class="h-28 w-28 shrink-0 text-primary"
+          class="h-48 w-48 shrink-0 text-primary"
           role="img"
           :data-pattern-position="index + 1"
           :aria-label="

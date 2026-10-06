@@ -46,75 +46,81 @@ const differenceEnd = computed(() =>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.comparisonBarsNotice') }}
     </p>
-    <svg
-      viewBox="0 0 310 205"
-      class="mx-auto block w-full max-w-lg"
-      role="img"
-      :aria-label="$t('educationLearning.comparisonBarsPicture')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <text x="14" y="70" fill="currentColor" font-size="18">A</text>
-      <path
-        d="M44 59 V71 M44 65 H220 M220 59 V71"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <text
-        x="132"
-        y="47"
-        text-anchor="middle"
-        fill="currentColor"
-        font-size="18"
+      <svg
+        viewBox="0 0 310 205"
+        class="mx-auto block w-full max-w-lg h-auto min-w-[310px]"
+        role="img"
+        :aria-label="$t('educationLearning.comparisonBarsPicture')"
       >
-        {{ visual.reference }}
-      </text>
-      <path
-        d="M44 77 V155 M220 77 V137"
-        fill="none"
-        stroke="currentColor"
-        stroke-dasharray="3 5"
-        opacity="0.45"
-      />
-      <text x="14" y="143" fill="currentColor" font-size="18">B</text>
-      <path
-        :d="`M44 132 V144 M44 138 H${visual.direction === 'more' && visual.difference > 0 ? 220 : targetEnd} M${targetEnd} 132 V144`"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <path
-        v-if="visual.difference > 0"
-        :d="`M${differenceStart} 130 V142 M${differenceStart} 136 H${differenceEnd} M${differenceEnd} 130 V142`"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-dasharray="4 3"
-      />
-      <text
-        :x="(differenceStart + differenceEnd) / 2"
-        y="117"
-        text-anchor="middle"
-        fill="currentColor"
-        font-size="18"
-      >
-        {{ visual.difference }}
-      </text>
-      <path
-        :d="`M44 168 V176 H${targetEnd} V168`"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-      />
-      <text
-        :x="(44 + targetEnd) / 2"
-        y="200"
-        text-anchor="middle"
-        fill="currentColor"
-        font-size="22"
-      >
-        ?
-      </text>
-    </svg>
+        <text x="14" y="70" fill="currentColor" font-size="22">A</text>
+        <path
+          d="M44 59 V71 M44 65 H220 M220 59 V71"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <text
+          x="132"
+          y="47"
+          text-anchor="middle"
+          fill="currentColor"
+          font-size="22"
+        >
+          {{ visual.reference }}
+        </text>
+        <path
+          d="M44 77 V155 M220 77 V137"
+          fill="none"
+          stroke="currentColor"
+          stroke-dasharray="3 5"
+          opacity="0.45"
+        />
+        <text x="14" y="143" fill="currentColor" font-size="22">B</text>
+        <path
+          :d="`M44 132 V144 M44 138 H${visual.direction === 'more' && visual.difference > 0 ? 220 : targetEnd} M${targetEnd} 132 V144`"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <path
+          v-if="visual.difference > 0"
+          :d="`M${differenceStart} 130 V142 M${differenceStart} 136 H${differenceEnd} M${differenceEnd} 130 V142`"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-dasharray="4 3"
+        />
+        <text
+          :x="(differenceStart + differenceEnd) / 2"
+          y="117"
+          text-anchor="middle"
+          fill="currentColor"
+          font-size="22"
+        >
+          {{ visual.difference }}
+        </text>
+        <path
+          :d="`M44 168 V176 H${targetEnd} V168`"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
+        <text
+          :x="(44 + targetEnd) / 2"
+          y="200"
+          text-anchor="middle"
+          fill="currentColor"
+          font-size="22"
+        >
+          ?
+        </text>
+      </svg>
+    </div>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.comparisonBarsUnknown') }}
     </p>

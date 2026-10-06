@@ -37,35 +37,41 @@ const description = computed(() =>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.towerInstruction') }}
     </p>
-    <svg
-      viewBox="0 0 320 235"
-      class="mx-auto w-full max-w-xs text-primary"
-      role="img"
-      :aria-label="description"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <g v-for="(node, index) in nodes" :key="index">
-        <rect
-          :x="node.x - 39"
-          :y="node.y - 28"
-          width="78"
-          height="56"
-          rx="8"
-          fill="hsl(var(--background))"
-          stroke="currentColor"
-          stroke-width="2"
-          :stroke-dasharray="node.blank ? '4 3' : undefined"
-        />
-        <text
-          :x="node.x"
-          :y="node.y + 8"
-          text-anchor="middle"
-          font-size="24"
-          fill="currentColor"
-        >
-          {{ node.label }}
-        </text>
-      </g>
-    </svg>
+      <svg
+        viewBox="0 0 320 235"
+        class="mx-auto w-full max-w-xs text-primary h-auto min-w-[320px]"
+        role="img"
+        :aria-label="description"
+      >
+        <g v-for="(node, index) in nodes" :key="index">
+          <rect
+            :x="node.x - 39"
+            :y="node.y - 28"
+            width="78"
+            height="56"
+            rx="8"
+            fill="hsl(var(--background))"
+            stroke="currentColor"
+            stroke-width="2"
+            :stroke-dasharray="node.blank ? '4 3' : undefined"
+          />
+          <text
+            :x="node.x"
+            :y="node.y + 8"
+            text-anchor="middle"
+            font-size="24"
+            fill="currentColor"
+          >
+            {{ node.label }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.towerNotice') }}
     </p>

@@ -20,81 +20,90 @@ const rows = ['A', 'B'];
         $t('educationLearning.comparisonRowsCount', { row: rows[row], count })
       }}
     </p>
-    <svg
-      viewBox="0 0 340 150"
-      class="mx-auto block w-full max-w-lg"
-      role="group"
-      :aria-label="$t('educationLearning.comparisonRowsPicture')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <line
-        v-for="i in Math.min(...visual.counts)"
-        :key="`pair-${i}`"
-        :x1="45 + (i - 1) * 14"
-        :x2="45 + (i - 1) * 14"
-        y1="56"
-        y2="103"
-        stroke="currentColor"
-        stroke-dasharray="2 4"
-        opacity="0.45"
-        aria-hidden="true"
-      />
-      <g
-        v-for="(count, row) in visual.counts"
-        :key="row"
+      <svg
+        viewBox="0 0 340 150"
+        class="mx-auto block w-full max-w-lg h-auto min-w-[340px]"
         role="group"
-        :aria-label="
-          $t('educationLearning.comparisonRowsCount', { row: rows[row], count })
-        "
+        :aria-label="$t('educationLearning.comparisonRowsPicture')"
       >
-        <text
-          x="14"
-          :y="row === 0 ? 56 : 121"
-          fill="currentColor"
-          font-size="18"
-        >
-          {{ rows[row] }}
-        </text>
+        <line
+          v-for="i in Math.min(...visual.counts)"
+          :key="`pair-${i}`"
+          :x1="45 + (i - 1) * 14"
+          :x2="45 + (i - 1) * 14"
+          y1="56"
+          y2="103"
+          stroke="currentColor"
+          stroke-dasharray="2 4"
+          opacity="0.45"
+          aria-hidden="true"
+        />
         <g
-          v-for="i in count"
-          :key="i"
-          role="img"
+          v-for="(count, row) in visual.counts"
+          :key="row"
+          role="group"
           :aria-label="
-            $t('educationLearning.comparisonRowsMark', {
+            $t('educationLearning.comparisonRowsCount', {
               row: rows[row],
-              position: i,
+              count,
             })
           "
         >
-          <circle
-            v-if="row === 0"
-            :cx="45 + (i - 1) * 14"
-            cy="50"
-            r="5"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <rect
-            v-else
-            :x="40 + (i - 1) * 14"
-            y="110"
-            width="10"
-            height="10"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
+          <text
+            x="14"
+            :y="row === 0 ? 56 : 121"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ rows[row] }}
+          </text>
+          <g
+            v-for="i in count"
+            :key="i"
+            role="img"
+            :aria-label="
+              $t('educationLearning.comparisonRowsMark', {
+                row: rows[row],
+                position: i,
+              })
+            "
+          >
+            <circle
+              v-if="row === 0"
+              :cx="45 + (i - 1) * 14"
+              cy="50"
+              r="5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <rect
+              v-else
+              :x="40 + (i - 1) * 14"
+              y="110"
+              width="10"
+              height="10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </g>
+          <text
+            v-if="count === 0"
+            x="45"
+            :y="row === 0 ? 56 : 121"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ $t('educationLearning.comparisonRowsEmpty') }}
+          </text>
         </g>
-        <text
-          v-if="count === 0"
-          x="45"
-          :y="row === 0 ? 56 : 121"
-          fill="currentColor"
-          font-size="16"
-        >
-          {{ $t('educationLearning.comparisonRowsEmpty') }}
-        </text>
-      </g>
-    </svg>
+      </svg>
+    </div>
   </div>
 </template>

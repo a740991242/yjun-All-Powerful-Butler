@@ -67,7 +67,7 @@ function name(code: FlagCode | null) {
             :x="index * 38 + 22"
             y="35"
             text-anchor="middle"
-            font-size="16"
+            font-size="22"
             :fill="entry ? '#111827' : 'currentColor'"
           >
             {{ entry ?? '?' }}

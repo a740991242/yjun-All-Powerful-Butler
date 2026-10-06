@@ -83,7 +83,7 @@ const rooms = computed(() => teenRooms(props.visual.variant));
               :x="room.x + 14"
               :y="room.y + 24"
               text-anchor="middle"
-              font-size="18"
+              font-size="22"
               fill="currentColor"
             >
               {{ room.guest }}
@@ -92,7 +92,7 @@ const rooms = computed(() => teenRooms(props.visual.variant));
               :x="room.x + 14"
               :y="room.y + 52"
               text-anchor="middle"
-              font-size="16"
+              font-size="22"
               fill="currentColor"
             >
               {{ room.visible ? room.number : '□' }}

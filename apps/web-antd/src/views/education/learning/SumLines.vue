@@ -31,49 +31,58 @@ const nodes = computed(() =>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.sumLinesInstruction') }}
     </p>
-    <svg
-      viewBox="0 0 320 280"
-      class="mx-auto w-full max-w-xs text-primary"
-      role="img"
-      :aria-label="
-        visual.layout === 'triangle'
-          ? $t('educationLearning.sumLinesTriangle', {
-              top: visual.given[0],
-              left: visual.given[1],
-              right: visual.given[2],
-            })
-          : $t('educationLearning.sumLinesCross', {
-              top: visual.given[0],
-              left: visual.given[1],
-              center: visual.given[2],
-            })
-      "
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <g fill="none" stroke="currentColor" stroke-width="2">
-        <path v-if="visual.layout === 'triangle'" d="M160 36 L40 244 H280 Z" />
-        <path v-else d="M160 36 V244 M40 140 H280" />
-      </g>
-      <g v-for="(node, index) in nodes" :key="index">
-        <circle
-          :cx="node.x"
-          :cy="node.y"
-          r="23"
-          fill="hsl(var(--background))"
-          stroke="currentColor"
-          stroke-width="2"
-          :stroke-dasharray="index >= 3 ? '4 3' : undefined"
-        />
-        <text
-          :x="node.x"
-          :y="node.y + 7"
-          text-anchor="middle"
-          font-size="22"
-          fill="currentColor"
-        >
-          {{ node.label }}
-        </text>
-      </g>
-    </svg>
+      <svg
+        viewBox="0 0 320 280"
+        class="mx-auto w-full max-w-xs text-primary h-auto min-w-[320px]"
+        role="img"
+        :aria-label="
+          visual.layout === 'triangle'
+            ? $t('educationLearning.sumLinesTriangle', {
+                top: visual.given[0],
+                left: visual.given[1],
+                right: visual.given[2],
+              })
+            : $t('educationLearning.sumLinesCross', {
+                top: visual.given[0],
+                left: visual.given[1],
+                center: visual.given[2],
+              })
+        "
+      >
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            v-if="visual.layout === 'triangle'"
+            d="M160 36 L40 244 H280 Z"
+          />
+          <path v-else d="M160 36 V244 M40 140 H280" />
+        </g>
+        <g v-for="(node, index) in nodes" :key="index">
+          <circle
+            :cx="node.x"
+            :cy="node.y"
+            r="23"
+            fill="hsl(var(--background))"
+            stroke="currentColor"
+            stroke-width="2"
+            :stroke-dasharray="index >= 3 ? '4 3' : undefined"
+          />
+          <text
+            :x="node.x"
+            :y="node.y + 7"
+            text-anchor="middle"
+            font-size="22"
+            fill="currentColor"
+          >
+            {{ node.label }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.sumLinesNotice') }}
     </p>

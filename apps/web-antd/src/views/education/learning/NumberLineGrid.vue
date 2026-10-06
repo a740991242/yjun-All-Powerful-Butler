@@ -62,7 +62,7 @@ const ticks = computed(() => numberLineTicks(props.visual));
             :x="tick.x"
             y="120"
             text-anchor="middle"
-            font-size="18"
+            font-size="22"
             fill="currentColor"
           >
             {{ tick.value }}
@@ -86,7 +86,7 @@ const ticks = computed(() => numberLineTicks(props.visual));
             :x="numberLinePointX(visual, point)"
             :y="index % 2 ? 30 : 56"
             text-anchor="middle"
-            font-size="18"
+            font-size="22"
             fill="currentColor"
           >
             {{ String.fromCodePoint(65 + index) }}

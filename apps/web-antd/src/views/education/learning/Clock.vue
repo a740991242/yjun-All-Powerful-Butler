@@ -34,52 +34,58 @@ const numbers = Array.from({ length: 12 }, (_, i) => ({
 </script>
 <template>
   <div class="flex flex-col gap-3">
-    <svg
-      viewBox="0 0 240 240"
-      class="mx-auto w-full max-w-xs text-primary"
-      role="img"
-      :aria-label="description"
-      :data-clock-kind="visual.kind"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <circle
-        cx="120"
-        cy="120"
-        r="117"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <text
-        v-for="number in numbers"
-        :key="number.label"
-        :x="number.x"
-        :y="number.y + 6"
-        text-anchor="middle"
-        font-size="17"
-        fill="currentColor"
+      <svg
+        viewBox="0 0 240 240"
+        class="mx-auto w-full max-w-xs text-primary h-auto min-w-[220px]"
+        role="img"
+        :aria-label="description"
+        :data-clock-kind="visual.kind"
       >
-        {{ number.label }}
-      </text>
-      <line
-        x1="120"
-        y1="120"
-        :x2="long.x"
-        :y2="long.y"
-        stroke="currentColor"
-        stroke-width="3"
-        stroke-dasharray="5 3"
-      />
-      <line
-        x1="120"
-        y1="120"
-        :x2="short.x"
-        :y2="short.y"
-        stroke="currentColor"
-        stroke-width="6"
-        stroke-linecap="round"
-      />
-      <circle cx="120" cy="120" r="5" fill="currentColor" />
-    </svg>
+        <circle
+          cx="120"
+          cy="120"
+          r="117"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+        <text
+          v-for="number in numbers"
+          :key="number.label"
+          :x="number.x"
+          :y="number.y + 6"
+          text-anchor="middle"
+          font-size="22"
+          fill="currentColor"
+        >
+          {{ number.label }}
+        </text>
+        <line
+          x1="120"
+          y1="120"
+          :x2="long.x"
+          :y2="long.y"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-dasharray="5 3"
+        />
+        <line
+          x1="120"
+          y1="120"
+          :x2="short.x"
+          :y2="short.y"
+          stroke="currentColor"
+          stroke-width="6"
+          stroke-linecap="round"
+        />
+        <circle cx="120" cy="120" r="5" fill="currentColor" />
+      </svg>
+    </div>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.clockLegend') }}
     </p>

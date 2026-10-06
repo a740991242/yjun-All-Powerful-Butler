@@ -79,76 +79,80 @@ function reset() {
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.triangleMosaicNotice') }}
     </p>
-    <svg
-      viewBox="0 0 256 224"
-      width="256"
-      height="224"
-      class="mx-auto block h-auto w-full max-w-sm text-foreground"
-      role="img"
-      :aria-label="diagramLabel"
+    <p class="text-xl">{{ $t('educationLearning.squareMosaicUnit') }}</p>
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <path
-        d="M32 20 H64 L32 52 Z"
-        fill="hsl(var(--primary) / 0.16)"
-        stroke="currentColor"
-        stroke-width="1.5"
-      />
-      <text x="76" y="42" font-size="13" fill="currentColor">
-        {{ $t('educationLearning.squareMosaicUnit') }}
-      </text>
-      <g
-        v-if="interactive"
-        stroke="hsl(var(--border))"
-        stroke-width="1"
-        aria-hidden="true"
+      <svg
+        viewBox="0 0 256 224"
+        width="256"
+        height="224"
+        class="mx-auto block h-auto w-full max-w-sm text-foreground min-w-[336px]"
+        role="img"
+        :aria-label="diagramLabel"
       >
         <path
-          v-for="x in 7"
-          :key="`x-${x}`"
-          :d="`M${32 + (x - 1) * 32} 72 V200`"
-        />
-        <path
-          v-for="y in 5"
-          :key="`y-${y}`"
-          :d="`M32 ${72 + (y - 1) * 32} H224`"
-        />
-      </g>
-      <g v-for="(points, index) in polygons" :key="index" aria-hidden="true">
-        <polygon
-          :points="
-            points.map((p) => `${32 + p.x * 32},${72 + p.y * 32}`).join(' ')
-          "
+          d="M32 20 H64 L32 52 Z"
           fill="hsl(var(--primary) / 0.16)"
-          :stroke="visual.seams ? 'hsl(var(--primary))' : 'none'"
-          :stroke-width="interactive && current.selected === index ? 3 : 1.5"
+          stroke="currentColor"
+          stroke-width="1.5"
         />
-        <text
-          v-if="visual.seams"
-          :x="32 + (points.reduce((sum, p) => sum + p.x, 0) / 3) * 32"
-          :y="76 + (points.reduce((sum, p) => sum + p.y, 0) / 3) * 32"
-          font-size="12"
-          text-anchor="middle"
-          fill="currentColor"
+        <g
+          v-if="interactive"
+          stroke="hsl(var(--border))"
+          stroke-width="1"
+          aria-hidden="true"
         >
-          {{ letter(index) }}
-        </text>
-      </g>
-      <g
-        stroke="hsl(var(--primary))"
-        stroke-width="2"
-        fill="none"
-        aria-hidden="true"
-      >
-        <line
-          v-for="(edge, index) in edges"
-          :key="index"
-          :x1="32 + edge[0] * 32"
-          :y1="72 + edge[1] * 32"
-          :x2="32 + edge[2] * 32"
-          :y2="72 + edge[3] * 32"
-        />
-      </g>
-    </svg>
+          <path
+            v-for="x in 7"
+            :key="`x-${x}`"
+            :d="`M${32 + (x - 1) * 32} 72 V200`"
+          />
+          <path
+            v-for="y in 5"
+            :key="`y-${y}`"
+            :d="`M32 ${72 + (y - 1) * 32} H224`"
+          />
+        </g>
+        <g v-for="(points, index) in polygons" :key="index" aria-hidden="true">
+          <polygon
+            :points="
+              points.map((p) => `${32 + p.x * 32},${72 + p.y * 32}`).join(' ')
+            "
+            fill="hsl(var(--primary) / 0.16)"
+            :stroke="visual.seams ? 'hsl(var(--primary))' : 'none'"
+            :stroke-width="interactive && current.selected === index ? 3 : 1.5"
+          />
+          <text
+            v-if="visual.seams"
+            :x="32 + (points.reduce((sum, p) => sum + p.x, 0) / 3) * 32"
+            :y="76 + (points.reduce((sum, p) => sum + p.y, 0) / 3) * 32"
+            font-size="16"
+            text-anchor="middle"
+            fill="currentColor"
+          >
+            {{ letter(index) }}
+          </text>
+        </g>
+        <g
+          stroke="hsl(var(--primary))"
+          stroke-width="2"
+          fill="none"
+          aria-hidden="true"
+        >
+          <line
+            v-for="(edge, index) in edges"
+            :key="index"
+            :x1="32 + edge[0] * 32"
+            :y1="72 + edge[1] * 32"
+            :x2="32 + edge[2] * 32"
+            :y2="72 + edge[3] * 32"
+          />
+        </g>
+      </svg>
+    </div>
     <template v-if="interactive">
       <p class="font-medium" aria-live="polite">
         {{

@@ -62,48 +62,54 @@ function select(selected: number) {
 <template>
   <div class="flex flex-col gap-4">
     <p>{{ $t('educationLearning.threePieceInstruction') }}</p>
-    <svg
-      viewBox="-0.25 -0.25 6.5 4.5"
-      class="mx-auto w-full max-w-xl rounded border border-border"
-      role="img"
-      :aria-label="
-        $t('educationLearning.threePieceBoard', {
-          pieces: current.pieces
-            .map((piece, index) =>
-              $t('educationLearning.joinPiecePosition', {
-                letter: ['A', 'B', 'C'][index],
-                x: piece.x,
-                y: piece.y,
-                turn: piece.turn * 90,
-              }),
-            )
-            .join('; '),
-        })
-      "
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <g stroke="hsl(var(--border))" stroke-width="0.02">
-        <path v-for="x in 7" :key="`x-${x}`" :d="`M${x - 1} 0 V4`" />
-        <path v-for="y in 5" :key="`y-${y}`" :d="`M0 ${y - 1} H6`" />
-      </g>
-      <g v-for="(polygon, index) in polygons" :key="index">
-        <polygon
-          :points="polygon.points"
-          fill="hsl(var(--primary))"
-          :fill-opacity="0.15 + index * 0.15"
-          stroke="hsl(var(--primary))"
-          :stroke-width="current.selected === index ? 0.08 : 0.035"
-        />
-        <text
-          :x="polygon.x"
-          :y="polygon.y + 0.1"
-          text-anchor="middle"
-          font-size="0.3"
-          fill="hsl(var(--foreground))"
-        >
-          {{ ['A', 'B', 'C'][index] }}
-        </text>
-      </g>
-    </svg>
+      <svg
+        viewBox="-0.25 -0.25 6.5 4.5"
+        class="mx-auto w-full max-w-xl rounded border border-border h-auto min-w-[220px]"
+        role="img"
+        :aria-label="
+          $t('educationLearning.threePieceBoard', {
+            pieces: current.pieces
+              .map((piece, index) =>
+                $t('educationLearning.joinPiecePosition', {
+                  letter: ['A', 'B', 'C'][index],
+                  x: piece.x,
+                  y: piece.y,
+                  turn: piece.turn * 90,
+                }),
+              )
+              .join('; '),
+          })
+        "
+      >
+        <g stroke="hsl(var(--border))" stroke-width="0.02">
+          <path v-for="x in 7" :key="`x-${x}`" :d="`M${x - 1} 0 V4`" />
+          <path v-for="y in 5" :key="`y-${y}`" :d="`M0 ${y - 1} H6`" />
+        </g>
+        <g v-for="(polygon, index) in polygons" :key="index">
+          <polygon
+            :points="polygon.points"
+            fill="hsl(var(--primary))"
+            :fill-opacity="0.15 + index * 0.15"
+            stroke="hsl(var(--primary))"
+            :stroke-width="current.selected === index ? 0.08 : 0.035"
+          />
+          <text
+            :x="polygon.x"
+            :y="polygon.y + 0.1"
+            text-anchor="middle"
+            font-size="0.6"
+            fill="hsl(var(--foreground))"
+          >
+            {{ ['A', 'B', 'C'][index] }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <p class="font-medium" aria-live="polite">
       {{
         shape

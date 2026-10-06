@@ -15,46 +15,52 @@ const rods = computed(() => [
     <p class="text-muted-foreground">
       {{ $t('educationLearning.counterNotice') }}
     </p>
-    <svg
-      viewBox="0 0 240 218"
-      class="mx-auto block w-full max-w-xs"
-      role="group"
-      :aria-label="$t('educationLearning.counterPicture')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <path
-        d="M 30 180 H 210 M 70 22 V 180 M 170 22 V 180"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <g
-        v-for="rod in rods"
-        :key="rod.key"
+      <svg
+        viewBox="0 0 240 218"
+        class="mx-auto block w-full max-w-xs h-auto min-w-[240px]"
         role="group"
-        :aria-label="$t(`educationLearning.counter_${rod.key}`)"
+        :aria-label="$t('educationLearning.counterPicture')"
       >
-        <ellipse
-          v-for="n in rod.count"
-          :key="n"
-          :cx="rod.x"
-          :cy="176 - n * 16"
-          rx="22"
-          ry="6"
-          fill="currentColor"
-          class="text-primary"
-          role="img"
-          :aria-label="$t(`educationLearning.counterBead_${rod.key}`)"
+        <path
+          d="M 30 180 H 210 M 70 22 V 180 M 170 22 V 180"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
         />
-        <text
-          :x="rod.x"
-          y="204"
-          text-anchor="middle"
-          fill="currentColor"
-          font-size="14"
+        <g
+          v-for="rod in rods"
+          :key="rod.key"
+          role="group"
+          :aria-label="$t(`educationLearning.counter_${rod.key}`)"
         >
-          {{ $t(`educationLearning.counter_${rod.key}`) }}
-        </text>
-      </g>
-    </svg>
+          <ellipse
+            v-for="n in rod.count"
+            :key="n"
+            :cx="rod.x"
+            :cy="176 - n * 16"
+            rx="22"
+            ry="6"
+            fill="currentColor"
+            class="text-primary"
+            role="img"
+            :aria-label="$t(`educationLearning.counterBead_${rod.key}`)"
+          />
+          <text
+            :x="rod.x"
+            y="204"
+            text-anchor="middle"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ $t(`educationLearning.counter_${rod.key}`) }}
+          </text>
+        </g>
+      </svg>
+    </div>
   </div>
 </template>

@@ -38,84 +38,90 @@ const star =
     <figcaption class="font-medium">
       {{ $t(`educationLearning.finalPositionTitle_${visual.scene}`) }}
     </figcaption>
-    <svg
+    <div
       v-if="visual.scene.startsWith('flower')"
-      viewBox="0 0 300 300"
-      class="mx-auto w-full max-w-md text-primary"
-      role="img"
-      :aria-label="flowerDescription"
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <path
-        d="M150 60 V240 M60 150 H240"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <g
-        fill="hsl(var(--primary) / 0.15)"
-        stroke="currentColor"
-        stroke-width="2"
+      <svg
+        viewBox="0 0 300 300"
+        class="mx-auto w-full max-w-md text-primary h-auto min-w-[300px]"
+        role="img"
+        :aria-label="flowerDescription"
       >
-        <circle
-          v-for="[x, y] in [
-            [138, 138],
-            [162, 138],
-            [138, 162],
-            [162, 162],
-          ]"
-          :key="`${x}-${y}`"
-          :cx="x"
-          :cy="y"
-          r="15"
-        />
-        <circle cx="150" cy="150" r="9" />
-      </g>
-      <g
-        v-for="slot in slots"
-        :key="slot.label"
-        :transform="`translate(${slot.x} ${slot.y})`"
-        :data-flower-slot="slot.label"
-        :data-flower-sample="slot.sample ? 'yes' : 'no'"
-      >
-        <rect
-          x="-36"
-          y="-32"
-          width="72"
-          height="64"
-          rx="8"
-          fill="hsl(var(--card))"
+        <path
+          d="M150 60 V240 M60 150 H240"
+          fill="none"
           stroke="currentColor"
           stroke-width="2"
         />
         <g
-          v-if="slot.sample || visual.scene === 'flower-filled'"
-          fill="none"
+          fill="hsl(var(--primary) / 0.15)"
           stroke="currentColor"
-          stroke-width="3"
-          :data-flower-shape="slot.shape"
+          stroke-width="2"
         >
-          <path v-if="slot.shape === 'star'" :d="star" />
-          <rect
-            v-else-if="slot.shape === 'square'"
-            x="-20"
-            y="-20"
-            width="40"
-            height="40"
+          <circle
+            v-for="[x, y] in [
+              [138, 138],
+              [162, 138],
+              [138, 162],
+              [162, 162],
+            ]"
+            :key="`${x}-${y}`"
+            :cx="x"
+            :cy="y"
+            r="15"
           />
-          <circle v-else-if="slot.shape === 'circle'" r="21" />
-          <path v-else d="M0 -22 L-24 21 H24 Z" />
+          <circle cx="150" cy="150" r="9" />
         </g>
-        <text
-          v-else
-          text-anchor="middle"
-          y="7"
-          font-size="22"
-          fill="currentColor"
+        <g
+          v-for="slot in slots"
+          :key="slot.label"
+          :transform="`translate(${slot.x} ${slot.y})`"
+          :data-flower-slot="slot.label"
+          :data-flower-sample="slot.sample ? 'yes' : 'no'"
         >
-          {{ slot.label }}
-        </text>
-      </g>
-    </svg>
+          <rect
+            x="-36"
+            y="-32"
+            width="72"
+            height="64"
+            rx="8"
+            fill="hsl(var(--card))"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <g
+            v-if="slot.sample || visual.scene === 'flower-filled'"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            :data-flower-shape="slot.shape"
+          >
+            <path v-if="slot.shape === 'star'" :d="star" />
+            <rect
+              v-else-if="slot.shape === 'square'"
+              x="-20"
+              y="-20"
+              width="40"
+              height="40"
+            />
+            <circle v-else-if="slot.shape === 'circle'" r="21" />
+            <path v-else d="M0 -22 L-24 21 H24 Z" />
+          </g>
+          <text
+            v-else
+            text-anchor="middle"
+            y="7"
+            font-size="22"
+            fill="currentColor"
+          >
+            {{ slot.label }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <div
       v-else-if="visual.scene === 'items'"
       class="overflow-x-auto pb-2"

@@ -32,7 +32,7 @@ const counting = computed(() => props.visual.scene.startsWith('count-'));
           )
         }}
       </p>
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
         <div
           v-for="piece in data.input"
           :key="piece.id"
@@ -81,16 +81,10 @@ const counting = computed(() => props.visual.scene.startsWith('count-'));
                   stroke-width="2"
                   data-layer-cell
                 />
-                <text
-                  x="120"
-                  y="140"
-                  text-anchor="middle"
-                  font-size="16"
-                  fill="currentColor"
-                >
-                  {{ $t('educationLearning.recomposeFront') }}
-                </text>
               </svg>
+              <p class="text-center text-xl">
+                {{ $t('educationLearning.recomposeFront') }}
+              </p>
             </div>
           </div>
         </div>
@@ -100,7 +94,7 @@ const counting = computed(() => props.visual.scene.startsWith('count-'));
       <p class="mb-2 font-medium">
         {{ $t('educationLearning.recomposeChoices') }}
       </p>
-      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
         <div
           v-for="(group, i) in data.choices"
           :key="i"

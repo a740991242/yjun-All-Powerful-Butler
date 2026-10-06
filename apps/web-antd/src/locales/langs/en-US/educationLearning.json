@@ -73,6 +73,8 @@
   "mode_practice": "Practice",
   "mode_review": "Mistake review",
   "mode_transition": "Volume transition",
+  "diagramScroll": "For a wide diagram, scroll within it; use the left and right arrow keys with a keyboard.",
+  "diagramScrollHint": "For a wide diagram or table, swipe left or right within it to see all the content.",
   "diagram": "Learning diagram",
   "queueFront": "Front",
   "queueRear": "Rear",

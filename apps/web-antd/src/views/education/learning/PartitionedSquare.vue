@@ -31,32 +31,38 @@ const pieces = computed(() =>
   <figure
     class="mx-auto w-full max-w-sm rounded-xl border border-border bg-card p-3"
   >
-    <svg
-      viewBox="0 0 320 320"
-      class="block w-full text-primary"
-      role="img"
-      :aria-label="$t('educationLearning.partitionedSquareLabel')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <title>{{ $t('educationLearning.partitionedSquareLabel') }}</title>
-      <g v-for="piece in pieces" :key="piece.letter">
-        <polygon
-          :points="piece.points"
-          fill="currentColor"
-          fill-opacity="0.08"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <text
-          :x="piece.x"
-          :y="piece.y"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          class="fill-current text-xl font-semibold"
-        >
-          {{ piece.letter }}
-        </text>
-      </g>
-    </svg>
+      <svg
+        viewBox="0 0 320 320"
+        class="block w-full text-primary h-auto min-w-[320px]"
+        role="img"
+        :aria-label="$t('educationLearning.partitionedSquareLabel')"
+      >
+        <title>{{ $t('educationLearning.partitionedSquareLabel') }}</title>
+        <g v-for="piece in pieces" :key="piece.letter">
+          <polygon
+            :points="piece.points"
+            fill="currentColor"
+            fill-opacity="0.08"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <text
+            :x="piece.x"
+            :y="piece.y"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            class="fill-current text-xl font-semibold"
+          >
+            {{ piece.letter }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <figcaption class="text-sm leading-6 text-muted-foreground">
       {{ $t('educationLearning.partitionedSquareHint') }}
     </figcaption>

@@ -26,48 +26,54 @@ const positions = [
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.crossNotice') }}
     </p>
-    <svg
-      viewBox="0 0 300 300"
-      class="mx-auto block w-full max-w-xs"
-      role="group"
-      :aria-label="$t('educationLearning.crossPicture')"
+    <div
+      class="min-w-0 max-w-full overflow-x-auto"
+      tabindex="0"
+      :aria-label="$t('educationLearning.diagramScroll')"
     >
-      <path
-        d="M150 38 V262 M38 150 H262"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      />
-      <g
-        v-for="position in positions"
-        :key="position.letter"
-        role="img"
-        :aria-label="
-          $t('educationLearning.crossPosition', {
-            letter: position.letter,
-            position: $t(`educationLearning.cross_${position.key}`),
-          })
-        "
+      <svg
+        viewBox="0 0 300 300"
+        class="mx-auto block w-full max-w-xs h-auto min-w-[300px]"
+        role="group"
+        :aria-label="$t('educationLearning.crossPicture')"
       >
-        <circle
-          :cx="position.x"
-          :cy="position.y"
-          r="27"
-          fill="hsl(var(--card))"
+        <path
+          d="M150 38 V262 M38 150 H262"
+          fill="none"
           stroke="currentColor"
           stroke-width="2"
         />
-        <text
-          :x="position.x"
-          :y="position.y + 7"
-          text-anchor="middle"
-          fill="currentColor"
-          font-size="22"
+        <g
+          v-for="position in positions"
+          :key="position.letter"
+          role="img"
+          :aria-label="
+            $t('educationLearning.crossPosition', {
+              letter: position.letter,
+              position: $t(`educationLearning.cross_${position.key}`),
+            })
+          "
         >
-          {{ position.letter }}
-        </text>
-      </g>
-    </svg>
+          <circle
+            :cx="position.x"
+            :cy="position.y"
+            r="27"
+            fill="hsl(var(--card))"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <text
+            :x="position.x"
+            :y="position.y + 7"
+            text-anchor="middle"
+            fill="currentColor"
+            font-size="22"
+          >
+            {{ position.letter }}
+          </text>
+        </g>
+      </svg>
+    </div>
     <p class="text-sm text-muted-foreground">
       {{ $t('educationLearning.crossLines') }}
     </p>

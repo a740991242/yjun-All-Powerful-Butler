@@ -73,6 +73,8 @@
   "mode_practice": "专项练习",
   "mode_review": "错题复习",
   "mode_transition": "上下册衔接",
+  "diagramScroll": "学习图示较宽时，可在图内左右滑动；键盘可用左右方向键。",
+  "diagramScrollHint": "图形或表格较宽时，可在图内左右滑动，查看完整内容。",
   "diagram": "学习示意图",
   "queueFront": "队首",
   "queueRear": "队尾",

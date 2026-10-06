@@ -66,7 +66,7 @@ function label(cell: (typeof cells.value)[number]) {
     >
       <svg
         viewBox="0 0 640 640"
-        class="mx-auto block w-full min-w-[560px] max-w-2xl text-foreground"
+        class="mx-auto block w-full min-w-[600px] max-w-2xl text-foreground"
         role="group"
         :aria-label="$t('educationLearning.circularTitle')"
       >
@@ -109,7 +109,7 @@ function label(cell: (typeof cells.value)[number]) {
           y="315"
           fill="currentColor"
           text-anchor="middle"
-          font-size="18"
+          font-size="22"
         >
           {{ $t('educationLearning.circularRings') }}
         </text>
@@ -118,7 +118,7 @@ function label(cell: (typeof cells.value)[number]) {
           y="342"
           fill="currentColor"
           text-anchor="middle"
-          font-size="18"
+          font-size="22"
         >
           1 → 2 → 3 → 4
         </text>
