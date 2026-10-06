@@ -298,7 +298,7 @@ const shapeDescription = computed(() =>
 
 <template>
   <figure
-    class="learning-visual my-4 rounded-xl border border-border bg-muted/30 p-4"
+    class="learning-visual my-4 rounded-xl border border-border bg-muted/30 p-4 text-xl leading-8"
     :aria-label="$t('educationLearning.diagram')"
   >
     <section v-if="visual.kind === 'knowledge-map'" data-knowledge-map>
@@ -1621,6 +1621,30 @@ const shapeDescription = computed(() =>
 </template>
 
 <style scoped>
+.learning-visual :deep(.text-xs),
+.learning-visual :deep(.text-sm),
+.learning-visual :deep(.text-base),
+.learning-visual :deep(.text-lg),
+.learning-visual :deep(.ant-btn),
+.learning-visual :deep(.ant-card-head),
+.learning-visual :deep(.ant-radio-button-wrapper),
+.learning-visual :deep(.ant-tag),
+.learning-visual :deep(.ant-table-cell),
+.learning-visual :deep(.ant-form-item-label > label) {
+  font-size: 1.25rem;
+  line-height: 2rem;
+}
+
+.learning-visual :deep(.ant-btn) {
+  height: auto;
+  min-height: 44px;
+  white-space: normal;
+}
+
+.learning-visual :deep(.ant-form-item-label > label) {
+  height: auto;
+}
+
 .knowledge-card-button :deep(span) {
   overflow-wrap: anywhere;
   white-space: normal;
