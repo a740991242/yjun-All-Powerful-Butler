@@ -1472,5 +1472,7 @@
   "englishPreparationNotice": "提供原创讲解、图文练习、交流活动与复习，不是完整教材或地区默认版本。学生教材ISBN、版次与当地选用范围尚待核实；来源页码区分教师分章与教案引用。暂无配套录音，字词选择题不评听辨或发音。真实跟读、画卡和交流由陪学者确认，没做可跳过；完成记录不代表掌握。",
   "englishPreparationSource": "查看官方教师资源",
   "englishPreparationPage": "来源页码引用：{number}（详见陪学提示）",
-  "englishPreparationInvalid": "册次无效，请选择上册或下册。"
+  "englishPreparationInvalid": "册次无效，请选择上册或下册。",
+  "regionalPriceCatalogDefaultScope": "参考{year}年政府核定的本地区教材零售价格表，本站默认组合采用表中列明且已制作课程的{edition}。这是价格资料参考与产品默认，不表示当前学年全省统一选用，也不排除其他版本。可在单科下切换并保存自己的组合。",
+  "regionalPriceCatalogAlternatives": "该价格表列明并已核对的数学教材版本："
 }

@@ -13,7 +13,7 @@ export interface RegionalMathDefault {
   evidence: RegionalDefaultSource[];
   alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
   catalogYear?: string;
-  catalogKind?: 'digital' | 'publisher';
+  catalogKind?: 'digital' | 'price' | 'publisher';
 }
 
 // Publisher price tables provide reference combinations, not uniform adoption.
@@ -123,6 +123,41 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'ningxia') {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'bnu-2024',
+      alternatives: ['bnu-2024'],
+      catalogYear: '2025',
+      catalogKind: 'price',
+      evidence: [
+        {
+          id: `ningxia-grade-one-math-${query.volume}-price-2025`,
+          sourceUrl: upper
+            ? 'https://www.huinong.gov.cn/zwgk/fdzdgknr/xzsyxsf/202506/t20250612_4932164.html'
+            : 'https://fzggw.nx.gov.cn/tzgg/202412/t20241206_4751529.html',
+          sourceTitle: upper
+            ? '宁夏2025年秋季中小学教材及教辅材料（第二批）零售价格通知（宁发改价格（管理）〔2025〕407号，惠农区政府转载；附件第1项北师大一年级数学上册）'
+            : '宁夏2025年春季中小学教材及教辅材料（第二批）零售价格通知（宁发改价格（管理）〔2024〕913号；附件第1项北师大一年级数学下册）',
+          publishedAt: upper ? '2025-06-12' : '2024-12-06',
+          issuedAt: upper ? '2025-06-09' : '2024-12-06',
+          checkedAt: '2026-10-06',
+        },
+        {
+          id: `ningxia-grade-one-math-${query.volume}-price-2025-attachment`,
+          sourceUrl: upper
+            ? 'https://www.huinong.gov.cn/zwgk/fdzdgknr/xzsyxsf/202506/P020250612556292803293.pdf'
+            : 'https://fzggw.nx.gov.cn/tzgg/202412/P020241206592878480909.et',
+          sourceTitle: upper
+            ? '宁夏2025年秋季第二批价格表（PDF第1页第1项：国标数学〔一上〕，北京师范大学出版社；不含学习之友教辅）'
+            : '宁夏2025年春季第二批价格表（WPS表格Sheet1第6行、第1项：国标数学〔一下〕新版，北京师范大学出版社；不含学习之友教辅）',
+          // The attachment inherits the notification scope, not its publication date.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
   const publisher = Object.hasOwn(bnuPublisher2026, query.province)
     ? bnuPublisher2026[query.province]
     : undefined;

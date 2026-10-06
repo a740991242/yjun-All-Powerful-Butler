@@ -32,6 +32,11 @@
 - `verify-regional-presets.mjs --bnu-2026-defaults`验证八地区两册三宽中英；先build:pages，finally终态后才编辑。广东现有参考，未知地区守卫用西藏；通过不代全国或全年完成。
 - 吉林/黑龙江/江西下册与广西上册新增2026独立参考，旧相反册次来源不改；江西/广西上下册可不同默认版。`--bnu-missing-volumes`核验四新三旧配置与相反册次独立版本，23省份中21两册；旧publisher/province断言不得继续当新册次未知。
 
+## 宁夏数学省份参考（2026-10-06）
+
+- 上下册使用独立2025自治区第二批价格通知及附件，catalogKind:price，中英文说明仅作价格参考与产品默认。上册原PDF第1项、下册原ET Sheet1第6行第1项北师大；学习之友教辅不当教材备选，2026永宁/灵武局部出版表不外推。
+- `verify-regional-presets.mjs --ningxia-defaults`验证两册三宽中英/暗色、日期与独立来源、三科一键应用及旧库/个人组合保留。先build:pages，浏览器/服务器finally终态后再编辑；现24地区22两册不是整体目标完成。
+
 ## 1. 项目定位与工作范围
 
 - 项目中文名为「全能管家」，英文名为「All-in-One Butler」。应用品牌与业务文案统一维护在 `apps/web-antd/src/locales/langs/{zh-CN,en-US}/tools.json`。

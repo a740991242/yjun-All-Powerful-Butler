@@ -1472,5 +1472,7 @@
   "englishPreparationNotice": "Includes original explanations, visual practice, communication activities and review. This is not a complete textbook or a regional default edition. Student-book ISBN, edition and local adoption remain unverified. Page references distinguish teacher chapters from pages cited in teaching plans. No companion audio is provided; word-choice tasks do not assess listening or pronunciation. A companion confirms actual speaking, drawing and interaction; unperformed activities may be skipped. A completion record does not establish mastery.",
   "englishPreparationSource": "View official teacher resources",
   "englishPreparationPage": "Source page reference: {number} (see companion guidance)",
-  "englishPreparationInvalid": "Invalid volume. Choose the upper or lower volume."
+  "englishPreparationInvalid": "Invalid volume. Choose the upper or lower volume.",
+  "regionalPriceCatalogDefaultScope": "This combination references government-approved regional textbook retail prices for {year}. This product defaults to the listed {edition} with existing courses. This is price information and a product default, not a claim of province-wide adoption in the current year; other editions may also apply. Choose a subject edition and save your own combination.",
+  "regionalPriceCatalogAlternatives": "Mathematics textbook editions checked in this price table:"
 }

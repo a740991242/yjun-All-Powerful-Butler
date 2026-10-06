@@ -1,7 +1,7 @@
 /* Verify personal regional presets in the actual Pages build with isolated Chrome profiles.
  * Creates one native unfinished learning record and checks it remains unchanged.
  * Personal choices never certify school adoption or curriculum completeness.
- * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults] [--bnu-2026-defaults] [--bnu-missing-volumes]
+ * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults] [--bnu-2026-defaults] [--bnu-missing-volumes] [--ningxia-defaults]
  * --all-areas checks personal upper/lower sets for every navigation area; it
  * does not infer local textbook adoption or create unsupported course packs.
  */
@@ -20,6 +20,7 @@ const allAreas = process.argv.includes('--all-areas');
 const provinceDefaults = process.argv.includes('--province-defaults');
 const missingVolumes = process.argv.includes('--bnu-missing-volumes');
 const bnu2026 = process.argv.includes('--bnu-2026-defaults');
+const ningxiaDefaults = process.argv.includes('--ningxia-defaults');
 const publisherDefaults = process.argv.includes('--publisher-defaults');
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
@@ -203,41 +204,42 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
-      if (publisherDefaults || bnu2026 || missingVolumes) {
+      if (publisherDefaults || bnu2026 || missingVolumes || ningxiaDefaults) {
         const beforePresets = await raw();
         await choose('education-region-system', '六三学制（小学六年）');
-        const cases = bnu2026
-          ? []
-          : [
-              {
-                year: '2025',
-                zh: '吉林',
-                en: 'Jilin',
-                volume: 'upper',
-                edition: 'bnu-2024',
-                source:
-                  'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf',
-                application: '2025-05-06',
-              },
-              {
-                year: '2025',
-                zh: '黑龙江',
-                en: 'Heilongjiang',
-                volume: 'upper',
-                edition: 'bnu-2024',
-                source:
-                  'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
-                application: '2025-05-26',
-              },
-              {
-                year: '2025',
-                zh: '广西',
-                en: 'Guangxi',
-                volume: 'lower',
-                edition: 'pep-2024',
-                source: 'https://www.gxcbcmjt.com/tzgg/content_4695',
-              },
-            ];
+        const cases =
+          bnu2026 || ningxiaDefaults
+            ? []
+            : [
+                {
+                  year: '2025',
+                  zh: '吉林',
+                  en: 'Jilin',
+                  volume: 'upper',
+                  edition: 'bnu-2024',
+                  source:
+                    'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf',
+                  application: '2025-05-06',
+                },
+                {
+                  year: '2025',
+                  zh: '黑龙江',
+                  en: 'Heilongjiang',
+                  volume: 'upper',
+                  edition: 'bnu-2024',
+                  source:
+                    'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
+                  application: '2025-05-26',
+                },
+                {
+                  year: '2025',
+                  zh: '广西',
+                  en: 'Guangxi',
+                  volume: 'lower',
+                  edition: 'pep-2024',
+                  source: 'https://www.gxcbcmjt.com/tzgg/content_4695',
+                },
+              ];
         if (bnu2026)
           cases.push(
             ...[
@@ -416,6 +418,20 @@ const server = http.createServer(async (req, res) => {
               },
             ],
           );
+        if (ningxiaDefaults)
+          cases.push(
+            ...['upper', 'lower'].map((volume) => ({
+              year: '2025',
+              zh: '宁夏',
+              en: 'Ningxia',
+              volume,
+              edition: 'bnu-2024',
+              source:
+                volume === 'upper'
+                  ? 'https://www.huinong.gov.cn/zwgk/fdzdgknr/xzsyxsf/202506/P020250612556292803293.pdf'
+                  : 'https://fzggw.nx.gov.cn/tzgg/202412/P020241206592878480909.et',
+            })),
+          );
         for (const language of ['zh', 'en']) {
           if (language === 'en') {
             await p
@@ -457,22 +473,28 @@ const server = http.createServer(async (req, res) => {
             const volumeLabel = volumeLabels[item.volume];
             await choose('education-region-volume', volumeLabel);
             const edition = editionLabels[item.edition];
-            const scope = region.getByText(
-              english
-                ? `This combination references regional textbook information published for ${item.year || (bnu2026 ? '2026' : '2025')}.`
-                : `参考${item.year || (bnu2026 ? '2026' : '2025')}年出版方公布的本地区教材资料`,
-              { exact: false },
-            );
+            let scopeLabel = english
+              ? `This combination references regional textbook information published for ${item.year || (bnu2026 ? '2026' : '2025')}.`
+              : `参考${item.year || (bnu2026 ? '2026' : '2025')}年出版方公布的本地区教材资料`;
+            if (ningxiaDefaults)
+              scopeLabel = english
+                ? 'This combination references government-approved regional textbook retail prices for 2025.'
+                : '参考2025年政府核定的本地区教材零售价格表';
+            const scope = region.getByText(scopeLabel, { exact: false });
             await scope.waitFor();
             const scopeText = await scope.textContent();
             if (!scopeText.includes(edition))
               throw new Error('publisher scope edition mismatch');
-            const alternatives = region.getByText(
-              english
-                ? 'Mathematics editions listed by this publisher:'
-                : '该出版方资料列明的数学版本：',
-              { exact: false },
-            );
+            let alternativesLabel = english
+              ? 'Mathematics editions listed by this publisher:'
+              : '该出版方资料列明的数学版本：';
+            if (ningxiaDefaults)
+              alternativesLabel = english
+                ? 'Mathematics textbook editions checked in this price table:'
+                : '该价格表列明并已核对的数学教材版本：';
+            const alternatives = region.getByText(alternativesLabel, {
+              exact: false,
+            });
             const alternativesText = await alternatives.textContent();
             if (
               !alternativesText.includes(edition) ||
@@ -485,6 +507,33 @@ const server = http.createServer(async (req, res) => {
             )
               throw new Error('PEP invented from BNU publisher source');
             await region.locator(`a[href="${item.source}"]`).waitFor();
+            if (ningxiaDefaults) {
+              const upper = item.volume === 'upper';
+              await region
+                .getByText(
+                  english
+                    ? `Published: ${upper ? '2025-06-12' : '2024-12-06'}`
+                    : `资料发布：${upper ? '2025-06-12' : '2024-12-06'}`,
+                  { exact: false },
+                )
+                .waitFor();
+              await region
+                .getByText(
+                  english
+                    ? `Document date: ${upper ? '2025-06-09' : '2024-12-06'}`
+                    : `文件日期：${upper ? '2025-06-09' : '2024-12-06'}`,
+                  { exact: false },
+                )
+                .waitFor();
+              if (
+                !scopeText.includes(
+                  english
+                    ? 'not a claim of province-wide adoption'
+                    : '不表示当前学年全省统一选用',
+                )
+              )
+                throw new Error('price reference scope missing');
+            }
             if (item.application) {
               await region
                 .getByText(`申报日期${item.application}`, { exact: false })
@@ -537,7 +586,7 @@ const server = http.createServer(async (req, res) => {
             )
               throw new Error('publisher layout overflow');
             await p.screenshot({
-              path: `/tmp/butler-publisher-${item.en}-${language}-${width}.png`,
+              path: `/tmp/butler-publisher-${item.en}-${item.volume}-${language}-${width}.png`,
             });
             await choose(
               'education-region-volume',
@@ -570,9 +619,10 @@ const server = http.createServer(async (req, res) => {
         console.log(
           JSON.stringify({
             width,
-            publisherDefaults: true,
-            BnuUpperJilinHeilongjiang: !bnu2026,
-            GuangxiPepLower: !bnu2026,
+            publisherDefaults: !ningxiaDefaults,
+            ningxiaPriceVolumePair: ningxiaDefaults,
+            BnuUpperJilinHeilongjiang: !bnu2026 && !ningxiaDefaults,
+            GuangxiPepLower: !bnu2026 && !ningxiaDefaults,
             Bnu2026ProvincePairs: bnu2026 ? 8 : 0,
             missingVolumes: missingVolumes ? 4 : 0,
             editionNotSubstituted: true,

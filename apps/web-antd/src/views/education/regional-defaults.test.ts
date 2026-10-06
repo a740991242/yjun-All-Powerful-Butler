@@ -657,7 +657,6 @@ it('supports eight independently checked province pairs as publisher references,
     }
   }
   for (const province of [
-    'ningxia',
     'qinghai',
     'hainan',
     'yunnan',
@@ -733,4 +732,55 @@ it('fills four missing volumes with independent 2026 references while preserving
         regionalMathematicsDefault({ ...local, ...change }),
       ).toBeUndefined();
   }
+});
+
+it('uses independently checked Ningxia upper and lower price references without treating workbooks as textbook alternatives', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    for (const volume of ['upper', 'lower']) {
+      const local = { ...query, province: 'ningxia', academicYear, volume };
+      const result = regionalMathematicsDefault(local)!;
+      const upper = volume === 'upper';
+      expect(result).toMatchObject({
+        edition: 'bnu-2024',
+        alternatives: ['bnu-2024'],
+        catalogYear: '2025',
+        catalogKind: 'price',
+      });
+      expect(result.evidence).toHaveLength(2);
+      expect(result.evidence[0]).toMatchObject({
+        publishedAt: upper ? '2025-06-12' : '2024-12-06',
+        issuedAt: upper ? '2025-06-09' : '2024-12-06',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[1]!.sourceUrl).toBe(
+        upper
+          ? 'https://www.huinong.gov.cn/zwgk/fdzdgknr/xzsyxsf/202506/P020250612556292803293.pdf'
+          : 'https://fzggw.nx.gov.cn/tzgg/202412/P020241206592878480909.et',
+      );
+      expect(result.evidence[1]!.publishedAt).toBe('');
+      expect(result.evidence[1]!.sourceTitle).toContain(
+        upper ? '一上' : '一下',
+      );
+      expect(result.evidence[1]!.sourceTitle).toContain('北京师范大学出版社');
+      result.alternatives!.pop();
+      result.evidence[1]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toEqual([
+        'bnu-2024',
+      ]);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[1]!.sourceUrl,
+      ).not.toBe('https://example.invalid');
+    }
+  }
+  for (const change of [
+    { city: 'yinchuan' },
+    { school: 'school' },
+    { subject: 'english' },
+    { grade: 'p2' },
+    { academicYear: '2027-2028' },
+    { volume: 'all' },
+  ])
+    expect(
+      regionalMathematicsDefault({ ...query, province: 'ningxia', ...change }),
+    ).toBeUndefined();
 });

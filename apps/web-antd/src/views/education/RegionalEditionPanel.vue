@@ -286,7 +286,9 @@ function apply() {
                 ? 'educationLearning.regionalDigitalCatalogDefaultScope'
                 : item.resolution.catalogKind === 'publisher'
                   ? 'educationLearning.regionalPublisherDefaultScope'
-                  : 'educationLearning.regionalCatalogDefaultScope',
+                  : item.resolution.catalogKind === 'price'
+                    ? 'educationLearning.regionalPriceCatalogDefaultScope'
+                    : 'educationLearning.regionalCatalogDefaultScope',
               {
                 year: item.resolution.catalogYear,
                 edition: editionLabel(item.resolution.edition),
@@ -305,7 +307,9 @@ function apply() {
             $t(
               item.resolution.catalogKind === 'publisher'
                 ? 'educationLearning.regionalPublisherAlternatives'
-                : 'educationLearning.regionalCatalogAlternatives',
+                : item.resolution.catalogKind === 'price'
+                  ? 'educationLearning.regionalPriceCatalogAlternatives'
+                  : 'educationLearning.regionalCatalogAlternatives',
             )
           }}
           {{ item.resolution.alternatives.map(editionLabel).join(' / ') }}

@@ -36,7 +36,7 @@ export interface RegionalSubjectPlan {
         evidence: PolicySource[];
         alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
         catalogYear?: string;
-        catalogKind?: 'digital' | 'publisher';
+        catalogKind?: 'digital' | 'price' | 'publisher';
       };
   reason: 'available' | 'conflict' | 'system' | 'unavailable' | 'unknown';
   action?: RegionalEditionAction;

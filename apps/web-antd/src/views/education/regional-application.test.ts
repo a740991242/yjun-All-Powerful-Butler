@@ -106,6 +106,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'jiangxi',
         'jilin',
         'liaoning',
+        'ningxia',
         'shaanxi',
         'shanxi',
         'sichuan',
@@ -136,6 +137,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'jiangxi',
         'jilin',
         'liaoning',
+        'ningxia',
         'shaanxi',
         'shanxi',
         'sichuan',
@@ -631,5 +633,33 @@ it('applies Guizhou and Jiangxi both volumes and Chongqing upper only without ch
       ]);
       expect(rows[3]!.action).toBeUndefined();
     }
+  }
+});
+
+it('applies both Ningxia BNU volumes from price references while leaving English unavailable', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const rows = regionalApplicationPlan({
+      ...query,
+      province: 'ningxia',
+      city: '',
+      school: '',
+      volume,
+    });
+    expect(
+      rows.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      `/education/primary/p1/math/bnu-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(rows[1]!.resolution).toMatchObject({
+      status: 'recommended',
+      edition: 'bnu-2024',
+      catalogKind: 'price',
+      catalogYear: '2025',
+    });
+    expect(rows[3]!.action).toBeUndefined();
   }
 });
