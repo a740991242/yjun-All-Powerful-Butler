@@ -13,7 +13,7 @@ export interface RegionalMathDefault {
   evidence: RegionalDefaultSource[];
   alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
   catalogYear?: string;
-  catalogKind?: 'digital';
+  catalogKind?: 'digital' | 'publisher';
 }
 
 /** Product combinations are distinct from verified adoption at any school.
@@ -40,6 +40,23 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'guangxi' && query.volume === 'lower')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024'],
+      catalogYear: '2025',
+      catalogKind: 'publisher',
+      evidence: [
+        {
+          id: 'guangxi-grade-one-math-lower-publisher-2025',
+          sourceUrl: 'https://www.gxcbcmjt.com/tzgg/content_4695',
+          sourceTitle:
+            '广西出版传媒集团2025年春季中小学教材零售价格公示（人教版租型代印表第111项，数学一年级下册）',
+          publishedAt: '2025-02-27',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'jiangxi' && query.volume === 'upper')
     return {
       edition: 'pep-2024',

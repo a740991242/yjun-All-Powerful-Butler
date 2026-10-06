@@ -750,6 +750,58 @@ const widths = process.argv.includes('--mobile-only')
           )
         )
           throw new Error('catalog overflow');
+        if (catalogOnly && edition === 'bnu-2024') {
+          const notice = p
+            .getByText(
+              volume === 'lower'
+                ? '各单元、综合实践和总复习已开放原创课包'
+                : '各单元与总复习已开放原创课包',
+              { exact: false },
+            )
+            .filter({ visible: true });
+          await notice.waitFor();
+          if (
+            await p
+              .getByText('第68页起仍制作中', { exact: false })
+              .filter({ visible: true })
+              .count()
+          )
+            throw new Error('Outdated BNU preparation notice');
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          const enNotice = p
+            .getByText('Original courses are open for all units', {
+              exact: false,
+            })
+            .filter({ visible: true });
+          await enNotice.waitFor();
+          const enNoticeText = await enNotice.textContent();
+          if (!enNoticeText.includes('full teaching verification continues'))
+            throw new Error('BNU notice overclaims verification');
+          if (
+            await p
+              .getByText(
+                'Teaching from page 68 onward remains in preparation',
+                { exact: false },
+              )
+              .filter({ visible: true })
+              .count()
+          )
+            throw new Error('Outdated English BNU notice');
+          await enNotice.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+          await p.screenshot({
+            path: `/tmp/butler-bnu-${volume}-notice-${width}-en.png`,
+          });
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await notice.waitFor();
+        }
       }
       if (JSON.stringify(await read()) !== JSON.stringify(beforeCatalogs))
         throw new Error('Catalog navigation changed existing learning records');
@@ -772,8 +824,15 @@ const widths = process.argv.includes('--mobile-only')
           const invalidCourses = p
             .getByRole('button', { name: '进入课程', exact: true })
             .filter({ visible: true });
-          // The outgoing cached workspace remains during the route transition.
-          await invalidCourses.first().waitFor({ state: 'hidden' });
+          // Locale updates can leave several cached workspaces during the
+          // transition; require all visible course buttons to disappear.
+          await p.waitForFunction(() =>
+            [...document.querySelectorAll('button')].every(
+              (button) =>
+                button.textContent.trim() !== '进入课程' ||
+                !button.checkVisibility(),
+            ),
+          );
           if (await invalidCourses.count())
             throw new Error(`Invalid route borrowed a catalog: ${invalid}`);
         }
@@ -785,6 +844,7 @@ const widths = process.argv.includes('--mobile-only')
           JSON.stringify({
             width,
             catalogs: volumes.length,
+            bnuNoticesBilingual: true,
             availableCourseEntries: volumes.reduce(
               (total, row) => total + row[3],
               0,

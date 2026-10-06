@@ -62,6 +62,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       [
         'anhui',
         'fujian',
+        'guangxi',
         'guizhou',
         'henan',
         'hubei',
@@ -80,6 +81,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
       [
         'anhui',
         'fujian',
+        'guangxi',
         'guizhou',
         'henan',
         'hubei',
@@ -500,6 +502,46 @@ it('applies Zhejiang both-volume combinations without inferring an English cours
     ).toEqual([
       `/education/primary/p1/chinese/pep-2024/${volume}`,
       `/education/primary/p1/math/pep-2024/${volume}`,
+      `/education/primary/p1/ethics/pep-2024/${volume}`,
+    ]);
+    expect(rows[3]!.action).toBeUndefined();
+    for (const schoolSystem of ['unknown', 'five-four'] as const)
+      expect(
+        regionalApplicationPlan({ ...local, schoolSystem }).every(
+          (row) => !row.action,
+        ),
+      ).toBe(true);
+  }
+});
+
+it('applies the Guangxi lower publisher reference without certifying adoption or enabling unsupported subjects', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const local = {
+      ...query,
+      province: 'guangxi',
+      city: '',
+      school: '',
+      volume,
+    };
+    const rows = regionalApplicationPlan(local);
+    expect(rows[1]!.resolution.status).toBe(
+      volume === 'lower' ? 'recommended' : 'unknown',
+    );
+    if (volume === 'lower')
+      expect(rows[1]!.resolution).toMatchObject({
+        catalogKind: 'publisher',
+        alternatives: ['pep-2024'],
+        catalogYear: '2025',
+      });
+    expect(
+      rows.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      ),
+    ).toEqual([
+      `/education/primary/p1/chinese/pep-2024/${volume}`,
+      ...(volume === 'lower'
+        ? [`/education/primary/p1/math/pep-2024/${volume}`]
+        : []),
       `/education/primary/p1/ethics/pep-2024/${volume}`,
     ]);
     expect(rows[3]!.action).toBeUndefined();

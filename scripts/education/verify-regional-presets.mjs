@@ -544,6 +544,56 @@ const server = http.createServer(async (req, res) => {
             .count()
         )
           throw new Error('Chongqing upper reference leaked into lower volume');
+        await choose('education-region-province', '广西', true);
+        await choose('education-region-volume', '下册');
+        const guangxiSource = 'https://www.gxcbcmjt.com/tzgg/content_4695';
+        const guangxiScope = region.getByText(
+          '参考2025年出版方公布的本地区教材资料',
+          { exact: false },
+        );
+        await guangxiScope.waitFor();
+        await region.locator(`a[href="${guangxiSource}"]`).waitFor();
+        await region
+          .getByText('资料发布：2025-02-27', { exact: false })
+          .waitFor();
+        const guangxiAlternatives = await region
+          .getByText('该出版方资料列明的数学版本：', { exact: false })
+          .textContent();
+        if (
+          !guangxiAlternatives.includes('人教版') ||
+          guangxiAlternatives.includes('苏教版') ||
+          guangxiAlternatives.includes('北师大版')
+        )
+          throw new Error('Guangxi publisher editions mismatch');
+        if (
+          await region
+            .getByText('参考2025年省级目录中的可选版本', { exact: false })
+            .count()
+        )
+          throw new Error(
+            'Publisher reference presented as government catalog',
+          );
+        await apply.click();
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 下册`,
+              exact: true,
+            })
+            .waitFor();
+        await guangxiScope.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.screenshot({
+          path: `/tmp/butler-guangxi-lower-default-${width}.png`,
+        });
+        await choose('education-region-volume', '上册');
+        await apply.click();
+        if (
+          (await p.getByRole('button', { name: /^数学 ·/ }).count()) ||
+          (await region.locator(`a[href="${guangxiSource}"]`).count())
+        )
+          throw new Error('Guangxi lower inherited by upper');
         await choose('education-region-province', '江西', true);
         await choose('education-region-volume', '上册');
         const jiangxiSource =
@@ -977,6 +1027,58 @@ const server = http.createServer(async (req, res) => {
           throw new Error(
             'Chongqing English upper reference leaked into lower volume',
           );
+        await choose('education-region-province', 'Guangxi', true);
+        await choose('education-region-volume', 'Lower volume');
+        const guangxiEnglishScope = p.getByText(
+          'This combination references regional textbook information published for 2025.',
+          { exact: false },
+        );
+        await guangxiEnglishScope.waitFor();
+        await p.locator(`a[href="${guangxiSource}"]`).waitFor();
+        await p
+          .getByText('Published: 2025-02-27; checked: 2026-10-06', {
+            exact: false,
+          })
+          .waitFor();
+        if (
+          await p
+            .getByText('The 2025 provincial catalog lists alternatives.', {
+              exact: false,
+            })
+            .count()
+        )
+          throw new Error(
+            'English publisher reference presented as provincial catalog',
+          );
+        await p
+          .getByRole('button', {
+            name: 'Apply available subject editions together',
+            exact: true,
+          })
+          .click();
+        for (const subject of ['Chinese', 'Mathematics', 'Morality and Law'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · PEP (2024 approved) · Lower volume`,
+              exact: true,
+            })
+            .waitFor();
+        await guangxiEnglishScope.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Guangxi English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-guangxi-lower-default-${width}-en-dark.png`,
+        });
+        await choose('education-region-volume', 'Upper volume');
+        if (await p.locator(`a[href="${guangxiSource}"]`).count())
+          throw new Error('English Guangxi lower inherited by upper');
         await choose('education-region-province', 'Jiangxi', true);
         await choose('education-region-volume', 'Upper volume');
         await p.locator(`a[href="${jiangxiSource}"]`).waitFor();
@@ -1150,6 +1252,8 @@ const server = http.createServer(async (req, res) => {
             AnhuiUpperLowerThreeSubjects: true,
             JiangxiUpperThreeSubjectsLowerTwoSubjects: true,
             JiangxiSourceDatesAndScopeBilingual: true,
+            GuangxiLowerPublisherReferenceThreeSubjects: true,
+            GuangxiPublisherScopeAndUpperIsolationBilingual: true,
             AnhuiUpperDatesAndScopeBilingual: true,
             AnhuiVolumeSourcesAndUnknownSpringDatesBilingual: true,
             HenanDigitalCatalogScopeBilingual: true,
@@ -1348,7 +1452,7 @@ const server = http.createServer(async (req, res) => {
       await choose('education-region-city', '苏州');
       await choose('education-region-system', '六三学制（小学六年）');
       await choose('education-custom-chinese', '人教版（2024审定）');
-      await choose('education-custom-math', '北师大版（2024审核，部分课程）');
+      await choose('education-custom-math', '北师大版（2024审核）');
       await choose('education-custom-ethics', '人教版（2024审定）');
       await click('保存当前地区组合');
       await custom()
@@ -1357,7 +1461,7 @@ const server = http.createServer(async (req, res) => {
       await click('一键应用我的组合');
       await p
         .getByRole('button', {
-          name: '数学 · 北师大版（2024审核，部分课程） · 上册',
+          name: '数学 · 北师大版（2024审核） · 上册',
           exact: true,
         })
         .waitFor();
@@ -1391,12 +1495,12 @@ const server = http.createServer(async (req, res) => {
       if (pendingClass.includes('disabled'))
         throw new Error('authored BNU lower edition is disabled');
       await p.locator('#education-custom-math').press('Escape');
-      await choose('education-custom-math', '北师大版（2024审核，部分课程）');
+      await choose('education-custom-math', '北师大版（2024审核）');
       await click('保存当前地区组合');
       await click('一键应用我的组合');
       await p
         .getByRole('button', {
-          name: '数学 · 北师大版（2024审核，部分课程） · 下册',
+          name: '数学 · 北师大版（2024审核） · 下册',
           exact: true,
         })
         .waitFor();
@@ -1418,12 +1522,12 @@ const server = http.createServer(async (req, res) => {
       await choose('education-region-province', '江苏', true);
       await assertKeep();
       await choose('education-region-city', '苏州');
-      if ((await mathLabel()) !== '北师大版（2024审核，部分课程）')
+      if ((await mathLabel()) !== '北师大版（2024审核）')
         throw new Error('city set not restored');
       await choose('education-region-school', '苏州市吴江区绸都小学');
       await assertKeep();
       await choose('education-region-school', '未选择学校（手动选版）');
-      if ((await mathLabel()) !== '北师大版（2024审核，部分课程）')
+      if ((await mathLabel()) !== '北师大版（2024审核）')
         throw new Error('school scope fallback');
       await choose('education-region-system', '五四学制（小学五年）');
       if (
@@ -1439,7 +1543,7 @@ const server = http.createServer(async (req, res) => {
       await choose('education-region-system', '六三学制（小学六年）');
       await choose('education-region-city', '苏州');
       if (
-        (await mathLabel()) !== '北师大版（2024审核，部分课程）' ||
+        (await mathLabel()) !== '北师大版（2024审核）' ||
         (await raw()) !== savedBeforeReload
       )
         throw new Error('reload lost set');
@@ -1457,7 +1561,7 @@ const server = http.createServer(async (req, res) => {
           throw new Error('failed write changed store');
         await p.evaluate(() => (window.qaFailWrite = false));
         await click('保存当前地区组合');
-        await choose('education-custom-math', '北师大版（2024审核，部分课程）');
+        await choose('education-custom-math', '北师大版（2024审核）');
         await click('保存当前地区组合');
         const intact = await raw();
         await p.evaluate(() =>

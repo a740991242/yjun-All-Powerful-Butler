@@ -706,11 +706,11 @@
   "stickOutline_twelve-triangle": "三条直边首尾闭合，每边由四根等长棒在同一直线上接成；整体转向{turn}度。",
   "stickOutline_twelve-slanted": "两组对边分别平行，相邻角不是直角；长边各四根等长棒，短边各两根；整体转向{turn}度。",
   "suzhouGenericTitle": "苏州通用课程 · 一年级",
-  "bnuEdition": "北师大版（2024审核，部分课程）",
+  "bnuEdition": "北师大版（2024审核）",
   "bnuLowerPreparingTitle": "北师大版下册课程筹备中",
   "bnuLowerPreparingNotice": "下册教材正文与课程尚未接入。可切回现有人教或苏教版学习，不把其他版本内容改名为北师大版；已有记录保留。",
   "bnuSourceLink": "查看北师大教材原书公开预览（第三方）",
-  "bnuSourceNotice": "北师大版一年级上册封面2024审核标识、完整目录及已读正文已核对，原书来自第三方公开预览，非出版社托管。ISBN与版印次未确认。仅已制作课包开放，其余筹备中；本站题目与图示原创，不复制教材全文或原画。",
+  "bnuSourceNotice": "已核对北师大版一年级上册2024审核封面、完整目录及已读正文，原书来自第三方公开预览，非出版社托管。各单元与总复习已开放原创课包，完整教学核验仍在继续。ISBN与版印次未确认；本站题目与图示原创，不复制教材全文或原画。",
   "suzhouGenericScope": "按你的苏州教材偏好选择六三学制一年级课程，无需填写学校或学年。此组合用于通用学习，不作为全市或具体学校选用教材的证明。",
   "suzhouGenericSubjects": "语文：统编人教版；数学：苏教版；道德与法治：统编人教版。",
   "suzhouGenericVolume": "苏州通用课程册次",
@@ -1182,7 +1182,7 @@
   "regionalDigitalCatalogDefaultScope": "参考{year}年省级数字教材推荐目录中的可选版本，本站默认采用已制作课程的人教版。这是数字教材目录参考与产品默认，不表示全省纸质教材统一选用，也不表示本站课程是官方数字教材。可在单科下切换并保存自己的组合。",
   "regionalCatalogDefaultScope": "参考{year}年省级目录中的可选版本，本站默认组合采用已有上下册课程的人教版；这是产品默认，不表示当前学年全省统一选用。可在单科下切换并保存自己的组合。",
   "regionalCatalogAlternatives": "该参考目录可选数学版本：",
-  "bnuLowerSourceNotice": "已核对2024审定封面与目录；第2～67页已接入35份原创课包，包含完整巩固、填数游戏、小兔请客、采松果与青蛙吃虫子。第68页起仍制作中。公开扫描为第三方来源，ISBN与版次印次未核验；已读正文不代表全部课程已完成。",
+  "bnuLowerSourceNotice": "已核对北师大版一年级下册2024审核封面与目录。各单元、综合实践和总复习已开放原创课包，完整教学核验仍在继续。公开扫描为第三方来源，ISBN与版次印次未核验；课程开放与孩子实际完成学习、纸面或实物任务是不同状态。",
   "teenAdditionTotal": "得数",
   "teenAdditionPosition": "位置{position}",
   "teenAdditionNotice": "本站按位置展示加法表：每个加数2～9，得数11～18。A～Z为26处待填算式，每处依次填两个加数。“—”不属于该行，不表示0。给定算式不自动确认纸面任务。",
@@ -1464,5 +1464,7 @@
   "finalPracticeMark_right": "已给第{position}图：杯子把手朝右",
   "finalPracticeMark_horizontal": "已给第{position}图：外框内横分线",
   "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线",
-  "regionalPublishedUnknown": "未标注"
+  "regionalPublishedUnknown": "未标注",
+  "regionalPublisherDefaultScope": "参考{year}年出版方公布的本地区教材资料，本站默认组合采用该资料列明且已制作课程的人教版。这是出版方资料参考与产品默认，不是政府推荐目录，也不表示当前学年全省统一选用或其他版本不适用。可在单科下切换并保存自己的组合。",
+  "regionalPublisherAlternatives": "该出版方资料列明的数学版本："
 }

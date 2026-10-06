@@ -706,11 +706,11 @@
   "stickOutline_twelve-triangle": "Three straight sides form a closed outline. Each side consists of four collinear unit sticks; rotated {turn} degrees.",
   "stickOutline_twelve-slanted": "Opposite sides are parallel, with no right-angle corners. Each long side consists of four unit sticks and each short side two; rotated {turn} degrees.",
   "suzhouGenericTitle": "Suzhou general courses · Grade 1",
-  "bnuEdition": "BNU (2024 approved, partial courses)",
+  "bnuEdition": "BNU (2024 approved)",
   "bnuLowerPreparingTitle": "BNU lower-volume courses are preparing",
   "bnuLowerPreparingNotice": "The lower textbook body and courses are not connected yet. Switch to existing PEP or Sujiao courses; other editions are not relabelled as BNU. Existing records are retained.",
   "bnuSourceLink": "Open BNU textbook preview (third party)",
-  "bnuSourceNotice": "The 2024 approval mark, complete contents and read body pages of BNU Grade 1 upper volume have been checked in a third-party public reader, not publisher hosting. ISBN and printing are unconfirmed. Only authored courses are open; others are preparing. Site questions and diagrams are original, without textbook full text or artwork.",
+  "bnuSourceNotice": "The 2024-approved cover, full contents and read body pages of BNU Grade 1 upper volume have been checked in a third-party public reader, not publisher hosting. Original courses are open for all units and final review; full teaching verification continues. ISBN and printing remain unconfirmed. Site questions and diagrams are original, without textbook full text or artwork.",
   "suzhouGenericScope": "Choose Grade 1 courses for the six-three system using your Suzhou textbook preferences, without a school or academic year. This learning combination is not evidence of citywide or individual school adoption.",
   "suzhouGenericSubjects": "Chinese: unified PEP; mathematics: Sujiao; ethics: unified PEP.",
   "suzhouGenericVolume": "Suzhou general course volume",
@@ -1182,7 +1182,7 @@
   "regionalDigitalCatalogDefaultScope": "The {year} provincial digital textbook catalog lists alternatives. This product defaults to the existing PEP courses. This digital catalog reference is not a claim of province-wide printed textbook adoption, and our courses are not official digital textbooks. Choose a subject edition and save your own combination.",
   "regionalCatalogDefaultScope": "The {year} provincial catalog lists alternatives. This product defaults to PEP because both course volumes are available; this is not a claim of province-wide adoption in the current year. Choose a subject edition and save your own combination.",
   "regionalCatalogAlternatives": "Mathematics alternatives in the reference catalog:",
-  "bnuLowerSourceNotice": "The 2024-approved cover and contents have been checked. Thirty-five original courses cover pages 2–67, including consolidation, filling games, whole-ten operations, pinecones and frog calculations. Teaching from page 68 onward remains in preparation. The public scan is a third-party source; ISBN, edition and printing remain unverified. Reading source pages does not mean every course is complete.",
+  "bnuLowerSourceNotice": "The 2024-approved cover and contents of BNU Grade 1 lower volume have been checked. Original courses are open for all units, practical projects and final review; full teaching verification continues. The public scan is a third-party source; ISBN, edition and printing remain unverified. Open courses do not mean a child has completed learning, paper tasks or physical activities.",
   "teenAdditionTotal": "Sum",
   "teenAdditionPosition": "Position {position}",
   "teenAdditionNotice": "The table uses addends 2–9 and sums 11–18. A–Z mark 26 equations to fill, with the first and second addends entered in order. A dash is outside that row, not zero. Given equations do not confirm paper activities.",
@@ -1464,5 +1464,7 @@
   "finalPracticeMark_right": "Given position {position}: cup handle faces right",
   "finalPracticeMark_horizontal": "Given position {position}: horizontal dividing line inside the frame",
   "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame",
-  "regionalPublishedUnknown": "Not stated"
+  "regionalPublishedUnknown": "Not stated",
+  "regionalPublisherDefaultScope": "This combination references regional textbook information published for {year}. This product defaults to the listed PEP edition with existing courses. This is publisher information and a product default, not a government recommendation catalog or a claim of province-wide adoption in the current year. Other editions may also apply. Choose a subject edition and save your own combination.",
+  "regionalPublisherAlternatives": "Mathematics editions listed by this publisher:"
 }

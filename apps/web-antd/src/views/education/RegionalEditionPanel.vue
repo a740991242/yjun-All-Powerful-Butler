@@ -282,7 +282,9 @@ function apply() {
             $t(
               item.resolution.catalogKind === 'digital'
                 ? 'educationLearning.regionalDigitalCatalogDefaultScope'
-                : 'educationLearning.regionalCatalogDefaultScope',
+                : item.resolution.catalogKind === 'publisher'
+                  ? 'educationLearning.regionalPublisherDefaultScope'
+                  : 'educationLearning.regionalCatalogDefaultScope',
               { year: item.resolution.catalogYear },
             )
           }}
@@ -294,7 +296,13 @@ function apply() {
           "
           class="w-full text-sm leading-6"
         >
-          {{ $t('educationLearning.regionalCatalogAlternatives') }}
+          {{
+            $t(
+              item.resolution.catalogKind === 'publisher'
+                ? 'educationLearning.regionalPublisherAlternatives'
+                : 'educationLearning.regionalCatalogAlternatives',
+            )
+          }}
           {{ item.resolution.alternatives.map(editionLabel).join(' / ') }}
         </p>
       </div>

@@ -89,6 +89,52 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
   );
 });
 
+it('keeps Guangxi publisher information distinct from government catalogs and from the upper volume', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const local = {
+      ...query,
+      province: 'guangxi',
+      volume: 'lower',
+      academicYear,
+    };
+    const result = regionalMathematicsDefault(local)!;
+    expect(result).toMatchObject({
+      edition: 'pep-2024',
+      alternatives: ['pep-2024'],
+      catalogYear: '2025',
+      catalogKind: 'publisher',
+    });
+    expect(result.evidence[0]).toMatchObject({
+      id: 'guangxi-grade-one-math-lower-publisher-2025',
+      sourceUrl: 'https://www.gxcbcmjt.com/tzgg/content_4695',
+      publishedAt: '2025-02-27',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[0]!.sourceTitle).toContain('第111项');
+    expect(result.evidence[0]!.issuedAt).toBeUndefined();
+    result.alternatives!.pop();
+    result.evidence[0]!.sourceUrl = 'https://example.invalid';
+    expect(regionalMathematicsDefault(local)!.alternatives).toEqual([
+      'pep-2024',
+    ]);
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl).toBe(
+      'https://www.gxcbcmjt.com/tzgg/content_4695',
+    );
+    for (const change of [
+      { volume: 'upper' },
+      { volume: 'all' },
+      { city: 'nanning' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { academicYear: '2027-2028' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});
+
 it('keeps the read Jiangxi autumn table and document date specific to the upper volume', () => {
   for (const academicYear of ['2025-2026', '2026-2027']) {
     const local = { ...query, province: 'jiangxi', academicYear };
