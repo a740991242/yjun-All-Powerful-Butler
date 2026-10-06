@@ -16,6 +16,69 @@ export interface RegionalMathDefault {
   catalogKind?: 'digital' | 'publisher';
 }
 
+// Publisher price tables provide reference combinations, not uniform adoption.
+const bnuPublisher2026: Record<
+  string,
+  { name: string; upper: string; lower: string }
+> = {
+  beijing: {
+    name: '北京',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/9aa60cfad67a4816869f0c8bc7efff62.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/1377da900b6a4dc3ba8d315b5223e043.pdf',
+  },
+  gansu: {
+    name: '甘肃',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/90fce52d76894c978c7e3aed76baf157.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/c93ab5e93677432ab382cc0666677c15.pdf',
+  },
+  guangdong: {
+    name: '广东',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/86dc329a25ae4dac96c76fcdec989d1d.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/4f71fee8395d436182cbf3c4866e79fd.pdf',
+  },
+  hebei: {
+    name: '河北',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/e9fee79d14ff4850bf37f11c7318b9bd.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/c804849000194353b19bd59a5e6aceff.pdf',
+  },
+  'inner-mongolia': {
+    name: '内蒙古',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/f543b49506754463a82df0166857ad63.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/16eba170c1174da399b7e7744c09d174.pdf',
+  },
+  shaanxi: {
+    name: '陕西',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/2fa773c1866e4fccae5995a0428afecc.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/91b73f75d2664b6185fa0fd9eefa2f3c.pdf',
+  },
+  sichuan: {
+    name: '四川',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/f8a54a4648f648079e18637cecdff4ec.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/5253a17448c040eebd84b48ad7c49b42.pdf',
+  },
+  tianjin: {
+    name: '天津',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/e8fb49ea97304a2aae859c0d7e5f0ad4.pdf',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/69a9b0a1452c45f2900b05cd4921ab97.pdf',
+  },
+};
+
 /** Product combinations are distinct from verified adoption at any school.
  * The Fujian 2024 catalog permits three ordinary Grade 1 math editions.
  * PEP is our initial combination because both course volumes are available;
@@ -40,6 +103,28 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  const publisher = Object.hasOwn(bnuPublisher2026, query.province)
+    ? bnuPublisher2026[query.province]
+    : undefined;
+  if (publisher) {
+    const upper = query.volume === 'upper';
+    return {
+      edition: 'bnu-2024',
+      alternatives: ['bnu-2024'],
+      catalogYear: '2026',
+      catalogKind: 'publisher',
+      evidence: [
+        {
+          id: `${query.province}-grade-one-math-${query.volume}-publisher-2026`,
+          sourceUrl: publisher[query.volume],
+          sourceTitle: `北师大出版集团2026年${upper ? '秋' : '春'}季${publisher.name}教材价格公示（PDF第1页第1项，一年级数学${upper ? '上' : '下'}册；价格参考，不证明全省统一选用）`,
+          publishedAt: upper ? '2026-08-25' : '2026-03-02',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
+
   if (
     (query.province === 'jilin' || query.province === 'heilongjiang') &&
     query.volume === 'upper'

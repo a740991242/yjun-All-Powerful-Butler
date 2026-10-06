@@ -21,6 +21,11 @@
 - 源草稿preparing保持，english-preparation.ts只生成可学习的独立课包副本；旧课ID/版本与schema1备份保持，原教案引用页码不冒学生正文已读。真实跟读/画卡/交流人工确认，未做可跳过，反思correct:null；无配套录音，不以选择题评发音。
 - 生产回归为`scripts/education/verify-english-preparation.mjs`；默认375十三主课，另两宽代表，`--representative-only`三宽代表主课与独立复习/备份/无效册次。执行前build:pages；浏览器/服务器finally关闭后再改源码、文档或验收脚本。阶段通过不代全目标完成。
 
+## 2026北师大地区参考组合（2026-10-06）
+
+- 八省份16独立价格表仅作参考组合，春/秋公示2026-03-02/2026-08-25与制表申报日期分开，不作全省统一或下一春采用证明。宁夏局部市县、青海网班不外推全省；旧15配置与旧学习库/个人组合保持。
+- `verify-regional-presets.mjs --bnu-2026-defaults`验证八地区两册三宽中英；先build:pages，finally终态后才编辑。广东现有参考，未知地区守卫用西藏；通过不代全国或全年完成。
+
 ## 1. 项目定位与工作范围
 
 - 项目中文名为「全能管家」，英文名为「All-in-One Butler」。应用品牌与业务文案统一维护在 `apps/web-antd/src/locales/langs/{zh-CN,en-US}/tools.json`。

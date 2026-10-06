@@ -659,7 +659,7 @@ const widths = process.argv.includes('--mobile-only')
           { exact: true },
         )
         .waitFor();
-      await chooseArea('education-region-province', '广东', true);
+      await chooseArea('education-region-province', '西藏', true);
       if (
         (await applyArea.isDisabled()) ||
         (await region.getByText('待核验', { exact: true }).count()) !== 2 ||

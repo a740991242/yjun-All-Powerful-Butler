@@ -40,8 +40,10 @@ it('rejects unsupported subjects, grades, years and specific reference scopes', 
     { subject: 'chinese' },
     { academicYear: '2027-2028' },
     { academicYear: '2024-2025' },
-    { province: 'guangdong' },
+    { province: 'tibet' },
     { province: 'not-an-area' },
+    { province: 'constructor' },
+    { province: '__proto__' },
     { volume: 'all' },
   ])
     expect(regionalMathematicsDefault({ ...query, ...change })).toBeUndefined();
@@ -597,4 +599,77 @@ it('uses the explicit Chongqing 2025 upper PEP label without guessing from the d
     { academicYear: '2027-2028' },
   ])
     expect(regionalMathematicsDefault({ ...local, ...change })).toBeUndefined();
+});
+
+it('supports eight independently checked province pairs as publisher references, with isolated evidence', () => {
+  for (const province of [
+    'beijing',
+    'gansu',
+    'guangdong',
+    'hebei',
+    'inner-mongolia',
+    'shaanxi',
+    'sichuan',
+    'tianjin',
+  ]) {
+    for (const volume of ['upper', 'lower']) {
+      const local = { ...query, province, volume };
+      const result = regionalMathematicsDefault(local)!;
+      expect(result).toMatchObject({
+        edition: 'bnu-2024',
+        alternatives: ['bnu-2024'],
+        catalogKind: 'publisher',
+        catalogYear: '2026',
+      });
+      expect(result.evidence[0]).toMatchObject({
+        id: `${province}-grade-one-math-${volume}-publisher-2026`,
+        publishedAt: volume === 'upper' ? '2026-08-25' : '2026-03-02',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[0]!.sourceUrl).toMatch(
+        /^https:\/\/www\.bnupg\.com\/docs\/2026-\d\d\/[a-f0-9]+\.pdf$/,
+      );
+      expect(result.evidence[0]!.sourceTitle).toContain('不证明全省统一选用');
+      expect(result.evidence[0]!.issuedAt).toBeUndefined();
+      const other = regionalMathematicsDefault({
+        ...local,
+        volume: volume === 'upper' ? 'lower' : 'upper',
+      })!;
+      expect(result.evidence[0]!.sourceUrl).not.toBe(
+        other.evidence[0]!.sourceUrl,
+      );
+      result.evidence[0]!.sourceTitle = 'mutated';
+      result.alternatives!.pop();
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceTitle,
+      ).not.toBe('mutated');
+      expect(regionalMathematicsDefault(local)!.alternatives).toEqual([
+        'bnu-2024',
+      ]);
+      for (const change of [
+        { city: 'city' },
+        { school: 'school' },
+        { grade: 'p2' },
+        { subject: 'english' },
+        { academicYear: '2027-2028' },
+        { volume: 'all' },
+      ])
+        expect(
+          regionalMathematicsDefault({ ...local, ...change }),
+        ).toBeUndefined();
+    }
+  }
+  for (const province of [
+    'ningxia',
+    'qinghai',
+    'hainan',
+    'yunnan',
+    'tibet',
+    'xinjiang',
+    'shanghai',
+  ])
+    for (const volume of ['upper', 'lower'])
+      expect(
+        regionalMathematicsDefault({ ...query, province, volume }),
+      ).toBeUndefined();
 });

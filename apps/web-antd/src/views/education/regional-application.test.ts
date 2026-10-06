@@ -99,14 +99,22 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     if (
       [
         'anhui',
+        'beijing',
         'fujian',
+        'gansu',
+        'guangdong',
         'guangxi',
         'guizhou',
+        'hebei',
         'henan',
         'hubei',
+        'inner-mongolia',
         'jiangsu',
         'liaoning',
+        'shaanxi',
         'shanxi',
+        'sichuan',
+        'tianjin',
         'zhejiang',
       ].includes(province)
     )
@@ -118,14 +126,22 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
     expect(required(rows[1]).resolution.status).toBe(
       [
         'anhui',
+        'beijing',
         'fujian',
+        'gansu',
+        'guangdong',
         'guangxi',
         'guizhou',
+        'hebei',
         'henan',
         'hubei',
+        'inner-mongolia',
         'jiangsu',
         'liaoning',
+        'shaanxi',
         'shanxi',
+        'sichuan',
+        'tianjin',
         'zhejiang',
       ].includes(province)
         ? 'recommended'

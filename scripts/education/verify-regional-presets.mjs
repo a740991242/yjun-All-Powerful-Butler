@@ -18,6 +18,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 );
 const allAreas = process.argv.includes('--all-areas');
 const provinceDefaults = process.argv.includes('--province-defaults');
+const bnu2026 = process.argv.includes('--bnu-2026-defaults');
 const publisherDefaults = process.argv.includes('--publisher-defaults');
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
@@ -201,36 +202,171 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
-      if (publisherDefaults) {
+      if (publisherDefaults || bnu2026) {
         const beforePresets = await raw();
         await choose('education-region-system', '六三学制（小学六年）');
-        const cases = [
-          {
-            zh: '吉林',
-            en: 'Jilin',
-            volume: 'upper',
-            edition: 'bnu-2024',
-            source:
-              'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf',
-            application: '2025-05-06',
-          },
-          {
-            zh: '黑龙江',
-            en: 'Heilongjiang',
-            volume: 'upper',
-            edition: 'bnu-2024',
-            source:
-              'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
-            application: '2025-05-26',
-          },
-          {
-            zh: '广西',
-            en: 'Guangxi',
-            volume: 'lower',
-            edition: 'pep-2024',
-            source: 'https://www.gxcbcmjt.com/tzgg/content_4695',
-          },
-        ];
+        const cases = bnu2026
+          ? []
+          : [
+              {
+                zh: '吉林',
+                en: 'Jilin',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf',
+                application: '2025-05-06',
+              },
+              {
+                zh: '黑龙江',
+                en: 'Heilongjiang',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
+                application: '2025-05-26',
+              },
+              {
+                zh: '广西',
+                en: 'Guangxi',
+                volume: 'lower',
+                edition: 'pep-2024',
+                source: 'https://www.gxcbcmjt.com/tzgg/content_4695',
+              },
+            ];
+        if (bnu2026)
+          cases.push(
+            ...[
+              {
+                zh: '北京',
+                en: 'Beijing',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/9aa60cfad67a4816869f0c8bc7efff62.pdf',
+              },
+              {
+                zh: '北京',
+                en: 'Beijing',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/1377da900b6a4dc3ba8d315b5223e043.pdf',
+              },
+              {
+                zh: '甘肃',
+                en: 'Gansu',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/90fce52d76894c978c7e3aed76baf157.pdf',
+              },
+              {
+                zh: '甘肃',
+                en: 'Gansu',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/c93ab5e93677432ab382cc0666677c15.pdf',
+              },
+              {
+                zh: '广东',
+                en: 'Guangdong',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/86dc329a25ae4dac96c76fcdec989d1d.pdf',
+              },
+              {
+                zh: '广东',
+                en: 'Guangdong',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/4f71fee8395d436182cbf3c4866e79fd.pdf',
+              },
+              {
+                zh: '河北',
+                en: 'Hebei',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/e9fee79d14ff4850bf37f11c7318b9bd.pdf',
+              },
+              {
+                zh: '河北',
+                en: 'Hebei',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/c804849000194353b19bd59a5e6aceff.pdf',
+              },
+              {
+                zh: '内蒙古',
+                en: 'Inner Mongolia',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/f543b49506754463a82df0166857ad63.pdf',
+              },
+              {
+                zh: '内蒙古',
+                en: 'Inner Mongolia',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/16eba170c1174da399b7e7744c09d174.pdf',
+              },
+              {
+                zh: '陕西',
+                en: 'Shaanxi',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/2fa773c1866e4fccae5995a0428afecc.pdf',
+              },
+              {
+                zh: '陕西',
+                en: 'Shaanxi',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/91b73f75d2664b6185fa0fd9eefa2f3c.pdf',
+              },
+              {
+                zh: '四川',
+                en: 'Sichuan',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/f8a54a4648f648079e18637cecdff4ec.pdf',
+              },
+              {
+                zh: '四川',
+                en: 'Sichuan',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/5253a17448c040eebd84b48ad7c49b42.pdf',
+              },
+              {
+                zh: '天津',
+                en: 'Tianjin',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/e8fb49ea97304a2aae859c0d7e5f0ad4.pdf',
+              },
+              {
+                zh: '天津',
+                en: 'Tianjin',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/69a9b0a1452c45f2900b05cd4921ab97.pdf',
+              },
+            ],
+          );
         for (const language of ['zh', 'en']) {
           if (language === 'en') {
             await p
@@ -274,8 +410,8 @@ const server = http.createServer(async (req, res) => {
             const edition = editionLabels[item.edition];
             const scope = region.getByText(
               english
-                ? 'This combination references regional textbook information published for 2025.'
-                : '参考2025年出版方公布的本地区教材资料',
+                ? `This combination references regional textbook information published for ${bnu2026 ? '2026' : '2025'}.`
+                : `参考${bnu2026 ? '2026' : '2025'}年出版方公布的本地区教材资料`,
               { exact: false },
             );
             await scope.waitFor();
@@ -360,11 +496,12 @@ const server = http.createServer(async (req, res) => {
             );
             await apply.click();
             if (
-              (await p
-                .getByRole('button', {
-                  name: english ? /^Mathematics ·/ : /^数学 ·/,
-                })
-                .count()) ||
+              (!bnu2026 &&
+                (await p
+                  .getByRole('button', {
+                    name: english ? /^Mathematics ·/ : /^数学 ·/,
+                  })
+                  .count())) ||
               (await region.locator(`a[href="${item.source}"]`).count())
             )
               throw new Error(
@@ -385,10 +522,11 @@ const server = http.createServer(async (req, res) => {
           JSON.stringify({
             width,
             publisherDefaults: true,
-            BnuUpperJilinHeilongjiang: true,
-            GuangxiPepLower: true,
+            BnuUpperJilinHeilongjiang: !bnu2026,
+            GuangxiPepLower: !bnu2026,
+            Bnu2026ProvincePairs: bnu2026 ? 8 : 0,
             editionNotSubstituted: true,
-            oppositeVolumeNotInherited: true,
+            oppositeVolumeSourceNotInherited: true,
             applicationDateNotPublication: true,
             bilingualDark: true,
             nativeHistoryUnchanged: true,
@@ -436,7 +574,7 @@ const server = http.createServer(async (req, res) => {
           )
             throw new Error('Jiangsu math not applied');
         }
-        await choose('education-region-province', '广东', true);
+        await choose('education-region-province', '西藏', true);
         await apply.click();
         if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
           throw new Error('Jiangsu edition leaked into other province');
