@@ -102,6 +102,7 @@ const farmNumbers = 'english-qihang-lower-farm-numbers-draft';
 const farmTime = 'english-qihang-lower-farm-time-draft';
 const room = 'english-qihang-lower-room-draft';
 const colourProject = 'english-qihang-upper-colour-project-draft';
+const roomProject = 'english-qihang-lower-room-project-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -2078,5 +2079,206 @@ export const englishQihangDraftLessons: Lesson[] = [
       ),
     ],
     '依据官方上册第三单元教学设计第三课时完整文本制作，未渲染Word或读取学生原图。page=32是教案引用的活动页，教案还引用33页数字涂色，但未给完整原图例；本站甲乙图例与虚构观察记录均为原创，不冒充原书。',
+  ),
+  draft(
+    roomProject,
+    '换位置再问答',
+    53,
+    '按三套独立的原创位置条件理解in/on/under/behind，核对位置猜测，实际轮换问答并区别设计与实做。',
+    '先学习房间物品、位置与整理；认识book、schoolbag、water bottle，允许陪学者用中文读位置条件。',
+    [
+      {
+        title: '先看完整的位置条件',
+        text: '本课三套位置卡都是本站原创文字情境，不是教材原图。甲卡：book书在schoolbag书包里面；water bottle水瓶在bed床下面；schoolbag书包在door门后面；颜色卡在desk课桌面上。in在里面，on在上面，under在下面，behind在后面。先确定问的是哪件物品，再找它的位置。',
+      },
+      {
+        title: '询问位置与检查猜测',
+        text: 'Where is the book?询问书的位置。甲卡可以答It’s in the schoolbag.。Is it on the desk?是检查“在桌面上”这个猜测；甲卡有书在包里的明确条件，因此这个猜测不对。仅仅说No, it’s not there.没有给出具体位置，还需继续问或观察。',
+      },
+      {
+        title: '移动后重新判断',
+        text: '乙卡表示新的位置，不是甲卡的重复：书放到课桌面上；水瓶放入书包；书包放到课桌下面；颜色卡放到门后面。同一件物品位置变了，答案要随新条件改变。题目只说移动后的乙卡时，不用甲卡回答。',
+        activity:
+          '实际用安全的纸卡和盒子模拟一次移动，移动前后各问一次位置；屏幕读卡不算已经实做。',
+      },
+      {
+        title: '换角色再问一次',
+        text: '一人提问，另一人先查看本次位置再回答，再交换角色。没看过自己的物品时，位置保持未知；不知道不等于物品不存在，也不能拿位置卡当真实房间情况。本课没有录音，点击正确不代表发音已经合格。',
+        activity:
+          '实际轮换问答，可以借助中文说明；未做或没有同伴可以跳过，不需要上传照片。',
+      },
+      {
+        title: '设计、模拟与真实整理分开',
+        text: '可以画自己的梦想空间并描述物品位置，标明这是设计。画卡或模拟摆卡没有证明真实房间已经收拾。真实整理和未来计划分别记录，不要求孩子提供家庭地址或所有房间都有同样家具。',
+        activity:
+          '实际画一张位置设计卡并介绍至少一件物品；若只计划还未画，不确认绘画已完成。',
+      },
+    ],
+    [
+      ...[
+        [
+          'a-book',
+          '甲卡：书在书包里面。Where is the book?选本卡的位置词。',
+          'in',
+        ],
+        [
+          'a-bottle',
+          '甲卡：水瓶在床下面。Where is the water bottle?选本卡的位置词。',
+          'under',
+        ],
+        [
+          'a-bag',
+          '甲卡：书包在门后面。Where is the schoolbag?选本卡的位置词。',
+          'behind',
+        ],
+        ['a-card', '甲卡：颜色卡在课桌面上。选择这张卡的位置词。', 'on'],
+        [
+          'b-book',
+          '换为乙卡：书现在在课桌面上。Where is the book?选新位置词。',
+          'on',
+        ],
+        [
+          'b-bottle',
+          '换为乙卡：水瓶现在在书包里面。Where is the water bottle?选新位置词。',
+          'in',
+        ],
+        [
+          'b-bag',
+          '换为乙卡：书包现在在课桌下面。Where is the schoolbag?选新位置词。',
+          'under',
+        ],
+        [
+          'b-card',
+          '换为乙卡：颜色卡现在在门后面。选择这张卡的新位置词。',
+          'behind',
+        ],
+      ].map(([suffix, prompt, answer]) =>
+        choose(
+          roomProject,
+          required(suffix),
+          required(prompt),
+          required(answer),
+          ['in', 'on', 'under', 'behind'],
+          '先核对当前卡片、提问对象和明确的位置条件；同一物品的旧位置不能代替新位置。',
+        ),
+      ),
+      choose(
+        roomProject,
+        'full-reply',
+        '乙卡明确书在桌面上。Where is the book?哪句回答符合乙卡？',
+        'It’s on the desk.',
+        ['It’s in the schoolbag.', 'It’s on the desk.', 'It’s under the bed.'],
+        '乙卡的书在桌面上，用on the desk；不是甲卡的in the schoolbag。',
+      ),
+      choose(
+        roomProject,
+        'check',
+        '甲卡明确书在包里面。Is it on the desk?这个位置猜测对吗？',
+        'No, it’s not there.',
+        ['Yes.', 'No, it’s not there.', '问了就一定在桌面上'],
+        '甲卡已明确书在包里面，不能因为问了on the desk就改变事实。',
+      ),
+      choose(
+        roomProject,
+        'negative',
+        '只有No, it’s not there.，没有其他位置条件。能确定物品在床下面吗？',
+        '不能，还需新的位置条件',
+        [
+          '能，一定用under',
+          '不能，还需新的位置条件',
+          '能，所有不在桌上的东西都在床下',
+        ],
+        '排除一个位置不能自动确定另一个位置，也不证明物品不存在。',
+      ),
+      choose(
+        roomProject,
+        'design',
+        '画了一张整齐的梦想房间卡，哪项记录符合事实？',
+        '完成了设计，真实整理另核',
+        [
+          '真实房间自动已整理',
+          '完成了设计，真实整理另核',
+          '所有物品真实位置都是图上的位置',
+        ],
+        '设计、纸卡模拟与真实整理是不同活动。',
+      ),
+      actual(
+        roomProject,
+        'move',
+        '实际用纸卡与盒子模拟一次物品位置变化，移动前后各说明位置；没摆可跳过。',
+      ),
+      actual(
+        roomProject,
+        'dialogue',
+        '和陪学者实际轮换Where is…?问答，再用Is it…?检查猜测；仅答屏幕题不确认口语已做。',
+      ),
+      actual(
+        roomProject,
+        'draw',
+        '实际画一张注明“设计”的位置卡，并介绍至少一件物品；未画可跳过。',
+      ),
+      record(
+        roomProject,
+        'today',
+        '分别记录已做的移动、轮换问答和绘画，没做或没观察就如实写；不填写住址或照片。',
+      ),
+      record(
+        roomProject,
+        'plan',
+        '另写下一次想试的新位置或真实整理安排，不把计划记为今天已做。',
+      ),
+    ],
+    [
+      ...[
+        [
+          'book',
+          '丙卡新条件：书在课桌下面。选择book的位置词，不沿用乙卡。',
+          'under',
+        ],
+        [
+          'bottle',
+          '丙卡新条件：水瓶在门后面。选择water bottle的位置词，不沿用乙卡。',
+          'behind',
+        ],
+        [
+          'bag',
+          '丙卡新条件：书包在椅子座面上。选择schoolbag的位置词，不沿用乙卡。',
+          'on',
+        ],
+        [
+          'card',
+          '丙卡新条件：颜色卡在书包里面。选择卡片的位置词，不沿用乙卡。',
+          'in',
+        ],
+      ].map(([suffix, prompt, answer]) =>
+        choose(
+          roomProject,
+          `review-${suffix}`,
+          required(prompt),
+          required(answer),
+          ['behind', 'under', 'in', 'on'],
+          '丙卡提供了新的明确位置，每项都与乙卡不同；按本次对象和条件重新回答。',
+        ),
+      ),
+      choose(
+        roomProject,
+        'review-unknown',
+        '只知道书不在课桌上，其他位置没有观察。现在怎么记录？',
+        '具体位置仍未知，继续核对',
+        ['一定在书包里', '具体位置仍未知，继续核对', '这本书不存在'],
+        '没有确认其他位置时，否定一个猜测不足以确定位置。',
+      ),
+      actual(
+        roomProject,
+        'review-talk',
+        '实际换一张新位置卡并交换角色问答；未做可以跳过，点击正确不评价发音。',
+      ),
+      record(
+        roomProject,
+        'review-reflection',
+        '记录本次用了什么新的位置条件，以及真实问答是否做过；想做的另写计划。',
+      ),
+    ],
+    '依据官方下册第五单元教学设计第三课时的询问位置、轮换交流和设计活动制作。page=53是教案引用的练习页，未渲染Word或读取学生原图；甲乙丙位置条件为本站原创，不照搬故事和原图答案。学生用书身份继续核验。',
   ),
 ];

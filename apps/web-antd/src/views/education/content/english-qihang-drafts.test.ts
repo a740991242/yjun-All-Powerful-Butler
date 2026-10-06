@@ -32,6 +32,49 @@ function checkOptions(question: Question, expected: Answer) {
 }
 
 describe('原创英语准备课的交际与数量', () => {
+  it('新位置课逐对象核对四关系，复习换位置，不由否定猜测推定新位置', () => {
+    const lesson = required(
+      englishQihangDraftLessons.find(
+        (item) => item.id === 'english-qihang-lower-room-project-draft',
+      ),
+    );
+    const before = ['in', 'under', 'behind', 'on'];
+    const after = ['on', 'in', 'under', 'behind'];
+    const review = ['under', 'behind', 'on', 'in'];
+    for (let i = 0; i < 4; i++) {
+      checkOptions(required(lesson.questions[i]), required(before[i]));
+      checkOptions(required(lesson.questions[i + 4]), required(after[i]));
+      checkOptions(required(lesson.reviewQuestions?.[i]), required(review[i]));
+      expect(
+        evaluate(required(lesson.questions[i + 4]).rule, required(before[i])),
+      ).toBe(false);
+      expect(
+        evaluate(
+          required(lesson.reviewQuestions?.[i]).rule,
+          required(after[i]),
+        ),
+      ).toBe(false);
+    }
+    checkOptions(required(lesson.questions[8]), 'It’s on the desk.');
+    checkOptions(required(lesson.questions[9]), 'No, it’s not there.');
+    checkOptions(required(lesson.questions[10]), '不能，还需新的位置条件');
+    checkOptions(required(lesson.questions[11]), '完成了设计，真实整理另核');
+    checkOptions(
+      required(lesson.reviewQuestions?.[4]),
+      '具体位置仍未知，继续核对',
+    );
+    expect(lesson.questions).toHaveLength(17);
+    expect(lesson.reviewQuestions).toHaveLength(7);
+    expect(
+      lesson.questions.filter((q) => q.rule.kind === 'manual'),
+    ).toHaveLength(3);
+    expect(
+      lesson.questions.filter((q) => q.rule.kind === 'reflection'),
+    ).toHaveLength(2);
+    expect(lesson.parentTip).toContain('甲乙丙位置条件为本站原创');
+    expect(lesson.parentTip).toContain('未渲染Word或读取学生原图');
+  });
+
   it('创作课完整双向核对五色，复习逐项换图例，预测与实测分别记录', () => {
     const lesson = required(
       englishQihangDraftLessons.find(

@@ -1,8 +1,9 @@
 /* Run after build:pages. Isolated Chrome and production base; no user storage.
- * Checks all 14 original activities at 375px, representative flows at 768/1200,
+ * Checks all 15 original activities at 375px, representative flows at 768/1200,
  * both catalogs, strict volume boundaries, real exports and retained old records.
  * --representative-only checks two main flows plus review/backup at all widths.
  * --colour-project checks the new project and its independent review at all widths.
+ * --room-project checks changed positions, review and backup at all widths.
  * Automated answers test UI wiring, not child mastery or actual oral activities.
  */
 import assert from 'node:assert/strict';
@@ -18,6 +19,7 @@ const root = fileURLToPath(
 );
 const base = '/yjun-All-Powerful-Butler/';
 const representativeOnly = process.argv.includes('--representative-only');
+const roomProjectOnly = process.argv.includes('--room-project');
 const colourProjectOnly = process.argv.includes('--colour-project');
 const server = http.createServer(async (req, res) => {
   try {
@@ -191,6 +193,16 @@ try {
             path: `/tmp/butler-colour-project-${s.mode}-${width}.png`,
           });
         }
+        if (
+          roomProjectOnly &&
+          (q.id.endsWith('-b-book') || q.id.endsWith('-review-book'))
+        ) {
+          await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
+          await noOverflow();
+          await p.screenshot({
+            path: `/tmp/butler-room-project-${s.mode}-${width}.png`,
+          });
+        }
         if (q.visual?.kind === 'clock') {
           await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
           await p.screenshot({
@@ -252,7 +264,7 @@ try {
     };
     for (const [volume, count] of [
       ['upper', 8],
-      ['lower', 6],
+      ['lower', 7],
     ]) {
       await p.goto(
         `${url}#/education/primary/p1/english-preparation/${volume}`,
@@ -279,8 +291,10 @@ try {
         .allTextContents();
       for (const [index, title] of titles.entries()) {
         if (colourProjectOnly && (volume !== 'upper' || index !== 5)) continue;
+        if (roomProjectOnly && (volume !== 'lower' || index !== 6)) continue;
         if (
           !colourProjectOnly &&
+          !roomProjectOnly &&
           (width !== 375 || representativeOnly) &&
           index !== (volume === 'upper' ? 0 : 4)
         )
@@ -307,22 +321,29 @@ try {
         }
         await finishPractice(
           sid,
-          volume === 'upper' && index === (colourProjectOnly ? 5 : 0),
+          roomProjectOnly ||
+            (volume === 'upper' && index === (colourProjectOnly ? 5 : 0)),
         );
         assert.deepEqual(await readSession(old.id), old);
         console.log(JSON.stringify({ width, volume, title, complete: true }));
       }
     }
-    await p.goto(`${url}#/education/primary/p1/english-preparation/upper`);
+    const reviewVolume = roomProjectOnly ? 'lower' : 'upper';
+    await p.goto(
+      `${url}#/education/primary/p1/english-preparation/${reviewVolume}`,
+    );
     await p
       .locator('.learning-workspace .ant-card-head-title')
-      .filter({ hasText: '原创英语启蒙 · 上册' })
+      .filter({
+        hasText: `原创英语启蒙 · ${roomProjectOnly ? '下册' : '上册'}`,
+      })
       .waitFor();
     await catalog();
     const beforeReview = await read();
     const wrongOriginal = beforeReview.sessions.find(
       (session) =>
-        session.bookId === 'original-english-preparation-p1-upper-v1' &&
+        session.bookId ===
+          `original-english-preparation-p1-${reviewVolume}-v1` &&
         session.responses.some(
           (response) => response.submissions[0]?.correct === false,
         ),

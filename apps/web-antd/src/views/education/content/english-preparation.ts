@@ -18,7 +18,7 @@ const groups = {
     ['Family', 'family'],
     ['Pets', 'pets'],
     ['At the farm', 'farm-numbers', 'farm-time'],
-    ['My room', 'room'],
+    ['My room', 'room', 'room-project'],
   ],
 } satisfies Record<Volume, [string, ...string[]][]>;
 
