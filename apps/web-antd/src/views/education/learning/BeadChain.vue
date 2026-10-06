@@ -22,8 +22,8 @@ const segments = computed(() =>
 );
 </script>
 <template>
-  <div class="flex min-w-0 flex-col gap-3">
-    <p class="text-sm leading-6 text-muted-foreground">
+  <div class="bead-chain-visual flex min-w-0 flex-col gap-3">
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.beadRule', { first: visual.firstB }) }}
     </p>
     <div
@@ -38,7 +38,7 @@ const segments = computed(() =>
           class="flex shrink-0 flex-col items-center gap-2"
         >
           <template v-if="segment.beads">
-            <span class="text-sm">
+            <span class="text-xl">
               {{ $t('educationLearning.beadGroup', { index: segment.index }) }}
             </span>
             <div
@@ -55,7 +55,7 @@ const segments = computed(() =>
                 v-for="(bead, index) in segment.beads"
                 :key="index"
                 aria-hidden="true"
-                class="flex size-9 shrink-0 items-center justify-center rounded-full border-2 text-sm font-semibold"
+                class="flex size-11 shrink-0 items-center justify-center rounded-full border-2 text-xl font-semibold"
                 :class="
                   bead === 'A'
                     ? 'border-primary text-primary'
@@ -68,7 +68,7 @@ const segments = computed(() =>
           </template>
           <div
             v-else
-            class="flex min-h-20 w-28 items-center justify-center rounded border-2 border-dashed p-3 text-center text-sm"
+            class="flex min-h-20 w-36 items-center justify-center rounded border-2 border-dashed p-3 text-center text-xl"
             role="img"
             :aria-label="
               $t('educationLearning.beadCovered', {
@@ -87,7 +87,7 @@ const segments = computed(() =>
         </div>
       </div>
     </div>
-    <p class="text-sm leading-6 text-muted-foreground">
+    <p class="text-xl leading-8 text-muted-foreground">
       {{ $t('educationLearning.beadNotice') }}
     </p>
   </div>
