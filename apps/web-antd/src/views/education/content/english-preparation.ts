@@ -14,7 +14,7 @@ const groups = {
     ['My classroom', 'classroom'],
   ],
   lower: [
-    ['Feelings', 'feelings'],
+    ['Feelings', 'feelings', 'feelings-activities'],
     ['Family', 'family'],
     ['Pets', 'pets'],
     ['At the farm', 'farm-numbers', 'farm-time'],

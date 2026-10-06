@@ -15,7 +15,7 @@ describe('original English foundations and saved learning', () => {
   it('opens both original volumes without assigning an unverified textbook or province', () => {
     for (const [volume, count] of [
       ['upper', 8],
-      ['lower', 7],
+      ['lower', 8],
     ] as const) {
       const book = required(englishPreparationBook(volume, 'Original course'));
       expect(book.id).toBe(`original-english-preparation-p1-${volume}-v1`);
@@ -83,7 +83,7 @@ describe('original English foundations and saved learning', () => {
     }
     const restored = parseBackup(exportBackup(library)).data;
     expect(restored.schemaVersion).toBe(1);
-    expect(restored.sessions).toHaveLength(31);
+    expect(restored.sessions).toHaveLength(33);
     expect(restored.sessions[0]).toEqual(oldSnapshot);
     expect(restored).toEqual(library);
   });

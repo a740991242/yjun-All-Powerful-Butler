@@ -103,6 +103,7 @@ const farmTime = 'english-qihang-lower-farm-time-draft';
 const room = 'english-qihang-lower-room-draft';
 const colourProject = 'english-qihang-upper-colour-project-draft';
 const roomProject = 'english-qihang-lower-room-project-draft';
+const feelingsActivities = 'english-qihang-lower-feelings-activities-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -2280,5 +2281,185 @@ export const englishQihangDraftLessons: Lesson[] = [
       ),
     ],
     '依据官方下册第五单元教学设计第三课时的询问位置、轮换交流和设计活动制作。page=53是教案引用的练习页，未渲染Word或读取学生原图；甲乙丙位置条件为本站原创，不照搬故事和原图答案。学生用书身份继续核验。',
+  ),
+  draft(
+    feelingsActivities,
+    '感受词规律与卡片找不同',
+    10,
+    '按明确给定的三种词卡规则补全，逐项比较两张原创信息卡；设计与真实感受分别记录。',
+    '先认识happy、hungry、tired、sad、scared；可用中文帮读，不要求独立拼写或已有英语口语。',
+    [
+      {
+        title: '先读规则，再补空格',
+        text: '甲规则按happy、hungry循环，乙按sad、sad、tired循环，丙按scared、happy、happy循环。一个循环可能有两个或三个词，同一词可以连续出现。先逐个读完整一组，再从组的开头继续；这些都是本站给定规则，不推断真实心情。',
+      },
+      {
+        title: '规则换了，答案也重新核对',
+        text: '甲的前六词是happy、hungry、happy、hungry、happy、hungry；乙的前六词是sad、sad、tired、sad、sad、tired；丙的前六词是scared、happy、happy、scared、happy、happy。没有指定循环规则时，仅凭前两个词不能确定后面必定是什么。',
+        activity:
+          '实际制作一种给定规则的六张词卡，与陪学者逐张核对；这是制作与读规则，不自动证明会发音。',
+      },
+      {
+        title: '找不同要按同一个字段比较',
+        text: '原创卡A明确写着：four只纸卡小鸡、一张red词卡、一张happy词卡、一个圆点。卡B明确写着：five只纸卡小鸡、一张blue词卡、一张tired词卡、一个圆点。数量、颜色词、感受词三项改变，圆点数量没变；只用这些明确信息，不猜原教材图片，也不把词卡当真人感受。',
+      },
+      {
+        title: '设计给角色的卡片，再轮换介绍',
+        text: '给虚构角色设计卡片，先注明想表达哪个词，再请陪学者按你给出的设计说明介绍。可以说I’m happy.来扮演角色，但它不等于你此刻必须开心。找不同活动可先中文说明，再在规范示范帮助下尝试英文词或短句。',
+        activity:
+          '实际和陪学者交换两张原创卡，分别说明数量、颜色词和感受词；没交换可以跳过。',
+      },
+      {
+        title: '推测、反馈和计划分别保留',
+        text: '画出来的表情可能被别人理解成不同意思，先听反馈，不强迫对方同意。如果在交流自己的真实感受，允许不分享，不由本题词卡代填。今天制作、交流做过什么与以后想做什么分别记，未做不当完成。',
+        activity:
+          '实际画一张虚构角色卡，注明设计意图并倾听反馈；不需要上传图片或私人经历。',
+      },
+    ],
+    [
+      ...[
+        ['a5', '甲按happy、hungry循环，第5词是什么？', 'happy'],
+        ['a6', '甲按happy、hungry循环，第6词是什么？', 'hungry'],
+        ['b5', '乙按sad、sad、tired循环，第5词是什么？', 'sad'],
+        ['b6', '乙按sad、sad、tired循环，第6词是什么？', 'tired'],
+        ['c4', '丙按scared、happy、happy循环，第4词是什么？', 'scared'],
+        ['c6', '丙按scared、happy、happy循环，第6词是什么？', 'happy'],
+      ].map(([suffix, prompt, answer]) =>
+        choose(
+          feelingsActivities,
+          required(suffix),
+          required(prompt),
+          required(answer),
+          ['happy', 'hungry', 'tired', 'sad', 'scared'],
+          '从明确给定的一整组循环重新点数，不根据自己的感受选词。',
+        ),
+      ),
+      choose(
+        feelingsActivities,
+        'unknown-rule',
+        '只给happy、sad两个开头词，没有说明规则。第3词能确定吗？',
+        '不能，规则还未知',
+        ['一定是happy', '一定是sad', '不能，规则还未知'],
+        '两项可以对应多种后续规则，不能把一个猜测当唯一答案。',
+      ),
+      choose(
+        feelingsActivities,
+        'a-count',
+        '原创卡A有four只纸卡小鸡，用中文说明数量是多少？',
+        '4只',
+        ['4只', '5只', '6只'],
+        'four表示4，这是卡片明确给出的数量。',
+      ),
+      choose(
+        feelingsActivities,
+        'b-count',
+        '原创卡B有five只纸卡小鸡，用中文说明数量是多少？',
+        '5只',
+        ['4只', '5只', '6只'],
+        'five表示5，换卡后重新读取条件。',
+      ),
+      choose(
+        feelingsActivities,
+        'colour-change',
+        '原创卡A的颜色词red，卡B为blue。哪项正确？',
+        '颜色词由红色变为蓝色',
+        ['颜色词没变', '颜色词由红色变为蓝色', '小鸡一定变蓝色'],
+        '比较的是注明的颜色词卡，不推断小鸡或原图颜色。',
+      ),
+      choose(
+        feelingsActivities,
+        'feeling-change',
+        '原创卡A的感受词happy，卡B为tired。哪项正确？',
+        '词卡由开心变为累，不判断真人',
+        ['两张词卡一样', '词卡由开心变为累，不判断真人', '孩子现在一定累了'],
+        'happy和tired对应不同词义；卡片不能诊断孩子的真实感受。',
+      ),
+      choose(
+        feelingsActivities,
+        'same',
+        '卡A、卡B都明确有一个圆点。哪项没有改变？',
+        '圆点数量',
+        ['小鸡数量', '颜色词', '圆点数量'],
+        '同字段逐项比较，圆点数量都为1。',
+      ),
+      actual(
+        feelingsActivities,
+        'cards',
+        '实际制作一种给定规则的六张词卡并逐张核对；没做可跳过。',
+      ),
+      actual(
+        feelingsActivities,
+        'exchange',
+        '实际交换原创卡并说明不同，可先中文再尝试英文；没交流可跳过。',
+      ),
+      actual(
+        feelingsActivities,
+        'draw',
+        '实际画虚构角色卡，注明意图并听反馈；不需要私人图片，没做可跳过。',
+      ),
+      record(
+        feelingsActivities,
+        'observed',
+        '记录今天实际做过的制作与交流，以及对方愿意给出的反馈；未做写未做。',
+      ),
+      record(
+        feelingsActivities,
+        'plan',
+        '另记下次想改哪条规则或哪张卡；未来计划不算本次完成。',
+      ),
+    ],
+    [
+      choose(
+        feelingsActivities,
+        'review-cycle',
+        '新规则按tired、happy、sad循环，第5词是什么？',
+        'happy',
+        ['tired', 'happy', 'sad'],
+        '前六词为tired、happy、sad、tired、happy、sad，不能沿用旧规则。',
+      ),
+      choose(
+        feelingsActivities,
+        'review-repeat',
+        '新规则按hungry、hungry、scared循环，第6词是什么？',
+        'scared',
+        ['hungry', 'scared', 'tired'],
+        '同词可以连续出现，完整循环三词重复两次。',
+      ),
+      choose(
+        feelingsActivities,
+        'review-count',
+        '新卡C有six只纸卡小鸡，卡D有three只。两卡数量怎样？',
+        '6只与3只，数量不同',
+        ['6只与3只，数量不同', '两卡都是6只', '两卡都是3只'],
+        'six表示6，three表示3，读取新卡而不是旧卡的four和five。',
+      ),
+      choose(
+        feelingsActivities,
+        'review-colour',
+        '新卡C与D都写green，但感受词分别sad和happy。颜色词怎样？',
+        '颜色词相同，感受词不同',
+        ['颜色词相同，感受词不同', '颜色词不同', '真实感受一定相同'],
+        'green都是绿色，词卡描述不自动判断真人。',
+      ),
+      choose(
+        feelingsActivities,
+        'review-unknown',
+        '角色画了笑脸，但没有说明设计意图，也没询问真人。怎样记录？',
+        '设计意图与真人感受均待核对',
+        ['真人一定happy', '真人一定sad', '设计意图与真人感受均待核对'],
+        '猜测可以保留为猜测，不能自动转成已经确认的信息。',
+      ),
+      actual(
+        feelingsActivities,
+        'review-exchange',
+        '实际用新规则或新卡轮换介绍并核对；没有做可跳过，文字选对不评价口语。',
+      ),
+      record(
+        feelingsActivities,
+        'review-record',
+        '记录本次重新核对了什么，实做、未做和以后计划分别说明。',
+      ),
+    ],
+    '依据官方下册Unit 1第三课时的规律、绘画交流和找不同活动制作。page=10仅为教案引用的活动页；学生原图未读。三种循环及A/B/C/D信息卡全部本站原创，不照搬教材图案、故事、韵文或答案。',
   ),
 ];

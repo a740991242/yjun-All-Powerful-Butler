@@ -32,6 +32,58 @@ function checkOptions(question: Question, expected: Answer) {
 }
 
 describe('原创英语准备课的交际与数量', () => {
+  it('感受词循环独立点数，换卡逐字段比较，不推定真人感受', () => {
+    const lesson = required(
+      englishQihangDraftLessons.find(
+        (item) => item.id === 'english-qihang-lower-feelings-activities-draft',
+      ),
+    );
+    const cycles = [
+      { words: ['happy', 'hungry'], places: [5, 6] },
+      { words: ['sad', 'sad', 'tired'], places: [5, 6] },
+      { words: ['scared', 'happy', 'happy'], places: [4, 6] },
+    ];
+    let index = 0;
+    for (const { words, places } of cycles) {
+      for (const place of places) {
+        checkOptions(
+          required(lesson.questions[index++]),
+          required(words[(place - 1) % words.length]),
+        );
+      }
+    }
+    const expected = [
+      '不能，规则还未知',
+      '4只',
+      '5只',
+      '颜色词由红色变为蓝色',
+      '词卡由开心变为累，不判断真人',
+      '圆点数量',
+    ];
+    expected.forEach((answer, offset) =>
+      checkOptions(required(lesson.questions[offset + 6]), answer),
+    );
+    const review = [
+      'happy',
+      'scared',
+      '6只与3只，数量不同',
+      '颜色词相同，感受词不同',
+      '设计意图与真人感受均待核对',
+    ];
+    review.forEach((answer, offset) =>
+      checkOptions(required(lesson.reviewQuestions?.[offset]), answer),
+    );
+    expect(lesson.questions).toHaveLength(17);
+    expect(lesson.reviewQuestions).toHaveLength(7);
+    expect(
+      lesson.questions.filter((q) => q.rule.kind === 'manual'),
+    ).toHaveLength(3);
+    expect(
+      lesson.questions.filter((q) => q.rule.kind === 'reflection'),
+    ).toHaveLength(2);
+    expect(lesson.status).toBe('preparing');
+    expect(lesson.parentTip).toContain('学生原图未读');
+  });
   it('新位置课逐对象核对四关系，复习换位置，不由否定猜测推定新位置', () => {
     const lesson = required(
       englishQihangDraftLessons.find(

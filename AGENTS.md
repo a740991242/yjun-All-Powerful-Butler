@@ -22,15 +22,15 @@
 
 ## 原创英语启蒙与正式教材分离（2026-10-06）
 
-- `/education/primary/p1/english-preparation/:volume`提供上册8课、下册7课原创基础活动，来源为已读新启航教师资源。学生用书ISBN/版次与省份采用未知，不称完整教材，不加入正式Textbook/editionTarget或地区默认。
+- `/education/primary/p1/english-preparation/:volume`提供上册8课、下册8课原创基础活动，来源为已读新启航教师资源。学生用书ISBN/版次与省份采用未知，不称完整教材，不加入正式Textbook/editionTarget或地区默认。
 - 源草稿preparing保持，english-preparation.ts只生成可学习的独立课包副本；旧课ID/版本与schema1备份保持，原教案引用页码不冒学生正文已读。真实跟读/画卡/交流人工确认，未做可跳过，反思correct:null；无配套录音，不以选择题评发音。
-- 生产回归为`scripts/education/verify-english-preparation.mjs`；默认375十五主课，另两宽代表，`--representative-only`三宽代表主课与独立复习/备份/无效册次。`--colour-project`三宽核验颜色创作18主任务与8独立复习，五色图例完整双向对应，实测与预测分开；复习先等待session路由再等实际首题，不假设首题为客观题。执行前build:pages；浏览器/服务器finally关闭后再改源码、文档或验收脚本。阶段通过不代全目标完成。
+- 生产回归为`scripts/education/verify-english-preparation.mjs`；默认375十六主课，另两宽代表，`--representative-only`三宽代表主课与独立复习/备份/无效册次。`--colour-project`三宽核验颜色创作18主任务与8独立复习，五色图例完整双向对应，实测与预测分开；复习先等待session路由再等实际首题，不假设首题为客观题。执行前build:pages；浏览器/服务器finally关闭后再改源码、文档或验收脚本。阶段通过不代全目标完成。
 
-- `--room-project`三宽核验位置变化17主任务与7独立复习、甲乙丙条件逐物品改变，否定猜测不自动确定位置；实做/设计/未来计划分开。旧14课ID/版本和正式课包保持，不把15个原创课当完整英语教材。
+- `--room-project`三宽核验位置变化17主任务与7独立复习、甲乙丙条件逐物品改变，否定猜测不自动确定位置；实做/设计/未来计划分开。旧14课ID/版本和正式课包保持，不把16个原创课当完整英语教材。
 
 ## 原创英语全复习验收（2026-10-06）
 
-- `verify-english-preparation.mjs --all-reviews`三宽逐课主练习/新复习/刷新，和筛选模式互斥；客观题先错再改以触发每个知识点，按课目定位复习并核验原记录不变及题目内容不复用。现每宽15主课238任务、15复习70任务，实做跳过与反思null保持。
+- `verify-english-preparation.mjs --all-reviews`三宽逐课主练习/新复习/刷新，和筛选模式互斥；客观题先错再改以触发每个知识点，按课目定位复习并核验原记录不变及题目内容不复用。现每宽16主课255任务、16复习77任务，实做跳过与反思null保持。
 - 全量运行仅证明当前原创课包UI和记录路径，不能代正式英语教材身份、完整教学审校或真实儿童掌握。先build:pages，finally终态后才编辑。
 
 ## 官方目录已列但课程未制作（2026-10-06）

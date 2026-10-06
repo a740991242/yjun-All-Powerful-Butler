@@ -1,10 +1,10 @@
 /* Run after build:pages. Isolated Chrome and production base; no user storage.
- * Checks all 15 original activities at 375px, representative flows at 768/1200,
+ * Checks all 16 original activities at 375px, representative flows at 768/1200,
  * both catalogs, strict volume boundaries, real exports and retained old records.
  * --representative-only checks two main flows plus review/backup at all widths.
  * --colour-project checks the new project and its independent review at all widths.
  * --room-project checks changed positions, review and backup at all widths.
- * --all-reviews completes all 15 main flows and their eligible new reviews at all widths.
+ * --all-reviews completes all 16 main flows and their eligible new reviews at all widths.
  * Automated answers test UI wiring, not child mastery or actual oral activities.
  */
 import assert from 'node:assert/strict';
@@ -218,6 +218,16 @@ try {
             path: `/tmp/butler-room-project-${s.mode}-${width}.png`,
           });
         }
+        if (
+          q.knowledge === 'english-qihang-lower-feelings-activities-draft' &&
+          (q.id.endsWith('-same') || q.id.endsWith('-review-colour'))
+        ) {
+          await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
+          await noOverflow();
+          await p.screenshot({
+            path: `/tmp/butler-feelings-activities-${s.mode}-${width}.png`,
+          });
+        }
         if (q.visual?.kind === 'clock') {
           await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
           await p.screenshot({
@@ -284,7 +294,7 @@ try {
     };
     for (const [volume, count] of [
       ['upper', 8],
-      ['lower', 7],
+      ['lower', 8],
     ]) {
       await p.goto(
         `${url}#/education/primary/p1/english-preparation/${volume}`,
@@ -311,13 +321,13 @@ try {
         .allTextContents();
       for (const [index, title] of titles.entries()) {
         if (colourProjectOnly && (volume !== 'upper' || index !== 5)) continue;
-        if (roomProjectOnly && (volume !== 'lower' || index !== 6)) continue;
+        if (roomProjectOnly && (volume !== 'lower' || index !== 7)) continue;
         if (
           !allReviews &&
           !colourProjectOnly &&
           !roomProjectOnly &&
           (width !== 375 || representativeOnly) &&
-          index !== (volume === 'upper' ? 0 : 4)
+          index !== (volume === 'upper' ? 0 : 5)
         )
           continue;
         const card = p
