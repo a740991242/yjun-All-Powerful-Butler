@@ -32,6 +32,47 @@ function checkOptions(question: Question, expected: Answer) {
 }
 
 describe('原创英语准备课的交际与数量', () => {
+  it('创作课完整双向核对五色，复习逐项换图例，预测与实测分别记录', () => {
+    const lesson = required(
+      englishQihangDraftLessons.find(
+        (item) => item.id === 'english-qihang-upper-colour-project-draft',
+      ),
+    );
+    const main = ['red', 'green', 'blue', 'yellow', 'orange'];
+    const review = ['yellow', 'blue', 'orange', 'red', 'green'];
+    checkOptions(required(lesson.questions[0]), 'It’s green.');
+    checkOptions(required(lesson.questions[1]), 'It’s orange.');
+    checkOptions(required(lesson.questions[2]), '尚未观察');
+    for (let index = 0; index < 5; index++) {
+      checkOptions(
+        required(lesson.questions[index + 3]),
+        required(main[index]),
+      );
+      const reverse = required(lesson.questions[index + 8]);
+      expect(evaluate(reverse.rule, index + 1)).toBe(true);
+      expect(evaluate(reverse.rule, 0)).toBe(false);
+      expect(evaluate(reverse.rule, index === 4 ? 1 : index + 2)).toBe(false);
+      expect(validAnswer(reverse.rule, null)).toBe(false);
+      const changed = required(lesson.reviewQuestions?.[index]);
+      checkOptions(changed, required(review[index]));
+      expect(evaluate(changed.rule, required(main[index]))).toBe(false);
+    }
+    checkOptions(
+      required(lesson.reviewQuestions?.[5]),
+      '预测和实际结果分别记录',
+    );
+    expect(lesson.questions).toHaveLength(18);
+    expect(lesson.reviewQuestions).toHaveLength(8);
+    expect(
+      lesson.questions.filter((item) => item.rule.kind === 'manual'),
+    ).toHaveLength(3);
+    expect(
+      lesson.questions.filter((item) => item.rule.kind === 'reflection'),
+    ).toHaveLength(2);
+    expect(lesson.steps[0]?.text).toContain('颜料种类和比例会影响结果');
+    expect(lesson.parentTip).toContain('未给完整原图例');
+    expect(lesson.parentTip).toContain('均为原创');
+  });
   it('问候的两种形式均合法，邀请与同意按给定情境判题', () => {
     const lesson = required(englishQihangDraftLessons[0]);
     expect(

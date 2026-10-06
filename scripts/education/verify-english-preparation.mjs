@@ -1,7 +1,8 @@
 /* Run after build:pages. Isolated Chrome and production base; no user storage.
- * Checks all 13 original activities at 375px, representative flows at 768/1200,
+ * Checks all 14 original activities at 375px, representative flows at 768/1200,
  * both catalogs, strict volume boundaries, real exports and retained old records.
  * --representative-only checks two main flows plus review/backup at all widths.
+ * --colour-project checks the new project and its independent review at all widths.
  * Automated answers test UI wiring, not child mastery or actual oral activities.
  */
 import assert from 'node:assert/strict';
@@ -17,6 +18,7 @@ const root = fileURLToPath(
 );
 const base = '/yjun-All-Powerful-Butler/';
 const representativeOnly = process.argv.includes('--representative-only');
+const colourProjectOnly = process.argv.includes('--colour-project');
 const server = http.createServer(async (req, res) => {
   try {
     const pathname = new URL(req.url, 'http://local').pathname;
@@ -179,6 +181,16 @@ try {
         const s = await readSession(sid);
         const q = s.questions[s.questionIndex];
         await p.getByText(q.prompt, { exact: true }).waitFor();
+        if (
+          colourProjectOnly &&
+          (q.id.endsWith('-reverse-red') || q.id.endsWith('-review-key-1'))
+        ) {
+          await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
+          await noOverflow();
+          await p.screenshot({
+            path: `/tmp/butler-colour-project-${s.mode}-${width}.png`,
+          });
+        }
         if (q.visual?.kind === 'clock') {
           await p.getByText(q.prompt, { exact: true }).scrollIntoViewIfNeeded();
           await p.screenshot({
@@ -239,7 +251,7 @@ try {
       await catalog();
     };
     for (const [volume, count] of [
-      ['upper', 7],
+      ['upper', 8],
       ['lower', 6],
     ]) {
       await p.goto(
@@ -266,7 +278,9 @@ try {
         .locator('.learning-workspace h4')
         .allTextContents();
       for (const [index, title] of titles.entries()) {
+        if (colourProjectOnly && (volume !== 'upper' || index !== 5)) continue;
         if (
+          !colourProjectOnly &&
           (width !== 375 || representativeOnly) &&
           index !== (volume === 'upper' ? 0 : 4)
         )
@@ -291,7 +305,10 @@ try {
           await waitSaved(sid, { step: step + 1 });
           session = await readSession(sid);
         }
-        await finishPractice(sid, index === 0 && volume === 'upper');
+        await finishPractice(
+          sid,
+          volume === 'upper' && index === (colourProjectOnly ? 5 : 0),
+        );
         assert.deepEqual(await readSession(old.id), old);
         console.log(JSON.stringify({ width, volume, title, complete: true }));
       }
@@ -315,8 +332,12 @@ try {
       .getByRole('button', { name: '同知识点新题', exact: true })
       .first()
       .click();
-    await p.getByRole('button', { name: '提交答案', exact: true }).waitFor();
+    await p.waitForURL((location) => /session=([^&]+)/.test(location.hash));
     const reviewId = new URL(p.url()).hash.match(/session=([^&]+)/)[1];
+    const startedReview = await readSession(reviewId);
+    await p
+      .getByText(startedReview.questions[0].prompt, { exact: true })
+      .waitFor();
     await finishPractice(reviewId);
     const afterReview = await read();
     const review = afterReview.sessions.find(

@@ -14,7 +14,7 @@ import { findTextbook } from './textbooks';
 describe('original English foundations and saved learning', () => {
   it('opens both original volumes without assigning an unverified textbook or province', () => {
     for (const [volume, count] of [
-      ['upper', 7],
+      ['upper', 8],
       ['lower', 6],
     ] as const) {
       const book = required(englishPreparationBook(volume, 'Original course'));
@@ -83,7 +83,7 @@ describe('original English foundations and saved learning', () => {
     }
     const restored = parseBackup(exportBackup(library)).data;
     expect(restored.schemaVersion).toBe(1);
-    expect(restored.sessions).toHaveLength(27);
+    expect(restored.sessions).toHaveLength(29);
     expect(restored.sessions[0]).toEqual(oldSnapshot);
     expect(restored).toEqual(library);
   });

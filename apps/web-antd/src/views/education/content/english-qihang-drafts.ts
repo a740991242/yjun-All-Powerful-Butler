@@ -101,6 +101,7 @@ const pets = 'english-qihang-lower-pets-draft';
 const farmNumbers = 'english-qihang-lower-farm-numbers-draft';
 const farmTime = 'english-qihang-lower-farm-time-draft';
 const room = 'english-qihang-lower-room-draft';
+const colourProject = 'english-qihang-upper-colour-project-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -1941,5 +1942,141 @@ export const englishQihangDraftLessons: Lesson[] = [
       ),
     ],
     '依据官方下册第五单元教学设计完整文本制作，未渲染Word或读取学生原图。page=45仅为教案引用的学生单元起点，学生用书身份继续核验。',
+  ),
+  draft(
+    colourProject,
+    '颜色实验与编号创作',
+    32,
+    '先预测再观察颜料变化，完整读取五色图例，换图例后重新判断，并介绍实际完成的作品。',
+    '认识1～5及red、blue、yellow、green、orange；可由陪学者帮读，不要求写单词。',
+    [
+      {
+        title: '预测不是观察结果',
+        text: '教案第三课时探索蓝与黄、红与黄、红与蓝的颜料混合，介绍green、orange与补充词purple。先说自己猜会怎样，再实际观察；颜料种类和比例会影响结果，不给所有实际混色指定同一个必答色调。没有材料可以跳过，不把屏幕上的颜色当实物实验。',
+        activity:
+          '先记录一个预测；有适合儿童的现有颜料和陪学条件，再实际混一种组合。未实验保持未知。',
+      },
+      {
+        title: '用给定记录练介绍',
+        text: '本站虚构记录A：混蓝与黄后观察到绿色，可以说It’s green.。虚构记录B：混红与黄后观察到橙色，可以说It’s orange.。这两条记录用于练表达，不是你的实测结果；实际实验没有发生时，不能据此确认完成。',
+      },
+      {
+        title: '逐项读完五色图例',
+        text: '本站原创图例甲：1=red、2=green、3=blue、4=yellow、5=orange。每个数字只是这次的编号。逐项找到对应词，也能从词找回编号，再在纸上画五个编号区域；这是本站创作，不是学生书第33页的原图或原图例。',
+        activity:
+          '实际按甲图例给自己画的编号区域涂色，记录已涂的范围；缺少工具时完成能做的部分即可。',
+      },
+      {
+        title: '换图例就重新核对',
+        text: '复习换用原创图例乙：1=yellow、2=blue、3=orange、4=red、5=green。同样的编号这次可能表示不同颜色，不能照旧答案涂；同一种颜色也可能换了编号。先读当前图例，再做问答。',
+      },
+      {
+        title: '介绍自己的实际作品',
+        text: '陪学者指向你实际完成的区域，问What’s the colour?，你尝试用It’s…回应，再交换角色。喜欢什么可以用I like…表达，个人喜好没有统一答案。不确定颜色时请对方帮助说明；纸面作画、实际交流和以后想做的事分开记录。',
+        activity:
+          '实际指向自己画涂的作品交流，再用原话记录看到的颜色与需要的帮助；没有画或没有交流可分别跳过。',
+      },
+    ],
+    [
+      choose(
+        colourProject,
+        'observed-green',
+        '虚构记录A明确观察到绿色，哪句描述符合记录？',
+        'It’s green.',
+        ['It’s red.', 'It’s green.', 'It’s orange.'],
+        '按给定观察记录介绍，不把这条虚构记录当自己的实测。',
+      ),
+      choose(
+        colourProject,
+        'observed-orange',
+        '虚构记录B明确观察到橙色，哪句描述符合记录？',
+        'It’s orange.',
+        ['It’s blue.', 'It’s yellow.', 'It’s orange.'],
+        'orange对应橙色；这不是孩子已完成实验的证明。',
+      ),
+      choose(
+        colourProject,
+        'unperformed',
+        '只猜了混色结果，还没混颜料，实际结果应怎样记？',
+        '尚未观察',
+        ['一定成功变绿', '尚未观察', '实验已完成'],
+        '预测与观察分开，未实验不代填结果。',
+      ),
+      ...['red', 'green', 'blue', 'yellow', 'orange'].map((word, index) =>
+        choose(
+          colourProject,
+          `key-${index + 1}`,
+          `原创图例甲：1=red、2=green、3=blue、4=yellow、5=orange。编号${index + 1}对应哪个词？`,
+          word,
+          ['yellow', 'red', 'orange', 'blue', 'green'],
+          '依据甲图例逐项对应，不背永久颜色编号。',
+        ),
+      ),
+      ...['red', 'green', 'blue', 'yellow', 'orange'].map((word, index) =>
+        task(
+          colourProject,
+          `reverse-${word}`,
+          `同一份原创甲图例：1=red、2=green、3=blue、4=yellow、5=orange。${word}对应编号几？`,
+          { kind: 'number', value: index + 1 },
+          '从词找回本次图例编号；数字不是颜色本身。',
+        ),
+      ),
+      actual(
+        colourProject,
+        'mix',
+        '有材料与陪学条件时，先预测再实际混一种颜料，观察结果；没有做可跳过，不以虚构记录代做。',
+      ),
+      actual(
+        colourProject,
+        'paint',
+        '实际画编号区域并按甲图例涂色；只确认自己做过的部分，未做可跳过。',
+      ),
+      actual(
+        colourProject,
+        'talk',
+        '指向自己实际完成的区域，与陪学者互换问答角色，介绍颜色并表达喜好；未交流可跳过。',
+      ),
+      record(
+        colourProject,
+        'observations',
+        '分别记录混色前的预测、实际结果或尚未实验、已涂哪些区域、交流与帮助。不要把预测抄为实测。',
+      ),
+      record(
+        colourProject,
+        'plan',
+        '另记下次想尝试的组合或作品；以后计划不计为本次已做。',
+      ),
+    ],
+    [
+      ...['yellow', 'blue', 'orange', 'red', 'green'].map((word, index) =>
+        choose(
+          colourProject,
+          `review-key-${index + 1}`,
+          `换用原创图例乙：1=yellow、2=blue、3=orange、4=red、5=green。编号${index + 1}现在对应哪个词？`,
+          word,
+          ['red', 'orange', 'green', 'yellow', 'blue'],
+          '重新读乙图例，不沿用甲图例的编号。',
+        ),
+      ),
+      choose(
+        colourProject,
+        'review-prediction',
+        '先猜会变成橙色，实际观察到另一种色调，应保留哪种记录？',
+        '预测和实际结果分别记录',
+        ['把实际结果改成橙色', '预测和实际结果分别记录', '没猜对就不记实验'],
+        '尊重实际观察，不能为符合预期而改写记录。',
+      ),
+      actual(
+        colourProject,
+        'review-talk',
+        '换用乙图例实际做一次新的作品问答；未制作或未交流可跳过，不自动沿用主课确认。',
+      ),
+      record(
+        colourProject,
+        'review-record',
+        '记录换图例后实际重新核对了什么、是否做了新作品与交流；未做的事项保持未做。',
+      ),
+    ],
+    '依据官方上册第三单元教学设计第三课时完整文本制作，未渲染Word或读取学生原图。page=32是教案引用的活动页，教案还引用33页数字涂色，但未给完整原图例；本站甲乙图例与虚构观察记录均为原创，不冒充原书。',
   ),
 ];

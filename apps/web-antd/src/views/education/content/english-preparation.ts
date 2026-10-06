@@ -9,7 +9,7 @@ const groups = {
   upper: [
     ['Hello!', 'greetings', 'name'],
     ['Numbers', 'number-words', 'counting'],
-    ['Colours', 'colours'],
+    ['Colours', 'colours', 'colour-project'],
     ['School things', 'school-things'],
     ['My classroom', 'classroom'],
   ],
