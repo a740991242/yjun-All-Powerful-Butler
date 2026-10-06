@@ -684,9 +684,9 @@ export interface Unit {
 
 export interface Book {
   id: string;
-  subject: Subject;
+  subject: 'english' | Subject;
   volume: Volume;
-  edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
+  edition: 'bnu-2024' | 'original-preparation' | 'pep-2024' | 'sujiao';
   title: string;
   source: string;
   verifiedAt: string;

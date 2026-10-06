@@ -1466,5 +1466,11 @@
   "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线",
   "regionalPublishedUnknown": "未标注",
   "regionalPublisherDefaultScope": "参考{year}年出版方公布的本地区教材资料，本站默认组合采用该资料列明且已制作课程的{edition}。这是出版方资料参考与产品默认，不是政府推荐目录，也不表示当前学年全省统一选用或其他版本不适用。可在单科下切换并保存自己的组合。",
-  "regionalPublisherAlternatives": "该出版方资料列明的数学版本："
+  "regionalPublisherAlternatives": "该出版方资料列明的数学版本：",
+  "englishPreparationTitle": "原创英语启蒙",
+  "englishPreparationDescription": "参考新启航教师资源制作的基础准备课，可按兴趣与已有经验选学。",
+  "englishPreparationNotice": "提供原创讲解、图文练习、交流活动与复习，不是完整教材或地区默认版本。学生教材ISBN、版次与当地选用范围尚待核实；来源页码区分教师分章与教案引用。暂无配套录音，字词选择题不评听辨或发音。真实跟读、画卡和交流由陪学者确认，没做可跳过；完成记录不代表掌握。",
+  "englishPreparationSource": "查看官方教师资源",
+  "englishPreparationPage": "来源页码引用：{number}（详见陪学提示）",
+  "englishPreparationInvalid": "册次无效，请选择上册或下册。"
 }

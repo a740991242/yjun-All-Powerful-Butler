@@ -1466,5 +1466,11 @@
   "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame",
   "regionalPublishedUnknown": "Not stated",
   "regionalPublisherDefaultScope": "This combination references regional textbook information published for {year}. This product defaults to the listed {edition} with existing courses. This is publisher information and a product default, not a government recommendation catalog or a claim of province-wide adoption in the current year. Other editions may also apply. Choose a subject edition and save your own combination.",
-  "regionalPublisherAlternatives": "Mathematics editions listed by this publisher:"
+  "regionalPublisherAlternatives": "Mathematics editions listed by this publisher:",
+  "englishPreparationTitle": "Original English Foundations",
+  "englishPreparationDescription": "Original foundational activities informed by New Qihang teacher resources. Choose activities to suit prior experience and interests.",
+  "englishPreparationNotice": "Includes original explanations, visual practice, communication activities and review. This is not a complete textbook or a regional default edition. Student-book ISBN, edition and local adoption remain unverified. Page references distinguish teacher chapters from pages cited in teaching plans. No companion audio is provided; word-choice tasks do not assess listening or pronunciation. A companion confirms actual speaking, drawing and interaction; unperformed activities may be skipped. A completion record does not establish mastery.",
+  "englishPreparationSource": "View official teacher resources",
+  "englishPreparationPage": "Source page reference: {number} (see companion guidance)",
+  "englishPreparationInvalid": "Invalid volume. Choose the upper or lower volume."
 }

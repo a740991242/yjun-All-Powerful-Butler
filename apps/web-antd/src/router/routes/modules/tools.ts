@@ -128,6 +128,18 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    name: 'EducationEnglishPreparation',
+    path: '/education/primary/p1/english-preparation/:volume',
+    component: () => import('#/views/education/english-preparation.vue'),
+    meta: {
+      title: 'educationLearning.englishPreparationTitle',
+      icon: 'lucide:languages',
+      hideInMenu: true,
+      activePath: '/education',
+      fullPathKey: false,
+    },
+  },
+  {
     name: 'EducationGradeOne',
     path: '/education/primary/p1/:subject/:edition/:volume',
     component: () => import('#/views/education/grade-one.vue'),

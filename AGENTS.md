@@ -15,6 +15,12 @@
 - 家长/教师审校记录用于教学质量核验；未指定审校人或未填反馈，不作为停止程序开发、修复或用户授权阶段提交推送的理由，不冒称已经人工审校。
 - 阶段发布仍需真实测试、类型、构建与生产子目录检查；不得将阶段发布或课包数量描述为全国各教材课程均已完整。
 
+## 原创英语启蒙与正式教材分离（2026-10-06）
+
+- `/education/primary/p1/english-preparation/:volume`提供上册7课、下册6课原创基础活动，来源为已读新启航教师资源。学生用书ISBN/版次与省份采用未知，不称完整教材，不加入正式Textbook/editionTarget或地区默认。
+- 源草稿preparing保持，english-preparation.ts只生成可学习的独立课包副本；旧课ID/版本与schema1备份保持，原教案引用页码不冒学生正文已读。真实跟读/画卡/交流人工确认，未做可跳过，反思correct:null；无配套录音，不以选择题评发音。
+- 生产回归为`scripts/education/verify-english-preparation.mjs`；默认375十三主课，另两宽代表，`--representative-only`三宽代表主课与独立复习/备份/无效册次。执行前build:pages；浏览器/服务器finally关闭后再改源码、文档或验收脚本。阶段通过不代全目标完成。
+
 ## 1. 项目定位与工作范围
 
 - 项目中文名为「全能管家」，英文名为「All-in-One Butler」。应用品牌与业务文案统一维护在 `apps/web-antd/src/locales/langs/{zh-CN,en-US}/tools.json`。

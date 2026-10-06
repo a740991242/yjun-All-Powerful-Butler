@@ -36,6 +36,8 @@ import { specialtyQuestions } from './specialties';
 
 const props = defineProps<{ book: Book }>();
 const textbookLinkKey = computed(() => {
+  if (props.book.edition === 'original-preparation')
+    return 'educationLearning.englishPreparationSource';
   if (props.book.edition === 'bnu-2024')
     return 'educationLearning.bnuSourceLink';
   if (props.book.subject === 'ethics') return 'educationEthics.sourceLink';
@@ -44,6 +46,8 @@ const textbookLinkKey = computed(() => {
   return 'educationLearning.openTextbook';
 });
 const textbookNoticeKey = computed(() => {
+  if (props.book.edition === 'original-preparation')
+    return 'educationLearning.englishPreparationNotice';
   if (props.book.edition === 'bnu-2024')
     return props.book.volume === 'lower'
       ? 'educationLearning.bnuLowerSourceNotice'
@@ -520,7 +524,12 @@ const wrongSessions = computed(() => [
                   <div class="flex flex-wrap gap-2">
                     <Tag>
                       {{
-                        $t('educationLearning.page', { number: lesson.page })
+                        $t(
+                          book.edition === 'original-preparation'
+                            ? 'educationLearning.englishPreparationPage'
+                            : 'educationLearning.page',
+                          { number: lesson.page },
+                        )
                       }}
                     </Tag>
                     <Tag v-if="isFinished(lesson.id)" color="green">
