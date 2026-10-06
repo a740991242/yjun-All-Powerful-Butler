@@ -1409,9 +1409,36 @@ const server = http.createServer(async (req, res) => {
           throw new Error('Hunan five-four applied');
         await choose('education-region-system', '六三学制（小学六年）');
         await choose('education-region-volume', '下册');
+        await region
+          .getByText('参考2025年政府核定的本地区教材零售价格表', {
+            exact: false,
+          })
+          .waitFor();
+        await region
+          .locator(
+            'a[href="https://www.xiangyin.gov.cn/31185/32018/32020/32026/37929/content_2267915.html"]',
+          )
+          .waitFor();
+        await region
+          .locator(
+            'a[href="https://www.xiangyin.gov.cn/uploadfiles/202501/202501241140441048904_s.png"]',
+          )
+          .waitFor();
+        const hunanLowerSource = region.locator(
+          'a[href="https://www.xiangyin.gov.cn/31185/32018/32020/32026/37929/content_2267915.html"]',
+        );
+        const hunanLowerCopy = await hunanLowerSource.locator('..').innerText();
+        for (const value of ['2025-01-23', '2025-01-22'])
+          if (!hunanLowerCopy.includes(value))
+            throw new Error(`Hunan lower missing independent date ${value}`);
         await apply.click();
-        if ((await p.getByRole('button', { name: /^数学 ·/ }).count()) !== 0)
-          throw new Error('Hunan upper math leaked into lower volume');
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 下册`,
+              exact: true,
+            })
+            .waitFor();
         if (
           await region
             .getByText('参考2025年省级目录中的可选版本', { exact: false })
@@ -1423,7 +1450,14 @@ const server = http.createServer(async (req, res) => {
             localStorage.getItem('butler-grade-one-math-edition-v1'),
           )) !== 'pep-2024'
         )
-          throw new Error('Hunan unknown lower math erased manual preference');
+          throw new Error('Hunan lower math not applied');
+        await hunanLowerSource.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(300);
+        await p.screenshot({
+          path: `/tmp/butler-hunan-lower-default-${width}.png`,
+        });
         await choose('education-region-province', '江苏', true);
         await choose('education-region-volume', '上册');
         await apply.click();
@@ -1512,6 +1546,34 @@ const server = http.createServer(async (req, res) => {
           throw new Error('Hunan English dark overflow');
         await p.screenshot({
           path: `/tmp/butler-hunan-default-${width}-en-dark.png`,
+        });
+        await choose('education-region-volume', 'Lower volume');
+        const hunanLowerEnglishCatalog = p.getByText(
+          'This combination references government-approved regional textbook retail prices for 2025.',
+          { exact: false },
+        );
+        await hunanLowerEnglishCatalog.waitFor();
+        const hunanLowerEnglishCopy = await p
+          .locator(
+            'a[href="https://www.xiangyin.gov.cn/31185/32018/32020/32026/37929/content_2267915.html"]',
+          )
+          .locator('..')
+          .innerText();
+        for (const value of ['2025-01-23', '2025-01-22'])
+          if (!hunanLowerEnglishCopy.includes(value))
+            throw new Error(`Hunan lower English missing date ${value}`);
+        await hunanLowerEnglishCatalog.evaluate((e) =>
+          e.scrollIntoView({ block: 'center' }),
+        );
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Hunan lower English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-hunan-lower-default-${width}-en-dark.png`,
         });
         await choose('education-region-province', 'Hubei', true);
         await choose('education-region-volume', 'Upper volume');
@@ -1852,8 +1914,8 @@ const server = http.createServer(async (req, res) => {
             JiangsuUpperLowerThreeSubjects: true,
             FujianUpperLowerThreeSubjects: true,
             ShanxiUpperLowerThreeSubjects: true,
-            HunanUpperThreeSubjectsLowerTwoSubjects: true,
-            HunanUpperCatalogNotInheritedByLower: true,
+            HunanBothVolumesThreeSubjects: true,
+            HunanIndependentVolumeSourcesAndDates: true,
             HunanEnglishDarkCatalog: true,
             HubeiUpperLowerThreeSubjects: true,
             HenanUpperLowerThreeSubjects: true,

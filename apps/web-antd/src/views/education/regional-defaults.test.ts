@@ -55,7 +55,7 @@ it('rejects unsupported subjects, grades, years and specific reference scopes', 
   );
 });
 
-it('uses Hunan upper-volume alternatives without extrapolating a lower-volume catalog', () => {
+it('retains Hunan upper-volume alternatives and their original source', () => {
   const hunan = { ...query, province: 'hunan' };
   for (const academicYear of ['2025-2026', '2026-2027']) {
     const result = regionalMathematicsDefault({ ...hunan, academicYear })!;
@@ -75,7 +75,6 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
     ]);
   }
   for (const change of [
-    { volume: 'lower' },
     { city: 'changsha' },
     { school: 'any-school' },
     { subject: 'english' },
@@ -89,6 +88,52 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
   expect(regionalMathematicsDefault(hunan)!.evidence[0]!.publishedAt).toBe(
     '2025-09-09',
   );
+});
+
+it('uses the independently read Hunan spring price table for lower-volume alternatives', () => {
+  const local = { ...query, province: 'hunan', volume: 'lower' };
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const result = regionalMathematicsDefault({ ...local, academicYear })!;
+    expect(result).toMatchObject({
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'sujiao'],
+      catalogKind: 'price',
+      catalogYear: '2025',
+    });
+    expect(result.evidence).toHaveLength(2);
+    expect(result.evidence[0]).toMatchObject({
+      id: 'hunan-grade-one-math-lower-price-2025',
+      sourceUrl:
+        'https://www.xiangyin.gov.cn/31185/32018/32020/32026/37929/content_2267915.html',
+      publishedAt: '2025-01-23',
+      issuedAt: '2025-01-22',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[1]).toMatchObject({
+      sourceUrl:
+        'https://www.xiangyin.gov.cn/uploadfiles/202501/202501241140441048904_s.png',
+      publishedAt: '',
+    });
+    expect(result.evidence[1]!.sourceTitle).toContain('第3、4项');
+    expect(result.evidence[1]!.sourceTitle).toContain('数学一年级下册');
+    expect(result.evidence).not.toEqual(
+      regionalMathematicsDefault({ ...local, volume: 'upper' })!.evidence,
+    );
+    result.alternatives!.pop();
+    result.evidence[0]!.publishedAt = 'changed';
+    expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(2);
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.publishedAt).toBe(
+      '2025-01-23',
+    );
+  }
+  for (const change of [
+    { city: 'changsha' },
+    { school: 'any-school' },
+    { subject: 'english' },
+    { academicYear: '2027-2028' },
+    { volume: 'invalid' },
+  ])
+    expect(regionalMathematicsDefault({ ...local, ...change })).toBeUndefined();
 });
 
 it('uses the read BNU publisher tables for Jilin and Heilongjiang upper volume without inferring publication dates', () => {

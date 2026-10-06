@@ -101,6 +101,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'heilongjiang',
         'henan',
         'hubei',
+        'hunan',
         'inner-mongolia',
         'jiangsu',
         'jiangxi',
@@ -132,6 +133,7 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'heilongjiang',
         'henan',
         'hubei',
+        'hunan',
         'inner-mongolia',
         'jiangsu',
         'jiangxi',
@@ -304,7 +306,7 @@ it('applies Fujian default volumes without asserting a sole provincial edition o
   }
 });
 
-it('applies Hunan upper-volume combination and preserves an unknown lower-volume math choice', () => {
+it('applies Hunan both-volume combinations with independent lower-volume price evidence', () => {
   const local = {
     ...query,
     province: 'hunan',
@@ -330,15 +332,30 @@ it('applies Hunan upper-volume combination and preserves an unknown lower-volume
   });
   expect(upper[3]!.action).toBeUndefined();
   const lower = regionalApplicationPlan({ ...local, volume: 'lower' });
-  expect(lower[1]!.resolution.status).toBe('unknown');
-  expect(lower[1]!.action).toBeUndefined();
+  expect(lower[1]!.resolution).toMatchObject({
+    status: 'recommended',
+    catalogKind: 'price',
+    catalogYear: '2025',
+    alternatives: ['pep-2024', 'sujiao'],
+  });
+  expect(lower[1]!.action).toEqual({
+    subject: 'math',
+    edition: 'pep-2024',
+    volume: 'lower',
+  });
+  expect(lower[1]!.resolution.evidence).not.toEqual(
+    upper[1]!.resolution.evidence,
+  );
+  expect(lower[3]!.action).toBeUndefined();
   expect(
     lower.flatMap((row) => (row.action ? [row.action.subject] : [])),
-  ).toEqual(['chinese', 'ethics']);
+  ).toEqual(['chinese', 'math', 'ethics']);
   for (const schoolSystem of ['unknown', 'five-four'] as const)
     expect(
-      regionalApplicationPlan({ ...local, schoolSystem }).every(
-        (row) => !row.action,
+      (['upper', 'lower'] as const).every((volume) =>
+        regionalApplicationPlan({ ...local, schoolSystem, volume }).every(
+          (row) => !row.action,
+        ),
       ),
     ).toBe(true);
 });
