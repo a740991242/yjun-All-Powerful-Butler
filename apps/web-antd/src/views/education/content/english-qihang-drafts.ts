@@ -97,6 +97,10 @@ const schoolThings = 'english-qihang-upper-school-things-draft';
 const classroom = 'english-qihang-upper-classroom-draft';
 const feelings = 'english-qihang-lower-feelings-draft';
 const family = 'english-qihang-lower-family-draft';
+const pets = 'english-qihang-lower-pets-draft';
+const farmNumbers = 'english-qihang-lower-farm-numbers-draft';
+const farmTime = 'english-qihang-lower-farm-time-draft';
+const room = 'english-qihang-lower-room-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -1355,5 +1359,587 @@ export const englishQihangDraftLessons: Lesson[] = [
       ),
     ],
     '依据官方下册第二单元教学设计完整文本制作，未渲染Word或读取学生原图。page=12只是教案引用的学生单元起点，学生用书身份继续核验。',
+  ),
+  draft(
+    pets,
+    '认识动物与介绍宠物卡',
+    23,
+    '理解五种动物名称，用明确的虚构角色或实际情况尝试介绍，不要求真实养宠物。',
+    '知道简单的I’m和It’s表达；可由陪学者帮读动物名称。',
+    [
+      {
+        title: '五种动物名称',
+        text: 'dog狗、cat猫、fish鱼、bird鸟、rabbit兔子。本稿文字词义题不代实际看图认动物；不知道动物种类时保留未知，不仅凭叫声、笼子或颜色作确定结论。',
+        activity:
+          '用已有图片或自己画的卡片实际指认一个动物，尝试说英文词；不用购买或接触真实动物。',
+      },
+      {
+        title: '角色拥有与自己拥有分开',
+        text: '本站明确给定虚构角色小安有一只兔子，他可以说I have a pet. It’s a rabbit.。这不表示读题的孩子也有兔子。自己没有宠物或不想介绍实际情况，可以只扮演标为虚构的角色。',
+      },
+      {
+        title: '介绍卡片上的动物',
+        text: 'It’s a cat.可用来说明给定卡片上的动物是猫，I have a pet.在角色介绍中表达我有一只宠物。完整情境不同，不能把看过一张动物卡自动记为实际拥有宠物。',
+        activity: '陪学者出一张动物卡，孩子尝试介绍；换另一张并交换角色。',
+      },
+      {
+        title: '画卡与关爱',
+        text: '可以画喜欢的动物或想象宠物，并标明是绘画或虚构。介绍已画出的动物与颜色，不要求触摸、喂养或收养动物。关爱可以表现为尊重、不追赶，不以养宠物作为完成条件。',
+        activity:
+          '实际画卡并向陪学者介绍；没画可跳过，不把网页答题当作完成绘画。',
+      },
+      {
+        title: '观察与计划分开',
+        text: '本课可以记录实际用了哪张卡、尝试了哪句、哪里需要帮助。下次想画另一只动物是计划，不当作今天已经画过或已经养过；自主喜好不设统一正确答案。',
+      },
+    ],
+    [
+      ...[
+        ['dog', '狗'],
+        ['cat', '猫'],
+        ['fish', '鱼'],
+        ['bird', '鸟'],
+        ['rabbit', '兔子'],
+      ].map(([word, meaning]) =>
+        choose(
+          pets,
+          `word-${word}`,
+          `${word}在动物情境中表示什么？`,
+          required(meaning),
+          ['鸟', '狗', '兔子', '猫', '鱼'],
+          `${word}对应${meaning}；实际物种仍需明确观察。`,
+        ),
+      ),
+      choose(
+        pets,
+        'given-rabbit',
+        '题干明确虚构角色的宠物是兔子，哪句符合？',
+        'It’s a rabbit.',
+        ['It’s a cat.', 'It’s a rabbit.', 'It’s a fish.'],
+        '按给定rabbit判断，不代表孩子真实拥有。',
+      ),
+      choose(
+        pets,
+        'have',
+        'I have a pet.在角色介绍中表达什么？',
+        '我有一只宠物',
+        ['我有一只宠物', '我喜欢一种颜色', '这是一个教室'],
+        '这是角色说明拥有宠物的表达。',
+      ),
+      choose(
+        pets,
+        'card',
+        '读到虚构角色有猫，就能把自己实际拥有猫自动记为已确认吗？',
+        '不能，角色与自己分开',
+        ['能，读过就拥有', '不能，角色与自己分开', '每个人必须养猫'],
+        '自己的实际情况不能由样例代填。',
+      ),
+      choose(
+        pets,
+        'unknown',
+        '只见一个笼子，没有看见动物也没有明确说明，能确定里面是bird吗？',
+        '不能，种类保持未知',
+        ['能，笼子一定是鸟', '不能，种类保持未知', '不知道就填rabbit'],
+        '线索可以用于猜测，但不足以确定种类。',
+      ),
+      choose(
+        pets,
+        'care',
+        '完成本课必须收养一只宠物吗？',
+        '不必，可用绘画或卡片',
+        ['必须养宠物', '不必，可用绘画或卡片', '没有宠物不能学习'],
+        '课包允许虚构卡片，不要求真实饲养。',
+      ),
+      actual(
+        pets,
+        'point',
+        '实际指认一张明确动物卡，听规范示范后尝试说词；未做可跳过。',
+      ),
+      actual(
+        pets,
+        'talk',
+        '用虚构角色卡实际轮换介绍与回应；不把角色拥有记为自己实际拥有。',
+      ),
+      actual(
+        pets,
+        'draw',
+        '实际画一张动物卡，标明绘画或虚构，再介绍作品；没画可跳过。',
+      ),
+      record(
+        pets,
+        'today',
+        '记录今天实际用了哪张卡、练过哪句、需要什么帮助；不要求透露实际宠物情况。',
+      ),
+      record(pets, 'plan', '另记以后想画或练什么，不把计划填作已做。'),
+    ],
+    [
+      choose(
+        pets,
+        'review-fish',
+        '新给定动物卡明确是鱼，哪句符合？',
+        'It’s a fish.',
+        ['It’s a rabbit.', 'It’s a fish.', 'It’s a bird.'],
+        '按新给定fish判断。',
+      ),
+      choose(
+        pets,
+        'review-cat',
+        'cat表示哪种动物？',
+        '猫',
+        ['狗', '鱼', '猫'],
+        'cat对应猫。',
+      ),
+      choose(
+        pets,
+        'review-art',
+        '画了一个想象动物，就说明已经饲养它吗？',
+        '不能，绘画与实际饲养分开',
+        ['已经饲养', '不能，绘画与实际饲养分开', '必须立刻饲养'],
+        '创作不代替现实情况。',
+      ),
+      actual(
+        pets,
+        'review-talk',
+        '换一张动物卡，实际进行一轮介绍；未做可跳过。',
+      ),
+    ],
+    '依据官方下册第三单元教学设计完整文本制作，未渲染Word或读取学生原图。page=23仅为教案引用的学生单元起点，学生用书身份继续核验。',
+  ),
+  draft(
+    farmNumbers,
+    '数字七到十二与数量问答',
+    34,
+    '在one～six基础上理解seven～twelve，按明确的数量图问答，区别样例数量与实际观察。',
+    '能逐一点数1～12，已认识one～six的对应；需要帮助可先复习。',
+    [
+      {
+        title: '六之后继续数',
+        text: 'one、two、three、four、five、six对应1～6；继续是seven=7、eight=8、nine=9、ten=10、eleven=11、twelve=12。每个标记代表一个，不把eleven的字母数当物件数量。',
+        visual: { kind: 'count', count: 12 },
+      },
+      {
+        title: '数量问句先理解',
+        text: 'How many?是在问多少个。I have…在给定数量情境中可说明我有多少；不知道某种物品的英文名称时，可以指着明确对象问How many?，不要求所有动植物名称都先会说。',
+        activity:
+          '实际摆1～12张纸片，逐个点数后由两人轮换问数量与说词；确认只记录做过。',
+      },
+      {
+        title: '农场词与数量分开',
+        text: 'cow奶牛、egg鸡蛋是本单元词。one egg和多个eggs的表达不同；本稿词义题分别认识词，数量图使用原创圆点，不冒实际看过教材牛或鸡蛋原图。',
+      },
+      {
+        title: '样例不是自己的实际数量',
+        text: '给定原创卡有9个标记，对应nine；自己的物件要实际数。未数过不填9，也不填0；数过发现没有才是0。本课英文数字练习范围1～12，不凭样例推断自己的所有物件数。',
+      },
+      {
+        title: '制作与换卡',
+        text: '可以在纸上按1～12顺序标点，自己设计一幅简单连点画，实际连接、涂色并分享。点序号是连接顺序，不保证任何一幅未见原图一定画出某种动物；本站只记录自己的作品。',
+        activity:
+          '实际画、连、涂一张原创点序卡，再向陪学者介绍；未制作可跳过。',
+      },
+    ],
+    [
+      ...['seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'].map(
+        (word, index) => ({
+          ...choose(
+            farmNumbers,
+            `word-${index + 7}`,
+            '逐一点数下图的标记，选对应英文词。',
+            word,
+            ['ten', 'seven', 'twelve', 'eight', 'eleven', 'nine'],
+            `${index + 7}个对应${word}。`,
+          ),
+          visual: { kind: 'count' as const, count: index + 7 },
+        }),
+      ),
+      ...['seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'].map(
+        (word, index) =>
+          task(
+            farmNumbers,
+            `meaning-${index + 7}`,
+            `${word}表示几个？填写数字。`,
+            { kind: 'number', value: index + 7 },
+            `${word}对应${index + 7}。`,
+          ),
+      ),
+      choose(
+        farmNumbers,
+        'cow',
+        'cow在本单元表示什么？',
+        '奶牛',
+        ['奶牛', '鸡蛋', '课桌'],
+        'cow是奶牛。',
+      ),
+      choose(
+        farmNumbers,
+        'egg',
+        'egg在本单元表示什么？',
+        '鸡蛋',
+        ['橡皮', '奶牛', '鸡蛋'],
+        'egg是鸡蛋，数量另需观察或给定。',
+      ),
+      choose(
+        farmNumbers,
+        'ask',
+        'How many?在数量问答中是什么意思？',
+        '有多少个',
+        ['什么颜色', '有多少个', '我叫什么'],
+        '这句用于询问数量。',
+      ),
+      choose(
+        farmNumbers,
+        'unknown',
+        '未数自己的纸片，可以直接把样例nine记为自己有9张吗？',
+        '不能，先实际数',
+        ['能，样例就是自己的', '不能，先实际数', '未知自动记0'],
+        '未知和样例数量、0分别处理。',
+      ),
+      actual(
+        farmNumbers,
+        'say',
+        '听规范示范后实际尝试seven～twelve中的词；未练可跳过，不自动评全会。',
+      ),
+      actual(
+        farmNumbers,
+        'count',
+        '实际用自己的纸片逐一点数，与陪学者轮换问数量和回答；未数可跳过。',
+      ),
+      actual(
+        farmNumbers,
+        'draw',
+        '实际设计一张1～12点序画、连线涂色并介绍；没有做可跳过。',
+      ),
+      record(
+        farmNumbers,
+        'today',
+        '记录实际点数、听说、绘画与需要的帮助；未数对象保持未知。',
+      ),
+      record(farmNumbers, 'plan', '另记未来练习安排，不当作已完成。'),
+    ],
+    [
+      ...[12, 8, 11, 7, 10, 9].map((count) => ({
+        ...choose(
+          farmNumbers,
+          `review-${count}`,
+          '复习：先数本次标记，再选词。',
+          required(
+            ['seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'][count - 7],
+          ),
+          ['nine', 'twelve', 'seven', 'eleven', 'eight', 'ten'],
+          `${count}个按本次图选择对应数字词。`,
+        ),
+        visual: { kind: 'count' as const, count },
+      })),
+      actual(
+        farmNumbers,
+        'review-talk',
+        '换一组实际纸片，重新点数并轮换问答；未做可跳过。',
+      ),
+    ],
+    '依据官方下册第四单元教学设计完整文本制作，未渲染Word或读取学生原图。page=34仅为教案引用的学生单元起点，圆点为原创数量表示，学生用书身份继续核验。',
+  ),
+  draft(
+    farmTime,
+    '理解整点与活动提议',
+    34,
+    '用数字词理解整点表达，区别钟面、给定活动、实际作息与计划。',
+    '认识1～12和整点钟面；数字词不熟悉可先复习数量课。',
+    [
+      {
+        title: '整点看两根针',
+        text: '整点时长分针指12，短时针指相应的小时数。原创示例短针指4、长针指12，是4点；英文可表达It’s four o’clock.。本课只用整点，不扩教半点或分钟。',
+        visual: { kind: 'clock', hour: 4, minute: 0 },
+      },
+      {
+        title: '数量与时间不同',
+        text: 'four表示4这个数；four o’clock表达4点，不是4个物件。没有日期或上午下午信息的12小时钟面，不能独自判定是上午还是下午，也不能把12点自动认定只有中午。',
+      },
+      {
+        title: '活动由明确情境给出',
+        text: 'Time to…可在给定情境里提示到做某事的时间。原创计划卡明确8点开始数卡片，就按该卡安排；钟面本身不能证明所有孩子8点都要做同一件事，也不能证明活动已经完成。',
+      },
+      {
+        title: '自己的作息另记',
+        text: '可以与陪学者在纸上画一个整点钟面，再写一个适合自己的活动。日常起床、吃饭和学习不强制与样例相同；计划、现在显示的时间、实际做过的活动分别记录。',
+        activity:
+          '实际画一个整点钟面并尝试说英文时间，陪学者观察两针是否符合自己的画法。',
+      },
+      {
+        title: '对话与完成分开',
+        text: '两人用纸面计划卡轮流说一个整点和活动提议，再回应是否愿意。说出计划不等于真的完成活动，网页题答对也不确认口语或真实劳动；没做可跳过。',
+        activity: '实际轮换说时间与活动提议两个角色，并记录需要帮助之处。',
+      },
+    ],
+    [
+      ...[
+        [2, 'two'],
+        [5, 'five'],
+        [11, 'eleven'],
+      ].map(([hour, word]) => ({
+        ...choose(
+          farmTime,
+          `clock-${hour}`,
+          '看原创整点钟面，哪句符合？',
+          `It’s ${word} o’clock.`,
+          ['It’s two o’clock.', 'It’s five o’clock.', 'It’s eleven o’clock.'],
+          `长针指12、短针指${hour}，对应${word} o’clock。`,
+        ),
+        visual: {
+          kind: 'clock' as const,
+          hour: Number(hour),
+          minute: 0 as const,
+        },
+      })),
+      choose(
+        farmTime,
+        'meaning',
+        'four o’clock在时间情境中表示什么？',
+        '4点',
+        ['4个物件', '4点', '4种颜色'],
+        '数字加o’clock在这里表示整点时间。',
+      ),
+      choose(
+        farmTime,
+        'time-to',
+        'Time to…在本课情境中有什么作用？',
+        '提示到做某事的时间',
+        ['介绍动物种类', '提示到做某事的时间', '证明事情已完成'],
+        '提示活动时间，不自动确认完成。',
+      ),
+      choose(
+        farmTime,
+        'period',
+        '只看短针指12、长针指12，没有其它信息，能确定一定是中午而非午夜吗？',
+        '不能，需要时段信息',
+        ['一定是中午', '一定是午夜', '不能，需要时段信息'],
+        '12小时钟面本身不足以区分时段。',
+      ),
+      choose(
+        farmTime,
+        'plan',
+        '纸卡写8点做活动，就能记为已完成活动吗？',
+        '不能，计划与实做分开',
+        ['能，写了就完成', '不能，计划与实做分开', '每人必须按样例作息'],
+        '真实完成须实际进行，自己的作息也可以不同。',
+      ),
+      actual(
+        farmTime,
+        'say',
+        '听规范示范后用纸面整点卡实际尝试说时间；没练可跳过。',
+      ),
+      actual(
+        farmTime,
+        'draw',
+        '实际画一张整点计划卡，分别标清时间与计划活动；不确认该活动已实际完成。',
+      ),
+      actual(
+        farmTime,
+        'talk',
+        '与陪学者实际轮换时间与活动提议对话；未交流可跳过。',
+      ),
+      record(
+        farmTime,
+        'today',
+        '记录实际画卡与问答，哪里需要帮助；不要把计划活动填为已经完成。',
+      ),
+      record(
+        farmTime,
+        'plan-next',
+        '另记下次想练的时间表达，保留与本次实际活动的区别。',
+      ),
+    ],
+    [
+      ...[
+        [7, 'seven'],
+        [12, 'twelve'],
+      ].map(([hour, word]) => ({
+        ...choose(
+          farmTime,
+          `review-clock-${hour}`,
+          '复习：看新整点钟面选择对应表达。',
+          `It’s ${word} o’clock.`,
+          ['It’s twelve o’clock.', 'It’s seven o’clock.', 'It’s four o’clock.'],
+          `本次钟面是${hour}点，不沿用旧图。`,
+        ),
+        visual: {
+          kind: 'clock' as const,
+          hour: Number(hour),
+          minute: 0 as const,
+        },
+      })),
+      choose(
+        farmTime,
+        'review-count',
+        'twelve o’clock与twelve个圆点是同一类信息吗？',
+        '不同，一个是时间一个是数量',
+        ['完全相同', '不同，一个是时间一个是数量', '都证明活动完成'],
+        '相同数字可以用于不同信息。',
+      ),
+      actual(
+        farmTime,
+        'review-talk',
+        '换整点卡实际说时间并提出活动计划；不要自动确认活动做完。',
+      ),
+    ],
+    '依据官方下册第四单元教学设计完整文本制作，未渲染Word或读取学生原图。page=34仅引用单元起点，钟面为原创实例，不据此宣称原故事逐图已完整映射。学生用书身份继续核验。',
+  ),
+  draft(
+    room,
+    '房间物品、位置与整理',
+    45,
+    '理解房间物品和in/on/under/behind，在明确位置条件下问答，并记录实际观察与创作。',
+    '认识简单物品介绍；可以用中文说明容器里面、上面、下面和后面。',
+    [
+      {
+        title: '物品词与位置词',
+        text: 'living room客厅、table桌子、sofa沙发、bed床、room房间、water bottle水壶或水瓶。位置词in在里面、on在上面、under在下面、behind在后面。一个物品可以在不同时间放到不同位置，名称不决定位置。',
+      },
+      {
+        title: '问在哪里与检查猜测',
+        text: 'Where is…?用于询问位置；It’s…说明位置。原创条件明确“书在盒子里面”，用in；“书放在桌面上”，用on。Is it…?可以检查位置猜测，不是猜了就确定在那个位置。',
+      },
+      {
+        title: '给定条件按对象理解',
+        text: '原创条件“水壶在床下面”用under，“书包在门后面”用behind。屏幕上的上下排列不是房间里的实际上下关系；本稿文字位置题没有展示学生原图，不说已经看图找到了原教材物品。',
+      },
+      {
+        title: '先实际观察再介绍',
+        text: '自己的书在哪里需实际观察；没有看过时不自动填样例的位置，也不说物品一定不存在。可用纸盒、物品卡或绘画模拟，不要求上传住址或真实房间照片。',
+        activity:
+          '用现有纸盒或画卡实际摆一个明确位置，陪学者和孩子轮换问答，再换位置重新说明。',
+      },
+      {
+        title: '设计空间与真实整理分开',
+        text: '可以画梦想房间并标明是设计，再描述一件物品位置；画了整齐的房间不等于现实已收拾。真实整理任选适合自己的桌面任务，在陪学者指导下实际做，未做可跳过。',
+        activity: '实际画一张标明设计的空间卡并介绍；真实整理与绘画另行记录。',
+      },
+    ],
+    [
+      ...[
+        ['living room', '客厅'],
+        ['table', '桌子'],
+        ['sofa', '沙发'],
+        ['bed', '床'],
+        ['room', '房间'],
+        ['water bottle', '水壶或水瓶'],
+        ['in', '在里面'],
+        ['on', '在上面'],
+        ['under', '在下面'],
+        ['behind', '在后面'],
+      ].map(([word, meaning]) =>
+        choose(
+          room,
+          `word-${word?.replaceAll(' ', '-')}`,
+          `${word}在本课位置情境中表示什么？`,
+          required(meaning),
+          [
+            '在后面',
+            '床',
+            '桌子',
+            '客厅',
+            '在里面',
+            '沙发',
+            '在下面',
+            '水壶或水瓶',
+            '房间',
+            '在上面',
+          ],
+          `${word}对应${meaning}，物品名称与位置条件分清。`,
+        ),
+      ),
+      choose(
+        room,
+        'ask',
+        'Where is…?在本课有什么作用？',
+        '询问在哪里',
+        ['询问颜色', '询问在哪里', '说明已收拾完'],
+        '这句用于询问位置。',
+      ),
+      choose(
+        room,
+        'inside',
+        '明确条件是“书在盒子里面”，对应哪个位置词？',
+        'in',
+        ['on', 'in', 'behind'],
+        'in说明在容器里面，不是桌面上。',
+      ),
+      choose(
+        room,
+        'under',
+        '明确条件是“水壶在床下面”，对应哪个位置词？',
+        'under',
+        ['under', 'on', 'in'],
+        'under说明在下面。',
+      ),
+      choose(
+        room,
+        'behind',
+        '明确条件是“书包在门后面”，对应哪个位置词？',
+        'behind',
+        ['in', 'on', 'behind'],
+        'behind说明在后面。',
+      ),
+      choose(
+        room,
+        'unknown',
+        '没有看过自己的书，也没有位置说明，能自动填in吗？',
+        '不能，位置保持未知',
+        ['能，所有书都在里面', '不能，位置保持未知', '不知道就是没有这本书'],
+        '未知位置不等于某个位置，也不证明物品不存在。',
+      ),
+      actual(
+        room,
+        'place',
+        '实际用物品卡或纸盒摆出一个明确位置，并轮换问答；不把卡片位置填为自己真实房间情况。',
+      ),
+      actual(
+        room,
+        'draw',
+        '实际画一张标为设计的房间卡，说明至少一件物品的位置；未画可跳过。',
+      ),
+      actual(
+        room,
+        'tidy',
+        '在陪学者指导下实际整理一个适合的桌面区域，再观察结果；只绘画或模拟不确认真实整理。',
+      ),
+      record(
+        room,
+        'today',
+        '分别记录实际摆卡、问答、设计和真实整理，未观察的位置保持未知；无需填住址。',
+      ),
+      record(room, 'plan', '另记以后想怎样摆放或整理，不当作本次已经做过。'),
+    ],
+    [
+      choose(
+        room,
+        'review-on',
+        '新条件明确“书放在桌面上”，位置词是哪一个？',
+        'on',
+        ['under', 'on', 'in'],
+        '新条件为桌面上，不沿用里面的in。',
+      ),
+      choose(
+        room,
+        'review-check',
+        'Is it under the bed?只是一个位置猜测，就能确认水壶在床下吗？',
+        '不能，需观察或明确回应',
+        ['能，问了就在那里', '不能，需观察或明确回应', '必须填under'],
+        '检查猜测与确认事实不同。',
+      ),
+      choose(
+        room,
+        'review-art',
+        '画了整齐的梦想房间，就说明真实房间已经整理好吗？',
+        '不能，设计与实际整理分开',
+        ['已经整理好', '不能，设计与实际整理分开', '绘画自动完成劳动'],
+        '真实完成须实际进行。',
+      ),
+      actual(
+        room,
+        'review-talk',
+        '换一个纸卡位置，实际重新问答与介绍；未做可跳过。',
+      ),
+    ],
+    '依据官方下册第五单元教学设计完整文本制作，未渲染Word或读取学生原图。page=45仅为教案引用的学生单元起点，学生用书身份继续核验。',
   ),
 ];

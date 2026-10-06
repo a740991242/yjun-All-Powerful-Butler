@@ -309,4 +309,149 @@ describe('原创英语准备课的交际与数量', () => {
     expect(lesson.steps[3]?.activity).toContain('模拟不记为已经向真实家人赠送');
     expect(lesson.parentTip).toContain('官方下册第二单元');
   });
+  it('动物卡不代实际拥有，换动物与绘画条件后的复习正确', () => {
+    const lesson = required(englishQihangDraftLessons[9]);
+    const expected = [
+      '狗',
+      '猫',
+      '鱼',
+      '鸟',
+      '兔子',
+      'It’s a rabbit.',
+      '我有一只宠物',
+      '不能，角色与自己分开',
+      '不能，种类保持未知',
+      '不必，可用绘画或卡片',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(10);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'It’s a fish.');
+    checkOptions(required(lesson.reviewQuestions?.[1]), '猫');
+    checkOptions(
+      required(lesson.reviewQuestions?.[2]),
+      '不能，绘画与实际饲养分开',
+    );
+  });
+
+  it('seven到twelve全部双向覆盖，图数量及换序复习一致', () => {
+    const lesson = required(englishQihangDraftLessons[10]);
+    const pairs = [
+      [7, 'seven'],
+      [8, 'eight'],
+      [9, 'nine'],
+      [10, 'ten'],
+      [11, 'eleven'],
+      [12, 'twelve'],
+    ] as const;
+    pairs.forEach(([count, word], index) => {
+      const question = required(lesson.questions[index]);
+      expect(question.visual).toEqual({ kind: 'count', count });
+      checkOptions(question, word);
+      const reverse = required(lesson.questions[index + 6]);
+      expect(evaluate(reverse.rule, count)).toBe(true);
+      expect(evaluate(reverse.rule, count - 1)).toBe(false);
+      expect(evaluate(reverse.rule, 0)).toBe(false);
+      expect(validAnswer(reverse.rule, null)).toBe(false);
+    });
+    ['奶牛', '鸡蛋', '有多少个', '不能，先实际数'].forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index + 12]), answer),
+    );
+    const counts = [12, 8, 11, 7, 10, 9];
+    ['twelve', 'eight', 'eleven', 'seven', 'ten', 'nine'].forEach(
+      (word, index) => {
+        const question = required(lesson.reviewQuestions?.[index]);
+        expect(question.visual).toEqual({
+          kind: 'count',
+          count: counts[index],
+        });
+        checkOptions(question, word);
+      },
+    );
+  });
+
+  it('只用整点钟面，数量/时间及未知时段/计划完成不混用', () => {
+    const lesson = required(englishQihangDraftLessons[11]);
+    const expected = [
+      'It’s two o’clock.',
+      'It’s five o’clock.',
+      'It’s eleven o’clock.',
+      '4点',
+      '提示到做某事的时间',
+      '不能，需要时段信息',
+      '不能，计划与实做分开',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(7);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    [2, 5, 11].forEach((hour, index) =>
+      expect(lesson.questions[index]?.visual).toEqual({
+        kind: 'clock',
+        hour,
+        minute: 0,
+      }),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'It’s seven o’clock.');
+    checkOptions(required(lesson.reviewQuestions?.[1]), 'It’s twelve o’clock.');
+    checkOptions(
+      required(lesson.reviewQuestions?.[2]),
+      '不同，一个是时间一个是数量',
+    );
+    [7, 12].forEach((hour, index) =>
+      expect(lesson.reviewQuestions?.[index]?.visual).toEqual({
+        kind: 'clock',
+        hour,
+        minute: 0,
+      }),
+    );
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-draw'))?.rule,
+    ).toEqual({ kind: 'manual' });
+  });
+
+  it('房间关系按明确条件，换位置、检查猜测与实际整理保持独立', () => {
+    const lesson = required(englishQihangDraftLessons[12]);
+    const expected = [
+      '客厅',
+      '桌子',
+      '沙发',
+      '床',
+      '房间',
+      '水壶或水瓶',
+      '在里面',
+      '在上面',
+      '在下面',
+      '在后面',
+      '询问在哪里',
+      'in',
+      'under',
+      'behind',
+      '不能，位置保持未知',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(15);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'on');
+    checkOptions(
+      required(lesson.reviewQuestions?.[1]),
+      '不能，需观察或明确回应',
+    );
+    checkOptions(
+      required(lesson.reviewQuestions?.[2]),
+      '不能，设计与实际整理分开',
+    );
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-tidy'))?.rule,
+    ).toEqual({ kind: 'manual' });
+    expect(lesson.parentTip).toContain('官方下册第五单元');
+  });
 });
