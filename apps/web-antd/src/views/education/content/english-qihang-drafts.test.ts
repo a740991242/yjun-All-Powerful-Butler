@@ -241,4 +241,72 @@ describe('原创英语准备课的交际与数量', () => {
     ).toEqual({ kind: 'reflection' });
     expect(lesson.parentTip).toContain('只是教案引用的学生单元起点');
   });
+  it('感受词与给定角色可以判题，真实感受未知及新规则复习不被代填', () => {
+    const lesson = required(englishQihangDraftLessons[7]);
+    const expected = [
+      '开心',
+      '饿',
+      '累',
+      '难过',
+      '害怕',
+      'I’m tired.',
+      '请等一下',
+      '不要跑',
+      '先倾听，不嘲笑或强迫开心',
+      'happy',
+      '不能，保持未知并尊重对方',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(11);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'I’m hungry.');
+    checkOptions(required(lesson.reviewQuestions?.[1]), 'sad');
+    checkOptions(
+      required(lesson.reviewQuestions?.[2]),
+      '不能，角色卡不等于本人感受',
+    );
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-observed'))
+        ?.rule,
+    ).toEqual({ kind: 'reflection' });
+    expect(lesson.steps[0]?.text).toContain(
+      '可以用中文说明、暂不表达或用虚构角色练习',
+    );
+  });
+
+  it('家庭关系按明确信息，年龄/结构不猜测，分享模拟与现实分开', () => {
+    const lesson = required(englishQihangDraftLessons[8]);
+    const expected = [
+      '爸爸',
+      '妈妈',
+      '兄弟',
+      '姐妹',
+      '爷爷或外公',
+      '奶奶或外婆',
+      '爱或喜爱',
+      '家庭',
+      'This is my sister.',
+      '这张卡给奶奶或外婆',
+      '我爱我的家人',
+      '不必，家庭情况可以不同',
+      '不能，需关系信息',
+    ];
+    expect(
+      lesson.questions.filter((question) => question.rule.kind === 'choice'),
+    ).toHaveLength(13);
+    expected.forEach((answer, index) =>
+      checkOptions(required(lesson.questions[index]), answer),
+    );
+    checkOptions(required(lesson.reviewQuestions?.[0]), 'This is my brother.');
+    checkOptions(required(lesson.reviewQuestions?.[1]), '妈妈');
+    checkOptions(required(lesson.reviewQuestions?.[2]), '不能，需具体年龄关系');
+    expect(
+      lesson.questions.find((question) => question.id.endsWith('-share'))?.rule,
+    ).toEqual({ kind: 'manual' });
+    expect(lesson.steps[3]?.activity).toContain('模拟不记为已经向真实家人赠送');
+    expect(lesson.parentTip).toContain('官方下册第二单元');
+  });
 });

@@ -95,6 +95,8 @@ const counting = 'english-qihang-upper-counting-draft';
 const colours = 'english-qihang-upper-colours-draft';
 const schoolThings = 'english-qihang-upper-school-things-draft';
 const classroom = 'english-qihang-upper-classroom-draft';
+const feelings = 'english-qihang-lower-feelings-draft';
+const family = 'english-qihang-lower-family-draft';
 const words = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export const englishQihangDraftLessons: Lesson[] = [
@@ -1032,5 +1034,326 @@ export const englishQihangDraftLessons: Lesson[] = [
       ),
     ],
     '依据官方上册第五单元教学设计完整文本制作，未渲染Word或读取学生原图。page=45只是教案引用的学生单元起点，不是本轮实际查看过的学生正文页。学生用书身份继续核验。',
+  ),
+  draft(
+    feelings,
+    '表达感受与关心他人',
+    1,
+    '理解五个感受词和I’m表达，在明确的原创情境中判断词义，尝试表达与倾听，不替别人认定真实感受。',
+    '能够在中文帮读下说出简单感受；不要求已有英语基础。',
+    [
+      {
+        title: '五个词，不只一个开心',
+        text: 'happy开心、hungry饿、tired累、sad难过、scared害怕。hungry和tired也描述身体感受。词义练习可以有答案，孩子此刻的真实感受却不统一判为happy；可以用中文说明、暂不表达或用虚构角色练习。',
+      },
+      {
+        title: '说明自己与描述角色分开',
+        text: 'I’m tired.可以表达我累了。原创文字情境明确“小林说自己累了”，才能在本题对应tired。仅凭一次笑脸、皱眉或样例，不能自动认定孩子或同伴的真实感受；需要倾听对方的话。',
+        activity:
+          '听陪学者的规范示范，任选两个词尝试跟读，再用虚构角色或自己愿意分享的感受练I’m…。',
+      },
+      {
+        title: '先听，再友好回应',
+        text: '对方表达sad或scared时，先听他愿意说的话，不嘲笑，也不要求马上开心。教案还包括礼貌请求与安全指令，本站原创例Please wait.请等一下，Don’t run.不要跑。语言理解不等于真实听从，也不做情绪诊断。',
+        activity:
+          '陪学者和孩子用纸卡角色交换表达与倾听，并实际练一次礼貌请求；未做可以跳过。',
+      },
+      {
+        title: '规则卡不是心情预测',
+        text: '本站词卡规则明确按happy、sad两个词依次重复：happy、sad、happy、sad、空格，下一张按给定规则是happy。这只是在读规则，不是在预测某个人下一刻必定开心。没有重复规则或真实反馈时，不能猜成固定答案。',
+      },
+      {
+        title: '画卡与实际记录',
+        text: '可以给虚构角色画表情卡，再说明你想让它表达哪个感受；他人可能有不同理解，交流时解释自己的设计。不要求填写私人经历或公开照片。今天实际练过什么、哪里需要帮助、下次想做什么，分别保留。',
+        activity:
+          '实际画一张角色感受卡，与陪学者说明设计并听反馈；画卡不自动证明所有词都会读。',
+      },
+    ],
+    [
+      ...[
+        ['happy', '开心'],
+        ['hungry', '饿'],
+        ['tired', '累'],
+        ['sad', '难过'],
+        ['scared', '害怕'],
+      ].map(([word, meaning]) =>
+        choose(
+          feelings,
+          `word-${word}`,
+          `${word}在本课感受表达中表示什么？`,
+          required(meaning),
+          ['累', '开心', '害怕', '饿', '难过'],
+          `${word}对应${meaning}；这是词义，不决定你的真实感受。`,
+        ),
+      ),
+      choose(
+        feelings,
+        'given-tired',
+        '原创文字情境明确“小林说自己累了”，哪句对应这份给定信息？',
+        'I’m tired.',
+        ['I’m happy.', 'I’m hungry.', 'I’m tired.'],
+        '本题给定的是累，选择tired，不推断真人感受。',
+      ),
+      choose(
+        feelings,
+        'wait',
+        'Please wait.表示哪种意思？',
+        '请等一下',
+        ['请等一下', '我很开心', '一起数数'],
+        'Please用于礼貌请求，本句请求等候。',
+      ),
+      choose(
+        feelings,
+        'dont',
+        'Don’t run.在这个指令情境中是什么意思？',
+        '不要跑',
+        ['一起跑吧', '不要跑', '我喜欢跑'],
+        'Don’t表示不要，本例为安全指令。',
+      ),
+      choose(
+        feelings,
+        'care',
+        '同伴愿意告诉你他有点sad，哪种回应更合适？',
+        '先倾听，不嘲笑或强迫开心',
+        ['嘲笑他', '先倾听，不嘲笑或强迫开心', '强迫他立即说happy'],
+        '可以友好倾听；不把开心作为唯一允许的感受。',
+      ),
+      choose(
+        feelings,
+        'pattern',
+        '按happy、sad两个词依次重复：happy、sad、happy、sad、空格。下一词是哪一个？',
+        'happy',
+        ['sad', 'hungry', 'happy'],
+        '按题干明确的交替规则选择happy，不是预测真人心情。',
+      ),
+      choose(
+        feelings,
+        'unknown',
+        '没有询问同伴，也没有对方给出的感受信息，能自动填他很happy吗？',
+        '不能，保持未知并尊重对方',
+        ['能，每个人都必须开心', '不能，保持未知并尊重对方', '不知道就是sad'],
+        '未知不等于happy或sad，不能替别人认定。',
+      ),
+      actual(
+        feelings,
+        'say',
+        '听规范示范后实际尝试两个感受词或一句I’m表达，可用虚构角色；未练可跳过。',
+      ),
+      actual(
+        feelings,
+        'listen',
+        '与陪学者实际交换表达与倾听两个角色，再尝试礼貌请求；确认只记录做过，不评真实感受对错。',
+      ),
+      actual(
+        feelings,
+        'draw',
+        '实际绘制一张虚构角色的感受卡，并向陪学者解释设计；未画可跳过。',
+      ),
+      record(
+        feelings,
+        'today',
+        '记录今天实际练习与需要帮助之处；不要求描述私人经历或评价自己的感受对错。',
+      ),
+      record(
+        feelings,
+        'observed',
+        '如实际交流过，记录对方愿意给出的反馈；没交流写未做，不用猜测代替。',
+      ),
+      record(feelings, 'plan', '另记以后想练什么；未来安排不算本次已经完成。'),
+    ],
+    [
+      choose(
+        feelings,
+        'review-hungry',
+        '新原创文字情境明确角色说自己饿了，哪句对应？',
+        'I’m hungry.',
+        ['I’m tired.', 'I’m hungry.', 'I’m scared.'],
+        '这次给定是饿，不能沿用上一题的tired。',
+      ),
+      choose(
+        feelings,
+        'review-pattern',
+        '新规则按sad、happy依次重复：sad、happy、sad、happy、空格，下一词是什么？',
+        'sad',
+        ['happy', 'sad', 'tired'],
+        '重新读取本次规则，开头已经换为sad。',
+      ),
+      choose(
+        feelings,
+        'review-personal',
+        '角色卡画了笑脸，就能自动把孩子此刻的感受记为happy吗？',
+        '不能，角色卡不等于本人感受',
+        ['能，卡片决定本人心情', '必须记happy', '不能，角色卡不等于本人感受'],
+        '绘画、给定角色与孩子真实感受分别记录。',
+      ),
+      actual(
+        feelings,
+        'review-talk',
+        '换一张角色卡，实际进行一轮表达与倾听；未做可跳过。',
+      ),
+    ],
+    '依据官方下册第一单元教学设计完整文本制作，未渲染Word或读取学生原图。page=1只是教案引用的学生单元起点，学生用书身份继续核验。',
+  ),
+  draft(
+    family,
+    '家庭称谓、介绍与分享',
+    12,
+    '理解家庭成员称谓、介绍和分享用语，以给定虚构关系练习，不要求孩子具有同样的家庭结构。',
+    '知道简单自我介绍；可由陪学者帮读角色关系。',
+    [
+      {
+        title: '称谓按关系理解',
+        text: 'dad爸爸、mum妈妈、brother兄弟、sister姐妹、grandpa爷爷或外公、grandma奶奶或外婆。brother与sister本身没有区分哥哥弟弟、姐姐妹妹；要靠具体关系知道年龄。grandpa与grandma也不能仅凭英文词判定父系或母系。',
+      },
+      {
+        title: '家庭样例与现实分开',
+        text: '原创虚构角色小林有一个妹妹，在本例中可以介绍This is my sister.。并非每个孩子都有兄弟姐妹或六种成员，不要求照抄样例家庭。不愿介绍实际家庭时，可以用虚构卡片；不用上传家庭照片、真实姓名或地址。',
+        activity:
+          '任选一个虚构人物卡，在明确关系后用This is my…尝试介绍；无需透露自己的家庭情况。',
+      },
+      {
+        title: '理解关爱表达',
+        text: 'love表示爱或喜爱，family表示家庭；I love my family.是表达对家人的爱，We love…用我们作说话者。文字题理解意思可以判题，孩子真实想表达的话保持开放，不强迫背句或给情感表达打分。',
+      },
+      {
+        title: '分享不必真的切蛋糕',
+        text: 'This is for…可以说明某件东西给谁。本站原创情境是分享自己画的纸卡，This is for Grandma.表示这张卡给奶奶或外婆。可与陪学者模拟轮流分享和感谢，不要求食物、庆生或每个家庭同样的分享顺序；尊重对方意愿。',
+        activity:
+          '两人用自画纸卡实际角色模拟介绍、提供与感谢，再交换角色；模拟不记为已经向真实家人赠送。',
+      },
+      {
+        title: '关系卡先有信息再排列',
+        text: '本站给定：小安的爸爸是小安的父亲，小波是小安的哥哥。在以小安为中心的关系卡里，爸爸对应dad、小波对应brother。只有“某个男性”或“年纪大”不足以确定是爸爸或爷爷。自己的关系图可以只画愿意表示的角色，未知关系保持未知，不补齐固定人数。',
+        activity:
+          '实际画一张标为虚构的关系卡，说明至少一条已给定关系；不要求画自己的真实家庭。',
+      },
+    ],
+    [
+      ...[
+        ['dad', '爸爸'],
+        ['mum', '妈妈'],
+        ['brother', '兄弟'],
+        ['sister', '姐妹'],
+        ['grandpa', '爷爷或外公'],
+        ['grandma', '奶奶或外婆'],
+        ['love', '爱或喜爱'],
+        ['family', '家庭'],
+      ].map(([word, meaning]) =>
+        choose(
+          family,
+          `word-${word}`,
+          `${word}在本课家庭情境中表示什么？`,
+          required(meaning),
+          [
+            '家庭',
+            '兄弟',
+            '爱或喜爱',
+            '奶奶或外婆',
+            '妈妈',
+            '姐妹',
+            '爷爷或外公',
+            '爸爸',
+          ],
+          `${word}对应${meaning}，年龄和父系母系还需具体关系。`,
+        ),
+      ),
+      choose(
+        family,
+        'sister',
+        '题干明确小林正在介绍自己的妹妹，哪句符合？',
+        'This is my sister.',
+        ['This is my brother.', 'This is my sister.', 'This is my dad.'],
+        'sister可以指姐姐或妹妹；这里关系已明确为妹妹。',
+      ),
+      choose(
+        family,
+        'for',
+        'This is for Grandma.在纸卡分享情境中说明什么？',
+        '这张卡给奶奶或外婆',
+        ['这张卡给奶奶或外婆', '我就是奶奶', '这张卡给爸爸'],
+        'for在这个情境说明给谁，不说明说话者就是该成员。',
+      ),
+      choose(
+        family,
+        'love-family',
+        'I love my family.表达什么？',
+        '我爱我的家人',
+        ['我喜欢一种颜色', '我爱我的家人', '我要数纸卡'],
+        '理解表达意思，不给孩子的真实情感打分。',
+      ),
+      choose(
+        family,
+        'different',
+        '每个孩子都必须有样例中的六种家庭成员吗？',
+        '不必，家庭情况可以不同',
+        ['必须一样', '不必，家庭情况可以不同', '没有一样的成员就不能练习'],
+        '家庭结构可以不同，可用虚构卡练习。',
+      ),
+      choose(
+        family,
+        'unknown',
+        '只知道某个角色是男性，没有关系信息，能确定他是dad吗？',
+        '不能，需关系信息',
+        ['能，男性都是爸爸', '能，年长就是爸爸', '不能，需关系信息'],
+        '成员称谓依据关系，不只依据外表。',
+      ),
+      actual(
+        family,
+        'say',
+        '听规范示范后实际尝试两个称谓，并用一张虚构关系卡介绍；未练可跳过。',
+      ),
+      actual(
+        family,
+        'share',
+        '用纸卡实际模拟介绍、分享和感谢，并交换角色；不把模拟记为已向真实家人赠送。',
+      ),
+      actual(
+        family,
+        'draw',
+        '实际制作一张虚构关系卡并解释至少一条已给定关系；不要求真实家庭照片。',
+      ),
+      record(
+        family,
+        'today',
+        '记录今天实际练了哪些词、关系卡或交流，哪里需要帮助；不要求填私人家庭情况。',
+      ),
+      record(
+        family,
+        'plan',
+        '另记下一次想练什么；计划不能写成今天已赠送或已交流。',
+      ),
+    ],
+    [
+      choose(
+        family,
+        'review-brother',
+        '新的给定角色正在介绍自己的弟弟，哪句合适？',
+        'This is my brother.',
+        ['This is my sister.', 'This is my brother.', 'This is my grandpa.'],
+        'brother可指哥哥或弟弟，按本次给定关系判断。',
+      ),
+      choose(
+        family,
+        'review-for',
+        '新纸卡上写This is for Mum.，卡片给谁？',
+        '妈妈',
+        ['奶奶或外婆', '爸爸', '妈妈'],
+        '本次收卡者换为Mum。',
+      ),
+      choose(
+        family,
+        'review-age',
+        '只看到brother一词，能确定一定是哥哥不是弟弟吗？',
+        '不能，需具体年龄关系',
+        ['一定是哥哥', '一定是弟弟', '不能，需具体年龄关系'],
+        '这个词没有独立给定年长或年幼关系。',
+      ),
+      actual(
+        family,
+        'review-talk',
+        '换一张虚构关系卡，实际介绍与模拟分享；未做可跳过。',
+      ),
+    ],
+    '依据官方下册第二单元教学设计完整文本制作，未渲染Word或读取学生原图。page=12只是教案引用的学生单元起点，学生用书身份继续核验。',
   ),
 ];
