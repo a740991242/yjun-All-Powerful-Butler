@@ -4,6 +4,7 @@
  * --representative-only checks two main flows plus review/backup at all widths.
  * --colour-project checks the new project and its independent review at all widths.
  * --room-project checks changed positions, review and backup at all widths.
+ * --all-reviews completes all 15 main flows and their eligible new reviews at all widths.
  * Automated answers test UI wiring, not child mastery or actual oral activities.
  */
 import assert from 'node:assert/strict';
@@ -18,6 +19,16 @@ const root = fileURLToPath(
   new URL('../../apps/web-antd/dist/', import.meta.url),
 );
 const base = '/yjun-All-Powerful-Butler/';
+const allReviews = process.argv.includes('--all-reviews');
+assert.ok(
+  !allReviews ||
+    !process.argv.some((flag) =>
+      ['--colour-project', '--representative-only', '--room-project'].includes(
+        flag,
+      ),
+    ),
+  'Do not combine full review coverage with a filtered run.',
+);
 const representativeOnly = process.argv.includes('--representative-only');
 const roomProjectOnly = process.argv.includes('--room-project');
 const colourProjectOnly = process.argv.includes('--colour-project');
@@ -177,7 +188,11 @@ try {
     await catalog();
     const initial = await read();
     const old = structuredClone(initial.sessions[0]);
-    const finishPractice = async (sid, wrongFirst = false) => {
+    const finishPractice = async (
+      sid,
+      wrongFirst = false,
+      wrongEvery = false,
+    ) => {
       let submittedWrong = false;
       while (true) {
         const s = await readSession(sid);
@@ -219,13 +234,18 @@ try {
             await click('保存反思');
             await p.getByText('已记录反思', { exact: true }).waitFor();
           } else {
-            if (wrongFirst && !submittedWrong && q.rule.kind === 'choice') {
-              await p
-                .getByRole('radio', {
-                  name: q.choices.find((c) => c.id !== q.rule.value).label,
-                  exact: true,
-                })
-                .check();
+            if (
+              wrongEvery ||
+              (wrongFirst && !submittedWrong && q.rule.kind === 'choice')
+            ) {
+              await (q.rule.kind === 'number'
+                ? p.getByRole('spinbutton').fill(String(q.rule.value + 1))
+                : p
+                    .getByRole('radio', {
+                      name: q.choices.find((c) => c.id !== q.rule.value).label,
+                      exact: true,
+                    })
+                    .check());
               await click('提交答案');
               await p
                 .getByText('再想一想，可以修改后重试', { exact: true })
@@ -293,6 +313,7 @@ try {
         if (colourProjectOnly && (volume !== 'upper' || index !== 5)) continue;
         if (roomProjectOnly && (volume !== 'lower' || index !== 6)) continue;
         if (
+          !allReviews &&
           !colourProjectOnly &&
           !roomProjectOnly &&
           (width !== 375 || representativeOnly) &&
@@ -323,61 +344,123 @@ try {
           sid,
           roomProjectOnly ||
             (volume === 'upper' && index === (colourProjectOnly ? 5 : 0)),
+          allReviews,
         );
+        if (allReviews) {
+          const original = await readSession(sid);
+          const wrongCard = p
+            .locator('.learning-workspace span')
+            .filter({ hasText: original.lessonTitle })
+            .filter({ visible: true })
+            .last()
+            .locator('..');
+          const reviewButton = wrongCard.getByRole('button', {
+            name: '同知识点新题',
+            exact: true,
+          });
+          assert.equal(await reviewButton.isEnabled(), true);
+          await reviewButton.click();
+          await p.waitForURL((location) =>
+            /session=([^&]+)/.test(location.hash),
+          );
+          const newId = new URL(p.url()).hash.match(/session=([^&]+)/)[1];
+          assert.notEqual(newId, sid);
+          const newSession = await readSession(newId);
+          assert.equal(newSession.originalSessionId, sid);
+          assert.equal(newSession.lessonId, original.lessonId);
+          assert.equal(newSession.mode, 'review');
+          const signature = (q) =>
+            JSON.stringify([
+              q.prompt,
+              q.material ?? '',
+              q.choices ?? [],
+              q.visual ?? null,
+              q.rule,
+            ]);
+          assert.ok(newSession.questions.length > 0);
+          assert.ok(
+            newSession.questions.every(
+              (q) =>
+                !original.questions.some(
+                  (oldQuestion) =>
+                    oldQuestion.id === q.id ||
+                    signature(oldQuestion) === signature(q),
+                ),
+            ),
+          );
+          await finishPractice(newId);
+          assert.deepEqual(await readSession(sid), original);
+          await p.reload();
+          await catalog();
+          assert.deepEqual(await readSession(sid), original);
+          const savedReview = await readSession(newId);
+          assert.ok(savedReview.completedAt);
+          console.log(
+            JSON.stringify({
+              width,
+              volume,
+              title,
+              reviewComplete: true,
+              reviewTasks: newSession.questions.length,
+            }),
+          );
+        }
         assert.deepEqual(await readSession(old.id), old);
         console.log(JSON.stringify({ width, volume, title, complete: true }));
       }
     }
-    const reviewVolume = roomProjectOnly ? 'lower' : 'upper';
-    await p.goto(
-      `${url}#/education/primary/p1/english-preparation/${reviewVolume}`,
-    );
-    await p
-      .locator('.learning-workspace .ant-card-head-title')
-      .filter({
-        hasText: `原创英语启蒙 · ${roomProjectOnly ? '下册' : '上册'}`,
-      })
-      .waitFor();
-    await catalog();
-    const beforeReview = await read();
-    const wrongOriginal = beforeReview.sessions.find(
-      (session) =>
-        session.bookId ===
-          `original-english-preparation-p1-${reviewVolume}-v1` &&
-        session.responses.some(
-          (response) => response.submissions[0]?.correct === false,
-        ),
-    );
-    assert.ok(wrongOriginal);
-    await p
-      .getByRole('button', { name: '同知识点新题', exact: true })
-      .first()
-      .click();
-    await p.waitForURL((location) => /session=([^&]+)/.test(location.hash));
-    const reviewId = new URL(p.url()).hash.match(/session=([^&]+)/)[1];
-    const startedReview = await readSession(reviewId);
-    await p
-      .getByText(startedReview.questions[0].prompt, { exact: true })
-      .waitFor();
-    await finishPractice(reviewId);
-    const afterReview = await read();
-    const review = afterReview.sessions.find(
-      (session) => session.id === reviewId,
-    );
-    assert.equal(review.mode, 'review');
-    assert.equal(review.originalSessionId, wrongOriginal.id);
-    assert.deepEqual(
-      afterReview.sessions.find((session) => session.id === wrongOriginal.id),
-      wrongOriginal,
-    );
-    assert.ok(
-      review.questions.every(
-        (question) =>
-          !wrongOriginal.questions.some(
-            (original) => original.id === question.id,
+    if (!allReviews) {
+      const reviewVolume = roomProjectOnly ? 'lower' : 'upper';
+      await p.goto(
+        `${url}#/education/primary/p1/english-preparation/${reviewVolume}`,
+      );
+      await p
+        .locator('.learning-workspace .ant-card-head-title')
+        .filter({
+          hasText: `原创英语启蒙 · ${roomProjectOnly ? '下册' : '上册'}`,
+        })
+        .waitFor();
+      await catalog();
+      const beforeReview = await read();
+      const wrongOriginal = beforeReview.sessions.find(
+        (session) =>
+          session.bookId ===
+            `original-english-preparation-p1-${reviewVolume}-v1` &&
+          session.responses.some(
+            (response) => response.submissions[0]?.correct === false,
           ),
-      ),
-    );
+      );
+      assert.ok(wrongOriginal);
+      await p
+        .getByRole('button', { name: '同知识点新题', exact: true })
+        .first()
+        .click();
+      await p.waitForURL((location) => /session=([^&]+)/.test(location.hash));
+      const reviewId = new URL(p.url()).hash.match(/session=([^&]+)/)[1];
+      const startedReview = await readSession(reviewId);
+      await p
+        .getByText(startedReview.questions[0].prompt, { exact: true })
+        .waitFor();
+      await finishPractice(reviewId);
+      const afterReview = await read();
+      const review = afterReview.sessions.find(
+        (session) => session.id === reviewId,
+      );
+      assert.equal(review.mode, 'review');
+      assert.equal(review.originalSessionId, wrongOriginal.id);
+      assert.deepEqual(
+        afterReview.sessions.find((session) => session.id === wrongOriginal.id),
+        wrongOriginal,
+      );
+      assert.ok(
+        review.questions.every(
+          (question) =>
+            !wrongOriginal.questions.some(
+              (original) => original.id === question.id,
+            ),
+        ),
+      );
+    }
     const beforeExport = await read();
     const downloading = p.waitForEvent('download');
     await click('导出备份');
