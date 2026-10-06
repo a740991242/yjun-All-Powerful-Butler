@@ -147,7 +147,9 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         ? 'recommended'
         : 'unknown',
     );
-    expect(required(rows[3]).resolution.status).toBe('unknown');
+    expect(required(rows[3]).resolution.status).toBe(
+      province === 'shanghai' ? 'catalogued' : 'unknown',
+    );
   }
 });
 
@@ -661,5 +663,63 @@ it('applies both Ningxia BNU volumes from price references while leaving English
       catalogYear: '2025',
     });
     expect(rows[3]!.action).toBeUndefined();
+  }
+});
+
+it('shows Shanghai Grade 1 English catalog identity independently of course readiness and school selection', () => {
+  for (const volume of ['upper', 'lower'] as const) {
+    const academicYear = volume === 'upper' ? '2026-2027' : '2025-2026';
+    for (const schoolSystem of ['unknown', 'six-three', 'five-four'] as const) {
+      const english = required(
+        regionalApplicationPlan({
+          ...query,
+          province: 'shanghai',
+          city: '',
+          school: '',
+          volume,
+          academicYear,
+          schoolSystem,
+        }).find((row) => row.subject === 'english'),
+      );
+      expect(english.resolution).toMatchObject({
+        status: 'catalogued',
+        edition: 'hujiao-english-five-four',
+        approvalNumber:
+          volume === 'upper' ? 'SD－XS－2024001' : 'SD－XS－2024002',
+      });
+      expect(english.reason).toBe('unavailable');
+      expect(english.action).toBeUndefined();
+      expect(english.resolution.evidence).toHaveLength(2);
+      expect(english.resolution.evidence[0]).toMatchObject({
+        publishedAt: volume === 'upper' ? '2026-08-10' : '2026-01-05',
+        issuedAt: volume === 'upper' ? '2026-06-18' : '2025-12-10',
+      });
+      expect(english.resolution.evidence[1]?.sourceUrl).toBe(
+        volume === 'upper'
+          ? 'https://edu.sh.gov.cn/cmsres/7a/7aed3909441a4c849d5d78b8d914f4fb/00e155989221056fb74efd6f967939f0.pdf'
+          : 'https://edu.sh.gov.cn/cmsres/3a/3a555417ed2b47a38f730ca8c9f10881/9ba8430bf7e54d3e19fce9c17b45f5fb.pdf',
+      );
+    }
+  }
+  for (const changes of [
+    { province: 'jiangsu' },
+    { grade: 'p2' },
+    { stage: 'junior' },
+    { academicYear: '2027-2028' },
+    { academicYear: '2025-2026' },
+    { volume: 'lower' as const },
+  ]) {
+    const english = required(
+      regionalApplicationPlan({
+        ...query,
+        province: 'shanghai',
+        city: '',
+        school: '',
+        academicYear: '2026-2027',
+        ...changes,
+      }).find((row) => row.subject === 'english'),
+    );
+    expect(english.resolution.status).toBe('unknown');
+    expect(english.action).toBeUndefined();
   }
 });

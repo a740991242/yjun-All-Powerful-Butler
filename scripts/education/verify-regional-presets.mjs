@@ -1,7 +1,7 @@
 /* Verify personal regional presets in the actual Pages build with isolated Chrome profiles.
  * Creates one native unfinished learning record and checks it remains unchanged.
  * Personal choices never certify school adoption or curriculum completeness.
- * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults] [--bnu-2026-defaults] [--bnu-missing-volumes] [--ningxia-defaults]
+ * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults] [--bnu-2026-defaults] [--bnu-missing-volumes] [--ningxia-defaults] [--shanghai-english-catalog]
  * --all-areas checks personal upper/lower sets for every navigation area; it
  * does not infer local textbook adoption or create unsupported course packs.
  */
@@ -15,6 +15,9 @@ import { chromium } from 'playwright';
 const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
   /\/$/,
   '',
+);
+const shanghaiEnglishCatalog = process.argv.includes(
+  '--shanghai-english-catalog',
 );
 const allAreas = process.argv.includes('--all-areas');
 const provinceDefaults = process.argv.includes('--province-defaults');
@@ -204,6 +207,166 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
+      if (shanghaiEnglishCatalog) {
+        const beforePresets = await raw();
+        await choose('education-region-province', '上海', true);
+        await choose('education-region-system', '五四学制（小学五年）');
+        for (const [volume, year, approval, published, issued, attachment] of [
+          [
+            '上册',
+            '2026—2027',
+            'SD－XS－2024001',
+            '2026-08-10',
+            '2026-06-18',
+            '00e155989221056fb74efd6f967939f0.pdf',
+          ],
+          [
+            '下册',
+            '2025—2026',
+            'SD－XS－2024002',
+            '2026-01-05',
+            '2025-12-10',
+            '9ba8430bf7e54d3e19fce9c17b45f5fb.pdf',
+          ],
+        ]) {
+          await choose('education-region-year', year);
+          await choose('education-region-volume', volume);
+          const region = p.getByRole('region', {
+            name: '按地区切换教材组合',
+            exact: true,
+          });
+          await region
+            .getByText('官方目录已列明，课程待制作', { exact: true })
+            .waitFor();
+          const text = await region.innerText();
+          for (const value of [
+            approval,
+            published,
+            issued,
+            '沪教英语（上海五四学制）',
+            '暂不能一键应用',
+          ]) {
+            if (!text.includes(value))
+              throw new Error(`Missing catalog identity: ${value}`);
+          }
+          if ((await region.locator(`a[href$="${attachment}"]`).count()) !== 1)
+            throw new Error('Wrong independent attachment');
+          if (
+            !(await region
+              .getByRole('button', {
+                name: '一键应用可用学科版本',
+                exact: true,
+              })
+              .isDisabled())
+          )
+            throw new Error('Five-four entry applied to six-three course');
+          if (
+            (await p.evaluate(async () =>
+              JSON.stringify(await window.qaLoad()),
+            )) !== library
+          )
+            throw new Error('Old library changed');
+          if ((await raw()) !== beforePresets)
+            throw new Error('Personal presets changed');
+          await p.screenshot({
+            path: `/tmp/butler-shanghai-english-catalog-${volume}-${width}.png`,
+            fullPage: true,
+          });
+        }
+        await choose('education-region-year', '2026—2027');
+        const region = p.getByRole('region', {
+          name: '按地区切换教材组合',
+          exact: true,
+        });
+        if (
+          await region
+            .getByText('官方目录已列明，课程待制作', { exact: true })
+            .count()
+        )
+          throw new Error('Spring catalog inherited into 2027');
+        await choose('education-region-volume', '上册');
+        await choose('education-region-system', '六三学制（小学六年）');
+        if (
+          await region
+            .getByRole('button', { name: '一键应用可用学科版本', exact: true })
+            .isDisabled()
+        )
+          throw new Error('Available independent subjects blocked');
+        await p
+          .locator('button[aria-haspopup="menu"]')
+          .filter({ has: p.locator('svg.lucide-languages') })
+          .click();
+        await p.getByText('English', { exact: true }).click();
+        const englishRegion = p.getByRole('region', {
+          name: 'Switch textbook combinations by area',
+          exact: true,
+        });
+        await englishRegion
+          .getByText('Official catalog entry; course pending', { exact: true })
+          .waitFor();
+        const englishCatalogText = await englishRegion.innerText();
+        if (!englishCatalogText.includes('Shanghai English (five-four system)'))
+          throw new Error('Missing English edition');
+        await choose(
+          'education-region-system',
+          'Five-four system (five primary years)',
+        );
+        if (
+          !(await englishRegion
+            .getByRole('button', {
+              name: 'Apply available subject editions together',
+              exact: true,
+            })
+            .isDisabled())
+        )
+          throw new Error('English catalog applied');
+        if (
+          !(await p.evaluate(() =>
+            document.documentElement.classList.contains('dark'),
+          ))
+        )
+          await p.locator('.theme-toggle svg').click();
+        await p.waitForFunction(() =>
+          document.documentElement.classList.contains('dark'),
+        );
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Page overflow');
+        await englishRegion
+          .getByText('Official catalog entry; course pending', { exact: true })
+          .scrollIntoViewIfNeeded();
+        await p.screenshot({
+          path: `/tmp/butler-shanghai-english-catalog-en-dark-${width}.png`,
+          fullPage: true,
+        });
+        if (
+          (await p.evaluate(async () =>
+            JSON.stringify(await window.qaLoad()),
+          )) !== library ||
+          (await raw()) !== beforePresets
+        )
+          throw new Error('Saved state changed');
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            shanghaiEnglishCatalog: true,
+            separateVolumes: true,
+            futureSpringNotInherited: true,
+            noFalseCourseAction: true,
+            oldRecords: true,
+            errors,
+            bad,
+            api,
+          }),
+        );
+        await c.close();
+        continue;
+      }
       if (publisherDefaults || bnu2026 || missingVolumes || ningxiaDefaults) {
         const beforePresets = await raw();
         await choose('education-region-system', '六三学制（小学六年）');

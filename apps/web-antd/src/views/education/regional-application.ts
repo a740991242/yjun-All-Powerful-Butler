@@ -31,6 +31,13 @@ export interface RegionalSubjectPlan {
   resolution:
     | RegionalEditionResolution
     | {
+        status: 'catalogued';
+        edition: 'hujiao-english-five-four';
+        catalogYear: string;
+        approvalNumber: string;
+        evidence: PolicySource[];
+      }
+    | {
         status: 'guidance' | 'recommended';
         edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
         evidence: PolicySource[];
@@ -113,6 +120,51 @@ export function regionalApplicationPlan(
     if (resolution.status === 'unknown') {
       const defaults = regionalMathematicsDefault({ ...query, subject });
       if (defaults) resolution = { status: 'recommended', ...defaults };
+    }
+    if (
+      resolution.status === 'unknown' &&
+      subject === 'english' &&
+      query.province === 'shanghai' &&
+      query.stage === 'primary' &&
+      query.grade === 'p1' &&
+      ((query.volume === 'upper' && query.academicYear === '2026-2027') ||
+        (query.volume === 'lower' && query.academicYear === '2025-2026'))
+    ) {
+      const upper = query.volume === 'upper';
+      resolution = {
+        status: 'catalogued',
+        edition: 'hujiao-english-five-four',
+        catalogYear: '2026',
+        approvalNumber: upper ? 'SD－XS－2024001' : 'SD－XS－2024002',
+        evidence: [
+          {
+            id: `shanghai-english-p1-${query.volume}-2026-catalog`,
+            sourceUrl: upper
+              ? 'https://edu.sh.gov.cn/xxgk2_zdgz_jcjy_04/20260810/339e915d906842caaf98736d562df96a.html'
+              : 'https://edu.sh.gov.cn/xxgk2_zdgz_jcjy_04/20260104/665a9f94e26543cf8a2be770a2d4af61.html',
+            sourceTitle: upper
+              ? '上海市教育委员会关于印发2026年秋季中小学教学用书目录的通知'
+              : '上海市教育委员会关于印发2026年春季中小学教学用书目录的通知',
+            publishedAt: upper ? '2026-08-10' : '2026-01-05',
+            issuedAt: upper ? '2026-06-18' : '2025-12-10',
+            checkedAt: '2026-10-06',
+          },
+          {
+            id: `shanghai-english-p1-${query.volume}-2026-attachment`,
+            sourceUrl: upper
+              ? 'https://edu.sh.gov.cn/cmsres/7a/7aed3909441a4c849d5d78b8d914f4fb/00e155989221056fb74efd6f967939f0.pdf'
+              : 'https://edu.sh.gov.cn/cmsres/3a/3a555417ed2b47a38f730ca8c9f10881/9ba8430bf7e54d3e19fce9c17b45f5fb.pdf',
+            sourceTitle: upper
+              ? '2026年秋季上海市编写教学用书目录（PDF第1页一年级英语）'
+              : '2026年春季上海市编写教学用书目录（PDF第1页一年级英语）',
+            publishedAt: '',
+            checkedAt: '2026-10-06',
+          },
+        ],
+      };
+      // A catalog entry is useful even before the student text and course are
+      // ready. It must never become an action for an existing preparation pack.
+      return { subject, resolution, reason: 'unavailable' };
     }
     if (resolution.status === 'conflict')
       return { subject, resolution, reason: 'conflict' };

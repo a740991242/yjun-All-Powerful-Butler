@@ -270,6 +270,20 @@ function apply() {
             )
           }}
         </span>
+        <span v-if="item.resolution.status === 'catalogued'">
+          {{ $t('educationLearning.hujiaoEnglishFiveFourEdition') }}
+        </span>
+        <p
+          v-if="item.resolution.status === 'catalogued'"
+          class="w-full text-sm leading-6 text-muted-foreground"
+        >
+          {{
+            $t('educationLearning.regionalEnglishCatalogScope', {
+              year: item.resolution.catalogYear,
+              approval: item.resolution.approvalNumber,
+            })
+          }}
+        </p>
         <p class="w-full text-sm leading-6 text-muted-foreground">
           {{ $t(`educationLearning.regionalReason_${item.reason}`) }}
         </p>

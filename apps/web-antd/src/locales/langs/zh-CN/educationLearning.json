@@ -1474,5 +1474,8 @@
   "englishPreparationPage": "来源页码引用：{number}（详见陪学提示）",
   "englishPreparationInvalid": "册次无效，请选择上册或下册。",
   "regionalPriceCatalogDefaultScope": "参考{year}年政府核定的本地区教材零售价格表，本站默认组合采用表中列明且已制作课程的{edition}。这是价格资料参考与产品默认，不表示当前学年全省统一选用，也不排除其他版本。可在单科下切换并保存自己的组合。",
-  "regionalPriceCatalogAlternatives": "该价格表列明并已核对的数学教材版本："
+  "regionalPriceCatalogAlternatives": "该价格表列明并已核对的数学教材版本：",
+  "regionalStatus_catalogued": "官方目录已列明，课程待制作",
+  "hujiaoEnglishFiveFourEdition": "沪教英语（上海五四学制）",
+  "regionalEnglishCatalogScope": "{year}年官方目录列有本册一年级英语，准用号：{approval}。学生用书正文及课程仍待制作，暂不能一键应用，不用原创启蒙或其他教材替代。"
 }

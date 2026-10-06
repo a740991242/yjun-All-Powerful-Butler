@@ -1474,5 +1474,8 @@
   "englishPreparationPage": "Source page reference: {number} (see companion guidance)",
   "englishPreparationInvalid": "Invalid volume. Choose the upper or lower volume.",
   "regionalPriceCatalogDefaultScope": "This combination references government-approved regional textbook retail prices for {year}. This product defaults to the listed {edition} with existing courses. This is price information and a product default, not a claim of province-wide adoption in the current year; other editions may also apply. Choose a subject edition and save your own combination.",
-  "regionalPriceCatalogAlternatives": "Mathematics textbook editions checked in this price table:"
+  "regionalPriceCatalogAlternatives": "Mathematics textbook editions checked in this price table:",
+  "regionalStatus_catalogued": "Official catalog entry; course pending",
+  "hujiaoEnglishFiveFourEdition": "Shanghai English (five-four system)",
+  "regionalEnglishCatalogScope": "The {year} official catalog lists Grade 1 English for this volume, approval number: {approval}. Student-book content and the course are still pending; this entry cannot be applied or replaced with original foundations or another textbook."
 }
