@@ -77,6 +77,18 @@ const allLessons = computed(() => [
   ...(props.book.transitions ?? []),
   ...(props.book.specialties ?? []),
 ]);
+const catalogAvailability = computed(() => {
+  const lessons = props.book.units.flatMap((unit) => unit.lessons);
+  return {
+    available: lessons.filter(
+      (lesson) => !lesson.reference && lesson.status === 'available',
+    ).length,
+    preparing: lessons.filter(
+      (lesson) => !lesson.reference && lesson.status === 'preparing',
+    ).length,
+    references: lessons.filter((lesson) => lesson.reference).length,
+  };
+});
 const bookSessions = computed(() =>
   studyLibrary.sessions.value.filter(
     (session) => session.bookId === props.book.id,
@@ -493,17 +505,13 @@ const wrongSessions = computed(() => [
             {{ $t(textbookNoticeKey) }}
           </p>
           <Alert
-            v-if="book.edition === 'sujiao'"
-            class="mb-4"
+            class="catalog-availability mb-4"
             type="info"
             show-icon
             :message="
-              $t(
-                book.volume === 'lower'
-                  ? 'educationLearning.sujiaoLowerPartialNotice'
-                  : 'educationLearning.sujiaoPartialNotice',
-              )
+              $t('educationLearning.catalogAvailability', catalogAvailability)
             "
+            :description="$t('educationLearning.catalogAvailabilityScope')"
           />
           <Alert
             v-if="book.subject === 'chinese'"

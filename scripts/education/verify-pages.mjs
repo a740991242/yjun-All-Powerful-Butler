@@ -750,6 +750,74 @@ const widths = process.argv.includes('--mobile-only')
           )
         )
           throw new Error('catalog overflow');
+        if (catalogOnly) {
+          const references = await p
+            .getByRole('button', { name: '查询工具表', exact: true })
+            .count();
+          const preparing = await p
+            .getByRole('button', {
+              name: '这节课程尚未完成核验。',
+              exact: true,
+            })
+            .count();
+          const summary = p.locator('.catalog-availability .ant-alert-message');
+          const expected = `本册目录：可学习${count}个课程入口，制作中${preparing}个，字表工具${references}个`;
+          await p.waitForFunction(
+            (text) =>
+              document
+                .querySelector('.catalog-availability .ant-alert-message')
+                ?.textContent.trim() === text,
+            expected,
+          );
+          const scope = p.locator(
+            '.catalog-availability .ant-alert-description',
+          );
+          const chineseScope = await scope.innerText();
+          if (!chineseScope.includes('不等同于教材课数'))
+            throw new Error('Catalog entry counts mislabel textbook lessons');
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('English', { exact: true }).click();
+          const enExpected = `This catalog: ${count} available course entries, ${preparing} in preparation, ${references} character tools`;
+          await p.waitForFunction(
+            (text) =>
+              document
+                .querySelector('.catalog-availability .ant-alert-message')
+                ?.textContent.trim() === text,
+            enExpected,
+          );
+          const englishScope = await scope.innerText();
+          if (
+            !englishScope.includes(
+              'does not establish full teaching verification',
+            )
+          )
+            throw new Error('English catalog notice overclaims verification');
+          await summary.scrollIntoViewIfNeeded();
+          if (
+            await p.evaluate(
+              () => document.documentElement.scrollWidth > innerWidth,
+            )
+          )
+            throw new Error('English catalog summary overflow');
+          await p.screenshot({
+            path: `/tmp/butler-catalog-${subject}-${edition}-${volume}-${width}-en.png`,
+          });
+          await p
+            .locator('button[aria-haspopup="menu"]')
+            .filter({ has: p.locator('svg.lucide-languages') })
+            .click();
+          await p.getByText('简体中文', { exact: true }).click();
+          await p.waitForFunction(
+            (text) =>
+              document
+                .querySelector('.catalog-availability .ant-alert-message')
+                ?.textContent.trim() === text,
+            expected,
+          );
+        }
         if (catalogOnly && edition === 'bnu-2024') {
           const notice = p
             .getByText(
