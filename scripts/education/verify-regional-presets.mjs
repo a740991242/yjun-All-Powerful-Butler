@@ -544,6 +544,45 @@ const server = http.createServer(async (req, res) => {
             .count()
         )
           throw new Error('Chongqing upper reference leaked into lower volume');
+        await choose('education-region-province', '江西', true);
+        await choose('education-region-volume', '上册');
+        const jiangxiSource =
+          'https://www.dingnan.gov.cn/dnxxxgk/jgysf/202601/40a87d0a7dc840c7b9ba57ce7a2ab8d8/files/75ccbb0d852d4057bbb7bc739e4d1d89.pdf';
+        await region.locator(`a[href="${jiangxiSource}"]`).waitFor();
+        await region
+          .getByText('文件日期：2025-09-28', { exact: false })
+          .waitFor();
+        await region.getByText('资料发布：未标注', { exact: false }).waitFor();
+        const jiangxiAlternatives = await region
+          .getByText('该参考目录可选数学版本：', { exact: false })
+          .textContent();
+        if (
+          !jiangxiAlternatives.includes('人教版') ||
+          !jiangxiAlternatives.includes('北师大版') ||
+          jiangxiAlternatives.includes('苏教版')
+        )
+          throw new Error('Jiangxi alternatives mismatch');
+        await apply.click();
+        for (const subject of ['语文', '数学', '道德与法治'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · 人教版（2024审定） · 上册`,
+              exact: true,
+            })
+            .waitFor();
+        await region
+          .locator(`a[href="${jiangxiSource}"]`)
+          .evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.screenshot({
+          path: `/tmp/butler-jiangxi-upper-default-${width}.png`,
+        });
+        await choose('education-region-volume', '下册');
+        await apply.click();
+        if (
+          (await p.getByRole('button', { name: /^数学 ·/ }).count()) ||
+          (await region.locator(`a[href="${jiangxiSource}"]`).count())
+        )
+          throw new Error('Jiangxi upper inherited by lower');
         await choose('education-region-province', '辽宁', true);
         for (const [volume, year, issued, published, url] of [
           [
@@ -938,6 +977,46 @@ const server = http.createServer(async (req, res) => {
           throw new Error(
             'Chongqing English upper reference leaked into lower volume',
           );
+        await choose('education-region-province', 'Jiangxi', true);
+        await choose('education-region-volume', 'Upper volume');
+        await p.locator(`a[href="${jiangxiSource}"]`).waitFor();
+        await p
+          .getByText('Document date: 2025-09-28', { exact: false })
+          .waitFor();
+        await p
+          .getByText('Published: Not stated; checked: 2026-10-06', {
+            exact: false,
+          })
+          .waitFor();
+        await p
+          .getByRole('button', {
+            name: 'Apply available subject editions together',
+            exact: true,
+          })
+          .click();
+        for (const subject of ['Chinese', 'Mathematics', 'Morality and Law'])
+          await p
+            .getByRole('button', {
+              name: `${subject} · PEP (2024 approved) · Upper volume`,
+              exact: true,
+            })
+            .waitFor();
+        await p
+          .locator(`a[href="${jiangxiSource}"]`)
+          .evaluate((e) => e.scrollIntoView({ block: 'center' }));
+        await p.waitForTimeout(500);
+        if (
+          await p.evaluate(
+            () => document.documentElement.scrollWidth > innerWidth,
+          )
+        )
+          throw new Error('Jiangxi English dark overflow');
+        await p.screenshot({
+          path: `/tmp/butler-jiangxi-upper-default-${width}-en-dark.png`,
+        });
+        await choose('education-region-volume', 'Lower volume');
+        if (await p.locator(`a[href="${jiangxiSource}"]`).count())
+          throw new Error('Jiangxi English upper source leaked into lower');
         await choose('education-region-province', 'Liaoning', true);
         for (const [volume, year, issued, published] of [
           ['Upper volume', '2025', '2025-07-21', '2025-07-23'],
@@ -1069,6 +1148,8 @@ const server = http.createServer(async (req, res) => {
             ZhejiangVolumeSourcesAndUnknownDatesBilingual: true,
             LiaoningVolumeYearsSourcesDatesBilingual: true,
             AnhuiUpperLowerThreeSubjects: true,
+            JiangxiUpperThreeSubjectsLowerTwoSubjects: true,
+            JiangxiSourceDatesAndScopeBilingual: true,
             AnhuiUpperDatesAndScopeBilingual: true,
             AnhuiVolumeSourcesAndUnknownSpringDatesBilingual: true,
             HenanDigitalCatalogScopeBilingual: true,

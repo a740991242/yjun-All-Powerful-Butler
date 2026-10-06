@@ -512,8 +512,8 @@ it('applies Zhejiang both-volume combinations without inferring an English cours
   }
 });
 
-it('applies Guizhou both volumes and Chongqing upper only without changing unsupported subject actions', () => {
-  for (const province of ['guizhou', 'chongqing']) {
+it('applies Guizhou both volumes and Chongqing/Jiangxi upper only without changing unsupported subject actions', () => {
+  for (const province of ['guizhou', 'chongqing', 'jiangxi']) {
     for (const volume of ['upper', 'lower'] as const) {
       const rows = regionalApplicationPlan({
         ...query,

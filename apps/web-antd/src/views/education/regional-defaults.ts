@@ -40,6 +40,25 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (query.province === 'jiangxi' && query.volume === 'upper')
+    return {
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: '2025',
+      evidence: [
+        {
+          id: 'jiangxi-grade-one-math-upper-catalog-2025',
+          sourceUrl:
+            'https://www.dingnan.gov.cn/dnxxxgk/jgysf/202601/40a87d0a7dc840c7b9ba57ce7a2ab8d8/files/75ccbb0d852d4057bbb7bc739e4d1d89.pdf',
+          sourceTitle:
+            '江西省2025年秋季中小学教材价格通知（赣发改价管〔2025〕662号，PDF第8、13页，第139、271项，一年级数学上册，北师大、人教）',
+          issuedAt: '2025-09-28',
+          // The host's generation date and URL path are not publication dates.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
   if (query.province === 'guizhou') {
     const upper = query.volume === 'upper';
     return {

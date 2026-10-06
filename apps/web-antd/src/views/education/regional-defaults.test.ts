@@ -89,6 +89,46 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
   );
 });
 
+it('keeps the read Jiangxi autumn table and document date specific to the upper volume', () => {
+  for (const academicYear of ['2025-2026', '2026-2027']) {
+    const local = { ...query, province: 'jiangxi', academicYear };
+    const result = regionalMathematicsDefault(local)!;
+    expect(result).toMatchObject({
+      edition: 'pep-2024',
+      alternatives: ['pep-2024', 'bnu-2024'],
+      catalogYear: '2025',
+    });
+    expect(result.evidence[0]).toMatchObject({
+      id: 'jiangxi-grade-one-math-upper-catalog-2025',
+      issuedAt: '2025-09-28',
+      publishedAt: '',
+      checkedAt: '2026-10-06',
+    });
+    expect(result.evidence[0]!.sourceTitle).toContain('第139、271项');
+    expect(result.evidence[0]!.sourceUrl).toContain(
+      '75ccbb0d852d4057bbb7bc739e4d1d89.pdf',
+    );
+    result.alternatives!.pop();
+    result.evidence[0]!.issuedAt = 'unknown';
+    expect(regionalMathematicsDefault(local)!.alternatives).toHaveLength(2);
+    expect(regionalMathematicsDefault(local)!.evidence[0]!.issuedAt).toBe(
+      '2025-09-28',
+    );
+    for (const change of [
+      { volume: 'lower' },
+      { volume: 'all' },
+      { city: 'nanchang' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { academicYear: '2027-2028' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
+});
+
 it('keeps Shanxi city-scoped catalog alternatives distinct from a province-wide adoption claim', () => {
   for (const volume of ['upper', 'lower'] as const) {
     const local = { ...query, province: 'shanxi', volume };
