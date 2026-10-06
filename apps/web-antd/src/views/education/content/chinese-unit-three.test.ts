@@ -375,9 +375,10 @@ it('locates all twenty recognition targets by word position without adding writi
     ],
   ] as const;
   for (const [lesson, words, positions, targets] of cases) {
-    expect(lesson.version).toBe(
-      ['cu-u3-4', 'cu-u3-5'].includes(lesson.id) ? 3 : 2,
-    );
+    let expectedVersion = 2;
+    if (lesson.id === 'cu-u3-5') expectedVersion = 4;
+    else if (lesson.id === 'cu-u3-4') expectedVersion = 3;
+    expect(lesson.version).toBe(expectedVersion);
     expect(lesson.parentTip).toContain('无新增会写汉字');
     targets.forEach((target, i) => {
       const q = lesson.reviewQuestions!.find(
@@ -395,7 +396,7 @@ it('locates all twenty recognition targets by word position without adding writi
         expect(evaluate(q.rule, c.id)).toBe(c.id === target);
     });
   }
-  expect(ywLesson.version).toBe(2);
+  expect(ywLesson.version).toBe(3);
 });
 it('keeps the exact former recognition materials, versions and wrong-first history in backup snapshots', () => {
   const now = '2026-10-04T00:00:00.000Z';

@@ -147,6 +147,20 @@ export const zeroInitialSpelling = {
   scope: '原创拼写活动的规则依据，不代替2024教材正文核验。',
 };
 
+/** Teaching classification evidence; not inspection of a 2024 textbook page. */
+export const wholeSyllableTeaching = {
+  title: '郑江黎：现在小学拼音教学中还要强调整体认读音节么？',
+  url: 'https://www.moe.gov.cn/moe_879/moe_1252/s8447/201412/t20141204_179526.html',
+  checkedAt: '2026-10-06',
+  pageDate: '2008-07-11',
+  facts: [
+    '小学拼音教学仍使用整体认读',
+    'yi、wu、yu属于零声母音节',
+    'y、w不是声母，在这些写法中起分隔音节的作用',
+  ],
+  scope: '支撑y/w与21个声母的分类讲解，不代替教材正文、标准读音或书写示范。',
+};
+
 /** Official public lesson design specifies its PEP August 2024 edition and p8.
  * This verifies the stated teaching scope, not inspection of the original art.
  */

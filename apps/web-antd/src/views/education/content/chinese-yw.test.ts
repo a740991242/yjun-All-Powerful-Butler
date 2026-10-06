@@ -119,7 +119,7 @@ describe('separate y w and whole-syllable activities', () => {
 describe('y w review applies recognition to changed syllable cards', () => {
   it('uses toned materials in both formal and supplemental lessons, without splitting whole syllables', () => {
     for (const lesson of [ywLesson, formalYwLesson]) {
-      expect(lesson.version).toBe(lesson.id === ywLesson.id ? 2 : 3);
+      expect(lesson.version).toBe(lesson.id === ywLesson.id ? 3 : 4);
       const cards = [
         ['r1', 'yà', 'y'],
         ['r2', 'wǒ', 'w'],

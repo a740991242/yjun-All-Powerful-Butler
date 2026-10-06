@@ -208,7 +208,7 @@ const copyQuestions = (questions: Question[]) =>
   }));
 export const formalYwLesson: Lesson = {
   ...structuredClone(ywLesson),
-  version: 3,
+  version: 4,
   id,
   title: 'y w',
   textbookTitle: 'y w',
