@@ -9,7 +9,7 @@ export interface RegionalDefaultSource {
   checkedAt: string;
 }
 export interface RegionalMathDefault {
-  edition: 'pep-2024' | 'sujiao';
+  edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
   evidence: RegionalDefaultSource[];
   alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
   catalogYear?: string;
@@ -40,6 +40,32 @@ export function regionalMathematicsDefault(
   )
     return;
   if (query.province === 'jiangsu') return { edition: 'sujiao', evidence: [] };
+  if (
+    (query.province === 'jilin' || query.province === 'heilongjiang') &&
+    query.volume === 'upper'
+  ) {
+    const jilin = query.province === 'jilin';
+    return {
+      edition: 'bnu-2024',
+      alternatives: ['bnu-2024'],
+      catalogYear: '2025',
+      catalogKind: 'publisher',
+      evidence: [
+        {
+          id: `${query.province}-grade-one-math-upper-publisher-2025`,
+          sourceUrl: jilin
+            ? 'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf'
+            : 'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
+          sourceTitle: jilin
+            ? '北师大出版社2025年秋季吉林省教材零售价格表（第1项，一年级上国标数学，表内申报日期2025-05-06）'
+            : '北师大出版社2025年秋季黑龙江省教材零售价格表（第001项，一年级上国标数学，表内申报日期2025-05-26）',
+          // Application dates and attachment paths are not publication dates.
+          publishedAt: '',
+          checkedAt: '2026-10-06',
+        },
+      ],
+    };
+  }
   if (query.province === 'guangxi' && query.volume === 'lower')
     return {
       edition: 'pep-2024',

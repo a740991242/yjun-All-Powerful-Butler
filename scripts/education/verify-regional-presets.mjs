@@ -1,7 +1,7 @@
 /* Verify personal regional presets in the actual Pages build with isolated Chrome profiles.
  * Creates one native unfinished learning record and checks it remains unchanged.
  * Personal choices never certify school adoption or curriculum completeness.
- * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults]
+ * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults]
  * --all-areas checks personal upper/lower sets for every navigation area; it
  * does not infer local textbook adoption or create unsupported course packs.
  */
@@ -18,6 +18,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 );
 const allAreas = process.argv.includes('--all-areas');
 const provinceDefaults = process.argv.includes('--province-defaults');
+const publisherDefaults = process.argv.includes('--publisher-defaults');
 const base = '/yjun-All-Powerful-Butler/';
 const root = `${repo}/apps/web-antd/dist`;
 const server = http.createServer(async (req, res) => {
@@ -200,6 +201,206 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
+      if (publisherDefaults) {
+        const beforePresets = await raw();
+        await choose('education-region-system', '六三学制（小学六年）');
+        const cases = [
+          {
+            zh: '吉林',
+            en: 'Jilin',
+            volume: 'upper',
+            edition: 'bnu-2024',
+            source:
+              'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf',
+            application: '2025-05-06',
+          },
+          {
+            zh: '黑龙江',
+            en: 'Heilongjiang',
+            volume: 'upper',
+            edition: 'bnu-2024',
+            source:
+              'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
+            application: '2025-05-26',
+          },
+          {
+            zh: '广西',
+            en: 'Guangxi',
+            volume: 'lower',
+            edition: 'pep-2024',
+            source: 'https://www.gxcbcmjt.com/tzgg/content_4695',
+          },
+        ];
+        for (const language of ['zh', 'en']) {
+          if (language === 'en') {
+            await p
+              .locator('button')
+              .filter({ has: p.locator('svg.lucide-languages') })
+              .click();
+            await p.getByText('English', { exact: true }).last().click();
+            const classes = await p.locator('html').getAttribute('class');
+            if (!classes.includes('dark'))
+              await p.locator('.theme-toggle svg').click();
+          }
+          const english = language === 'en';
+          const region = p.getByRole('region', {
+            name: english
+              ? 'Switch textbook combinations by area'
+              : '按地区切换教材组合',
+            exact: true,
+          });
+          const apply = region.getByRole('button', {
+            name: english
+              ? 'Apply available subject editions together'
+              : '一键应用可用学科版本',
+            exact: true,
+          });
+          for (const item of cases) {
+            await choose('education-region-province', item[language], true);
+            const volumeLabels = english
+              ? { upper: 'Upper volume', lower: 'Lower volume' }
+              : { upper: '上册', lower: '下册' };
+            const editionLabels = english
+              ? {
+                  'bnu-2024': 'BNU (2024 approved)',
+                  'pep-2024': 'PEP (2024 approved)',
+                }
+              : {
+                  'bnu-2024': '北师大版（2024审核）',
+                  'pep-2024': '人教版（2024审定）',
+                };
+            const volumeLabel = volumeLabels[item.volume];
+            await choose('education-region-volume', volumeLabel);
+            const edition = editionLabels[item.edition];
+            const scope = region.getByText(
+              english
+                ? 'This combination references regional textbook information published for 2025.'
+                : '参考2025年出版方公布的本地区教材资料',
+              { exact: false },
+            );
+            await scope.waitFor();
+            const scopeText = await scope.textContent();
+            if (!scopeText.includes(edition))
+              throw new Error('publisher scope edition mismatch');
+            const alternatives = region.getByText(
+              english
+                ? 'Mathematics editions listed by this publisher:'
+                : '该出版方资料列明的数学版本：',
+              { exact: false },
+            );
+            const alternativesText = await alternatives.textContent();
+            if (
+              !alternativesText.includes(edition) ||
+              alternativesText.includes(english ? 'SJ edition' : '苏教版')
+            )
+              throw new Error('publisher alternatives mismatch');
+            if (
+              item.edition === 'bnu-2024' &&
+              alternativesText.includes(english ? 'PEP' : '人教版')
+            )
+              throw new Error('PEP invented from BNU publisher source');
+            await region.locator(`a[href="${item.source}"]`).waitFor();
+            if (item.application) {
+              await region
+                .getByText(`申报日期${item.application}`, { exact: false })
+                .waitFor();
+              await region
+                .getByText(
+                  english
+                    ? 'Published: Not stated; checked: 2026-10-06'
+                    : '资料发布：未标注',
+                  { exact: false },
+                )
+                .waitFor();
+              if (
+                await region
+                  .getByText(english ? 'Document date:' : '文件日期：', {
+                    exact: false,
+                  })
+                  .count()
+              )
+                throw new Error(
+                  'application date presented as document issue date',
+                );
+            }
+            await apply.click();
+            for (const subject of english
+              ? ['Chinese', 'Mathematics', 'Morality and Law']
+              : ['语文', '数学', '道德与法治']) {
+              const math = subject === '数学' || subject === 'Mathematics';
+              const subjectEdition = math ? edition : editionLabels['pep-2024'];
+              await p
+                .getByRole('button', {
+                  name: `${subject} · ${subjectEdition} · ${volumeLabel}`,
+                  exact: true,
+                })
+                .waitFor();
+            }
+            const storedEdition = await p.evaluate(() =>
+              localStorage.getItem('butler-grade-one-math-edition-v1'),
+            );
+            if (storedEdition !== item.edition)
+              throw new Error(
+                'publisher action stores wrong mathematics edition',
+              );
+            await scope.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+            await p.waitForTimeout(500);
+            if (
+              await p.evaluate(
+                () => document.documentElement.scrollWidth > innerWidth,
+              )
+            )
+              throw new Error('publisher layout overflow');
+            await p.screenshot({
+              path: `/tmp/butler-publisher-${item.en}-${language}-${width}.png`,
+            });
+            await choose(
+              'education-region-volume',
+              volumeLabels[item.volume === 'upper' ? 'lower' : 'upper'],
+            );
+            await apply.click();
+            if (
+              (await p
+                .getByRole('button', {
+                  name: english ? /^Mathematics ·/ : /^数学 ·/,
+                })
+                .count()) ||
+              (await region.locator(`a[href="${item.source}"]`).count())
+            )
+              throw new Error(
+                'publisher source or edition inherited by opposite volume',
+              );
+          }
+        }
+        if ((await raw()) !== beforePresets)
+          throw new Error('publisher actions overwrite personal presets');
+        const afterLibrary = await p.evaluate(async () =>
+          JSON.stringify(await window.qaLoad()),
+        );
+        if (afterLibrary !== library)
+          throw new Error('publisher actions alter native learning history');
+        if (errors.length > 0 || bad.length > 0 || api.length > 0)
+          throw new Error(JSON.stringify({ errors, bad, api }));
+        console.log(
+          JSON.stringify({
+            width,
+            publisherDefaults: true,
+            BnuUpperJilinHeilongjiang: true,
+            GuangxiPepLower: true,
+            editionNotSubstituted: true,
+            oppositeVolumeNotInherited: true,
+            applicationDateNotPublication: true,
+            bilingualDark: true,
+            nativeHistoryUnchanged: true,
+            personalPresetsUnchanged: true,
+            errors,
+            bad,
+            api,
+          }),
+        );
+        await c.close();
+        continue;
+      }
       if (provinceDefaults) {
         const region = p.getByRole('region', {
           name: '按地区切换教材组合',

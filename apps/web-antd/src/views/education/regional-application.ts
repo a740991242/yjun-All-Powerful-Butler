@@ -32,7 +32,7 @@ export interface RegionalSubjectPlan {
     | RegionalEditionResolution
     | {
         status: 'guidance' | 'recommended';
-        edition: 'pep-2024' | 'sujiao';
+        edition: 'bnu-2024' | 'pep-2024' | 'sujiao';
         evidence: PolicySource[];
         alternatives?: ('bnu-2024' | 'pep-2024' | 'sujiao')[];
         catalogYear?: string;

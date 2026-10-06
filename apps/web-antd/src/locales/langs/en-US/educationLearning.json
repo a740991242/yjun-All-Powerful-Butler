@@ -1465,6 +1465,6 @@
   "finalPracticeMark_horizontal": "Given position {position}: horizontal dividing line inside the frame",
   "finalPracticeMark_vertical": "Given position {position}: vertical dividing line inside the frame",
   "regionalPublishedUnknown": "Not stated",
-  "regionalPublisherDefaultScope": "This combination references regional textbook information published for {year}. This product defaults to the listed PEP edition with existing courses. This is publisher information and a product default, not a government recommendation catalog or a claim of province-wide adoption in the current year. Other editions may also apply. Choose a subject edition and save your own combination.",
+  "regionalPublisherDefaultScope": "This combination references regional textbook information published for {year}. This product defaults to the listed {edition} with existing courses. This is publisher information and a product default, not a government recommendation catalog or a claim of province-wide adoption in the current year. Other editions may also apply. Choose a subject edition and save your own combination.",
   "regionalPublisherAlternatives": "Mathematics editions listed by this publisher:"
 }

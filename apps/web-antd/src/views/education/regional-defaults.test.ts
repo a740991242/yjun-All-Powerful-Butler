@@ -89,6 +89,55 @@ it('uses Hunan upper-volume alternatives without extrapolating a lower-volume ca
   );
 });
 
+it('uses the read BNU publisher tables for Jilin and Heilongjiang upper volume without inferring publication dates', () => {
+  for (const province of ['jilin', 'heilongjiang']) {
+    for (const academicYear of ['2025-2026', '2026-2027']) {
+      const local = { ...query, province, academicYear, volume: 'upper' };
+      const result = regionalMathematicsDefault(local)!;
+      expect(result).toMatchObject({
+        edition: 'bnu-2024',
+        alternatives: ['bnu-2024'],
+        catalogYear: '2025',
+        catalogKind: 'publisher',
+      });
+      expect(result.evidence[0]).toMatchObject({
+        id: `${province}-grade-one-math-upper-publisher-2025`,
+        publishedAt: '',
+        checkedAt: '2026-10-06',
+      });
+      expect(result.evidence[0]!.sourceUrl).toBe(
+        province === 'jilin'
+          ? 'https://www.bnupg.com/docs/2025-10/bdf31864139243a7b7454dc7a3d9e238.pdf'
+          : 'https://www.bnupg.com/docs/2025-10/c417a22c9c7a4dec8f33f1725ed38f20.pdf',
+      );
+      expect(result.evidence[0]!.sourceTitle).toContain(
+        province === 'jilin' ? '申报日期2025-05-06' : '申报日期2025-05-26',
+      );
+      expect(result.evidence[0]!.issuedAt).toBeUndefined();
+      result.alternatives!.pop();
+      result.evidence[0]!.sourceUrl = 'https://example.invalid';
+      expect(regionalMathematicsDefault(local)!.alternatives).toEqual([
+        'bnu-2024',
+      ]);
+      expect(
+        regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
+      ).not.toBe('https://example.invalid');
+      for (const change of [
+        { volume: 'lower' },
+        { volume: 'all' },
+        { city: 'city' },
+        { school: 'school' },
+        { subject: 'english' },
+        { grade: 'p2' },
+        { academicYear: '2027-2028' },
+      ])
+        expect(
+          regionalMathematicsDefault({ ...local, ...change }),
+        ).toBeUndefined();
+    }
+  }
+});
+
 it('keeps Guangxi publisher information distinct from government catalogs and from the upper volume', () => {
   for (const academicYear of ['2025-2026', '2026-2027']) {
     const local = {

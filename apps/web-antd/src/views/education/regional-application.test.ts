@@ -44,6 +44,44 @@ it('plans all four subjects without upgrading national guidance into school adop
   expect(required(rows[3]).action).toBeUndefined();
 });
 
+it('applies BNU mathematics for the Jilin and Heilongjiang upper references without substituting PEP', () => {
+  for (const province of ['jilin', 'heilongjiang']) {
+    for (const volume of ['upper', 'lower'] as const) {
+      const local = { ...query, province, city: '', school: '', volume };
+      const rows = regionalApplicationPlan(local);
+      const paths = rows.flatMap((row) =>
+        row.action ? [regionalActionPath(row.action)] : [],
+      );
+      expect(paths).toEqual(
+        volume === 'upper'
+          ? [
+              '/education/primary/p1/chinese/pep-2024/upper',
+              '/education/primary/p1/math/bnu-2024/upper',
+              '/education/primary/p1/ethics/pep-2024/upper',
+            ]
+          : [
+              '/education/primary/p1/chinese/pep-2024/lower',
+              '/education/primary/p1/ethics/pep-2024/lower',
+            ],
+      );
+      if (volume === 'upper')
+        expect(rows[1]!.resolution).toMatchObject({
+          status: 'recommended',
+          edition: 'bnu-2024',
+          catalogKind: 'publisher',
+        });
+      else expect(rows[1]!.resolution.status).toBe('unknown');
+      expect(rows[3]!.action).toBeUndefined();
+      for (const schoolSystem of ['unknown', 'five-four'] as const)
+        expect(
+          regionalApplicationPlan({ ...local, schoolSystem }).some(
+            (row) => row.action,
+          ),
+        ).toBe(false);
+    }
+  }
+});
+
 it('keeps the national policy scope explicit across all 34 navigation areas', () => {
   for (const province of regionalProvinces) {
     const rows = regionalApplicationPlan({

@@ -264,7 +264,9 @@ function apply() {
                 ? 'educationLearning.sujiaoEdition'
                 : item.resolution.edition === 'qingdao'
                   ? 'educationLearning.qingdaoEdition'
-                  : 'educationLearning.pepEdition',
+                  : item.resolution.edition === 'bnu-2024'
+                    ? 'educationLearning.bnuEdition'
+                    : 'educationLearning.pepEdition',
             )
           }}
         </span>
@@ -285,7 +287,10 @@ function apply() {
                 : item.resolution.catalogKind === 'publisher'
                   ? 'educationLearning.regionalPublisherDefaultScope'
                   : 'educationLearning.regionalCatalogDefaultScope',
-              { year: item.resolution.catalogYear },
+              {
+                year: item.resolution.catalogYear,
+                edition: editionLabel(item.resolution.edition),
+              },
             )
           }}
         </p>

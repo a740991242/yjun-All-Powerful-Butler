@@ -1465,6 +1465,6 @@
   "finalPracticeMark_horizontal": "已给第{position}图：外框内横分线",
   "finalPracticeMark_vertical": "已给第{position}图：外框内竖分线",
   "regionalPublishedUnknown": "未标注",
-  "regionalPublisherDefaultScope": "参考{year}年出版方公布的本地区教材资料，本站默认组合采用该资料列明且已制作课程的人教版。这是出版方资料参考与产品默认，不是政府推荐目录，也不表示当前学年全省统一选用或其他版本不适用。可在单科下切换并保存自己的组合。",
+  "regionalPublisherDefaultScope": "参考{year}年出版方公布的本地区教材资料，本站默认组合采用该资料列明且已制作课程的{edition}。这是出版方资料参考与产品默认，不是政府推荐目录，也不表示当前学年全省统一选用或其他版本不适用。可在单科下切换并保存自己的组合。",
   "regionalPublisherAlternatives": "该出版方资料列明的数学版本："
 }
