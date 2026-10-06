@@ -1,7 +1,7 @@
 /* Verify personal regional presets in the actual Pages build with isolated Chrome profiles.
  * Creates one native unfinished learning record and checks it remains unchanged.
  * Personal choices never certify school adoption or curriculum completeness.
- * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults]
+ * Usage: rtk proxy node scripts/education/verify-regional-presets.mjs [--mobile-only] [--all-areas] [--province-defaults] [--publisher-defaults] [--bnu-2026-defaults] [--bnu-missing-volumes]
  * --all-areas checks personal upper/lower sets for every navigation area; it
  * does not infer local textbook adoption or create unsupported course packs.
  */
@@ -18,6 +18,7 @@ const repo = fileURLToPath(new URL('../../', import.meta.url)).replace(
 );
 const allAreas = process.argv.includes('--all-areas');
 const provinceDefaults = process.argv.includes('--province-defaults');
+const missingVolumes = process.argv.includes('--bnu-missing-volumes');
 const bnu2026 = process.argv.includes('--bnu-2026-defaults');
 const publisherDefaults = process.argv.includes('--publisher-defaults');
 const base = '/yjun-All-Powerful-Butler/';
@@ -202,13 +203,14 @@ const server = http.createServer(async (req, res) => {
           throw new Error('inherited math edition');
       };
       const raw = () => p.evaluate(() => window.qaStored());
-      if (publisherDefaults || bnu2026) {
+      if (publisherDefaults || bnu2026 || missingVolumes) {
         const beforePresets = await raw();
         await choose('education-region-system', '六三学制（小学六年）');
         const cases = bnu2026
           ? []
           : [
               {
+                year: '2025',
                 zh: '吉林',
                 en: 'Jilin',
                 volume: 'upper',
@@ -218,6 +220,7 @@ const server = http.createServer(async (req, res) => {
                 application: '2025-05-06',
               },
               {
+                year: '2025',
                 zh: '黑龙江',
                 en: 'Heilongjiang',
                 volume: 'upper',
@@ -227,6 +230,7 @@ const server = http.createServer(async (req, res) => {
                 application: '2025-05-26',
               },
               {
+                year: '2025',
                 zh: '广西',
                 en: 'Guangxi',
                 volume: 'lower',
@@ -367,6 +371,51 @@ const server = http.createServer(async (req, res) => {
               },
             ],
           );
+        if (missingVolumes)
+          cases.push(
+            ...[
+              {
+                zh: '吉林',
+                en: 'Jilin',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/0409b5019f434d08b9a9b5f845701f4c.pdf',
+                year: '2026',
+                oppositeEdition: 'bnu-2024',
+              },
+              {
+                zh: '黑龙江',
+                en: 'Heilongjiang',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/00f661a0008b4cd6a16ff1e9c8455aef.pdf',
+                year: '2026',
+                oppositeEdition: 'bnu-2024',
+              },
+              {
+                zh: '江西',
+                en: 'Jiangxi',
+                volume: 'lower',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/d6e6003b51334f2c8ce64731eaf586f3.pdf',
+                year: '2026',
+                oppositeEdition: 'pep-2024',
+              },
+              {
+                zh: '广西',
+                en: 'Guangxi',
+                volume: 'upper',
+                edition: 'bnu-2024',
+                source:
+                  'https://www.bnupg.com/docs/2026-09/9069fad62b904fcc9d53fa225b2ade57.pdf',
+                year: '2026',
+                oppositeEdition: 'pep-2024',
+              },
+            ],
+          );
         for (const language of ['zh', 'en']) {
           if (language === 'en') {
             await p
@@ -410,8 +459,8 @@ const server = http.createServer(async (req, res) => {
             const edition = editionLabels[item.edition];
             const scope = region.getByText(
               english
-                ? `This combination references regional textbook information published for ${bnu2026 ? '2026' : '2025'}.`
-                : `参考${bnu2026 ? '2026' : '2025'}年出版方公布的本地区教材资料`,
+                ? `This combination references regional textbook information published for ${item.year || (bnu2026 ? '2026' : '2025')}.`
+                : `参考${item.year || (bnu2026 ? '2026' : '2025')}年出版方公布的本地区教材资料`,
               { exact: false },
             );
             await scope.waitFor();
@@ -495,15 +544,15 @@ const server = http.createServer(async (req, res) => {
               volumeLabels[item.volume === 'upper' ? 'lower' : 'upper'],
             );
             await apply.click();
-            if (
-              (!bnu2026 &&
-                (await p
-                  .getByRole('button', {
-                    name: english ? /^Mathematics ·/ : /^数学 ·/,
-                  })
-                  .count())) ||
-              (await region.locator(`a[href="${item.source}"]`).count())
-            )
+            const oppositeVolume = item.volume === 'upper' ? 'lower' : 'upper';
+            const oppositeEdition = item.oppositeEdition || 'bnu-2024';
+            await p
+              .getByRole('button', {
+                name: `${english ? 'Mathematics' : '数学'} · ${editionLabels[oppositeEdition]} · ${volumeLabels[oppositeVolume]}`,
+                exact: true,
+              })
+              .waitFor();
+            if (await region.locator(`a[href="${item.source}"]`).count())
               throw new Error(
                 'publisher source or edition inherited by opposite volume',
               );
@@ -525,6 +574,7 @@ const server = http.createServer(async (req, res) => {
             BnuUpperJilinHeilongjiang: !bnu2026,
             GuangxiPepLower: !bnu2026,
             Bnu2026ProvincePairs: bnu2026 ? 8 : 0,
+            missingVolumes: missingVolumes ? 4 : 0,
             editionNotSubstituted: true,
             oppositeVolumeSourceNotInherited: true,
             applicationDateNotPublication: true,
@@ -929,7 +979,12 @@ const server = http.createServer(async (req, res) => {
         await choose('education-region-volume', '上册');
         await apply.click();
         if (
-          (await p.getByRole('button', { name: /^数学 ·/ }).count()) ||
+          !(await p
+            .getByRole('button', {
+              name: '数学 · 北师大版（2024审核） · 上册',
+              exact: true,
+            })
+            .count()) ||
           (await region.locator(`a[href="${guangxiSource}"]`).count())
         )
           throw new Error('Guangxi lower inherited by upper');
@@ -968,7 +1023,12 @@ const server = http.createServer(async (req, res) => {
         await choose('education-region-volume', '下册');
         await apply.click();
         if (
-          (await p.getByRole('button', { name: /^数学 ·/ }).count()) ||
+          !(await p
+            .getByRole('button', {
+              name: '数学 · 北师大版（2024审核） · 下册',
+              exact: true,
+            })
+            .count()) ||
           (await region.locator(`a[href="${jiangxiSource}"]`).count())
         )
           throw new Error('Jiangxi upper inherited by lower');
@@ -1589,7 +1649,7 @@ const server = http.createServer(async (req, res) => {
             ZhejiangVolumeSourcesAndUnknownDatesBilingual: true,
             LiaoningVolumeYearsSourcesDatesBilingual: true,
             AnhuiUpperLowerThreeSubjects: true,
-            JiangxiUpperThreeSubjectsLowerTwoSubjects: true,
+            JiangxiBothVolumesThreeSubjects: true,
             JiangxiSourceDatesAndScopeBilingual: true,
             GuangxiLowerPublisherReferenceThreeSubjects: true,
             GuangxiPublisherScopeAndUpperIsolationBilingual: true,

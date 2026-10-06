@@ -19,8 +19,28 @@ export interface RegionalMathDefault {
 // Publisher price tables provide reference combinations, not uniform adoption.
 const bnuPublisher2026: Record<
   string,
-  { name: string; upper: string; lower: string }
+  { name: string; upper?: string; lower?: string }
 > = {
+  jilin: {
+    name: '吉林',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/0409b5019f434d08b9a9b5f845701f4c.pdf',
+  },
+  heilongjiang: {
+    name: '黑龙江',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/00f661a0008b4cd6a16ff1e9c8455aef.pdf',
+  },
+  jiangxi: {
+    name: '江西',
+    lower:
+      'https://www.bnupg.com/docs/2026-09/d6e6003b51334f2c8ce64731eaf586f3.pdf',
+  },
+  guangxi: {
+    name: '广西',
+    upper:
+      'https://www.bnupg.com/docs/2026-09/9069fad62b904fcc9d53fa225b2ade57.pdf',
+  },
   beijing: {
     name: '北京',
     upper:
@@ -106,7 +126,8 @@ export function regionalMathematicsDefault(
   const publisher = Object.hasOwn(bnuPublisher2026, query.province)
     ? bnuPublisher2026[query.province]
     : undefined;
-  if (publisher) {
+  const sourceUrl = publisher?.[query.volume];
+  if (publisher && sourceUrl) {
     const upper = query.volume === 'upper';
     return {
       edition: 'bnu-2024',
@@ -116,7 +137,7 @@ export function regionalMathematicsDefault(
       evidence: [
         {
           id: `${query.province}-grade-one-math-${query.volume}-publisher-2026`,
-          sourceUrl: publisher[query.volume],
+          sourceUrl,
           sourceTitle: `北师大出版集团2026年${upper ? '秋' : '春'}季${publisher.name}教材价格公示（PDF第1页第1项，一年级数学${upper ? '上' : '下'}册；价格参考，不证明全省统一选用）`,
           publishedAt: upper ? '2026-08-25' : '2026-03-02',
           checkedAt: '2026-10-06',

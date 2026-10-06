@@ -52,25 +52,17 @@ it('applies BNU mathematics for the Jilin and Heilongjiang upper references with
       const paths = rows.flatMap((row) =>
         row.action ? [regionalActionPath(row.action)] : [],
       );
-      expect(paths).toEqual(
-        volume === 'upper'
-          ? [
-              '/education/primary/p1/chinese/pep-2024/upper',
-              '/education/primary/p1/math/bnu-2024/upper',
-              '/education/primary/p1/ethics/pep-2024/upper',
-            ]
-          : [
-              '/education/primary/p1/chinese/pep-2024/lower',
-              '/education/primary/p1/ethics/pep-2024/lower',
-            ],
-      );
-      if (volume === 'upper')
-        expect(rows[1]!.resolution).toMatchObject({
-          status: 'recommended',
-          edition: 'bnu-2024',
-          catalogKind: 'publisher',
-        });
-      else expect(rows[1]!.resolution.status).toBe('unknown');
+      expect(paths).toEqual([
+        `/education/primary/p1/chinese/pep-2024/${volume}`,
+        `/education/primary/p1/math/bnu-2024/${volume}`,
+        `/education/primary/p1/ethics/pep-2024/${volume}`,
+      ]);
+      expect(rows[1]!.resolution).toMatchObject({
+        status: 'recommended',
+        edition: 'bnu-2024',
+        catalogKind: 'publisher',
+        catalogYear: volume === 'upper' ? '2025' : '2026',
+      });
       expect(rows[3]!.action).toBeUndefined();
       for (const schoolSystem of ['unknown', 'five-four'] as const)
         expect(
@@ -106,10 +98,13 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'guangxi',
         'guizhou',
         'hebei',
+        'heilongjiang',
         'henan',
         'hubei',
         'inner-mongolia',
         'jiangsu',
+        'jiangxi',
+        'jilin',
         'liaoning',
         'shaanxi',
         'shanxi',
@@ -133,10 +128,13 @@ it('keeps the national policy scope explicit across all 34 navigation areas', ()
         'guangxi',
         'guizhou',
         'hebei',
+        'heilongjiang',
         'henan',
         'hubei',
         'inner-mongolia',
         'jiangsu',
+        'jiangxi',
+        'jilin',
         'liaoning',
         'shaanxi',
         'shanxi',
@@ -578,9 +576,7 @@ it('applies the Guangxi lower publisher reference without certifying adoption or
       volume,
     };
     const rows = regionalApplicationPlan(local);
-    expect(rows[1]!.resolution.status).toBe(
-      volume === 'lower' ? 'recommended' : 'unknown',
-    );
+    expect(rows[1]!.resolution.status).toBe('recommended');
     if (volume === 'lower')
       expect(rows[1]!.resolution).toMatchObject({
         catalogKind: 'publisher',
@@ -593,9 +589,7 @@ it('applies the Guangxi lower publisher reference without certifying adoption or
       ),
     ).toEqual([
       `/education/primary/p1/chinese/pep-2024/${volume}`,
-      ...(volume === 'lower'
-        ? [`/education/primary/p1/math/pep-2024/${volume}`]
-        : []),
+      `/education/primary/p1/math/${volume === 'upper' ? 'bnu-2024' : 'pep-2024'}/${volume}`,
       `/education/primary/p1/ethics/pep-2024/${volume}`,
     ]);
     expect(rows[3]!.action).toBeUndefined();
@@ -608,7 +602,7 @@ it('applies the Guangxi lower publisher reference without certifying adoption or
   }
 });
 
-it('applies Guizhou both volumes and Chongqing/Jiangxi upper only without changing unsupported subject actions', () => {
+it('applies Guizhou and Jiangxi both volumes and Chongqing upper only without changing unsupported subject actions', () => {
   for (const province of ['guizhou', 'chongqing', 'jiangxi']) {
     for (const volume of ['upper', 'lower'] as const) {
       const rows = regionalApplicationPlan({
@@ -618,7 +612,7 @@ it('applies Guizhou both volumes and Chongqing/Jiangxi upper only without changi
         school: '',
         volume,
       });
-      const supported = province === 'guizhou' || volume === 'upper';
+      const supported = province !== 'chongqing' || volume === 'upper';
       expect(rows[1]!.resolution.status).toBe(
         supported ? 'recommended' : 'unknown',
       );
@@ -628,7 +622,11 @@ it('applies Guizhou both volumes and Chongqing/Jiangxi upper only without changi
         ),
       ).toEqual([
         `/education/primary/p1/chinese/pep-2024/${volume}`,
-        ...(supported ? [`/education/primary/p1/math/pep-2024/${volume}`] : []),
+        ...(supported
+          ? [
+              `/education/primary/p1/math/${province === 'jiangxi' && volume === 'lower' ? 'bnu-2024' : 'pep-2024'}/${volume}`,
+            ]
+          : []),
         `/education/primary/p1/ethics/pep-2024/${volume}`,
       ]);
       expect(rows[3]!.action).toBeUndefined();

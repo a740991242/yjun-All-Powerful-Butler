@@ -125,7 +125,6 @@ it('uses the read BNU publisher tables for Jilin and Heilongjiang upper volume w
         regionalMathematicsDefault(local)!.evidence[0]!.sourceUrl,
       ).not.toBe('https://example.invalid');
       for (const change of [
-        { volume: 'lower' },
         { volume: 'all' },
         { city: 'city' },
         { school: 'school' },
@@ -172,7 +171,6 @@ it('keeps Guangxi publisher information distinct from government catalogs and fr
       'https://www.gxcbcmjt.com/tzgg/content_4695',
     );
     for (const change of [
-      { volume: 'upper' },
       { volume: 'all' },
       { city: 'nanning' },
       { school: 'school' },
@@ -212,7 +210,6 @@ it('keeps the read Jiangxi autumn table and document date specific to the upper 
       '2025-09-28',
     );
     for (const change of [
-      { volume: 'lower' },
       { volume: 'all' },
       { city: 'nanchang' },
       { school: 'school' },
@@ -672,4 +669,68 @@ it('supports eight independently checked province pairs as publisher references,
       expect(
         regionalMathematicsDefault({ ...query, province, volume }),
       ).toBeUndefined();
+});
+
+it('fills four missing volumes with independent 2026 references while preserving opposite-volume evidence', () => {
+  const cases = [
+    {
+      province: 'jilin',
+      volume: 'lower',
+      oppositeEdition: 'bnu-2024',
+      oppositeYear: '2025',
+    },
+    {
+      province: 'heilongjiang',
+      volume: 'lower',
+      oppositeEdition: 'bnu-2024',
+      oppositeYear: '2025',
+    },
+    {
+      province: 'jiangxi',
+      volume: 'lower',
+      oppositeEdition: 'pep-2024',
+      oppositeYear: '2025',
+    },
+    {
+      province: 'guangxi',
+      volume: 'upper',
+      oppositeEdition: 'pep-2024',
+      oppositeYear: '2025',
+    },
+  ];
+  for (const row of cases) {
+    const local = { ...query, province: row.province, volume: row.volume };
+    const added = regionalMathematicsDefault(local)!;
+    expect(added).toMatchObject({
+      edition: 'bnu-2024',
+      alternatives: ['bnu-2024'],
+      catalogYear: '2026',
+      catalogKind: 'publisher',
+    });
+    expect(added.evidence[0]).toMatchObject({
+      id: `${row.province}-grade-one-math-${row.volume}-publisher-2026`,
+      publishedAt: row.volume === 'upper' ? '2026-08-25' : '2026-03-02',
+    });
+    const opposite = regionalMathematicsDefault({
+      ...local,
+      volume: row.volume === 'upper' ? 'lower' : 'upper',
+    })!;
+    expect(opposite.edition).toBe(row.oppositeEdition);
+    expect(opposite.catalogYear).toBe(row.oppositeYear);
+    expect(added.evidence[0]!.sourceUrl).not.toBe(
+      opposite.evidence[0]!.sourceUrl,
+    );
+    expect(added.evidence[0]!.issuedAt).toBeUndefined();
+    for (const change of [
+      { city: 'city' },
+      { school: 'school' },
+      { subject: 'english' },
+      { grade: 'p2' },
+      { volume: 'all' },
+      { academicYear: '2027-2028' },
+    ])
+      expect(
+        regionalMathematicsDefault({ ...local, ...change }),
+      ).toBeUndefined();
+  }
 });
