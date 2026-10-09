@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-30",
+  "updatedAt": "2026-10-09",
   "coverage": {
     "codes": [
       "600219",
@@ -17,7 +17,7 @@
       "kind": "exdiv",
       "status": "confirmed",
       "source": "https://static.cninfo.com.cn/finalpage/2026-05-13/1225300692.PDF",
-      "updatedAt": "2026-09-30",
+      "updatedAt": "2026-10-09",
       "note": "每股现金红利 0.136 元（含税）；股权登记日 2026-05-19。"
     },
     {
@@ -28,7 +28,7 @@
       "kind": "report",
       "status": "confirmed",
       "source": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12563095&stockid=600690",
-      "updatedAt": "2026-09-30",
+      "updatedAt": "2026-10-09",
       "note": "实际公告日期；来源为新浪财经转载的公司公告。"
     }
   ]
