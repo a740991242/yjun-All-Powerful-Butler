@@ -251,6 +251,7 @@ rtk git diff --check
 
 - 公开指标通过 `python3 scripts/finance/refresh_stock_metrics.py` 采集到 `scripts/finance/stock-metrics.json`，再执行 `python3 scripts/finance/export_snapshots.py --stocks-only`。更换收盘日期时先用 `--as-of YYYY-MM-DD` 刷新指标；导出检查日期一致。股息率与 TTM 市盈率使用腾讯行情快照，记录来源和时间，不冒充收盘时点指标。港股 TTM 使用字段 57（不是字段 39），股息率为 47；A 股分别为 39、64，映射依据保留在脚本。范围计算测试：`python3 -m unittest discover -s scripts/finance -p "test_*.py"`。
 - 已核验的年度分红另存 `scripts/finance/dividend-annual.json`，逐笔记录每股税前金额、特别分红标记、除息日及公告链接。导出时仅在该年度记录全部已实施且收盘价有效时计算全年及剔除特别分红的股息率，保留原始行情股息率用于追溯；新增年度时须重新核验公告。港股在北京时间16:15前排除当天日K，使用最近已完成交易日收盘价，指标时间仍独立标注。
+- 云南白药（000538）已加入相邻 A 股自选看板，持仓数量与成本未设置；上市以来不复权历史见 `../../A_Shares_Datas/000538-云南白药-不复权日线历史数据.md`，个股档案金额为元。2025年度分红记录为特别1.019元和年度1.583元/股；2026特别1.038元只列日历，不混入2025年度股息率。心动目标保持<47元。新增个股档案后按每日计划同步追加实际交易日，不重写旧历史。
 
 - 自选与持仓选择 A 股后可按沪深主板、科创板（含存托凭证）、创业板、北交所和其他板块筛选；板块筛选仅对 A 股生效，切换筛选重置分页，不改持仓汇总或本地排序。分类逻辑与测试见 `stock-board.ts`、`stock-board.test.ts`。
 

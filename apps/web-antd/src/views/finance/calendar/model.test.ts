@@ -3,7 +3,7 @@ import { expect, it } from 'vitest';
 import data from '../../../../public/data/finance/calendar.json';
 import { validateCalendar } from './model';
 it('validates published event provenance and rejects executable links and impossible dates', () => {
-  expect(validateCalendar(data.events)).toHaveLength(2);
+  expect(validateCalendar(data.events)).toHaveLength(5);
   const event = data.events[0];
   expect(() =>
     validateCalendar([{ ...event, source: 'javascript:alert(1)' }]),

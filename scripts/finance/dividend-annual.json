@@ -25,5 +25,25 @@
         "source": "https://static.cninfo.com.cn/finalpage/2026-05-13/1225300692.PDF"
       }
     ]
+  },
+  "000538": {
+    "year": 2025,
+    "verifiedAt": "2026-10-13",
+    "payments": [
+      {
+        "label": "特别分红",
+        "perShare": 1.019,
+        "special": true,
+        "exDate": "2025-09-24",
+        "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2025-09-17/46e6648e-b082-41c9-8d3b-f88865ed52c3.PDF"
+      },
+      {
+        "label": "年度分红",
+        "perShare": 1.583,
+        "special": false,
+        "exDate": "2026-04-30",
+        "source": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12161033.PDF"
+      }
+    ]
   }
 }
