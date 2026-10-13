@@ -26,11 +26,12 @@ export const catalog = [
   { code: '600690', name: '海尔智家', kind: 'stock', price: 19.5 },
   { code: '601601', name: '中国太保', kind: 'stock', price: 28.5 },
   { code: '000001', name: '平安银行', kind: 'stock', price: 10.5 },
+  { code: '000538', name: '云南白药', kind: 'stock', price: 47 },
 ] as const;
 export function defaults(): Target[] {
   return catalog.map((item) => {
     let rule: Target['rule'] = 'around';
-    if (item.code === '600900') rule = 'below';
+    if (['000538', '600900'].includes(item.code)) rule = 'below';
     else if (
       [
         '000001',
@@ -167,3 +168,13 @@ export const statusOrder = {
   stale: 3,
   missing: 4,
 };
+
+export function upgradeV5Targets(input: unknown): Target[] {
+  const saved = validateTargets(input);
+  const additions = defaults().filter(
+    (target) =>
+      target.code === '000538' &&
+      !saved.some((row) => row.code === target.code),
+  );
+  return [...saved, ...additions];
+}

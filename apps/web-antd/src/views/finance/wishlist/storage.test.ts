@@ -63,6 +63,7 @@ describe('wishlist hearts', () => {
       defaults().find((target) => target.code === '600690'),
       defaults().find((target) => target.code === '601601'),
       defaults().find((target) => target.code === '000001'),
+      defaults().find((target) => target.code === '000538'),
     ]);
   });
 });
@@ -85,8 +86,11 @@ describe('v3 wishlist migration', () => {
       '600690',
       '601601',
       '000001',
+      '000538',
     ]);
-    for (const target of upgraded.targets.slice(1)) {
+    for (const target of upgraded.targets.filter(
+      (row) => row.rule === 'atMost',
+    )) {
       expect(target.rule).toBe('atMost');
       expect(
         evaluate(
@@ -120,6 +124,7 @@ describe('v3 wishlist migration', () => {
     ).toEqual([
       ...saved,
       defaults().find((target) => target.code === '000001'),
+      defaults().find((target) => target.code === '000538'),
     ]);
   });
 });
@@ -139,21 +144,75 @@ describe('corrected Ping An Bank target', () => {
   it('corrects the old insurance code and keeps other targets', () => {
     const other = defaults().find((row) => row.code === '601601');
     expect(migrate([wrong, other])).toEqual({
-      targets: [{ ...wrong, code: '000001' }, other],
+      targets: [
+        { ...wrong, code: '000001' },
+        other,
+        defaults().find((row) => row.code === '000538'),
+      ],
       needsSave: true,
     });
   });
   it('preserves edits and prefers an existing bank target without duplicates', () => {
     const edited = { ...wrong, price: 10, note: 'my target' };
-    expect(migrate([edited]).targets).toEqual([{ ...edited, code: '000001' }]);
+    expect(migrate([edited]).targets).toEqual([
+      { ...edited, code: '000001' },
+      defaults().find((row) => row.code === '000538'),
+    ]);
     const bank = { ...wrong, code: '000001', price: 9.5 };
-    expect(migrate([wrong, bank]).targets).toEqual([bank]);
+    expect(migrate([wrong, bank]).targets).toEqual([
+      bank,
+      defaults().find((row) => row.code === '000538'),
+    ]);
   });
   it('respects deleted targets and validates malformed data', () => {
-    expect(migrate([]).targets).toEqual([]);
+    expect(migrate([]).targets).toEqual([
+      defaults().find((row) => row.code === '000538'),
+    ]);
     expect(() => migrate([{ ...wrong, price: 0 }])).toThrow('invalid');
     expect(
       readWishlist({ getItem: (key) => (key === WISHLIST_KEY ? '[]' : null) }),
     ).toEqual({ targets: [], needsSave: false });
+  });
+});
+
+describe('v5 Yunnan Baiyao migration', () => {
+  const yunnan = () => defaults().find((row) => row.code === '000538');
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v5') ? JSON.stringify(rows) : null),
+    });
+  it('adds only the new stock while keeping custom targets and prior removals', () => {
+    const edited = {
+      code: '600690',
+      price: 18,
+      rule: 'below',
+      near: 1,
+      note: 'mine',
+    };
+    expect(migrate([edited])).toEqual({
+      targets: [edited, yunnan()],
+      needsSave: true,
+    });
+    expect(migrate([]).targets).toEqual([yunnan()]);
+    expect(
+      readWishlist({ getItem: (key) => (key === WISHLIST_KEY ? '[]' : null) }),
+    ).toEqual({ targets: [], needsSave: false });
+  });
+  it('preserves an existing Yunnan Baiyao target without duplicates', () => {
+    const edited = { ...yunnan(), price: 45, near: 1, note: 'personal' };
+    const upgraded = migrate([edited]);
+    expect(upgraded.targets).toEqual([edited]);
+    expect(
+      readWishlist({
+        getItem: (key) =>
+          key === WISHLIST_KEY ? JSON.stringify(upgraded.targets) : null,
+      }),
+    ).toEqual({ targets: [edited], needsSave: false });
+  });
+  it('does not replace broken legacy storage with defaults', () => {
+    expect(() => migrate([{ ...yunnan(), price: 0 }])).toThrow('invalid');
+    expect(() =>
+      readWishlist({ getItem: (key) => (key.endsWith(':v5') ? '{' : null) }),
+    ).toThrow(SyntaxError);
   });
 });

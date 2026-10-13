@@ -16,10 +16,10 @@ describe('wishlist targets', () => {
     note: '',
   };
   const quote = (price: number, date = '2026-09-16') => ({ price, date });
-  it('preserves the 16 user targets and the strict boundary', () => {
+  it('preserves the 17 user targets and the strict boundary', () => {
     const all = defaults();
     expect(validateTargets(all)).toEqual(all);
-    expect(all).toHaveLength(16);
+    expect(all).toHaveLength(17);
     expect(all.find((t) => t.code === '600900')?.rule).toBe('below');
     expect(all.find((t) => t.code === '510210')?.note).toContain('3750');
   });
@@ -30,6 +30,16 @@ describe('wishlist targets', () => {
     expect(evaluate(semir, quote(5), '2026-09-16').status).toBe('reached');
     expect(evaluate(semir, quote(4.99), '2026-09-16').status).toBe('reached');
     expect(evaluate(semir, quote(5.01), '2026-09-16').status).toBe('near');
+  });
+  it('marks Yunnan Baiyao below 47, but does not include the boundary', () => {
+    const target = defaults().find((row) => row.code === '000538');
+    expect(target).toMatchObject({ price: 47, rule: 'below' });
+    if (!target) throw new Error('Missing Yunnan Baiyao target');
+    expect(evaluate(target, quote(46.99), '2026-09-16').status).toBe('reached');
+    expect(evaluate(target, quote(47), '2026-09-16').status).toBe('near');
+    expect(evaluate(target, quote(47.01), '2026-09-16').status).not.toBe(
+      'reached',
+    );
   });
   it('migrates only the new target without restoring removed targets or changing edits', () => {
     const saved = [{ ...target, price: 3.8, note: 'personal' }];
