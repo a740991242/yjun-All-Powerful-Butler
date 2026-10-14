@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-13",
+  "updatedAt": "2026-10-14",
   "coverage": {
     "codes": [
       "000538",
@@ -18,7 +18,7 @@
       "kind": "exdiv",
       "status": "confirmed",
       "source": "https://static.cninfo.com.cn/finalpage/2026-05-13/1225300692.PDF",
-      "updatedAt": "2026-10-13",
+      "updatedAt": "2026-10-14",
       "note": "每股现金红利 0.136 元（含税）；股权登记日 2026-05-19。"
     },
     {
@@ -29,7 +29,7 @@
       "kind": "report",
       "status": "confirmed",
       "source": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12563095&stockid=600690",
-      "updatedAt": "2026-10-13",
+      "updatedAt": "2026-10-14",
       "note": "实际公告日期；来源为新浪财经转载的公司公告。"
     },
     {
@@ -40,7 +40,7 @@
       "kind": "exdiv",
       "status": "confirmed",
       "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2025-09-17/46e6648e-b082-41c9-8d3b-f88865ed52c3.PDF",
-      "updatedAt": "2026-10-13",
+      "updatedAt": "2026-10-14",
       "note": "每股税前现金红利 1.019 元；股权登记日 2025-09-23。年度归属按公司实施公告，不按付款年份改写。"
     },
     {
@@ -50,8 +50,8 @@
       "date": "2026-04-30",
       "kind": "exdiv",
       "status": "confirmed",
-      "source": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12161033.PDF",
-      "updatedAt": "2026-10-13",
+      "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-24/20e4ddbe-b846-47df-960d-68504190d32b.PDF",
+      "updatedAt": "2026-10-14",
       "note": "每股税前现金红利 1.583 元；股权登记日 2026-04-29。年度归属按公司实施公告，不按付款年份改写。"
     },
     {
@@ -62,7 +62,7 @@
       "kind": "exdiv",
       "status": "confirmed",
       "source": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-9/2026-09-17/12606766.PDF",
-      "updatedAt": "2026-10-13",
+      "updatedAt": "2026-10-14",
       "note": "每股税前现金红利 1.038 元；股权登记日 2026-09-23。年度归属按公司实施公告，不按付款年份改写。"
     }
   ]

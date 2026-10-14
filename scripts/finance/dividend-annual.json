@@ -1,7 +1,7 @@
 {
   "600219": {
     "year": 2025,
-    "verifiedAt": "2026-10-13",
+    "verifiedAt": "2026-10-14",
     "payments": [
       {
         "label": "半年度分红",
@@ -28,7 +28,7 @@
   },
   "000538": {
     "year": 2025,
-    "verifiedAt": "2026-10-13",
+    "verifiedAt": "2026-10-14",
     "payments": [
       {
         "label": "特别分红",
@@ -42,7 +42,7 @@
         "perShare": 1.583,
         "special": false,
         "exDate": "2026-04-30",
-        "source": "https://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-24/12161033.PDF"
+        "source": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-24/20e4ddbe-b846-47df-960d-68504190d32b.PDF"
       }
     ]
   }
