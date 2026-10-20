@@ -117,9 +117,19 @@ def main():
         now = datetime.now(ZoneInfo('Asia/Shanghai'))
         close_end = completed_end(code, end, now)
         url = KLINE_URL + f'{ticker},day,{start},{close_end},400,'
-        data = json.loads(request(url))
-        if data.get('code') != 0:
-            raise ValueError(f'Kline request failed: {code}')
+        data = None
+        for attempt in range(4):
+            try:
+                candidate = json.loads(request(url))
+                if candidate.get('code') == 0 and candidate.get('data', {}).get(ticker, {}).get('day'):
+                    data = candidate
+                    break
+            except (OSError, ValueError, KeyError):
+                pass
+            if attempt < 3:
+                time.sleep(attempt + 1)
+        if data is None:
+            raise ValueError(f'Kline request failed after retries: {code}')
         # Only unadjusted day data is accepted, never qfqday/hfqday fallback.
         points = data['data'][ticker]['day']
         metrics.update(price_range(points, start.isoformat(), close_end.isoformat()))
