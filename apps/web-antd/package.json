@@ -30,7 +30,7 @@
     "@vben/utils": "workspace:*",
     "@vueuse/core": "catalog:",
     "ant-design-vue": "catalog:",
-    "cron-parser": "^5.10.1",
+    "cron-parser": "^5.10.2",
     "dayjs": "catalog:",
     "diff": "^9.0.0",
     "papaparse": "^5.7.0",
