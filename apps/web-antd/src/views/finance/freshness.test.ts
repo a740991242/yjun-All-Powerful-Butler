@@ -3,6 +3,7 @@ import { expect, it } from 'vitest';
 import { dateOnly, freshness } from './freshness';
 it('checks timestamps, calendar boundaries and missing values separately', () => {
   expect(dateOnly('20260924161459')).toBe('2026-09-24');
+  expect(dateOnly('2026/11/02 16:08:21')).toBe('2026-11-02');
   expect(dateOnly('2026-02-30')).toBeNull();
   expect(freshness('2026-09-20', true, '2026-09-24', 4)).toBe('fresh');
   expect(freshness('2026-09-19', true, '2026-09-24', 4)).toBe('stale');

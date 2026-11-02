@@ -1,9 +1,11 @@
 export type Freshness = 'fresh' | 'future' | 'missing' | 'stale';
 export function dateOnly(value: null | string | undefined) {
   if (!value) return null;
-  const date = /^\d{14}$/.test(value)
-    ? `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`
-    : value.slice(0, 10);
+  let date = value.slice(0, 10);
+  if (/^\d{14}$/.test(value))
+    date = `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`;
+  else if (/^\d{4}\/\d{2}\/\d{2}/.test(value))
+    date = value.slice(0, 10).replaceAll('/', '-');
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(date) ||
     !Number.isFinite(Date.parse(date)) ||
