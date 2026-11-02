@@ -1,6 +1,8 @@
 import { publicAsset } from '#/utils/public-asset';
 export async function snapshot<T>(file: string): Promise<T> {
-  const response = await fetch(publicAsset(`data/finance/${file}.json`));
+  const response = await fetch(publicAsset(`data/finance/${file}.json`), {
+    cache: 'no-store',
+  });
   if (!response.ok) throw new Error('load');
   return response.json() as Promise<T>;
 }
