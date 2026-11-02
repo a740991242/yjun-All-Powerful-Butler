@@ -16,12 +16,28 @@ describe('wishlist targets', () => {
     note: '',
   };
   const quote = (price: number, date = '2026-09-16') => ({ price, date });
-  it('preserves the 17 user targets and the strict boundary', () => {
+  it('preserves the 18 user targets and the strict boundary', () => {
     const all = defaults();
     expect(validateTargets(all)).toEqual(all);
-    expect(all).toHaveLength(17);
+    expect(all).toHaveLength(18);
     expect(all.find((t) => t.code === '600900')?.rule).toBe('below');
     expect(all.find((t) => t.code === '510210')?.note).toContain('3750');
+  });
+  it('records the requested target prices as inclusive limits', () => {
+    const requested = [
+      ['601658', 4.8],
+      ['601601', 28.5],
+      ['600690', 19.5],
+      ['000001', 10.5],
+      ['000651', 36.5],
+    ] as const;
+    const all = defaults();
+    for (const [code, price] of requested)
+      expect(all.find((target) => target.code === code)).toMatchObject({
+        code,
+        price,
+        rule: 'atMost',
+      });
   });
   it('includes Semir at five yuan, but not above five', () => {
     const semir = defaults().find((row) => row.code === '002563');
