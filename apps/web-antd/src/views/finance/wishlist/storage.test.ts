@@ -3,6 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { defaults, evaluate } from './model';
 import { heartTier, readWishlist, WISHLIST_KEY } from './storage';
 
+const requestedBanks = () => [
+  defaults().find((row) => row.code === '601229'),
+  defaults().find((row) => row.code === '002966'),
+];
+
 describe('wishlist hearts', () => {
   it.each([
     [0, 0],
@@ -66,6 +71,7 @@ describe('wishlist hearts', () => {
       defaults().find((target) => target.code === '000538'),
       defaults().find((target) => target.code === '000651'),
       defaults().find((target) => target.code === '601658'),
+      ...requestedBanks(),
     ]);
   });
 });
@@ -95,6 +101,8 @@ describe('v3 wishlist migration', () => {
       '000538',
       '000651',
       '601658',
+      '601229',
+      '002966',
     ]);
     for (const target of upgraded.targets.filter(
       (row) => row.rule === 'atMost',
@@ -136,6 +144,7 @@ describe('v3 wishlist migration', () => {
       defaults().find((target) => target.code === '000651'),
       defaults().find((target) => target.code === '600690'),
       defaults().find((target) => target.code === '601658'),
+      ...requestedBanks(),
     ]);
   });
 });
@@ -162,6 +171,7 @@ describe('corrected Ping An Bank target', () => {
         defaults().find((row) => row.code === '000651'),
         defaults().find((row) => row.code === '600690'),
         defaults().find((row) => row.code === '601658'),
+        ...requestedBanks(),
       ],
       needsSave: true,
     });
@@ -175,6 +185,7 @@ describe('corrected Ping An Bank target', () => {
       defaults().find((row) => row.code === '600690'),
       defaults().find((row) => row.code === '601601'),
       defaults().find((row) => row.code === '601658'),
+      ...requestedBanks(),
     ]);
     const bank = { ...wrong, code: '000001', price: 9.5 };
     expect(migrate([wrong, bank]).targets).toEqual([
@@ -184,6 +195,7 @@ describe('corrected Ping An Bank target', () => {
       defaults().find((row) => row.code === '600690'),
       defaults().find((row) => row.code === '601601'),
       defaults().find((row) => row.code === '601658'),
+      ...requestedBanks(),
     ]);
   });
   it('respects deleted targets and validates malformed data', () => {
@@ -194,6 +206,7 @@ describe('corrected Ping An Bank target', () => {
       defaults().find((row) => row.code === '601601'),
       defaults().find((row) => row.code === '000001'),
       defaults().find((row) => row.code === '601658'),
+      ...requestedBanks(),
     ]);
     expect(() => migrate([{ ...wrong, price: 0 }])).toThrow('invalid');
     expect(
@@ -225,6 +238,7 @@ describe('v5 Yunnan Baiyao migration', () => {
         defaults().find((row) => row.code === '601601'),
         defaults().find((row) => row.code === '000001'),
         postal(),
+        ...requestedBanks(),
       ],
       needsSave: true,
     });
@@ -235,6 +249,7 @@ describe('v5 Yunnan Baiyao migration', () => {
       defaults().find((row) => row.code === '601601'),
       defaults().find((row) => row.code === '000001'),
       postal(),
+      ...requestedBanks(),
     ]);
     expect(
       readWishlist({ getItem: (key) => (key === WISHLIST_KEY ? '[]' : null) }),
@@ -250,6 +265,7 @@ describe('v5 Yunnan Baiyao migration', () => {
       defaults().find((row) => row.code === '601601'),
       defaults().find((row) => row.code === '000001'),
       postal(),
+      ...requestedBanks(),
     ]);
     expect(
       readWishlist({
@@ -264,6 +280,7 @@ describe('v5 Yunnan Baiyao migration', () => {
         defaults().find((row) => row.code === '601601'),
         defaults().find((row) => row.code === '000001'),
         postal(),
+        ...requestedBanks(),
       ],
       needsSave: false,
     });
@@ -305,6 +322,7 @@ describe('v6 requested target migration', () => {
         defaults().find((row) => row.code === '601601'),
         defaults().find((row) => row.code === '000001'),
         postal(),
+        ...requestedBanks(),
       ],
       needsSave: true,
     });
@@ -325,6 +343,52 @@ describe('v6 requested target migration', () => {
         defaults().find((row) => row.code === '600690'),
         defaults().find((row) => row.code === '601601'),
         defaults().find((row) => row.code === '000001'),
+        ...requestedBanks(),
+      ],
+      needsSave: true,
+    });
+  });
+});
+
+describe('v7 bank target migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v7') ? JSON.stringify(rows) : null),
+    });
+  const shanghai = () => defaults().find((row) => row.code === '601229');
+  const suzhou = () => defaults().find((row) => row.code === '002966');
+  it('adds Shanghai and Suzhou banks at their inclusive targets', () => {
+    const unrelated = {
+      code: '600050',
+      price: 3.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(migrate([unrelated])).toEqual({
+      targets: [unrelated, shanghai(), suzhou()],
+      needsSave: true,
+    });
+  });
+  it('updates existing bank targets without losing notes or near ranges', () => {
+    const customShanghai = {
+      ...shanghai(),
+      price: 7.5,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    const customSuzhou = {
+      ...suzhou(),
+      price: 6.5,
+      rule: 'around' as const,
+      near: 4,
+      note: 'watch',
+    };
+    expect(migrate([customShanghai, customSuzhou])).toEqual({
+      targets: [
+        { ...customShanghai, price: 8, rule: 'atMost' },
+        { ...customSuzhou, price: 7, rule: 'atMost' },
       ],
       needsSave: true,
     });
