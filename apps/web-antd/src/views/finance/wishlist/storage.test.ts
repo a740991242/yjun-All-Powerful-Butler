@@ -6,6 +6,8 @@ import { heartTier, readWishlist, WISHLIST_KEY } from './storage';
 const requestedBanks = () => [
   defaults().find((row) => row.code === '601229'),
   defaults().find((row) => row.code === '002966'),
+  defaults().find((row) => row.code === '601728'),
+  defaults().find((row) => row.code === '601169'),
 ];
 
 describe('wishlist hearts', () => {
@@ -103,6 +105,8 @@ describe('v3 wishlist migration', () => {
       '601658',
       '601229',
       '002966',
+      '601728',
+      '601169',
     ]);
     for (const target of upgraded.targets.filter(
       (row) => row.rule === 'atMost',
@@ -366,7 +370,13 @@ describe('v7 bank target migration', () => {
       note: 'personal',
     };
     expect(migrate([unrelated])).toEqual({
-      targets: [unrelated, shanghai(), suzhou()],
+      targets: [
+        unrelated,
+        shanghai(),
+        suzhou(),
+        defaults().find((row) => row.code === '601728'),
+        defaults().find((row) => row.code === '601169'),
+      ],
       needsSave: true,
     });
   });
@@ -389,6 +399,53 @@ describe('v7 bank target migration', () => {
       targets: [
         { ...customShanghai, price: 8, rule: 'atMost' },
         { ...customSuzhou, price: 7, rule: 'atMost' },
+        defaults().find((row) => row.code === '601728'),
+        defaults().find((row) => row.code === '601169'),
+      ],
+      needsSave: true,
+    });
+  });
+});
+
+describe('v8 telecom and Beijing bank migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v8') ? JSON.stringify(rows) : null),
+    });
+  const telecom = () => defaults().find((row) => row.code === '601728');
+  const beijing = () => defaults().find((row) => row.code === '601169');
+  it('adds China Telecom and Beijing Bank at their inclusive targets', () => {
+    const unrelated = {
+      code: '600050',
+      price: 3.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(migrate([unrelated])).toEqual({
+      targets: [unrelated, telecom(), beijing()],
+      needsSave: true,
+    });
+  });
+  it('updates existing values without losing notes or near ranges', () => {
+    const customTelecom = {
+      ...telecom(),
+      price: 4.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    const customBeijing = {
+      ...beijing(),
+      price: 4.5,
+      rule: 'around' as const,
+      near: 4,
+      note: 'watch',
+    };
+    expect(migrate([customTelecom, customBeijing])).toEqual({
+      targets: [
+        { ...customTelecom, price: 5.2, rule: 'atMost' },
+        { ...customBeijing, price: 5, rule: 'atMost' },
       ],
       needsSave: true,
     });
