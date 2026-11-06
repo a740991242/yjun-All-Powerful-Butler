@@ -32,6 +32,8 @@ export const catalog = [
   { code: '002966', name: '苏州银行', kind: 'stock', price: 7 },
   { code: '601728', name: '中国电信', kind: 'stock', price: 5.2 },
   { code: '601169', name: '北京银行', kind: 'stock', price: 5 },
+  { code: '600377', name: '宁沪高速', kind: 'stock', price: 11.7 },
+  { code: '600009', name: '上海机场', kind: 'stock', price: 22.5 },
 ] as const;
 export function defaults(): Target[] {
   return catalog.map((item) => {
@@ -43,8 +45,10 @@ export function defaults(): Target[] {
         '000651',
         '002563',
         '002966',
+        '600009',
         '600050',
         '600219',
+        '600377',
         '600690',
         '601169',
         '601229',
@@ -239,6 +243,26 @@ export function upgradeV7Targets(input: unknown): Target[] {
 export function upgradeV8Targets(input: unknown): Target[] {
   const saved = validateTargets(input);
   const requestedCodes = new Set(['601169', '601728']);
+  const requestedByCode = new Map(
+    defaults()
+      .filter((target) => requestedCodes.has(target.code))
+      .map((target) => [target.code, target]),
+  );
+  const updated = saved.map((target) => {
+    const requested = requestedByCode.get(target.code);
+    return requested
+      ? { ...target, price: requested.price, rule: requested.rule }
+      : target;
+  });
+  const additions = [...requestedByCode.values()].filter(
+    (target) => !updated.some((row) => row.code === target.code),
+  );
+  return [...updated, ...additions];
+}
+
+export function upgradeV9Targets(input: unknown): Target[] {
+  const saved = validateTargets(input);
+  const requestedCodes = new Set(['600009', '600377']);
   const requestedByCode = new Map(
     defaults()
       .filter((target) => requestedCodes.has(target.code))

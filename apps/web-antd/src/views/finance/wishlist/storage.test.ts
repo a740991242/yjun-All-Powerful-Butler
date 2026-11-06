@@ -8,6 +8,8 @@ const requestedBanks = () => [
   defaults().find((row) => row.code === '002966'),
   defaults().find((row) => row.code === '601728'),
   defaults().find((row) => row.code === '601169'),
+  defaults().find((row) => row.code === '600377'),
+  defaults().find((row) => row.code === '600009'),
 ];
 
 describe('wishlist hearts', () => {
@@ -107,6 +109,8 @@ describe('v3 wishlist migration', () => {
       '002966',
       '601728',
       '601169',
+      '600377',
+      '600009',
     ]);
     for (const target of upgraded.targets.filter(
       (row) => row.rule === 'atMost',
@@ -376,6 +380,8 @@ describe('v7 bank target migration', () => {
         suzhou(),
         defaults().find((row) => row.code === '601728'),
         defaults().find((row) => row.code === '601169'),
+        defaults().find((row) => row.code === '600377'),
+        defaults().find((row) => row.code === '600009'),
       ],
       needsSave: true,
     });
@@ -401,6 +407,8 @@ describe('v7 bank target migration', () => {
         { ...customSuzhou, price: 7, rule: 'atMost' },
         defaults().find((row) => row.code === '601728'),
         defaults().find((row) => row.code === '601169'),
+        defaults().find((row) => row.code === '600377'),
+        defaults().find((row) => row.code === '600009'),
       ],
       needsSave: true,
     });
@@ -423,7 +431,13 @@ describe('v8 telecom and Beijing bank migration', () => {
       note: 'personal',
     };
     expect(migrate([unrelated])).toEqual({
-      targets: [unrelated, telecom(), beijing()],
+      targets: [
+        unrelated,
+        telecom(),
+        beijing(),
+        defaults().find((row) => row.code === '600377'),
+        defaults().find((row) => row.code === '600009'),
+      ],
       needsSave: true,
     });
   });
@@ -446,6 +460,53 @@ describe('v8 telecom and Beijing bank migration', () => {
       targets: [
         { ...customTelecom, price: 5.2, rule: 'atMost' },
         { ...customBeijing, price: 5, rule: 'atMost' },
+        defaults().find((row) => row.code === '600377'),
+        defaults().find((row) => row.code === '600009'),
+      ],
+      needsSave: true,
+    });
+  });
+});
+
+describe('v9 expressway and airport migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v9') ? JSON.stringify(rows) : null),
+    });
+  const expressway = () => defaults().find((row) => row.code === '600377');
+  const airport = () => defaults().find((row) => row.code === '600009');
+  it('adds Ninghu Expressway and Shanghai Airport at inclusive targets', () => {
+    const unrelated = {
+      code: '600050',
+      price: 3.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(migrate([unrelated])).toEqual({
+      targets: [unrelated, expressway(), airport()],
+      needsSave: true,
+    });
+  });
+  it('updates existing values without losing notes or near ranges', () => {
+    const customExpressway = {
+      ...expressway(),
+      price: 11,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    const customAirport = {
+      ...airport(),
+      price: 21,
+      rule: 'around' as const,
+      near: 4,
+      note: 'watch',
+    };
+    expect(migrate([customExpressway, customAirport])).toEqual({
+      targets: [
+        { ...customExpressway, price: 11.7, rule: 'atMost' },
+        { ...customAirport, price: 22.5, rule: 'atMost' },
       ],
       needsSave: true,
     });
