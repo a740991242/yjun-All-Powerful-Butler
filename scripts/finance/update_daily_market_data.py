@@ -181,7 +181,7 @@ def previous_universe(path):
     return stocks
 
 
-def fetch_all_klines(codes, start, end, cache_path):
+def fetch_all_klines(codes, start, end, cache_path, workers):
     cache = {}
     if cache_path.exists():
         cache = json.loads(cache_path.read_text())
@@ -191,7 +191,7 @@ def fetch_all_klines(codes, start, end, cache_path):
     def work(code):
         return code, fetch_kline(code, start, end)
 
-    with ThreadPoolExecutor(max_workers=40) as pool:
+    with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(work, code): code for code in missing}
         for index, future in enumerate(as_completed(futures), 1):
             code, rows = future.result()
@@ -678,6 +678,7 @@ def main():
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--start", help="Existing closing date to update from")
     parser.add_argument("--end", default=date.today().isoformat())
+    parser.add_argument("--workers", type=int, default=40)
     args = parser.parse_args()
     source = args.source.resolve()
     if args.start:
@@ -703,7 +704,9 @@ def main():
         f"for {len(universe)} stocks",
         flush=True,
     )
-    klines = fetch_all_klines(universe, last_date, args.end, cache_path)
+    klines = fetch_all_klines(
+        universe, last_date, args.end, cache_path, args.workers
+    )
     write_daily_files(source, trading_dates, klines, universe, collected_at)
     summaries = update_etfs(source, trading_dates, collected_at)
     (source / "ETF" / "README.md").write_text(render_etf_index(summaries, collected_at))
