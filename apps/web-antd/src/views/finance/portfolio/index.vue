@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+/* eslint-disable vue/multiline-html-element-content-newline, vue/html-closing-bracket-newline */
 import type { TableColumnsType, TableProps } from 'ant-design-vue';
 
 import type { Holding, Stock } from '../model';
@@ -425,18 +426,18 @@ onBeforeUnmount(() => {
                   <Space wrap>
                     <Tag color="blue">
                       {{ $t('finance.snapshot') }}
-                      {{ stocks[0]?.priceDate }}
-</Tag><Tag>{{ $t('finance.localOnly') }}</Tag>
-</Space><Space wrap>
+                      {{ stocks[0]?.priceDate }} </Tag
+                    ><Tag>{{ $t('finance.localOnly') }}</Tag> </Space
+                  ><Space wrap>
                     <Upload
                       accept=".md,.json"
                       :show-upload-list="false"
                       :before-upload="importFile"
                     >
-                      <Button>{{ $t('finance.import') }}</Button>
-</Upload><Button :disabled="!holdings.length" @click="exportFile">
-                      {{ $t('finance.export') }}
-</Button><Button type="primary" @click="edit()">
+                      <Button>{{ $t('finance.import') }}</Button> </Upload
+                    ><Button :disabled="!holdings.length" @click="exportFile">
+                      {{ $t('finance.export') }} </Button
+                    ><Button type="primary" @click="edit()">
                       {{ $t('finance.addHolding') }}
                     </Button>
                   </Space>
@@ -466,8 +467,8 @@ onBeforeUnmount(() => {
                 </div>
                 <div v-if="holdings.length" class="grid gap-4 lg:grid-cols-3">
                   <Card :title="$t('finance.allocation')" class="lg:col-span-2">
-                    <FinanceChart :options="chart" />
-</Card><Card :title="$t('finance.calculation')">
+                    <FinanceChart :options="chart" /> </Card
+                  ><Card :title="$t('finance.calculation')">
                     <div class="flex flex-col gap-4 text-muted-foreground">
                       <p>{{ $t('finance.pnlNote') }}</p>
                       <p>{{ $t('finance.importNote') }}</p>
@@ -501,30 +502,37 @@ onBeforeUnmount(() => {
               show-icon
               :message="$t('finance.wishlistReadError')"
             />
-            <Space wrap class="mb-4">
-              <Space wrap :aria-label="$t('opportunities.filter')">
-                <Button
-                  v-for="option in [
-                    'all',
-                    'wishlist',
-                    'reached',
-                    'within2',
-                    'within5',
-                  ]"
-                  :key="option"
-                  :type="opportunity === option ? 'primary' : 'default'"
-                  @click="setOpportunity(option)"
+            <div class="finance-filter-toolbar">
+              <div class="finance-filter-actions">
+                <div
+                  class="finance-filter-buttons"
+                  role="group"
+                  :aria-label="$t('opportunities.filter')"
                 >
-                  {{ $t(`opportunities.${option}`) }}
-                </Button>
-              </Space>
-              <Checkbox v-model:checked="opportunitySort">
-                {{ $t('opportunities.sort') }}
-              </Checkbox>
-            </Space>
+                  <Button
+                    v-for="option in [
+                      'all',
+                      'wishlist',
+                      'reached',
+                      'within2',
+                      'within5',
+                    ]"
+                    :key="option"
+                    :type="opportunity === option ? 'primary' : 'default'"
+                    @click="setOpportunity(option)"
+                  >
+                    {{ $t(`opportunities.${option}`) }}
+                  </Button>
+                </div>
+                <Checkbox v-model:checked="opportunitySort">
+                  {{ $t('opportunities.sort') }}
+                </Checkbox>
+              </div>
+            </div>
             <div class="finance-detail-layout">
               <div class="finance-filter-row">
                 <Input
+                  class="finance-filter-search"
                   v-model:value="query"
                   allow-clear
                   :placeholder="$t('finance.search')"
@@ -532,7 +540,7 @@ onBeforeUnmount(() => {
                 />
                 <Select
                   v-model:value="market"
-                  class="w-full"
+                  class="finance-filter-select w-full"
                   :aria-label="$t('finance.marketFilter')"
                   :options="[
                     { value: 'all', label: $t('finance.allMarkets') },
@@ -543,7 +551,7 @@ onBeforeUnmount(() => {
                 <Select
                   v-if="market === 'a'"
                   v-model:value="board"
-                  class="w-full"
+                  class="finance-filter-select w-full"
                   :aria-label="$t('finance.boardFilter')"
                   :options="[
                     { value: 'all', label: $t('finance.allBoards') },
@@ -556,7 +564,7 @@ onBeforeUnmount(() => {
                 />
                 <Select
                   v-model:value="filter"
-                  class="w-full"
+                  class="finance-filter-select w-full"
                   :aria-label="$t('finance.filter')"
                   :options="[
                     { value: 'all', label: $t('finance.all') },
@@ -610,8 +618,8 @@ onBeforeUnmount(() => {
                       class="text-xs text-muted-foreground"
                     >
                       {{ $t('finance.noQuote') }}
-                    </div>
-</template><Space v-else-if="column.key === 'actions'" :size="0">
+                    </div> </template
+                  ><Space v-else-if="column.key === 'actions'" :size="0">
                     <Button
                       type="link"
                       size="small"
@@ -648,8 +656,8 @@ onBeforeUnmount(() => {
                       @click="edit(record.code)"
                     >
                       {{ $t('finance.edit') }}
-                    </Button>
-</Space><Tooltip
+                    </Button> </Space
+                  ><Tooltip
                     v-else-if="
                       column.dataIndex === 'dividendYield' ||
                       column.dataIndex === 'pe'
@@ -690,7 +698,9 @@ onBeforeUnmount(() => {
                           record.specialDividendPerShare
                         "
                         class="block text-xs text-muted-foreground"
-                        >{{ $t('finance.includesSpecialDividend') }}</span></span>
+                        >{{ $t('finance.includesSpecialDividend') }}</span
+                      ></span
+                    >
                   </Tooltip>
                   <Tooltip
                     v-else-if="
@@ -705,15 +715,19 @@ onBeforeUnmount(() => {
                       })
                     "
                   >
-                    <span>{{ number(text)
+                    <span
+                      >{{ number(text)
                       }}<span
                         v-if="record.currency === 'HKD'"
                         class="ml-1 text-xs text-muted-foreground"
-                        >{{ $t('finance.hkd') }}</span></span>
+                        >{{ $t('finance.hkd') }}</span
+                      ></span
+                    >
                   </Tooltip>
                   <template v-else-if="column.dataIndex === 'percent'">
-                    {{ text === null ? '—' : `${signed(text)}%` }}
-</template><span v-else>{{
+                    {{ text === null ? '—' : `${signed(text)}%` }} </template
+                  ><span v-else
+                    >{{
                       column.dataIndex === 'pnl'
                         ? signed(text)
                         : number(text, column.dataIndex === 'quantity' ? 0 : 2)
@@ -723,7 +737,9 @@ onBeforeUnmount(() => {
                         record.currency === 'HKD'
                       "
                       class="ml-1 text-xs text-muted-foreground"
-                      >{{ $t('finance.hkd') }}</span></span>
+                      >{{ $t('finance.hkd') }}</span
+                    ></span
+                  >
                 </template>
               </Table>
             </div>
@@ -760,16 +776,16 @@ onBeforeUnmount(() => {
               }))
             "
             @change="(value) => edit(String(value))"
-          />
-</FormItem><FormItem name="quantity" :label="$t('finance.quantity')">
+          /> </FormItem
+        ><FormItem name="quantity" :label="$t('finance.quantity')">
           <InputNumber
             v-model:value="form.quantity"
             class="!w-full"
             :min="1"
             :max="1e10"
             :precision="0"
-          />
-</FormItem><FormItem name="cost" :label="$t('finance.cost')">
+          /> </FormItem
+        ><FormItem name="cost" :label="$t('finance.cost')">
           <InputNumber
             v-model:value="form.cost"
             class="!w-full"
@@ -808,10 +824,48 @@ onBeforeUnmount(() => {
 }
 
 .finance-filter-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  min-width: 0;
+}
+
+.finance-filter-toolbar {
+  min-width: 0;
+  margin-bottom: 16px;
+}
+
+.finance-filter-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.finance-filter-buttons {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.finance-filter-actions :deep(.ant-checkbox-wrapper) {
+  flex: 0 0 auto;
+  margin-inline-start: 0;
+  white-space: normal;
+}
+
+.finance-filter-search {
+  flex: 1.5 1 220px;
+  min-width: 0;
+}
+
+.finance-filter-select {
+  flex: 1 1 160px;
+  min-width: 0;
 }
 
 .finance-order-note {
@@ -821,8 +875,30 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 640px) {
+  .finance-filter-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .finance-filter-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .finance-filter-buttons :deep(.ant-btn) {
+    height: auto;
+    min-height: 32px;
+    white-space: normal;
+  }
+
   .finance-filter-row {
-    grid-template-columns: minmax(0, 1fr);
+    flex-flow: column nowrap;
+    align-items: stretch;
+  }
+
+  .finance-filter-search,
+  .finance-filter-select {
+    flex-basis: 100%;
   }
 }
 </style>
