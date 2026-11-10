@@ -10,6 +10,8 @@ const requestedBanks = () => [
   defaults().find((row) => row.code === '601169'),
   defaults().find((row) => row.code === '600377'),
   defaults().find((row) => row.code === '600009'),
+  defaults().find((row) => row.code === '601166'),
+  defaults().find((row) => row.code === '600887'),
 ];
 
 describe('wishlist hearts', () => {
@@ -111,6 +113,8 @@ describe('v3 wishlist migration', () => {
       '601169',
       '600377',
       '600009',
+      '601166',
+      '600887',
     ]);
     for (const target of upgraded.targets.filter(
       (row) => row.rule === 'atMost',
@@ -382,6 +386,8 @@ describe('v7 bank target migration', () => {
         defaults().find((row) => row.code === '601169'),
         defaults().find((row) => row.code === '600377'),
         defaults().find((row) => row.code === '600009'),
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
       ],
       needsSave: true,
     });
@@ -409,6 +415,8 @@ describe('v7 bank target migration', () => {
         defaults().find((row) => row.code === '601169'),
         defaults().find((row) => row.code === '600377'),
         defaults().find((row) => row.code === '600009'),
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
       ],
       needsSave: true,
     });
@@ -437,6 +445,8 @@ describe('v8 telecom and Beijing bank migration', () => {
         beijing(),
         defaults().find((row) => row.code === '600377'),
         defaults().find((row) => row.code === '600009'),
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
       ],
       needsSave: true,
     });
@@ -462,6 +472,8 @@ describe('v8 telecom and Beijing bank migration', () => {
         { ...customBeijing, price: 5, rule: 'atMost' },
         defaults().find((row) => row.code === '600377'),
         defaults().find((row) => row.code === '600009'),
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
       ],
       needsSave: true,
     });
@@ -484,7 +496,13 @@ describe('v9 expressway and airport migration', () => {
       note: 'personal',
     };
     expect(migrate([unrelated])).toEqual({
-      targets: [unrelated, expressway(), airport()],
+      targets: [
+        unrelated,
+        expressway(),
+        airport(),
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
+      ],
       needsSave: true,
     });
   });
@@ -507,6 +525,53 @@ describe('v9 expressway and airport migration', () => {
       targets: [
         { ...customExpressway, price: 11.7, rule: 'atMost' },
         { ...customAirport, price: 22.5, rule: 'atMost' },
+        defaults().find((row) => row.code === '601166'),
+        defaults().find((row) => row.code === '600887'),
+      ],
+      needsSave: true,
+    });
+  });
+});
+
+describe('v10 industrial and dairy target migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v10') ? JSON.stringify(rows) : null),
+    });
+  const industrial = () => defaults().find((row) => row.code === '601166');
+  const dairy = () => defaults().find((row) => row.code === '600887');
+  it('adds Industrial Bank and Yili at inclusive targets', () => {
+    const unrelated = {
+      code: '600050',
+      price: 3.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(migrate([unrelated])).toEqual({
+      targets: [unrelated, industrial(), dairy()],
+      needsSave: true,
+    });
+  });
+  it('updates existing values without losing notes or near ranges', () => {
+    const customIndustrial = {
+      ...industrial(),
+      price: 16,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    const customDairy = {
+      ...dairy(),
+      price: 23,
+      rule: 'around' as const,
+      near: 4,
+      note: 'watch',
+    };
+    expect(migrate([customIndustrial, customDairy])).toEqual({
+      targets: [
+        { ...customIndustrial, price: 17.5, rule: 'atMost' },
+        { ...customDairy, price: 24.5, rule: 'atMost' },
       ],
       needsSave: true,
     });
