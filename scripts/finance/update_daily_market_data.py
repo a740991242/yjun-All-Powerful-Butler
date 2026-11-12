@@ -21,9 +21,14 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE = ROOT / "../../A_Shares_Datas"
 INDEX_CODE = "1.000001"
 KLINE_URL = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+THS_KLINE_URL = "https://d.10jqka.com.cn/v6/line/hs_{code}/01/last.js"
 SINA_URL = (
     "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/"
     "Market_Center.getHQNodeData"
+)
+SINA_INDEX_URL = (
+    "https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/"
+    "CN_MarketData.getKLineData"
 )
 HEADERS = {
     "Referer": "https://quote.eastmoney.com/",
@@ -52,11 +57,11 @@ def numeric(value):
         return None
 
 
-def request_bytes(url, params=None):
+def request_bytes(url, params=None, attempts=5):
     if params:
         url = f"{url}?{urlencode(params)}"
     last_error = None
-    for attempt in range(5):
+    for attempt in range(attempts):
         try:
             with urlopen(Request(url, headers=HEADERS), timeout=25) as response:
                 return response.read()
@@ -83,19 +88,20 @@ def secid(code):
     return f"{market(code)}.{code}"
 
 
-def fetch_kline(code, start, end):
+def fetch_kline(code, start, end, attempts=5):
     payload = json.loads(
         request_bytes(
-        KLINE_URL,
-        {
-            "secid": secid(code),
-            "fields1": "f1,f2,f3,f4,f5,f6",
-            "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
-            "klt": "101",
-            "fqt": "0",
-            "beg": start.replace("-", ""),
-            "end": end.replace("-", ""),
-        },
+            KLINE_URL,
+            {
+                "secid": secid(code),
+                "fields1": "f1,f2,f3,f4,f5,f6",
+                "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
+                "klt": "101",
+                "fqt": "0",
+                "beg": start.replace("-", ""),
+                "end": end.replace("-", ""),
+            },
+            attempts=attempts,
         )
     )
     rows = (payload.get("data") or {}).get("klines") or []
@@ -125,40 +131,148 @@ def fetch_kline(code, start, end):
     return parsed
 
 
+def fetch_ths_kline(code, start, end):
+    text = request_bytes(THS_KLINE_URL.format(code=code), attempts=3).decode(
+        "utf-8", errors="replace"
+    )
+    left, right = text.find("("), text.rfind(")")
+    if left < 0 or right <= left:
+        return []
+    payload = json.loads(text[left + 1 : right])
+    all_rows = []
+    previous_close = None
+    for raw in (payload.get("data") or "").split(";"):
+        cells = raw.split(",")
+        if len(cells) < 8:
+            continue
+        date_text = cells[0]
+        if not re.fullmatch(r"\d{8}", date_text):
+            continue
+        values = [numeric(value) for value in cells[1:8]]
+        if any(value is None for value in values):
+            continue
+        open_price, high, low, close, volume, amount, turnover = values
+        if previous_close and previous_close > 0:
+            change = close - previous_close
+            pct = change / previous_close * 100
+            amplitude = (high - low) / previous_close * 100
+        else:
+            change = pct = amplitude = 0.0
+        row = {
+            "date": f"{date_text[:4]}-{date_text[4:6]}-{date_text[6:]}",
+            "open": open_price,
+            "close": close,
+            "high": high,
+            "low": low,
+            "volume": int(volume),
+            "amount": amount,
+            "amplitude": amplitude,
+            "pct": pct,
+            "change": change,
+            "turnover": turnover,
+        }
+        all_rows.append(row)
+        previous_close = close
+    return [row for row in all_rows if start < row["date"] <= end]
+
+
 def fetch_index_dates(start, end):
-    rows = fetch_kline("000001", start, end)
+    try:
+        rows = fetch_kline("000001", start, end, attempts=1)
+    except Exception:
+        payload = json.loads(
+            request_bytes(
+                SINA_INDEX_URL,
+                {"symbol": "sh000001", "scale": "240", "ma": "no", "datalen": "30"},
+                attempts=3,
+            )
+        )
+        rows = [{"date": row["day"]} for row in payload]
     return [row["date"] for row in rows if row["date"] > start]
 
 
-def fetch_sina_page(page):
+def fetch_sina_page(page, node="hs_a"):
     rows = json.loads(
         request_bytes(
-        SINA_URL,
-        {
-            "page": page,
-            "num": 100,
-            "sort": "symbol",
-            "asc": 1,
-            "node": "hs_a",
-        },
+            SINA_URL,
+            {
+                "page": page,
+                "num": 100,
+                "sort": "symbol",
+                "asc": 1,
+                "node": node,
+            },
         )
     )
     return rows if isinstance(rows, list) else []
 
 
-def fetch_stock_universe():
-    stocks = {}
+def fetch_sina_rows(node="hs_a", max_pages=80):
+    rows = {}
     with ThreadPoolExecutor(max_workers=12) as pool:
-        futures = {pool.submit(fetch_sina_page, page): page for page in range(1, 80)}
+        futures = {
+            pool.submit(fetch_sina_page, page, node): page
+            for page in range(1, max_pages + 1)
+        }
         for future in as_completed(futures):
             for row in future.result():
-                code = str(row["code"])
-                stocks[code] = str(row["name"])
+                rows[str(row["code"])] = row
+    return rows
+
+
+def fetch_stock_universe(sina_rows=None):
+    rows = sina_rows or fetch_sina_rows("hs_a")
+    stocks = {str(row["code"]): str(row["name"]) for row in rows.values()}
     if "689009" not in stocks:
         stocks["689009"] = "九号公司-WD"
     if len(stocks) < 5000:
         raise ValueError(f"Incomplete A-share universe: {len(stocks)}")
     return stocks
+
+
+def sina_snapshot_row(row, date_text):
+    values = [
+        numeric(row.get("open")),
+        numeric(row.get("trade")),
+        numeric(row.get("high")),
+        numeric(row.get("low")),
+        numeric(row.get("settlement")),
+        numeric(row.get("volume")),
+        numeric(row.get("amount")),
+        numeric(row.get("turnoverratio")),
+        numeric(row.get("changepercent")),
+        numeric(row.get("pricechange")),
+    ]
+    if any(value is None for value in values):
+        return None
+    open_price, close, high, low, previous, volume, amount, turnover, pct, change = (
+        values
+    )
+    if not (0 < low <= high and close > 0 and open_price > 0 and previous > 0):
+        return None
+    return {
+        "date": date_text,
+        "open": open_price,
+        "close": close,
+        "high": high,
+        "low": low,
+        "volume": int(volume),
+        "amount": amount,
+        "amplitude": (high - low) / previous * 100,
+        "pct": pct,
+        "change": change,
+        "turnover": turnover,
+    }
+
+
+def merge_sina_snapshot(klines, sina_rows, date_text):
+    for code, source in sina_rows.items():
+        row = sina_snapshot_row(source, date_text)
+        if row is None:
+            continue
+        by_date = {item["date"]: item for item in klines.get(code, [])}
+        by_date[date_text] = row
+        klines[code] = sorted(by_date.values(), key=lambda item: item["date"])
 
 
 def latest_daily_file(source):
@@ -181,15 +295,16 @@ def previous_universe(path):
     return stocks
 
 
-def fetch_all_klines(codes, start, end, cache_path, workers):
+def fetch_all_klines(codes, start, end, cache_path, workers, provider):
     cache = {}
     if cache_path.exists():
         cache = json.loads(cache_path.read_text())
     missing = sorted(set(codes) - set(cache))
     lock = threading.Lock()
+    fetch = fetch_ths_kline if provider == "ths" else fetch_kline
 
     def work(code):
-        return code, fetch_kline(code, start, end)
+        return code, fetch(code, start, end)
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(work, code): code for code in missing}
@@ -197,7 +312,7 @@ def fetch_all_klines(codes, start, end, cache_path, workers):
             code, rows = future.result()
             with lock:
                 cache[code] = rows
-                if index % 250 == 0:
+                if index % 50 == 0:
                     cache_path.write_text(json.dumps(cache, separators=(",", ":")))
                     print(f"Klines {index}/{len(missing)}", flush=True)
     cache_path.write_text(json.dumps(cache, separators=(",", ":")))
@@ -222,7 +337,8 @@ def render_daily(date_text, records, universe, collected_at):
         "",
         (
             f"> 数据来源：新浪沪深北 A 股清单及九号公司 CDR 补充、"
-            f"东方财富不复权日 K。共 {len(universe):,} 个标的，"
+            f"东方财富主源/同花顺备用不复权日 K、新浪收盘快照兜底。"
+            f"共 {len(universe):,} 个标的，"
             f"{count:,} 个有有效当日成交行情。"
         ),
         f"> 采集时间：{collected_at}；日线交易日：{date_text}。",
@@ -314,7 +430,9 @@ def render_daily(date_text, records, universe, collected_at):
             "",
             "## 数据来源",
             f"- {KLINE_URL}（复权口径 fqt=0）",
+            f"- {THS_KLINE_URL.format(code='<代码>')}（不复权日 K 备用源）",
             f"- {SINA_URL}（node=hs_a）",
+            f"- {SINA_INDEX_URL}（指数交易日备用源）",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -365,18 +483,23 @@ def render_etf_row(row):
     )
 
 
-def update_etfs(source, trading_dates, collected_at):
+def update_etfs(source, trading_dates, collected_at, provider, sina_rows):
     summaries = []
+    fetch = fetch_ths_kline if provider == "ths" else fetch_kline
     for path in sorted((source / "ETF").glob("*-日线历史数据.md")):
         code, name, _ = path.stem.split("-", 2)
         text = path.read_text()
         rows = parse_etf_rows(text)
         last_date = max(rows)
-        new_rows = [
-            row
-            for row in fetch_kline(code, last_date, trading_dates[-1])
+        new_by_date = {
+            row["date"]: row
+            for row in fetch(code, last_date, trading_dates[-1])
             if row["date"] in trading_dates and row["date"] not in rows
-        ]
+        }
+        snapshot = sina_snapshot_row(sina_rows.get(code, {}), trading_dates[-1])
+        if snapshot is not None:
+            new_by_date[snapshot["date"]] = snapshot
+        new_rows = sorted(new_by_date.values(), key=lambda row: row["date"])
         if new_rows:
             path.write_text(text.rstrip() + "\n" + "\n".join(map(render_etf_row, new_rows)) + "\n")
             text = path.read_text()
@@ -388,7 +511,7 @@ def update_etfs(source, trading_dates, collected_at):
             r"> 更新范围：.*",
             (
                 f"> 更新范围：{min(rows)} 至 {latest_date} | "
-                "数据来源：东方财富日 K，接口不可用时腾讯证券备用行情 | "
+                "数据来源：东方财富主源/同花顺备用日 K，末交易日使用新浪收盘快照 | "
                 f"复权口径：不复权 | 生成时间：{collected_at}"
             ),
             text,
@@ -417,7 +540,7 @@ def render_etf_index(summaries, collected_at):
         "",
         (
             f"> 更新日期：{summaries[0][3]}；采集时间：{collected_at}。"
-            "东方财富不复权日 K 优先，接口断连时用腾讯不复权日 K 与当日收盘快照。"
+            "东方财富不复权日 K 优先，接口不可用时使用同花顺日 K 与新浪收盘快照。"
         ),
         "",
         "- 只追加实际交易日，不新增分钟数据；价格不复权，成交量为手，成交额为亿元。",
@@ -591,16 +714,19 @@ def parse_yunnan_rows(text):
     return rows
 
 
-def update_yunnan(source, metrics, trading_dates, collected_at, end):
+def update_yunnan(source, metrics, trading_dates, collected_at, end, daily_rows):
     path = source / "000538-云南白药-不复权日线历史数据.md"
     text = path.read_text()
     rows = parse_yunnan_rows(text)
     last_date = max(rows)
     new_rows = [
         row
-        for row in fetch_kline("000538", last_date, end)
-        if row["date"] in trading_dates and row["date"] not in rows
+        for row in daily_rows
+        if last_date < row["date"] <= end
+        and row["date"] in trading_dates
+        and row["date"] not in rows
     ]
+    new_rows.sort(key=lambda row: row["date"])
     if new_rows:
         text = text.rstrip() + "\n" + "\n".join(
             (
@@ -673,12 +799,26 @@ def update_yunnan(source, metrics, trading_dates, collected_at, end):
     return len(rows)
 
 
+def resolve_provider(requested, start, end):
+    if requested != "auto":
+        return requested
+    try:
+        fetch_kline("600519", start, end, attempts=1)
+    except Exception:
+        print("Eastmoney unavailable; using Tonghuashun fallback.", flush=True)
+        return "ths"
+    return "eastmoney"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--start", help="Existing closing date to update from")
     parser.add_argument("--end", default=date.today().isoformat())
     parser.add_argument("--workers", type=int, default=40)
+    parser.add_argument(
+        "--provider", choices=["auto", "eastmoney", "ths"], default="auto"
+    )
     args = parser.parse_args()
     source = args.source.resolve()
     if args.start:
@@ -693,7 +833,9 @@ def main():
     if not trading_dates:
         print("No new trading dates.")
         return
-    current = fetch_stock_universe()
+    provider = resolve_provider(args.provider, last_date, args.end)
+    sina_rows = fetch_sina_rows("hs_a")
+    current = fetch_stock_universe(sina_rows)
     previous = previous_universe(last_path)
     universe = {**previous, **current}
     cache_path = source / "tmp" / f"kline-{last_date}-{args.end}.json"
@@ -705,10 +847,18 @@ def main():
         flush=True,
     )
     klines = fetch_all_klines(
-        universe, last_date, args.end, cache_path, args.workers
+        universe, last_date, args.end, cache_path, args.workers, provider
     )
+    today = datetime.now(ZoneInfo("Asia/Shanghai")).date().isoformat()
+    if args.end == today:
+        merge_sina_snapshot(klines, sina_rows, args.end)
+        etf_sina_rows = fetch_sina_rows("etf_hq_fund", max_pages=40)
+    else:
+        etf_sina_rows = {}
     write_daily_files(source, trading_dates, klines, universe, collected_at)
-    summaries = update_etfs(source, trading_dates, collected_at)
+    summaries = update_etfs(
+        source, trading_dates, collected_at, provider, etf_sina_rows
+    )
     (source / "ETF" / "README.md").write_text(render_etf_index(summaries, collected_at))
     (source / "ETF" / "ETF每日行情数据.md").write_text(
         render_etf_index(summaries, collected_at)
@@ -722,7 +872,12 @@ def main():
         )
     }
     yunnan_count = update_yunnan(
-        source, metrics, trading_dates, collected_at, args.end
+        source,
+        metrics,
+        trading_dates,
+        collected_at,
+        args.end,
+        klines["000538"],
     )
     update_watchlist(
         source,
