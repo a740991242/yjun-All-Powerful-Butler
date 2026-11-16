@@ -105,6 +105,12 @@ def main():
     parser.add_argument('--as-of', help='52-week range ending date; defaults to the local closing snapshot')
     args = parser.parse_args()
     stocks = json.loads((ROOT / 'apps/web-antd/public/data/finance/stocks.json').read_text())['stocks']
+    supplement = json.loads((ROOT / 'scripts/finance/watchlist-supplement.json').read_text())
+    known = {stock['code'] for stock in stocks}
+    for item in supplement:
+        if item['code'] not in known:
+            stocks.append({'code': item['code'], 'name': item['name'], 'priceDate': None})
+            known.add(item['code'])
     end = date.fromisoformat(args.as_of or max(s['priceDate'] for s in stocks if s['priceDate']))
     start = end - timedelta(weeks=52) + timedelta(days=1)
     quotes = request(QUOTE_URL + ','.join(symbol(s['code']) for s in stocks)).decode('gbk')

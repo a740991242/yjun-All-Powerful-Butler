@@ -10,11 +10,13 @@ import {
   upgradeV8Targets,
   upgradeV9Targets,
   upgradeV10Targets,
+  upgradeV12Targets,
   validateTargets,
 } from './model';
 
-export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v11';
+export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v12';
 export const WISHLIST_CHANGED = 'finance:wishlist-changed';
+const V11_KEY = 'all-in-one-butler:finance:wishlist:v11';
 const V10_KEY = 'all-in-one-butler:finance:wishlist:v10';
 const V9_KEY = 'all-in-one-butler:finance:wishlist:v9';
 const V8_KEY = 'all-in-one-butler:finance:wishlist:v8';
@@ -30,37 +32,51 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const current = storage.getItem(WISHLIST_KEY);
   if (current !== null)
     return { targets: validateTargets(JSON.parse(current)), needsSave: false };
+  const v11 = storage.getItem(V11_KEY);
+  if (v11 !== null)
+    return { targets: upgradeV12Targets(JSON.parse(v11)), needsSave: true };
   const v10 = storage.getItem(V10_KEY);
   if (v10 !== null)
-    return { targets: upgradeV10Targets(JSON.parse(v10)), needsSave: true };
+    return {
+      targets: upgradeV12Targets(upgradeV10Targets(JSON.parse(v10))),
+      needsSave: true,
+    };
   const v9 = storage.getItem(V9_KEY);
   if (v9 !== null)
     return {
-      targets: upgradeV10Targets(upgradeV9Targets(JSON.parse(v9))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(upgradeV9Targets(JSON.parse(v9))),
+      ),
       needsSave: true,
     };
   const v8 = storage.getItem(V8_KEY);
   if (v8 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(upgradeV8Targets(JSON.parse(v8))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(upgradeV9Targets(upgradeV8Targets(JSON.parse(v8)))),
       ),
       needsSave: true,
     };
   const v7 = storage.getItem(V7_KEY);
   if (v7 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(upgradeV8Targets(upgradeV7Targets(JSON.parse(v7)))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(upgradeV8Targets(upgradeV7Targets(JSON.parse(v7)))),
+        ),
       ),
       needsSave: true,
     };
   const v6 = storage.getItem(V6_KEY);
   if (v6 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(
-          upgradeV8Targets(upgradeV7Targets(upgradeV6Targets(JSON.parse(v6)))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(
+            upgradeV8Targets(
+              upgradeV7Targets(upgradeV6Targets(JSON.parse(v6))),
+            ),
+          ),
         ),
       ),
       needsSave: true,
@@ -68,11 +84,13 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const v5 = storage.getItem(V5_KEY);
   if (v5 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(
-          upgradeV8Targets(
-            upgradeV7Targets(
-              upgradeV6Targets(upgradeV5Targets(JSON.parse(v5))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(
+            upgradeV8Targets(
+              upgradeV7Targets(
+                upgradeV6Targets(upgradeV5Targets(JSON.parse(v5))),
+              ),
             ),
           ),
         ),
@@ -82,12 +100,14 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const v4 = storage.getItem(V4_KEY);
   if (v4 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(
-          upgradeV8Targets(
-            upgradeV7Targets(
-              upgradeV6Targets(
-                upgradeV5Targets(upgradeV4Targets(JSON.parse(v4))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(
+            upgradeV8Targets(
+              upgradeV7Targets(
+                upgradeV6Targets(
+                  upgradeV5Targets(upgradeV4Targets(JSON.parse(v4))),
+                ),
               ),
             ),
           ),
@@ -98,12 +118,14 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const v3 = storage.getItem(V3_KEY);
   if (v3 !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(
-          upgradeV8Targets(
-            upgradeV7Targets(
-              upgradeV6Targets(
-                upgradeV5Targets(upgradeV3Targets(JSON.parse(v3))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(
+            upgradeV8Targets(
+              upgradeV7Targets(
+                upgradeV6Targets(
+                  upgradeV5Targets(upgradeV3Targets(JSON.parse(v3))),
+                ),
               ),
             ),
           ),
@@ -114,13 +136,15 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const previous = storage.getItem(PREVIOUS_KEY);
   if (previous !== null)
     return {
-      targets: upgradeV10Targets(
-        upgradeV9Targets(
-          upgradeV8Targets(
-            upgradeV7Targets(
-              upgradeV6Targets(
-                upgradeV5Targets(
-                  upgradeV3Targets(upgradeV2Targets(JSON.parse(previous))),
+      targets: upgradeV12Targets(
+        upgradeV10Targets(
+          upgradeV9Targets(
+            upgradeV8Targets(
+              upgradeV7Targets(
+                upgradeV6Targets(
+                  upgradeV5Targets(
+                    upgradeV3Targets(upgradeV2Targets(JSON.parse(previous))),
+                  ),
                 ),
               ),
             ),
@@ -134,15 +158,17 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
     targets:
       legacy === null
         ? defaults()
-        : upgradeV10Targets(
-            upgradeV9Targets(
-              upgradeV8Targets(
-                upgradeV7Targets(
-                  upgradeV6Targets(
-                    upgradeV5Targets(
-                      upgradeV3Targets(
-                        upgradeV2Targets(
-                          upgradeLegacyTargets(JSON.parse(legacy)),
+        : upgradeV12Targets(
+            upgradeV10Targets(
+              upgradeV9Targets(
+                upgradeV8Targets(
+                  upgradeV7Targets(
+                    upgradeV6Targets(
+                      upgradeV5Targets(
+                        upgradeV3Targets(
+                          upgradeV2Targets(
+                            upgradeLegacyTargets(JSON.parse(legacy)),
+                          ),
                         ),
                       ),
                     ),

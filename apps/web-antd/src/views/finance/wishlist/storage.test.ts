@@ -3,6 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { defaults, evaluate } from './model';
 import { heartTier, readWishlist, WISHLIST_KEY } from './storage';
 
+const latestTargets = () => [
+  defaults().find((row) => row.code === '601888'),
+  defaults().find((row) => row.code === '601868'),
+];
+
 const requestedBanks = () => [
   defaults().find((row) => row.code === '601229'),
   defaults().find((row) => row.code === '002966'),
@@ -12,6 +17,7 @@ const requestedBanks = () => [
   defaults().find((row) => row.code === '600009'),
   defaults().find((row) => row.code === '601166'),
   defaults().find((row) => row.code === '600887'),
+  ...latestTargets(),
 ];
 
 describe('wishlist hearts', () => {
@@ -115,6 +121,8 @@ describe('v3 wishlist migration', () => {
       '600009',
       '601166',
       '600887',
+      '601888',
+      '601868',
     ]);
     for (const target of upgraded.targets.filter(
       (row) => row.rule === 'atMost',
@@ -388,6 +396,7 @@ describe('v7 bank target migration', () => {
         defaults().find((row) => row.code === '600009'),
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -417,6 +426,7 @@ describe('v7 bank target migration', () => {
         defaults().find((row) => row.code === '600009'),
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -447,6 +457,7 @@ describe('v8 telecom and Beijing bank migration', () => {
         defaults().find((row) => row.code === '600009'),
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -474,6 +485,7 @@ describe('v8 telecom and Beijing bank migration', () => {
         defaults().find((row) => row.code === '600009'),
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -502,6 +514,7 @@ describe('v9 expressway and airport migration', () => {
         airport(),
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -527,6 +540,7 @@ describe('v9 expressway and airport migration', () => {
         { ...customAirport, price: 22.5, rule: 'atMost' },
         defaults().find((row) => row.code === '601166'),
         defaults().find((row) => row.code === '600887'),
+        ...latestTargets(),
       ],
       needsSave: true,
     });
@@ -549,7 +563,7 @@ describe('v10 industrial and dairy target migration', () => {
       note: 'personal',
     };
     expect(migrate([unrelated])).toEqual({
-      targets: [unrelated, industrial(), dairy()],
+      targets: [unrelated, industrial(), dairy(), ...latestTargets()],
       needsSave: true,
     });
   });
@@ -572,6 +586,52 @@ describe('v10 industrial and dairy target migration', () => {
       targets: [
         { ...customIndustrial, price: 17.5, rule: 'atMost' },
         { ...customDairy, price: 24.5, rule: 'atMost' },
+        ...latestTargets(),
+      ],
+      needsSave: true,
+    });
+  });
+});
+
+describe('v12 China Tourism and Energy Engineering target migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v11') ? JSON.stringify(rows) : null),
+    });
+  const tourism = () => defaults().find((row) => row.code === '601888');
+  const energy = () => defaults().find((row) => row.code === '601868');
+  it('adds China Tourism and Energy Engineering at inclusive targets', () => {
+    const unrelated = {
+      code: '600050',
+      price: 3.8,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(migrate([unrelated])).toEqual({
+      targets: [unrelated, tourism(), energy()],
+      needsSave: true,
+    });
+  });
+  it('updates existing values without losing notes or near ranges', () => {
+    const customTourism = {
+      ...tourism(),
+      price: 48,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    const customEnergy = {
+      ...energy(),
+      price: 1.9,
+      rule: 'around' as const,
+      near: 4,
+      note: 'watch',
+    };
+    expect(migrate([customTourism, customEnergy])).toEqual({
+      targets: [
+        { ...customTourism, price: 50, rule: 'atMost' },
+        { ...customEnergy, price: 2, rule: 'atMost' },
       ],
       needsSave: true,
     });

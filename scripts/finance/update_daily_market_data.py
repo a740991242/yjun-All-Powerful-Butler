@@ -299,22 +299,42 @@ def fetch_all_klines(codes, start, end, cache_path, workers, provider):
     cache = {}
     if cache_path.exists():
         cache = json.loads(cache_path.read_text())
-    missing = sorted(set(codes) - set(cache))
     lock = threading.Lock()
     fetch = fetch_ths_kline if provider == "ths" else fetch_kline
 
     def work(code):
         return code, fetch(code, start, end)
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(work, code): code for code in missing}
-        for index, future in enumerate(as_completed(futures), 1):
-            code, rows = future.result()
-            with lock:
-                cache[code] = rows
-                if index % 50 == 0:
-                    cache_path.write_text(json.dumps(cache, separators=(",", ":")))
-                    print(f"Klines {index}/{len(missing)}", flush=True)
+    for attempt in range(3):
+        missing = sorted(set(codes) - set(cache))
+        if not missing:
+            break
+        failures = []
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futures = {pool.submit(work, code): code for code in missing}
+            for index, future in enumerate(as_completed(futures), 1):
+                try:
+                    code, rows = future.result()
+                except Exception as error:
+                    failures.append((future, error))
+                    continue
+                with lock:
+                    cache[code] = rows
+                    if index % 50 == 0:
+                        cache_path.write_text(
+                            json.dumps(cache, separators=(",", ":"))
+                        )
+                        print(f"Klines {index}/{len(missing)}", flush=True)
+        cache_path.write_text(json.dumps(cache, separators=(",", ":")))
+        if failures:
+            failed_codes = [futures[future] for future, _ in failures]
+            print(
+                f"Retrying {len(failed_codes)} kline requests after transient errors.",
+                flush=True,
+            )
+    missing = sorted(set(codes) - set(cache))
+    if missing:
+        raise ValueError(f"Kline requests failed for {len(missing)} codes: {missing[:10]}")
     cache_path.write_text(json.dumps(cache, separators=(",", ":")))
     return cache
 
