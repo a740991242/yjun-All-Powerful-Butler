@@ -47,5 +47,14 @@
   "localTag": "Local targets",
   "ruleHint": "Around uses the reference price as the upper trigger. The near threshold does not raise that trigger.",
   "current": "Security",
-  "actions": "Actions"
+  "actions": "Actions",
+  "editClose": "Edit close",
+  "manual": "Manual",
+  "quoteSaved": "Manual close saved",
+  "quoteReset": "Automatic quote restored",
+  "quoteInvalid": "Close must be positive and the quote date must be a valid YYYY-MM-DD.",
+  "quoteHint": "The manual close is stored only in this browser and takes priority for target checks. Refreshing public quotes will not overwrite it.",
+  "restoreQuote": "Restore automatic quote",
+  "quoteReadError": "Local manual closes could not be read. Public quotes are being used.",
+  "clearQuotes": "Clear manual quotes"
 }

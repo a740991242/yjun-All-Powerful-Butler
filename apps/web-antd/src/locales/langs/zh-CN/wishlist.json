@@ -47,5 +47,14 @@
   "localTag": "本地目标",
   "ruleHint": "“左右”以参考价作为达标上限；提醒范围只标记接近，不提高达标价。",
   "current": "所选标的",
-  "actions": "操作"
+  "actions": "操作",
+  "editClose": "编辑收盘价",
+  "manual": "手动",
+  "quoteSaved": "手动收盘价已保存",
+  "quoteReset": "已恢复自动行情",
+  "quoteInvalid": "收盘价须大于 0，行情日期须为有效的 YYYY-MM-DD。",
+  "quoteHint": "手动收盘价仅保存在当前浏览器，并优先用于达标判断；刷新公共行情不会覆盖。",
+  "restoreQuote": "恢复自动行情",
+  "quoteReadError": "无法读取本地手动收盘价，暂用公共行情。",
+  "clearQuotes": "清除手动行情"
 }

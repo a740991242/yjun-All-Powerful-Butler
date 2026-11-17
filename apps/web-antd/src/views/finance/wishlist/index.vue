@@ -4,6 +4,7 @@ import type { TableColumnsType } from 'ant-design-vue';
 import type { Point, Stock } from '../model';
 import type { OpportunityFilter } from '../opportunity';
 import type { Quote, Target } from './model';
+import type { QuoteOverrideMap } from './quote-overrides';
 
 import { computed, onActivated, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -45,6 +46,11 @@ import {
   statusOrder,
   validateTargets,
 } from './model';
+import {
+  mergeQuotes,
+  readQuoteOverrides,
+  writeQuoteOverrides,
+} from './quote-overrides';
 import { readWishlist, WISHLIST_CHANGED, WISHLIST_KEY } from './storage';
 
 defineOptions({ name: 'FinanceWishlist' });
@@ -52,7 +58,11 @@ const router = useRouter();
 const { width } = useWindowSize();
 
 const targets = ref<Target[]>(defaults());
-const quotes = ref<Record<string, Quote>>({});
+const marketQuotes = ref<Record<string, Quote>>({});
+const quoteOverrides = ref<QuoteOverrideMap>({});
+const quotes = computed(() =>
+  mergeQuotes(marketQuotes.value, quoteOverrides.value),
+);
 const query = ref('');
 const kind = ref('all');
 const state = ref('all');
@@ -65,10 +75,13 @@ const sortByGap = ref('status');
 const loading = ref(false);
 const failed = ref(false);
 const readFailed = ref(false);
+const quoteReadFailed = ref(false);
 const today = ref('');
 const editing = ref(false);
 const adding = ref(false);
 const error = ref(false);
+const quoteEditing = ref(false);
+const quoteError = ref(false);
 const form = reactive<Target>({
   code: '',
   price: 1,
@@ -76,6 +89,17 @@ const form = reactive<Target>({
   near: 3,
   note: '',
 });
+const quoteForm = reactive({
+  code: '',
+  date: '',
+  price: 1,
+});
+const quoteSecurity = computed(() =>
+  catalog.find((security) => security.code === quoteForm.code),
+);
+const quotePrecision = computed(() =>
+  quoteSecurity.value?.kind === 'etf' ? 3 : 2,
+);
 function updateToday() {
   today.value = new Intl.DateTimeFormat('sv-SE', {
     timeZone: 'Asia/Shanghai',
@@ -135,6 +159,13 @@ async function load() {
   loading.value = true;
   failed.value = false;
   updateToday();
+  try {
+    quoteOverrides.value = readQuoteOverrides(localStorage);
+    quoteReadFailed.value = false;
+  } catch {
+    quoteOverrides.value = {};
+    quoteReadFailed.value = true;
+  }
   const next: Record<string, Quote> = {};
   const results = await Promise.allSettled([
     snapshot<{ stocks: Stock[] }>('stocks').then((data) => {
@@ -156,7 +187,7 @@ async function load() {
       }),
   ]);
   failed.value = results.some((result) => result.status === 'rejected');
-  quotes.value = next;
+  marketQuotes.value = next;
   loading.value = false;
 }
 function persist(next: Target[]) {
@@ -198,6 +229,48 @@ function save() {
     }
   } catch {
     error.value = true;
+  }
+}
+function editQuote(record: Record<string, unknown>) {
+  const code = String(record.code ?? '');
+  const quote = record.quote as Quote | undefined;
+  Object.assign(quoteForm, {
+    code,
+    date: quote?.date ?? today.value,
+    price: quote?.price ?? 1,
+  });
+  quoteError.value = false;
+  quoteEditing.value = true;
+}
+function saveQuote() {
+  try {
+    quoteOverrides.value = writeQuoteOverrides(localStorage, {
+      ...quoteOverrides.value,
+      [quoteForm.code]: {
+        date: quoteForm.date,
+        price: quoteForm.price,
+      },
+    });
+    quoteEditing.value = false;
+    quoteError.value = false;
+    quoteReadFailed.value = false;
+    message.success($t('wishlist.quoteSaved'));
+  } catch {
+    quoteError.value = true;
+  }
+}
+function resetQuote(code?: string) {
+  const targetCode = code ?? quoteForm.code;
+  const next = targetCode ? { ...quoteOverrides.value } : {};
+  if (targetCode) Reflect.deleteProperty(next, targetCode);
+  try {
+    quoteOverrides.value = writeQuoteOverrides(localStorage, next);
+    quoteEditing.value = false;
+    quoteError.value = false;
+    quoteReadFailed.value = false;
+    message.success($t('wishlist.quoteReset'));
+  } catch {
+    message.error($t('wishlist.storageError'));
   }
 }
 async function importFile(file: File) {
@@ -291,6 +364,18 @@ onActivated(updateToday);
         :message="$t('wishlist.readError')"
       />
       <Alert
+        v-if="quoteReadFailed"
+        type="warning"
+        show-icon
+        :message="$t('wishlist.quoteReadError')"
+      >
+        <template #action>
+          <Button @click="resetQuote()">
+            {{ $t('wishlist.clearQuotes') }}
+          </Button>
+        </template>
+      </Alert>
+      <Alert
         v-if="failed"
         type="warning"
         show-icon
@@ -376,8 +461,26 @@ onActivated(updateToday);
               </div>
             </template>
             <template v-else-if="column.key === 'close'">
-              ¥
-              {{ number(record.quote?.price, record.kind === 'etf' ? 3 : 2) }}
+              <div class="flex items-center justify-end gap-1">
+                <Tooltip :title="$t('wishlist.editClose')">
+                  <Button
+                    type="text"
+                    size="small"
+                    class="!h-auto !px-1"
+                    :aria-label="`${$t('wishlist.editClose')} ${record.name}`"
+                    @click="editQuote(record)"
+                  >
+                    ¥
+                    {{
+                      number(record.quote?.price, record.kind === 'etf' ? 3 : 2)
+                    }}
+                    <IconifyIcon icon="lucide:pencil-line" />
+                  </Button>
+                </Tooltip>
+                <Tag v-if="quoteOverrides[record.code]" class="!m-0">
+                  {{ $t('wishlist.manual') }}
+                </Tag>
+              </div>
             </template>
             <template v-else-if="column.key === 'target'">
               {{
@@ -496,10 +599,29 @@ onActivated(updateToday);
                   {{ $t('wishlist.close') }}
                 </dt>
                 <dd class="mt-1 font-medium">
-                  ¥
-                  {{
-                    number(record.quote?.price, record.kind === 'etf' ? 3 : 2)
-                  }}
+                  <div class="flex flex-wrap items-center gap-1">
+                    <Tooltip :title="$t('wishlist.editClose')">
+                      <Button
+                        type="text"
+                        size="small"
+                        class="!h-auto !px-0"
+                        :aria-label="`${$t('wishlist.editClose')} ${record.name}`"
+                        @click="editQuote(record)"
+                      >
+                        ¥
+                        {{
+                          number(
+                            record.quote?.price,
+                            record.kind === 'etf' ? 3 : 2,
+                          )
+                        }}
+                        <IconifyIcon icon="lucide:pencil-line" />
+                      </Button>
+                    </Tooltip>
+                    <Tag v-if="quoteOverrides[record.code]" class="!m-0">
+                      {{ $t('wishlist.manual') }}
+                    </Tag>
+                  </div>
                 </dd>
               </div>
               <div>
@@ -650,6 +772,59 @@ onActivated(updateToday);
       >
         <Button danger>{{ $t('wishlist.remove') }}</Button>
       </Popconfirm>
+    </Modal>
+    <Modal
+      v-model:open="quoteEditing"
+      :title="$t('wishlist.editClose')"
+      :ok-text="$t('wishlist.save')"
+      :cancel-text="$t('wishlist.cancel')"
+      @ok="saveQuote"
+    >
+      <Form layout="vertical">
+        <FormItem :label="$t('wishlist.current')">
+          <Input
+            :value="
+              quoteSecurity
+                ? `${quoteSecurity.name} · ${quoteSecurity.code}`
+                : quoteForm.code
+            "
+            disabled
+          />
+        </FormItem>
+        <FormItem :label="$t('wishlist.close')">
+          <InputNumber
+            v-model:value="quoteForm.price"
+            class="!w-full"
+            :min="0.001"
+            :max="1000000"
+            :precision="quotePrecision"
+            :aria-label="$t('wishlist.close')"
+          />
+        </FormItem>
+        <FormItem :label="$t('wishlist.date')">
+          <Input
+            v-model:value="quoteForm.date"
+            placeholder="YYYY-MM-DD"
+            :maxlength="10"
+            :aria-label="$t('wishlist.date')"
+          />
+        </FormItem>
+      </Form>
+      <p class="mb-3 text-sm text-muted-foreground">
+        {{ $t('wishlist.quoteHint') }}
+      </p>
+      <Alert
+        v-if="quoteError"
+        type="error"
+        :message="$t('wishlist.quoteInvalid')"
+      />
+      <Button
+        v-if="quoteOverrides[quoteForm.code]"
+        danger
+        @click="resetQuote()"
+      >
+        {{ $t('wishlist.restoreQuote') }}
+      </Button>
     </Modal>
   </Page>
 </template>
