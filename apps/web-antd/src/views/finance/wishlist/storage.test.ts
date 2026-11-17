@@ -637,3 +637,26 @@ describe('v12 China Tourism and Energy Engineering target migration', () => {
     });
   });
 });
+
+describe('v13 removed target migration', () => {
+  const migrate = (rows: unknown[]) =>
+    readWishlist({
+      getItem: (key) => (key.endsWith(':v12') ? JSON.stringify(rows) : null),
+    });
+  it('removes delisted selections while preserving other targets and edits', () => {
+    const preserved = {
+      code: '601888',
+      price: 49,
+      rule: 'below' as const,
+      near: 2,
+      note: 'personal',
+    };
+    expect(
+      migrate([
+        { code: '600219', price: 4, rule: 'atMost', near: 3, note: '' },
+        { code: '601818', price: 2.9, rule: 'atMost', near: 3, note: '' },
+        preserved,
+      ]),
+    ).toEqual({ targets: [preserved], needsSave: true });
+  });
+});

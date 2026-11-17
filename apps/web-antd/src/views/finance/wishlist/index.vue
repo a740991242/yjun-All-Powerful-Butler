@@ -6,7 +6,14 @@ import type { OpportunityFilter } from '../opportunity';
 import type { Quote, Target } from './model';
 import type { QuoteOverrideMap } from './quote-overrides';
 
-import { computed, onActivated, onMounted, reactive, ref } from 'vue';
+import {
+  computed,
+  onActivated,
+  onBeforeUnmount,
+  onMounted,
+  reactive,
+  ref,
+} from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
@@ -82,6 +89,8 @@ const adding = ref(false);
 const error = ref(false);
 const quoteEditing = ref(false);
 const quoteError = ref(false);
+let lastLoadedAt = 0;
+let refreshTimer: number | undefined;
 const form = reactive<Target>({
   code: '',
   price: 1,
@@ -155,7 +164,9 @@ const columns = computed<TableColumnsType<(typeof allRows.value)[number]>>(
     },
   ],
 );
-async function load() {
+async function load(force = false) {
+  if (loading.value) return;
+  if (!force && Date.now() - lastLoadedAt < 60_000) return;
   loading.value = true;
   failed.value = false;
   updateToday();
@@ -189,6 +200,7 @@ async function load() {
   failed.value = results.some((result) => result.status === 'rejected');
   marketQuotes.value = next;
   loading.value = false;
+  lastLoadedAt = Date.now();
 }
 function persist(next: Target[]) {
   try {
@@ -273,6 +285,13 @@ function resetQuote(code?: string) {
     message.error($t('wishlist.storageError'));
   }
 }
+function refreshCurrentData() {
+  updateToday();
+  void load();
+}
+function onVisibilityChange() {
+  if (document.visibilityState === 'visible') refreshCurrentData();
+}
 async function importFile(file: File) {
   try {
     if (file.size > 2_000_000) throw new Error('size');
@@ -307,9 +326,19 @@ onMounted(() => {
   } catch {
     readFailed.value = true;
   }
-  void load();
+  void load(true);
+  window.addEventListener('focus', refreshCurrentData);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  refreshTimer = window.setInterval(() => {
+    if (document.visibilityState === 'visible') refreshCurrentData();
+  }, 5 * 60_000);
 });
-onActivated(updateToday);
+onActivated(refreshCurrentData);
+onBeforeUnmount(() => {
+  window.removeEventListener('focus', refreshCurrentData);
+  document.removeEventListener('visibilitychange', onVisibilityChange);
+  if (refreshTimer !== undefined) window.clearInterval(refreshTimer);
+});
 </script>
 
 <template>
@@ -331,7 +360,7 @@ onActivated(updateToday);
             <Button
               :aria-label="$t('wishlist.retry')"
               :loading="loading"
-              @click="load"
+              @click="load(true)"
             >
               <IconifyIcon icon="lucide:refresh-cw" />
             </Button>

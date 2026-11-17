@@ -19,6 +19,7 @@ import {
 import { useRoute } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
+import { IconifyIcon } from '@vben/icons';
 
 import { useMediaQuery } from '@vueuse/core';
 import {
@@ -80,6 +81,8 @@ const holdings = ref<Holding[]>([]);
 const loading = ref(false);
 const failed = ref(false);
 const storageError = ref(false);
+let lastLoadedAt = 0;
+let refreshTimer: number | undefined;
 const route = useRoute();
 const query = ref(typeof route.query.code === 'string' ? route.query.code : '');
 watch(
@@ -189,7 +192,9 @@ const chart = computed(() => ({
     },
   ],
 }));
-async function load() {
+async function load(force = false) {
+  if (loading.value) return;
+  if (!force && Date.now() - lastLoadedAt < 60_000) return;
   loading.value = true;
   failed.value = false;
   try {
@@ -228,6 +233,7 @@ async function load() {
     failed.value = true;
   } finally {
     loading.value = false;
+    lastLoadedAt = Date.now();
   }
 }
 function reorder(code: string, direction: 'down' | 'top' | 'up') {
@@ -387,18 +393,31 @@ function onWishlistStorage(event: StorageEvent) {
   )
     refreshWishlist();
 }
-onMounted(() => {
+function refreshCurrentData() {
+  refreshWishlist();
   void load();
+}
+function onVisibilityChange() {
+  if (document.visibilityState === 'visible') refreshCurrentData();
+}
+onMounted(() => {
+  void load(true);
   refreshWishlist();
   window.addEventListener(WISHLIST_CHANGED, refreshWishlist);
   window.addEventListener('storage', onWishlistStorage);
-  window.addEventListener('focus', refreshWishlist);
+  window.addEventListener('focus', refreshCurrentData);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  refreshTimer = window.setInterval(() => {
+    if (document.visibilityState === 'visible') refreshCurrentData();
+  }, 5 * 60_000);
 });
-onActivated(refreshWishlist);
+onActivated(refreshCurrentData);
 onBeforeUnmount(() => {
   window.removeEventListener(WISHLIST_CHANGED, refreshWishlist);
   window.removeEventListener('storage', onWishlistStorage);
-  window.removeEventListener('focus', refreshWishlist);
+  window.removeEventListener('focus', refreshCurrentData);
+  document.removeEventListener('visibilitychange', onVisibilityChange);
+  if (refreshTimer !== undefined) window.clearInterval(refreshTimer);
 });
 </script>
 <template>
@@ -414,7 +433,7 @@ onBeforeUnmount(() => {
         show-icon
       >
         <template #action>
-          <Button @click="load">{{ $t('finance.retry') }}</Button>
+          <Button @click="load(true)">{{ $t('finance.retry') }}</Button>
         </template>
       </Alert>
       <Spin :spinning="loading">
@@ -495,6 +514,32 @@ onBeforeUnmount(() => {
             </CollapsePanel>
           </Collapse>
           <Card :title="$t('finance.watchlist')">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <Space wrap>
+                <Tag :color="rangeEnd === today ? 'green' : 'orange'">
+                  {{ $t('finance.snapshot') }}
+                  {{ rangeEnd || stocks[0]?.priceDate || '—' }}
+                </Tag>
+                <span class="text-xs text-muted-foreground">
+                  {{
+                    $t('finance.refreshedAt', {
+                      time: updatedAt || '—',
+                    })
+                  }}
+                </span>
+              </Space>
+              <Tooltip :title="$t('finance.refreshQuotes')">
+                <Button
+                  size="small"
+                  :loading="loading"
+                  :aria-label="$t('finance.refreshQuotes')"
+                  @click="load(true)"
+                >
+                  <IconifyIcon icon="lucide:refresh-cw" />
+                  {{ $t('finance.refreshQuotes') }}
+                </Button>
+              </Tooltip>
+            </div>
             <Alert
               v-if="wishlistError"
               class="mb-4"

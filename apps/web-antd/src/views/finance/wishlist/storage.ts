@@ -11,11 +11,13 @@ import {
   upgradeV9Targets,
   upgradeV10Targets,
   upgradeV12Targets,
+  upgradeV13Targets,
   validateTargets,
 } from './model';
 
-export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v12';
+export const WISHLIST_KEY = 'all-in-one-butler:finance:wishlist:v13';
 export const WISHLIST_CHANGED = 'finance:wishlist-changed';
+const V12_KEY = 'all-in-one-butler:finance:wishlist:v12';
 const V11_KEY = 'all-in-one-butler:finance:wishlist:v11';
 const V10_KEY = 'all-in-one-butler:finance:wishlist:v10';
 const V9_KEY = 'all-in-one-butler:finance:wishlist:v9';
@@ -32,6 +34,9 @@ export function readWishlist(storage: Pick<Storage, 'getItem'>) {
   const current = storage.getItem(WISHLIST_KEY);
   if (current !== null)
     return { targets: validateTargets(JSON.parse(current)), needsSave: false };
+  const v12 = storage.getItem(V12_KEY);
+  if (v12 !== null)
+    return { targets: upgradeV13Targets(JSON.parse(v12)), needsSave: true };
   const v11 = storage.getItem(V11_KEY);
   if (v11 !== null)
     return { targets: upgradeV12Targets(JSON.parse(v11)), needsSave: true };

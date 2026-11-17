@@ -16,8 +16,6 @@ export const catalog = [
   { code: '513100', name: '纳指ETF国泰', kind: 'etf', price: 1.2 },
   { code: '601328', name: '交通银行', kind: 'stock', price: 6.4 },
   { code: '600050', name: '中国联通', kind: 'stock', price: 4 },
-  { code: '600219', name: '南山铝业', kind: 'stock', price: 4 },
-  { code: '601818', name: '光大银行', kind: 'stock', price: 2.9 },
   { code: '600900', name: '长江电力', kind: 'stock', price: 20 },
   { code: '600036', name: '招商银行', kind: 'stock', price: 36 },
   { code: '000776', name: '广发证券', kind: 'stock', price: 20 },
@@ -51,7 +49,6 @@ export function defaults(): Target[] {
         '002966',
         '600009',
         '600050',
-        '600219',
         '600377',
         '600690',
         '600887',
@@ -61,7 +58,6 @@ export function defaults(): Target[] {
         '601601',
         '601658',
         '601728',
-        '601818',
         '601868',
         '601888',
       ].includes(item.code)
@@ -325,5 +321,18 @@ export function upgradeV12Targets(input: unknown): Target[] {
   const additions = [...requestedByCode.values()].filter(
     (target) => !updated.some((row) => row.code === target.code),
   );
-  return [...updated, ...additions];
+  return upgradeV13Targets([...updated, ...additions]);
+}
+
+export function upgradeV13Targets(input: unknown): Target[] {
+  const removed = new Set(['600219', '601818']);
+  if (!Array.isArray(input)) return validateTargets(input);
+  return validateTargets(
+    input.filter(
+      (target) =>
+        !target ||
+        typeof target !== 'object' ||
+        !removed.has(String((target as Record<string, unknown>).code)),
+    ),
+  );
 }

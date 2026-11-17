@@ -19,6 +19,8 @@
   "percent": "浮动盈亏率",
   "actions": "操作",
   "snapshot": "收盘快照",
+  "refreshedAt": "数据刷新：{time}",
+  "refreshQuotes": "刷新行情",
   "localOnly": "持仓仅保存在此浏览器",
   "import": "导入持仓",
   "export": "导出持仓",

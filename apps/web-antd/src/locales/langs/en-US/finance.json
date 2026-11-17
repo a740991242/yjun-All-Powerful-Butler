@@ -19,6 +19,8 @@
   "percent": "Unrealized P&L (%)",
   "actions": "Actions",
   "snapshot": "Closing snapshot",
+  "refreshedAt": "Data refreshed: {time}",
+  "refreshQuotes": "Refresh quotes",
   "localOnly": "Holdings stored in this browser only",
   "import": "Import holdings",
   "export": "Export holdings",

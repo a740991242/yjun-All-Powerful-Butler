@@ -16,10 +16,10 @@ describe('wishlist targets', () => {
     note: '',
   };
   const quote = (price: number, date = '2026-09-16') => ({ price, date });
-  it('preserves the 28 user targets and the strict boundary', () => {
+  it('preserves the 26 user targets and the strict boundary', () => {
     const all = defaults();
     expect(validateTargets(all)).toEqual(all);
-    expect(all).toHaveLength(28);
+    expect(all).toHaveLength(26);
     expect(all.find((t) => t.code === '600900')?.rule).toBe('below');
     expect(all.find((t) => t.code === '510210')?.note).toContain('3750');
   });

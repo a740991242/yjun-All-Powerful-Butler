@@ -49,7 +49,15 @@ export function readQuoteOverrides(
   storage: Pick<Storage, 'getItem'>,
 ): QuoteOverrideMap {
   const current = storage.getItem(QUOTE_OVERRIDES_KEY);
-  return current === null ? {} : validateQuoteOverrides(JSON.parse(current));
+  if (current === null) return {};
+  const input = JSON.parse(current);
+  if (!input || typeof input !== 'object' || Array.isArray(input))
+    throw new Error('invalid');
+  const knownCodes = new Set<string>(catalog.map((security) => security.code));
+  const retained = Object.fromEntries(
+    Object.entries(input).filter(([code]) => knownCodes.has(code)),
+  );
+  return validateQuoteOverrides(retained);
 }
 
 export function writeQuoteOverrides(

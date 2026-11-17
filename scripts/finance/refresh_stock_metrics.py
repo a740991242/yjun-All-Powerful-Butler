@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[2]
 QUOTE_URL = 'https://qt.gtimg.cn/q='
 KLINE_URL = 'https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param='
+SINA_KLINE_URL = 'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData'
 # Verified against Tencent's own adaptHS/adaptHK implementation, 2026-09-09:
 FIELD_SOURCE = 'https://st.gtimg.com/quotes/hs-fund/bundle.13362df9.js'
 
@@ -74,6 +75,29 @@ def price_range(points, start, end):
     }
 
 
+def sina_price_points(ticker, start, end):
+    url = f'{SINA_KLINE_URL}?symbol={ticker}&scale=240&ma=no&datalen=400'
+    rows = json.loads(request(url))
+    if not isinstance(rows, list):
+        raise ValueError('Unexpected Sina daily price response')
+    points = []
+    for row in rows:
+        day = row.get('day')
+        if not day or not start <= day <= end:
+            continue
+        points.append([
+            day,
+            row.get('open'),
+            row.get('close'),
+            row.get('high'),
+            row.get('low'),
+            row.get('volume'),
+        ])
+    if not points:
+        raise ValueError('No Sina daily prices in the requested 52-week window')
+    return points
+
+
 def request(url):
     for attempt in range(3):
         try:
@@ -104,14 +128,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--as-of', help='52-week range ending date; defaults to the local closing snapshot')
     args = parser.parse_args()
-    stocks = json.loads((ROOT / 'apps/web-antd/public/data/finance/stocks.json').read_text())['stocks']
+    snapshot = json.loads((ROOT / 'apps/web-antd/public/data/finance/stocks.json').read_text())
+    board = {}
+    for line in (ROOT / '../../A_Shares_Datas/自选持仓股分析看板.md').read_text().splitlines():
+        cells = [cell.strip() for cell in line.strip('|').split('|')]
+        if len(cells) == 13 and re.fullmatch(r'\d{6}|HK\d{4}', cells[1]):
+            board[cells[1]] = {'code': cells[1], 'name': cells[0], 'priceDate': None}
+    stocks = list(board.values())
     supplement = json.loads((ROOT / 'scripts/finance/watchlist-supplement.json').read_text())
-    known = {stock['code'] for stock in stocks}
+    known = set(board)
     for item in supplement:
         if item['code'] not in known:
             stocks.append({'code': item['code'], 'name': item['name'], 'priceDate': None})
             known.add(item['code'])
-    end = date.fromisoformat(args.as_of or max(s['priceDate'] for s in stocks if s['priceDate']))
+    end = date.fromisoformat(args.as_of or snapshot['rangeEnd'])
     start = end - timedelta(weeks=52) + timedelta(days=1)
     quotes = request(QUOTE_URL + ','.join(symbol(s['code']) for s in stocks)).decode('gbk')
     parsed = {key: value.split('~') for key, value in re.findall(r'v_(\w+)="([^"]*)"', quotes)}
@@ -134,10 +164,15 @@ def main():
                 pass
             if attempt < 3:
                 time.sleep(attempt + 1)
-        if data is None:
-            raise ValueError(f'Kline request failed after retries: {code}')
         # Only unadjusted day data is accepted, never qfqday/hfqday fallback.
-        points = data['data'][ticker]['day']
+        if data is not None:
+            points = data['data'][ticker]['day']
+        elif code.startswith('HK'):
+            raise ValueError(f'Kline request failed after retries: {code}')
+        else:
+            points = sina_price_points(
+                ticker, start.isoformat(), close_end.isoformat()
+            )
         metrics.update(price_range(points, start.isoformat(), close_end.isoformat()))
         if code.startswith('HK'):
             latest = max((p for p in points if p[0] <= close_end.isoformat()), key=lambda p: p[0])

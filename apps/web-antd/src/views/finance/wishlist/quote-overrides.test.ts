@@ -60,4 +60,17 @@ describe('manual quote overrides', () => {
       '601868': { price: 2, date: '2026-11-17' },
     });
   });
+
+  it('drops overrides whose securities are no longer selectable', () => {
+    const storage = {
+      getItem: () =>
+        JSON.stringify({
+          '600219': { price: 4, date: '2026-11-17' },
+          '601888': { price: 49.9, date: '2026-11-17' },
+        }),
+    };
+    expect(readQuoteOverrides(storage)).toEqual({
+      '601888': { price: 49.9, date: '2026-11-17' },
+    });
+  });
 });

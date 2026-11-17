@@ -1,7 +1,14 @@
 import unittest
 from datetime import date, datetime
+from unittest.mock import patch
 
-from refresh_stock_metrics import completed_end, price_range, quote_metrics, symbol
+from refresh_stock_metrics import (
+    completed_end,
+    price_range,
+    quote_metrics,
+    sina_price_points,
+    symbol,
+)
 
 
 class MetricsTest(unittest.TestCase):
@@ -55,6 +62,18 @@ class MetricsTest(unittest.TestCase):
         valid = [['2026-09-08', '10', '11', '12', '9']]
         with self.assertRaises(ValueError):
             price_range(valid * 2, '2025-09-10', '2026-09-08')
+
+    def test_sina_fallback_maps_unadjusted_high_low(self):
+        body = (
+            b'[{"day":"2026-09-08","open":"10","close":"11",'
+            b'"high":"12","low":"9","volume":"100"}]'
+        )
+        with patch('refresh_stock_metrics.request', return_value=body):
+            points = sina_price_points(
+                'sh601600', '2025-09-09', '2026-09-08'
+            )
+        result = price_range(points, '2025-09-09', '2026-09-08')
+        self.assertEqual((result['high52Week'], result['low52Week']), (12, 9))
 
 
 if __name__ == '__main__':
