@@ -517,7 +517,7 @@ def update_etfs(source, trading_dates, collected_at, provider, sina_rows):
             if row["date"] in trading_dates and row["date"] not in rows
         }
         snapshot = sina_snapshot_row(sina_rows.get(code, {}), trading_dates[-1])
-        if snapshot is not None:
+        if snapshot is not None and snapshot["date"] not in rows:
             new_by_date[snapshot["date"]] = snapshot
         new_rows = sorted(new_by_date.values(), key=lambda row: row["date"])
         if new_rows:
@@ -686,22 +686,23 @@ def update_watchlist(
         text,
         count=1,
     )
-    nanhai_price = closes["600219"]["close"]
-    nanhai_yield = 0.4344 / nanhai_price * 100
-    nanhai_ex_special = 0.176 / nanhai_price * 100
-    text = re.sub(
-        r"- 南山铝业（600219）：.*",
-        (
-            "- 南山铝业（600219）：2025年度每股税前分红0.4344元"
-            "（中期0.04元、特别分红0.2584元、年度0.136元）；"
-            f"按本次收盘价{nanhai_price:.2f}元计算为{nanhai_yield:.2f}%，"
-            f"剔除特别分红为{nanhai_ex_special:.2f}%。历史分红不代表未来承诺。"
-            "依据2025半年度、临时及2025年度权益分派实施公告；"
-            "Butler快照保留逐笔金额、除息日和公告链接。"
-        ),
-        text,
-        count=1,
-    )
+    nanhai_price = closes.get("600219", {}).get("close")
+    if nanhai_price:
+        nanhai_yield = 0.4344 / nanhai_price * 100
+        nanhai_ex_special = 0.176 / nanhai_price * 100
+        text = re.sub(
+            r"- 南山铝业（600219）：.*",
+            (
+                "- 南山铝业（600219）：2025年度每股税前分红0.4344元"
+                "（中期0.04元、特别分红0.2584元、年度0.136元）；"
+                f"按本次收盘价{nanhai_price:.2f}元计算为{nanhai_yield:.2f}%，"
+                f"剔除特别分红为{nanhai_ex_special:.2f}%。历史分红不代表未来承诺。"
+                "依据2025半年度、临时及2025年度权益分派实施公告；"
+                "Butler快照保留逐笔金额、除息日和公告链接。"
+            ),
+            text,
+            count=1,
+        )
     yunnan_price = closes["000538"]["close"]
     yunnan_yield = 2.602 / yunnan_price * 100
     yunnan_ex_special = 1.583 / yunnan_price * 100
