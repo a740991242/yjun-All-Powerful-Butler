@@ -36,6 +36,13 @@ updated = re.search(r'更新时间：([^\n]+)', text).group(1).strip()
 # Screenshot watchlist supplements are durable inputs, so later exports preserve them.
 supplement = json.loads((ROOT / 'scripts/finance/watchlist-supplement.json').read_text())
 price_date = max(stock['priceDate'] for stock in stocks)
+required_codes = {'601888'}
+required_stocks = [stock for stock in stocks if stock['code'] in required_codes]
+missing_required = required_codes - {stock['code'] for stock in required_stocks}
+assert not missing_required, f'Missing mandatory watchlist securities: {missing_required}'
+assert all(stock['priceDate'] == price_date for stock in required_stocks), (
+    'Mandatory watchlist securities must share the latest snapshot date'
+)
 year, month, _ = price_date.split('-')
 daily_path = args.source / year / f'{year}年{month}月' / f'{price_date}.md'
 closes = {}

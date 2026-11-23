@@ -34,6 +34,7 @@ HEADERS = {
     "Referer": "https://quote.eastmoney.com/",
     "User-Agent": "Mozilla/5.0",
 }
+MANDATORY_WATCHLIST_CODES = {"601888"}
 
 
 # Some networks stall on GitHub/quote services when IPv6 is preferred.
@@ -602,6 +603,13 @@ def update_watchlist(
 ):
     path = source / "自选持仓股分析看板.md"
     text = path.read_text()
+    watchlist_rows = parse_watchlist(text)
+    present_codes = {cells[1] for _, cells in watchlist_rows}
+    missing_required = MANDATORY_WATCHLIST_CODES - present_codes
+    if missing_required:
+        raise ValueError(
+            f"Mandatory watchlist securities missing: {sorted(missing_required)}"
+        )
     metric_by_code = {row["code"]: row for row in metrics["stocks"]}
     highs = {}
     lows = {}
@@ -615,8 +623,11 @@ def update_watchlist(
         highs[code] = (high["high"], high["date"])
         lows[code] = (low["low"], low["date"])
         closes[code] = max(valid, key=lambda row: row["date"])
+    for code in MANDATORY_WATCHLIST_CODES:
+        if code not in metric_by_code or code not in closes:
+            raise ValueError(f"Mandatory watchlist data missing: {code}")
     updated_lines = text.splitlines()
-    for index, cells in parse_watchlist(text):
+    for index, cells in watchlist_rows:
         code = cells[1]
         metric = metric_by_code.get(code)
         close = closes.get(code)

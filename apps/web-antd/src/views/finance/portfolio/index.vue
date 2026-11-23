@@ -40,6 +40,7 @@ import {
   message,
   Modal,
   Popconfirm,
+  Segmented,
   Select,
   Space,
   Spin,
@@ -53,6 +54,11 @@ import {
 
 import { $t } from '#/locales';
 
+import {
+  PORTFOLIO_ARCHIVE_KEY,
+  readArchivedCodes,
+  writeArchivedCodes,
+} from '../archive';
 import FinanceChart from '../chart.vue';
 import { number, signed, snapshot } from '../data';
 import { parseHoldings, portfolio, validateHoldings } from '../model';
@@ -98,6 +104,8 @@ function setOpportunity(value: string) {
     opportunity.value = value as OpportunityFilter;
 }
 const opportunitySort = ref(false);
+const archiveView = ref<'active' | 'archived'>('active');
+const archivedCodes = ref<string[]>([]);
 const filter = ref('all');
 const market = ref<MarketFilter>('all');
 const board = ref<BoardFilter>('all');
@@ -108,6 +116,8 @@ const form = reactive<{
   cost: number | undefined;
 }>({ code: '', quantity: undefined, cost: undefined });
 const error = ref(false);
+const archivedSet = computed(() => new Set(archivedCodes.value));
+const archivedCount = computed(() => archivedCodes.value.length);
 const result = computed(() => portfolio(stocks.value, holdings.value));
 type PortfolioRow = ReturnType<typeof portfolio>['rows'][number];
 const rows = computed(() =>
@@ -123,6 +133,9 @@ const rows = computed(() =>
     )
     .filter(
       (row) =>
+        (archiveView.value === 'archived'
+          ? archivedSet.value.has(row.code)
+          : !archivedSet.value.has(row.code)) &&
         (!query.value ||
           `${row.name}${row.code}`.includes(query.value.trim())) &&
         (filter.value !== 'held' || row.quantity !== null) &&
@@ -173,7 +186,7 @@ const columns = computed<TableColumnsType<PortfolioRow>>(() => [
   {
     title: $t('finance.actions'),
     key: 'actions',
-    width: 200,
+    width: 230,
     fixed: narrowScreen.value ? undefined : 'right',
   },
 ]);
@@ -209,6 +222,16 @@ async function load(force = false) {
     rangeStart.value = data.rangeStart;
     rangeEnd.value = data.rangeEnd;
     const codes = stocks.value.map((stock) => stock.code);
+    try {
+      archivedCodes.value = readArchivedCodes(
+        localStorage,
+        PORTFOLIO_ARCHIVE_KEY,
+        codes,
+      );
+    } catch {
+      archivedCodes.value = [];
+      message.warning($t('finance.archiveReadError'));
+    }
     order.value = codes;
     try {
       const savedOrder = localStorage.getItem(orderKey);
@@ -272,6 +295,23 @@ const changeTable: NonNullable<TableProps<PortfolioRow>['onChange']> = (
     order: active?.order ?? null,
   };
 };
+function setArchived(code: string, archived: boolean) {
+  const next = archived
+    ? [...new Set([...archivedCodes.value, code])]
+    : archivedCodes.value.filter((item) => item !== code);
+  try {
+    archivedCodes.value = writeArchivedCodes(
+      localStorage,
+      PORTFOLIO_ARCHIVE_KEY,
+      next,
+      stocks.value.map((stock) => stock.code),
+    );
+    currentPage.value = 1;
+    message.success($t(archived ? 'finance.archived' : 'finance.restored'));
+  } catch {
+    message.error($t('finance.archiveSaveError'));
+  }
+}
 function persist(next: Holding[]) {
   try {
     localStorage.setItem(storageKey, JSON.stringify(next));
@@ -342,9 +382,12 @@ function exportFile() {
   link.click();
   URL.revokeObjectURL(url);
 }
-watch([query, filter, market, board, opportunity, opportunitySort], () => {
-  currentPage.value = 1;
-});
+watch(
+  [query, filter, market, board, opportunity, opportunitySort, archiveView],
+  () => {
+    currentPage.value = 1;
+  },
+);
 const wishlist = ref<Target[]>([]);
 const wishlistError = ref(false);
 const today = ref('');
@@ -528,17 +571,34 @@ onBeforeUnmount(() => {
                   }}
                 </span>
               </Space>
-              <Tooltip :title="$t('finance.refreshQuotes')">
-                <Button
-                  size="small"
-                  :loading="loading"
-                  :aria-label="$t('finance.refreshQuotes')"
-                  @click="load(true)"
-                >
-                  <IconifyIcon icon="lucide:refresh-cw" />
-                  {{ $t('finance.refreshQuotes') }}
-                </Button>
-              </Tooltip>
+              <Space wrap>
+                <Segmented
+                  v-model:value="archiveView"
+                  :options="[
+                    {
+                      value: 'active',
+                      label: $t('finance.archiveActive'),
+                    },
+                    {
+                      value: 'archived',
+                      label: $t('finance.archiveBin', {
+                        count: archivedCount,
+                      }),
+                    },
+                  ]"
+                />
+                <Tooltip :title="$t('finance.refreshQuotes')">
+                  <Button
+                    size="small"
+                    :loading="loading"
+                    :aria-label="$t('finance.refreshQuotes')"
+                    @click="load(true)"
+                  >
+                    <IconifyIcon icon="lucide:refresh-cw" />
+                    {{ $t('finance.refreshQuotes') }}
+                  </Button>
+                </Tooltip>
+              </Space>
             </div>
             <Alert
               v-if="wishlistError"
@@ -635,6 +695,17 @@ onBeforeUnmount(() => {
                 }"
                 @change="changeTable"
               >
+                <template #emptyText>
+                  <Empty
+                    :description="
+                      $t(
+                        archiveView === 'archived'
+                          ? 'finance.archiveEmpty'
+                          : 'finance.emptyWatchlist',
+                      )
+                    "
+                  />
+                </template>
                 <template #bodyCell="{ column, record, text, index }">
                   <template v-if="column.key === 'rowNumber'">
                     {{ (currentPage - 1) * pageSize + index + 1 }}
@@ -665,43 +736,73 @@ onBeforeUnmount(() => {
                       {{ $t('finance.noQuote') }}
                     </div> </template
                   ><Space v-else-if="column.key === 'actions'" :size="0">
-                    <Button
-                      type="link"
-                      size="small"
-                      :disabled="order[0] === record.code"
-                      @click="reorder(record.code, 'top')"
-                    >
-                      {{ $t('finance.moveTop') }}
-                    </Button>
-                    <Dropdown :trigger="['click']">
-                      <Button type="link" size="small">
-                        {{ $t('finance.reorder') }}
+                    <template v-if="archiveView === 'active'">
+                      <Button
+                        type="link"
+                        size="small"
+                        :disabled="order[0] === record.code"
+                        @click="reorder(record.code, 'top')"
+                      >
+                        {{ $t('finance.moveTop') }}
                       </Button>
-                      <template #overlay>
-                        <Menu>
-                          <MenuItem
-                            :disabled="rows[0]?.code === record.code"
-                            @click="reorder(record.code, 'up')"
-                          >
-                            {{ $t('finance.moveUp') }}
-                          </MenuItem>
-                          <MenuItem
-                            :disabled="rows.at(-1)?.code === record.code"
-                            @click="reorder(record.code, 'down')"
-                          >
-                            {{ $t('finance.moveDown') }}
-                          </MenuItem>
-                        </Menu>
-                      </template>
-                    </Dropdown>
-                    <Button
-                      type="link"
-                      size="small"
-                      :disabled="record.price === null"
-                      @click="edit(record.code)"
+                      <Dropdown :trigger="['click']">
+                        <Button type="link" size="small">
+                          {{ $t('finance.reorder') }}
+                        </Button>
+                        <template #overlay>
+                          <Menu>
+                            <MenuItem
+                              :disabled="rows[0]?.code === record.code"
+                              @click="reorder(record.code, 'up')"
+                            >
+                              {{ $t('finance.moveUp') }}
+                            </MenuItem>
+                            <MenuItem
+                              :disabled="rows.at(-1)?.code === record.code"
+                              @click="reorder(record.code, 'down')"
+                            >
+                              {{ $t('finance.moveDown') }}
+                            </MenuItem>
+                          </Menu>
+                        </template>
+                      </Dropdown>
+                      <Button
+                        type="link"
+                        size="small"
+                        :disabled="record.price === null"
+                        @click="edit(record.code)"
+                      >
+                        {{ $t('finance.edit') }}
+                      </Button>
+                    </template>
+                    <Tooltip
+                      :title="
+                        archiveView === 'active'
+                          ? $t('finance.archiveAction')
+                          : $t('finance.restoreAction')
+                      "
                     >
-                      {{ $t('finance.edit') }}
-                    </Button> </Space
+                      <Button
+                        type="text"
+                        size="small"
+                        :aria-label="
+                          archiveView === 'active'
+                            ? $t('finance.archiveAction')
+                            : $t('finance.restoreAction')
+                        "
+                        @click="
+                          setArchived(record.code, archiveView === 'active')
+                        "
+                      >
+                        <IconifyIcon
+                          :icon="
+                            archiveView === 'active'
+                              ? 'lucide:archive'
+                              : 'lucide:archive-restore'
+                          "
+                        />
+                      </Button>
+                    </Tooltip> </Space
                   ><Tooltip
                     v-else-if="
                       column.dataIndex === 'dividendYield' ||

@@ -43,6 +43,11 @@ import {
 
 import { $t } from '#/locales';
 
+import {
+  readArchivedCodes,
+  WISHLIST_ARCHIVE_KEY,
+  writeArchivedCodes,
+} from '../archive';
 import { number, snapshot } from '../data';
 import { compareOpportunity, matchesOpportunity } from '../opportunity';
 import WishlistHeart from './heart.vue';
@@ -89,6 +94,8 @@ const adding = ref(false);
 const error = ref(false);
 const quoteEditing = ref(false);
 const quoteError = ref(false);
+const archiveView = ref<'active' | 'archived'>('active');
+const archivedCodes = ref<string[]>([]);
 let lastLoadedAt = 0;
 let refreshTimer: number | undefined;
 const form = reactive<Target>({
@@ -135,9 +142,16 @@ const allRows = computed(() =>
         (a.gap ?? Infinity) - (b.gap ?? Infinity),
     ),
 );
+const archivedSet = computed(() => new Set(archivedCodes.value));
+const activeRows = computed(() =>
+  allRows.value.filter((row) => !archivedSet.value.has(row.code)),
+);
 const rows = computed(() =>
   allRows.value.filter(
     (row) =>
+      (archiveView.value === 'archived'
+        ? archivedSet.value.has(row.code)
+        : !archivedSet.value.has(row.code)) &&
       (kind.value === 'all' || row.kind === kind.value) &&
       (state.value === 'all' || row.status === state.value) &&
       matchesOpportunity(row, opportunity.value) &&
@@ -207,11 +221,33 @@ function persist(next: Target[]) {
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(validateTargets(next)));
     window.dispatchEvent(new Event(WISHLIST_CHANGED));
     targets.value = next;
+    archivedCodes.value = writeArchivedCodes(
+      localStorage,
+      WISHLIST_ARCHIVE_KEY,
+      archivedCodes.value,
+      next.map((target) => target.code),
+    );
     readFailed.value = false;
     return true;
   } catch {
     message.error($t('wishlist.storageError'));
     return false;
+  }
+}
+function setArchived(code: string, archived: boolean) {
+  const next = archived
+    ? [...new Set([...archivedCodes.value, code])]
+    : archivedCodes.value.filter((item) => item !== code);
+  try {
+    archivedCodes.value = writeArchivedCodes(
+      localStorage,
+      WISHLIST_ARCHIVE_KEY,
+      next,
+      targets.value.map((target) => target.code),
+    );
+    message.success($t(archived ? 'wishlist.archived' : 'wishlist.restored'));
+  } catch {
+    message.error($t('wishlist.archiveSaveError'));
   }
 }
 function edit(target?: Target) {
@@ -322,6 +358,16 @@ onMounted(() => {
   try {
     const saved = readWishlist(localStorage);
     targets.value = saved.targets;
+    try {
+      archivedCodes.value = readArchivedCodes(
+        localStorage,
+        WISHLIST_ARCHIVE_KEY,
+        targets.value.map((target) => target.code),
+      );
+    } catch {
+      archivedCodes.value = [];
+      message.warning($t('wishlist.archiveReadError'));
+    }
     if (saved.needsSave) persist(saved.targets);
   } catch {
     readFailed.value = true;
@@ -349,9 +395,9 @@ onBeforeUnmount(() => {
           <Tag color="blue">{{ $t('wishlist.localTag') }}</Tag>
           <span>{{
             $t('wishlist.scope', {
-              total: allRows.length,
-              reached: allRows.filter((r) => r.status === 'reached').length,
-              near: allRows.filter((r) => r.status === 'near').length,
+              total: activeRows.length,
+              reached: activeRows.filter((r) => r.status === 'reached').length,
+              near: activeRows.filter((r) => r.status === 'near').length,
             })
           }}</span>
         </div>
@@ -411,6 +457,21 @@ onBeforeUnmount(() => {
         :message="$t('wishlist.loadError')"
       />
       <Space wrap>
+        <Segmented
+          v-model:value="archiveView"
+          :options="[
+            {
+              value: 'active',
+              label: $t('wishlist.archiveActive'),
+            },
+            {
+              value: 'archived',
+              label: $t('wishlist.archiveBin', {
+                count: archivedCodes.length,
+              }),
+            },
+          ]"
+        />
         <Space wrap :aria-label="$t('opportunities.filter')">
           <Button
             v-for="option in ['all', 'reached', 'within2', 'within5']"
@@ -467,7 +528,15 @@ onBeforeUnmount(() => {
           :scroll="{ x: 1490 }"
         >
           <template #emptyText>
-            <Empty :description="$t('wishlist.empty')" />
+            <Empty
+              :description="
+                $t(
+                  archiveView === 'archived'
+                    ? 'wishlist.archiveEmpty'
+                    : 'wishlist.empty',
+                )
+              "
+            />
           </template>
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'name'">
@@ -548,7 +617,10 @@ onBeforeUnmount(() => {
             </template>
             <template v-else-if="column.key === 'actions'">
               <Space :size="0">
-                <Tooltip :title="$t('wishlist.edit')">
+                <Tooltip
+                  v-if="archiveView === 'active'"
+                  :title="$t('wishlist.edit')"
+                >
                   <Button
                     type="text"
                     :aria-label="`${$t('wishlist.edit')} ${record.name}`"
@@ -559,6 +631,31 @@ onBeforeUnmount(() => {
                     "
                   >
                     <IconifyIcon icon="lucide:pencil" />
+                  </Button>
+                </Tooltip>
+                <Tooltip
+                  :title="
+                    archiveView === 'active'
+                      ? $t('wishlist.archiveAction')
+                      : $t('wishlist.restoreAction')
+                  "
+                >
+                  <Button
+                    type="text"
+                    :aria-label="
+                      archiveView === 'active'
+                        ? $t('wishlist.archiveAction')
+                        : $t('wishlist.restoreAction')
+                    "
+                    @click="setArchived(record.code, archiveView === 'active')"
+                  >
+                    <IconifyIcon
+                      :icon="
+                        archiveView === 'active'
+                          ? 'lucide:archive'
+                          : 'lucide:archive-restore'
+                      "
+                    />
                   </Button>
                 </Tooltip>
                 <Tooltip :title="$t('wishlist.detail')">
@@ -583,7 +680,16 @@ onBeforeUnmount(() => {
           </template>
         </Table>
         <div v-else class="min-w-0">
-          <Empty v-if="!rows.length" :description="$t('wishlist.empty')" />
+          <Empty
+            v-if="!rows.length"
+            :description="
+              $t(
+                archiveView === 'archived'
+                  ? 'wishlist.archiveEmpty'
+                  : 'wishlist.empty',
+              )
+            "
+          />
           <article
             v-for="record in rows"
             :key="record.code"
@@ -692,12 +798,39 @@ onBeforeUnmount(() => {
               {{ record.note }}
             </p>
             <div class="flex justify-end gap-2">
-              <Tooltip :title="$t('wishlist.edit')">
+              <Tooltip
+                v-if="archiveView === 'active'"
+                :title="$t('wishlist.edit')"
+              >
                 <Button
                   :aria-label="`${$t('wishlist.edit')} ${record.name}`"
                   @click="edit(record)"
                 >
                   <IconifyIcon icon="lucide:pencil" />
+                </Button>
+              </Tooltip>
+              <Tooltip
+                :title="
+                  archiveView === 'active'
+                    ? $t('wishlist.archiveAction')
+                    : $t('wishlist.restoreAction')
+                "
+              >
+                <Button
+                  :aria-label="
+                    archiveView === 'active'
+                      ? $t('wishlist.archiveAction')
+                      : $t('wishlist.restoreAction')
+                  "
+                  @click="setArchived(record.code, archiveView === 'active')"
+                >
+                  <IconifyIcon
+                    :icon="
+                      archiveView === 'active'
+                        ? 'lucide:archive'
+                        : 'lucide:archive-restore'
+                    "
+                  />
                 </Button>
               </Tooltip>
               <Tooltip :title="$t('wishlist.detail')">
